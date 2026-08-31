@@ -31,7 +31,7 @@ Renovix Home Services – Home Renovation & Improvement Services in Kuala Lumpur
 | `npm run build` | Production build |
 | `npm run start` | Start the production server |
 | `npm run lint` | Run ESLint |
-| `npm run type-check` | TypeScript check (`tsc --noEmit`) |
+| `npm run type-check` | Generate Next.js route types, then TypeScript check (`next typegen && tsc --noEmit`) |
 
 ## Version notes
 
