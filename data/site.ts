@@ -39,12 +39,16 @@ export function isPlaceholder(value: string): boolean {
   return value.startsWith("[") && value.endsWith("]");
 }
 
+/**
+ * Trailing slashes match the URLs the site actually serves (`trailingSlash: true`
+ * in next.config.ts), so these never cost an internal redirect hop.
+ */
 export function getContactHref(lang = "en"): string {
-  return `/${lang}/contact`;
+  return `/${lang}/contact/`;
 }
 
 export function getQuoteHref(lang = "en"): string {
-  return `/${lang}/quote`;
+  return `/${lang}/quote/`;
 }
 
 export function getWhatsAppHref(lang = "en"): string {

@@ -5,17 +5,27 @@ import type { AreaFaq } from "@/data/area-content/types";
 type AreaFaqSectionProps = {
   name: string;
   faqs: AreaFaq[];
+  /** Localized overrides used by the translated service-areas index. */
+  eyebrow?: string;
+  title?: string;
+  description?: string;
 };
 
-export function AreaFaqSection({ name, faqs }: AreaFaqSectionProps) {
+export function AreaFaqSection({
+  name,
+  faqs,
+  eyebrow = "FAQs",
+  title,
+  description = "Practical answers for property owners in the area.",
+}: AreaFaqSectionProps) {
   return (
     <section className="section section-surface">
       <div className="container-app grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
         <div>
           <SectionHeading
-            eyebrow="FAQs"
-            title={`${name} — Frequently Asked Questions`}
-            description="Practical answers for property owners in the area."
+            eyebrow={eyebrow}
+            title={title ?? `${name} — Frequently Asked Questions`}
+            description={description}
           />
         </div>
 

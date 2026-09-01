@@ -5,15 +5,20 @@ import { Button, WhatsAppButton } from "@/components/ui/Button";
 import { Breadcrumbs } from "@/components/service/Breadcrumbs";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { IconArrowRight } from "@/components/icons";
-import { getLanguage } from "@/data/languages";
+import { getLanguage, languages } from "@/data/languages";
+import { getServiceCategories } from "@/data/i18n";
 import { getWhatsAppHref } from "@/data/site";
-import { localizeHref } from "@/data/navigation";
-import { serviceDetails } from "@/data/service-content";
-import { siteConfig } from "@/data/site";
+import { getDictionary } from "@/i18n";
+import { contentHref, localizedHref } from "@/i18n/hrefs";
+import { buildPageMetadata } from "@/i18n/seo";
 
 type ServicesPageProps = {
   params: Promise<{ lang: string }>;
 };
+
+export function generateStaticParams() {
+  return languages.map((language) => ({ lang: language.code }));
+}
 
 export async function generateMetadata({
   params,
@@ -25,28 +30,16 @@ export async function generateMetadata({
     return {};
   }
 
-  const canonicalUrl = `${siteConfig.url}/${lang}/services/`;
+  const t = getDictionary(language.code);
 
-  return {
-    title: {
-      absolute: "Our Services in Kuala Lumpur & Selangor | Renovix Home Services",
-    },
-    description:
-      "Explore Renovix home services in Kuala Lumpur & Selangor: tiling, welding & metal works, electrical, painting, ceiling & partition, renovation, plumbing, waterproofing, flooring and handyman services.",
-    alternates: {
-      canonical: canonicalUrl,
-    },
-    openGraph: {
-      title: "Our Services in Kuala Lumpur & Selangor | Renovix Home Services",
-      description:
-        "Complete home renovation and improvement services across Kuala Lumpur, Selangor and the Klang Valley.",
-      url: canonicalUrl,
-      type: "website",
-    },
-    twitter: {
-      card: "summary_large_image",
-    },
-  };
+  return buildPageMetadata({
+    lang: language.code,
+    path: "/services/",
+    title: t.servicesIndex.metaTitle,
+    description: t.servicesIndex.metaDescription,
+    ogDescription: t.servicesIndex.ogDescription,
+    availableLanguages: languages.map((item) => item.code),
+  });
 }
 
 export default async function ServicesPage({ params }: ServicesPageProps) {
@@ -56,6 +49,10 @@ export default async function ServicesPage({ params }: ServicesPageProps) {
   if (!language) {
     notFound();
   }
+
+  const code = language.code;
+  const t = getDictionary(code);
+  const highlightSlugs = getServiceCategories(code).slice(0, 4);
 
   return (
     <>
@@ -68,28 +65,30 @@ export default async function ServicesPage({ params }: ServicesPageProps) {
           <Breadcrumbs
             inverse
             items={[
-              { label: "Home", href: "/" },
-              { label: "Services" },
+              { label: t.common.home, href: "/" },
+              { label: t.servicesIndex.breadcrumb },
             ]}
-            lang={lang}
+            lang={code}
           />
           <h1 className="max-w-3xl text-4xl font-extrabold leading-[1.08] tracking-tight sm:text-5xl">
-            Our Home Services in Kuala Lumpur &amp; Selangor
+            {t.servicesIndex.title}
           </h1>
           <p className="mt-6 max-w-2xl text-base leading-7 text-white/80">
-            Ten practical service categories covering renovation, repairs, maintenance and
-            home improvement across the Klang Valley. Each service page explains what we
-            do, the problems we solve and how the work is carried out.
+            {t.servicesIndex.lead}
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Button
-              href={localizeHref("/quote", lang)}
+              href={localizedHref("/quote", code)}
               variant="primary"
               icon={<IconArrowRight className="h-4 w-4" />}
             >
-              Get a Free Quote
+              {t.cta.getFreeQuote}
             </Button>
-            <WhatsAppButton href={getWhatsAppHref(lang)} variant="secondary" />
+            <WhatsAppButton
+              href={getWhatsAppHref(code)}
+              variant="secondary"
+              label={t.cta.whatsappUs}
+            />
           </div>
         </div>
       </section>
@@ -97,12 +96,12 @@ export default async function ServicesPage({ params }: ServicesPageProps) {
       <section className="section section-surface">
         <div className="container-app">
           <SectionHeading
-            eyebrow="Explore Services"
-            title="Choose a service to learn more"
-            description="Every service page covers the full scope of work, sub-services, common problems, property types we serve, our process, service areas and FAQs."
+            eyebrow={t.servicesIndex.gridEyebrow}
+            title={t.servicesIndex.gridTitle}
+            description={t.servicesIndex.gridDescription}
           />
           <div className="mt-10">
-            <ServiceGrid lang={lang} />
+            <ServiceGrid lang={code} />
           </div>
         </div>
       </section>
@@ -110,24 +109,34 @@ export default async function ServicesPage({ params }: ServicesPageProps) {
       <section className="section bg-white">
         <div className="container-app">
           <SectionHeading
-            eyebrow="One-Stop Home Services"
-            title="Multiple services, one point of contact"
-            description="Most renovation and repair projects combine several services. Renovix coordinates tiling, electrical, plumbing, painting and the rest through a single team — so the work is sequenced properly and you deal with one point of contact."
+            eyebrow={t.servicesIndex.oneStopEyebrow}
+            title={t.servicesIndex.oneStopTitle}
+            description={t.servicesIndex.oneStopDescription}
           />
           <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {serviceDetails.slice(0, 4).map((detail) => (
-              <article key={detail.slug} className="card h-full p-6">
-                <h3 className="h3-card">{detail.name}</h3>
-                <p className="mt-3 text-sm leading-6 text-secondary">
-                  {detail.highlights[0]?.description}
-                </p>
-              </article>
-            ))}
+            {highlightSlugs.map((service) => {
+              const href = contentHref("service", service.slug, code);
+
+              return (
+                <article key={service.slug} className="card h-full p-6">
+                  <h3 className="h3-card">{service.name}</h3>
+                  <p className="mt-3 text-sm leading-6 text-secondary">
+                    {service.shortDescription}
+                  </p>
+                  {href ? (
+                    <a
+                      href={href}
+                      className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-brand hover:text-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                    >
+                      {t.cta.viewService}
+                      <IconArrowRight className="h-4 w-4" />
+                    </a>
+                  ) : null}
+                </article>
+              );
+            })}
           </div>
-          <p className="mt-8 text-sm text-secondary">
-            Not sure which service you need? Describe the job to us and we will point you
-            to the right one.
-          </p>
+          <p className="mt-8 text-sm text-secondary">{t.servicesIndex.oneStopNote}</p>
         </div>
       </section>
     </>

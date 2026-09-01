@@ -1,24 +1,45 @@
+"use client";
+
 import Link from "next/link";
-import { languages } from "@/data/languages";
+import { usePathname } from "next/navigation";
+import { languages, type LanguageCode } from "@/data/languages";
+import { switchLanguagePath } from "@/i18n/hrefs";
 
 type LanguageSwitcherProps = {
-  lang: string;
+  lang: LanguageCode;
   className?: string;
   compact?: boolean;
   inverse?: boolean;
+  /** Accessible name for the switcher, localized by the caller. */
+  label: string;
 };
 
+/**
+ * EN | BM | 中文
+ *
+ * Switching keeps the visitor on the equivalent page in the new language. When
+ * that page has no complete translation yet, the link falls back to the nearest
+ * translated section (and finally to that language's homepage) instead of
+ * sending the visitor back to the start or to a 404.
+ */
 export function LanguageSwitcher({
   lang,
   className = "",
   compact = false,
   inverse = false,
+  label,
 }: LanguageSwitcherProps) {
+  const pathname = usePathname() ?? `/${lang}`;
+
   return (
-    <nav aria-label="Language" className={className}>
+    <nav aria-label={label} className={className}>
       <ul className={`flex items-center ${compact ? "gap-1.5" : "gap-0"}`}>
         {languages.map((language, index) => {
           const isCurrent = language.code === lang;
+          const href = isCurrent
+            ? pathname
+            : switchLanguagePath(pathname, language.code);
+
           return (
             <li key={language.code}>
               {index > 0 ? (
@@ -27,9 +48,10 @@ export function LanguageSwitcher({
                 </span>
               ) : null}
               <Link
-                href={`/${language.code}`}
+                href={href}
                 lang={language.htmlLang}
-                aria-current={isCurrent ? "page" : undefined}
+                hrefLang={language.hreflang}
+                aria-current={isCurrent ? "true" : undefined}
                 className={`rounded-md px-2 py-1 text-xs font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent ${
                   isCurrent
                     ? inverse
@@ -40,7 +62,7 @@ export function LanguageSwitcher({
                       : "text-secondary hover:text-navy"
                 }`}
               >
-                {compact ? language.nativeLabel : language.label}
+                {compact ? language.nativeLabel : language.nativeLabel}
               </Link>
             </li>
           );

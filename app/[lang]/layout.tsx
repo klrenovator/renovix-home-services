@@ -1,41 +1,75 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
+import localFont from "next/font/local";
+import "../globals.css";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
-import { getLanguage } from "@/data/languages";
+import { getLanguage, languages } from "@/data/languages";
 import { siteConfig } from "@/data/site";
+import { getDictionary } from "@/i18n";
+
+const plusJakartaSans = localFont({
+  src: [
+    {
+      path: "../fonts/plus-jakarta-sans-latin-400-normal.woff2",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../fonts/plus-jakarta-sans-latin-500-normal.woff2",
+      weight: "500",
+      style: "normal",
+    },
+    {
+      path: "../fonts/plus-jakarta-sans-latin-600-normal.woff2",
+      weight: "600",
+      style: "normal",
+    },
+    {
+      path: "../fonts/plus-jakarta-sans-latin-700-normal.woff2",
+      weight: "700",
+      style: "normal",
+    },
+    {
+      path: "../fonts/plus-jakarta-sans-latin-800-normal.woff2",
+      weight: "800",
+      style: "normal",
+    },
+  ],
+  display: "swap",
+  variable: "--font-plus-jakarta",
+});
+
+/** Every route lives under `/[lang]`, so this is the app's root layout. */
+export function generateStaticParams() {
+  return languages.map((language) => ({ lang: language.code }));
+}
+
+export const metadata: Metadata = {
+  metadataBase: new URL(siteConfig.url),
+  title: {
+    default: siteConfig.tagline,
+    template: `%s | ${siteConfig.name}`,
+  },
+  description: siteConfig.description,
+  openGraph: {
+    type: "website",
+    siteName: siteConfig.name,
+  },
+  twitter: {
+    card: "summary_large_image",
+  },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: "#0B1F33",
+};
 
 type LocaleLayoutProps = {
   children: React.ReactNode;
   params: Promise<{ lang: string }>;
 };
-
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ lang: string }>;
-}): Promise<Metadata> {
-  const { lang } = await params;
-  const language = getLanguage(lang);
-  const canonicalUrl = `${siteConfig.url}/${language?.code ?? "en"}/`;
-  const locale = lang === "ms" ? "ms_MY" : lang === "zh" ? "zh_CN" : "en_MY";
-
-  return {
-    alternates: {
-      canonical: canonicalUrl,
-    },
-    robots: {
-      index: lang === "en",
-      follow: true,
-    },
-    openGraph: {
-      locale,
-      url: canonicalUrl,
-    },
-    twitter: {
-      card: "summary_large_image",
-    },
-  };
-}
 
 export default async function LocaleLayout({
   children,
@@ -43,12 +77,19 @@ export default async function LocaleLayout({
 }: LocaleLayoutProps) {
   const { lang } = await params;
   const language = getLanguage(lang);
+  const code = language?.code ?? "en";
+  const t = getDictionary(code);
 
   return (
-    <>
-      <Header lang={language?.code ?? "en"} />
-      <main id="main">{children}</main>
-      <Footer lang={language?.code ?? "en"} />
-    </>
+    <html lang={language?.htmlLang ?? "en-MY"} className={plusJakartaSans.variable}>
+      <body className="bg-white font-sans text-ink">
+        <a href="#main" className="skip-link">
+          {t.a11y.skipToContent}
+        </a>
+        <Header lang={code} />
+        <main id="main">{children}</main>
+        <Footer lang={code} />
+      </body>
+    </html>
   );
 }

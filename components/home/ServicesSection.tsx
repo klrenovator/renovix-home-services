@@ -1,18 +1,22 @@
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { ServiceGrid } from "@/components/home/ServiceGrid";
+import { getLanguageCode } from "@/data/languages";
+import { getDictionary } from "@/i18n";
 
 type ServicesSectionProps = {
   lang: string;
 };
 
 export function ServicesSection({ lang }: ServicesSectionProps) {
+  const t = getDictionary(getLanguageCode(lang));
+
   return (
     <section id="services" className="section section-surface scroll-mt-24">
       <div className="container-app">
         <SectionHeading
-          eyebrow="Our Home Services"
-          title="Complete home improvement under one roof"
-          description="From small repairs to larger renovation jobs, Renovix provides a practical range of home services across Kuala Lumpur and Selangor."
+          eyebrow={t.home.services.eyebrow}
+          title={t.home.services.title}
+          description={t.home.services.description}
         />
         <div className="mt-10 sm:mt-12">
           <ServiceGrid lang={lang} />

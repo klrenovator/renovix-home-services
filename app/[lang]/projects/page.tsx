@@ -7,9 +7,11 @@ import { PageBreadcrumbJsonLd } from "@/components/support/PageBreadcrumbJsonLd"
 import { PageHero } from "@/components/support/PageHero";
 import { Button } from "@/components/ui/Button";
 import { getLanguage, languages } from "@/data/languages";
-import { localizeHref } from "@/data/navigation";
-import { projectCategories, projectPlaceholders } from "@/data/projects";
-import { getQuoteHref, siteConfig } from "@/data/site";
+import { getProjectCategories } from "@/data/i18n";
+import { projectCategories } from "@/data/projects";
+import { getDictionary } from "@/i18n";
+import { contentHref, localizedHref } from "@/i18n/hrefs";
+import { buildPageMetadata } from "@/i18n/seo";
 
 type ProjectsPageProps = {
   params: Promise<{ lang: string }>;
@@ -29,41 +31,38 @@ export async function generateMetadata({
     return {};
   }
 
-  const canonicalUrl = `${siteConfig.url}/${lang}/projects/`;
-  const title = "Projects Portfolio Structure | Renovix Home Services";
-  const description =
-    "Explore Renovix Home Services’ portfolio structure for tiling, welding, electrical, painting, ceiling, partition, renovation, plumbing, waterproofing, flooring and handyman work in KL and Selangor.";
+  const t = getDictionary(language.code);
 
-  return {
-    title: { absolute: title },
-    description,
-    alternates: { canonical: canonicalUrl },
-    openGraph: {
-      title,
-      description,
-      url: canonicalUrl,
-      type: "website",
-    },
-    twitter: { card: "summary_large_image" },
-  };
+  return buildPageMetadata({
+    lang: language.code,
+    path: "/projects/",
+    title: t.projects.metaTitle,
+    description: t.projects.metaDescription,
+    availableLanguages: languages.map((item) => item.code),
+  });
 }
 
 export default async function ProjectsPage({ params }: ProjectsPageProps) {
   const { lang } = await params;
+  const language = getLanguage(lang);
 
-  if (!getLanguage(lang)) {
+  if (!language) {
     notFound();
   }
 
+  const code = language.code;
+  const t = getDictionary(code);
+  const categories = getProjectCategories(code);
+
   return (
     <>
-      <PageBreadcrumbJsonLd lang={lang} label="Projects" path="/projects/" />
+      <PageBreadcrumbJsonLd lang={code} label={t.projects.breadcrumb} path="/projects/" />
       <PageHero
-        eyebrow="Projects"
-        title="A portfolio framework ready for verified project details"
-        description="Browse the service categories planned for the Renovix portfolio. Actual project photographs, scope and location information will only be published when they are supplied and verified."
-        currentLabel="Projects"
-        lang={lang}
+        eyebrow={t.projects.eyebrow}
+        title={t.projects.title}
+        description={t.projects.description}
+        currentLabel={t.projects.breadcrumb}
+        lang={code}
       />
 
       <section className="section section-surface">
@@ -73,36 +72,53 @@ export default async function ProjectsPage({ params }: ProjectsPageProps) {
               <IconCamera className="h-6 w-6" />
             </span>
             <div>
-              <p className="eyebrow">Portfolio status</p>
+              <p className="eyebrow">{t.projects.statusEyebrow}</p>
               <h2 className="mt-3 text-2xl font-bold tracking-tight text-navy">
-                Project placeholders are intentional
+                {t.projects.statusTitle}
               </h2>
               <p className="mt-3 max-w-3xl text-sm leading-6 text-secondary">
-                No completed Renovix projects, before-and-after images, locations,
-                dates or results have been fabricated for this page. Each card below
-                is explicitly marked as a placeholder and reserves a structured place
-                for genuine portfolio material when it becomes available.
+                {t.projects.statusBody}
               </p>
             </div>
           </div>
 
           <div className="mt-12">
             <div className="max-w-2xl">
-              <p className="eyebrow">Browse by service category</p>
-              <h2 className="h2-section mt-3 text-navy">
-                Portfolio categories for home improvement work
-              </h2>
-              <p className="lead mt-4">
-                Filter the framework by the kind of work you are interested in. The
-                category links lead to the relevant service information while the
-                portfolio awaits real project content.
-              </p>
+              <p className="eyebrow">{t.projects.browseEyebrow}</p>
+              <h2 className="h2-section mt-3 text-navy">{t.projects.browseTitle}</h2>
+              <p className="lead mt-4">{t.projects.browseLead}</p>
             </div>
             <div className="mt-8">
               <ProjectsPortfolio
-                categories={projectCategories}
-                placeholders={projectPlaceholders}
-                lang={lang}
+                categories={categories.map((category) => ({
+                  id: category.id,
+                  label: category.label,
+                  icon: category.icon,
+                  href: contentHref(
+                    "service",
+                    projectCategories.find((item) => item.id === category.id)
+                      ?.servicePath.replace("/services/", "") ?? "",
+                    code,
+                  ),
+                }))}
+                items={categories.map((category) => ({
+                  id: `placeholder-${category.id}`,
+                  category: category.id,
+                }))}
+                labels={{
+                  allCategories: t.projects.allCategories,
+                  filterAria: t.a11y.filterProjects,
+                  showingPrefix: t.projects.showingPrefix,
+                  showingSuffixOne: t.projects.showingSuffixOne,
+                  showingSuffixMany: t.projects.showingSuffixMany,
+                  showingNote: t.projects.showingNote,
+                  imagePlaceholder: t.projects.imagePlaceholder,
+                  statusLabel: t.projects.statusLabel,
+                  fallbackCategory: t.projects.fallbackCategory,
+                  exploreServicePrefix: t.projects.exploreServicePrefix,
+                  titleSuffix: t.projects.placeholderTitleSuffix,
+                  description: t.projects.placeholderDescription,
+                }}
               />
             </div>
           </div>
@@ -112,38 +128,24 @@ export default async function ProjectsPage({ params }: ProjectsPageProps) {
       <section className="section bg-white">
         <div className="container-app grid gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:items-center lg:gap-16">
           <div>
-            <p className="eyebrow">Future project entries</p>
-            <h2 className="h2-section mt-3 text-navy">
-              What verified portfolio information should include
-            </h2>
-            <p className="lead mt-4">
-              When real materials are supplied, each entry can be made useful without
-              over-claiming: genuine images, the service scope, property type and
-              general area can be added only where they are confirmed.
-            </p>
+            <p className="eyebrow">{t.projects.futureEyebrow}</p>
+            <h2 className="h2-section mt-3 text-navy">{t.projects.futureTitle}</h2>
+            <p className="lead mt-4">{t.projects.futureLead}</p>
           </div>
           <ul className="grid gap-4 sm:grid-cols-3">
-            <li className="card p-5">
-              <IconCamera className="h-5 w-5 text-brand" />
-              <h3 className="mt-4 text-sm font-semibold text-navy">Verified photos</h3>
-              <p className="mt-2 text-sm leading-6 text-secondary">
-                Images supplied for publication, with accurate context.
-              </p>
-            </li>
-            <li className="card p-5">
-              <IconLayers className="h-5 w-5 text-brand" />
-              <h3 className="mt-4 text-sm font-semibold text-navy">Clear scope</h3>
-              <p className="mt-2 text-sm leading-6 text-secondary">
-                A factual description of the work rather than invented outcomes.
-              </p>
-            </li>
-            <li className="card p-5">
-              <IconCheck className="h-5 w-5 text-brand" />
-              <h3 className="mt-4 text-sm font-semibold text-navy">Confirmed details</h3>
-              <p className="mt-2 text-sm leading-6 text-secondary">
-                Property and area information only when it can be shared accurately.
-              </p>
-            </li>
+            {t.projects.futureItems.map((item, index) => {
+              const Icon = [IconCamera, IconLayers, IconCheck][index % 3];
+
+              return (
+                <li key={item.title} className="card p-5">
+                  <Icon className="h-5 w-5 text-brand" />
+                  <h3 className="mt-4 text-sm font-semibold text-navy">{item.title}</h3>
+                  <p className="mt-2 text-sm leading-6 text-secondary">
+                    {item.description}
+                  </p>
+                </li>
+              );
+            })}
           </ul>
         </div>
       </section>
@@ -156,27 +158,26 @@ export default async function ProjectsPage({ params }: ProjectsPageProps) {
               className="absolute -right-14 -top-14 h-52 w-52 rounded-full bg-brand/25"
             />
             <div className="relative max-w-2xl">
-              <p className="eyebrow-light">Plan your own work</p>
+              <p className="eyebrow-light">{t.projects.ctaEyebrow}</p>
               <h2 className="mt-3 text-3xl font-bold tracking-tight text-white sm:text-4xl">
-                Looking for a service rather than a portfolio example?
+                {t.projects.ctaTitle}
               </h2>
               <p className="mt-4 text-base leading-7 text-white/75">
-                Explore the service categories or share your own repair, upgrade or
-                renovation details to begin a considered quote request.
+                {t.projects.ctaDescription}
               </p>
               <div className="mt-7 flex flex-col gap-3 sm:flex-row">
                 <Button
-                  href={getQuoteHref(lang)}
+                  href={localizedHref("/quote", code)}
                   variant="primary"
                   icon={<IconArrowRight className="h-4 w-4" />}
                 >
-                  Get a Quote
+                  {t.cta.getQuote}
                 </Button>
                 <Link
-                  href={localizeHref("/services", lang)}
+                  href={localizedHref("/services", code)}
                   className="btn btn-secondary"
                 >
-                  Explore Services
+                  {t.projects.ctaSecondary}
                 </Link>
               </div>
             </div>

@@ -17,8 +17,8 @@ export function HomePage({ lang }: HomePageProps) {
       <Hero lang={lang} />
       <ServicesSection lang={lang} />
       <ProblemSection lang={lang} />
-      <WhySection />
-      <ProcessSection />
+      <WhySection lang={lang} />
+      <ProcessSection lang={lang} />
       <AreasSection lang={lang} />
       <CTASection lang={lang} />
       <FAQPreview lang={lang} />

@@ -1,5 +1,7 @@
 import { JsonLd } from "@/components/service/JsonLd";
+import { getLanguageCode } from "@/data/languages";
 import { siteConfig } from "@/data/site";
+import { getDictionary } from "@/i18n";
 
 type PageBreadcrumbJsonLdProps = {
   lang: string;
@@ -12,7 +14,9 @@ export function PageBreadcrumbJsonLd({
   label,
   path,
 }: PageBreadcrumbJsonLdProps) {
-  const canonicalUrl = `${siteConfig.url}/${lang}${path}`;
+  const code = getLanguageCode(lang);
+  const t = getDictionary(code);
+  const canonicalUrl = `${siteConfig.url}/${code}${path}`;
 
   return (
     <JsonLd
@@ -23,8 +27,8 @@ export function PageBreadcrumbJsonLd({
           {
             "@type": "ListItem",
             position: 1,
-            name: "Home",
-            item: `${siteConfig.url}/${lang}/`,
+            name: t.common.home,
+            item: `${siteConfig.url}/${code}/`,
           },
           {
             "@type": "ListItem",

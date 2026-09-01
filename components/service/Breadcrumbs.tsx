@@ -1,5 +1,7 @@
 import Link from "next/link";
-import { localizeHref } from "@/data/navigation";
+import { getLanguageCode } from "@/data/languages";
+import { getDictionary } from "@/i18n";
+import { localizedHref } from "@/i18n/hrefs";
 
 type BreadcrumbItem = {
   label: string;
@@ -13,8 +15,11 @@ type BreadcrumbsProps = {
 };
 
 export function Breadcrumbs({ items, lang, inverse = false }: BreadcrumbsProps) {
+  const code = getLanguageCode(lang);
+  const t = getDictionary(code);
+
   return (
-    <nav aria-label="Breadcrumb" className="mb-6">
+    <nav aria-label={t.a11y.breadcrumb} className="mb-6">
       <ol className="flex flex-wrap items-center gap-2 text-xs font-medium">
         {items.map((item, index) => {
           const isLast = index === items.length - 1;
@@ -22,7 +27,7 @@ export function Breadcrumbs({ items, lang, inverse = false }: BreadcrumbsProps) 
           if (isLast || !item.href) {
             return (
               <li
-                key={item.label}
+                key={`${item.label}-${index}`}
                 aria-current={isLast ? "page" : undefined}
                 className={
                   isLast
@@ -40,9 +45,9 @@ export function Breadcrumbs({ items, lang, inverse = false }: BreadcrumbsProps) 
           }
 
           return (
-            <li key={item.label} className="flex items-center gap-2">
+            <li key={`${item.label}-${index}`} className="flex items-center gap-2">
               <Link
-                href={localizeHref(item.href, lang)}
+                href={localizedHref(item.href, code)}
                 className={
                   inverse
                     ? "text-white/70 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"

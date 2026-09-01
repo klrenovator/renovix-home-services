@@ -15,7 +15,6 @@ import { PageHero } from "@/components/support/PageHero";
 import { PageBreadcrumbJsonLd } from "@/components/support/PageBreadcrumbJsonLd";
 import { Button, WhatsAppButton } from "@/components/ui/Button";
 import { getLanguage, languages } from "@/data/languages";
-import { localizeHref } from "@/data/navigation";
 import {
   getEmailHref,
   getPhoneHref,
@@ -24,6 +23,9 @@ import {
   isPlaceholder,
   siteConfig,
 } from "@/data/site";
+import { getDictionary } from "@/i18n";
+import { contentHref, localizedHref } from "@/i18n/hrefs";
+import { buildPageMetadata } from "@/i18n/seo";
 
 type ContactPageProps = {
   params: Promise<{ lang: string }>;
@@ -51,90 +53,83 @@ export async function generateMetadata({
     return {};
   }
 
-  const canonicalUrl = `${siteConfig.url}/${lang}/contact/`;
-  const title = "Contact Renovix Home Services | KL & Selangor";
-  const description =
-    "Contact Renovix Home Services about renovation, repairs and home improvement work in Kuala Lumpur, Selangor and the Klang Valley, or start a quote request.";
+  const t = getDictionary(language.code);
 
-  return {
-    title: { absolute: title },
-    description,
-    alternates: { canonical: canonicalUrl },
-    openGraph: {
-      title,
-      description,
-      url: canonicalUrl,
-      type: "website",
-    },
-    twitter: { card: "summary_large_image" },
-  };
+  return buildPageMetadata({
+    lang: language.code,
+    path: "/contact/",
+    title: t.contact.metaTitle,
+    description: t.contact.metaDescription,
+    availableLanguages: languages.map((item) => item.code),
+  });
 }
 
 export default async function ContactPage({ params }: ContactPageProps) {
   const { lang } = await params;
+  const language = getLanguage(lang);
 
-  if (!getLanguage(lang)) {
+  if (!language) {
     notFound();
   }
 
+  const code = language.code;
+  const t = getDictionary(code);
+  const channels = t.contact.channels;
+
   const contactDetails: ContactDetail[] = [
     {
-      label: "Phone Number",
+      label: channels.phone,
       value: siteConfig.phone,
-      href: getPhoneHref(lang),
+      href: getPhoneHref(code),
       icon: <IconPhone className="h-5 w-5" />,
-      helper: "Call details will be added when the phone number is confirmed.",
+      helper: channels.phoneHelper,
     },
     {
-      label: "WhatsApp Number",
+      label: channels.whatsapp,
       value: siteConfig.whatsapp,
-      href: getWhatsAppHref(lang),
+      href: getWhatsAppHref(code),
       icon: <IconWhatsApp className="h-5 w-5" />,
-      helper: "WhatsApp details will be added when the number is confirmed.",
+      helper: channels.whatsappHelper,
     },
     {
-      label: "Email",
+      label: channels.email,
       value: siteConfig.email,
-      href: getEmailHref(lang),
+      href: getEmailHref(code),
       icon: <IconMail className="h-5 w-5" />,
-      helper: "Email details will be added when the address is confirmed.",
+      helper: channels.emailHelper,
     },
     {
-      label: "Address",
+      label: channels.address,
       value: siteConfig.address,
       icon: <IconMapPin className="h-5 w-5" />,
-      helper: "Service coverage is listed below; a physical address has not been supplied.",
+      helper: channels.addressHelper,
     },
     {
-      label: "Business Hours",
+      label: channels.hours,
       value: siteConfig.businessHours,
       icon: <IconCalendar className="h-5 w-5" />,
-      helper: "Business hours will be added when they are confirmed.",
+      helper: channels.hoursHelper,
     },
   ];
 
   return (
     <>
-      <PageBreadcrumbJsonLd lang={lang} label="Contact" path="/contact/" />
+      <PageBreadcrumbJsonLd lang={code} label={t.contact.breadcrumb} path="/contact/" />
       <PageHero
-        eyebrow="Contact Renovix"
-        title="Let’s start with your home service question"
-        description="Use the contact details below, send a WhatsApp once the number is available, or share the scope through a quote request for work in Kuala Lumpur, Selangor and the Klang Valley."
-        currentLabel="Contact"
-        lang={lang}
-        primaryLabel="Start a Quote Request"
+        eyebrow={t.contact.eyebrow}
+        title={t.contact.title}
+        description={t.contact.description}
+        currentLabel={t.contact.breadcrumb}
+        lang={code}
+        primaryLabel={t.contact.heroPrimary}
       />
 
       <section id="contact" className="section section-surface scroll-mt-24">
         <div className="container-app">
           <div className="max-w-2xl">
-            <p className="eyebrow">Contact details</p>
-            <h2 className="h2-section mt-3 text-navy">Ways to get in touch</h2>
-            <p className="lead mt-4">
-              Contact information has intentionally been left as placeholders until
-              the official details are supplied. No phone number, email, address or
-              operating hours have been assumed.
-            </p>
+            <p className="eyebrow">{t.contact.detailsEyebrow}</p>
+            <h2 className="h2-section mt-3 text-navy">{t.contact.detailsTitle}</h2>
+            <p className="lead mt-4">{t.contact.detailsLead}</p>
           </div>
 
           <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -151,21 +146,20 @@ export default async function ContactPage({ params }: ContactPageProps) {
             <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-brand/10 text-brand">
               <IconChat className="h-5 w-5" />
             </span>
-            <p className="eyebrow mt-6">Contact CTA</p>
+            <p className="eyebrow mt-6">{t.contact.ctaEyebrow}</p>
             <h2 className="mt-3 text-2xl font-bold tracking-tight text-navy">
-              Share the work you need
+              {t.contact.ctaTitle}
             </h2>
             <p className="mt-3 max-w-lg text-sm leading-6 text-secondary">
-              A quote request is the clearest place to share the service, property,
-              location and a short description. Photos can help with the assessment.
+              {t.contact.ctaBody}
             </p>
             <div className="mt-6">
               <Button
-                href={getQuoteHref(lang)}
+                href={getQuoteHref(code)}
                 variant="primary"
                 icon={<IconArrowRight className="h-4 w-4" />}
               >
-                Get a Quote
+                {t.cta.getQuote}
               </Button>
             </div>
           </div>
@@ -174,20 +168,22 @@ export default async function ContactPage({ params }: ContactPageProps) {
             <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-white/10 text-accent">
               <IconWhatsApp className="h-5 w-5" />
             </span>
-            <p className="eyebrow-light mt-6">WhatsApp CTA</p>
+            <p className="eyebrow-light mt-6">{t.contact.whatsappEyebrow}</p>
             <h2 className="mt-3 text-2xl font-bold tracking-tight text-white">
-              Prefer to use WhatsApp?
+              {t.contact.whatsappTitle}
             </h2>
             <p className="mt-3 max-w-lg text-sm leading-6 text-white/75">
-              The WhatsApp contact route will activate when an official number is
-              supplied. Until then, the button leads back to this contact page rather
-              than attempting to open an unverified number.
+              {t.contact.whatsappBody}
             </p>
             <div className="mt-6">
-              <WhatsAppButton href={getWhatsAppHref(lang)} variant="primary" />
+              <WhatsAppButton
+                href={getWhatsAppHref(code)}
+                variant="primary"
+                label={t.cta.whatsappUs}
+              />
             </div>
             <p className="mt-4 text-xs font-medium text-white/60">
-              WhatsApp placeholder: {siteConfig.whatsapp}
+              {t.contact.whatsappNote} {siteConfig.whatsapp}
             </p>
           </div>
         </div>
@@ -196,31 +192,28 @@ export default async function ContactPage({ params }: ContactPageProps) {
       <section className="section section-surface">
         <div className="container-app grid gap-10 lg:grid-cols-[0.82fr_1.18fr] lg:items-center lg:gap-16">
           <div>
-            <p className="eyebrow">Service area information</p>
-            <h2 className="h2-section mt-3 text-navy">
-              Kuala Lumpur, Selangor &amp; the Klang Valley
-            </h2>
-            <p className="lead mt-4">
-              Renovix&apos;s stated coverage includes Kuala Lumpur, Selangor and the wider
-              Klang Valley. Please include your area or neighbourhood in the enquiry
-              so the work can be considered in context.
-            </p>
+            <p className="eyebrow">{t.contact.areasEyebrow}</p>
+            <h2 className="h2-section mt-3 text-navy">{t.contact.areasTitle}</h2>
+            <p className="lead mt-4">{t.contact.areasLead}</p>
           </div>
           <div className="grid gap-3 sm:grid-cols-3">
             <AreaLink
-              href={localizeHref("/areas/kuala-lumpur", lang)}
-              label="Kuala Lumpur"
-              description="City and neighbourhood guidance"
+              href={contentHref("areaRegion", "kuala-lumpur", code)}
+              label={t.common.kualaLumpur}
+              description={t.contact.kualaLumpurDescription}
+              cta={t.cta.viewAreas}
             />
             <AreaLink
-              href={localizeHref("/areas/selangor", lang)}
-              label="Selangor"
-              description="State and town guidance"
+              href={contentHref("areaRegion", "selangor", code)}
+              label={t.common.selangor}
+              description={t.contact.selangorDescription}
+              cta={t.cta.viewAreas}
             />
             <AreaLink
-              href={localizeHref("/areas", lang)}
-              label="Klang Valley"
-              description="Explore all service areas"
+              href={localizedHref("/areas", code)}
+              label={t.common.klangValley}
+              description={t.contact.klangValleyDescription}
+              cta={t.cta.viewAreas}
             />
           </div>
         </div>
@@ -257,23 +250,35 @@ function AreaLink({
   href,
   label,
   description,
+  cta,
 }: {
-  href: string;
+  href: string | null;
   label: string;
   description: string;
+  cta: string;
 }) {
-  return (
-    <Link
-      href={href}
-      className="group rounded-xl border border-slate-200 bg-white p-5 transition-all hover:-translate-y-0.5 hover:border-brand/30 hover:shadow-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
-    >
+  const inner = (
+    <>
       <IconMapPin className="h-5 w-5 text-brand" />
       <h3 className="mt-4 text-base font-semibold text-navy">{label}</h3>
       <p className="mt-2 text-sm leading-6 text-secondary">{description}</p>
       <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-brand">
-        View areas
+        {cta}
         <IconArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
       </span>
+    </>
+  );
+
+  const classes =
+    "group rounded-xl border border-slate-200 bg-white p-5 transition-all hover:-translate-y-0.5 hover:border-brand/30 hover:shadow-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent";
+
+  if (!href) {
+    return <div className={classes}>{inner}</div>;
+  }
+
+  return (
+    <Link href={href} className={classes}>
+      {inner}
     </Link>
   );
 }
