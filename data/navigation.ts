@@ -9,7 +9,7 @@ export type NavigationItem = {
 
 export const primaryNavigation: NavigationItem[] = [
   { label: "Home", href: "/" },
-  { label: "Services", href: "/#services" },
+  { label: "Services", href: "/services" },
   { label: "Problems", href: "/#problems" },
   { label: "Areas We Serve", href: "/#areas" },
   { label: "Projects", href: "/projects" },
@@ -19,7 +19,7 @@ export const primaryNavigation: NavigationItem[] = [
 
 export const footerNavigation: NavigationItem[] = [
   { label: "Home", href: "/" },
-  { label: "Services", href: "/#services" },
+  { label: "Services", href: "/services" },
   { label: "Problems", href: "/#problems" },
   { label: "Areas We Serve", href: "/#areas" },
   { label: "Projects", href: "/projects" },

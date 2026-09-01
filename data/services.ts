@@ -20,11 +20,11 @@ export type ServiceCategory = {
 
 export const services: ServiceCategory[] = [
   {
-    slug: "tile-and-tiling",
+    slug: "tiling",
     name: "Tile & Tiling",
     shortDescription: "Tile installation, replacement and repair for floors, walls and bathrooms.",
     icon: "tile",
-    path: "/services/tile-and-tiling",
+    path: "/services/tiling",
   },
   {
     slug: "welding-metal-works",
