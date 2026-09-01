@@ -8,7 +8,7 @@ import {
   localizeNavigation,
 } from "@/data/navigation";
 import { services } from "@/data/services";
-import { areas } from "@/data/areas";
+import { areas, areasIndexHref } from "@/data/areas";
 import {
   siteConfig,
   getPhoneHref,
@@ -84,13 +84,21 @@ export function Footer({ lang }: FooterProps) {
               {areas.map((area) => (
                 <li key={area.id}>
                   <Link
-                    href={`/${lang}/#areas`}
+                    href={localizeHref(area.href, lang)}
                     className="text-sm transition-colors hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
                   >
                     {area.label}
                   </Link>
                 </li>
               ))}
+              <li>
+                <Link
+                  href={localizeHref(areasIndexHref, lang)}
+                  className="text-sm transition-colors hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                >
+                  All Service Areas
+                </Link>
+              </li>
             </ul>
           </div>
 

@@ -53,7 +53,7 @@ export function ProblemPage({ problem, lang }: ProblemPageProps) {
       <RelatedServiceSection problem={problem} lang={lang} />
       <ProblemProcessSection problem={problem} />
       <PropertyTypesSection problem={problem} />
-      <AreasSection areasNote={problem.areasNote} />
+      <AreasSection areasNote={problem.areasNote} lang={lang} />
       <FaqSection problem={problem} />
       {related.length > 0 ? (
         <RelatedProblemsSection problems={related} current={problem} lang={lang} />

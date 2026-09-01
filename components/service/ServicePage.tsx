@@ -29,7 +29,7 @@ export function ServicePage({ detail, related, relatedProblems, lang }: ServiceP
       <PropertyTypesSection detail={detail} />
       <ProcessSection detail={detail} />
       <WhySection detail={detail} />
-      <AreasSection areasNote={detail.areasNote} />
+      <AreasSection areasNote={detail.areasNote} lang={lang} />
       <FaqSection detail={detail} />
       <RelatedServicesSection related={related} current={detail} lang={lang} />
       <CtaSection detail={detail} lang={lang} />

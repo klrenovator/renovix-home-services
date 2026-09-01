@@ -1,55 +1,31 @@
+import { areaRegions, getAreaHref } from "./area-content";
+
+export type AreaPlace = {
+  name: string;
+  href: string;
+};
+
 export type AreaGroup = {
   id: string;
   label: string;
   description: string;
-  places: string[];
+  href: string;
+  places: AreaPlace[];
 };
 
-export const areas: AreaGroup[] = [
-  {
-    id: "kuala-lumpur",
-    label: "Kuala Lumpur",
-    description: "Home services across the city and surrounding neighbourhoods.",
-    places: [
-      "Kuala Lumpur City",
-      "Cheras",
-      "Setapak",
-      "Bangsar",
-      "Ampang",
-      "Mont Kiara",
-      "Brickfields",
-    ],
-  },
-  {
-    id: "selangor",
-    label: "Selangor",
-    description: "Reliable home improvement support across key Selangor areas.",
-    places: [
-      "Petaling Jaya",
-      "Subang Jaya",
-      "Shah Alam",
-      "Klang",
-      "Puchong",
-      "Seri Kembangan",
-      "Damansara",
-    ],
-  },
-  {
-    id: "klang-valley",
-    label: "Klang Valley",
-    description: "Convenient service coverage for most Klang Valley locations.",
-    places: [
-      "Gombak",
-      "Kajang",
-      "Balakong",
-      "Sungai Buloh",
-      "Rawang",
-      "Sepang",
-      "Other Klang Valley areas",
-    ],
-  },
-];
+/**
+ * Derived from the area-content registry so the homepage, service pages,
+ * problem pages and footer always link to the live location pages.
+ */
+export const areas: AreaGroup[] = areaRegions.map((region) => ({
+  id: region.id,
+  label: region.name,
+  description: region.summary,
+  href: `/areas/${region.id}`,
+  places: region.areas.map((area) => ({
+    name: area.name,
+    href: getAreaHref(area),
+  })),
+}));
 
-export function getAllPlaces(): string[] {
-  return areas.flatMap((group) => group.places);
-}
+export const areasIndexHref = "/areas";
