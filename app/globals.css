@@ -1,5 +1,178 @@
 @import "tailwindcss";
 
-body {
-  font-family: Arial, Helvetica, sans-serif;
+@theme {
+  --font-sans: var(--font-plus-jakarta), ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+  --color-navy: #0b1f33;
+  --color-navy-deep: #071523;
+  --color-navy-soft: #102a42;
+  --color-brand: #1769aa;
+  --color-brand-dark: #0f4f82;
+  --color-accent: #f4b942;
+  --color-accent-dark: #d99a22;
+  --color-surface: #f7f9fc;
+  --color-ink: #17212b;
+  --color-secondary: #5b6573;
+  --color-line: #e8edf4;
+
+  --shadow-soft: 0 2px 10px rgba(11, 31, 51, 0.06);
+  --shadow-card: 0 14px 40px rgba(11, 31, 51, 0.12);
+  --shadow-lift: 0 20px 50px rgba(11, 31, 51, 0.16);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-line);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-surface);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    color: var(--color-ink);
+    text-wrap: balance;
+  }
+
+  h1 {
+    font-weight: 800;
+    letter-spacing: -0.03em;
+  }
+
+  h2 {
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  h3 {
+    font-weight: 600;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background-color: color-mix(in oklab, var(--color-accent) 72%, white);
+    color: var(--color-navy);
+  }
+
+  :focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px color-mix(in oklab, var(--color-accent) 55%, transparent);
+  }
+}
+
+@layer components {
+  .container-app {
+    @apply mx-auto w-full max-w-[1200px] px-4 sm:px-6 lg:px-8;
+  }
+
+  .section {
+    @apply py-16 sm:py-20 lg:py-24;
+  }
+
+  .section-surface {
+    @apply bg-surface;
+  }
+
+  .section-navy {
+    @apply bg-navy text-white;
+  }
+
+  .eyebrow {
+    @apply text-xs font-bold uppercase tracking-[0.18em] text-brand;
+  }
+
+  .eyebrow-light {
+    @apply text-xs font-bold uppercase tracking-[0.18em] text-accent;
+  }
+
+  .h1-page {
+    @apply text-4xl font-extrabold leading-[1.08] tracking-tight sm:text-5xl;
+  }
+
+  .h2-section {
+    @apply text-3xl font-bold leading-tight tracking-tight sm:text-4xl;
+  }
+
+  .h3-card {
+    @apply text-lg font-semibold tracking-tight;
+  }
+
+  .lead {
+    @apply text-base leading-7 text-secondary sm:text-lg sm:leading-8;
+  }
+
+  .card {
+    @apply rounded-2xl border border-slate-200/80 bg-white shadow-soft;
+  }
+
+  .card-hover {
+    @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-card;
+  }
+
+  .btn {
+    @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-lg px-4 py-3 text-sm font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2;
+  }
+
+  .btn-primary {
+    @apply bg-accent text-navy hover:bg-accent-dark focus-visible:ring-accent;
+  }
+
+  .btn-secondary {
+    @apply bg-navy text-white hover:bg-brand focus-visible:ring-brand;
+  }
+
+  .btn-outline {
+    @apply border border-navy/20 bg-white text-navy hover:border-brand hover:bg-surface focus-visible:ring-brand;
+  }
+
+  .btn-whatsapp {
+    @apply bg-navy text-white hover:bg-brand focus-visible:ring-brand;
+  }
+
+  .btn-ghost {
+    @apply bg-transparent text-navy hover:bg-surface focus-visible:ring-brand;
+  }
+
+  .chip {
+    @apply inline-flex items-center rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-secondary;
+  }
+
+  .skip-link {
+    @apply fixed left-4 top-4 z-50 -translate-y-20 rounded-md bg-navy px-4 py-2 text-sm font-semibold text-white transition-transform focus-visible:translate-y-0;
+  }
+}
+
+@keyframes menu-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-menu-in {
+  animation: menu-in 0.2s ease-out;
 }
