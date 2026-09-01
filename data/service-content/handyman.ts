@@ -262,4 +262,12 @@ export const handyman: ServiceDetail = {
     },
   ],
   relatedServices: ["plumbing", "electrical", "painting", "general-renovation"],
+  relatedProblems: [
+    "door-problems",
+    "lock-problems",
+    "curtain-installation",
+    "tv-mounting",
+    "shelf-installation",
+    "minor-home-repairs",
+  ],
 };

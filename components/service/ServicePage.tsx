@@ -10,20 +10,22 @@ import { FaqSection } from "@/components/service/FaqSection";
 import { RelatedServicesSection } from "@/components/service/RelatedServicesSection";
 import { CtaSection } from "@/components/service/CtaSection";
 import type { ServiceDetail } from "@/data/service-content/types";
+import type { ProblemDetail } from "@/data/problem-content/types";
 
 type ServicePageProps = {
   detail: ServiceDetail;
   related: ServiceDetail[];
+  relatedProblems: ProblemDetail[];
   lang: string;
 };
 
-export function ServicePage({ detail, related, lang }: ServicePageProps) {
+export function ServicePage({ detail, related, relatedProblems, lang }: ServicePageProps) {
   return (
     <>
       <ServiceHero detail={detail} lang={lang} />
       <OverviewSection detail={detail} lang={lang} />
       <SubServicesSection detail={detail} />
-      <ProblemsSection detail={detail} />
+      <ProblemsSection detail={detail} relatedProblemPages={relatedProblems} lang={lang} />
       <PropertyTypesSection detail={detail} />
       <ProcessSection detail={detail} />
       <WhySection detail={detail} />

@@ -59,4 +59,5 @@ export type ServiceDetail = {
   areasNote: string;
   faqs: ServiceFaq[];
   relatedServices: string[];
+  relatedProblems?: string[];
 };

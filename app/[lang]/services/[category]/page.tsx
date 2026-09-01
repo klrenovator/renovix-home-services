@@ -5,6 +5,7 @@ import { ServiceJsonLd } from "@/components/service/ServiceJsonLd";
 import { getLanguage, languages } from "@/data/languages";
 import { services } from "@/data/services";
 import { getServiceDetail, getRelatedServiceDetails } from "@/data/service-content";
+import { getProblemsBySlugs } from "@/data/problem-content";
 import { siteConfig } from "@/data/site";
 
 type ServicePageProps = {
@@ -63,11 +64,17 @@ export default async function ServiceDetailPage({ params }: ServicePageProps) {
   }
 
   const related = getRelatedServiceDetails(detail);
+  const relatedProblems = getProblemsBySlugs(detail.relatedProblems);
 
   return (
     <>
       <ServiceJsonLd detail={detail} lang={lang} />
-      <ServicePage detail={detail} related={related} lang={lang} />
+      <ServicePage
+        detail={detail}
+        related={related}
+        relatedProblems={relatedProblems}
+        lang={lang}
+      />
     </>
   );
 }

@@ -322,4 +322,15 @@ export const tiling: ServiceDetail = {
     },
   ],
   relatedServices: ["waterproofing", "general-renovation", "flooring", "plumbing"],
+  relatedProblems: [
+    "broken-tile-repair",
+    "cracked-tile-repair",
+    "loose-tile-repair",
+    "hollow-tile-problems",
+    "uneven-tiles",
+    "tile-grout-problems",
+    "bathroom-tile-problems",
+    "kitchen-tile-problems",
+    "water-seepage-through-tiles",
+  ],
 };

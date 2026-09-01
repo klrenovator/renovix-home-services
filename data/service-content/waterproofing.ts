@@ -257,4 +257,12 @@ export const waterproofing: ServiceDetail = {
     },
   ],
   relatedServices: ["tiling", "plumbing", "general-renovation", "painting"],
+  relatedProblems: [
+    "roof-leakage",
+    "bathroom-leakage",
+    "balcony-leakage",
+    "wall-seepage",
+    "damp-walls",
+    "water-stains",
+  ],
 };

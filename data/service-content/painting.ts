@@ -362,4 +362,13 @@ export const painting: ServiceDetail = {
     },
   ],
   relatedServices: ["ceiling-partition", "waterproofing", "general-renovation", "handyman"],
+  relatedProblems: [
+    "peeling-paint",
+    "cracked-walls",
+    "mouldy-walls",
+    "faded-paint",
+    "uneven-paint",
+    "wall-surface-damage",
+    "water-stains",
+  ],
 };

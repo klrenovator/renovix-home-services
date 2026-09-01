@@ -307,4 +307,12 @@ export const generalRenovation: ServiceDetail = {
     },
   ],
   relatedServices: ["tiling", "electrical", "plumbing", "painting"],
+  relatedProblems: [
+    "cracked-walls",
+    "cracked-ceiling",
+    "uneven-tiles",
+    "water-damaged-ceiling",
+    "wall-surface-damage",
+    "minor-home-repairs",
+  ],
 };
