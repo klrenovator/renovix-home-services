@@ -1,4 +1,5 @@
 import { ImageResponse } from "next/og";
+import { languages } from "@/data/languages";
 
 export const alt = "Renovix Home Services";
 export const size = {
@@ -7,6 +8,15 @@ export const size = {
 };
 
 export const contentType = "image/png";
+
+/**
+ * Without this the route is the site's only on-demand render: every social
+ * crawler request would re-rasterize the card. Enumerating the languages
+ * prerenders the three PNGs at build time, so the whole site is static.
+ */
+export function generateStaticParams() {
+  return languages.map((language) => ({ lang: language.code }));
+}
 
 export default function Image() {
   return new ImageResponse(

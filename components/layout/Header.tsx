@@ -58,7 +58,7 @@ export function Header({ lang }: HeaderProps) {
           </Button>
         </div>
 
-        <div className="flex items-center gap-3 xl:hidden">
+        <div className="flex items-center gap-2 xl:hidden sm:gap-3">
           {/* Hidden below `sm`: at 320–380px the brand lockup, the compact
               switcher and the menu button together exceed the viewport and
               push the header into horizontal overflow. Language switching on
@@ -70,6 +70,20 @@ export function Header({ lang }: HeaderProps) {
               label={t.a11y.languageNavigation}
             />
           </div>
+          {/* The primary conversion action stays visible on phones instead of
+              hiding inside the menu. A short label plus tighter padding keeps
+              the header on one line; below 360px (where the brand lockup, the
+              button and the menu trigger no longer fit) it falls back to the
+              menu, which still carries the full-width quote and WhatsApp CTAs.
+              `aria-label` gives assistive tech the full wording and contains
+              the visible text (WCAG 2.5.3). */}
+          <Link
+            href={localizedHref("/quote", code)}
+            aria-label={t.cta.getFreeQuote}
+            className="btn btn-primary hidden whitespace-nowrap px-3 min-[360px]:inline-flex"
+          >
+            {t.cta.quoteShort}
+          </Link>
           <MobileMenu
             lang={code}
             navigation={navigation}

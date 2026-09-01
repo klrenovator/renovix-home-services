@@ -14,7 +14,7 @@ export const en: Dictionary = {
     homeTitle:
       "Home Renovation & Improvement in KL & Selangor | Renovix",
     homeDescription:
-      "Professional home renovation and improvement services in Kuala Lumpur, Selangor and the Klang Valley — tiling, welding, electrical, painting, ceiling, partition, plumbing, waterproofing, flooring and handyman work.",
+      "Home renovation and improvement services in Kuala Lumpur, Selangor and the Klang Valley — tiling, welding, electrical, painting, plumbing and more.",
   },
   a11y: {
     skipToContent: "Skip to main content",
@@ -43,6 +43,7 @@ export const en: Dictionary = {
   },
   cta: {
     getFreeQuote: "Get a Free Quote",
+    quoteShort: "Quote",
     requestQuote: "Request a Quote",
     getQuote: "Get a Quote",
     startQuoteRequest: "Start a Quote Request",
@@ -204,9 +205,9 @@ export const en: Dictionary = {
     },
   },
   servicesIndex: {
-    metaTitle: "Our Services in Kuala Lumpur & Selangor | Renovix Home Services",
+    metaTitle: "Our Services in Kuala Lumpur & Selangor | Renovix",
     metaDescription:
-      "Explore Renovix home services in Kuala Lumpur & Selangor: tiling, welding & metal works, electrical, painting, ceiling & partition, renovation, plumbing, waterproofing, flooring and handyman services.",
+      "Explore Renovix home services in KL & Selangor: tiling, welding, electrical, painting, ceiling & partition, renovation, plumbing and waterproofing.",
     ogDescription:
       "Complete home renovation and improvement services across Kuala Lumpur, Selangor and the Klang Valley.",
     breadcrumb: "Services",
@@ -250,7 +251,7 @@ export const en: Dictionary = {
   problemsIndex: {
     metaTitle: "Home Problems We Solve in Kuala Lumpur & Selangor | Renovix",
     metaDescription:
-      "Explore common home problems we help with across Kuala Lumpur & Selangor — tiling, electrical, painting, ceiling, plumbing, waterproofing and handyman issues explained with causes and solutions.",
+      "Common home problems we help with across KL & Selangor — tiling, electrical, painting, ceiling, plumbing and waterproofing issues, causes and fixes.",
     ogDescription:
       "Clear answers to common home problems across the Klang Valley, each linked to the right Renovix service.",
     breadcrumb: "Problems",
@@ -292,7 +293,7 @@ export const en: Dictionary = {
       "Describe what you are seeing and where the property is located, and we will advise on the next step.",
   },
   areasIndex: {
-    metaTitle: "Service Areas in Kuala Lumpur, Selangor & Klang Valley | Renovix",
+    metaTitle: "Service Areas in KL, Selangor & Klang Valley | Renovix",
     metaDescription:
       "Renovix serves Kuala Lumpur, Selangor and the Klang Valley. Browse local guides for KL neighbourhoods and Selangor towns, with services, property types and common problems per area.",
     ogDescription:
@@ -302,6 +303,7 @@ export const en: Dictionary = {
     lead: "Renovix provides home renovation, repair and improvement services across Kuala Lumpur and Selangor. Each area guide explains the local housing context, the services most relevant there and the problems we commonly see.",
     faqEyebrow: "Coverage Questions",
     faqTitle: "About our service areas",
+    faqDescription: "Practical answers for property owners in the areas we cover.",
     guidesEyebrow: "Where We Work",
     guidesTitle: "Choose a region to explore",
     guidesDescription:
@@ -567,7 +569,7 @@ export const en: Dictionary = {
   projects: {
     metaTitle: "Projects Portfolio Structure | Renovix Home Services",
     metaDescription:
-      "Explore Renovix Home Services' portfolio structure for tiling, welding, electrical, painting, ceiling, partition, renovation, plumbing, waterproofing, flooring and handyman work in KL and Selangor.",
+      "The Renovix Home Services portfolio structure for tiling, welding, electrical, painting, ceiling, renovation and plumbing work in KL and Selangor.",
     breadcrumb: "Projects",
     eyebrow: "Projects",
     title: "A portfolio framework ready for verified project details",
@@ -682,7 +684,7 @@ export const en: Dictionary = {
         answer:
           "Renovix covers Kuala Lumpur, Selangor and the wider Klang Valley. Visit the Service Areas page for region and local area guides, then share your location when requesting a quote so the job can be considered properly.",
       },
-      kualaLumpur: {
+      "kuala-lumpur": {
         question: "Do you work in Kuala Lumpur?",
         answer:
           "Yes. Kuala Lumpur is within Renovix's stated service coverage. The Service Areas section includes Kuala Lumpur guidance and neighbourhood pages; availability for a particular job is confirmed after the work and location are reviewed.",

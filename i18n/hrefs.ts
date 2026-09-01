@@ -18,7 +18,7 @@ export function localizedHref(href: string, lang: LanguageCode | string): string
   const query = rest ? href.slice(path.length) : "";
   const normalized = path === "/" ? "/" : `${path.replace(/\/+$/, "")}/`;
 
-  return `/${code}${normalized === "/" ? "" : normalized}${query}`;
+  return `/${code}${normalized}${query}`;
 }
 
 /** Strips the leading language segment, e.g. `/ms/quote` -> `/quote`. */

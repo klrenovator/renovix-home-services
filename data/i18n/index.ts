@@ -7,7 +7,10 @@ import { getDictionary } from "@/i18n";
 import { services, type ServiceCategory } from "@/data/services";
 import { problems as problemPreviews, type ProblemCategory } from "@/data/problems";
 import { problemCategories } from "@/data/problem-content";
-import type { ProblemCategory as ProblemContentCategory } from "@/data/problem-content/types";
+import type {
+  ProblemCategory as ProblemContentCategory,
+  ProblemDetail,
+} from "@/data/problem-content/types";
 import { projectCategories, type ProjectCategory } from "@/data/projects";
 import { areasIndexFaqs } from "@/data/area-content";
 import type { AreaDetail, AreaFaq } from "@/data/area-content/types";
@@ -15,6 +18,7 @@ import {
   areaNames,
   areasIndexFaqList,
   problemCategoryList,
+  problemList,
   problemPreviewLabels,
   projectCategoryLabels,
   regionList,
@@ -96,6 +100,28 @@ export function getProblemCategories(
       ? { ...category, label: entry.label, intro: entry.intro }
       : category;
   });
+}
+
+/**
+ * Problem names and one-line summaries for the problem index cards. The full
+ * problem guides are English-only, but the index lists all of them in every
+ * language, so the card labels are translated here — otherwise a `/ms/` or
+ * `/zh/` index page would render an English catalogue.
+ */
+export function getProblemCardLabels(
+  lang: LanguageCode | string,
+  problem: ProblemDetail,
+): { name: string; subtitle: string } {
+  const code = getLanguageCode(lang);
+
+  if (code === "en") {
+    return { name: problem.name, subtitle: problem.subtitle };
+  }
+
+  return problemList[code][problem.slug] ?? {
+    name: problem.name,
+    subtitle: problem.subtitle,
+  };
 }
 
 export function getProjectCategories(lang: LanguageCode | string): ProjectCategory[] {

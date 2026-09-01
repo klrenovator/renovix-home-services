@@ -45,7 +45,7 @@ export const waterproofingProblems: ProblemDetail[] = [
     name: "Roof Leakage",
     title: "Roof Leakage in Kuala Lumpur & Selangor | Roof Waterproofing",
     metaDescription:
-      "Roof leakage in Kuala Lumpur & Selangor — water coming through the ceiling, stains and damp patches. Learn the causes, warning signs, roof waterproofing solutions and when to call a professional.",
+      "Roof leakage in KL & Selangor — water through the ceiling, stains and damp patches. Learn the causes, warning signs and roof waterproofing solutions.",
     h1: "Roof Leakage",
     subtitle:
       "A roof leak spreads as fast as it rains. Renovix finds the entry point, waterproofs the roof and stops the leak at its source.",
@@ -164,7 +164,7 @@ export const waterproofingProblems: ProblemDetail[] = [
     name: "Bathroom Leakage",
     title: "Bathroom Leakage in Kuala Lumpur & Selangor | Renovix",
     metaDescription:
-      "Bathroom leakage in Kuala Lumpur & Selangor — water seeping through to the ceiling below, damp walls and failed membranes. Learn causes, warning signs, bathroom waterproofing solutions and when to call a professional.",
+      "Bathroom leakage in KL & Selangor — water seeping to the ceiling below, damp walls and failed membranes. Learn the causes, signs and waterproofing fixes.",
     h1: "Bathroom Leakage",
     subtitle:
       "A bathroom leak finds its way to the room below. Renovix finds the source, re-waterproofs the wet area and stops the damage.",
@@ -283,7 +283,7 @@ export const waterproofingProblems: ProblemDetail[] = [
     name: "Balcony Leakage",
     title: "Balcony Leakage in Kuala Lumpur & Selangor | Renovix",
     metaDescription:
-      "Balcony leakage in Kuala Lumpur & Selangor — water seeping through balcony floor to a room below, stained ceilings and failed membranes. Learn causes, warning signs, solutions and when to call a professional.",
+      "Balcony leakage in KL & Selangor — water seeping to the room below, stained ceilings and failed membranes. Learn the causes, warning signs and solutions.",
     h1: "Balcony Leakage",
     subtitle:
       "A wet balcony that leaks through to the floor below is a waterproofing problem. Renovix seals it properly and protects the rooms beneath.",
@@ -402,7 +402,7 @@ export const waterproofingProblems: ProblemDetail[] = [
     name: "Wall Seepage",
     title: "Wall Seepage in Kuala Lumpur & Selangor | Wall Waterproofing",
     metaDescription:
-      "Wall seepage in Kuala Lumpur & Selangor — water soaking through walls, damp patches and mould. Learn the causes, warning signs, wall waterproofing and sealing solutions, and when to call a professional.",
+      "Wall seepage in KL & Selangor — water soaking through walls, damp patches and mould. Learn the causes, warning signs and wall waterproofing solutions.",
     h1: "Wall Seepage",
     subtitle:
       "Water migrating through a wall is what causes damp and mould. Renovix finds the side the water is coming from and seals it properly.",
@@ -521,7 +521,7 @@ export const waterproofingProblems: ProblemDetail[] = [
     name: "Damp Walls",
     title: "Damp Wall Treatment in Kuala Lumpur & Selangor | Renovix",
     metaDescription:
-      "Damp walls in Kuala Lumpur & Selangor — moisture, condensation and rising damp causing mould, peeling paint and stains. Learn the causes, warning signs, treatment solutions and when to call a professional.",
+      "Damp walls in KL & Selangor — condensation and rising damp causing mould, peeling paint and stains. Learn the causes, warning signs and treatments.",
     h1: "Damp Walls",
     subtitle:
       "A damp wall is a persistent moisture problem. Renovix finds the reason it stays wet and treats the wall so it dries out for good.",
@@ -640,7 +640,7 @@ export const waterproofingProblems: ProblemDetail[] = [
     name: "Water Stains",
     title: "Water Stain Removal in Kuala Lumpur & Selangor | Renovix",
     metaDescription:
-      "Water stains on walls or ceilings in Kuala Lumpur & Selangor — yellow-brown marks and recurring discolouration. Learn the causes, warning signs, the right treatment and when to call a waterproofing professional.",
+      "Water stains on walls or ceilings in KL & Selangor — yellow-brown marks and recurring discolouration. Learn the causes, warning signs and treatments.",
     h1: "Water Stains",
     subtitle:
       "A water stain is a moisture mark that should be traced, not just painted over. Renovix finds the cause and restores a clean surface.",

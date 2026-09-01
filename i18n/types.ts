@@ -46,6 +46,8 @@ export type Dictionary = {
   };
   cta: {
     getFreeQuote: string;
+    /** Short form for the compact mobile header button. */
+    quoteShort: string;
     requestQuote: string;
     getQuote: string;
     startQuoteRequest: string;
@@ -202,6 +204,7 @@ export type Dictionary = {
     lead: string;
     faqEyebrow: string;
     faqTitle: string;
+    faqDescription: string;
     guidesEyebrow: string;
     guidesTitle: string;
     guidesDescription: string;

@@ -8,24 +8,6 @@ export type SiteFaq = {
   relatedServiceSlug?: string;
 };
 
-export const faqGroups: { id: FaqGroupId; label: string; description: string }[] = [
-  {
-    id: "getting-started",
-    label: "Getting started",
-    description: "Useful information before you share the details of your job.",
-  },
-  {
-    id: "areas-properties",
-    label: "Areas & property types",
-    description: "Where Renovix works and what to consider for different homes.",
-  },
-  {
-    id: "services",
-    label: "Service-specific questions",
-    description: "Direct links to the service pages that explain each scope of work.",
-  },
-];
-
 export const siteFaqs: SiteFaq[] = [
   {
     id: "services-provided",
@@ -165,7 +147,3 @@ export const siteFaqs: SiteFaq[] = [
     relatedServiceSlug: "handyman",
   },
 ];
-
-export function getFaqsByGroup(group: FaqGroupId): SiteFaq[] {
-  return siteFaqs.filter((faq) => faq.group === group);
-}

@@ -88,10 +88,14 @@ export function buildPageMetadata({
  * The generated Open Graph image for a language version. It is served by the
  * `app/[lang]/opengraph-image.tsx` route (1200×630 PNG) and is shared across
  * every page of that language.
+ *
+ * The trailing slash matters: `trailingSlash: true` means the slashless URL
+ * answers with a 308 redirect, and social crawlers that do not follow
+ * redirects would drop the preview image entirely.
  */
 function ogImageUrl(lang: LanguageCode | string): string {
   const code = getLanguageCodeSafe(lang);
-  return `${siteConfig.url}/${code}/opengraph-image`;
+  return `${siteConfig.url}/${code}/opengraph-image/`;
 }
 
 export function absoluteUrl(lang: LanguageCode | string, path: string): string {

@@ -38,23 +38,8 @@ export function getAllAreas(): AreaDetail[] {
   return areaRegions.flatMap((region) => region.areas);
 }
 
-export function getRegionPath(regionId: AreaRegionId): string {
-  return `/areas/${regionId}`;
-}
-
-export function getAreaPath(area: AreaDetail): string {
-  return `/areas/${area.region}/${area.slug}`;
-}
-
 export function getAreaHref(area: Pick<AreaDetail, "region" | "slug">): string {
   return `/areas/${area.region}/${area.slug}`;
-}
-
-/** Resolves the slugs an area lists as nearby into full area details. */
-export function getNearbyAreas(area: AreaDetail): AreaDetail[] {
-  return area.nearbyAreas
-    .map((slug) => getAllAreas().find((item) => item.slug === slug))
-    .filter((item): item is AreaDetail => Boolean(item));
 }
 
 export function getOtherRegion(region: AreaRegion): AreaRegion | undefined {

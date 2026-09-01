@@ -55,7 +55,7 @@ export function organizationNode() {
     url: `${siteConfig.url}/`,
     description: siteConfig.description,
     slogan: siteConfig.tagline,
-    image: `${siteConfig.url}/en/opengraph-image`,
+    image: `${siteConfig.url}/en/opengraph-image/`,
     knowsLanguage: languages.map((language) => language.code),
     areaServed: SERVICE_PLACES,
     hasOfferCatalog: {

@@ -10,7 +10,7 @@
 
 ---
 
-## PHASE 1 — Foundation, Design System & Homepage
+## PHASE 1 — Foundation, Design System & Homepage — [x]
 
 ### Design system
 - [x] Desktop design direction and premium Malaysian home-services visual language
@@ -720,7 +720,226 @@ no template changes are required.
 - [x] Served-response checks: `X-Powered-By` gone; hero serves AVIF/WebP by
       `Accept` with `Cache-Control: public, max-age=2678400`
 
-## PHASE 9 — Further Conversion & SEO Expansion — [ ]
+## PHASE 9 — Final Full Website Audit & Quality Assurance — [x]
+
+> **Scope note.** The earlier outline in this file labelled Phase 9 "Further
+> Conversion & SEO Expansion". The client brief for Phase 9 is the final QA
+> pass: audit the whole project, fix genuine issues, add no new features and
+> avoid unnecessary redesign. That is what this phase delivers.
+
+### Audit method
+- [x] Production build served locally and **crawled from the three language
+      homepages** — 122 pages reached, every internal link resolved and status
+      checked, plus every URL and every `hreflang` alternate in all three
+      sitemaps (222 + 44 + 44 alternates)
+- [x] Automated per-page extraction of title, description, canonical, robots,
+      `html lang`, OG/Twitter tags, hreflang set, full heading tree, JSON-LD
+      and main-content length, then checked against the SEO/a11y rules
+- [x] Near-duplicate detection across the 31 area, 46 problem and 10 service
+      pages (5-word shingle overlap) to prove the local pages are not thin
+      doorway pages
+- [x] Static accessibility scan of every rendered page (alt text, accessible
+      names, duplicate ids, form labels, landmarks, `target="_blank"` rel)
+- [x] Language-mixing scan: every `/ms/` and `/zh/` page scanned for English
+      copy
+- [x] Dead-code / unused-export scan across `app`, `components`, `data`, `i18n`
+
+### 1. Route audit — PASS
+- [x] 122 pages (100 `en`, 11 `ms`, 11 `zh`) + 3 sitemaps + robots + 3 OG
+      images; **132 routes, all statically prerendered**
+- [x] Zero 404s, zero broken internal links, zero redirect hops in rendered
+      links (checked every `href` on every page)
+- [x] No duplicate routes, no orphan pages (all 100 `en` pages are reachable
+      by crawling from `/en/`), no empty pages — the thinnest page body is
+      ~1,000 words
+- [x] Invalid routes correctly 404: `/fr/`, `/en/services/carpentry/`,
+      `/en/areas/johor/`, untranslated `/ms/services/tiling/`
+- [x] `/` → `/en/` (308, single hop); localized 404 renders in the right
+      language with working recovery links
+
+### 2. Multilingual audit — PASS (with a documented coverage gap)
+- [x] **Fixed — English leaking into `/ms/` and `/zh/` pages.** Three real
+      language-mixing defects found and fixed:
+  - `/ms/problems/` and `/zh/problems/` rendered all 46 problem names and
+    summaries in **English**. Malay and Chinese labels for all 46 problems are
+    now in `data/i18n/lists.ts` (`problemList`), used by the cards and by the
+    `ItemList` schema
+  - The "Do you work in Kuala Lumpur?" FAQ was keyed `kualaLumpur` in the
+    dictionaries but its id is `kuala-lumpur`, so the Malay and Chinese
+    homepages and FAQ pages silently fell back to the **English** question and
+    answer. Key corrected in all three dictionaries
+  - The service-areas index passed a localized FAQ eyebrow and title but not
+    the description, leaving an English sentence on `/ms/areas/` and
+    `/zh/areas/`. `areasIndex.faqDescription` added in all three languages
+- [x] **Two build-time guards added** (`i18n/verify.ts`, run from the sitemap
+      route on every build) so this class of bug cannot come back: FAQ answer
+      keys and problem-card keys must match the registries exactly, in every
+      language. Verified by deliberately breaking a key — the build fails
+- [x] Re-scan result: **zero English strings remain on any `/ms/` or `/zh/`
+      page**
+- [x] `html lang` correct on all 122 pages (`en-MY` / `ms-MY` / `zh-MY`);
+      navigation, footer, mobile menu, forms and CTAs fully localized
+- [x] hreflang: reciprocal, self-referencing, `x-default` → English; a page is
+      only listed for a language that actually publishes it. Every alternate
+      URL returns 200
+- [x] Canonicals: self-referencing, absolute, trailing-slash, no mismatches
+- [x] Titles and descriptions unique across all 122 pages — **no duplicates**
+- [x] Known gap (unchanged, deliberate): the long-form service, problem and
+      area guides are English-only, so `/ms/` and `/zh/` publish 11 pages each
+      against 100 in English. Untranslated pages are not generated, not
+      sitemapped and not linked — no wrong-language pages, no dead links
+
+### 3. Service audit — PASS
+- [x] All 10 main services exist, generate, and are linked from the header
+      menu, footer, services index, homepage grid, area pages and related-
+      service blocks: tiling, welding-metal-works, electrical, painting,
+      ceiling-partition, general-renovation, plumbing, waterproofing,
+      flooring, handyman
+- [x] **208 sub-services** across the 10 pages (tiling 24, welding 22,
+      electrical 31, painting 32, ceiling & partition 30, general renovation
+      21, plumbing 15, waterproofing 11, flooring 10, handyman 12)
+- [x] Every service page carries 6 FAQs, 4 related services, `Service` +
+      `OfferCatalog` + `FAQPage` + `BreadcrumbList` + `WebPage` schema
+- [x] Noted, not a defect: `welding-metal-works` and `flooring` have no
+      related **problem** pages because the problem library covers the other
+      eight trades; the section is conditionally rendered, so those pages have
+      no empty block
+
+### 4. Problem audit — PASS
+- [x] 46 problem guides across 7 categories, each 1,350–1,555 words, each with
+      causes, warning signs, solutions, when-to-call, process, property types
+      and FAQs
+- [x] Every problem links to its parent service and to related problems; every
+      service page (bar the two above) links back to its problems
+- [x] Unique metadata, correct H1/H2/H3 hierarchy, `Article` + `FAQPage` +
+      `BreadcrumbList` schema on all 46
+- [x] Not thin, not duplicated: highest content overlap between any two
+      problem pages is 0.47 including shared chrome (average 0.28)
+
+### 5. Location audit — PASS
+- [x] Kuala Lumpur (14 areas) and Selangor (17 areas) region hubs + 31 local
+      guides + the areas index; Klang Valley covered as the parent metro on
+      the index, region hubs and contact page
+- [x] **Not doorway pages**: every area page is 1,026–1,349 rendered words of
+      area-specific copy (property mix, local landscape, common problems,
+      process notes, FAQs) with unique intros; highest overlap between any two
+      area pages is 0.29 including shared chrome (average 0.20)
+- [x] Each area lists 4+ services, 2+ nearby areas (all resolving), its own
+      FAQs and a `Service` node scoped to that `Place`
+
+### 6. Conversion audit — PASS
+- [x] **Fixed — no visible CTA on mobile.** The header quote button was
+      `xl:` only, so on every phone and tablet the primary conversion action
+      was hidden behind the hamburger menu (Phase 8 recorded it as
+      "persistent", which it was not below 1280px). A compact quote button now
+      sits in the mobile header from 360px up, with a short localized label
+      ("Quote" / "Sebut Harga" / "报价"), the full wording as `aria-label`
+      (WCAG 2.5.3 satisfied), 44px tap height and `whitespace-nowrap`. Below
+      360px it stays in the menu, which keeps the full-width quote and
+      WhatsApp CTAs — measured so the 320px header cannot overflow
+- [x] Get a Quote reachable from: header (desktop + mobile), mobile menu, hero,
+      every CTA section, footer navigation and the 404 page
+- [x] WhatsApp reachable from: hero, CTA sections, mobile menu, footer contact
+      column and the contact page — all still placeholder-aware, falling back
+      to `/contact/` while no number exists
+- [x] Quote form: 6 required fields, service → sub-service dependency, photo
+      upload, autocomplete, localized in all three languages, honest "no
+      instant quote" messaging, client-side confirmation only (no backend
+      invented)
+- [x] **Placeholders verified intact** — `[PHONE NUMBER]`, `[WHATSAPP NUMBER]`,
+      `[EMAIL]`, `[ADDRESS]`, `[BUSINESS HOURS]` still render on the contact
+      page and footer in all three languages. Scanned the whole codebase: no
+      invented phone numbers, emails, prices, ratings, reviews, certifications
+      or years of experience
+
+### 7. SEO audit — PASS
+- [x] **Fixed — `og:image` returned a 308.** Every page pointed
+      `og:image`/`twitter:image` (and the Organization `image`) at
+      `/{lang}/opengraph-image` while the site serves trailing-slash URLs, so
+      the image answered with a redirect — social crawlers that do not follow
+      redirects would show no preview. Now `/{lang}/opengraph-image/`, verified
+      200 `image/png` in all three languages
+- [x] **Fixed — `localizedHref("/")` produced `/en` without the trailing
+      slash**, one redirect hop away from the canonical. Now `/en/`
+- [x] **Fixed — over-length metadata.** Five titles above 65 characters and the
+      16 longest descriptions (193–264 characters, truncated well before the
+      end in SERPs) shortened without adding any new claim
+- [x] Titles, descriptions, canonicals, robots (`index, follow` on all 122),
+      OG + Twitter cards with dimensions and alt, verified on every page
+- [x] Schema: `Organization`+`LocalBusiness`, `WebSite`, `WebPage` on all 122;
+      `BreadcrumbList` on all 119 non-home pages; `FAQPage` ×95, `Article` ×46,
+      `Service` ×41, `ItemList` ×8 — all valid JSON, all linked by stable `@id`
+- [x] Visible breadcrumbs on every non-home page, matching the schema
+- [x] Heading hierarchy: exactly one H1 per page, no skipped levels, on all 122
+- [x] Sitemaps: one per language, 122 URLs, every `<loc>` 200, every alternate
+      200; robots.txt allows everything except `/_next/` and lists all three
+- [x] Internal linking: no orphans, no dead ends in English, related services /
+      problems / nearby areas cross-linked throughout
+
+### 8. Performance audit — PASS
+- [x] **Fixed — the Open Graph image route was the site's only on-demand
+      render** (`ƒ`), rasterizing a 1200×630 PNG per crawler request.
+      `generateStaticParams` added; the site is now **100% static — 132/132
+      routes prerendered**, zero dynamic routes
+- [x] Gzipped page weight: HTML 24–32 KB, CSS 8.9 KB, JS ~176 KB (the Next.js
+      16 / React 19 App Router baseline — no application data in the bundle)
+- [x] Only 4 client components (`MobileMenu`, `LanguageSwitcher`, `QuoteForm`,
+      `ProjectsPortfolio`); everything else is server-rendered. FAQ accordions
+      remain zero-JS `<details>`
+- [x] One raster image, served through `next/image` as AVIF/WebP with a correct
+      `sizes`, `priority` and a 31-day immutable cache
+- [x] Fonts: 5 self-hosted woff2 subsets, `display: swap`, preloaded
+- [x] No third-party scripts, no analytics, no trackers, three runtime
+      dependencies (`next`, `react`, `react-dom`)
+
+### 9. Accessibility audit — PASS
+- [x] Static scan of all 122 pages: **zero** images without `alt`, zero links
+      or buttons without an accessible name, zero unlabelled form controls,
+      zero duplicate ids, `<main>` landmark and skip link on every page
+- [x] Keyboard: visible `:focus-visible` ring sitewide, focus trap + Escape +
+      focus restore in the mobile menu, 44px buttons, 24px+ tap targets
+- [x] Semantic HTML, `aria-label`s on every nav, decorative SVGs `aria-hidden`,
+      `aria-live` on the form's photo counter, spoken "(required)" on every
+      required field, `prefers-reduced-motion` respected
+- [x] Contrast matrix re-checked against the WCAG AA thresholds — the new
+      mobile CTA is navy on amber (9.4:1)
+
+### 10. Security & code quality — PASS
+- [x] No secrets, no `.env` files, no `process.env` usage anywhere, nothing
+      sensitive committed; `.gitignore` covers env files, keys and build output
+- [x] No unsafe code: no `dangerouslySetInnerHTML` outside typed JSON-LD, no
+      `eval`, no user input reaching the DOM, external links carry
+      `rel="noreferrer"`
+- [x] **Dead code removed**: `i18n/content.ts` (146 lines, entirely unused),
+      `getRegionPath`, `getAreaPath`, `getNearbyAreas`, `projectPlaceholders`
+      + its type, `faqGroups`, `getFaqsByGroup`, `languageCodes`,
+      `getSiteMetadata`, `defaultLanguage`, `supportedLanguages`
+- [x] Dependencies: 3 runtime + 10 dev, all used; `npm audit` reports 0
+      vulnerabilities
+- [x] `tsc --noEmit --noUnusedLocals --noUnusedParameters` clean
+
+### 11. Build verification
+- [x] `npm run type-check` — **PASS**
+- [x] `npm run lint` — **PASS**
+- [x] `npm run build` — **PASS** (132/132 routes prerendered, 3 sitemaps,
+      robots, 3 OG images)
+
+### Known issues carried forward (not defects introduced here)
+- Deep content (10 services, 46 problems, 33 area pages) is English-only, so
+  `/ms/` and `/zh/` publish 11 pages each. Their index pages list the
+  catalogues in the right language but the cards are not links, because the
+  target pages do not exist in that language yet. Translating the catalogues
+  is the next content project
+- 63 English pages still carry meta descriptions of 160–190 characters. They
+  are front-loaded so nothing critical is cut, but desktop SERPs will truncate
+  the tail; the 16 worst (193–264 characters) were fixed in this phase
+- The quote form has no backend — submitting shows a confirmation and no
+  message is sent. It needs a real endpoint once business contact details exist
+- All business details remain placeholders, so the LocalBusiness schema
+  carries no telephone, address, geo, opening hours, rating or review data
+- Projects portfolio contains labelled placeholders only; no project photos
+  have been invented
+
 
 ---
 
@@ -734,3 +953,4 @@ no template changes are required.
   - `[ADDRESS]`
   - `[BUSINESS HOURS]`
 - Dedicated service detail pages were built in Phase 2; problem pages were built in Phase 3; the local SEO area architecture (2 region hubs + 31 unique location guides + areas index) was built in Phase 4. Phase 5 adds the supporting pages and a portfolio framework containing only clearly labelled placeholders. Phase 6 delivered the multilingual architecture and full translations for the core pages; the long-form service, problem and area catalogues remain English-only and the blog is not built. Phase 8 was the quality optimization pass (performance, accessibility, mobile & UX); the advanced quote system remains future work.
+- Phase 9 was the final QA audit: full route, multilingual, service, problem, location, conversion, SEO, performance, accessibility and code-quality review. Six genuine defects were fixed (three language-mixing bugs, the redirecting `og:image`, the missing mobile CTA and the on-demand OG route), dead code was removed and two build-time i18n guards were added. Remaining known issues are listed at the end of the Phase 9 section.

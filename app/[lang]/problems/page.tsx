@@ -7,7 +7,11 @@ import { IconArrowRight, IconAlertTriangle } from "@/components/icons";
 import { PageSchema } from "@/components/seo/PageSchema";
 import { itemListNode } from "@/components/seo/schema";
 import { getLanguage, languages } from "@/data/languages";
-import { getProblemCategories, getServiceName } from "@/data/i18n";
+import {
+  getProblemCardLabels,
+  getProblemCategories,
+  getServiceName,
+} from "@/data/i18n";
 import { getProblemsByCategory, problemDetails } from "@/data/problem-content";
 import { getWhatsAppHref } from "@/data/site";
 import { getDictionary } from "@/i18n";
@@ -60,7 +64,7 @@ export default async function ProblemsPage({ params }: ProblemsPageProps) {
   // The full problem library as an ItemList. Problem guides only exist in
   // English, so item URLs are emitted for English only.
   const problemItems = problemDetails.map((problem) => ({
-    name: problem.name,
+    name: getProblemCardLabels(code, problem).name,
     ...(code === "en"
       ? { url: absoluteUrl("en", `/problems/${problem.slug}/`) }
       : {}),
@@ -134,6 +138,7 @@ export default async function ProblemsPage({ params }: ProblemsPageProps) {
                 <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                   {problems.map((problem) => {
                     const href = contentHref("problem", problem.slug, code);
+                    const card = getProblemCardLabels(code, problem);
                     const classes =
                       "card card-hover group flex h-full flex-col p-6 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent";
 
@@ -143,10 +148,10 @@ export default async function ProblemsPage({ params }: ProblemsPageProps) {
                           <IconAlertTriangle className="h-5 w-5" />
                         </span>
                         <h3 className="mt-4 text-base font-semibold tracking-tight text-navy">
-                          {problem.name}
+                          {card.name}
                         </h3>
                         <p className="mt-2 flex-1 text-sm leading-6 text-secondary">
-                          {problem.subtitle}
+                          {card.subtitle}
                         </p>
                         {href ? (
                           <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-brand">

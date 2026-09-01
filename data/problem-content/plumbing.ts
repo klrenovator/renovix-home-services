@@ -45,7 +45,7 @@ export const plumbingProblems: ProblemDetail[] = [
     name: "Water Leakage",
     title: "Water Leakage Repair in Kuala Lumpur & Selangor | Renovix",
     metaDescription:
-      "Water leakage in Kuala Lumpur & Selangor — hidden leaks, damp patches, high water bills and dripping pipes. Learn the causes, warning signs, leak detection solutions and when to call a plumber.",
+      "Water leakage in KL & Selangor — hidden leaks, damp patches, high water bills and dripping pipes. Learn the causes, signs and leak detection options.",
     h1: "Water Leakage",
     subtitle:
       "Water leaks hide behind walls and under floors. Renovix finds the source, repairs the leak and stops the damage.",
