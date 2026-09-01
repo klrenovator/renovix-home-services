@@ -37,12 +37,12 @@ export function Header({ lang }: HeaderProps) {
           aria-label={t.a11y.primaryNavigation}
           className="hidden items-center xl:flex"
         >
-          <ul className="flex items-center gap-1">
+          <ul className="flex items-center gap-0.5">
             {navigation.map((item) => (
               <li key={item.href}>
                 <Link
                   href={item.href}
-                  className="rounded-md px-3 py-2 text-sm font-medium text-secondary transition-colors hover:bg-surface hover:text-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                  className="rounded-md px-2.5 py-2 text-sm font-medium text-secondary transition-colors hover:bg-surface hover:text-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
                 >
                   {item.label}
                 </Link>
@@ -59,7 +59,17 @@ export function Header({ lang }: HeaderProps) {
         </div>
 
         <div className="flex items-center gap-3 xl:hidden">
-          <LanguageSwitcher lang={code} compact label={t.a11y.languageNavigation} />
+          {/* Hidden below `sm`: at 320–380px the brand lockup, the compact
+              switcher and the menu button together exceed the viewport and
+              push the header into horizontal overflow. Language switching on
+              phones stays one tap away inside the mobile menu (and footer). */}
+          <div className="hidden sm:block">
+            <LanguageSwitcher
+              lang={code}
+              compact
+              label={t.a11y.languageNavigation}
+            />
+          </div>
           <MobileMenu
             lang={code}
             navigation={navigation}

@@ -3,7 +3,7 @@ import { InlineLinks } from "@/components/service/InlineLinks";
 import { Button, WhatsAppButton } from "@/components/ui/Button";
 import { IconArrowRight, IconMapPin } from "@/components/icons";
 import { getWhatsAppHref } from "@/data/site";
-import { localizeHref } from "@/data/navigation";
+import { localizedHref } from "@/i18n/hrefs";
 import { getAreaRegion } from "@/data/area-content";
 import type { AreaDetail } from "@/data/area-content/types";
 
@@ -52,7 +52,7 @@ export function AreaHero({ area, lang }: AreaHeroProps) {
 
         <div className="mt-8 flex flex-col gap-3 sm:flex-row">
           <Button
-            href={localizeHref("/quote", lang)}
+            href={localizedHref("/quote", lang)}
             variant="primary"
             icon={<IconArrowRight className="h-4 w-4" />}
           >

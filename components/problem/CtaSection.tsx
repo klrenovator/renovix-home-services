@@ -1,7 +1,7 @@
 import { Button, WhatsAppButton } from "@/components/ui/Button";
 import { IconArrowRight } from "@/components/icons";
 import { getWhatsAppHref, siteConfig } from "@/data/site";
-import { localizeHref } from "@/data/navigation";
+import { localizedHref } from "@/i18n/hrefs";
 import type { ProblemDetail } from "@/data/problem-content/types";
 
 type CtaSectionProps = {
@@ -38,7 +38,7 @@ export function CtaSection({ problem, lang }: CtaSectionProps) {
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Button
-                href={localizeHref("/quote", lang)}
+                href={localizedHref("/quote", lang)}
                 variant="primary"
                 icon={<IconArrowRight className="h-4 w-4" />}
               >

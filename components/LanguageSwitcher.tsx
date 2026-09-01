@@ -62,7 +62,7 @@ export function LanguageSwitcher({
                       : "text-secondary hover:text-navy"
                 }`}
               >
-                {compact ? language.nativeLabel : language.nativeLabel}
+                {language.nativeLabel}
               </Link>
             </li>
           );

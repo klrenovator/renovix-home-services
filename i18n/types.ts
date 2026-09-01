@@ -329,6 +329,8 @@ export type Dictionary = {
       description: string;
       preferredDate: string;
       photos: string;
+      /** Spoken-only "(required)" suffix for required-field labels. */
+      requiredText: string;
     };
     placeholders: {
       name: string;

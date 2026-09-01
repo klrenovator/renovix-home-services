@@ -2,6 +2,25 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   /**
+   * The `X-Powered-By` header reveals stack details and saves a few bytes on
+   * every response; nothing depends on it.
+   */
+  poweredByHeader: false,
+  images: {
+    /**
+     * AVIF first (roughly half the weight of WebP at the same quality) with
+     * WebP as the fallback for browsers without AVIF support. Next.js picks
+     * the best format the requesting browser accepts.
+     */
+    formats: ["image/avif", "image/webp"],
+    /**
+     * Optimized images are content-hashed per source path and re-generated on
+     * deploy, so a long browser/CDN TTL is safe here. If an image file is ever
+     * replaced under the same name, rename the file to bust the cache.
+     */
+    minimumCacheTTL: 2678400, // 31 days
+  },
+  /**
    * Canonicals, hreflang alternates, sitemaps and JSON-LD across the site are
    * written with a trailing slash (`/en/services/`). Serving the same shape keeps
    * every canonical pointing at a URL that returns 200 instead of a redirect.

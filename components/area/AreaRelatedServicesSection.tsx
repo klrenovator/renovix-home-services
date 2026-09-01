@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { serviceIcons, IconArrowRight, IconWrench } from "@/components/icons";
-import { localizeHref } from "@/data/navigation";
+import { localizedHref } from "@/i18n/hrefs";
 import { getServiceBySlug } from "@/data/services";
 import type { AreaDetail } from "@/data/area-content/types";
 
@@ -36,7 +36,7 @@ export function AreaRelatedServicesSection({
             return (
               <Link
                 key={slug}
-                href={localizeHref(service.path, lang)}
+                href={localizedHref(service.path, lang)}
                 className="card card-hover group flex h-full flex-col p-6 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
               >
                 <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-brand/10 text-brand transition-colors group-hover:bg-brand group-hover:text-white">

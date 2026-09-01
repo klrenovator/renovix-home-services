@@ -71,7 +71,9 @@ export function QuoteForm({
       <div className="mt-6 grid gap-5 sm:grid-cols-2">
         <div>
           <label className="form-label" htmlFor="quote-name">
-            {t.labels.name} <span aria-hidden="true">*</span>
+            {t.labels.name}{" "}
+            <span aria-hidden="true">*</span>
+            <span className="sr-only">{t.labels.requiredText}</span>
           </label>
           <input
             className="form-control"
@@ -85,7 +87,9 @@ export function QuoteForm({
 
         <div>
           <label className="form-label" htmlFor="quote-whatsapp">
-            {t.labels.whatsapp} <span aria-hidden="true">*</span>
+            {t.labels.whatsapp}{" "}
+            <span aria-hidden="true">*</span>
+            <span className="sr-only">{t.labels.requiredText}</span>
           </label>
           <input
             className="form-control"
@@ -115,7 +119,9 @@ export function QuoteForm({
 
         <div>
           <label className="form-label" htmlFor="quote-property-type">
-            {t.labels.propertyType} <span aria-hidden="true">*</span>
+            {t.labels.propertyType}{" "}
+            <span aria-hidden="true">*</span>
+            <span className="sr-only">{t.labels.requiredText}</span>
           </label>
           <select
             className="form-control"
@@ -137,7 +143,9 @@ export function QuoteForm({
 
         <div>
           <label className="form-label" htmlFor="quote-service">
-            {t.labels.service} <span aria-hidden="true">*</span>
+            {t.labels.service}{" "}
+            <span aria-hidden="true">*</span>
+            <span className="sr-only">{t.labels.requiredText}</span>
           </label>
           <select
             className="form-control"
@@ -191,7 +199,9 @@ export function QuoteForm({
 
         <div className="sm:col-span-2">
           <label className="form-label" htmlFor="quote-location">
-            {t.labels.location} <span aria-hidden="true">*</span>
+            {t.labels.location}{" "}
+            <span aria-hidden="true">*</span>
+            <span className="sr-only">{t.labels.requiredText}</span>
           </label>
           <input
             className="form-control"
@@ -206,7 +216,9 @@ export function QuoteForm({
 
         <div className="sm:col-span-2">
           <label className="form-label" htmlFor="quote-description">
-            {t.labels.description} <span aria-hidden="true">*</span>
+            {t.labels.description}{" "}
+            <span aria-hidden="true">*</span>
+            <span className="sr-only">{t.labels.requiredText}</span>
           </label>
           <textarea
             className="form-control min-h-32 resize-y"

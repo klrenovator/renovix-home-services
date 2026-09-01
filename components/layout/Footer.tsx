@@ -40,6 +40,13 @@ export function Footer({ lang }: FooterProps) {
 
   const services = getServiceCategories(code);
 
+  /**
+   * Footer links sit on 10px gaps (`space-y-2.5`); `-my-1 py-1` extends each
+   * link's tap target to 28px without moving anything visually (WCAG 2.5.8).
+   */
+  const footerLinkClass =
+    "-my-1 py-1 text-sm transition-colors hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent";
+
   return (
     <footer className="bg-navy text-white/70">
       <div className="container-app py-14 lg:py-16">
@@ -72,7 +79,7 @@ export function Footer({ lang }: FooterProps) {
                     {href ? (
                       <Link
                         href={href}
-                        className="text-sm transition-colors hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                        className={footerLinkClass}
                       >
                         {service.name}
                       </Link>
@@ -92,7 +99,7 @@ export function Footer({ lang }: FooterProps) {
                 <li key={item.href}>
                   <Link
                     href={item.href}
-                    className="text-sm transition-colors hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                    className={footerLinkClass}
                   >
                     {item.label}
                   </Link>
@@ -112,7 +119,7 @@ export function Footer({ lang }: FooterProps) {
                     {href ? (
                       <Link
                         href={href}
-                        className="text-sm transition-colors hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                        className={footerLinkClass}
                       >
                         {getRegionName(region.id, code)}
                       </Link>
@@ -128,7 +135,7 @@ export function Footer({ lang }: FooterProps) {
               <li>
                 <Link
                   href={localizedHref("/areas", code)}
-                  className="text-sm transition-colors hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                  className={footerLinkClass}
                 >
                   {t.cta.allServiceAreas}
                 </Link>
@@ -188,7 +195,7 @@ export function Footer({ lang }: FooterProps) {
                 <li key={item.href}>
                   <Link
                     href={item.href}
-                    className="text-xs text-white/60 transition-colors hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                    className="-my-1 py-1 text-xs text-white/60 transition-colors hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
                   >
                     {item.label}
                   </Link>
@@ -213,7 +220,7 @@ function ContactLink({
 }) {
   return (
     <div className="flex items-start gap-2">
-      <span className="text-xs font-semibold uppercase tracking-wider text-white/40">
+      <span className="text-xs font-semibold uppercase tracking-wider text-white/60">
         {label}
       </span>
       <a

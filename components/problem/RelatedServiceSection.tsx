@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { serviceIcons, IconArrowRight } from "@/components/icons";
-import { localizeHref } from "@/data/navigation";
+import { localizedHref } from "@/i18n/hrefs";
 import { services } from "@/data/services";
 import { getProblemServiceDetails } from "@/data/problem-content";
 import type { ProblemDetail } from "@/data/problem-content/types";
@@ -29,7 +29,7 @@ export function RelatedServiceSection({ problem, lang }: RelatedServiceSectionPr
         {service ? (
           <div className="mt-10">
             <Link
-              href={localizeHref(categoryFor(service.slug)?.path ?? `/services/${service.slug}`, lang)}
+              href={localizedHref(categoryFor(service.slug)?.path ?? `/services/${service.slug}`, lang)}
               className="card card-hover group flex h-full flex-col justify-between gap-6 bg-navy p-6 text-white sm:p-8"
             >
               <div>
@@ -56,7 +56,7 @@ export function RelatedServiceSection({ problem, lang }: RelatedServiceSectionPr
               return (
                 <Link
                   key={item.slug}
-                  href={localizeHref(category?.path ?? `/services/${item.slug}`, lang)}
+                  href={localizedHref(category?.path ?? `/services/${item.slug}`, lang)}
                   className="card card-hover group flex h-full flex-col p-6 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
                 >
                   <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-brand/10 text-brand transition-colors group-hover:bg-brand group-hover:text-white">

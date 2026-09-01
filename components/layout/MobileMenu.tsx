@@ -57,10 +57,40 @@ export function MobileMenu({ lang, navigation, services, labels }: MobileMenuPro
     const trigger = triggerRef.current;
     panel?.focus();
 
+    /**
+     * The open menu behaves modally (page scroll is locked, the panel covers
+     * the page), so keyboard focus is trapped inside it: Tab cycles through
+     * the menu's focusable elements instead of reaching content the user
+     * cannot see behind the overlay.
+     */
     function handleKeydown(event: KeyboardEvent) {
       if (event.key === "Escape") {
         closeMenu();
         trigger?.focus();
+        return;
+      }
+
+      if (event.key !== "Tab" || !panel) {
+        return;
+      }
+
+      const focusables = panel.querySelectorAll<HTMLElement>(
+        'a[href], button:not([disabled]), input, select, textarea, [tabindex]:not([tabindex="-1"])',
+      );
+      if (focusables.length === 0) {
+        return;
+      }
+
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      const active = document.activeElement;
+
+      if (event.shiftKey && (active === first || active === panel)) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && active === last) {
+        event.preventDefault();
+        first.focus();
       }
     }
 
@@ -92,6 +122,9 @@ export function MobileMenu({ lang, navigation, services, labels }: MobileMenuPro
         <div
           ref={panelRef}
           id="mobile-menu"
+          role="dialog"
+          aria-modal="true"
+          aria-label={labels.navigation}
           className="fixed inset-0 top-[70px] z-50 overflow-y-auto border-t border-slate-200 bg-white px-4 pb-8 pt-6 shadow-xl animate-menu-in"
           tabIndex={-1}
         >
@@ -114,7 +147,7 @@ export function MobileMenu({ lang, navigation, services, labels }: MobileMenuPro
             </nav>
 
             <div>
-              <p className="eyebrow text-primary">{labels.services}</p>
+              <p className="eyebrow">{labels.services}</p>
               <ul className="mt-3 grid grid-cols-1 gap-1.5 sm:grid-cols-2">
                 {services.map((service) => {
                   const classes =

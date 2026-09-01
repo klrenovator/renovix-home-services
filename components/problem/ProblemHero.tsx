@@ -2,7 +2,7 @@ import { Breadcrumbs } from "@/components/service/Breadcrumbs";
 import { Button, WhatsAppButton } from "@/components/ui/Button";
 import { IconArrowRight, IconMapPin } from "@/components/icons";
 import { getWhatsAppHref } from "@/data/site";
-import { localizeHref } from "@/data/navigation";
+import { localizedHref } from "@/i18n/hrefs";
 import { getProblemCategory } from "@/data/problem-content";
 import type { ProblemDetail } from "@/data/problem-content/types";
 
@@ -47,7 +47,7 @@ export function ProblemHero({ problem, lang }: ProblemHeroProps) {
 
         <div className="mt-8 flex flex-col gap-3 sm:flex-row">
           <Button
-            href={localizeHref("/quote", lang)}
+            href={localizedHref("/quote", lang)}
             variant="primary"
             icon={<IconArrowRight className="h-4 w-4" />}
           >
