@@ -5,7 +5,7 @@ export const klAreasA: AreaDetail[] = [
     region: "kuala-lumpur",
     slug: "cheras",
     name: "Cheras",
-    title: "Home Renovation & Repair Services in Cheras, KL | Renovix",
+    title: "Renovix Home Services | Home Renovation & Repair Services in Cheras, KL",
     metaDescription:
       "Renovation and repair services in Cheras, Kuala Lumpur — plumbing, waterproofing, tiling, electrical and painting for older flats, terrace houses and new condos. Free quote.",
     h1: "Home Renovation & Repair Services in Cheras",
@@ -163,7 +163,7 @@ export const klAreasA: AreaDetail[] = [
     region: "kuala-lumpur",
     slug: "setapak",
     name: "Setapak",
-    title: "Home Renovation & Repair Services in Setapak, KL | Renovix",
+    title: "Renovix Home Services | Home Renovation & Repair Services in Setapak, KL",
     metaDescription:
       "Renovation and repair services in Setapak, Kuala Lumpur — for older terrace houses, apartments and student units near TAR UMT. Electrical, plumbing, tiling, painting. Free quote.",
     h1: "Home Renovation & Repair Services in Setapak",
@@ -321,7 +321,7 @@ export const klAreasA: AreaDetail[] = [
     region: "kuala-lumpur",
     slug: "wangsa-maju",
     name: "Wangsa Maju",
-    title: "Home Renovation & Repair Services in Wangsa Maju | Renovix",
+    title: "Renovix Home Services | Home Renovation & Repair Services in Wangsa Maju",
     metaDescription:
       "Renovation and repair services in Wangsa Maju, Kuala Lumpur — 90s terrace houses and condominiums. Kitchen and bathroom upgrades, waterproofing, electrical. Free quotation.",
     h1: "Home Renovation & Repair Services in Wangsa Maju",
@@ -479,7 +479,7 @@ export const klAreasA: AreaDetail[] = [
     region: "kuala-lumpur",
     slug: "ampang",
     name: "Ampang",
-    title: "Home Renovation & Repair Services in Ampang, KL | Renovix",
+    title: "Renovix Home Services | Home Renovation & Repair Services in Ampang, KL",
     metaDescription:
       "Renovation and repair services in Ampang, Kuala Lumpur — leafy embassy district with older bungalows, expat condos and mature apartments. Free quote from Renovix.",
     h1: "Home Renovation & Repair Services in Ampang",
@@ -637,7 +637,7 @@ export const klAreasA: AreaDetail[] = [
     region: "kuala-lumpur",
     slug: "kepong",
     name: "Kepong",
-    title: "Home Renovation & Repair Services in Kepong, KL | Renovix",
+    title: "Renovix Home Services | Home Renovation & Repair Services in Kepong, KL",
     metaDescription:
       "Renovation and repair services in Kepong, Kuala Lumpur — mature terrace townships, old shoplots and new MRT-era condos. Tiling, waterproofing, plumbing, painting. Free quote.",
     h1: "Home Renovation & Repair Services in Kepong",
@@ -795,7 +795,7 @@ export const klAreasA: AreaDetail[] = [
     region: "kuala-lumpur",
     slug: "segambut",
     name: "Segambut",
-    title: "Home Renovation & Repair Services in Segambut, KL | Renovix",
+    title: "Renovix Home Services | Home Renovation & Repair Services in Segambut, KL",
     metaDescription:
       "Renovation and repair services in Segambut, Kuala Lumpur — older terrace and kampung-style housing beside premium Taman Duta-area pockets and new condos. Free quote.",
     h1: "Home Renovation & Repair Services in Segambut",
@@ -953,7 +953,7 @@ export const klAreasA: AreaDetail[] = [
     region: "kuala-lumpur",
     slug: "sentul",
     name: "Sentul",
-    title: "Home Renovation & Repair Services in Sentul, KL | Renovix",
+    title: "Renovix Home Services | Home Renovation & Repair Services in Sentul, KL",
     metaDescription:
       "Renovation and repair services in Sentul, Kuala Lumpur — railway-heritage streets, older flats and new Sentul East/West condominiums. Repairs, fit-outs, bathrooms. Free quote.",
     h1: "Home Renovation & Repair Services in Sentul",

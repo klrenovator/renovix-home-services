@@ -2,7 +2,7 @@ import type { ServiceTranslation } from "../types";
 
 export const translation: ServiceTranslation = {
   name: "天花板与隔间工程",
-  title: "吉隆坡与雪兰莪天花板与隔间工程 | Renovix",
+  title: "Renovix Home Services | 吉隆坡与雪兰莪天花板与隔间工程",
   metaDescription:
     "吉隆坡与雪兰莪天花板与隔间服务：石膏天花、假天花、灯槽造型、房间与办公室隔间，以及天花板维修。免费报价。",
   h1: "吉隆坡与雪兰莪天花板与隔间工程",

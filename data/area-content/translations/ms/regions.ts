@@ -3,7 +3,7 @@ import type { AreaRegionTranslations } from "../types";
 export const translations: AreaRegionTranslations = {
   "kuala-lumpur": {
     name: "Kuala Lumpur",
-    title: "Servis Renovasi & Pembaikan Rumah di Kuala Lumpur | Renovix",
+    title: "Renovix Home Services | Servis Renovasi & Pembaikan Rumah di Kuala Lumpur",
     metaDescription:
       "Servis renovasi dan pembaikan rumah di seluruh Kuala Lumpur — jubin, elektrik, plumbing, kalis air, cat, siling, lantai dan handyman. Sebut harga percuma.",
     h1: "Servis Renovasi & Pembaikan Rumah di Kuala Lumpur",
@@ -43,7 +43,7 @@ export const translations: AreaRegionTranslations = {
   },
   selangor: {
     name: "Selangor",
-    title: "Servis Renovasi & Pembaikan Rumah di Selangor | Renovix",
+    title: "Renovix Home Services | Servis Renovasi & Pembaikan Rumah di Selangor",
     metaDescription:
       "Servis renovasi dan pembaikan rumah di seluruh Selangor — Petaling Jaya, Subang Jaya, Shah Alam, Puchong, Klang, Kajang, Cyberjaya dan lain-lain. Sebut harga percuma.",
     h1: "Servis Renovasi & Pembaikan Rumah di Selangor",

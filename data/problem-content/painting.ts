@@ -43,7 +43,7 @@ export const paintingProblems: ProblemDetail[] = [
     ...paintingBase,
     slug: "peeling-paint",
     name: "Peeling Paint",
-    title: "Peeling Paint Repair in Kuala Lumpur & Selangor | Renovix",
+    title: "Renovix Home Services | Peeling Paint Repair in KL & Selangor",
     metaDescription:
       "Peeling, flaking or bubbling paint in Kuala Lumpur & Selangor? Learn the causes, warning signs, the right surface preparation and repainting solutions, and when to call a painting contractor.",
     h1: "Peeling Paint",
@@ -162,7 +162,7 @@ export const paintingProblems: ProblemDetail[] = [
     ...paintingBase,
     slug: "cracked-walls",
     name: "Cracked Walls",
-    title: "Cracked Wall Repair in Kuala Lumpur & Selangor | Renovix",
+    title: "Renovix Home Services | Cracked Wall Repair in KL & Selangor",
     metaDescription:
       "Cracked walls, hairline cracks and plaster damage in Kuala Lumpur & Selangor repaired. Learn the causes, warning signs, plastering and repainting solutions, and when to call a professional.",
     h1: "Cracked Walls",
@@ -281,7 +281,7 @@ export const paintingProblems: ProblemDetail[] = [
     ...paintingBase,
     slug: "mouldy-walls",
     name: "Mouldy Walls",
-    title: "Mouldy Wall Treatment in Kuala Lumpur & Selangor | Renovix",
+    title: "Renovix Home Services | Mouldy Wall Treatment in KL & Selangor",
     metaDescription:
       "Mould on walls in Kuala Lumpur & Selangor — what it means, common causes, warning signs, treatment and prevention solutions, and when to call a painting and waterproofing professional.",
     h1: "Mouldy Walls",
@@ -400,7 +400,7 @@ export const paintingProblems: ProblemDetail[] = [
     ...paintingBase,
     slug: "faded-paint",
     name: "Faded Paint",
-    title: "Faded Paint Restoration in Kuala Lumpur & Selangor | Renovix",
+    title: "Renovix Home Services | Faded Paint Restoration in KL & Selangor",
     metaDescription:
       "Faded, dull or sun-bleached paint in Kuala Lumpur & Selangor? Learn what causes paint to fade, warning signs, repainting and colour-matching solutions, and when to call a painting contractor.",
     h1: "Faded Paint",
@@ -519,7 +519,7 @@ export const paintingProblems: ProblemDetail[] = [
     ...paintingBase,
     slug: "uneven-paint",
     name: "Uneven Paint",
-    title: "Uneven Paint Finish in Kuala Lumpur & Selangor | Renovix",
+    title: "Renovix Home Services | Uneven Paint Finish in KL & Selangor",
     metaDescription:
       "Patchy, streaky or uneven paint in Kuala Lumpur & Selangor? Learn the causes, warning signs, the right way to get a smooth finish, and when to call a painting professional.",
     h1: "Uneven Paint",
@@ -638,7 +638,7 @@ export const paintingProblems: ProblemDetail[] = [
     ...paintingBase,
     slug: "wall-surface-damage",
     name: "Wall Surface Damage",
-    title: "Wall Damage Repair in Kuala Lumpur & Selangor | Renovix",
+    title: "Renovix Home Services | Wall Damage Repair in KL & Selangor",
     metaDescription:
       "Damaged wall surfaces — holes, dents, scratches, water damage and crumbling plaster — repaired in KL & Selangor. Learn the causes, signs and solutions.",
     h1: "Wall Surface Damage",

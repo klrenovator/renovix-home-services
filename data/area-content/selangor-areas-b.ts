@@ -5,7 +5,7 @@ export const selangorAreasB: AreaDetail[] = [
     region: "selangor",
     slug: "seri-kembangan",
     name: "Seri Kembangan",
-    title: "Home Renovation & Repair Services in Seri Kembangan | Renovix",
+    title: "Renovix Home Services | Home Renovation & Repair Services in Seri Kembangan",
     metaDescription:
       "Renovation and repair services in Seri Kembangan — new-village shoplots, township terraces and apartments near the Mines and MRT. Free quote from Renovix.",
     h1: "Home Renovation & Repair Services in Seri Kembangan",
@@ -163,7 +163,7 @@ export const selangorAreasB: AreaDetail[] = [
     region: "selangor",
     slug: "cyberjaya",
     name: "Cyberjaya",
-    title: "Home Renovation & Repair Services in Cyberjaya | Renovix",
+    title: "Renovix Home Services | Home Renovation & Repair Services in Cyberjaya",
     metaDescription:
       "Renovation and repair services in Cyberjaya — modern condos, gated landed homes and tech-hub residences. Fit-outs, upgrades, repairs. Free quote from Renovix.",
     h1: "Home Renovation & Repair Services in Cyberjaya",
@@ -321,7 +321,7 @@ export const selangorAreasB: AreaDetail[] = [
     region: "selangor",
     slug: "putrajaya",
     name: "Putrajaya",
-    title: "Home Renovation & Repair Services in Putrajaya | Renovix",
+    title: "Renovix Home Services | Home Renovation & Repair Services in Putrajaya",
     metaDescription:
       "Renovation and repair services in Putrajaya — garden-city precincts, government quarters and lakeside residences. Repairs, upgrades, fit-outs. Free quote.",
     h1: "Home Renovation & Repair Services in Putrajaya",
@@ -479,7 +479,7 @@ export const selangorAreasB: AreaDetail[] = [
     region: "selangor",
     slug: "kota-damansara",
     name: "Kota Damansara",
-    title: "Home Renovation & Repair Services in Kota Damansara | Renovix",
+    title: "Renovix Home Services | Home Renovation & Repair Services in Kota Damansara",
     metaDescription:
       "Renovation and repair services in Kota Damansara — sectional terraces, The Strand commercial belt and MRT-era condos. Free quote from Renovix.",
     h1: "Home Renovation & Repair Services in Kota Damansara",
@@ -637,7 +637,7 @@ export const selangorAreasB: AreaDetail[] = [
     region: "selangor",
     slug: "sungai-buloh",
     name: "Sungai Buloh",
-    title: "Home Renovation & Repair Services in Sungai Buloh | Renovix",
+    title: "Renovix Home Services | Home Renovation & Repair Services in Sungai Buloh",
     metaDescription:
       "Renovation and repair services in Sungai Buloh — old town streets, established gated estates, hospital belt and new MRT-era housing. Free quote from Renovix.",
     h1: "Home Renovation & Repair Services in Sungai Buloh",
@@ -795,7 +795,7 @@ export const selangorAreasB: AreaDetail[] = [
     region: "selangor",
     slug: "rawang",
     name: "Rawang",
-    title: "Home Renovation & Repair Services in Rawang | Renovix",
+    title: "Renovix Home Services | Home Renovation & Repair Services in Rawang",
     metaDescription:
       "Renovation and repair services in Rawang, Selangor — old mining town streets and fast-growing townships. Repairs, upgrades, repainting. Free quote from Renovix.",
     h1: "Home Renovation & Repair Services in Rawang",
@@ -953,7 +953,7 @@ export const selangorAreasB: AreaDetail[] = [
     region: "selangor",
     slug: "semenyih",
     name: "Semenyih",
-    title: "Home Renovation & Repair Services in Semenyih | Renovix",
+    title: "Renovix Home Services | Home Renovation & Repair Services in Semenyih",
     metaDescription:
       "Renovation and repair services in Semenyih, Selangor — university town, Broga-fringe greenery and growing landed townships. Free quote from Renovix.",
     h1: "Home Renovation & Repair Services in Semenyih",
@@ -1111,7 +1111,7 @@ export const selangorAreasB: AreaDetail[] = [
     region: "selangor",
     slug: "usj",
     name: "USJ",
-    title: "Home Renovation & Repair Services in USJ | Renovix",
+    title: "Renovix Home Services | Home Renovation & Repair Services in USJ",
     metaDescription:
       "Renovation and repair services in USJ (UEP Subang Jaya) — 90s terraces, Goodyear-era apartments and Taipan commercial rows. Free quote from Renovix.",
     h1: "Home Renovation & Repair Services in USJ",

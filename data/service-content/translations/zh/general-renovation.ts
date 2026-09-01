@@ -2,7 +2,7 @@ import type { ServiceTranslation } from "../types";
 
 export const translation: ServiceTranslation = {
   name: "综合装修工程",
-  title: "吉隆坡与雪兰莪综合装修工程 | Renovix",
+  title: "Renovix Home Services | 吉隆坡与雪兰莪综合装修工程",
   metaDescription:
     "吉隆坡与雪兰莪住宅装修服务：全屋与局部装修、浴室与厨房翻新、打墙、砖砌、批荡与结构修补。免费报价。",
   h1: "吉隆坡与雪兰莪综合装修工程",

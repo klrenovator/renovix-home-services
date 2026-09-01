@@ -22,7 +22,7 @@ export const translations: AreaTranslations = {
   "selangor/petaling-jaya": {
     ...shared("Petaling Jaya"),
     name: "Petaling Jaya",
-    title: "Renovasi & Pembaikan Rumah di Petaling Jaya | Renovix",
+    title: "Renovix Home Services | Renovasi & Pembaikan Rumah di Petaling Jaya",
     metaDescription:
       "Servis renovasi dan pembaikan rumah di Petaling Jaya — renovasi, elektrik, kerja paip, kalis air, cat dan siling. Sebut harga percuma.",
     h1: "Servis Renovasi & Pembaikan Rumah di Petaling Jaya",
@@ -69,7 +69,7 @@ export const translations: AreaTranslations = {
   "selangor/subang-jaya": {
     ...shared("Subang Jaya"),
     name: "Subang Jaya",
-    title: "Renovasi & Pembaikan Rumah di Subang Jaya | Renovix",
+    title: "Renovix Home Services | Renovasi & Pembaikan Rumah di Subang Jaya",
     metaDescription:
       "Servis renovasi dan pembaikan rumah di Subang Jaya — kerja paip, elektrik, renovasi, jubin, cat dan kalis air. Sebut harga percuma.",
     h1: "Servis Renovasi & Pembaikan Rumah di Subang Jaya",
@@ -116,7 +116,7 @@ export const translations: AreaTranslations = {
   "selangor/shah-alam": {
     ...shared("Shah Alam"),
     name: "Shah Alam",
-    title: "Renovasi & Pembaikan Rumah di Shah Alam | Renovix",
+    title: "Renovix Home Services | Renovasi & Pembaikan Rumah di Shah Alam",
     metaDescription:
       "Servis renovasi dan pembaikan rumah di Shah Alam — kalis air, cat, renovasi, elektrik, kerja paip dan handyman. Sebut harga percuma.",
     h1: "Servis Renovasi & Pembaikan Rumah di Shah Alam",
@@ -163,7 +163,7 @@ export const translations: AreaTranslations = {
   "selangor/puchong": {
     ...shared("Puchong"),
     name: "Puchong",
-    title: "Renovasi & Pembaikan Rumah di Puchong | Renovix",
+    title: "Renovix Home Services | Renovasi & Pembaikan Rumah di Puchong",
     metaDescription:
       "Servis renovasi dan pembaikan rumah di Puchong — renovasi, kerja paip, kalis air, lantai, elektrik dan handyman. Sebut harga percuma.",
     h1: "Servis Renovasi & Pembaikan Rumah di Puchong",
@@ -210,7 +210,7 @@ export const translations: AreaTranslations = {
   "selangor/klang": {
     ...shared("Klang"),
     name: "Klang",
-    title: "Renovasi & Pembaikan Rumah di Klang | Renovix",
+    title: "Renovix Home Services | Renovasi & Pembaikan Rumah di Klang",
     metaDescription:
       "Servis renovasi dan pembaikan rumah di Klang — kalis air, elektrik, kerja paip, cat, renovasi dan siling. Sebut harga percuma.",
     h1: "Servis Renovasi & Pembaikan Rumah di Klang",
@@ -257,7 +257,7 @@ export const translations: AreaTranslations = {
   "selangor/selayang": {
     ...shared("Selayang"),
     name: "Selayang",
-    title: "Renovasi & Pembaikan Rumah di Selayang | Renovix",
+    title: "Renovix Home Services | Renovasi & Pembaikan Rumah di Selayang",
     metaDescription:
       "Servis renovasi dan pembaikan rumah di Selayang — kerja paip, kalis air, cat, elektrik, handyman dan renovasi. Sebut harga percuma.",
     h1: "Servis Renovasi & Pembaikan Rumah di Selayang",
@@ -304,7 +304,7 @@ export const translations: AreaTranslations = {
   "selangor/gombak": {
     ...shared("Gombak"),
     name: "Gombak",
-    title: "Renovasi & Pembaikan Rumah di Gombak | Renovix",
+    title: "Renovix Home Services | Renovasi & Pembaikan Rumah di Gombak",
     metaDescription:
       "Servis renovasi dan pembaikan rumah di Gombak — elektrik, kerja paip, renovasi, cat, handyman dan siling. Sebut harga percuma.",
     h1: "Servis Renovasi & Pembaikan Rumah di Gombak",
@@ -351,7 +351,7 @@ export const translations: AreaTranslations = {
   "selangor/ampang-jaya": {
     ...shared("Ampang Jaya"),
     name: "Ampang Jaya",
-    title: "Renovasi & Pembaikan Rumah di Ampang Jaya | Renovix",
+    title: "Renovix Home Services | Renovasi & Pembaikan Rumah di Ampang Jaya",
     metaDescription:
       "Servis renovasi dan pembaikan rumah di Ampang Jaya — kerja paip, kalis air, elektrik, jubin, renovasi dan handyman. Sebut harga percuma.",
     h1: "Servis Renovasi & Pembaikan Rumah di Ampang Jaya",
@@ -398,7 +398,7 @@ export const translations: AreaTranslations = {
   "selangor/kajang": {
     ...shared("Kajang"),
     name: "Kajang",
-    title: "Renovasi & Pembaikan Rumah di Kajang | Renovix",
+    title: "Renovix Home Services | Renovasi & Pembaikan Rumah di Kajang",
     metaDescription:
       "Servis renovasi dan pembaikan rumah di Kajang — renovasi, kalis air, kerja paip, elektrik, cat dan handyman. Sebut harga percuma.",
     h1: "Servis Renovasi & Pembaikan Rumah di Kajang",
@@ -445,7 +445,7 @@ export const translations: AreaTranslations = {
   "selangor/seri-kembangan": {
     ...shared("Seri Kembangan"),
     name: "Seri Kembangan",
-    title: "Renovasi & Pembaikan Rumah di Seri Kembangan | Renovix",
+    title: "Renovix Home Services | Renovasi & Pembaikan Rumah di Seri Kembangan",
     metaDescription:
       "Servis renovasi dan pembaikan rumah di Seri Kembangan — kerja paip, kalis air, renovasi, elektrik, cat dan handyman. Sebut harga percuma.",
     h1: "Servis Renovasi & Pembaikan Rumah di Seri Kembangan",
@@ -492,7 +492,7 @@ export const translations: AreaTranslations = {
   "selangor/cyberjaya": {
     ...shared("Cyberjaya"),
     name: "Cyberjaya",
-    title: "Renovasi & Pembaikan Rumah di Cyberjaya | Renovix",
+    title: "Renovix Home Services | Renovasi & Pembaikan Rumah di Cyberjaya",
     metaDescription:
       "Servis renovasi dan pembaikan rumah di Cyberjaya — lantai, elektrik, renovasi, handyman, kerja paip dan cat. Sebut harga percuma.",
     h1: "Servis Renovasi & Pembaikan Rumah di Cyberjaya",
@@ -539,7 +539,7 @@ export const translations: AreaTranslations = {
   "selangor/putrajaya": {
     ...shared("Putrajaya"),
     name: "Putrajaya",
-    title: "Renovasi & Pembaikan Rumah di Putrajaya | Renovix",
+    title: "Renovix Home Services | Renovasi & Pembaikan Rumah di Putrajaya",
     metaDescription:
       "Servis renovasi dan pembaikan rumah di Putrajaya — cat, kerja paip, elektrik, handyman, renovasi dan lantai. Sebut harga percuma.",
     h1: "Servis Renovasi & Pembaikan Rumah di Putrajaya",
@@ -586,7 +586,7 @@ export const translations: AreaTranslations = {
   "selangor/kota-damansara": {
     ...shared("Kota Damansara"),
     name: "Kota Damansara",
-    title: "Renovasi & Pembaikan Rumah di Kota Damansara | Renovix",
+    title: "Renovix Home Services | Renovasi & Pembaikan Rumah di Kota Damansara",
     metaDescription:
       "Servis renovasi dan pembaikan rumah di Kota Damansara — renovasi, kerja paip, kalis air, lantai, elektrik dan handyman. Sebut harga percuma.",
     h1: "Servis Renovasi & Pembaikan Rumah di Kota Damansara",
@@ -633,7 +633,7 @@ export const translations: AreaTranslations = {
   "selangor/sungai-buloh": {
     ...shared("Sungai Buloh"),
     name: "Sungai Buloh",
-    title: "Renovasi & Pembaikan Rumah di Sungai Buloh | Renovix",
+    title: "Renovix Home Services | Renovasi & Pembaikan Rumah di Sungai Buloh",
     metaDescription:
       "Servis renovasi dan pembaikan rumah di Sungai Buloh — renovasi, kerja paip, kalis air, elektrik, cat dan handyman. Sebut harga percuma.",
     h1: "Servis Renovasi & Pembaikan Rumah di Sungai Buloh",
@@ -680,7 +680,7 @@ export const translations: AreaTranslations = {
   "selangor/rawang": {
     ...shared("Rawang"),
     name: "Rawang",
-    title: "Renovasi & Pembaikan Rumah di Rawang | Renovix",
+    title: "Renovix Home Services | Renovasi & Pembaikan Rumah di Rawang",
     metaDescription:
       "Servis renovasi dan pembaikan rumah di Rawang — renovasi, kalis air, kerja paip, elektrik, cat dan handyman. Sebut harga percuma.",
     h1: "Servis Renovasi & Pembaikan Rumah di Rawang",
@@ -727,7 +727,7 @@ export const translations: AreaTranslations = {
   "selangor/semenyih": {
     ...shared("Semenyih"),
     name: "Semenyih",
-    title: "Renovasi & Pembaikan Rumah di Semenyih | Renovix",
+    title: "Renovix Home Services | Renovasi & Pembaikan Rumah di Semenyih",
     metaDescription:
       "Servis renovasi dan pembaikan rumah di Semenyih — renovasi, kalis air, kerja paip, elektrik, cat dan handyman. Sebut harga percuma.",
     h1: "Servis Renovasi & Pembaikan Rumah di Semenyih",
@@ -774,7 +774,7 @@ export const translations: AreaTranslations = {
   "selangor/usj": {
     ...shared("USJ"),
     name: "USJ",
-    title: "Renovasi & Pembaikan Rumah di USJ | Renovix",
+    title: "Renovix Home Services | Renovasi & Pembaikan Rumah di USJ",
     metaDescription:
       "Servis renovasi dan pembaikan rumah di USJ — renovasi, kalis air, kerja paip, elektrik, jubin dan cat. Sebut harga percuma.",
     h1: "Servis Renovasi & Pembaikan Rumah di USJ",

@@ -3,7 +3,7 @@ import type { ServiceDetail } from "./types";
 export const generalRenovation: ServiceDetail = {
   slug: "general-renovation",
   name: "General Renovation",
-  title: "General Renovation Services in Kuala Lumpur & Selangor",
+  title: "Renovix Home Services | General Renovation Services in KL & Selangor",
   metaDescription:
     "Home, condo, office and shop renovation in Kuala Lumpur & Selangor — full and partial renovation, bathroom and kitchen makeovers, wall hacking, brickwork, plastering and repairs. Free quote.",
   h1: "General Renovation Services in Kuala Lumpur & Selangor",

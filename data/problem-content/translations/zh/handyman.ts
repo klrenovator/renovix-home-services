@@ -20,7 +20,7 @@ export const translations: ProblemTranslations = {
   "door-problems": {
     ...base,
     name: "门的问题",
-    title: "吉隆坡与雪兰莪门扇维修 | Renovix",
+    title: "Renovix Home Services | 吉隆坡与雪兰莪门扇维修",
     metaDescription:
       "在吉隆坡与雪兰莪维修卡住、异响或关不上的门。了解成因、警示迹象与解决方式。",
     h1: "门的问题",
@@ -75,7 +75,7 @@ export const translations: ProblemTranslations = {
   "lock-problems": {
     ...base,
     name: "门锁问题",
-    title: "吉隆坡与雪兰莪门锁维修与更换 | Renovix",
+    title: "Renovix Home Services | 吉隆坡与雪兰莪门锁维修与更换",
     metaDescription:
       "在吉隆坡与雪兰莪维修或更换卡涩、转不动的门锁。了解成因、警示迹象与解决方式。",
     h1: "门锁问题",
@@ -130,7 +130,7 @@ export const translations: ProblemTranslations = {
   "curtain-installation": {
     ...base,
     name: "窗帘安装",
-    title: "吉隆坡与雪兰莪窗帘安装 | Renovix",
+    title: "Renovix Home Services | 吉隆坡与雪兰莪窗帘安装",
     metaDescription:
       "在吉隆坡与雪兰莪按墙体类型安装稳固水平的窗帘杆与轨道。了解常见问题与解决方式。",
     h1: "窗帘安装",
@@ -185,7 +185,7 @@ export const translations: ProblemTranslations = {
   "tv-mounting": {
     ...base,
     name: "电视挂墙安装",
-    title: "吉隆坡与雪兰莪电视挂墙安装 | Renovix",
+    title: "Renovix Home Services | 吉隆坡与雪兰莪电视挂墙安装",
     metaDescription:
       "在吉隆坡与雪兰莪以合适支架与固定件安装挂墙电视，并整理线材。了解注意事项与解决方式。",
     h1: "电视挂墙安装",
@@ -240,7 +240,7 @@ export const translations: ProblemTranslations = {
   "shelf-installation": {
     ...base,
     name: "置物架安装",
-    title: "吉隆坡与雪兰莪置物架安装 | Renovix",
+    title: "Renovix Home Services | 吉隆坡与雪兰莪置物架安装",
     metaDescription:
       "在吉隆坡与雪兰莪按墙体类型安装水平且牢固的置物架。了解常见问题、警示迹象与解决方式。",
     h1: "置物架安装",
@@ -295,7 +295,7 @@ export const translations: ProblemTranslations = {
   "minor-home-repairs": {
     ...base,
     name: "家居小维修",
-    title: "吉隆坡与雪兰莪家居小维修 | Renovix",
+    title: "Renovix Home Services | 吉隆坡与雪兰莪家居小维修",
     metaDescription:
       "在吉隆坡与雪兰莪一次上门解决家中累积的小维修清单。了解常见问题与解决方式。",
     h1: "家居小维修",

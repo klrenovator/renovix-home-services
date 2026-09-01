@@ -21,7 +21,7 @@ export const translations: ProblemTranslations = {
   "power-tripping": {
     ...base,
     name: "电源跳闸",
-    title: "吉隆坡与雪兰莪电源跳闸检修 | Renovix",
+    title: "Renovix Home Services | 吉隆坡与雪兰莪电源跳闸检修",
     metaDescription:
       "在吉隆坡与雪兰莪检查并修复反复跳闸的保险开关。了解成因、警示迹象，以及电工到达前的安全做法。",
     h1: "电源跳闸",
@@ -77,7 +77,7 @@ export const translations: ProblemTranslations = {
   "faulty-socket": {
     ...base,
     name: "插座故障",
-    title: "吉隆坡与雪兰莪插座故障维修 | Renovix",
+    title: "Renovix Home Services | 吉隆坡与雪兰莪插座故障维修",
     metaDescription:
       "在吉隆坡与雪兰莪安全维修与更换失灵、松动或发烫的插座，并测试回路。了解成因与解决方式。",
     h1: "插座故障",
@@ -132,7 +132,7 @@ export const translations: ProblemTranslations = {
   "faulty-switch": {
     ...base,
     name: "开关故障",
-    title: "吉隆坡与雪兰莪开关故障维修 | Renovix",
+    title: "Renovix Home Services | 吉隆坡与雪兰莪开关故障维修",
     metaDescription:
       "在吉隆坡与雪兰莪安全更换打火、发烫或失灵的墙面开关并进行测试。了解成因与解决方式。",
     h1: "开关故障",
@@ -187,7 +187,7 @@ export const translations: ProblemTranslations = {
   "flickering-lights": {
     ...base,
     name: "灯光闪烁",
-    title: "吉隆坡与雪兰莪灯光闪烁检修 | Renovix",
+    title: "Renovix Home Services | 吉隆坡与雪兰莪灯光闪烁检修",
     metaDescription:
       "在吉隆坡与雪兰莪从回路层面追查灯光闪烁的原因。了解常见成因、警示迹象与何时该找电工。",
     h1: "灯光闪烁",
@@ -242,7 +242,7 @@ export const translations: ProblemTranslations = {
   "short-circuit": {
     ...base,
     name: "短路",
-    title: "吉隆坡与雪兰莪短路检修 | Renovix",
+    title: "Renovix Home Services | 吉隆坡与雪兰莪短路检修",
     metaDescription:
       "在吉隆坡与雪兰莪安全定位并修复短路故障。了解成因、警示迹象与应立即采取的措施。",
     h1: "短路",
@@ -297,7 +297,7 @@ export const translations: ProblemTranslations = {
   "old-house-wiring": {
     ...base,
     name: "旧屋线路",
-    title: "吉隆坡与雪兰莪旧屋线路检查与换线 | Renovix",
+    title: "Renovix Home Services | 吉隆坡与雪兰莪旧屋线路检查与换线",
     metaDescription:
       "在吉隆坡与雪兰莪评估旧屋线路并安全换线。了解警示迹象，以及全屋换线与局部换线的选择。",
     h1: "旧屋线路",
@@ -352,7 +352,7 @@ export const translations: ProblemTranslations = {
   "insufficient-power-points": {
     ...base,
     name: "电源插座不足",
-    title: "吉隆坡与雪兰莪加装电源插座 | Renovix",
+    title: "Renovix Home Services | 吉隆坡与雪兰莪加装电源插座",
     metaDescription:
       "在吉隆坡与雪兰莪按正确方式加装电源插座，摆脱对延长线的依赖。了解成因与解决方式。",
     h1: "电源插座不足",
@@ -407,7 +407,7 @@ export const translations: ProblemTranslations = {
   "ceiling-fan-wiring-problems": {
     ...base,
     name: "吊扇线路问题",
-    title: "吉隆坡与雪兰莪吊扇线路检修 | Renovix",
+    title: "Renovix Home Services | 吉隆坡与雪兰莪吊扇线路检修",
     metaDescription:
       "在吉隆坡与雪兰莪修复不转、打火或没有供电的吊扇线路，并可安装新的吊扇电源点。",
     h1: "吊扇线路问题",

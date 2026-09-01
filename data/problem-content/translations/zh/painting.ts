@@ -21,7 +21,7 @@ export const translations: ProblemTranslations = {
   "peeling-paint": {
     ...base,
     name: "油漆脱落",
-    title: "吉隆坡与雪兰莪油漆脱落修复 | Renovix",
+    title: "Renovix Home Services | 吉隆坡与雪兰莪油漆脱落修复",
     metaDescription:
       "在吉隆坡与雪兰莪修复起泡脱落的油漆，从基层处理做起。了解成因、警示迹象与解决方式。",
     h1: "油漆脱落",
@@ -76,7 +76,7 @@ export const translations: ProblemTranslations = {
   "cracked-walls": {
     ...base,
     name: "墙面开裂",
-    title: "吉隆坡与雪兰莪墙面开裂修补 | Renovix",
+    title: "Renovix Home Services | 吉隆坡与雪兰莪墙面开裂修补",
     metaDescription:
       "在吉隆坡与雪兰莪修补开裂的墙面，并如实说明哪些裂缝需要进一步检查。了解成因与解决方式。",
     h1: "墙面开裂",
@@ -131,7 +131,7 @@ export const translations: ProblemTranslations = {
   "mouldy-walls": {
     ...base,
     name: "墙面发霉",
-    title: "吉隆坡与雪兰莪墙面发霉处理 | Renovix",
+    title: "Renovix Home Services | 吉隆坡与雪兰莪墙面发霉处理",
     metaDescription:
       "在吉隆坡与雪兰莪处理发霉墙面：找出潮湿源头、做防霉处理并使用防霉漆。了解成因与解决方式。",
     h1: "墙面发霉",
@@ -186,7 +186,7 @@ export const translations: ProblemTranslations = {
   "faded-paint": {
     ...base,
     name: "油漆褪色",
-    title: "吉隆坡与雪兰莪油漆褪色翻新 | Renovix",
+    title: "Renovix Home Services | 吉隆坡与雪兰莪油漆褪色翻新",
     metaDescription:
       "在吉隆坡与雪兰莪翻新褪色墙面，做好颜色匹配并选用更耐候的涂料。了解成因与解决方式。",
     h1: "油漆褪色",
@@ -241,7 +241,7 @@ export const translations: ProblemTranslations = {
   "uneven-paint": {
     ...base,
     name: "漆面不均",
-    title: "吉隆坡与雪兰莪漆面不均修复 | Renovix",
+    title: "Renovix Home Services | 吉隆坡与雪兰莪漆面不均修复",
     metaDescription:
       "在吉隆坡与雪兰莪修复斑驳、有滚痕或光泽不一的漆面，从基层处理与施工方式着手。了解成因与解决方式。",
     h1: "漆面不均",
@@ -296,7 +296,7 @@ export const translations: ProblemTranslations = {
   "wall-surface-damage": {
     ...base,
     name: "墙面破损",
-    title: "吉隆坡与雪兰莪墙面破损修补 | Renovix",
+    title: "Renovix Home Services | 吉隆坡与雪兰莪墙面破损修补",
     metaDescription:
       "在吉隆坡与雪兰莪修补孔洞、凹痕、批荡剥落与受潮墙面，为重新上漆做好准备。了解成因与解决方式。",
     h1: "墙面破损",

@@ -22,7 +22,7 @@ export const translations: AreaTranslations = {
   "kuala-lumpur/cheras": {
     ...shared("Cheras"),
     name: "Cheras",
-    title: "Renovasi & Pembaikan Rumah di Cheras | Renovix",
+    title: "Renovix Home Services | Renovasi & Pembaikan Rumah di Cheras",
     metaDescription:
       "Servis renovasi dan pembaikan rumah di Cheras — kerja paip, kalis air, elektrik, jubin dan mengecat untuk pangsapuri, rumah teres dan kondominium. Sebut harga percuma.",
     h1: "Servis Renovasi & Pembaikan Rumah di Cheras",
@@ -69,7 +69,7 @@ export const translations: AreaTranslations = {
   "kuala-lumpur/setapak": {
     ...shared("Setapak"),
     name: "Setapak",
-    title: "Renovasi & Pembaikan Rumah di Setapak | Renovix",
+    title: "Renovix Home Services | Renovasi & Pembaikan Rumah di Setapak",
     metaDescription:
       "Servis renovasi dan pembaikan rumah di Setapak — kerja elektrik, paip, cat, jubin dan handyman untuk rumah teres, pangsapuri dan unit sewa. Sebut harga percuma.",
     h1: "Servis Renovasi & Pembaikan Rumah di Setapak",
@@ -116,7 +116,7 @@ export const translations: AreaTranslations = {
   "kuala-lumpur/wangsa-maju": {
     ...shared("Wangsa Maju"),
     name: "Wangsa Maju",
-    title: "Renovasi & Pembaikan Rumah di Wangsa Maju | Renovix",
+    title: "Renovix Home Services | Renovasi & Pembaikan Rumah di Wangsa Maju",
     metaDescription:
       "Servis renovasi dan pembaikan rumah di Wangsa Maju — kalis air, kerja paip, jubin, cat dan elektrik untuk rumah teres dan kondominium. Sebut harga percuma.",
     h1: "Servis Renovasi & Pembaikan Rumah di Wangsa Maju",
@@ -163,7 +163,7 @@ export const translations: AreaTranslations = {
   "kuala-lumpur/ampang": {
     ...shared("Ampang"),
     name: "Ampang",
-    title: "Renovasi & Pembaikan Rumah di Ampang | Renovix",
+    title: "Renovix Home Services | Renovasi & Pembaikan Rumah di Ampang",
     metaDescription:
       "Servis renovasi dan pembaikan rumah di Ampang — renovasi, elektrik, kalis air, kerja paip dan siling untuk banglo dan kondominium. Sebut harga percuma.",
     h1: "Servis Renovasi & Pembaikan Rumah di Ampang",
@@ -210,7 +210,7 @@ export const translations: AreaTranslations = {
   "kuala-lumpur/kepong": {
     ...shared("Kepong"),
     name: "Kepong",
-    title: "Renovasi & Pembaikan Rumah di Kepong | Renovix",
+    title: "Renovix Home Services | Renovasi & Pembaikan Rumah di Kepong",
     metaDescription:
       "Servis renovasi dan pembaikan rumah di Kepong — renovasi, jubin, kerja paip, elektrik, cat dan kalis air untuk rumah teres dan lot kedai. Sebut harga percuma.",
     h1: "Servis Renovasi & Pembaikan Rumah di Kepong",
@@ -257,7 +257,7 @@ export const translations: AreaTranslations = {
   "kuala-lumpur/segambut": {
     ...shared("Segambut"),
     name: "Segambut",
-    title: "Renovasi & Pembaikan Rumah di Segambut | Renovix",
+    title: "Renovix Home Services | Renovasi & Pembaikan Rumah di Segambut",
     metaDescription:
       "Servis renovasi dan pembaikan rumah di Segambut — renovasi, elektrik, kerja paip, cat, kalis air dan handyman. Sebut harga percuma.",
     h1: "Servis Renovasi & Pembaikan Rumah di Segambut",
@@ -304,7 +304,7 @@ export const translations: AreaTranslations = {
   "kuala-lumpur/sentul": {
     ...shared("Sentul"),
     name: "Sentul",
-    title: "Renovasi & Pembaikan Rumah di Sentul | Renovix",
+    title: "Renovix Home Services | Renovasi & Pembaikan Rumah di Sentul",
     metaDescription:
       "Servis renovasi dan pembaikan rumah di Sentul — kerja paip, elektrik, cat, jubin, siling dan handyman untuk flat lama dan kondominium baharu. Sebut harga percuma.",
     h1: "Servis Renovasi & Pembaikan Rumah di Sentul",
@@ -351,7 +351,7 @@ export const translations: AreaTranslations = {
   "kuala-lumpur/mont-kiara": {
     ...shared("Mont Kiara"),
     name: "Mont Kiara",
-    title: "Renovasi & Pembaikan Rumah di Mont Kiara | Renovix",
+    title: "Renovix Home Services | Renovasi & Pembaikan Rumah di Mont Kiara",
     metaDescription:
       "Servis renovasi dan pembaikan kondominium di Mont Kiara — kerja paip, kalis air, jubin, elektrik dan handyman mengikut peraturan pengurusan. Sebut harga percuma.",
     h1: "Servis Renovasi & Pembaikan Rumah di Mont Kiara",
@@ -398,7 +398,7 @@ export const translations: AreaTranslations = {
   "kuala-lumpur/bangsar": {
     ...shared("Bangsar"),
     name: "Bangsar",
-    title: "Renovasi & Pembaikan Rumah di Bangsar | Renovix",
+    title: "Renovix Home Services | Renovasi & Pembaikan Rumah di Bangsar",
     metaDescription:
       "Servis renovasi dan pembaikan rumah di Bangsar — renovasi, elektrik, kerja paip, cat, kalis air dan siling untuk banglo dan rumah teres. Sebut harga percuma.",
     h1: "Servis Renovasi & Pembaikan Rumah di Bangsar",
@@ -445,7 +445,7 @@ export const translations: AreaTranslations = {
   "kuala-lumpur/bukit-jalil": {
     ...shared("Bukit Jalil"),
     name: "Bukit Jalil",
-    title: "Renovasi & Pembaikan Rumah di Bukit Jalil | Renovix",
+    title: "Renovix Home Services | Renovasi & Pembaikan Rumah di Bukit Jalil",
     metaDescription:
       "Servis renovasi dan pembaikan rumah di Bukit Jalil — renovasi, lantai, kerja paip, elektrik, kalis air dan handyman. Sebut harga percuma.",
     h1: "Servis Renovasi & Pembaikan Rumah di Bukit Jalil",
@@ -492,7 +492,7 @@ export const translations: AreaTranslations = {
   "kuala-lumpur/sri-petaling": {
     ...shared("Sri Petaling"),
     name: "Sri Petaling",
-    title: "Renovasi & Pembaikan Rumah di Sri Petaling | Renovix",
+    title: "Renovix Home Services | Renovasi & Pembaikan Rumah di Sri Petaling",
     metaDescription:
       "Servis renovasi dan pembaikan rumah di Sri Petaling — renovasi, kerja paip, kalis air, jubin, elektrik dan cat. Sebut harga percuma.",
     h1: "Servis Renovasi & Pembaikan Rumah di Sri Petaling",
@@ -539,7 +539,7 @@ export const translations: AreaTranslations = {
   "kuala-lumpur/old-klang-road": {
     ...shared("Old Klang Road"),
     name: "Old Klang Road",
-    title: "Renovasi & Pembaikan Rumah di Old Klang Road | Renovix",
+    title: "Renovix Home Services | Renovasi & Pembaikan Rumah di Old Klang Road",
     metaDescription:
       "Servis renovasi dan pembaikan rumah di Old Klang Road — kerja paip, kalis air, renovasi, jubin, cat dan elektrik. Sebut harga percuma.",
     h1: "Servis Renovasi & Pembaikan Rumah di Old Klang Road",
@@ -586,7 +586,7 @@ export const translations: AreaTranslations = {
   "kuala-lumpur/taman-melawati": {
     ...shared("Taman Melawati"),
     name: "Taman Melawati",
-    title: "Renovasi & Pembaikan Rumah di Taman Melawati | Renovix",
+    title: "Renovix Home Services | Renovasi & Pembaikan Rumah di Taman Melawati",
     metaDescription:
       "Servis renovasi dan pembaikan rumah di Taman Melawati — kalis air, renovasi, kerja paip, elektrik, cat dan handyman. Sebut harga percuma.",
     h1: "Servis Renovasi & Pembaikan Rumah di Taman Melawati",
@@ -633,7 +633,7 @@ export const translations: AreaTranslations = {
   "kuala-lumpur/desa-parkcity": {
     ...shared("Desa ParkCity"),
     name: "Desa ParkCity",
-    title: "Renovasi & Pembaikan Rumah di Desa ParkCity | Renovix",
+    title: "Renovix Home Services | Renovasi & Pembaikan Rumah di Desa ParkCity",
     metaDescription:
       "Servis renovasi dan pembaikan rumah di Desa ParkCity — lantai, elektrik, renovasi, kerja paip, handyman dan cat mengikut garis panduan komuniti. Sebut harga percuma.",
     h1: "Servis Renovasi & Pembaikan Rumah di Desa ParkCity",

@@ -2,7 +2,7 @@ import type { ServiceTranslation } from "../types";
 
 export const translation: ServiceTranslation = {
   name: "Kerja Paip (Plumbing)",
-  title: "Kerja Paip & Plumbing di Kuala Lumpur & Selangor | Renovix",
+  title: "Renovix Home Services | Kerja Paip & Plumbing di KL & Selangor",
   metaDescription:
     "Kerja paip di Kuala Lumpur & Selangor — pembaikan kebocoran, pemasangan dan penggantian paip, sinki, tandas, pili, pemanas air dan floor trap. Sebut harga percuma.",
   h1: "Kerja Paip & Plumbing di Kuala Lumpur & Selangor",

@@ -3,7 +3,7 @@ import type { ServiceDetail } from "./types";
 export const waterproofing: ServiceDetail = {
   slug: "waterproofing",
   name: "Waterproofing",
-  title: "Waterproofing Services in Kuala Lumpur & Selangor | Renovix",
+  title: "Renovix Home Services | Waterproofing Services in KL & Selangor",
   metaDescription:
     "Bathroom, toilet, balcony, roof and wall waterproofing in Kuala Lumpur & Selangor. Water seepage repair, leakage treatment, PU waterproofing, coatings and crack sealing. Free quote.",
   h1: "Waterproofing Services in Kuala Lumpur & Selangor",

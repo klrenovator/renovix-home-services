@@ -22,7 +22,7 @@ export const translations: ProblemTranslations = {
   "door-problems": {
     ...base,
     name: "Masalah Pintu",
-    title: "Masalah Pintu di Kuala Lumpur & Selangor | Renovix",
+    title: "Renovix Home Services | Masalah Pintu di KL & Selangor",
     metaDescription:
       "Pintu tersangkut, berdecit atau tidak boleh ditutup dibaiki di Kuala Lumpur & Selangor. Punca, tanda amaran dan penyelesaian.",
     h1: "Masalah Pintu",
@@ -78,7 +78,7 @@ export const translations: ProblemTranslations = {
   "lock-problems": {
     ...base,
     name: "Masalah Kunci",
-    title: "Masalah Kunci di Kuala Lumpur & Selangor | Renovix",
+    title: "Renovix Home Services | Masalah Kunci di KL & Selangor",
     metaDescription:
       "Kunci yang keras, tersangkut atau tidak boleh dipusing dibaiki atau diganti di Kuala Lumpur & Selangor. Punca dan penyelesaian.",
     h1: "Masalah Kunci",
@@ -134,7 +134,7 @@ export const translations: ProblemTranslations = {
   "curtain-installation": {
     ...base,
     name: "Pemasangan Langsir",
-    title: "Pemasangan Langsir di Kuala Lumpur & Selangor | Renovix",
+    title: "Renovix Home Services | Pemasangan Langsir di KL & Selangor",
     metaDescription:
       "Rod dan trek langsir dipasang lurus dan kukuh di Kuala Lumpur & Selangor mengikut jenis dinding. Punca masalah dan penyelesaian.",
     h1: "Pemasangan Langsir",
@@ -190,7 +190,7 @@ export const translations: ProblemTranslations = {
   "tv-mounting": {
     ...base,
     name: "Pemasangan TV",
-    title: "Pemasangan TV Dinding di Kuala Lumpur & Selangor | Renovix",
+    title: "Renovix Home Services | Pemasangan TV Dinding di KL & Selangor",
     metaDescription:
       "TV dipasang pada dinding dengan braket dan pengikat yang betul di Kuala Lumpur & Selangor, termasuk kemasan kabel. Punca dan penyelesaian.",
     h1: "Pemasangan TV",
@@ -246,7 +246,7 @@ export const translations: ProblemTranslations = {
   "shelf-installation": {
     ...base,
     name: "Pemasangan Rak",
-    title: "Pemasangan Rak di Kuala Lumpur & Selangor | Renovix",
+    title: "Renovix Home Services | Pemasangan Rak di KL & Selangor",
     metaDescription:
       "Rak dipasang lurus dan kukuh mengikut jenis dinding di Kuala Lumpur & Selangor. Punca masalah, tanda amaran dan penyelesaian.",
     h1: "Pemasangan Rak",
@@ -302,7 +302,7 @@ export const translations: ProblemTranslations = {
   "minor-home-repairs": {
     ...base,
     name: "Pembaikan Kecil Rumah",
-    title: "Pembaikan Kecil Rumah di Kuala Lumpur & Selangor | Renovix",
+    title: "Renovix Home Services | Pembaikan Kecil Rumah di KL & Selangor",
     metaDescription:
       "Senarai kerja kecil di rumah diselesaikan dalam satu lawatan di Kuala Lumpur & Selangor. Punca, tanda amaran dan penyelesaian.",
     h1: "Pembaikan Kecil Rumah",

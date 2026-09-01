@@ -43,7 +43,7 @@ export const waterproofingProblems: ProblemDetail[] = [
     ...waterproofingBase,
     slug: "roof-leakage",
     name: "Roof Leakage",
-    title: "Roof Leakage in Kuala Lumpur & Selangor | Roof Waterproofing",
+    title: "Renovix Home Services | Roof Leakage in KL & Selangor",
     metaDescription:
       "Roof leakage in KL & Selangor — water through the ceiling, stains and damp patches. Learn the causes, warning signs and roof waterproofing solutions.",
     h1: "Roof Leakage",
@@ -162,7 +162,7 @@ export const waterproofingProblems: ProblemDetail[] = [
     ...waterproofingBase,
     slug: "bathroom-leakage",
     name: "Bathroom Leakage",
-    title: "Bathroom Leakage in Kuala Lumpur & Selangor | Renovix",
+    title: "Renovix Home Services | Bathroom Leakage in KL & Selangor",
     metaDescription:
       "Bathroom leakage in KL & Selangor — water seeping to the ceiling below, damp walls and failed membranes. Learn the causes, signs and waterproofing fixes.",
     h1: "Bathroom Leakage",
@@ -281,7 +281,7 @@ export const waterproofingProblems: ProblemDetail[] = [
     ...waterproofingBase,
     slug: "balcony-leakage",
     name: "Balcony Leakage",
-    title: "Balcony Leakage in Kuala Lumpur & Selangor | Renovix",
+    title: "Renovix Home Services | Balcony Leakage in KL & Selangor",
     metaDescription:
       "Balcony leakage in KL & Selangor — water seeping to the room below, stained ceilings and failed membranes. Learn the causes, warning signs and solutions.",
     h1: "Balcony Leakage",
@@ -400,7 +400,7 @@ export const waterproofingProblems: ProblemDetail[] = [
     ...waterproofingBase,
     slug: "wall-seepage",
     name: "Wall Seepage",
-    title: "Wall Seepage in Kuala Lumpur & Selangor | Wall Waterproofing",
+    title: "Renovix Home Services | Wall Seepage in KL & Selangor",
     metaDescription:
       "Wall seepage in KL & Selangor — water soaking through walls, damp patches and mould. Learn the causes, warning signs and wall waterproofing solutions.",
     h1: "Wall Seepage",
@@ -519,7 +519,7 @@ export const waterproofingProblems: ProblemDetail[] = [
     ...waterproofingBase,
     slug: "damp-walls",
     name: "Damp Walls",
-    title: "Damp Wall Treatment in Kuala Lumpur & Selangor | Renovix",
+    title: "Renovix Home Services | Damp Wall Treatment in KL & Selangor",
     metaDescription:
       "Damp walls in KL & Selangor — condensation and rising damp causing mould, peeling paint and stains. Learn the causes, warning signs and treatments.",
     h1: "Damp Walls",
@@ -638,7 +638,7 @@ export const waterproofingProblems: ProblemDetail[] = [
     ...waterproofingBase,
     slug: "water-stains",
     name: "Water Stains",
-    title: "Water Stain Removal in Kuala Lumpur & Selangor | Renovix",
+    title: "Renovix Home Services | Water Stain Removal in KL & Selangor",
     metaDescription:
       "Water stains on walls or ceilings in KL & Selangor — yellow-brown marks and recurring discolouration. Learn the causes, warning signs and treatments.",
     h1: "Water Stains",

@@ -20,7 +20,7 @@ export const translations: ProblemTranslations = {
   "water-leakage": {
     ...base,
     name: "漏水",
-    title: "吉隆坡与雪兰莪漏水检测与维修 | Renovix",
+    title: "Renovix Home Services | 吉隆坡与雪兰莪漏水检测与维修",
     metaDescription:
       "在吉隆坡与雪兰莪定位并修复漏水，避免墙面与天花受损。了解成因、警示迹象与解决方式。",
     h1: "漏水",
@@ -75,7 +75,7 @@ export const translations: ProblemTranslations = {
   "leaking-tap": {
     ...base,
     name: "水龙头漏水",
-    title: "吉隆坡与雪兰莪水龙头漏水维修 | Renovix",
+    title: "Renovix Home Services | 吉隆坡与雪兰莪水龙头漏水维修",
     metaDescription:
       "在吉隆坡与雪兰莪维修或更换滴水的水龙头。了解成因、警示迹象与解决方式。",
     h1: "水龙头漏水",
@@ -130,7 +130,7 @@ export const translations: ProblemTranslations = {
   "leaking-pipe": {
     ...base,
     name: "水管渗漏",
-    title: "吉隆坡与雪兰莪水管渗漏维修 | Renovix",
+    title: "Renovix Home Services | 吉隆坡与雪兰莪水管渗漏维修",
     metaDescription:
       "在吉隆坡与雪兰莪定位并修复渗漏水管，包括墙内隐蔽管路。了解成因与解决方式。",
     h1: "水管渗漏",
@@ -185,7 +185,7 @@ export const translations: ProblemTranslations = {
   "blocked-drain": {
     ...base,
     name: "排水堵塞",
-    title: "吉隆坡与雪兰莪排水堵塞疏通 | Renovix",
+    title: "Renovix Home Services | 吉隆坡与雪兰莪排水堵塞疏通",
     metaDescription:
       "在吉隆坡与雪兰莪疏通堵塞的排水管，并提供防止复发的建议。了解成因与解决方式。",
     h1: "排水堵塞",
@@ -240,7 +240,7 @@ export const translations: ProblemTranslations = {
   "toilet-problems": {
     ...base,
     name: "马桶故障",
-    title: "吉隆坡与雪兰莪马桶维修 | Renovix",
+    title: "Renovix Home Services | 吉隆坡与雪兰莪马桶维修",
     metaDescription:
       "在吉隆坡与雪兰莪维修不停流水、渗漏或冲力不足的马桶。了解成因、警示迹象与解决方式。",
     h1: "马桶故障",
@@ -295,7 +295,7 @@ export const translations: ProblemTranslations = {
   "low-water-pressure": {
     ...base,
     name: "水压不足",
-    title: "吉隆坡与雪兰莪水压不足检修 | Renovix",
+    title: "Renovix Home Services | 吉隆坡与雪兰莪水压不足检修",
     metaDescription:
       "在吉隆坡与雪兰莪检查并改善水压不足，从堵塞的配件到供水问题逐一排查。了解成因与解决方式。",
     h1: "水压不足",

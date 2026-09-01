@@ -1088,7 +1088,98 @@ published pages each to **100 each — the same 100 pages English publishes**.
 
 ---
 
-## Notes
+## PHASE 11 — Business Information & Local SEO Foundation — [x] COMPLETE
+
+Phase 10 already replaced the placeholders with the verified business details; this
+phase audited every use of them, removed the last stale wording, made the full
+business identity explicit on the Contact page, normalized every page title to
+the full brand and added a reproducible automated business-info audit.
+
+### 1. Business information audit (single source of truth)
+- [x] `data/site.ts` remains the one source of truth: name **Renovix Home
+      Services**, phone/WhatsApp **+601159259521**, email
+      **renovixhomeservices@gmail.com**, address **Jalan Kiara, Mont Kiara,
+      50480 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia**, hours
+      **9:00 AM – 6:00 PM** (`09:00`–`18:00`)
+- [x] Codebase scan (app/, components/, data/, i18n/): exactly one phone
+      number, one WhatsApp link, one email and one address — no sample,
+      old, placeholder or conflicting values anywhere
+- [x] No `[PHONE NUMBER]`, `[WHATSAPP NUMBER]`, `[EMAIL]`, `[ADDRESS]`,
+      `[BUSINESS HOURS]` or `example.com` business placeholders remain. The
+      only `you@example.com` / `anda@contoh.com` strings are the visitor's
+      own-email form input examples, not business contact details
+- [x] No references to KL Renovator, KL Servis Rumah or any other brand
+- [x] No invented unit/building/suite numbers, offices, branches, showrooms,
+      coordinates, reviews, ratings, prices, certifications or licences
+
+### 2. NAP & contact consistency
+- [x] Header, footer, contact page, about page, quote page, homepage CTA,
+      mobile menu CTA and every service/problem/area hero + CTA block read
+      the verified details from `data/site.ts`
+- [x] Call links: `tel:+601159259521` (visible number stays `+601159259521`)
+- [x] WhatsApp links: `https://wa.me/601159259521` (international format, no
+      prefill, no invented automation) on every WhatsApp control
+- [x] Email links: `mailto:renovixhomeservices@gmail.com`; visible email
+      everywhere is `renovixhomeservices@gmail.com`
+- [x] Contact page now leads with a **Business** card (`Renovix Home
+      Services`, linking to the About page) followed by Phone, WhatsApp,
+      Email, Address and Business Hours cards — same facts in English,
+      Malay and Simplified Chinese
+- [x] FAQ "request a quote" answer no longer says the contact details are
+      "once they are confirmed" — it now points to the verified
+      `+601159259521` / `renovixhomeservices@gmail.com` (fix applied to
+      `data/site-faqs.ts` and all three dictionaries)
+- [x] No map/embed or coordinates were added; the verified address is used
+      where a location is shown
+
+### 3. Structured data
+- [x] `Organization`/`LocalBusiness` node verified on every page: `name`,
+      `telephone`, `email`, `PostalAddress`
+      (street `Jalan Kiara, Mont Kiara`, locality `Kuala Lumpur`, region
+      `Wilayah Persekutuan Kuala Lumpur`, postcode `50480`, country `MY`),
+      `url`, `contactPoint`, `knowsLanguage` and
+      `openingHoursSpecification` (`09:00`–`18:00`, **no `dayOfWeek`** — the
+      business has not stated which days it opens)
+- [x] `areaServed` = Kuala Lumpur, Selangor, Klang Valley (service
+      coverage only — no fake branches or local offices)
+- [x] Still no `sameAs` (no verified social profiles), `geo`, `aggregateRating`,
+      reviews, `priceRange`, awards, certifications or licences
+
+### 4. SEO / metadata
+- [x] Every one of the 300 pages now carries the full brand in its `<title>`:
+      **Renovix Home Services | …** (brand-first). Index pages updated in the
+      dictionaries; 267 service/problem/area titles normalized in the content
+      data; the 6 titles that were missing the brand (2 service pages, 4
+      problem pages) now include it
+- [x] Title lengths kept reasonable by using the established "KL & Selangor"
+      form inside titles instead of the full state name
+- [x] Service, location and brand intent preserved; no keyword stuffing; no
+      rewrites of content descriptions beyond the required brand/contact fixes
+- [x] Canonicals, hreflang (`en-MY`/`ms-MY`/`zh-MY` + `x-default`),
+      per-language sitemaps (100 URLs each) and robots.txt re-verified — no
+      indexing blocks, no new pages, no broken links, Phase 10 routing intact
+
+### 5. Automated audit
+- [x] New `scripts/audit-business-info.mjs` + `npm run audit:business`:
+      scans the source tree and fails on any phone/email other than the
+      verified ones, any conflicting opening-hours claim, any business
+      placeholder, a missing required schema field, an invented schema signal
+      or another business name — **PASS**
+- [x] README updated with the new script
+
+### 6. Testing
+- [x] `npm run type-check` — **PASS**
+- [x] `npm run lint` — **PASS** (0 errors, 0 warnings)
+- [x] `npm run build` — **PASS** (all pages statically prerendered)
+- [x] All **300 localized routes** return HTTP 200 (100 per language)
+- [x] Business-fact + JSON-LD checks on 30 page/language combinations PASS
+      (name/phone/WhatsApp/email/address/hours present, schema accurate,
+      no invented signals)
+- [x] Contact page renders Business + Phone + WhatsApp + Email + Address +
+      Hours correctly in all three languages, with correct `tel:`, `wa.me`
+      and `mailto:` links
+
+
 
 - No prices, reviews, ratings, review counts, geo coordinates, certifications, licences, awards, registration numbers, warranties, years of experience, projects or team members have been invented.
 - Contact details are the real ones supplied by the business in Phase 10 (they were placeholders through Phases 1–9):
@@ -1098,4 +1189,4 @@ published pages each to **100 each — the same 100 pages English publishes**.
   - Hours: `9:00 AM – 6:00 PM` (the opening days were not stated, so no `dayOfWeek` is published in the schema)
 - Dedicated service detail pages were built in Phase 2; problem pages were built in Phase 3; the local SEO area architecture (2 region hubs + 31 unique location guides + areas index) was built in Phase 4. Phase 5 adds the supporting pages and a portfolio framework containing only clearly labelled placeholders. Phase 6 delivered the multilingual architecture and full translations for the core pages; the long-form service, problem and area catalogues remain English-only and the blog is not built. Phase 8 was the quality optimization pass (performance, accessibility, mobile & UX); the advanced quote system remains future work.
 - Phase 9 was the final QA audit: full route, multilingual, service, problem, location, conversion, SEO, performance, accessibility and code-quality review. Six genuine defects were fixed (three language-mixing bugs, the redirecting `og:image`, the missing mobile CTA and the on-demand OG route), dead code was removed and two build-time i18n guards were added. Remaining known issues are listed at the end of the Phase 9 section.
-- Phase 10 completed the localization project: all 10 service pages, 46 problem pages and 33 area guides now exist in Malay and Chinese (178 new translated documents), every contact detail is real, and each language publishes the same 100 pages. Phases 11+ remain pending.
+- Phase 10 completed the localization project: all 10 service pages, 46 problem pages and 33 area guides now exist in Malay and Chinese (178 new translated documents), every contact detail is real, and each language publishes the same 100 pages. Phase 11 completed the business information/local SEO foundation: the verified NAP is the only business data in the codebase, the Contact page presents it in full in all three languages, every page title carries the full brand, the structured data is audited and an automated business-info audit (`npm run audit:business`) guards it. Phases 12–14 remain pending.

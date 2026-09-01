@@ -43,7 +43,7 @@ export const handymanProblems: ProblemDetail[] = [
     ...handymanBase,
     slug: "door-problems",
     name: "Door Problems",
-    title: "Door Repair in Kuala Lumpur & Selangor | Renovix",
+    title: "Renovix Home Services | Door Repair in KL & Selangor",
     metaDescription:
       "Doors that stick, squeak, sag or will not close in Kuala Lumpur & Selangor? Learn the causes, warning signs, door repair and adjustment solutions, and when to call a handyman.",
     h1: "Door Problems",
@@ -162,7 +162,7 @@ export const handymanProblems: ProblemDetail[] = [
     ...handymanBase,
     slug: "lock-problems",
     name: "Lock Problems",
-    title: "Lock Repair in Kuala Lumpur & Selangor | Renovix",
+    title: "Renovix Home Services | Lock Repair in KL & Selangor",
     metaDescription:
       "A stiff, jammed, broken or sticking lock in Kuala Lumpur & Selangor? Learn the causes, warning signs, lock repair and replacement solutions, and when to call a handyman or locksmith.",
     h1: "Lock Problems",
@@ -281,7 +281,7 @@ export const handymanProblems: ProblemDetail[] = [
     ...handymanBase,
     slug: "curtain-installation",
     name: "Curtain Installation",
-    title: "Curtain Installation in Kuala Lumpur & Selangor | Renovix",
+    title: "Renovix Home Services | Curtain Installation in KL & Selangor",
     metaDescription:
       "Curtain and curtain-rod installation in Kuala Lumpur & Selangor — rods, tracks, hooks and rails fitted securely. Learn the process, property types, and when to call a handyman.",
     h1: "Curtain Installation",
@@ -400,7 +400,7 @@ export const handymanProblems: ProblemDetail[] = [
     ...handymanBase,
     slug: "tv-mounting",
     name: "TV Mounting",
-    title: "TV Mounting in Kuala Lumpur & Selangor | Renovix",
+    title: "Renovix Home Services | TV Mounting in KL & Selangor",
     metaDescription:
       "TV wall mounting in Kuala Lumpur & Selangor — secure brackets, correct height and neat cable routing. Learn the process, safety considerations and when to call a handyman.",
     h1: "TV Mounting",
@@ -519,7 +519,7 @@ export const handymanProblems: ProblemDetail[] = [
     ...handymanBase,
     slug: "shelf-installation",
     name: "Shelf Installation",
-    title: "Shelf Installation in Kuala Lumpur & Selangor | Renovix",
+    title: "Renovix Home Services | Shelf Installation in KL & Selangor",
     metaDescription:
       "Shelf and bracket installation in Kuala Lumpur & Selangor — floating shelves, wall shelves and storage fitted securely. Learn the process, wall considerations and when to call a handyman.",
     h1: "Shelf Installation",
@@ -638,7 +638,7 @@ export const handymanProblems: ProblemDetail[] = [
     ...handymanBase,
     slug: "minor-home-repairs",
     name: "Minor Home Repairs",
-    title: "Minor Home Repairs in Kuala Lumpur & Selangor | Renovix",
+    title: "Renovix Home Services | Minor Home Repairs in KL & Selangor",
     metaDescription:
       "Minor home repairs in Kuala Lumpur & Selangor — small fixes, loose fittings, hooks, caulking, grout, doors and general maintenance. Learn the scope and when to call a handyman.",
     h1: "Minor Home Repairs",

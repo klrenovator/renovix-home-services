@@ -2,7 +2,7 @@ import type { ServiceTranslation } from "../types";
 
 export const translation: ServiceTranslation = {
   name: "Kerja Mengecat",
-  title: "Kerja Mengecat Rumah di Kuala Lumpur & Selangor | Renovix",
+  title: "Renovix Home Services | Kerja Mengecat Rumah di KL & Selangor",
   metaDescription:
     "Kerja mengecat dalaman dan luaran di Kuala Lumpur & Selangor — cat semula, penyediaan dinding, skim coat, cat anti-kulat dan kemasan khas. Sebut harga percuma.",
   h1: "Kerja Mengecat di Kuala Lumpur & Selangor",

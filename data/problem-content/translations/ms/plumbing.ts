@@ -22,7 +22,7 @@ export const translations: ProblemTranslations = {
   "water-leakage": {
     ...base,
     name: "Kebocoran Air",
-    title: "Kebocoran Air di Kuala Lumpur & Selangor | Renovix",
+    title: "Renovix Home Services | Kebocoran Air di KL & Selangor",
     metaDescription:
       "Kebocoran air dikesan dan dibaiki di Kuala Lumpur & Selangor sebelum ia merosakkan dinding dan siling. Punca, tanda amaran dan penyelesaian.",
     h1: "Kebocoran Air",
@@ -78,7 +78,7 @@ export const translations: ProblemTranslations = {
   "leaking-tap": {
     ...base,
     name: "Pili Bocor",
-    title: "Pili Bocor di Kuala Lumpur & Selangor | Renovix",
+    title: "Renovix Home Services | Pili Bocor di KL & Selangor",
     metaDescription:
       "Pili bocor dibaiki atau diganti di Kuala Lumpur & Selangor supaya ia berhenti menitis. Punca, tanda amaran dan penyelesaian.",
     h1: "Pili Bocor",
@@ -134,7 +134,7 @@ export const translations: ProblemTranslations = {
   "leaking-pipe": {
     ...base,
     name: "Paip Bocor",
-    title: "Paip Bocor di Kuala Lumpur & Selangor | Renovix",
+    title: "Renovix Home Services | Paip Bocor di KL & Selangor",
     metaDescription:
       "Paip bocor dikesan dan dibaiki di Kuala Lumpur & Selangor, termasuk paip tersembunyi dalam dinding. Punca, tanda dan penyelesaian.",
     h1: "Paip Bocor",
@@ -190,7 +190,7 @@ export const translations: ProblemTranslations = {
   "blocked-drain": {
     ...base,
     name: "Saluran Tersumbat",
-    title: "Saluran Tersumbat di Kuala Lumpur & Selangor | Renovix",
+    title: "Renovix Home Services | Saluran Tersumbat di KL & Selangor",
     metaDescription:
       "Saluran tersumbat dibersihkan di Kuala Lumpur & Selangor, dengan nasihat mencegahnya berulang. Punca, tanda amaran dan penyelesaian.",
     h1: "Saluran Tersumbat",
@@ -246,7 +246,7 @@ export const translations: ProblemTranslations = {
   "toilet-problems": {
     ...base,
     name: "Masalah Tandas",
-    title: "Masalah Tandas di Kuala Lumpur & Selangor | Renovix",
+    title: "Renovix Home Services | Masalah Tandas di KL & Selangor",
     metaDescription:
       "Tandas yang bocor, tidak berhenti mengalir atau kurang kuat pam dibaiki di Kuala Lumpur & Selangor. Punca, tanda dan penyelesaian.",
     h1: "Masalah Tandas",
@@ -302,7 +302,7 @@ export const translations: ProblemTranslations = {
   "low-water-pressure": {
     ...base,
     name: "Tekanan Air Rendah",
-    title: "Tekanan Air Rendah di Kuala Lumpur & Selangor | Renovix",
+    title: "Renovix Home Services | Tekanan Air Rendah di KL & Selangor",
     metaDescription:
       "Tekanan air rendah diperiksa dan dipulihkan di Kuala Lumpur & Selangor, daripada pili tersumbat hingga isu bekalan. Punca dan penyelesaian.",
     h1: "Tekanan Air Rendah",

@@ -22,7 +22,7 @@ export const translations: AreaTranslations = {
   "kuala-lumpur/cheras": {
     ...shared("蕉赖"),
     name: "蕉赖",
-    title: "蕉赖房屋装修与维修服务 | Renovix",
+    title: "Renovix Home Services | 蕉赖房屋装修与维修服务",
     metaDescription:
       "蕉赖（Cheras）房屋装修与维修——水管、防水、电气、瓷砖与油漆工程，服务组屋、排屋与公寓。免费报价。",
     h1: "蕉赖房屋装修与维修服务",
@@ -69,7 +69,7 @@ export const translations: AreaTranslations = {
   "kuala-lumpur/setapak": {
     ...shared("文良港"),
     name: "文良港",
-    title: "文良港房屋装修与维修服务 | Renovix",
+    title: "Renovix Home Services | 文良港房屋装修与维修服务",
     metaDescription:
       "文良港（Setapak）房屋装修与维修——电气、水管、油漆、瓷砖与家居维修，服务排屋、公寓与出租单位。免费报价。",
     h1: "文良港房屋装修与维修服务",
@@ -116,7 +116,7 @@ export const translations: AreaTranslations = {
   "kuala-lumpur/wangsa-maju": {
     ...shared("旺沙玛珠"),
     name: "旺沙玛珠",
-    title: "旺沙玛珠房屋装修与维修服务 | Renovix",
+    title: "Renovix Home Services | 旺沙玛珠房屋装修与维修服务",
     metaDescription:
       "旺沙玛珠（Wangsa Maju）房屋装修与维修——防水、水管、瓷砖、油漆与电气工程，服务排屋与公寓。免费报价。",
     h1: "旺沙玛珠房屋装修与维修服务",
@@ -163,7 +163,7 @@ export const translations: AreaTranslations = {
   "kuala-lumpur/ampang": {
     ...shared("安邦"),
     name: "安邦",
-    title: "安邦房屋装修与维修服务 | Renovix",
+    title: "Renovix Home Services | 安邦房屋装修与维修服务",
     metaDescription:
       "安邦（Ampang）房屋装修与维修——装修、电气、防水、水管与天花工程，服务洋房与公寓。免费报价。",
     h1: "安邦房屋装修与维修服务",
@@ -210,7 +210,7 @@ export const translations: AreaTranslations = {
   "kuala-lumpur/kepong": {
     ...shared("甲洞"),
     name: "甲洞",
-    title: "甲洞房屋装修与维修服务 | Renovix",
+    title: "Renovix Home Services | 甲洞房屋装修与维修服务",
     metaDescription:
       "甲洞（Kepong）房屋装修与维修——装修、瓷砖、水管、电气、油漆与防水工程，服务排屋与店屋。免费报价。",
     h1: "甲洞房屋装修与维修服务",
@@ -257,7 +257,7 @@ export const translations: AreaTranslations = {
   "kuala-lumpur/segambut": {
     ...shared("士甲末"),
     name: "士甲末",
-    title: "士甲末房屋装修与维修服务 | Renovix",
+    title: "Renovix Home Services | 士甲末房屋装修与维修服务",
     metaDescription:
       "士甲末（Segambut）房屋装修与维修——装修、电气、水管、油漆、防水与家居维修。免费报价。",
     h1: "士甲末房屋装修与维修服务",
@@ -304,7 +304,7 @@ export const translations: AreaTranslations = {
   "kuala-lumpur/sentul": {
     ...shared("冼都"),
     name: "冼都",
-    title: "冼都房屋装修与维修服务 | Renovix",
+    title: "Renovix Home Services | 冼都房屋装修与维修服务",
     metaDescription:
       "冼都（Sentul）房屋装修与维修——水管、电气、油漆、瓷砖、天花与家居维修，服务旧组屋与新公寓。免费报价。",
     h1: "冼都房屋装修与维修服务",
@@ -351,7 +351,7 @@ export const translations: AreaTranslations = {
   "kuala-lumpur/mont-kiara": {
     ...shared("满家乐"),
     name: "满家乐",
-    title: "满家乐公寓装修与维修服务 | Renovix",
+    title: "Renovix Home Services | 满家乐公寓装修与维修服务",
     metaDescription:
       "满家乐（Mont Kiara）公寓装修与维修——水管、防水、瓷砖、电气与家居维修，按管理层规定施工。免费报价。",
     h1: "满家乐房屋装修与维修服务",
@@ -398,7 +398,7 @@ export const translations: AreaTranslations = {
   "kuala-lumpur/bangsar": {
     ...shared("孟沙"),
     name: "孟沙",
-    title: "孟沙房屋装修与维修服务 | Renovix",
+    title: "Renovix Home Services | 孟沙房屋装修与维修服务",
     metaDescription:
       "孟沙（Bangsar）房屋装修与维修——装修、电气、水管、油漆、防水与天花工程，服务洋房与排屋。免费报价。",
     h1: "孟沙房屋装修与维修服务",
@@ -445,7 +445,7 @@ export const translations: AreaTranslations = {
   "kuala-lumpur/bukit-jalil": {
     ...shared("武吉加里尔"),
     name: "武吉加里尔",
-    title: "武吉加里尔房屋装修与维修服务 | Renovix",
+    title: "Renovix Home Services | 武吉加里尔房屋装修与维修服务",
     metaDescription:
       "武吉加里尔（Bukit Jalil）房屋装修与维修——装修、地板、水管、电气、防水与家居维修。免费报价。",
     h1: "武吉加里尔房屋装修与维修服务",
@@ -492,7 +492,7 @@ export const translations: AreaTranslations = {
   "kuala-lumpur/sri-petaling": {
     ...shared("斯里布特拉"),
     name: "斯里布特拉",
-    title: "斯里布特拉房屋装修与维修服务 | Renovix",
+    title: "Renovix Home Services | 斯里布特拉房屋装修与维修服务",
     metaDescription:
       "斯里布特拉（Sri Petaling）房屋装修与维修——装修、水管、防水、瓷砖、电气与油漆工程。免费报价。",
     h1: "斯里布特拉房屋装修与维修服务",
@@ -539,7 +539,7 @@ export const translations: AreaTranslations = {
   "kuala-lumpur/old-klang-road": {
     ...shared("旧巴生路"),
     name: "旧巴生路",
-    title: "旧巴生路房屋装修与维修服务 | Renovix",
+    title: "Renovix Home Services | 旧巴生路房屋装修与维修服务",
     metaDescription:
       "旧巴生路（Old Klang Road）房屋装修与维修——水管、防水、装修、瓷砖、油漆与电气工程。免费报价。",
     h1: "旧巴生路房屋装修与维修服务",
@@ -586,7 +586,7 @@ export const translations: AreaTranslations = {
   "kuala-lumpur/taman-melawati": {
     ...shared("美拉华蒂花园"),
     name: "美拉华蒂花园",
-    title: "美拉华蒂花园房屋装修与维修服务 | Renovix",
+    title: "Renovix Home Services | 美拉华蒂花园房屋装修与维修服务",
     metaDescription:
       "美拉华蒂花园（Taman Melawati）房屋装修与维修——防水、装修、水管、电气、油漆与家居维修。免费报价。",
     h1: "美拉华蒂花园房屋装修与维修服务",
@@ -633,7 +633,7 @@ export const translations: AreaTranslations = {
   "kuala-lumpur/desa-parkcity": {
     ...shared("百乐镇"),
     name: "百乐镇",
-    title: "百乐镇房屋装修与维修服务 | Renovix",
+    title: "Renovix Home Services | 百乐镇房屋装修与维修服务",
     metaDescription:
       "百乐镇（Desa ParkCity）房屋装修与维修——地板、电气、装修、水管、家居维修与油漆，按社区规定施工。免费报价。",
     h1: "百乐镇房屋装修与维修服务",

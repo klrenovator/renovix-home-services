@@ -12,7 +12,7 @@ export const en: Dictionary = {
     defaultDescription:
       "Renovix Home Services provides professional home renovation and improvement services across Kuala Lumpur, Selangor and the Klang Valley. Tiling, welding, electrical, painting, ceiling, partition, plumbing, waterproofing, flooring, renovation and handyman services.",
     homeTitle:
-      "Home Renovation & Improvement in KL & Selangor | Renovix",
+      "Renovix Home Services | Home Renovation & Improvement in KL & Selangor",
     homeDescription:
       "Home renovation and improvement services in Kuala Lumpur, Selangor and the Klang Valley — tiling, welding, electrical, painting, plumbing and more.",
     ogBadge: "Serving KL & Selangor · Klang Valley",
@@ -209,7 +209,8 @@ export const en: Dictionary = {
     },
   },
   servicesIndex: {
-    metaTitle: "Our Services in Kuala Lumpur & Selangor | Renovix",
+    metaTitle:
+      "Renovix Home Services | Services in Kuala Lumpur & Selangor",
     metaDescription:
       "Explore Renovix home services in KL & Selangor: tiling, welding, electrical, painting, ceiling & partition, renovation, plumbing and waterproofing.",
     ogDescription:
@@ -258,7 +259,8 @@ export const en: Dictionary = {
       "Share the details of the work, your property type and location, and we will guide the next step.",
   },
   problemsIndex: {
-    metaTitle: "Home Problems We Solve in Kuala Lumpur & Selangor | Renovix",
+    metaTitle:
+      "Renovix Home Services | Home Problems in Kuala Lumpur & Selangor",
     metaDescription:
       "Common home problems we help with across KL & Selangor — tiling, electrical, painting, ceiling, plumbing and waterproofing issues, causes and fixes.",
     ogDescription:
@@ -314,7 +316,8 @@ export const en: Dictionary = {
       "Describe what you are seeing and where the property is located, and we will advise on the next step.",
   },
   areasIndex: {
-    metaTitle: "Service Areas in KL, Selangor & Klang Valley | Renovix",
+    metaTitle:
+      "Renovix Home Services | Service Areas in KL, Selangor & Klang Valley",
     metaDescription:
       "Renovix serves Kuala Lumpur, Selangor and the Klang Valley. Browse local guides for KL neighbourhoods and Selangor towns, with services, property types and common problems per area.",
     ogDescription:
@@ -480,6 +483,9 @@ export const en: Dictionary = {
     detailsLead:
       "Reach Renovix Home Services directly by phone, WhatsApp or email. We answer enquiries during business hours and will tell you honestly whether a site visit is needed before a quotation.",
     channels: {
+      business: "Business",
+      businessHelper:
+        "The official name of the company, used throughout the website, on invoices and in correspondence.",
       phone: "Phone Number",
       phoneHelper: "Call us during business hours to describe the work you need.",
       whatsapp: "WhatsApp Number",
@@ -511,7 +517,7 @@ export const en: Dictionary = {
     klangValleyDescription: "Explore all service areas",
   },
   quote: {
-    metaTitle: "Get a Quote for Home Services in KL & Selangor | Renovix",
+    metaTitle: "Renovix Home Services | Get a Quote in KL & Selangor",
     metaDescription:
       "Request a home renovation, repair or improvement quote from Renovix for Kuala Lumpur, Selangor and the Klang Valley. Share service, property, location and photos to help with assessment.",
     breadcrumb: "Get a Quote",
@@ -671,7 +677,8 @@ export const en: Dictionary = {
     ctaSecondary: "Explore Services",
   },
   faq: {
-    metaTitle: "Home Services FAQ | Renovix KL & Selangor",
+    metaTitle:
+      "Renovix Home Services | Home Services FAQ in KL & Selangor",
     metaDescription:
       "Answers to common Renovix Home Services questions about home repairs, renovation, KL and Selangor coverage, condos, quotation photos and specific service categories.",
     breadcrumb: "FAQ",
@@ -716,7 +723,7 @@ export const en: Dictionary = {
       "request-quote": {
         question: "How can I request a quote?",
         answer:
-          "Use the Get a Quote form to share the work you need, your property details and location. You can also use the contact or WhatsApp details once they are confirmed. After the information is reviewed, further details or an assessment may be needed before a quotation is prepared.",
+          "Use the Get a Quote form to share the work you need, your property details and location. You can also call or WhatsApp us on +601159259521, or email renovixhomeservices@gmail.com. After the information is reviewed, further details or an assessment may be needed before a quotation is prepared.",
       },
       "send-photos": {
         question: "Can I send photos for quotation?",

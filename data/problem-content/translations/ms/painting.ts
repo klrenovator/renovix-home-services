@@ -22,7 +22,7 @@ export const translations: ProblemTranslations = {
   "peeling-paint": {
     ...base,
     name: "Cat Mengelupas",
-    title: "Cat Mengelupas di Kuala Lumpur & Selangor | Renovix",
+    title: "Renovix Home Services | Cat Mengelupas di KL & Selangor",
     metaDescription:
       "Cat yang mengelupas atau menggelembung dibaiki di Kuala Lumpur & Selangor dengan penyediaan permukaan yang betul. Punca, tanda amaran dan penyelesaian.",
     h1: "Cat Mengelupas",
@@ -78,7 +78,7 @@ export const translations: ProblemTranslations = {
   "cracked-walls": {
     ...base,
     name: "Dinding Retak",
-    title: "Dinding Retak di Kuala Lumpur & Selangor | Renovix",
+    title: "Renovix Home Services | Dinding Retak di KL & Selangor",
     metaDescription:
       "Dinding retak dibaiki dan dikemas di Kuala Lumpur & Selangor, dengan nasihat jujur bila retak perlu diperiksa lebih lanjut. Punca dan penyelesaian.",
     h1: "Dinding Retak",
@@ -134,7 +134,7 @@ export const translations: ProblemTranslations = {
   "mouldy-walls": {
     ...base,
     name: "Dinding Berkulat",
-    title: "Dinding Berkulat di Kuala Lumpur & Selangor | Renovix",
+    title: "Renovix Home Services | Dinding Berkulat di KL & Selangor",
     metaDescription:
       "Dinding berkulat dirawat di Kuala Lumpur & Selangor dengan menangani punca kelembapan dan menggunakan cat anti-kulat. Punca, tanda dan penyelesaian.",
     h1: "Dinding Berkulat",
@@ -190,7 +190,7 @@ export const translations: ProblemTranslations = {
   "faded-paint": {
     ...base,
     name: "Cat Pudar",
-    title: "Cat Pudar di Kuala Lumpur & Selangor | Renovix",
+    title: "Renovix Home Services | Cat Pudar di KL & Selangor",
     metaDescription:
       "Cat yang pudar dipulihkan di Kuala Lumpur & Selangor dengan padanan warna dan kemasan yang lebih tahan cuaca. Punca dan penyelesaian.",
     h1: "Cat Pudar",
@@ -246,7 +246,7 @@ export const translations: ProblemTranslations = {
   "uneven-paint": {
     ...base,
     name: "Cat Tidak Sekata",
-    title: "Cat Tidak Sekata di Kuala Lumpur & Selangor | Renovix",
+    title: "Renovix Home Services | Cat Tidak Sekata di KL & Selangor",
     metaDescription:
       "Cat belang, berjalur atau tidak sekata dibaiki di Kuala Lumpur & Selangor dengan penyediaan permukaan dan lapisan yang betul. Punca dan penyelesaian.",
     h1: "Cat Tidak Sekata",
@@ -302,7 +302,7 @@ export const translations: ProblemTranslations = {
   "wall-surface-damage": {
     ...base,
     name: "Kerosakan Permukaan Dinding",
-    title: "Kerosakan Permukaan Dinding di Kuala Lumpur & Selangor | Renovix",
+    title: "Renovix Home Services | Kerosakan Permukaan Dinding di KL & Selangor",
     metaDescription:
       "Lubang, kemek, plaster reput dan dinding rosak air dibaiki di Kuala Lumpur & Selangor sebelum dicat semula. Punca, tanda dan penyelesaian.",
     h1: "Kerosakan Permukaan Dinding",

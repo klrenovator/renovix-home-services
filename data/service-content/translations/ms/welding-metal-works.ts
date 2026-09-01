@@ -2,7 +2,7 @@ import type { ServiceTranslation } from "../types";
 
 export const translation: ServiceTranslation = {
   name: "Kimpalan & Kerja Logam",
-  title: "Kimpalan & Kerja Logam di Kuala Lumpur & Selangor | Renovix",
+  title: "Renovix Home Services | Kimpalan & Kerja Logam di KL & Selangor",
   metaDescription:
     "Kerja kimpalan dan logam di Kuala Lumpur & Selangor — pagar, gril, susur tangan, railing balkoni, awning dan fabrikasi khas, termasuk pembaikan kimpalan. Sebut harga percuma.",
   h1: "Kimpalan & Kerja Logam di Kuala Lumpur & Selangor",

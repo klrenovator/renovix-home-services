@@ -5,7 +5,7 @@ import { klAreasB } from "./kuala-lumpur-areas-b";
 export const kualaLumpur: AreaRegion = {
   id: "kuala-lumpur",
   name: "Kuala Lumpur",
-  title: "Home Renovation & Repair Services in Kuala Lumpur | Renovix",
+  title: "Renovix Home Services | Home Renovation & Repair Services in Kuala Lumpur",
   metaDescription:
     "Home renovation and repair services across Kuala Lumpur — tiling, electrical, plumbing, waterproofing, painting, ceiling, flooring and handyman work. Free quotation.",
   h1: "Home Renovation & Repair Services in Kuala Lumpur",

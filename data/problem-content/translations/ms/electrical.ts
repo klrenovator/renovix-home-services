@@ -22,7 +22,7 @@ export const translations: ProblemTranslations = {
   "power-tripping": {
     ...base,
     name: "Elektrik Trip",
-    title: "Masalah Elektrik Trip di Kuala Lumpur & Selangor | Renovix",
+    title: "Renovix Home Services | Masalah Elektrik Trip di KL & Selangor",
     metaDescription:
       "Breaker yang kerap trip diperiksa dan dibaiki di Kuala Lumpur & Selangor. Ketahui punca, tanda amaran dan langkah selamat sebelum juruelektrik tiba.",
     h1: "Elektrik Trip",
@@ -78,7 +78,7 @@ export const translations: ProblemTranslations = {
   "faulty-socket": {
     ...base,
     name: "Soket Rosak",
-    title: "Soket Rosak di Kuala Lumpur & Selangor | Renovix",
+    title: "Renovix Home Services | Soket Rosak di KL & Selangor",
     metaDescription:
       "Soket mati, longgar atau panas dibaiki dan diganti dengan selamat di Kuala Lumpur & Selangor, termasuk ujian litar. Punca, tanda dan penyelesaian.",
     h1: "Soket Rosak",
@@ -134,7 +134,7 @@ export const translations: ProblemTranslations = {
   "faulty-switch": {
     ...base,
     name: "Suis Rosak",
-    title: "Suis Rosak di Kuala Lumpur & Selangor | Renovix",
+    title: "Renovix Home Services | Suis Rosak di KL & Selangor",
     metaDescription:
       "Suis yang berpercikan, panas atau tidak berfungsi diganti dengan selamat di Kuala Lumpur & Selangor. Ketahui punca, tanda amaran dan penyelesaian.",
     h1: "Suis Rosak",
@@ -190,7 +190,7 @@ export const translations: ProblemTranslations = {
   "flickering-lights": {
     ...base,
     name: "Lampu Berkelip",
-    title: "Lampu Berkelip di Kuala Lumpur & Selangor | Renovix",
+    title: "Renovix Home Services | Lampu Berkelip di KL & Selangor",
     metaDescription:
       "Lampu berkelip dijejak sehingga ke punca litar di Kuala Lumpur & Selangor. Ketahui punca biasa, tanda amaran dan bila perlu memanggil juruelektrik.",
     h1: "Lampu Berkelip",
@@ -246,7 +246,7 @@ export const translations: ProblemTranslations = {
   "short-circuit": {
     ...base,
     name: "Litar Pintas",
-    title: "Litar Pintas di Kuala Lumpur & Selangor | Renovix",
+    title: "Renovix Home Services | Litar Pintas di KL & Selangor",
     metaDescription:
       "Litar pintas dikesan dan dibaiki dengan selamat di Kuala Lumpur & Selangor. Ketahui punca, tanda amaran dan apa yang perlu dilakukan segera.",
     h1: "Litar Pintas",
@@ -302,7 +302,7 @@ export const translations: ProblemTranslations = {
   "old-house-wiring": {
     ...base,
     name: "Pendawaian Rumah Lama",
-    title: "Pendawaian Rumah Lama di Kuala Lumpur & Selangor | Renovix",
+    title: "Renovix Home Services | Pendawaian Rumah Lama di KL & Selangor",
     metaDescription:
       "Pendawaian rumah lama diperiksa dan didawai semula dengan selamat di Kuala Lumpur & Selangor. Ketahui tanda amaran dan pilihan pendawaian penuh atau separa.",
     h1: "Pendawaian Rumah Lama",
@@ -358,7 +358,7 @@ export const translations: ProblemTranslations = {
   "insufficient-power-points": {
     ...base,
     name: "Kekurangan Titik Kuasa",
-    title: "Kekurangan Titik Kuasa di Kuala Lumpur & Selangor | Renovix",
+    title: "Renovix Home Services | Kekurangan Titik Kuasa di KL & Selangor",
     metaDescription:
       "Soket tambahan dipasang dengan pendawaian yang betul di Kuala Lumpur & Selangor supaya anda tidak lagi bergantung pada extension. Punca dan penyelesaian.",
     h1: "Kekurangan Titik Kuasa",
@@ -414,7 +414,7 @@ export const translations: ProblemTranslations = {
   "ceiling-fan-wiring-problems": {
     ...base,
     name: "Masalah Pendawaian Kipas Siling",
-    title: "Masalah Pendawaian Kipas Siling di Kuala Lumpur & Selangor | Renovix",
+    title: "Renovix Home Services | Masalah Pendawaian Kipas Siling di KL & Selangor",
     metaDescription:
       "Kipas siling yang tidak berputar, berpercikan atau tiada bekalan dibaiki di Kuala Lumpur & Selangor, termasuk pemasangan titik kipas baharu.",
     h1: "Masalah Pendawaian Kipas Siling",

@@ -22,7 +22,7 @@ export const translations: ProblemTranslations = {
   "broken-tile-repair": {
     ...base,
     name: "破砖维修",
-    title: "吉隆坡与雪兰莪破砖维修 | Renovix",
+    title: "Renovix Home Services | 吉隆坡与雪兰莪破砖维修",
     metaDescription:
       "在吉隆坡与雪兰莪维修与更换破裂、崩角的瓷砖，不必整片重铺。了解成因、警示迹象与解决方式。",
     h1: "破砖维修",
@@ -79,7 +79,7 @@ export const translations: ProblemTranslations = {
   "cracked-tile-repair": {
     ...base,
     name: "瓷砖裂缝维修",
-    title: "吉隆坡与雪兰莪瓷砖裂缝维修 | Renovix",
+    title: "Renovix Home Services | 吉隆坡与雪兰莪瓷砖裂缝维修",
     metaDescription:
       "在吉隆坡与雪兰莪先找出成因，再维修或更换开裂的瓷砖。了解常见原因、警示迹象与处理方式。",
     h1: "瓷砖裂缝维修",
@@ -136,7 +136,7 @@ export const translations: ProblemTranslations = {
   "loose-tile-repair": {
     ...base,
     name: "松动瓷砖维修",
-    title: "吉隆坡与雪兰莪松动瓷砖维修 | Renovix",
+    title: "Renovix Home Services | 吉隆坡与雪兰莪松动瓷砖维修",
     metaDescription:
       "在吉隆坡与雪兰莪取下松动瓷砖、重新铺贴并固定在平整基面上。了解成因、警示迹象与解决方式。",
     h1: "松动瓷砖维修",
@@ -193,7 +193,7 @@ export const translations: ProblemTranslations = {
   "hollow-tile-problems": {
     ...base,
     name: "瓷砖空鼓问题",
-    title: "吉隆坡与雪兰莪瓷砖空鼓问题 | Renovix",
+    title: "Renovix Home Services | 吉隆坡与雪兰莪瓷砖空鼓问题",
     metaDescription:
       "在吉隆坡与雪兰莪检测并处理空鼓瓷砖，避免翘起、开裂与渗水。了解成因、警示迹象与解决方式。",
     h1: "瓷砖空鼓问题",
@@ -250,7 +250,7 @@ export const translations: ProblemTranslations = {
   "uneven-tiles": {
     ...base,
     name: "瓷砖不平整",
-    title: "吉隆坡与雪兰莪瓷砖不平整处理 | Renovix",
+    title: "Renovix Home Services | 吉隆坡与雪兰莪瓷砖不平整处理",
     metaDescription:
       "在吉隆坡与雪兰莪以找平与批荡处理瓷砖高低差。了解成因、警示迹象与解决方式。",
     h1: "瓷砖不平整",
@@ -307,7 +307,7 @@ export const translations: ProblemTranslations = {
   "tile-grout-problems": {
     ...base,
     name: "瓷砖填缝问题",
-    title: "吉隆坡与雪兰莪瓷砖填缝问题 | Renovix",
+    title: "Renovix Home Services | 吉隆坡与雪兰莪瓷砖填缝问题",
     metaDescription:
       "在吉隆坡与雪兰莪更换开裂、粉化或发霉的填缝，让瓷砖保持牢固与密封。了解成因与解决方式。",
     h1: "瓷砖填缝问题",
@@ -364,7 +364,7 @@ export const translations: ProblemTranslations = {
   "bathroom-tile-problems": {
     ...base,
     name: "浴室瓷砖问题",
-    title: "吉隆坡与雪兰莪浴室瓷砖问题 | Renovix",
+    title: "Renovix Home Services | 吉隆坡与雪兰莪浴室瓷砖问题",
     metaDescription:
       "在吉隆坡与雪兰莪处理浴室开裂、空鼓与受水损坏的瓷砖，并配合防水工程。了解成因与解决方式。",
     h1: "浴室瓷砖问题",
@@ -421,7 +421,7 @@ export const translations: ProblemTranslations = {
   "kitchen-tile-problems": {
     ...base,
     name: "厨房瓷砖问题",
-    title: "吉隆坡与雪兰莪厨房瓷砖问题 | Renovix",
+    title: "Renovix Home Services | 吉隆坡与雪兰莪厨房瓷砖问题",
     metaDescription:
       "在吉隆坡与雪兰莪修复厨房地面与墙面的破损瓷砖，含重新填缝与空鼓处理。了解成因与解决方式。",
     h1: "厨房瓷砖问题",
@@ -478,7 +478,7 @@ export const translations: ProblemTranslations = {
   "water-seepage-through-tiles": {
     ...base,
     name: "瓷砖渗水",
-    title: "吉隆坡与雪兰莪瓷砖渗水处理 | Renovix",
+    title: "Renovix Home Services | 吉隆坡与雪兰莪瓷砖渗水处理",
     metaDescription:
       "在吉隆坡与雪兰莪追查并阻止瓷砖渗水，含防水修复与填缝处理。了解成因、警示迹象与解决方式。",
     h1: "瓷砖渗水",

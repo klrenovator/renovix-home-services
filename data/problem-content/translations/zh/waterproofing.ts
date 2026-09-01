@@ -20,7 +20,7 @@ export const translations: ProblemTranslations = {
   "roof-leakage": {
     ...base,
     name: "屋顶漏水",
-    title: "吉隆坡与雪兰莪屋顶漏水维修 | Renovix",
+    title: "Renovix Home Services | 吉隆坡与雪兰莪屋顶漏水维修",
     metaDescription:
       "在吉隆坡与雪兰莪定位并修复屋顶漏水，做好防水处理。了解成因、警示迹象与解决方式。",
     h1: "屋顶漏水",
@@ -75,7 +75,7 @@ export const translations: ProblemTranslations = {
   "bathroom-leakage": {
     ...base,
     name: "浴室渗漏",
-    title: "吉隆坡与雪兰莪浴室渗漏维修 | Renovix",
+    title: "Renovix Home Services | 吉隆坡与雪兰莪浴室渗漏维修",
     metaDescription:
       "在吉隆坡与雪兰莪修复浴室渗漏，为潮湿区域重做防水。了解成因、警示迹象与解决方式。",
     h1: "浴室渗漏",
@@ -130,7 +130,7 @@ export const translations: ProblemTranslations = {
   "balcony-leakage": {
     ...base,
     name: "阳台渗漏",
-    title: "吉隆坡与雪兰莪阳台渗漏防水 | Renovix",
+    title: "Renovix Home Services | 吉隆坡与雪兰莪阳台渗漏防水",
     metaDescription:
       "在吉隆坡与雪兰莪为渗漏的阳台重做防水，保护楼下空间。了解成因、警示迹象与解决方式。",
     h1: "阳台渗漏",
@@ -185,7 +185,7 @@ export const translations: ProblemTranslations = {
   "wall-seepage": {
     ...base,
     name: "墙体渗水",
-    title: "吉隆坡与雪兰莪墙体渗水处理 | Renovix",
+    title: "Renovix Home Services | 吉隆坡与雪兰莪墙体渗水处理",
     metaDescription:
       "在吉隆坡与雪兰莪处理墙体渗水，先判断水从哪一侧进来再施工。了解成因与解决方式。",
     h1: "墙体渗水",
@@ -240,7 +240,7 @@ export const translations: ProblemTranslations = {
   "damp-walls": {
     ...base,
     name: "墙体潮湿",
-    title: "吉隆坡与雪兰莪墙体潮湿处理 | Renovix",
+    title: "Renovix Home Services | 吉隆坡与雪兰莪墙体潮湿处理",
     metaDescription:
       "在吉隆坡与雪兰莪处理长期潮湿的墙体，先分辨潮湿类型再对症施工。了解成因与解决方式。",
     h1: "墙体潮湿",
@@ -295,7 +295,7 @@ export const translations: ProblemTranslations = {
   "water-stains": {
     ...base,
     name: "水渍",
-    title: "吉隆坡与雪兰莪水渍处理 | Renovix",
+    title: "Renovix Home Services | 吉隆坡与雪兰莪水渍处理",
     metaDescription:
       "在吉隆坡与雪兰莪追查并处理墙面与天花的水渍，而不是简单盖漆。了解成因与解决方式。",
     h1: "水渍",

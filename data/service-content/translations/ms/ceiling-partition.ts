@@ -2,7 +2,7 @@ import type { ServiceTranslation } from "../types";
 
 export const translation: ServiceTranslation = {
   name: "Siling & Partisyen",
-  title: "Kerja Siling & Partisyen di Kuala Lumpur & Selangor | Renovix",
+  title: "Renovix Home Services | Kerja Siling & Partisyen di KL & Selangor",
   metaDescription:
     "Kerja siling dan partisyen di Kuala Lumpur & Selangor — siling plaster dan gypsum, false ceiling, cove lighting, partisyen bilik dan pejabat, serta pembaikan siling. Sebut harga percuma.",
   h1: "Kerja Siling & Partisyen di Kuala Lumpur & Selangor",

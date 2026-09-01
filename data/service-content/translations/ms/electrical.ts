@@ -2,7 +2,7 @@ import type { ServiceTranslation } from "../types";
 
 export const translation: ServiceTranslation = {
   name: "Kerja Elektrik",
-  title: "Kerja Elektrik di Kuala Lumpur & Selangor | Renovix",
+  title: "Renovix Home Services | Kerja Elektrik di KL & Selangor",
   metaDescription:
     "Kerja elektrik rumah di Kuala Lumpur & Selangor — pendawaian, pendawaian semula, lampu, soket tambahan, naik taraf DB box dan mencari punca kerosakan. Sebut harga percuma.",
   h1: "Kerja Elektrik di Kuala Lumpur & Selangor",
