@@ -1,17 +1,21 @@
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { IconShieldCheck } from "@/components/icons";
+import { getDictionary } from "@/i18n";
 import type { ServiceDetail } from "@/data/service-content/types";
 
 type WhySectionProps = {
   detail: ServiceDetail;
+  lang: string;
 };
 
-export function WhySection({ detail }: WhySectionProps) {
+export function WhySection({ detail, lang }: WhySectionProps) {
+  const t = getDictionary(lang);
+
   return (
     <section className="section section-surface">
       <div className="container-app">
         <SectionHeading
-          eyebrow="Why Renovix"
+          eyebrow={t.servicePage.whyEyebrow}
           title={detail.whyTitle}
           description={detail.whyIntro}
         />

@@ -18,6 +18,8 @@ export type Dictionary = {
     defaultDescription: string;
     homeTitle: string;
     homeDescription: string;
+    /** Badge line rendered on the social share card. */
+    ogBadge: string;
   };
   a11y: {
     skipToContent: string;
@@ -68,6 +70,10 @@ export type Dictionary = {
     viewContactDetails: string;
     viewServiceAreas: string;
     tellUsAboutWork: string;
+    callNow: string;
+    emailUs: string;
+    /** "View {name}" — used for the main-service card on problem guides. */
+    viewNamed: string;
   };
   footer: {
     blurbPrimary: string;
@@ -144,6 +150,8 @@ export type Dictionary = {
     overviewEyebrow: string;
     highlightsTitle: string;
     subServicesEyebrow: string;
+    /** "{name} Services" */
+    subServicesTitle: string;
     problemsEyebrow: string;
     propertyTypesEyebrow: string;
     propertyTypesTitle: string;
@@ -152,11 +160,17 @@ export type Dictionary = {
     areasEyebrow: string;
     areasTitle: string;
     faqsEyebrow: string;
+    /** "{name} — Frequently Asked Questions" */
+    faqsTitle: string;
     faqsDescription: string;
     relatedEyebrow: string;
     relatedTitle: string;
+    /** "{name} often pairs with other Renovix services…" */
+    relatedDescription: string;
     relatedProblemsTitle: string;
     relatedProblemsNote: string;
+    /** "Need {name} in Kuala Lumpur & Selangor?" */
+    ctaHeading: string;
     ctaTitle: string;
     ctaDescription: string;
   };
@@ -170,9 +184,18 @@ export type Dictionary = {
   };
   problemPage: {
     breadcrumbProblems: string;
+    /** Eyebrow fallback when a problem has no category label. */
+    heroCategoryFallback: string;
     whatItMeansEyebrow: string;
+    /** "Understanding {name}" */
+    whatItMeansTitle: string;
     whatItMeansDescription: string;
+    shortAnswerEyebrow: string;
+    shortAnswerNote: string;
     causesEyebrow: string;
+    /** "What usually causes {name}" */
+    causesTitle: string;
+    causesDescription: string;
     warningSignsEyebrow: string;
     warningSignsTitle: string;
     warningSignsDescription: string;
@@ -184,14 +207,21 @@ export type Dictionary = {
     whenToCallDescription: string;
     relatedServiceEyebrow: string;
     relatedServiceTitle: string;
+    /** "{problem} is handled by our {service} team…" */
+    relatedServiceDescription: string;
+    mainServiceLabel: string;
     processEyebrow: string;
     propertyTypesEyebrow: string;
     propertyTypesTitle: string;
     faqsEyebrow: string;
+    /** "{name} — Frequently Asked Questions" */
+    faqsTitle: string;
     faqsDescription: string;
     relatedProblemsEyebrow: string;
     relatedProblemsTitle: string;
     relatedProblemsDescription: string;
+    /** "Need help with {name} in Kuala Lumpur & Selangor?" */
+    ctaHeading: string;
     ctaTitle: string;
     ctaDescription: string;
   };
@@ -219,29 +249,77 @@ export type Dictionary = {
   areaRegion: {
     breadcrumbAreas: string;
     areasEyebrow: string;
+    /** "Areas We Serve in {name}" */
+    areasTitle: string;
+    areasDescription: string;
     landscapeEyebrow: string;
+    /** "Understanding housing in {name}" */
+    landscapeTitle: string;
     servicesEyebrow: string;
+    /** "Services Most Requested in {name}" */
+    servicesTitle: string;
     faqsEyebrow: string;
+    /** "{name} — Frequently Asked Questions" */
+    faqsTitle: string;
     faqsDescription: string;
     otherRegion: string;
+    /** "We also serve {name}" */
+    otherTitle: string;
+    /** "Browse our {name} area guides…" */
+    otherBody: string;
+    /** "Explore {name}" */
+    exploreOther: string;
     ctaTitle: string;
     ctaDescription: string;
   };
   areaPage: {
     breadcrumbAreas: string;
     servicesEyebrow: string;
+    /** "Home Services Available in {name}" */
+    servicesTitle: string;
+    /** "{service} in {name}" — card title in the services grid. */
+    serviceInArea: string;
+    /** "All areas in {name}" */
+    allAreasIn: string;
+    /** "{count} location guides across {name}." */
+    guidesCount: string;
+    /** "Browse {name}" */
+    browseRegion: string;
+    /** Service name used in the page's structured data. */
+    schemaServiceName: string;
+    /** Service type used in the page's structured data. */
+    schemaServiceType: string;
+    /** Offer catalogue name used in the page's structured data. */
+    schemaCatalogName: string;
     propertyTypesEyebrow: string;
+    /** "Property Types in {name}" */
+    propertyTypesTitle: string;
     problemsEyebrow: string;
+    /** "Common Renovation & Repair Problems in {name}" */
+    problemsTitle: string;
     processEyebrow: string;
     contextEyebrow: string;
+    /** "Working in {name} — What to Expect" */
+    contextTitle: string;
     relatedEyebrow: string;
+    /** "Services Often Combined in {name}" */
+    relatedTitle: string;
+    relatedDescription: string;
     nearbyEyebrow: string;
+    /** "Areas We Also Serve Near {name}" */
+    nearbyTitle: string;
     nearbyDescription: string;
     faqsEyebrow: string;
+    /** "{name} — Frequently Asked Questions" */
+    faqsTitle: string;
     faqsDescription: string;
     problemsLink: string;
     coverageNoteTitle: string;
     coverageNote: string;
+    /** "Planning work in {name}? Start with a free quotation." */
+    ctaHeading: string;
+    /** "Get a Free Quote in {name}" */
+    ctaEyebrow: string;
     ctaTitle: string;
     ctaDescription: string;
   };
@@ -457,5 +535,25 @@ export type Dictionary = {
     kualaLumpur: string;
     selangor: string;
     klangValley: string;
+    /** Eyebrow above the quote CTA blocks. */
+    freeQuoteEyebrow: string;
+    /** Hero chip. */
+    freeQuotation: string;
+    /** Hero chip / coverage line. */
+    klSelangor: string;
+    /** Process step label, rendered as "Step 01". */
+    step: string;
+    /** Localized rendering of the business hours in `data/site.ts`. */
+    businessHours: string;
+    /** Label in front of the phone number on contact CTA blocks. */
+    callOrWhatsApp: string;
+  };
+  /** Shared "service areas" block used by service and problem guides. */
+  areasBlock: {
+    eyebrow: string;
+    title: string;
+    guideTitle: string;
+    guideDescription: string;
+    note: string;
   };
 };

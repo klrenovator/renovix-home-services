@@ -1,11 +1,13 @@
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { IconChevronDown } from "@/components/icons";
+import { format, getDictionary } from "@/i18n";
 import type { AreaFaq } from "@/data/area-content/types";
 
 type AreaFaqSectionProps = {
   name: string;
   faqs: AreaFaq[];
-  /** Localized overrides used by the translated service-areas index. */
+  lang: string;
+  /** Localized overrides used by the service-areas index and region hubs. */
   eyebrow?: string;
   title?: string;
   description?: string;
@@ -14,18 +16,21 @@ type AreaFaqSectionProps = {
 export function AreaFaqSection({
   name,
   faqs,
-  eyebrow = "FAQs",
+  lang,
+  eyebrow,
   title,
-  description = "Practical answers for property owners in the area.",
+  description,
 }: AreaFaqSectionProps) {
+  const t = getDictionary(lang);
+
   return (
     <section className="section section-surface">
       <div className="container-app grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
         <div>
           <SectionHeading
-            eyebrow={eyebrow}
-            title={title ?? `${name} — Frequently Asked Questions`}
-            description={description}
+            eyebrow={eyebrow ?? t.areaPage.faqsEyebrow}
+            title={title ?? format(t.areaPage.faqsTitle, { name })}
+            description={description ?? t.areaPage.faqsDescription}
           />
         </div>
 

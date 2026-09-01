@@ -1,18 +1,22 @@
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { IconBuilding } from "@/components/icons";
+import { getDictionary } from "@/i18n";
 import type { ServiceDetail } from "@/data/service-content/types";
 
 type PropertyTypesSectionProps = {
   detail: ServiceDetail;
+  lang: string;
 };
 
-export function PropertyTypesSection({ detail }: PropertyTypesSectionProps) {
+export function PropertyTypesSection({ detail, lang }: PropertyTypesSectionProps) {
+  const t = getDictionary(lang);
+
   return (
     <section className="section section-surface">
       <div className="container-app">
         <SectionHeading
-          eyebrow="Property Types"
-          title="Property Types We Serve"
+          eyebrow={t.servicePage.propertyTypesEyebrow}
+          title={t.servicePage.propertyTypesTitle}
           description={detail.propertyTypesIntro}
         />
 

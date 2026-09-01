@@ -1,0 +1,92 @@
+import type { ServiceTranslation } from "../types";
+
+export const translation: ServiceTranslation = {
+  name: "Kerja Paip (Plumbing)",
+  title: "Kerja Paip & Plumbing di Kuala Lumpur & Selangor | Renovix",
+  metaDescription:
+    "Kerja paip di Kuala Lumpur & Selangor — pembaikan kebocoran, pemasangan dan penggantian paip, sinki, tandas, pili, pemanas air dan floor trap. Sebut harga percuma.",
+  h1: "Kerja Paip & Plumbing di Kuala Lumpur & Selangor",
+  intro: [
+    "Masalah paip jarang kekal kecil. Pili yang menitis menaikkan bil air, paip bocor di sebalik dinding merosakkan plaster dan cat, dan saliran tersumbat boleh melumpuhkan bilik air atau dapur dalam sehari.",
+    "Renovix mengendalikan kerja paip untuk rumah dan premis kecil di Kuala Lumpur, Selangor dan Lembah Klang — daripada pembaikan kebocoran dan penggantian kelengkapan sehinggalah kerja paip penuh semasa [renovasi](/services/general-renovation). Jika kebocoran telah merosakkan permukaan, kami menyelaraskan kerja [kalis air](/services/waterproofing) dan [jubin](/services/tiling) sekali.",
+  ],
+  overviewTitle: "Pembaikan, Pemasangan & Kerja Paip Renovasi",
+  overviewIntro:
+    "Kerja paip yang baik bermula dengan mencari punca sebenar kebocoran, bukan menampal tempat yang basah.",
+  overviewParagraphs: [
+    "Untuk pembaikan, kami menjejak dari mana air itu datang. Tompok lembap pada siling atau dinding selalunya muncul jauh daripada punca sebenar, jadi kami memeriksa kelengkapan, sambungan dan laluan paip sebelum memutuskan sama ada perlu membuka dinding atau tidak.",
+    "Untuk pemasangan, paip diletakkan dengan kecerunan dan sokongan yang betul, sambungan diuji, dan kelengkapan seperti sinki, tandas, pili dan pemanas air dipasang kemas. Selepas kerja siap, sistem diuji semula sebelum kawasan itu ditutup atau dijubin.",
+  ],
+  highlights: [
+    { title: "Pembaikan & pengesanan kebocoran", description: "Menjejak punca kebocoran sebelum membuka dinding atau lantai." },
+    { title: "Pemasangan & penggantian paip", description: "Paip baharu, penggantian paip lama dan kerja paip tersembunyi." },
+    { title: "Pemasangan kelengkapan sanitari", description: "Sinki, besen, tandas, pili, pancuran dan pemanas air." },
+    { title: "Kerja paip renovasi", description: "Kerja paip yang diselaraskan dengan jubin, kalis air dan kemasan." },
+  ],
+  subServicesIntro:
+    "Kerja paip di bawah boleh ditempah secara berasingan atau digabungkan dalam satu lawatan.",
+  subServices: [
+    { name: "Pemasangan Paip", description: "Laluan paip baharu untuk bilik air, dapur dan ruang tambahan." },
+    { name: "Penggantian Paip", description: "Menggantikan paip lama atau bocor dengan bahan yang sesuai." },
+    { name: "Pembaikan Kebocoran Air", description: "Mencari dan membaiki kebocoran pada paip dan sambungan." },
+    { name: "Pemasangan Sinki", description: "Sinki dapur dipasang dengan sambungan dan perangkap yang betul." },
+    { name: "Pemasangan Besen", description: "Besen bilik air dipasang kemas dan tanpa titisan." },
+    { name: "Pemasangan Tandas", description: "Mangkuk tandas dipasang dengan seal yang rapat." },
+    { name: "Pembaikan Tandas", description: "Membaiki tangki yang bocor, flush lemah dan air yang mengalir berterusan." },
+    { name: "Pemasangan Pili", description: "Pili dan mixer baharu dipasang dan diuji." },
+    { name: "Pemasangan Pancuran", description: "Set pancuran dipasang pada ketinggian dan tekanan yang sesuai." },
+    { name: "Pemasangan Pemanas Air", description: "Water heater dipasang dengan sambungan paip yang betul." },
+    { name: "Penggantian Floor Trap", description: "Floor trap lama diganti supaya saliran lancar dan tiada bau." },
+    { name: "Pembaikan Paip Saliran", description: "Membaiki paip buangan yang bocor atau tersumbat." },
+    { name: "Kerja Paip Dapur", description: "Kerja paip lengkap untuk dapur termasuk sinki dan mesin basuh." },
+    { name: "Kerja Paip Bilik Air", description: "Kerja paip bilik air untuk pemasangan baharu atau naik taraf." },
+    { name: "Kerja Paip Tersembunyi", description: "Paip disembunyikan dalam dinding dengan akses yang dirancang." },
+  ],
+  problemsTitle: "Masalah Paip Yang Kami Selesaikan",
+  problemsIntro: "Gejala di bawah ialah antara panggilan paip yang paling kerap kami terima.",
+  problems: [
+    { title: "Pili & mixer menitis", description: "Seal atau kartrij yang haus menyebabkan titisan berterusan." },
+    { title: "Paip bocor", description: "Sambungan yang longgar atau paip retak yang membasahkan dinding dan lantai." },
+    { title: "Tandas bocor atau air mengalir", description: "Komponen dalam tangki yang gagal menutup dengan rapat." },
+    { title: "Saliran perlahan atau tersumbat", description: "Sumbatan pada perangkap dan paip buangan yang menghalang aliran." },
+    { title: "Tekanan air rendah", description: "Sumbatan, paip bersaiz kecil atau isu pada kelengkapan tertentu." },
+    { title: "Kebocoran di sebalik dinding & lantai", description: "Kebocoran tersembunyi yang hanya kelihatan sebagai tompok lembap." },
+  ],
+  propertyTypesIntro: "Kerja paip berbeza mengikut jenis bangunan dan cara sistem asalnya dipasang.",
+  propertyTypes: [
+    { label: "Kondominium", note: "Kerja dalam unit dengan perhatian kepada kebocoran ke unit di bawah." },
+    { label: "Pangsapuri", note: "Pembaikan dan penggantian kelengkapan dalam unit pangsapuri." },
+    { label: "Rumah Teres", note: "Kerja paip dalaman dan laluan paip luar rumah teres." },
+    { label: "Semi-D & Banglo", note: "Sistem paip yang lebih besar dengan lebih banyak bilik air." },
+    { label: "Kedai & Pejabat", note: "Kerja paip untuk pantri dan tandas premis komersial." },
+    { label: "Projek Renovasi", note: "Kerja paip mengikut urutan sebelum kalis air dan jubin." },
+  ],
+  processTitle: "Proses Kerja Paip Kami",
+  processIntro: "Kami mengesahkan punca dahulu supaya pembaikan dibuat sekali sahaja.",
+  processSteps: [
+    { title: "Mencari Punca Masalah", description: "Kami memeriksa kelengkapan, sambungan dan laluan paip berkaitan." },
+    { title: "Penilaian & Cadangan", description: "Kami terangkan pilihan membaiki atau mengganti berserta kosnya." },
+    { title: "Melaksanakan Kerja", description: "Pembaikan atau pemasangan dijalankan dengan gangguan minimum." },
+    { title: "Ujian & Penyerahan", description: "Sistem diuji untuk kebocoran dan kawasan kerja dikemas." },
+  ],
+  whyTitle: "Kenapa Pilih Renovix untuk Kerja Paip",
+  whyIntro: "Pembaikan paip yang betul bermula daripada diagnosis yang betul.",
+  whyChoose: [
+    { title: "Cari punca sebenar", description: "Kami tidak menampal simptom tanpa mengesahkan dari mana air datang." },
+    { title: "Penyelarasan renovasi", description: "Kerja paip diselaraskan dengan jubin, kalis air dan siling." },
+    { title: "Pemasangan kemas", description: "Laluan paip yang teratur dan sambungan yang boleh diakses." },
+    { title: "Nasihat jujur", description: "Jika membaiki sudah memadai, kami tidak cadangkan penggantian penuh." },
+    { title: "Perlindungan kawasan basah", description: "Kami maklumkan jika kalis air perlu dibaiki selepas kebocoran." },
+    { title: "Liputan KL & Selangor", description: "Kami berkhidmat di seluruh Kuala Lumpur, Selangor dan Lembah Klang." },
+  ],
+  areasNote:
+    "Kerja paip tersedia di seluruh Kuala Lumpur, Selangor dan Lembah Klang untuk kediaman dan premis kecil.",
+  faqs: [
+    { question: "Bagaimana hendak mencari kebocoran tersembunyi?", answer: "Kami bermula dengan corak kelembapan, kemudian menutup kelengkapan satu per satu dan memerhatikan sama ada tompok itu bertambah. Lokasi paip, arah aliran dan keadaan kalis air membantu mengecilkan kawasan sebelum sebarang pembukaan dibuat." },
+    { question: "Patutkah saya baiki atau ganti paip yang bocor?", answer: "Jika kebocoran setempat dan paip masih dalam keadaan baik, pembaikan sudah memadai. Jika paip sudah lama, berkarat atau bocor berulang kali di beberapa tempat, penggantian bahagian tersebut lebih menjimatkan." },
+    { question: "Boleh kerja paip dibuat tanpa hacking dinding?", answer: "Kadangkala boleh, terutamanya jika laluan alternatif di permukaan atau melalui kabinet boleh digunakan. Untuk paip tersembunyi yang bocor, sedikit pembukaan biasanya diperlukan, dan kami cuba mengehadkannya sekecil mungkin." },
+    { question: "Apa yang terlibat dalam pemasangan pemanas air?", answer: "Pemasangan melibatkan sokongan dinding yang kukuh, sambungan paip masuk dan keluar, injap keselamatan dan penyelarasan dengan litar elektrik yang sesuai. Kami menguji unit sebelum menyerahkannya." },
+    { question: "Kenapa tandas saya asyik mengalir air?", answer: "Biasanya kerana flush valve atau inlet valve dalam tangki tidak menutup rapat. Komponen ini boleh diganti tanpa menukar keseluruhan tandas." },
+    { question: "Perlukah kelulusan untuk kerja paip di kondominium?", answer: "Kebanyakan pengurusan bangunan memerlukan notis atau permohonan untuk kerja yang melibatkan hacking atau paip utama. Kerja pembaikan kecil dalam unit lazimnya tidak, tetapi kami tetap mengikut peraturan bangunan anda." },
+  ],
+};

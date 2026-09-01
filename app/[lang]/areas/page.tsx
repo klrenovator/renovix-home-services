@@ -112,7 +112,7 @@ export default async function AreasPage({ params }: AreasPageProps) {
               {t.cta.getFreeQuote}
             </Button>
             <WhatsAppButton
-              href={getWhatsAppHref(code)}
+              href={getWhatsAppHref()}
               variant="secondary"
               label={t.cta.whatsappUs}
             />
@@ -223,6 +223,7 @@ export default async function AreasPage({ params }: AreasPageProps) {
       <AreaFaqSection
         name={t.areasIndex.breadcrumb}
         faqs={faqs}
+        lang={code}
         eyebrow={t.areasIndex.faqEyebrow}
         title={t.areasIndex.faqTitle}
         description={t.areasIndex.faqDescription}
@@ -233,9 +234,6 @@ export default async function AreasPage({ params }: AreasPageProps) {
         eyebrow={t.areasIndex.ctaEyebrow}
         title={t.areasIndex.ctaTitle}
         description={t.areasIndex.ctaDescription}
-        primaryLabel={t.cta.requestQuote}
-        whatsappLabel={t.cta.whatsappUs}
-        note={t.home.ctaSection.note}
       />
     </>
   );

@@ -40,7 +40,7 @@ export function CTASection({ lang }: CTASectionProps) {
                 {t.cta.requestQuote}
               </Button>
               <WhatsAppButton
-                href={getWhatsAppHref(code)}
+                href={getWhatsAppHref()}
                 variant="secondary"
                 label={t.cta.whatsappUs}
               />

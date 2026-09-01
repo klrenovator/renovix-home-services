@@ -15,6 +15,7 @@ export const ms: Dictionary = {
       "Renovasi & Pembaikan Rumah di KL & Selangor | Renovix",
     homeDescription:
       "Perkhidmatan renovasi dan pembaikan rumah di KL, Selangor dan Lembah Klang — kerja jubin, kimpalan, elektrik, cat, siling, paip dan kalis air.",
+    ogBadge: "Berkhidmat di KL & Selangor · Lembah Klang",
   },
   a11y: {
     skipToContent: "Langkau ke kandungan utama",
@@ -69,6 +70,9 @@ export const ms: Dictionary = {
     viewContactDetails: "Lihat maklumat hubungan",
     viewServiceAreas: "Lihat Kawasan Perkhidmatan",
     tellUsAboutWork: "Beritahu kami tentang kerja yang anda rancang",
+    callNow: "Telefon Sekarang",
+    emailUs: "E-mel Kami",
+    viewNamed: "Lihat {name}",
   },
   footer: {
     blurbPrimary:
@@ -200,7 +204,7 @@ export const ms: Dictionary = {
       title: "Merancang Pembaikan atau Renovasi Rumah?",
       description:
         "Beritahu kami apa yang anda perlukan dan pasukan kami akan menilai kerja tersebut serta menasihati langkah seterusnya.",
-      note: "Maklumat hubungan sementara: [WHATSAPP NUMBER]",
+      note: "Telefon atau WhatsApp: +601159259521",
     },
     faq: {
       eyebrow: "Soalan Lazim",
@@ -235,6 +239,7 @@ export const ms: Dictionary = {
     overviewEyebrow: "Gambaran Perkhidmatan",
     highlightsTitle: "Apa yang diliputi perkhidmatan ini",
     subServicesEyebrow: "Sub-Perkhidmatan",
+    subServicesTitle: "Perkhidmatan {name}",
     problemsEyebrow: "Masalah Yang Kami Selesaikan",
     propertyTypesEyebrow: "Jenis Hartanah",
     propertyTypesTitle: "Jenis Hartanah Yang Kami Layani",
@@ -243,13 +248,17 @@ export const ms: Dictionary = {
     areasEyebrow: "Kawasan Perkhidmatan",
     areasTitle: "Berkhidmat di Kuala Lumpur & Selangor",
     faqsEyebrow: "Soalan Lazim",
+    faqsTitle: "{name} — Soalan Lazim",
     faqsDescription:
       "Jawapan terus kepada soalan yang paling kerap ditanya pelanggan tentang perkhidmatan ini.",
     relatedEyebrow: "Perkhidmatan Berkaitan",
     relatedTitle: "Perkhidmatan yang sesuai digabungkan",
+    relatedDescription:
+      "{name} sering digabungkan dengan perkhidmatan Renovix yang lain. Terokai perkhidmatan yang biasa dilakukan serentak.",
     relatedProblemsTitle: "Terokai panduan masalah ini",
     relatedProblemsNote:
       "Panduan ini menerangkan punca, tanda amaran dan penyelesaian praktikal bagi masalah yang ditangani oleh perkhidmatan ini.",
+    ctaHeading: "Perlukan {name} di Kuala Lumpur & Selangor?",
     ctaTitle: "Perlukan perkhidmatan ini untuk rumah anda?",
     ctaDescription:
       "Kongsi butiran kerja, jenis hartanah dan lokasi anda, dan kami akan bantu tentukan langkah seterusnya.",
@@ -266,10 +275,18 @@ export const ms: Dictionary = {
   },
   problemPage: {
     breadcrumbProblems: "Masalah",
+    heroCategoryFallback: "Masalah Rumah",
     whatItMeansEyebrow: "Apa Maksud Masalah Ini",
+    whatItMeansTitle: "Memahami {name}",
     whatItMeansDescription:
       "Penerangan yang jelas dan jujur tentang apa yang sedang berlaku supaya anda tahu apa yang anda hadapi.",
+    shortAnswerEyebrow: "Jawapan ringkas",
+    shortAnswerNote:
+      "Kami terangkan puncanya dan cara membaikinya, bukan sekadar gejalanya.",
     causesEyebrow: "Punca Biasa",
+    causesTitle: "Apa yang biasanya menyebabkan {name}",
+    causesDescription:
+      "Memahami puncanya membantu anda tahu kenapa ia berlaku dan apa pembaikan yang betul.",
     warningSignsEyebrow: "Tanda Amaran",
     warningSignsTitle: "Tanda amaran yang perlu diperhatikan",
     warningSignsDescription:
@@ -284,16 +301,21 @@ export const ms: Dictionary = {
       "Ada masalah yang wajar ditangani awal, dan ada yang sepatutnya diserahkan kepada profesional. Berikut ialah bila anda perlu hubungi kami.",
     relatedServiceEyebrow: "Perkhidmatan Renovix Berkaitan",
     relatedServiceTitle: "Perkhidmatan yang mengendalikan masalah ini",
+    relatedServiceDescription:
+      "{problem} dikendalikan oleh pasukan {service} kami. Perkhidmatan berkaitan di bawah selalunya sebahagian daripada kerja yang sama.",
+    mainServiceLabel: "Perkhidmatan utama",
     processEyebrow: "Proses Kami",
     propertyTypesEyebrow: "Jenis Hartanah",
     propertyTypesTitle: "Jenis Hartanah Yang Kami Bantu",
     faqsEyebrow: "Soalan Lazim",
+    faqsTitle: "{name} — Soalan Lazim",
     faqsDescription:
       "Jawapan terus kepada soalan yang paling kerap ditanya pelanggan tentang masalah ini.",
     relatedProblemsEyebrow: "Masalah Berkaitan",
     relatedProblemsTitle: "Masalah yang sering berkait",
     relatedProblemsDescription:
       "Masalah-masalah ini kerap berlaku bersama di rumah-rumah sekitar Kuala Lumpur dan Selangor.",
+    ctaHeading: "Perlukan bantuan untuk {name} di Kuala Lumpur & Selangor?",
     ctaTitle: "Menghadapi masalah ini di rumah?",
     ctaDescription:
       "Terangkan apa yang anda nampak dan lokasi hartanah anda, dan kami akan nasihati langkah seterusnya.",
@@ -331,11 +353,21 @@ export const ms: Dictionary = {
   areaRegion: {
     breadcrumbAreas: "Kawasan Perkhidmatan",
     areasEyebrow: "Panduan Kawasan",
+    areasTitle: "Kawasan Yang Kami Layani di {name}",
+    areasDescription:
+      "Setiap panduan merangkumi jenis perumahan setempat, masalah yang kami lihat di sana, perkhidmatan yang paling kerap diminta dan nota praktikal tentang bekerja di kawasan itu.",
     landscapeEyebrow: "Landskap Perumahan",
+    landscapeTitle: "Memahami perumahan di {name}",
     servicesEyebrow: "Perkhidmatan Popular",
+    servicesTitle: "Perkhidmatan Paling Diminta di {name}",
     faqsEyebrow: "Soalan Lazim",
+    faqsTitle: "{name} — Soalan Lazim",
     faqsDescription: "Jawapan praktikal untuk pemilik hartanah di wilayah ini.",
     otherRegion: "Lihat wilayah satu lagi",
+    otherTitle: "Kami juga berkhidmat di {name}",
+    otherBody:
+      "Lihat panduan kawasan {name} kami untuk maklumat perumahan setempat, masalah biasa dan perkhidmatan yang ditawarkan.",
+    exploreOther: "Terokai {name}",
     ctaTitle: "Merancang kerja di wilayah ini?",
     ctaDescription:
       "Kongsi kawasan anda, jenis hartanah dan kerja yang diperlukan, dan kami akan bantu tentukan langkah seterusnya.",
@@ -343,19 +375,37 @@ export const ms: Dictionary = {
   areaPage: {
     breadcrumbAreas: "Kawasan Perkhidmatan",
     servicesEyebrow: "Perkhidmatan Yang Tersedia",
+    servicesTitle: "Perkhidmatan Rumah Yang Tersedia di {name}",
+    serviceInArea: "{service} di {name}",
+    allAreasIn: "Semua kawasan di {name}",
+    guidesCount: "{count} panduan lokasi di seluruh {name}.",
+    browseRegion: "Lihat {name}",
+    schemaServiceName: "Perkhidmatan renovasi & pembaikan rumah di {name}",
+    schemaServiceType: "Perkhidmatan renovasi dan pembaikan rumah",
+    schemaCatalogName: "Perkhidmatan Renovix yang tersedia di {name}",
     propertyTypesEyebrow: "Jenis Hartanah",
+    propertyTypesTitle: "Jenis Hartanah di {name}",
     problemsEyebrow: "Masalah Biasa",
+    problemsTitle: "Masalah Renovasi & Pembaikan Yang Biasa di {name}",
     processEyebrow: "Proses Kami",
     contextEyebrow: "Konteks Perkhidmatan Tempatan",
+    contextTitle: "Bekerja di {name} — Apa Yang Perlu Dijangka",
     relatedEyebrow: "Perkhidmatan Berkaitan",
+    relatedTitle: "Perkhidmatan Yang Sering Digabungkan di {name}",
+    relatedDescription:
+      "Kebanyakan projek di {name} melibatkan beberapa bidang kerja. Merancangnya serentak memastikan urutan kerja betul dan tapak kekal teratur.",
     nearbyEyebrow: "Kawasan Berhampiran",
+    nearbyTitle: "Kawasan Lain Yang Kami Layani Berhampiran {name}",
     nearbyDescription: "Kawasan lain yang kami layani berhampiran lokasi ini.",
     faqsEyebrow: "Soalan Lazim",
+    faqsTitle: "{name} — Soalan Lazim",
     faqsDescription: "Jawapan praktikal untuk pemilik hartanah di kawasan ini.",
     problemsLink: "Ketahui lebih lanjut tentang masalah ini",
     coverageNoteTitle: "Liputan, dinyatakan dengan jujur",
     coverageNote:
       "Panduan ini menerangkan kawasan tempat kami bekerja dan konteks tempatan yang kami ambil kira semasa merancang. Ia tidak mendakwa adanya pejabat fizikal, radius perkhidmatan tetap atau pasukan tempatan di lokasi ini.",
+    ctaHeading: "Merancang kerja di {name}? Mulakan dengan sebut harga percuma.",
+    ctaEyebrow: "Dapatkan Sebut Harga Percuma di {name}",
     ctaTitle: "Merancang kerja di kawasan ini?",
     ctaDescription:
       "Kongsi jenis hartanah, kerja yang diperlukan dan lokasi anda, dan kami akan bantu tentukan langkah seterusnya.",
@@ -434,26 +484,26 @@ export const ms: Dictionary = {
     eyebrow: "Hubungi Renovix",
     title: "Mulakan dengan soalan tentang perkhidmatan rumah anda",
     description:
-      "Gunakan maklumat hubungan di bawah, hantar WhatsApp apabila nombor tersedia, atau kongsi skop kerja melalui permintaan sebut harga untuk kerja di Kuala Lumpur, Selangor dan Lembah Klang.",
+      "Telefon atau WhatsApp kami di +601159259521, e-mel renovixhomeservices@gmail.com, atau kongsi skop kerja melalui permintaan sebut harga untuk kerja di Kuala Lumpur, Selangor dan Lembah Klang.",
     heroPrimary: "Mulakan Permintaan Sebut Harga",
     detailsEyebrow: "Maklumat hubungan",
     detailsTitle: "Cara untuk menghubungi kami",
     detailsLead:
-      "Maklumat hubungan sengaja dibiarkan sebagai ruang letak sehingga butiran rasmi dibekalkan. Tiada nombor telefon, e-mel, alamat atau waktu operasi yang dianggap wujud.",
+      "Hubungi Renovix Home Services terus melalui telefon, WhatsApp atau e-mel. Kami menjawab pertanyaan dalam waktu operasi dan akan beritahu dengan jujur sama ada lawatan tapak diperlukan sebelum sebut harga disediakan.",
     channels: {
       phone: "Nombor Telefon",
       phoneHelper:
-        "Butiran panggilan akan ditambah apabila nombor telefon disahkan.",
+        "Telefon kami dalam waktu operasi untuk terangkan kerja yang anda perlukan.",
       whatsapp: "Nombor WhatsApp",
       whatsappHelper:
-        "Butiran WhatsApp akan ditambah apabila nombor disahkan.",
+        "Cara paling pantas untuk hubungi kami — hantar gambar masalah bersama mesej anda.",
       email: "E-mel",
-      emailHelper: "Butiran e-mel akan ditambah apabila alamat disahkan.",
+      emailHelper: "Sesuai untuk skop yang lebih besar, pelan, sebut harga dan dokumen.",
       address: "Alamat",
       addressHelper:
-        "Liputan perkhidmatan disenaraikan di bawah; alamat fizikal belum dibekalkan.",
+        "Pangkalan kami di Mont Kiara. Kerja dijalankan di premis anda di seluruh KL, Selangor dan Lembah Klang.",
       hours: "Waktu Operasi",
-      hoursHelper: "Waktu operasi akan ditambah apabila disahkan.",
+      hoursHelper: "Panggilan, mesej WhatsApp dan e-mel dijawab dalam waktu ini.",
     },
     ctaEyebrow: "Hubungi kami",
     ctaTitle: "Kongsi kerja yang anda perlukan",
@@ -462,8 +512,8 @@ export const ms: Dictionary = {
     whatsappEyebrow: "WhatsApp",
     whatsappTitle: "Lebih selesa guna WhatsApp?",
     whatsappBody:
-      "Saluran WhatsApp akan diaktifkan apabila nombor rasmi dibekalkan. Buat masa ini, butang ini membawa anda kembali ke halaman hubungan ini dan bukan cuba membuka nombor yang belum disahkan.",
-    whatsappNote: "Ruang letak WhatsApp:",
+      "Hantar mesej bersama beberapa gambar dan lokasi anda. WhatsApp biasanya cara paling cepat untuk terangkan kerja pembaikan dan tentukan langkah seterusnya.",
+    whatsappNote: "Telefon atau WhatsApp:",
     areasEyebrow: "Maklumat kawasan perkhidmatan",
     areasTitle: "Kuala Lumpur, Selangor & Lembah Klang",
     areasLead:
@@ -525,13 +575,13 @@ export const ms: Dictionary = {
     photosPrompt: "Muat Naik Gambar",
     photosSelectedSuffix: "gambar",
     photosSelectedSuffixPlural: "gambar",
-    deliveryTitle: "Ruang letak penghantaran sebut harga",
+    deliveryTitle: "Cara borang ini dihantar",
     deliveryBody:
-      "Borang ini sedia disambungkan kepada sistem permintaan sebut harga yang selamat, tetapi penghantaran belum dikonfigurasikan. Menghantar borang ini tidak menghantar maklumat atau gambar anda, dan tidak menjana sebut harga serta-merta.",
+      "Penghantaran dalam talian belum disambungkan, jadi borang ini tidak menghantar butiran atau gambar anda dan tidak menjana sebut harga serta-merta. Untuk menghubungi kami sekarang, WhatsApp atau telefon +601159259521, atau e-mel renovixhomeservices@gmail.com.",
     submittedBodyPrefix:
-      "Ruangan anda telah disemak dalam pratonton hadapan ini. Oleh sebab penghantaran sebut harga belum dikonfigurasikan, tiada butiran dihantar. Sila gunakan",
+      "Ruangan anda telah disemak dalam pratonton ini. Oleh sebab penghantaran dalam talian belum disambungkan, tiada butiran dihantar. Sila WhatsApp atau telefon +601159259521, atau gunakan",
     submittedLink: "halaman hubungan",
-    submittedBodySuffix: "sementara peti masuk sebut harga disambungkan.",
+    submittedBodySuffix: "supaya kami boleh menerima permintaan anda.",
     submit: "Hantar Permintaan Sebut Harga",
     asideEyebrow: "Apa yang berlaku seterusnya",
     asideTitle: "Penilaian yang teliti, bukan janji serta-merta",
@@ -557,7 +607,7 @@ export const ms: Dictionary = {
     ],
     statusTitle: "Status penghantaran borang",
     statusBody:
-      "Borang ini hanyalah seni bina hadapan. Backend yang selamat, destinasi notifikasi dan sambungan storan gambar belum dikonfigurasikan, jadi tiada maklumat dihantar daripada halaman ini buat masa ini.",
+      "Penghantaran dalam talian belum disambungkan, jadi tiada maklumat dihantar daripada halaman ini. WhatsApp, telefon dan e-mel sampai terus kepada kami: +601159259521 dan renovixhomeservices@gmail.com.",
     browseEyebrow: "Tidak pasti dari mana hendak mula?",
     browseTitle: "Lihat skop perkhidmatan sebelum meminta sebut harga",
     browseBody:
@@ -772,12 +822,12 @@ export const ms: Dictionary = {
     eyebrow: "Undang-undang",
     privacyTitle: "Dasar Privasi",
     privacyDescription:
-      "Dasar Privasi yang lengkap akan ditambah dalam fasa seterusnya. Maklumat hubungan kekal sebagai ruang letak sehingga ia dibekalkan.",
+      "Dasar Privasi yang lengkap akan ditambah dalam fasa seterusnya. Untuk sebarang soalan privasi, hubungi Renovix Home Services di +601159259521 atau renovixhomeservices@gmail.com.",
     privacyMetaDescription:
       "Dasar Privasi untuk laman web dan perkhidmatan Renovix Home Services.",
     termsTitle: "Terma & Syarat",
     termsDescription:
-      "Terma & Syarat yang lengkap akan ditambah dalam fasa seterusnya. Maklumat hubungan kekal sebagai ruang letak sehingga ia dibekalkan.",
+      "Terma & Syarat yang lengkap akan ditambah dalam fasa seterusnya. Untuk sebarang pertanyaan, hubungi Renovix Home Services di +601159259521 atau renovixhomeservices@gmail.com.",
     termsMetaDescription:
       "Terma & Syarat untuk penggunaan laman web dan perkhidmatan Renovix Home Services.",
     placeholderNote:
@@ -797,5 +847,19 @@ export const ms: Dictionary = {
     kualaLumpur: "Kuala Lumpur",
     selangor: "Selangor",
     klangValley: "Lembah Klang",
+    freeQuoteEyebrow: "Dapatkan Sebut Harga Percuma",
+    freeQuotation: "Sebut Harga Percuma",
+    klSelangor: "Kuala Lumpur & Selangor",
+    step: "Langkah",
+    businessHours: "9:00 pagi – 6:00 petang",
+    callOrWhatsApp: "Telefon atau WhatsApp",
+  },
+  areasBlock: {
+    eyebrow: "Kawasan Perkhidmatan",
+    title: "Berkhidmat di Kuala Lumpur & Selangor",
+    guideTitle: "Setiap kawasan ada panduannya sendiri",
+    guideDescription:
+      "Jenis perumahan setempat, masalah yang kerap berlaku dan nota kerja yang praktikal untuk kejiranan dan pekan di seluruh Lembah Klang.",
+    note: "Tidak pasti sama ada kami meliputi kawasan anda? Tanya kami — kami berkhidmat di kebanyakan lokasi Lembah Klang.",
   },
 };

@@ -3,10 +3,18 @@ import { Breadcrumbs } from "@/components/service/Breadcrumbs";
 import { InlineLinks } from "@/components/service/InlineLinks";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button, WhatsAppButton } from "@/components/ui/Button";
-import { IconArrowRight, IconMapPin, IconBuilding, serviceIcons, IconWrench } from "@/components/icons";
-import { getWhatsAppHref } from "@/data/site";
-import { localizedHref } from "@/i18n/hrefs";
-import { getServiceBySlug } from "@/data/services";
+import {
+  IconArrowRight,
+  IconMapPin,
+  IconBuilding,
+  IconPhone,
+  serviceIcons,
+  IconWrench,
+} from "@/components/icons";
+import { getPhoneHref, getWhatsAppHref } from "@/data/site";
+import { format, getDictionary } from "@/i18n";
+import { contentHref, localizedHref } from "@/i18n/hrefs";
+import { getServiceCategories } from "@/data/i18n";
 import { getOtherRegion } from "@/data/area-content";
 import type { AreaRegion } from "@/data/area-content/types";
 
@@ -16,7 +24,9 @@ type AreaRegionPageProps = {
 };
 
 export function AreaRegionPage({ region, lang }: AreaRegionPageProps) {
-  const other = getOtherRegion(region);
+  const t = getDictionary(lang);
+  const categories = getServiceCategories(lang);
+  const other = getOtherRegion(region, lang);
 
   return (
     <>
@@ -35,8 +45,8 @@ export function AreaRegionPage({ region, lang }: AreaRegionPageProps) {
             inverse
             lang={lang}
             items={[
-              { label: "Home", href: "/" },
-              { label: "Service Areas", href: "/areas" },
+              { label: t.common.home, href: "/" },
+              { label: t.areaRegion.breadcrumbAreas, href: "/areas" },
               { label: region.name },
             ]}
           />
@@ -53,27 +63,40 @@ export function AreaRegionPage({ region, lang }: AreaRegionPageProps) {
             ))}
           </div>
 
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
             <Button
               href={localizedHref("/quote", lang)}
               variant="primary"
               icon={<IconArrowRight className="h-4 w-4" />}
             >
-              Get a Free Quote
+              {t.cta.getFreeQuote}
             </Button>
-            <WhatsAppButton href={getWhatsAppHref(lang)} variant="secondary" />
+            <WhatsAppButton
+              href={getWhatsAppHref()}
+              variant="secondary"
+              label={t.cta.whatsappUs}
+            />
+            <Button
+              href={getPhoneHref()}
+              variant="outline"
+              external
+              className="border-white/40 text-white hover:bg-white/10"
+              icon={<IconPhone className="h-4 w-4" />}
+            >
+              {t.cta.callNow}
+            </Button>
           </div>
 
           <ul className="mt-8 flex flex-wrap gap-2">
             <li className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/10 px-3 py-1.5 text-xs font-medium text-white/90">
               <IconMapPin className="h-3.5 w-3.5 text-accent" />
-              {region.areas.length} area guides
+              {region.areas.length} {t.areasIndex.guidesCountSuffix}
             </li>
             <li className="rounded-full border border-white/15 bg-white/10 px-3 py-1.5 text-xs font-medium text-white/90">
-              Klang Valley
+              {t.common.klangValley}
             </li>
             <li className="rounded-full border border-white/15 bg-white/10 px-3 py-1.5 text-xs font-medium text-white/90">
-              Free Quotation
+              {t.common.freeQuotation}
             </li>
           </ul>
         </div>
@@ -82,16 +105,19 @@ export function AreaRegionPage({ region, lang }: AreaRegionPageProps) {
       <section id="areas" className="section bg-white scroll-mt-24">
         <div className="container-app">
           <SectionHeading
-            eyebrow="Area Guides"
-            title={`Areas We Serve in ${region.name}`}
-            description={`Each guide covers the local housing stock, the problems we see there, the services most requested and practical notes about working in the area.`}
+            eyebrow={t.areaRegion.areasEyebrow}
+            title={format(t.areaRegion.areasTitle, { name: region.name })}
+            description={t.areaRegion.areasDescription}
           />
 
           <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {region.areas.map((area) => (
               <Link
                 key={area.slug}
-                href={localizedHref(`/areas/${area.region}/${area.slug}`, lang)}
+                href={
+                  contentHref("area", `${area.region}/${area.slug}`, lang) ??
+                  localizedHref(`/areas/${area.region}/${area.slug}`, lang)
+                }
                 className="card card-hover group flex h-full flex-col p-6 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
               >
                 <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-brand/10 text-brand transition-colors group-hover:bg-brand group-hover:text-white">
@@ -102,7 +128,7 @@ export function AreaRegionPage({ region, lang }: AreaRegionPageProps) {
                 </h3>
                 <p className="mt-2 flex-1 text-sm leading-6 text-secondary">{area.summary}</p>
                 <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-brand">
-                  View Area Guide
+                  {t.cta.viewGuide}
                   <IconArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </span>
               </Link>
@@ -114,8 +140,8 @@ export function AreaRegionPage({ region, lang }: AreaRegionPageProps) {
       <section className="section section-surface">
         <div className="container-app">
           <SectionHeading
-            eyebrow="Housing Landscape"
-            title={`Understanding ${region.name}'s Housing`}
+            eyebrow={t.areaRegion.landscapeEyebrow}
+            title={format(t.areaRegion.landscapeTitle, { name: region.name })}
             description={region.landscapeIntro}
           />
 
@@ -138,14 +164,14 @@ export function AreaRegionPage({ region, lang }: AreaRegionPageProps) {
       <section className="section bg-white">
         <div className="container-app">
           <SectionHeading
-            eyebrow="Popular Services"
-            title={`Services Most Requested in ${region.name}`}
+            eyebrow={t.areaRegion.servicesEyebrow}
+            title={format(t.areaRegion.servicesTitle, { name: region.name })}
             description={region.servicesIntro}
           />
 
           <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {region.servicesAvailable.map((focus) => {
-              const service = getServiceBySlug(focus.serviceSlug);
+              const service = categories.find((item) => item.slug === focus.serviceSlug);
 
               if (!service) {
                 return null;
@@ -156,7 +182,10 @@ export function AreaRegionPage({ region, lang }: AreaRegionPageProps) {
               return (
                 <Link
                   key={focus.serviceSlug}
-                  href={localizedHref(service.path, lang)}
+                  href={
+                    contentHref("service", focus.serviceSlug, lang) ??
+                    localizedHref(service.path, lang)
+                  }
                   className="card card-hover group flex h-full flex-col p-6 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
                 >
                   <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-brand/10 text-brand transition-colors group-hover:bg-brand group-hover:text-white">
@@ -167,7 +196,7 @@ export function AreaRegionPage({ region, lang }: AreaRegionPageProps) {
                   </h3>
                   <p className="mt-2 flex-1 text-sm leading-6 text-secondary">{focus.note}</p>
                   <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-brand">
-                    View Service
+                    {t.cta.viewService}
                     <IconArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                   </span>
                 </Link>
@@ -182,24 +211,23 @@ export function AreaRegionPage({ region, lang }: AreaRegionPageProps) {
           <div className="container-app">
             <div className="rounded-2xl border border-slate-200/80 bg-white p-6 shadow-soft sm:p-8">
               <h2 className="text-xl font-bold tracking-tight text-navy">
-                We also serve {other.name}
+                {format(t.areaRegion.otherTitle, { name: other.name })}
               </h2>
               <p className="mt-3 max-w-2xl text-sm leading-6 text-secondary">
-                {other.summary} Browse our {other.name} area guides for local housing
-                details, common problems and services.
+                {other.summary} {format(t.areaRegion.otherBody, { name: other.name })}
               </p>
               <div className="mt-5 flex flex-wrap gap-2">
                 <Link
-                  href={localizedHref(`/areas/${other.id}`, lang)}
+                  href={
+                    contentHref("areaRegion", other.id, lang) ??
+                    localizedHref(`/areas/${other.id}`, lang)
+                  }
                   className="btn btn-primary"
                 >
-                  Explore {other.name}
+                  {format(t.areaRegion.exploreOther, { name: other.name })}
                 </Link>
-                <Link
-                  href={localizedHref("/areas", lang)}
-                  className="btn btn-outline"
-                >
-                  All Service Areas
+                <Link href={localizedHref("/areas", lang)} className="btn btn-outline">
+                  {t.cta.allServiceAreas}
                 </Link>
               </div>
             </div>

@@ -1,8 +1,9 @@
 import { Breadcrumbs } from "@/components/service/Breadcrumbs";
 import { InlineLinks } from "@/components/service/InlineLinks";
 import { Button, WhatsAppButton } from "@/components/ui/Button";
-import { IconArrowRight, IconMapPin } from "@/components/icons";
-import { getWhatsAppHref } from "@/data/site";
+import { IconArrowRight, IconMapPin, IconPhone } from "@/components/icons";
+import { getPhoneHref, getWhatsAppHref } from "@/data/site";
+import { getDictionary } from "@/i18n";
 import { localizedHref } from "@/i18n/hrefs";
 import { getAreaRegion } from "@/data/area-content";
 import type { AreaDetail } from "@/data/area-content/types";
@@ -13,7 +14,8 @@ type AreaHeroProps = {
 };
 
 export function AreaHero({ area, lang }: AreaHeroProps) {
-  const region = getAreaRegion(area.region);
+  const t = getDictionary(lang);
+  const region = getAreaRegion(area.region, lang);
 
   return (
     <section className="relative overflow-hidden bg-navy text-white">
@@ -31,8 +33,8 @@ export function AreaHero({ area, lang }: AreaHeroProps) {
           inverse
           lang={lang}
           items={[
-            { label: "Home", href: "/" },
-            { label: "Service Areas", href: "/areas" },
+            { label: t.common.home, href: "/" },
+            { label: t.areaPage.breadcrumbAreas, href: "/areas" },
             ...(region ? [{ label: region.name, href: `/areas/${region.id}` }] : []),
             { label: area.name },
           ]}
@@ -50,27 +52,36 @@ export function AreaHero({ area, lang }: AreaHeroProps) {
           ))}
         </div>
 
-        <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+        <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
           <Button
             href={localizedHref("/quote", lang)}
             variant="primary"
             icon={<IconArrowRight className="h-4 w-4" />}
           >
-            Get a Free Quote
+            {t.cta.getFreeQuote}
           </Button>
-          <WhatsAppButton href={getWhatsAppHref(lang)} variant="secondary" />
+          <WhatsAppButton href={getWhatsAppHref()} variant="secondary" label={t.cta.whatsappUs} />
+          <Button
+            href={getPhoneHref()}
+            variant="outline"
+            external
+            className="border-white/40 text-white hover:bg-white/10"
+            icon={<IconPhone className="h-4 w-4" />}
+          >
+            {t.cta.callNow}
+          </Button>
         </div>
 
         <ul className="mt-8 flex flex-wrap gap-2">
           <li className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/10 px-3 py-1.5 text-xs font-medium text-white/90">
             <IconMapPin className="h-3.5 w-3.5 text-accent" />
-            {region?.name ?? "Klang Valley"}
+            {region?.name ?? t.common.klangValley}
           </li>
           <li className="rounded-full border border-white/15 bg-white/10 px-3 py-1.5 text-xs font-medium text-white/90">
-            Klang Valley
+            {t.common.klangValley}
           </li>
           <li className="rounded-full border border-white/15 bg-white/10 px-3 py-1.5 text-xs font-medium text-white/90">
-            Free Quotation
+            {t.common.freeQuotation}
           </li>
         </ul>
       </div>

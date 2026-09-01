@@ -8,6 +8,7 @@ import {
 } from "@/components/seo/schema";
 import { getDictionary } from "@/i18n";
 import { absoluteUrl } from "@/i18n/seo";
+import { hasTranslation } from "@/i18n/coverage";
 import { getProblemServiceDetails } from "@/data/problem-content";
 import type { ProblemDetail } from "@/data/problem-content/types";
 
@@ -21,7 +22,7 @@ type ProblemJsonLdProps = {
  * as an Article (about the service that handles it) + the page's FAQPage.
  */
 export function ProblemJsonLd({ problem, lang }: ProblemJsonLdProps) {
-  const t = getDictionary("en");
+  const t = getDictionary(lang);
   const canonical = absoluteUrl(lang, `/problems/${problem.slug}/`);
   const { service } = getProblemServiceDetails(problem);
 
@@ -36,7 +37,10 @@ export function ProblemJsonLd({ problem, lang }: ProblemJsonLdProps) {
             "@type": "Service",
             name: service.name,
             serviceType: service.name,
-            url: absoluteUrl("en", `/services/${service.slug}/`),
+            url: absoluteUrl(
+              hasTranslation("service", service.slug, lang) ? lang : "en",
+              `/services/${service.slug}/`,
+            ),
           }
         : undefined,
     }),

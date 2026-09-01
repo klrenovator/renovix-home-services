@@ -1,19 +1,23 @@
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { IconWrench } from "@/components/icons";
+import { getDictionary } from "@/i18n";
 import type { ProblemDetail } from "@/data/problem-content/types";
 
 type SolutionsSectionProps = {
   problem: ProblemDetail;
+  lang: string;
 };
 
-export function SolutionsSection({ problem }: SolutionsSectionProps) {
+export function SolutionsSection({ problem, lang }: SolutionsSectionProps) {
+  const t = getDictionary(lang);
+
   return (
     <section className="section section-surface">
       <div className="container-app">
         <SectionHeading
-          eyebrow="Possible Solutions"
-          title="How we can fix it"
-          description="The practical approaches we take to resolve this problem — from a targeted repair to a fuller solution."
+          eyebrow={t.problemPage.solutionsEyebrow}
+          title={t.problemPage.solutionsTitle}
+          description={t.problemPage.solutionsDescription}
         />
 
         <div className="mt-10 grid gap-4 sm:grid-cols-2">

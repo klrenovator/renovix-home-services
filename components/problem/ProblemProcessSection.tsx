@@ -1,16 +1,20 @@
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { getDictionary } from "@/i18n";
 import type { ProblemDetail } from "@/data/problem-content/types";
 
 type ProblemProcessSectionProps = {
   problem: ProblemDetail;
+  lang: string;
 };
 
-export function ProblemProcessSection({ problem }: ProblemProcessSectionProps) {
+export function ProblemProcessSection({ problem, lang }: ProblemProcessSectionProps) {
+  const t = getDictionary(lang);
+
   return (
     <section className="section bg-white">
       <div className="container-app">
         <SectionHeading
-          eyebrow="Our Process"
+          eyebrow={t.problemPage.processEyebrow}
           title={problem.processTitle}
           description={problem.processIntro}
         />
@@ -22,7 +26,7 @@ export function ProblemProcessSection({ problem }: ProblemProcessSectionProps) {
               className="relative rounded-2xl border border-slate-200/80 bg-surface p-6"
             >
               <span className="text-xs font-bold tracking-widest text-brand">
-                Step {String(index + 1).padStart(2, "0")}
+                {t.common.step} {String(index + 1).padStart(2, "0")}
               </span>
               <h3 className="mt-4 text-lg font-semibold tracking-tight text-navy">
                 {step.title}

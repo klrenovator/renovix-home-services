@@ -1,8 +1,10 @@
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { format, getDictionary } from "@/i18n";
 import type { ServiceDetail, SubService } from "@/data/service-content/types";
 
 type SubServicesSectionProps = {
   detail: ServiceDetail;
+  lang: string;
 };
 
 function SubServiceItem({ subService }: { subService: SubService }) {
@@ -24,15 +26,16 @@ function SubServiceItem({ subService }: { subService: SubService }) {
   );
 }
 
-export function SubServicesSection({ detail }: SubServicesSectionProps) {
+export function SubServicesSection({ detail, lang }: SubServicesSectionProps) {
+  const t = getDictionary(lang);
   const hasGroups = Boolean(detail.subServiceGroups?.length);
 
   return (
     <section className="section section-surface">
       <div className="container-app">
         <SectionHeading
-          eyebrow="Sub-Services"
-          title={`${detail.name} Services`}
+          eyebrow={t.servicePage.subServicesEyebrow}
+          title={format(t.servicePage.subServicesTitle, { name: detail.name })}
           description={detail.subServicesIntro}
         />
 

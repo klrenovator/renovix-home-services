@@ -55,14 +55,18 @@ export function Button({
   );
 }
 
+/**
+ * `label` is required on purpose: a hardcoded English default would silently
+ * leak English onto the /ms/ and /zh/ pages.
+ */
 export function WhatsAppButton({
   href,
-  label = "WhatsApp Us",
+  label,
   variant = "whatsapp",
   className = "",
 }: {
   href: string;
-  label?: string;
+  label: string;
   variant?: ButtonVariant;
   className?: string;
 }) {

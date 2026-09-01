@@ -1,20 +1,24 @@
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { IconChevronDown } from "@/components/icons";
+import { format, getDictionary } from "@/i18n";
 import type { ProblemDetail } from "@/data/problem-content/types";
 
 type FaqSectionProps = {
   problem: ProblemDetail;
+  lang: string;
 };
 
-export function FaqSection({ problem }: FaqSectionProps) {
+export function FaqSection({ problem, lang }: FaqSectionProps) {
+  const t = getDictionary(lang);
+
   return (
     <section className="section bg-white">
       <div className="container-app grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
         <div>
           <SectionHeading
-            eyebrow="FAQs"
-            title={`${problem.name} — Frequently Asked Questions`}
-            description="Straight answers to the questions customers ask us most about this problem."
+            eyebrow={t.problemPage.faqsEyebrow}
+            title={format(t.problemPage.faqsTitle, { name: problem.name })}
+            description={t.problemPage.faqsDescription}
           />
         </div>
 

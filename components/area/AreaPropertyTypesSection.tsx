@@ -1,18 +1,22 @@
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { IconBuilding } from "@/components/icons";
+import { format, getDictionary } from "@/i18n";
 import type { AreaDetail } from "@/data/area-content/types";
 
 type AreaPropertyTypesSectionProps = {
   area: AreaDetail;
+  lang: string;
 };
 
-export function AreaPropertyTypesSection({ area }: AreaPropertyTypesSectionProps) {
+export function AreaPropertyTypesSection({ area, lang }: AreaPropertyTypesSectionProps) {
+  const t = getDictionary(lang);
+
   return (
     <section className="section bg-white">
       <div className="container-app">
         <SectionHeading
-          eyebrow="Property Types"
-          title={`Property Types in ${area.name}`}
+          eyebrow={t.areaPage.propertyTypesEyebrow}
+          title={format(t.areaPage.propertyTypesTitle, { name: area.name })}
           description={area.propertyTypesIntro}
         />
 

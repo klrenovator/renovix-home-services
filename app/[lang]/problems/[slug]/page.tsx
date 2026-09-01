@@ -27,7 +27,7 @@ export async function generateMetadata({
 }: ProblemPageProps): Promise<Metadata> {
   const { lang, slug } = await params;
   const language = getLanguage(lang);
-  const problem = getProblemDetail(slug);
+  const problem = getProblemDetail(slug, lang);
 
   if (!language || !problem) {
     return {};
@@ -45,7 +45,7 @@ export async function generateMetadata({
 export default async function ProblemDetailPage({ params }: ProblemPageProps) {
   const { lang, slug } = await params;
   const language = getLanguage(lang);
-  const problem = getProblemDetail(slug);
+  const problem = getProblemDetail(slug, lang);
 
   if (!language || !problem || !hasTranslation("problem", problem.slug, language.code)) {
     notFound();

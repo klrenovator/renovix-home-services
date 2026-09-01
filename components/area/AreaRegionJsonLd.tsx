@@ -6,7 +6,7 @@ import {
   schemaGraph,
   webPageNode,
 } from "@/components/seo/schema";
-import { getDictionary } from "@/i18n";
+import { format, getDictionary } from "@/i18n";
 import { absoluteUrl } from "@/i18n/seo";
 import type { AreaRegion } from "@/data/area-content/types";
 
@@ -20,7 +20,7 @@ type AreaRegionJsonLdProps = {
  * the area guides in the region + the page's FAQPage.
  */
 export function AreaRegionJsonLd({ region, lang }: AreaRegionJsonLdProps) {
-  const t = getDictionary("en");
+  const t = getDictionary(lang);
   const canonical = absoluteUrl(lang, `/areas/${region.id}/`);
 
   const nodes = [
@@ -37,7 +37,7 @@ export function AreaRegionJsonLd({ region, lang }: AreaRegionJsonLdProps) {
     ]),
     itemListNode(
       canonical,
-      `Renovix service areas in ${region.name}`,
+      format(t.areaRegion.areasTitle, { name: region.name }),
       region.areas.map((area) => ({
         name: area.name,
         url: absoluteUrl(lang, `/areas/${area.region}/${area.slug}/`),

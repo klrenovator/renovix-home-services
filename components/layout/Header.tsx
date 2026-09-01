@@ -99,7 +99,7 @@ export function Header({ lang }: HeaderProps) {
               quote: t.cta.getFreeQuote,
               quoteHref: localizedHref("/quote", code),
               whatsapp: t.cta.whatsappUs,
-              whatsappHref: getWhatsAppHref(code),
+              whatsappHref: getWhatsAppHref(),
               language: t.a11y.languageNavigation,
             }}
           />

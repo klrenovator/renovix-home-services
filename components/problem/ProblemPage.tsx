@@ -11,6 +11,7 @@ import { RelatedProblemsSection } from "@/components/problem/RelatedProblemsSect
 import { CtaSection } from "@/components/problem/CtaSection";
 import { IconAlertTriangle, IconCheck, IconShieldCheck } from "@/components/icons";
 import { getRelatedProblemDetails } from "@/data/problem-content";
+import { format, getDictionary } from "@/i18n";
 import type { ProblemDetail } from "@/data/problem-content/types";
 
 type ProblemPageProps = {
@@ -19,44 +20,45 @@ type ProblemPageProps = {
 };
 
 export function ProblemPage({ problem, lang }: ProblemPageProps) {
-  const related = getRelatedProblemDetails(problem);
+  const t = getDictionary(lang);
+  const related = getRelatedProblemDetails(problem, lang);
 
   return (
     <>
       <ProblemHero problem={problem} lang={lang} />
-      <WhatItMeansSection problem={problem} />
+      <WhatItMeansSection problem={problem} lang={lang} />
       <ProblemListSection
-        eyebrow="Common Causes"
-        title={`What usually causes ${problem.name.toLowerCase()}`}
-        description={`Understanding the cause helps you know why it happened and what the right fix is.`}
+        eyebrow={t.problemPage.causesEyebrow}
+        title={format(t.problemPage.causesTitle, { name: problem.name })}
+        description={t.problemPage.causesDescription}
         items={problem.commonCauses}
         icon={<IconAlertTriangle className="h-3.5 w-3.5" />}
         tone="surface"
       />
       <ProblemListSection
-        eyebrow="Warning Signs"
-        title="Warning signs to look out for"
-        description="Spotting these signs early can often prevent a small problem from becoming a larger repair."
+        eyebrow={t.problemPage.warningSignsEyebrow}
+        title={t.problemPage.warningSignsTitle}
+        description={t.problemPage.warningSignsDescription}
         items={problem.warningSigns}
         icon={<IconCheck className="h-3.5 w-3.5" />}
         tone="white"
       />
-      <SolutionsSection problem={problem} />
+      <SolutionsSection problem={problem} lang={lang} />
       <ProblemListSection
-        eyebrow="When to Call a Professional"
-        title="When professional help is needed"
-        description="Some problems are worth handling early, and some should always be left to a professional. Here is when to get in touch."
+        eyebrow={t.problemPage.whenToCallEyebrow}
+        title={t.problemPage.whenToCallTitle}
+        description={t.problemPage.whenToCallDescription}
         items={problem.whenToCall}
         icon={<IconShieldCheck className="h-3.5 w-3.5" />}
         tone="surface"
       />
       <RelatedServiceSection problem={problem} lang={lang} />
-      <ProblemProcessSection problem={problem} />
-      <PropertyTypesSection problem={problem} />
+      <ProblemProcessSection problem={problem} lang={lang} />
+      <PropertyTypesSection problem={problem} lang={lang} />
       <AreasSection areasNote={problem.areasNote} lang={lang} />
-      <FaqSection problem={problem} />
+      <FaqSection problem={problem} lang={lang} />
       {related.length > 0 ? (
-        <RelatedProblemsSection problems={related} current={problem} lang={lang} />
+        <RelatedProblemsSection problems={related} lang={lang} />
       ) : null}
       <CtaSection problem={problem} lang={lang} />
     </>

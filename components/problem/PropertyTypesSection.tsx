@@ -1,18 +1,22 @@
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { IconBuilding } from "@/components/icons";
+import { getDictionary } from "@/i18n";
 import type { ProblemDetail } from "@/data/problem-content/types";
 
 type PropertyTypesSectionProps = {
   problem: ProblemDetail;
+  lang: string;
 };
 
-export function PropertyTypesSection({ problem }: PropertyTypesSectionProps) {
+export function PropertyTypesSection({ problem, lang }: PropertyTypesSectionProps) {
+  const t = getDictionary(lang);
+
   return (
     <section className="section section-surface">
       <div className="container-app">
         <SectionHeading
-          eyebrow="Property Types"
-          title="Property Types We Help With"
+          eyebrow={t.problemPage.propertyTypesEyebrow}
+          title={t.problemPage.propertyTypesTitle}
           description={problem.propertyTypesIntro}
         />
 

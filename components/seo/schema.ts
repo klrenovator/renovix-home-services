@@ -1,6 +1,8 @@
 import { languages } from "@/data/languages";
 import { siteConfig } from "@/data/site";
-import { getServiceBySlug, services } from "@/data/services";
+import { getServiceCategories } from "@/data/i18n";
+import { format, getDictionary } from "@/i18n";
+import { hasTranslation } from "@/i18n/coverage";
 import { getAreaRegion } from "@/data/area-content";
 import type { ServiceDetail } from "@/data/service-content/types";
 import type { ProblemDetail } from "@/data/problem-content/types";
@@ -18,9 +20,12 @@ import { absoluteUrl } from "@/i18n/seo";
  *   WebPage                     (every page, with breadcrumb + entity links)
  *   Service / Article / FAQPage / ItemList (page-specific content nodes)
  *
- * Honesty rules: only information the site already publishes is emitted.
- * No ratings, reviews, prices, certifications, address, geo, phone, email
- * or opening hours — those are placeholders in `data/site.ts`.
+ * Honesty rules: only information the business has actually supplied is
+ * emitted. The verified contact block (name, phone, email, address, opening
+ * time) comes from `data/site.ts`. No ratings, reviews, prices, geo
+ * coordinates, certifications, licences, awards or registration numbers are
+ * published anywhere, and the opening-hours node deliberately carries no
+ * `dayOfWeek` because the business has not stated which days it opens.
  */
 
 /** Site-level entity ids, stable across every language version. */
@@ -41,35 +46,71 @@ export function getHtmlLang(lang: string): string {
 /**
  * The business as one entity with two schema types. `LocalBusiness` is a
  * subtype of `Organization`, so a single node with both types keeps the
- * company, its web presence and its service area as one linked entity for
- * search engines and LLMs. Only verified facts are included:
- * name, legal name, website, the public description/tagline, the languages
- * the site serves and the areas it states it works in.
+ * company, its web presence, its contact details and its service area as one
+ * linked entity for search engines and LLMs. Only verified facts are included:
+ * name, legal name, website, description/tagline, telephone, email, postal
+ * address, opening time, the languages the site serves and the areas it works
+ * in. Nothing about ratings, reviews, prices or credentials is claimed.
  */
-export function organizationNode() {
+export function organizationNode(lang: string) {
+  const t = getDictionary(lang);
+  const categories = getServiceCategories(lang);
+
   return {
     "@type": ["Organization", "LocalBusiness"],
     "@id": ORGANIZATION_ID,
     name: siteConfig.name,
     legalName: siteConfig.legalName,
     url: `${siteConfig.url}/`,
-    description: siteConfig.description,
-    slogan: siteConfig.tagline,
-    image: `${siteConfig.url}/en/opengraph-image/`,
+    description: t.meta.defaultDescription,
+    slogan: t.meta.brandTagline,
+    image: absoluteUrl(lang, "/opengraph-image/"),
+    telephone: siteConfig.phone,
+    email: siteConfig.email,
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: siteConfig.address.streetAddress,
+      addressLocality: siteConfig.address.locality,
+      addressRegion: siteConfig.address.region,
+      postalCode: siteConfig.address.postalCode,
+      addressCountry: siteConfig.address.country,
+    },
+    // Opening and closing time only: the business has stated 9:00 AM – 6:00 PM
+    // but has not stated which days, so no `dayOfWeek` is invented here.
+    openingHoursSpecification: {
+      "@type": "OpeningHoursSpecification",
+      opens: siteConfig.businessHours.opens,
+      closes: siteConfig.businessHours.closes,
+    },
+    contactPoint: {
+      "@type": "ContactPoint",
+      contactType: "customer service",
+      telephone: siteConfig.phone,
+      email: siteConfig.email,
+      availableLanguage: languages.map((language) => language.label),
+      areaServed: "MY",
+    },
     knowsLanguage: languages.map((language) => language.code),
     areaServed: SERVICE_PLACES,
     hasOfferCatalog: {
       "@type": "OfferCatalog",
-      name: "Renovix Home Services services",
-      itemListElement: services.map((service) => ({
-        "@type": "Offer",
-        itemOffered: {
-          "@type": "Service",
-          name: service.name,
-          serviceType: service.name,
-          url: absoluteUrl("en", `/services/${service.slug}/`),
-        },
-      })),
+      name: `${siteConfig.name} — ${t.nav.services}`,
+      itemListElement: categories.map((service) => {
+        const name = service.name;
+
+        return {
+          "@type": "Offer",
+          itemOffered: {
+            "@type": "Service",
+            name,
+            serviceType: name,
+            url: absoluteUrl(
+              hasTranslation("service", service.slug, lang) ? lang : "en",
+              `/services/${service.slug}/`,
+            ),
+          },
+        };
+      }),
     },
   };
 }
@@ -81,7 +122,7 @@ export function websiteNode(lang: string) {
     "@id": WEBSITE_ID,
     name: siteConfig.name,
     url: absoluteUrl(lang, "/"),
-    description: siteConfig.description,
+    description: getDictionary(lang).meta.defaultDescription,
     inLanguage: getHtmlLang(lang),
     publisher: { "@id": ORGANIZATION_ID },
   };
@@ -241,7 +282,10 @@ export function problemArticleNode(
           "@type": "Service",
           name: service.name,
           serviceType: service.name,
-          url: absoluteUrl("en", `/services/${service.slug}/`),
+          url: absoluteUrl(
+            hasTranslation("service", service.slug, lang) ? lang : "en",
+            `/services/${service.slug}/`,
+          ),
         }
       : { "@id": ORGANIZATION_ID },
     author: { "@id": ORGANIZATION_ID },
@@ -254,8 +298,10 @@ export function problemArticleNode(
  * expression of the Service + Location relationship.
  */
 export function areaServiceNode(area: AreaDetail, lang: string) {
+  const t = getDictionary(lang);
   const canonical = absoluteUrl(lang, `/areas/${area.region}/${area.slug}/`);
-  const region = getAreaRegion(area.region);
+  const region = getAreaRegion(area.region, lang);
+  const categories = getServiceCategories(lang);
 
   const place = {
     "@type": "Place",
@@ -266,30 +312,36 @@ export function areaServiceNode(area: AreaDetail, lang: string) {
   };
 
   const offers = area.servicesAvailable
-    .map((focus) => getServiceBySlug(focus.serviceSlug))
+    .map((focus) => categories.find((item) => item.slug === focus.serviceSlug))
     .filter((service): service is NonNullable<typeof service> => Boolean(service))
     .slice(0, 10)
     .map((service) => ({
       "@type": "Offer",
       itemOffered: {
         "@type": "Service",
-        name: `${service.name} in ${area.name}`,
-        url: absoluteUrl("en", `/services/${service.slug}/`),
+        name: format(t.areaPage.serviceInArea, {
+          service: service.name,
+          name: area.name,
+        }),
+        url: absoluteUrl(
+          hasTranslation("service", service.slug, lang) ? lang : "en",
+          `/services/${service.slug}/`,
+        ),
       },
     }));
 
   return {
     "@type": "Service",
     "@id": `${canonical}#service`,
-    name: `Home renovation & repair services in ${area.name}`,
-    serviceType: "Home renovation and repair services",
+    name: format(t.areaPage.schemaServiceName, { name: area.name }),
+    serviceType: t.areaPage.schemaServiceType,
     description: area.metaDescription,
     url: canonical,
     provider: { "@id": ORGANIZATION_ID },
     areaServed: place,
     hasOfferCatalog: {
       "@type": "OfferCatalog",
-      name: `Renovix services available in ${area.name}`,
+      name: format(t.areaPage.schemaCatalogName, { name: area.name }),
       itemListElement: offers,
     },
   };

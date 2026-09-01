@@ -149,21 +149,21 @@ export function Footer({ lang }: FooterProps) {
               <li>
                 <ContactLink
                   label={t.footer.phone}
-                  href={getPhoneHref(code)}
+                  href={getPhoneHref()}
                   value={siteConfig.phone}
                 />
               </li>
               <li>
                 <ContactLink
                   label={t.footer.whatsapp}
-                  href={getWhatsAppHref(code)}
+                  href={getWhatsAppHref()}
                   value={siteConfig.whatsapp}
                 />
               </li>
               <li>
                 <ContactLink
                   label={t.footer.email}
-                  href={getEmailHref(code)}
+                  href={getEmailHref()}
                   value={siteConfig.email}
                 />
               </li>
@@ -171,14 +171,14 @@ export function Footer({ lang }: FooterProps) {
                 <ContactLink
                   label={t.footer.address}
                   href={getContactHref(code)}
-                  value={siteConfig.address}
+                  value={siteConfig.address.full}
                 />
               </li>
               <li>
                 <ContactLink
                   label={t.footer.hours}
                   href={getContactHref(code)}
-                  value={siteConfig.businessHours}
+                  value={t.common.businessHours}
                 />
               </li>
             </ul>

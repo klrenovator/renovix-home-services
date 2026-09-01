@@ -23,8 +23,8 @@ type AreaJsonLdProps = {
  * the business has none published.
  */
 export function AreaJsonLd({ area, lang }: AreaJsonLdProps) {
-  const t = getDictionary("en");
-  const region = getAreaRegion(area.region);
+  const t = getDictionary(lang);
+  const region = getAreaRegion(area.region, lang);
   const canonical = absoluteUrl(lang, `/areas/${area.region}/${area.slug}/`);
 
   const nodes = [

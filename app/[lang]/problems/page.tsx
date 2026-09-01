@@ -15,6 +15,7 @@ import {
 import { getProblemsByCategory, problemDetails } from "@/data/problem-content";
 import { getWhatsAppHref } from "@/data/site";
 import { getDictionary } from "@/i18n";
+import { hasTranslation } from "@/i18n/coverage";
 import { contentHref, localizedHref } from "@/i18n/hrefs";
 import { absoluteUrl, buildPageMetadata } from "@/i18n/seo";
 
@@ -61,12 +62,13 @@ export default async function ProblemsPage({ params }: ProblemsPageProps) {
   const categories = getProblemCategories(code);
   const canonical = absoluteUrl(code, "/problems/");
 
-  // The full problem library as an ItemList. Problem guides only exist in
-  // English, so item URLs are emitted for English only.
+  // The full problem library as an ItemList. Each item points at the guide in
+  // the current language when that translation is published, so a Malay or
+  // Chinese ItemList never links a reader back into English.
   const problemItems = problemDetails.map((problem) => ({
     name: getProblemCardLabels(code, problem).name,
-    ...(code === "en"
-      ? { url: absoluteUrl("en", `/problems/${problem.slug}/`) }
+    ...(hasTranslation("problem", problem.slug, code)
+      ? { url: absoluteUrl(code, `/problems/${problem.slug}/`) }
       : {}),
   }));
 
@@ -112,7 +114,7 @@ export default async function ProblemsPage({ params }: ProblemsPageProps) {
               {t.cta.getFreeQuote}
             </Button>
             <WhatsAppButton
-              href={getWhatsAppHref(code)}
+              href={getWhatsAppHref()}
               variant="secondary"
               label={t.cta.whatsappUs}
             />
@@ -123,7 +125,7 @@ export default async function ProblemsPage({ params }: ProblemsPageProps) {
       <section className="section section-surface">
         <div className="container-app">
           {categories.map((category) => {
-            const problems = getProblemsByCategory(category.id);
+            const problems = getProblemsByCategory(category.id, code);
 
             return (
               <div key={category.id} className="mb-16 last:mb-0">

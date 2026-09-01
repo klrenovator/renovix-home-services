@@ -20,11 +20,11 @@ export function AreaPage({ area, lang }: AreaPageProps) {
     <>
       <AreaHero area={area} lang={lang} />
       <AreaServicesSection area={area} lang={lang} />
-      <AreaPropertyTypesSection area={area} />
+      <AreaPropertyTypesSection area={area} lang={lang} />
       <AreaProblemsSection area={area} lang={lang} />
-      <AreaProcessSection area={area} />
+      <AreaProcessSection area={area} lang={lang} />
       <AreaContextSection area={area} lang={lang} />
-      <AreaFaqSection name={area.name} faqs={area.faqs} />
+      <AreaFaqSection name={area.name} faqs={area.faqs} lang={lang} />
       <AreaRelatedServicesSection area={area} lang={lang} />
       <NearbyAreasSection area={area} lang={lang} />
       <AreaCtaSection name={area.name} lang={lang} />

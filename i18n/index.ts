@@ -18,3 +18,18 @@ export function getDictionary(lang: string | undefined | null): Dictionary {
 }
 
 export { en, ms, zh };
+
+/**
+ * Fills `{placeholder}` slots in a dictionary string, e.g.
+ * `format(t.areaPage.servicesTitle, { name: "Cheras" })`.
+ *
+ * Templates keep the whole sentence inside the dictionary, so each language can
+ * put the value where its grammar needs it instead of forcing English word
+ * order through string concatenation.
+ */
+export function format(
+  template: string,
+  values: Record<string, string | undefined>,
+): string {
+  return template.replace(/\{(\w+)\}/g, (match, key: string) => values[key] ?? match);
+}

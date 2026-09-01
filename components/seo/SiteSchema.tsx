@@ -14,7 +14,7 @@ type SiteSchemaProps = {
 export function SiteSchema({ lang }: SiteSchemaProps) {
   return (
     <JsonLd
-      data={schemaGraph([organizationNode(), websiteNode(lang)])}
+      data={schemaGraph([organizationNode(lang), websiteNode(lang)])}
     />
   );
 }

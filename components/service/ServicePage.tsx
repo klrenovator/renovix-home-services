@@ -24,13 +24,13 @@ export function ServicePage({ detail, related, relatedProblems, lang }: ServiceP
     <>
       <ServiceHero detail={detail} lang={lang} />
       <OverviewSection detail={detail} lang={lang} />
-      <SubServicesSection detail={detail} />
+      <SubServicesSection detail={detail} lang={lang} />
       <ProblemsSection detail={detail} relatedProblemPages={relatedProblems} lang={lang} />
-      <PropertyTypesSection detail={detail} />
-      <ProcessSection detail={detail} />
-      <WhySection detail={detail} />
+      <PropertyTypesSection detail={detail} lang={lang} />
+      <ProcessSection detail={detail} lang={lang} />
+      <WhySection detail={detail} lang={lang} />
       <AreasSection areasNote={detail.areasNote} lang={lang} />
-      <FaqSection detail={detail} />
+      <FaqSection detail={detail} lang={lang} />
       <RelatedServicesSection related={related} current={detail} lang={lang} />
       <CtaSection detail={detail} lang={lang} />
     </>

@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { IconAlertTriangle, IconArrowRight } from "@/components/icons";
-import { localizedHref } from "@/i18n/hrefs";
+import { format, getDictionary } from "@/i18n";
+import { contentHref } from "@/i18n/hrefs";
 import { getProblemsBySlugs } from "@/data/problem-content";
 import type { AreaDetail } from "@/data/area-content/types";
 
@@ -11,14 +12,15 @@ type AreaProblemsSectionProps = {
 };
 
 export function AreaProblemsSection({ area, lang }: AreaProblemsSectionProps) {
-  const problemPages = getProblemsBySlugs(area.relatedProblems);
+  const t = getDictionary(lang);
+  const problemPages = getProblemsBySlugs(area.relatedProblems, lang);
 
   return (
     <section id="problems" className="section section-surface scroll-mt-24">
       <div className="container-app">
         <SectionHeading
-          eyebrow="Common Problems"
-          title={`Common Renovation & Repair Problems in ${area.name}`}
+          eyebrow={t.areaPage.problemsEyebrow}
+          title={format(t.areaPage.problemsTitle, { name: area.name })}
           description={area.problemsIntro}
         />
 
@@ -39,17 +41,16 @@ export function AreaProblemsSection({ area, lang }: AreaProblemsSectionProps) {
         {problemPages.length > 0 ? (
           <div className="mt-8 rounded-2xl border border-slate-200/80 bg-white p-6 shadow-soft">
             <h3 className="text-base font-semibold tracking-tight text-navy">
-              Learn more about these problems
+              {t.areaPage.problemsLink}
             </h3>
             <p className="mt-2 text-sm leading-6 text-secondary">
-              Detailed problem guides explain causes, warning signs and how the work is
-              carried out.
+              {t.servicePage.relatedProblemsNote}
             </p>
             <ul className="mt-4 flex flex-wrap gap-2">
               {problemPages.map((problem) => (
                 <li key={problem.slug}>
                   <Link
-                    href={localizedHref(`/problems/${problem.slug}`, lang)}
+                    href={contentHref("problem", problem.slug, lang) ?? "#"}
                     className="chip inline-flex items-center gap-1.5 transition-colors hover:border-brand hover:text-brand focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
                   >
                     {problem.name}

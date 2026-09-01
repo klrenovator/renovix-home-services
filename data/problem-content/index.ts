@@ -1,3 +1,5 @@
+import type { LanguageCode } from "@/data/languages";
+import { getLanguageCode } from "@/data/languages";
 import type { ProblemCategory, ProblemCategoryId, ProblemDetail } from "./types";
 import type { ServiceDetail } from "@/data/service-content/types";
 import { tilingProblems } from "./tiling";
@@ -8,6 +10,7 @@ import { plumbingProblems } from "./plumbing";
 import { waterproofingProblems } from "./waterproofing";
 import { handymanProblems } from "./handyman";
 import { getServiceDetail } from "@/data/service-content";
+import { problemTranslations } from "./translations";
 
 export const problemCategories: ProblemCategory[] = [
   {
@@ -61,6 +64,7 @@ export const problemCategories: ProblemCategory[] = [
   },
 ];
 
+/** English problem guides — the source of truth for structure and meaning. */
 export const problemDetails: ProblemDetail[] = [
   ...tilingProblems,
   ...electricalProblems,
@@ -71,37 +75,82 @@ export const problemDetails: ProblemDetail[] = [
   ...handymanProblems,
 ];
 
+/** Merges a translation over the English guide, keeping every link identical. */
+function localize(problem: ProblemDetail, lang: LanguageCode): ProblemDetail {
+  if (lang === "en") {
+    return problem;
+  }
+
+  const translation = problemTranslations[lang][problem.slug];
+
+  if (!translation) {
+    return problem;
+  }
+
+  return {
+    ...problem,
+    ...translation,
+    slug: problem.slug,
+    category: problem.category,
+    relatedService: problem.relatedService,
+    relatedServices: problem.relatedServices,
+    relatedProblems: problem.relatedProblems,
+  };
+}
+
+export function getProblemDetails(lang: string = "en"): ProblemDetail[] {
+  const code = getLanguageCode(lang);
+  return problemDetails.map((problem) => localize(problem, code));
+}
+
 export function getProblemDetail(
   slug: string | undefined | null,
+  lang: string = "en",
 ): ProblemDetail | undefined {
   if (!slug) {
     return undefined;
   }
 
-  return problemDetails.find((problem) => problem.slug === slug);
+  const problem = problemDetails.find((item) => item.slug === slug);
+
+  return problem ? localize(problem, getLanguageCode(lang)) : undefined;
 }
 
-export function getRelatedProblemDetails(problem: ProblemDetail): ProblemDetail[] {
+export function getRelatedProblemDetails(
+  problem: ProblemDetail,
+  lang: string = "en",
+): ProblemDetail[] {
   return problem.relatedProblems
-    .map((slug) => problemDetails.find((item) => item.slug === slug))
+    .map((slug) => getProblemDetail(slug, lang))
     .filter((item): item is ProblemDetail => Boolean(item));
 }
 
-export function getProblemsByCategory(category: ProblemCategoryId): ProblemDetail[] {
-  return problemDetails.filter((problem) => problem.category === category);
+export function getProblemsByCategory(
+  category: ProblemCategoryId,
+  lang: string = "en",
+): ProblemDetail[] {
+  return getProblemDetails(lang).filter((problem) => problem.category === category);
 }
 
-export function getProblemsForService(serviceSlug: string): ProblemDetail[] {
-  return problemDetails.filter((problem) => problem.relatedService === serviceSlug);
+export function getProblemsForService(
+  serviceSlug: string,
+  lang: string = "en",
+): ProblemDetail[] {
+  return getProblemDetails(lang).filter(
+    (problem) => problem.relatedService === serviceSlug,
+  );
 }
 
-export function getProblemsBySlugs(slugs: string[] | undefined): ProblemDetail[] {
+export function getProblemsBySlugs(
+  slugs: string[] | undefined,
+  lang: string = "en",
+): ProblemDetail[] {
   if (!slugs || slugs.length === 0) {
     return [];
   }
 
   return slugs
-    .map((slug) => problemDetails.find((item) => item.slug === slug))
+    .map((slug) => getProblemDetail(slug, lang))
     .filter((item): item is ProblemDetail => Boolean(item));
 }
 
@@ -109,14 +158,21 @@ export function getProblemCategory(id: ProblemCategoryId): ProblemCategory | und
   return problemCategories.find((category) => category.id === id);
 }
 
-export function getProblemServiceDetails(problem: ProblemDetail) {
-  const service = getServiceDetail(problem.relatedService);
+export function getProblemServiceDetails(problem: ProblemDetail, lang: string = "en") {
+  const service = getServiceDetail(problem.relatedService, lang);
   const related = problem.relatedServices
-    .map((slug) => getServiceDetail(slug))
+    .map((slug) => getServiceDetail(slug, lang))
     .filter((item): item is ServiceDetail => Boolean(item));
 
   return {
     service,
     related,
   };
+}
+
+/** Slugs with a complete translation in a language — used by the build guard. */
+export function translatedProblemSlugs(lang: "ms" | "zh"): string[] {
+  return problemDetails
+    .map((problem) => problem.slug)
+    .filter((slug) => Boolean(problemTranslations[lang][slug]));
 }

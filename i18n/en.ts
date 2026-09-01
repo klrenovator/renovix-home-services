@@ -15,6 +15,7 @@ export const en: Dictionary = {
       "Home Renovation & Improvement in KL & Selangor | Renovix",
     homeDescription:
       "Home renovation and improvement services in Kuala Lumpur, Selangor and the Klang Valley — tiling, welding, electrical, painting, plumbing and more.",
+    ogBadge: "Serving KL & Selangor · Klang Valley",
   },
   a11y: {
     skipToContent: "Skip to main content",
@@ -64,6 +65,9 @@ export const en: Dictionary = {
     viewContactDetails: "View contact details",
     viewServiceAreas: "View Service Areas",
     tellUsAboutWork: "Tell us about the work you have in mind",
+    callNow: "Call Now",
+    emailUs: "Email Us",
+    viewNamed: "View {name}",
   },
   footer: {
     blurbPrimary:
@@ -195,7 +199,7 @@ export const en: Dictionary = {
       title: "Planning a Home Repair or Renovation?",
       description:
         "Tell us what you need and our team can assess the work and guide you on the next step.",
-      note: "Contact placeholder: [WHATSAPP NUMBER]",
+      note: "Call or WhatsApp: +601159259521",
     },
     faq: {
       eyebrow: "FAQ",
@@ -229,6 +233,7 @@ export const en: Dictionary = {
     overviewEyebrow: "Service Overview",
     highlightsTitle: "What this service covers",
     subServicesEyebrow: "Sub-Services",
+    subServicesTitle: "{name} Services",
     problemsEyebrow: "Problems We Solve",
     propertyTypesEyebrow: "Property Types",
     propertyTypesTitle: "Property Types We Serve",
@@ -237,13 +242,17 @@ export const en: Dictionary = {
     areasEyebrow: "Service Areas",
     areasTitle: "Serving Kuala Lumpur & Selangor",
     faqsEyebrow: "FAQs",
+    faqsTitle: "{name} — Frequently Asked Questions",
     faqsDescription:
       "Straight answers to the questions customers ask us most about this service.",
     relatedEyebrow: "Related Services",
     relatedTitle: "Services that work well together",
+    relatedDescription:
+      "{name} often pairs with other Renovix services. Explore the services customers usually combine with it.",
     relatedProblemsTitle: "Explore these problem pages",
     relatedProblemsNote:
       "These guides explain the causes, warning signs and practical solutions for the issues this service handles.",
+    ctaHeading: "Need {name} in Kuala Lumpur & Selangor?",
     ctaTitle: "Need this service for your home?",
     ctaDescription:
       "Share the details of the work, your property type and location, and we will guide the next step.",
@@ -260,10 +269,17 @@ export const en: Dictionary = {
   },
   problemPage: {
     breadcrumbProblems: "Problems",
+    heroCategoryFallback: "Home Problem",
     whatItMeansEyebrow: "What This Problem Means",
+    whatItMeansTitle: "Understanding {name}",
     whatItMeansDescription:
       "A clear, honest explanation of what is happening so you know what you are dealing with.",
+    shortAnswerEyebrow: "The short answer",
+    shortAnswerNote: "We explain the cause and the fix, not just the symptom.",
     causesEyebrow: "Common Causes",
+    causesTitle: "What usually causes {name}",
+    causesDescription:
+      "Understanding the cause helps you know why it happened and what the right fix is.",
     warningSignsEyebrow: "Warning Signs",
     warningSignsTitle: "Warning signs to look out for",
     warningSignsDescription:
@@ -278,16 +294,21 @@ export const en: Dictionary = {
       "Some problems are worth handling early, and some should always be left to a professional. Here is when to get in touch.",
     relatedServiceEyebrow: "Related Renovix Service",
     relatedServiceTitle: "The service that handles this",
+    relatedServiceDescription:
+      "{problem} is handled by our {service} team. The related services below are often part of the same job.",
+    mainServiceLabel: "Main service",
     processEyebrow: "Our Process",
     propertyTypesEyebrow: "Property Types",
     propertyTypesTitle: "Property Types We Help With",
     faqsEyebrow: "FAQs",
+    faqsTitle: "{name} — Frequently Asked Questions",
     faqsDescription:
       "Straight answers to the questions customers ask us most about this problem.",
     relatedProblemsEyebrow: "Related Problems",
     relatedProblemsTitle: "Problems that are often linked",
     relatedProblemsDescription:
       "These issues frequently appear together in Kuala Lumpur and Selangor homes.",
+    ctaHeading: "Need help with {name} in Kuala Lumpur & Selangor?",
     ctaTitle: "Dealing with this problem at home?",
     ctaDescription:
       "Describe what you are seeing and where the property is located, and we will advise on the next step.",
@@ -323,11 +344,21 @@ export const en: Dictionary = {
   areaRegion: {
     breadcrumbAreas: "Service Areas",
     areasEyebrow: "Area Guides",
+    areasTitle: "Areas We Serve in {name}",
+    areasDescription:
+      "Each guide covers the local housing stock, the problems we see there, the services most requested and practical notes about working in the area.",
     landscapeEyebrow: "Housing Landscape",
+    landscapeTitle: "Understanding housing in {name}",
     servicesEyebrow: "Popular Services",
+    servicesTitle: "Services Most Requested in {name}",
     faqsEyebrow: "FAQs",
+    faqsTitle: "{name} — Frequently Asked Questions",
     faqsDescription: "Practical answers for property owners in this region.",
     otherRegion: "View the other region",
+    otherTitle: "We also serve {name}",
+    otherBody:
+      "Browse our {name} area guides for local housing details, common problems and services.",
+    exploreOther: "Explore {name}",
     ctaTitle: "Planning work in this region?",
     ctaDescription:
       "Share your area, property type and the work you need, and we will guide the next step.",
@@ -335,19 +366,37 @@ export const en: Dictionary = {
   areaPage: {
     breadcrumbAreas: "Service Areas",
     servicesEyebrow: "Services Available",
+    servicesTitle: "Home Services Available in {name}",
+    serviceInArea: "{service} in {name}",
+    allAreasIn: "All areas in {name}",
+    guidesCount: "{count} location guides across {name}.",
+    browseRegion: "Browse {name}",
+    schemaServiceName: "Home renovation & repair services in {name}",
+    schemaServiceType: "Home renovation and repair services",
+    schemaCatalogName: "Renovix services available in {name}",
     propertyTypesEyebrow: "Property Types",
+    propertyTypesTitle: "Property Types in {name}",
     problemsEyebrow: "Common Problems",
+    problemsTitle: "Common Renovation & Repair Problems in {name}",
     processEyebrow: "Our Process",
     contextEyebrow: "Local Service Context",
+    contextTitle: "Working in {name} — What to Expect",
     relatedEyebrow: "Related Services",
+    relatedTitle: "Services Often Combined in {name}",
+    relatedDescription:
+      "Most projects in {name} combine several trades. Planning them together keeps the sequence right and the site efficient.",
     nearbyEyebrow: "Nearby Areas",
+    nearbyTitle: "Areas We Also Serve Near {name}",
     nearbyDescription: "Other areas we serve close to this location.",
     faqsEyebrow: "FAQs",
+    faqsTitle: "{name} — Frequently Asked Questions",
     faqsDescription: "Practical answers for property owners in the area.",
     problemsLink: "Learn more about these problems",
     coverageNoteTitle: "Coverage, honestly stated",
     coverageNote:
       "This guide describes the area we work in and the local context we plan around. It does not claim a physical office, a fixed service radius or a local team in this location.",
+    ctaHeading: "Planning work in {name}? Start with a free quotation.",
+    ctaEyebrow: "Get a Free Quote in {name}",
     ctaTitle: "Planning work in this area?",
     ctaDescription:
       "Share your property type, the work you need and your location, and we will guide the next step.",
@@ -424,25 +473,25 @@ export const en: Dictionary = {
     eyebrow: "Contact Renovix",
     title: "Let's start with your home service question",
     description:
-      "Use the contact details below, send a WhatsApp once the number is available, or share the scope through a quote request for work in Kuala Lumpur, Selangor and the Klang Valley.",
+      "Call or WhatsApp us on +601159259521, email renovixhomeservices@gmail.com, or share the scope through a quote request for work in Kuala Lumpur, Selangor and the Klang Valley.",
     heroPrimary: "Start a Quote Request",
     detailsEyebrow: "Contact details",
     detailsTitle: "Ways to get in touch",
     detailsLead:
-      "Contact information has intentionally been left as placeholders until the official details are supplied. No phone number, email, address or operating hours have been assumed.",
+      "Reach Renovix Home Services directly by phone, WhatsApp or email. We answer enquiries during business hours and will tell you honestly whether a site visit is needed before a quotation.",
     channels: {
       phone: "Phone Number",
-      phoneHelper: "Call details will be added when the phone number is confirmed.",
+      phoneHelper: "Call us during business hours to describe the work you need.",
       whatsapp: "WhatsApp Number",
       whatsappHelper:
-        "WhatsApp details will be added when the number is confirmed.",
+        "The fastest way to reach us — send photos of the problem with your message.",
       email: "Email",
-      emailHelper: "Email details will be added when the address is confirmed.",
+      emailHelper: "Best for longer scopes, drawings, quotations and documents.",
       address: "Address",
       addressHelper:
-        "Service coverage is listed below; a physical address has not been supplied.",
+        "Our base in Mont Kiara. Work is carried out at your property across KL, Selangor and the Klang Valley.",
       hours: "Business Hours",
-      hoursHelper: "Business hours will be added when they are confirmed.",
+      hoursHelper: "Calls, WhatsApp messages and emails are answered during these hours.",
     },
     ctaEyebrow: "Contact CTA",
     ctaTitle: "Share the work you need",
@@ -451,8 +500,8 @@ export const en: Dictionary = {
     whatsappEyebrow: "WhatsApp CTA",
     whatsappTitle: "Prefer to use WhatsApp?",
     whatsappBody:
-      "The WhatsApp contact route will activate when an official number is supplied. Until then, the button leads back to this contact page rather than attempting to open an unverified number.",
-    whatsappNote: "WhatsApp placeholder:",
+      "Send us a message with a few photos and your location. WhatsApp is usually the quickest way to describe a repair and agree on the next step.",
+    whatsappNote: "Call or WhatsApp:",
     areasEyebrow: "Service area information",
     areasTitle: "Kuala Lumpur, Selangor & the Klang Valley",
     areasLead:
@@ -514,13 +563,13 @@ export const en: Dictionary = {
     photosPrompt: "Upload Photos",
     photosSelectedSuffix: "photo",
     photosSelectedSuffixPlural: "photos",
-    deliveryTitle: "Quote delivery placeholder",
+    deliveryTitle: "How this form is delivered",
     deliveryBody:
-      "This form is ready to connect to a secure quote-request endpoint, but delivery is not configured yet. Submitting this form does not send your information or photos, and it does not create an instant quote.",
+      "Online submission is not connected yet, so this form does not send your details or photos and does not produce an instant quote. To reach us now, WhatsApp or call +601159259521, or email renovixhomeservices@gmail.com.",
     submittedBodyPrefix:
-      "Your fields have been checked in this front-end preview. Because quote delivery is not configured, no details were sent. Please use the",
+      "Your fields have been checked in this preview. Because online delivery is not connected yet, nothing was sent. Please WhatsApp or call +601159259521, or use the",
     submittedLink: "contact page",
-    submittedBodySuffix: "while the quote inbox is being connected.",
+    submittedBodySuffix: "so we can pick up your request.",
     submit: "Submit Quote Request",
     asideEyebrow: "What happens next",
     asideTitle: "A considered assessment, not an instant promise",
@@ -546,7 +595,7 @@ export const en: Dictionary = {
     ],
     statusTitle: "Form delivery status",
     statusBody:
-      "This form is a front-end architecture only. A secure backend, notification destination and photo-storage connection have not been configured, so no information is transmitted from this page yet.",
+      "Online submission has not been connected yet, so nothing is transmitted from this page. WhatsApp, phone and email reach us directly: +601159259521 and renovixhomeservices@gmail.com.",
     browseEyebrow: "Not sure where to start?",
     browseTitle: "Browse the service scope before you request a quote",
     browseBody:
@@ -755,12 +804,12 @@ export const en: Dictionary = {
     eyebrow: "Legal",
     privacyTitle: "Privacy Policy",
     privacyDescription:
-      "The complete Privacy Policy will be added in a later phase. Contact details remain placeholders until they are provided.",
+      "The complete Privacy Policy will be added in a later phase. For any privacy question, contact Renovix Home Services on +601159259521 or renovixhomeservices@gmail.com.",
     privacyMetaDescription:
       "Privacy Policy for the Renovix Home Services website and services.",
     termsTitle: "Terms & Conditions",
     termsDescription:
-      "The complete Terms & Conditions will be added in a later phase. Contact details remain placeholders until they are provided.",
+      "The complete Terms & Conditions will be added in a later phase. For any question, contact Renovix Home Services on +601159259521 or renovixhomeservices@gmail.com.",
     termsMetaDescription:
       "Terms & Conditions for using the Renovix Home Services website and services.",
     placeholderNote:
@@ -780,5 +829,19 @@ export const en: Dictionary = {
     kualaLumpur: "Kuala Lumpur",
     selangor: "Selangor",
     klangValley: "Klang Valley",
+    freeQuoteEyebrow: "Get a Free Quote",
+    freeQuotation: "Free Quotation",
+    klSelangor: "Kuala Lumpur & Selangor",
+    step: "Step",
+    businessHours: "9:00 AM – 6:00 PM",
+    callOrWhatsApp: "Call or WhatsApp",
+  },
+  areasBlock: {
+    eyebrow: "Service Areas",
+    title: "Serving Kuala Lumpur & Selangor",
+    guideTitle: "Every area has its own guide",
+    guideDescription:
+      "Local housing stock, common problems and practical service notes for neighbourhoods and towns across the Klang Valley.",
+    note: "Not sure if we cover your area? Ask us — we serve most Klang Valley locations.",
   },
 };

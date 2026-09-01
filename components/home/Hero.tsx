@@ -41,7 +41,7 @@ export function Hero({ lang }: HeroProps) {
               {t.cta.getFreeQuote}
             </Button>
             <WhatsAppButton
-              href={getWhatsAppHref(code)}
+              href={getWhatsAppHref()}
               variant="whatsapp"
               label={t.cta.whatsappUs}
             />
