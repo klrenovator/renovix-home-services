@@ -161,7 +161,10 @@
   }
 
   .form-control {
-    @apply w-full rounded-lg border border-slate-300 bg-white px-3.5 py-3 text-sm text-ink transition-colors placeholder:text-slate-400 focus:border-brand focus:outline-none focus:ring-4 focus:ring-brand/10 disabled:cursor-not-allowed disabled:bg-slate-100 disabled:text-slate-500;
+    /* 16px (text-base) prevents iOS Safari from auto-zooming into the field
+       on focus — inputs below 16px trigger the zoom, which breaks the
+       mobile form experience. */
+    @apply w-full rounded-lg border border-slate-300 bg-white px-3.5 py-3 text-base text-ink transition-colors placeholder:text-slate-500 focus:border-brand focus:outline-none focus:ring-4 focus:ring-brand/10 disabled:cursor-not-allowed disabled:bg-slate-100 disabled:text-slate-500;
   }
 
   .form-help {
@@ -187,4 +190,28 @@
 
 .animate-menu-in {
   animation: menu-in 0.2s ease-out;
+}
+
+/* Safari still renders the default disclosure triangle on <summary> unless the
+   webkit pseudo-element is hidden explicitly; `list-none` alone is not enough. */
+summary::-webkit-details-marker {
+  display: none;
+}
+
+/* Respect users who prefer less motion: disable smooth scrolling, entrance
+   animations and decorative transitions (WCAG 2.1 — Animation from
+   Interactions / reduced-motion media feature). */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

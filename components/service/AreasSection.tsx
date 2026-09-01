@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { IconArrowRight, IconMapPin } from "@/components/icons";
-import { localizeHref } from "@/data/navigation";
+import { localizedHref } from "@/i18n/hrefs";
 import { areas, areasIndexHref } from "@/data/areas";
 
 type AreasSectionProps = {
@@ -30,7 +30,7 @@ export function AreasSection({ areasNote, lang }: AreasSectionProps) {
                   <h3 className="h3-card">{area.label}</h3>
                 </div>
                 <Link
-                  href={localizeHref(area.href, lang)}
+                  href={localizedHref(area.href, lang)}
                   className="inline-flex items-center gap-1 text-sm font-semibold text-brand transition-colors hover:text-brand-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
                 >
                   View areas
@@ -42,7 +42,7 @@ export function AreasSection({ areasNote, lang }: AreasSectionProps) {
                 {area.places.map((place) => (
                   <li key={place.name}>
                     <Link
-                      href={localizeHref(place.href, lang)}
+                      href={localizedHref(place.href, lang)}
                       className="chip transition-colors hover:border-brand hover:text-brand focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
                     >
                       {place.name}
@@ -66,7 +66,7 @@ export function AreasSection({ areasNote, lang }: AreasSectionProps) {
               </p>
             </div>
             <Link
-              href={localizeHref(areasIndexHref, lang)}
+              href={localizedHref(areasIndexHref, lang)}
               className="btn btn-outline"
             >
               Browse All Service Areas

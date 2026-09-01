@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { IconAlertTriangle, IconArrowRight } from "@/components/icons";
-import { localizeHref } from "@/data/navigation";
+import { localizedHref } from "@/i18n/hrefs";
 import { getProblemsBySlugs } from "@/data/problem-content";
 import type { AreaDetail } from "@/data/area-content/types";
 
@@ -49,7 +49,7 @@ export function AreaProblemsSection({ area, lang }: AreaProblemsSectionProps) {
               {problemPages.map((problem) => (
                 <li key={problem.slug}>
                   <Link
-                    href={localizeHref(`/problems/${problem.slug}`, lang)}
+                    href={localizedHref(`/problems/${problem.slug}`, lang)}
                     className="chip inline-flex items-center gap-1.5 transition-colors hover:border-brand hover:text-brand focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
                   >
                     {problem.name}

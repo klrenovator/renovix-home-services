@@ -48,10 +48,12 @@ export function Breadcrumbs({ items, lang, inverse = false }: BreadcrumbsProps) 
             <li key={`${item.label}-${index}`} className="flex items-center gap-2">
               <Link
                 href={localizedHref(item.href, code)}
+                /* py-1 keeps the tap target at 24px+ (WCAG 2.5.8) on the
+                   small breadcrumb text. */
                 className={
                   inverse
-                    ? "text-white/70 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
-                    : "text-secondary transition-colors hover:text-brand focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                    ? "py-1 text-white/70 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                    : "py-1 text-secondary transition-colors hover:text-brand focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
                 }
               >
                 {item.label}

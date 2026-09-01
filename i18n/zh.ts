@@ -446,6 +446,7 @@ export const zh: Dictionary = {
       description: "工程说明",
       preferredDate: "期望日期",
       photos: "上传照片",
+      requiredText: "（必填）",
     },
     placeholders: {
       name: "您的姓名",

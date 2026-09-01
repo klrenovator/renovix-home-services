@@ -5,7 +5,7 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button, WhatsAppButton } from "@/components/ui/Button";
 import { IconArrowRight, IconMapPin, IconBuilding, serviceIcons, IconWrench } from "@/components/icons";
 import { getWhatsAppHref } from "@/data/site";
-import { localizeHref } from "@/data/navigation";
+import { localizedHref } from "@/i18n/hrefs";
 import { getServiceBySlug } from "@/data/services";
 import { getOtherRegion } from "@/data/area-content";
 import type { AreaRegion } from "@/data/area-content/types";
@@ -55,7 +55,7 @@ export function AreaRegionPage({ region, lang }: AreaRegionPageProps) {
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Button
-              href={localizeHref("/quote", lang)}
+              href={localizedHref("/quote", lang)}
               variant="primary"
               icon={<IconArrowRight className="h-4 w-4" />}
             >
@@ -91,7 +91,7 @@ export function AreaRegionPage({ region, lang }: AreaRegionPageProps) {
             {region.areas.map((area) => (
               <Link
                 key={area.slug}
-                href={localizeHref(`/areas/${area.region}/${area.slug}`, lang)}
+                href={localizedHref(`/areas/${area.region}/${area.slug}`, lang)}
                 className="card card-hover group flex h-full flex-col p-6 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
               >
                 <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-brand/10 text-brand transition-colors group-hover:bg-brand group-hover:text-white">
@@ -156,7 +156,7 @@ export function AreaRegionPage({ region, lang }: AreaRegionPageProps) {
               return (
                 <Link
                   key={focus.serviceSlug}
-                  href={localizeHref(service.path, lang)}
+                  href={localizedHref(service.path, lang)}
                   className="card card-hover group flex h-full flex-col p-6 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
                 >
                   <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-brand/10 text-brand transition-colors group-hover:bg-brand group-hover:text-white">
@@ -190,13 +190,13 @@ export function AreaRegionPage({ region, lang }: AreaRegionPageProps) {
               </p>
               <div className="mt-5 flex flex-wrap gap-2">
                 <Link
-                  href={localizeHref(`/areas/${other.id}`, lang)}
+                  href={localizedHref(`/areas/${other.id}`, lang)}
                   className="btn btn-primary"
                 >
                   Explore {other.name}
                 </Link>
                 <Link
-                  href={localizeHref("/areas", lang)}
+                  href={localizedHref("/areas", lang)}
                   className="btn btn-outline"
                 >
                   All Service Areas

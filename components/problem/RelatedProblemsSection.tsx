@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { IconAlertTriangle } from "@/components/icons";
-import { localizeHref } from "@/data/navigation";
+import { localizedHref } from "@/i18n/hrefs";
 import type { ProblemDetail } from "@/data/problem-content/types";
 
 type RelatedProblemsSectionProps = {
@@ -28,7 +28,7 @@ export function RelatedProblemsSection({
           {problems.map((problem) => (
             <Link
               key={problem.slug}
-              href={localizeHref(`/problems/${problem.slug}`, lang)}
+              href={localizedHref(`/problems/${problem.slug}`, lang)}
               className="card card-hover group flex h-full flex-col p-6 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
             >
               <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-accent/15 text-navy transition-colors group-hover:bg-navy group-hover:text-white">

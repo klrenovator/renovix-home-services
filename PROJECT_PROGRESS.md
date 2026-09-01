@@ -586,7 +586,139 @@ no template changes are required.
 - [ ] `LocalBusiness` has no address/phone/hours by design: the official
       details are still placeholders in `data/site.ts`
 
-## PHASE 8 — Advanced Quote System — [ ]
+## PHASE 8 — Performance, Accessibility, Mobile & UX QA — [x]
+
+> **Scope note.** The earlier outline in this file labelled Phase 8 "Advanced
+> Quote System". The client brief for Phase 8 is the professional quality
+> optimization pass (performance, Core Web Vitals, mobile UX, accessibility,
+> images, JavaScript, navigation, forms, responsive design), which is what this
+> phase delivers. The advanced quote system remains unbuilt (future phase);
+> the quote form delivered in Phase 5 keeps its clean integration contract.
+
+### Performance audit (JavaScript, CSS, fonts, third-party)
+- [x] **Client-component audit**: only 4 `"use client"` components exist —
+      `MobileMenu` (state), `LanguageSwitcher` (`usePathname`), `QuoteForm`
+      (form state) and `ProjectsPortfolio` (filters). All are necessary; none
+      removed. Everything else renders on the server (FAQ accordions use
+      native `<details>`, zero JS)
+- [x] **Code splitting verified**: the quote form ships in its own chunk
+      loaded only on `/quote`; every other route shares only the framework
+      baseline plus the small layout chunk (header/menu/switcher)
+- [x] **Bundle audit**: ~176 KB gzip JS per route, measured against the
+      served chunks — this is the Next.js 16 / React 19 App Router runtime
+      baseline; no application data leaks into the client bundle (verified:
+      content registries, area/service/problem catalogues are absent from
+      all shipped chunks; `i18n/coverage.ts` deliberately holds slugs only)
+- [x] **Third-party scripts**: none — no analytics, tags or trackers to
+      defer; no unnecessary dependencies in `package.json` to remove
+- [x] **Dead code removed**: `data/navigation.ts` deleted (its five exported
+      nav arrays and `localizeNavigation` were unused; `localizeHref`
+      duplicated `localizedHref`). 15 components migrated onto
+      `@/i18n/hrefs` so one helper serves the whole site
+- [x] **CSS**: one stylesheet (~10 KB gzip), already minified by Lightning
+      CSS (Turbopack default) — no extra config needed
+- [x] **Fonts**: Plus Jakarta Sans self-hosted (5 × ~12 KB woff2, latin),
+      `display: swap`, automatic Arial fallback-metric adjustment to limit
+      CLS; all five weights are used above the fold, so preloading all five
+      is correct
+- [x] **`next.config.ts`**: `poweredByHeader: false` (smaller responses, no
+      stack fingerprint); `images.formats: ['image/avif', 'image/webp']`;
+      `images.minimumCacheTTL: 2678400` (31 days)
+- [x] **All 129 routes remain statically generated** (SSG) — no dynamic
+      rendering, no server data waterfalls
+
+### Images
+- [x] Single raster image (`hero-renovation.jpg`, 1408×768, 156 KB source)
+      served through `next/image` with `fill`, `priority` (preloaded,
+      fetchpriority high) and a correct `sizes` attribute
+- [x] **AVIF enabled**: hero now serves as ~28 KB AVIF at w1080 (82% smaller
+      than the source JPG, ~36% smaller than WebP), 31-day immutable cache
+- [x] Responsive `srcSet` (384w–3840w) — browsers download the right size
+- [x] Localized, meaningful `alt` text (per-language dictionary)
+- [x] No oversized/unused images; project tiles use icon placeholders only
+      (no fabricated photos); decorative icons and shapes `aria-hidden`
+
+### Mobile fixes (tested conceptually at 320 / 375 / 390 / 430 / 768 / 1024 / 1280 / 1440 / 1920)
+- [x] **Header overflow below ~380px fixed** — measured with the actual font
+      metrics: brand lockup (143px) + compact language switcher + menu button
+      exceeded the viewport on 320–375px phones (e.g. 360px Androids). The
+      header switcher is now hidden below `sm`; language switching stays one
+      tap away in the mobile menu and footer
+- [x] **Bahasa Melayu desktop header overflow fixed** — the long BM nav labels
+      + "Dapatkan Sebut Harga Percuma" CTA overflowed every width from 1280px
+      to ~1490px (nav text alone 654px). Measured short forms that fit with
+      healthy slack (110px at 1280px): Utama, Kawasan, FAQ, Tentang, Hubungi,
+      and CTA "Sebut Harga Percuma"; nav item padding tightened to `px-2.5`
+- [x] **iOS input zoom fixed** — form controls were 14px, which makes iOS
+      Safari auto-zoom the page on focus; `.form-control` is now 16px
+- [x] Responsive grids verified: every grid stacks to one column at base
+      (services, problems, why, process, areas, FAQ, form, footer); no
+      `whitespace-nowrap` or fixed-width overflow sources; all decorative
+      absolute shapes sit inside `overflow-hidden` containers
+- [x] Buttons keep a 44px minimum height (`min-h-11`) across breakpoints
+- [x] Breakpoint map: 320–430px single-column + hamburger menu; 640px+ header
+      switcher returns, menu services in 2 columns; 768/1024px tablet
+      hamburger + 2–3 column grids; 1280px+ full desktop nav (all languages
+      fit); 1440/1920px capped by the 1200px container
+
+### Accessibility
+- [x] **Mobile menu**: focus is now trapped inside the open panel (Tab /
+      Shift+Tab cycle through menu items instead of reaching invisible
+      content behind the overlay); panel marked `role="dialog"` +
+      `aria-modal="true"`; Escape closes and focus returns to the trigger;
+      body scroll lock retained
+- [x] **Required fields announced**: the quote form's asterisks were
+      `aria-hidden` with no spoken equivalent — a visually hidden
+      "(required)" / "(wajib)" / "（必填）" now accompanies every required
+      label in all three languages
+- [x] **Colour contrast fixes**: footer contact labels `white/40` → `white/60`
+      (3.6:1 → 6.7:1 on navy) and input placeholder `slate-400` →
+      `slate-500` (2.6:1 → 4.8:1). Full token contrast matrix audited — all
+      text pairs now meet WCAG AA (eyebrow/brand 5.5:1+, secondary 5.6:1+,
+      white-on-navy mixes 5.1:1+, navy-on-accent buttons 9.4:1)
+- [x] **Tap targets**: breadcrumb links (`py-1`) and footer links
+      (`-my-1 py-1`, hit area extended into the list gaps with zero visual
+      change) now meet the 24px WCAG 2.5.8 minimum; primary buttons are 44px
+- [x] **`prefers-reduced-motion`**: smooth scrolling, entrance animations and
+      transitions are disabled for users who ask for less motion
+- [x] **Safari `<summary>` marker**: `::-webkit-details-marker` hidden so FAQ
+      accordions show the custom chevron, not the native triangle
+- [x] Audit re-verified sitewide: exactly one H1 per page and no heading
+      level skips on all 19 template types; correct `html lang` per language;
+      skip link + landmarks; `aria-label`s on all navs; visible
+      `:focus-visible` styles sitewide; decorative SVGs `aria-hidden`;
+      autocomplete attributes on every quote field; `aria-live` on filter and
+      photo-count feedback
+- [x] Invalid `text-primary` utility removed from the mobile menu (matched no
+      theme token; the `.eyebrow` class already applies the brand colour)
+
+### UX review (no redesign — verification plus targeted fixes)
+- [x] CTA obvious: persistent "Get a Free Quote" header button, hero primary
+      CTA, CTA section on every content template, quote CTA in footers/menus
+- [x] WhatsApp easy to find: hero, CTA sections, mobile menu, footer contact
+      column and Contact page (placeholder-aware — falls back to the contact
+      page until a real number is configured)
+- [x] Quote request easy: 3 short required fields to a usable form, service →
+      sub-service dependency, photo upload with guidance, no instant-quote
+      overclaiming
+- [x] Services easy to discover: nav, homepage grid (10), footer list,
+      related-services blocks on every service/problem/area page
+- [x] Locations easy to discover: nav "Areas We Serve", homepage region cards
+      with all 31 area chips, region hubs + nearby-area links, footer
+- [x] Related services/problems cross-linked everywhere (Phase 7 audit stood;
+      re-spot-checked after this phase's changes)
+
+### Test results
+- [x] `npm run type-check` — PASS
+- [x] `npm run lint` — PASS
+- [x] `npm run build` — PASS (129 static pages + 3 sitemaps + robots)
+- [x] All 100 `en` sitemap URLs return 200; `ms`/`zh` pages 200; untranslated
+      deep routes correctly 404; localized 404 works
+- [x] Rendered-output checks: heading hierarchy, single H1, `html lang`,
+      sr-only required text, `hidden sm:block` switcher behaviour, reduced-
+      motion and summary-marker rules present in the compiled stylesheet
+- [x] Served-response checks: `X-Powered-By` gone; hero serves AVIF/WebP by
+      `Accept` with `Cache-Control: public, max-age=2678400`
 
 ## PHASE 9 — Further Conversion & SEO Expansion — [ ]
 
@@ -601,4 +733,4 @@ no template changes are required.
   - `[EMAIL]`
   - `[ADDRESS]`
   - `[BUSINESS HOURS]`
-- Dedicated service detail pages were built in Phase 2; problem pages were built in Phase 3; the local SEO area architecture (2 region hubs + 31 unique location guides + areas index) was built in Phase 4. Phase 5 adds the supporting pages and a portfolio framework containing only clearly labelled placeholders. Phase 6 delivered the multilingual architecture and full translations for the core pages; the long-form service, problem and area catalogues remain English-only and the blog is not built.
+- Dedicated service detail pages were built in Phase 2; problem pages were built in Phase 3; the local SEO area architecture (2 region hubs + 31 unique location guides + areas index) was built in Phase 4. Phase 5 adds the supporting pages and a portfolio framework containing only clearly labelled placeholders. Phase 6 delivered the multilingual architecture and full translations for the core pages; the long-form service, problem and area catalogues remain English-only and the blog is not built. Phase 8 was the quality optimization pass (performance, accessibility, mobile & UX); the advanced quote system remains future work.

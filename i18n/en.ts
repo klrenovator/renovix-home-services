@@ -483,6 +483,7 @@ export const en: Dictionary = {
       description: "Description",
       preferredDate: "Preferred Date",
       photos: "Upload Photos",
+      requiredText: "(required)",
     },
     placeholders: {
       name: "Your name",

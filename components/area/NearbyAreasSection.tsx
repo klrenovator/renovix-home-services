@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { IconArrowRight, IconMapPin } from "@/components/icons";
-import { localizeHref } from "@/data/navigation";
+import { localizedHref } from "@/i18n/hrefs";
 import { getAreaRegion, getAllAreas } from "@/data/area-content";
 import type { AreaDetail } from "@/data/area-content/types";
 
@@ -28,7 +28,7 @@ export function NearbyAreasSection({ area, lang }: NearbyAreasSectionProps) {
 
         <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           <Link
-            href={localizeHref(`/areas/${region.id}`, lang)}
+            href={localizedHref(`/areas/${region.id}`, lang)}
             className="card card-hover group flex h-full flex-col p-6 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
           >
             <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-navy/10 text-navy transition-colors group-hover:bg-navy group-hover:text-white">
@@ -56,7 +56,7 @@ export function NearbyAreasSection({ area, lang }: NearbyAreasSectionProps) {
             return (
               <Link
                 key={slug}
-                href={localizeHref(`/areas/${nearby.region}/${nearby.slug}`, lang)}
+                href={localizedHref(`/areas/${nearby.region}/${nearby.slug}`, lang)}
                 className="card card-hover group flex h-full flex-col p-6 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
               >
                 <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-brand/10 text-brand transition-colors group-hover:bg-brand group-hover:text-white">

@@ -28,21 +28,26 @@ export const ms: Dictionary = {
     filterProjects: "Tapis contoh portfolio",
   },
   nav: {
-    home: "Laman Utama",
+    // Short forms measured against the Plus Jakarta Sans metrics: the long
+    // forms ("Laman Utama", "Kawasan Kami", "Soalan Lazim", "Tentang Kami",
+    // "Hubungi Kami") made the desktop header overflow between 1280px and
+    // ~1490px. These are the standard short BM nav labels used across
+    // Malaysian sites, and they also read better in the mobile menu.
+    home: "Utama",
     services: "Perkhidmatan",
     problems: "Masalah",
-    areas: "Kawasan Kami",
+    areas: "Kawasan",
     projects: "Projek",
-    faq: "Soalan Lazim",
-    about: "Tentang Kami",
-    contact: "Hubungi Kami",
+    faq: "FAQ",
+    about: "Tentang",
+    contact: "Hubungi",
   },
   legal: {
     privacy: "Dasar Privasi",
     terms: "Terma & Syarat",
   },
   cta: {
-    getFreeQuote: "Dapatkan Sebut Harga Percuma",
+    getFreeQuote: "Sebut Harga Percuma",
     requestQuote: "Minta Sebut Harga",
     getQuote: "Dapatkan Sebut Harga",
     startQuoteRequest: "Mulakan Permintaan Sebut Harga",
@@ -488,6 +493,7 @@ export const ms: Dictionary = {
       description: "Penerangan",
       preferredDate: "Tarikh Pilihan",
       photos: "Muat Naik Gambar",
+      requiredText: "(wajib)",
     },
     placeholders: {
       name: "Nama anda",
