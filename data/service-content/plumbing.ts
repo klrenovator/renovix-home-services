@@ -3,7 +3,7 @@ import type { ServiceDetail } from "./types";
 export const plumbing: ServiceDetail = {
   slug: "plumbing",
   name: "Plumbing",
-  title: "Plumbing Services in Kuala Lumpur & Selangor | Leaks, Pipes & Fittings",
+  title: "Plumbing Services in Kuala Lumpur & Selangor | Renovix",
   metaDescription:
     "Plumbing repairs and installations in Kuala Lumpur & Selangor — water leaks, pipe work, sinks, toilets, showers, water heaters and concealed pipes. Leak detection and drainage repairs. Free quote.",
   h1: "Plumbing Services in Kuala Lumpur & Selangor",

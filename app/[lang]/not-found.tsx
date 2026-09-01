@@ -22,6 +22,7 @@ export default async function LocaleNotFound() {
           title={t.notFound.title}
           description={t.notFound.description}
           align="center"
+          headingLevel={1}
         />
         <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
           <Link href={localizedHref("/", code)} className="btn btn-primary">

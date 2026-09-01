@@ -11,14 +11,19 @@ const nextConfig: NextConfig = {
    * The site is fully language-prefixed (`/en/`, `/ms/`, `/zh/`). The bare root
    * sends visitors to the default language rather than serving a fourth,
    * duplicate copy of the homepage.
+   *
+   * `permanent: true` makes this a permanent redirect (Next.js 16 emits a 308
+   * for `permanent`, its method-preserving equivalent of the traditional 301).
+   * A permanent default-locale redirect is what Google's hreflang guidance
+   * recommends, and it passes the root's ranking signal to `/en/` permanently.
+   * The trailing slash keeps it a single hop to the URL that returns 200.
    */
   async redirects() {
     return [
       {
         source: "/",
-        // Trailing slash so this is a single hop to the URL that returns 200.
         destination: "/en/",
-        permanent: false,
+        permanent: true,
       },
     ];
   },

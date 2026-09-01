@@ -4,13 +4,15 @@ import { notFound } from "next/navigation";
 import { Button, WhatsAppButton } from "@/components/ui/Button";
 import { Breadcrumbs } from "@/components/service/Breadcrumbs";
 import { IconArrowRight, IconAlertTriangle } from "@/components/icons";
+import { PageSchema } from "@/components/seo/PageSchema";
+import { itemListNode } from "@/components/seo/schema";
 import { getLanguage, languages } from "@/data/languages";
 import { getProblemCategories, getServiceName } from "@/data/i18n";
-import { getProblemsByCategory } from "@/data/problem-content";
+import { getProblemsByCategory, problemDetails } from "@/data/problem-content";
 import { getWhatsAppHref } from "@/data/site";
 import { getDictionary } from "@/i18n";
 import { contentHref, localizedHref } from "@/i18n/hrefs";
-import { buildPageMetadata } from "@/i18n/seo";
+import { absoluteUrl, buildPageMetadata } from "@/i18n/seo";
 
 type ProblemsPageProps = {
   params: Promise<{ lang: string }>;
@@ -53,9 +55,30 @@ export default async function ProblemsPage({ params }: ProblemsPageProps) {
   const code = language.code;
   const t = getDictionary(code);
   const categories = getProblemCategories(code);
+  const canonical = absoluteUrl(code, "/problems/");
+
+  // The full problem library as an ItemList. Problem guides only exist in
+  // English, so item URLs are emitted for English only.
+  const problemItems = problemDetails.map((problem) => ({
+    name: problem.name,
+    ...(code === "en"
+      ? { url: absoluteUrl("en", `/problems/${problem.slug}/`) }
+      : {}),
+  }));
 
   return (
     <>
+      <PageSchema
+        lang={code}
+        path="/problems/"
+        name={t.problemsIndex.title}
+        description={t.problemsIndex.metaDescription}
+        breadcrumbs={[
+          { name: t.common.home, url: absoluteUrl(code, "/") },
+          { name: t.problemsIndex.breadcrumb },
+        ]}
+        extra={[itemListNode(canonical, t.problemsIndex.title, problemItems)]}
+      />
       <section className="relative overflow-hidden bg-navy text-white">
         <div
           aria-hidden="true"

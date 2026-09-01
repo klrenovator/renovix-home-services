@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import "../globals.css";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { SiteSchema } from "@/components/seo/SiteSchema";
 import { getLanguage, languages } from "@/data/languages";
 import { siteConfig } from "@/data/site";
 import { getDictionary } from "@/i18n";
@@ -83,6 +84,9 @@ export default async function LocaleLayout({
   return (
     <html lang={language?.htmlLang ?? "en-MY"} className={plusJakartaSans.variable}>
       <body className="bg-white font-sans text-ink">
+        {/* Site-level structured data (Organization/LocalBusiness + WebSite),
+            emitted on every page so the business entity is consistent. */}
+        <SiteSchema lang={code} />
         <a href="#main" className="skip-link">
           {t.a11y.skipToContent}
         </a>

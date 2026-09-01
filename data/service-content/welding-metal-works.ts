@@ -3,7 +3,7 @@ import type { ServiceDetail } from "./types";
 export const weldingMetalWorks: ServiceDetail = {
   slug: "welding-metal-works",
   name: "Welding & Metal Works",
-  title: "Welding & Metal Works in Kuala Lumpur & Selangor | Gates, Grilles & Railings",
+  title: "Welding & Metal Works in Kuala Lumpur & Selangor | Renovix",
   metaDescription:
     "Welding and metal fabrication in Kuala Lumpur & Selangor — gates, grilles, handrails, railings, awnings, custom steel work and metal repairs. Free quote.",
   h1: "Welding & Metal Works in Kuala Lumpur & Selangor",

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { HomePage } from "@/components/home/HomePage";
+import { PageSchema } from "@/components/seo/PageSchema";
 import { getLanguage, languages } from "@/data/languages";
 import { getDictionary } from "@/i18n";
 import { buildPageMetadata } from "@/i18n/seo";
@@ -42,5 +43,18 @@ export default async function Home({ params }: HomePageProps) {
     notFound();
   }
 
-  return <HomePage lang={language.code} />;
+  const code = language.code;
+  const t = getDictionary(code);
+
+  return (
+    <>
+      <PageSchema
+        lang={code}
+        path="/"
+        name={t.home.hero.title}
+        description={t.meta.homeDescription}
+      />
+      <HomePage lang={code} />
+    </>
+  );
 }

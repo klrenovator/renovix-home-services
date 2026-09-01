@@ -1,7 +1,14 @@
-import { JsonLd } from "@/components/service/JsonLd";
-import { siteConfig } from "@/data/site";
-import { getAreaRegion, getAreaPath } from "@/data/area-content";
-import { getServiceBySlug } from "@/data/services";
+import { JsonLd } from "@/components/seo/JsonLd";
+import {
+  breadcrumbNode,
+  faqNode,
+  schemaGraph,
+  webPageNode,
+} from "@/components/seo/schema";
+import { areaServiceNode } from "@/components/seo/schema";
+import { getDictionary } from "@/i18n";
+import { absoluteUrl } from "@/i18n/seo";
+import { getAreaRegion } from "@/data/area-content";
 import type { AreaDetail } from "@/data/area-content/types";
 
 type AreaJsonLdProps = {
@@ -10,120 +17,40 @@ type AreaJsonLdProps = {
 };
 
 /**
- * Schema for a location page: BreadcrumbList, a Service node whose
- * areaServed is the specific place, and FAQPage.
- * No address, geo or Google Business profile data is emitted — the
- * business has no published local presence details.
+ * Structured data for a location guide: WebPage + BreadcrumbList + a Service
+ * node scoped to that place (the Service + Location relationship) + the
+ * page's FAQPage. No address, geo or local-presence details are emitted —
+ * the business has none published.
  */
 export function AreaJsonLd({ area, lang }: AreaJsonLdProps) {
+  const t = getDictionary("en");
   const region = getAreaRegion(area.region);
-  const canonical = `${siteConfig.url}/${lang}${getAreaPath(area)}/`;
+  const canonical = absoluteUrl(lang, `/areas/${area.region}/${area.slug}/`);
 
-  const breadcrumbs = [
-    {
-      "@type": "ListItem",
-      position: 1,
-      name: "Home",
-      item: `${siteConfig.url}/${lang}/`,
-    },
-    {
-      "@type": "ListItem",
-      position: 2,
-      name: "Service Areas",
-      item: `${siteConfig.url}/${lang}/areas/`,
-    },
-    ...(region
-      ? [
-          {
-            "@type": "ListItem",
-            position: 3,
-            name: region.name,
-            item: `${siteConfig.url}/${lang}/areas/${region.id}/`,
-          },
-        ]
-      : []),
-    {
-      "@type": "ListItem",
-      position: region ? 4 : 3,
+  const nodes = [
+    webPageNode({
+      lang,
+      path: `/areas/${area.region}/${area.slug}/`,
       name: area.name,
-      item: canonical,
-    },
+      description: area.metaDescription,
+      about: { "@id": `${canonical}#service` },
+    }),
+    breadcrumbNode(canonical, [
+      { name: t.common.home, url: absoluteUrl(lang, "/") },
+      { name: t.areasIndex.breadcrumb, url: absoluteUrl(lang, "/areas/") },
+      ...(region
+        ? [
+            {
+              name: region.name,
+              url: absoluteUrl(lang, `/areas/${region.id}/`),
+            },
+          ]
+        : []),
+      { name: area.name },
+    ]),
+    areaServiceNode(area, lang),
+    faqNode(canonical, area.faqs),
   ];
 
-  const place = {
-    "@type": "Place",
-    name: `${area.name}${region ? `, ${region.name}` : ""}`,
-    ...(region
-      ? {
-          containedInPlace: {
-            "@type": "Place",
-            name: region.name,
-          },
-        }
-      : {}),
-  };
-
-  const serviceSchema = {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    name: `Home renovation & repair services in ${area.name}`,
-    serviceType: "Home renovation and repair services",
-    description: area.metaDescription,
-    url: canonical,
-    provider: {
-      "@type": "LocalBusiness",
-      name: siteConfig.legalName,
-      url: siteConfig.url,
-      areaServed: {
-        "@type": "Place",
-        name: "Kuala Lumpur, Selangor & Klang Valley",
-      },
-    },
-    areaServed: place,
-    hasOfferCatalog: {
-      "@type": "OfferCatalog",
-      name: `Renovix services available in ${area.name}`,
-      itemListElement: area.servicesAvailable
-        .flatMap((focus) => {
-          const service = getServiceBySlug(focus.serviceSlug);
-          return service ? [service] : [];
-        })
-        .slice(0, 10)
-        .map((service) => ({
-          "@type": "Offer",
-          itemOffered: {
-            "@type": "Service",
-            name: `${service.name} in ${area.name}`,
-            url: `${siteConfig.url}/${lang}${service.path}/`,
-          },
-        })),
-    },
-  };
-
-  const faqSchema = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: area.faqs.map((faq) => ({
-      "@type": "Question",
-      name: faq.question,
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: faq.answer,
-      },
-    })),
-  };
-
-  return (
-    <>
-      <JsonLd
-        data={{
-          "@context": "https://schema.org",
-          "@type": "BreadcrumbList",
-          itemListElement: breadcrumbs,
-        }}
-      />
-      <JsonLd data={serviceSchema} />
-      <JsonLd data={faqSchema} />
-    </>
-  );
+  return <JsonLd data={schemaGraph(nodes)} />;
 }

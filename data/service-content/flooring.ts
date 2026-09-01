@@ -3,7 +3,7 @@ import type { ServiceDetail } from "./types";
 export const flooring: ServiceDetail = {
   slug: "flooring",
   name: "Flooring",
-  title: "Flooring Services in Kuala Lumpur & Selangor | Vinyl, SPC, Laminate & More",
+  title: "Flooring Services in Kuala Lumpur & Selangor | Renovix",
   metaDescription:
     "Vinyl, SPC, laminate, parquet and wooden flooring installation, replacement and repair in Kuala Lumpur & Selangor. Floor leveling, screeding and skirting. Free quote.",
   h1: "Flooring Services in Kuala Lumpur & Selangor",

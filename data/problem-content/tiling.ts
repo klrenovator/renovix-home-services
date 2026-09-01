@@ -638,7 +638,7 @@ export const tilingProblems: ProblemDetail[] = [
     ...tilingBase,
     slug: "tile-grout-problems",
     name: "Tile Grout Problems",
-    title: "Tile Grout Problems in Kuala Lumpur & Selangor | Regrouting | Renovix",
+    title: "Tile Grout Problems in Kuala Lumpur & Selangor | Renovix",
     metaDescription:
       "Crumbling, stained or missing tile grout fixed in Kuala Lumpur & Selangor. Learn the causes of grout problems, warning signs, regrouting solutions and when to call a tiler.",
     h1: "Tile Grout Problems",
@@ -995,7 +995,7 @@ export const tilingProblems: ProblemDetail[] = [
     ...tilingBase,
     slug: "water-seepage-through-tiles",
     name: "Water Seepage Through Tiles",
-    title: "Water Seepage Through Tiles in Kuala Lumpur & Selangor | Renovix",
+    title: "Tile Water Seepage in Kuala Lumpur & Selangor | Renovix",
     metaDescription:
       "Water seeping through tiles in Kuala Lumpur & Selangor — what it means, common causes, warning signs, waterproofing solutions and when to call a professional.",
     h1: "Water Seepage Through Tiles",

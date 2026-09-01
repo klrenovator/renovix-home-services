@@ -1,7 +1,14 @@
 import type { MetadataRoute } from "next";
 import { languages, type LanguageCode } from "@/data/languages";
-import { siteConfig } from "@/data/site";
 import { hasTranslation, ALL_AREAS, ALL_AREA_REGIONS, ALL_PROBLEMS, ALL_SERVICES } from "@/i18n/coverage";
+import { absoluteUrl } from "@/i18n/seo";
+import { assertCoverageInSync } from "@/i18n/verify";
+
+// The sitemap is the only place a stale slug would silently produce a URL that
+// 404s (and a wrong hreflang set). Sitemaps run at build time for every
+// locale, so this fails the build the moment the coverage lists drift from the
+// content registries.
+assertCoverageInSync();
 
 /**
  * One sitemap per language: `/sitemap/en.xml`, `/sitemap/ms.xml`,
@@ -87,8 +94,10 @@ export default async function sitemap(props: {
     "en") as LanguageCode;
 
   return pathsForLanguage(lang).map((entry) => {
-    const suffix = entry.path === "/" ? "" : entry.path;
-    const url = `${siteConfig.url}/${lang}${suffix}`;
+    // `absoluteUrl` keeps the sitemap in the exact trailing-slash shape the
+    // site serves, so every `<loc>` points at a URL that returns 200 — no
+    // redirect hop for crawlers, and alternates match the real canonicals.
+    const url = absoluteUrl(lang, entry.path);
 
     const alternates: Record<string, string> = {};
 
@@ -119,11 +128,12 @@ export default async function sitemap(props: {
                 : hasTranslation("area", areaKeyOf(entry.path), language.code);
 
       if (publishes) {
-        alternates[language.hreflang] = `${siteConfig.url}/${language.code}${suffix}`;
+        alternates[language.hreflang] = absoluteUrl(language.code, entry.path);
       }
     }
 
-    alternates["x-default"] = `${siteConfig.url}/en${suffix}`;
+    // `x-default` points at the English version, the site's default locale.
+    alternates["x-default"] = absoluteUrl("en", entry.path);
 
     return {
       url,

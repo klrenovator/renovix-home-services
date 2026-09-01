@@ -3,7 +3,7 @@ import type { ServiceDetail } from "./types";
 export const electrical: ServiceDetail = {
   slug: "electrical",
   name: "Electrical",
-  title: "Electrical Services in Kuala Lumpur & Selangor | Wiring, Lighting & Repairs",
+  title: "Electrical Services in Kuala Lumpur & Selangor | Renovix",
   metaDescription:
     "Electrical wiring, rewiring, lighting installation, power points, DB box upgrades and fault repairs in Kuala Lumpur & Selangor. Safe, tidy electrical work for homes and offices. Free quote.",
   h1: "Electrical Services in Kuala Lumpur & Selangor",

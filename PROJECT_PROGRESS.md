@@ -340,7 +340,9 @@
 - [x] Malaysian locale tags throughout: `en-MY`, `ms-MY`, `zh-MY`
 - [x] `app/[lang]/layout.tsx` is now the root layout, so `<html lang>` is correct per
       language (`en-MY` / `ms-MY` / `zh-MY`) instead of a hardcoded `lang="en"`
-- [x] `/` 307-redirects to `/en` (no fourth duplicate homepage)
+- [x] `/` redirects to the default language (no fourth duplicate homepage)
+      — originally a 307; Phase 7 made it permanent (Next.js 16 emits 308 for
+      `permanent: true`) pointing at `/en/`
 - [x] `next/root-params` used for the localized 404, which receives no `params` prop
 
 ### Translation architecture
@@ -434,7 +436,155 @@ no template changes are required.
 - No prices, reviews, ratings, certifications, licences, warranties, projects or
   team claims were introduced in any language.
 
-## PHASE 7 — Blog & Content / Further Expansion — [ ]
+## PHASE 7 — SEO, AEO, GEO, Structured Data & Technical SEO — [x]
+
+> **Scope note.** The earlier outline in this file labelled Phase 7 "Blog &
+> Content". The client brief for Phase 7 is the complete technical and
+> semantic SEO implementation, which is what this phase delivers. The blog
+> remains unbuilt.
+
+### Structured data (unified `@graph` system, `components/seo/`)
+- [x] New shared schema builder (`components/seo/schema.ts`) with stable `@id`s,
+      so every page participates in one consistent entity graph:
+      `Organization/LocalBusiness` → `WebSite` → `WebPage` → page content nodes
+- [x] `SiteSchema` rendered in the root layout — the business entity and the
+      WebSite entity appear on **all 122 pages** (consistent entity identity
+      for search engines and LLMs)
+- [x] `PageSchema` emits a `WebPage` node (with `isPartOf`, `about`,
+      `breadcrumb`, `inLanguage`) on every page
+- [x] **Organization + LocalBusiness** (single multi-type node): name, legal
+      name, website, public description, tagline, languages served (en/ms/zh),
+      areas served (Kuala Lumpur, Selangor, Klang Valley), and an
+      `OfferCatalog` of the 10 services
+- [x] **WebSite** per language version (`en-MY` / `ms-MY` / `zh-MY`),
+      publisher → organization
+- [x] **Service** nodes (10 service pages) with `provider` → organization,
+      `areaServed` places and `OfferCatalog` of sub-services
+- [x] **Service-scoped-to-place** nodes (31 area guides): the Service +
+      Location relationship in schema form (`areaServed` = `Place` with
+      `containedInPlace` = region), with offers "Service in {Area}"
+- [x] **Article** nodes (46 problem guides) with `about` → the service that
+      handles the problem, author/publisher → organization
+- [x] **FAQPage** on 95 pages (service, problem, area, region, FAQ and
+      areas-index pages) — built from the same Q&A data the visible FAQ
+      sections render (answers present in the static DOM inside
+      `<details>`)
+- [x] **BreadcrumbList** on 119 pages — matches the visible breadcrumb,
+      sequential positions, and the last item carries **no URL** (per Google's
+      guidance)
+- [x] **ItemList** on the services index (10), problems index (46) and both
+      region hubs — with item URLs in English only, where the detail pages
+      exist
+- [x] **Honesty rules enforced**: no ratings, reviews, prices,
+      certifications, address, geo, phone, email, opening hours or awards
+      anywhere in the markup — the audit fails on any such property. The
+      `LocalBusiness` entity deliberately contains only verified facts
+- [x] Refactored all existing JSON-LD (service / problem / area / region /
+      support pages) onto the shared builders; removed the two legacy
+      components (`service/JsonLd.tsx`, `support/PageBreadcrumbJsonLd.tsx`)
+- [x] Privacy and Terms pages now carry structured data too (previously none)
+
+### Technical SEO
+- [x] `metadataBase` set; unique titles and descriptions on all 122 pages
+      (verified: **0 duplicates**)
+- [x] Title lengths trimmed to ≤60 characters where the previous length would
+      truncate in SERPs (10 service + problem titles + EN/BM homepages); the
+      "in Kuala Lumpur & Selangor" local anchor is preserved in every title
+- [x] Self-referencing canonicals on every page (verified URL-for-URL)
+- [x] `og:image` (1200×630, with dimensions + alt) and `twitter:image` now
+      explicit on **every** page — the generated image route
+      (`/[lang]/opengraph-image`) only auto-applied to the homepage, so the
+      image is set directly in page metadata per language version
+- [x] `robots.txt`: allows everything, disallows only `/_next/`, lists all
+      three sitemaps, sets `Host`. No content page is blocked
+- [x] Sitemaps: per-language (`en` 100 URLs, `ms` 11, `zh` 11), each entry
+      with `lastmod`, `changefreq`, priority and hreflang alternates; the
+      root URL now uses the exact trailing-slash form the site serves
+      (`/en/` — previously `/en`, which 308-redirects)
+- [x] **Sitemap bug fix**: four stale problem slugs in `i18n/coverage.ts`
+      (`hollow-tile-repair`, `grout-problems`, `tile-water-seepage`,
+      `ceiling-fan-wiring`) did not match the content registry — they produced
+      sitemap entries for URLs that 404 and left the real pages out of the
+      sitemap and hreflang sets. All four corrected
+- [x] **New build-time guard** (`i18n/verify.ts`, wired into the sitemap
+      build): fails the build if the slug inventories in `i18n/coverage.ts`
+      ever drift from the service / problem / area registries again
+- [x] Redirect handling: `/` → `/en/` is now a **permanent** redirect
+      (Next.js 16 emits 308 for `permanent: true`, its method-preserving
+      permanent code); trailing-slash variants 308 to the canonical form
+- [x] Favicon (`app/icon.svg`) verified serving; single H1 on every page
+      (legal pages and the 404 previously had none — `SectionHeading` gained
+      a `headingLevel` option)
+- [x] Localized 404 in all three languages with working navigation links
+
+### Hreflang
+- [x] Verified on all 122 pages: every page lists itself, lists only the
+      languages that actually publish it (English-only content pages list
+      `en-MY` + `x-default` only), `x-default` → English, and **reciprocity
+      holds** — if page A lists B, page B lists A (0 conflicts)
+- [x] Sitemap hreflang alternates match the on-page `rel="alternate"` sets
+      exactly (verified URL-for-URL)
+- [x] `og:locale` localized (`en_MY` / `ms_MY` / `zh_MY`)
+
+### Local SEO / semantic relationships
+- [x] Service + Location + Problem + Property Type relationships now exist at
+      three levels: content (Phases 2–4), visible internal links (verified
+      below), and schema (Service `areaServed` = Place, Article `about` =
+      Service, organization `areaServed` + service catalog)
+- [x] No keyword stuffing — existing Phase 2–4 copy untouched except the
+      title lengths above
+
+### AEO / GEO / LLM discoverability
+- [x] FAQ answers are direct, in the static DOM, and mirrored in FAQPage
+      schema — the same answer text search engines, AEO extractors and LLMs
+      see, whether collapsed or expanded
+- [x] Problem guides keep their answer-first structure: short definition
+      ("What this problem means"), cause lists, warning signs, step-by-step
+      process, "when to call a professional", FAQ
+- [x] Entity relationships are stable and consistent site-wide via shared
+      `@id`s (one organization entity, one WebSite per language, pages linked
+      to their service/place/organization)
+- [x] Business positioning expressed in schema: description, slogan,
+      languages, service areas, full service catalog with URLs
+
+### Internal link audit (all 122 sitemap pages crawled)
+- [x] Homepage → services / problems / areas: ✓
+- [x] Services → sub-services (content), problems, areas: ✓
+- [x] Problems → related service + related problems: ✓
+- [x] Services/Problems → locations; locations → services + nearby areas: ✓
+- [x] Supporting pages (quote, contact, about, projects, FAQ) → services +
+      areas: ✓
+- [x] Related services / related problems: ✓
+- [x] **Broken internal links: 0** — and **orphan pages: 0** (every sitemap
+      URL has at least one inbound internal link)
+- [x] Language switcher links stay within each language's published pages
+      (nearest-translated-ancestor fallback, Phase 6) — no cross-language
+      content links, no 404 links
+
+### Test results
+- [x] `npm run type-check` — PASS
+- [x] `npm run lint` — PASS
+- [x] `npm run build` — PASS (129 static pages + 3 sitemaps + robots)
+- [x] SEO route audit over all 122 sitemap URLs — **0 issues**: status 200,
+      canonical self-reference, unique titles/descriptions, exactly one H1,
+      correct `html lang`, og:title/og:image/twitter:image present,
+      hreflang self + x-default + reciprocity, robots/sitemap consistency,
+      root redirect 308 → `/en/`, 404 behaviour
+- [x] JSON-LD structural validation over all 122 pages — **0 errors**: valid
+      `@context`/types/properties, all `@id` references resolve, breadcrumb
+      shape rules, FAQ answer completeness, and the honesty property ban
+      (no rating/price/address/phone/hours/award/credential fields)
+- [x] Title audit: 0 duplicate titles; all titles ≤60 characters except area
+      guides whose location anchor requires 61–64 (local-SEO priority)
+
+### Known minor items (intentionally left)
+- [ ] ~49 meta descriptions run 170–200 characters (Google truncates at
+      ~155); the first 155 characters carry the full message, so rewriting
+      the Phase 2–4 copy was not worth the churn
+- [ ] No `SearchAction` in the WebSite schema — the site has no search
+      feature, and one is not claimed
+- [ ] `LocalBusiness` has no address/phone/hours by design: the official
+      details are still placeholders in `data/site.ts`
 
 ## PHASE 8 — Advanced Quote System — [ ]
 

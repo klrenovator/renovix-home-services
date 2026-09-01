@@ -3,15 +3,15 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { IconArrowRight, IconChat, IconMapPin } from "@/components/icons";
 import { FaqAccordion } from "@/components/faq/FaqAccordion";
-import { JsonLd } from "@/components/service/JsonLd";
-import { PageBreadcrumbJsonLd } from "@/components/support/PageBreadcrumbJsonLd";
+import { PageSchema } from "@/components/seo/PageSchema";
+import { faqNode } from "@/components/seo/schema";
 import { PageHero } from "@/components/support/PageHero";
 import { Button } from "@/components/ui/Button";
 import { getLanguage, languages } from "@/data/languages";
 import { getSiteFaqs } from "@/data/i18n";
 import { getDictionary } from "@/i18n";
 import { localizedHref } from "@/i18n/hrefs";
-import { buildPageMetadata } from "@/i18n/seo";
+import { absoluteUrl, buildPageMetadata } from "@/i18n/seo";
 
 type FaqPageProps = {
   params: Promise<{ lang: string }>;
@@ -56,17 +56,16 @@ export default async function FaqPage({ params }: FaqPageProps) {
 
   return (
     <>
-      <PageBreadcrumbJsonLd lang={code} label={t.faq.breadcrumb} path="/faq/" />
-      <JsonLd
-        data={{
-          "@context": "https://schema.org",
-          "@type": "FAQPage",
-          mainEntity: faqs.map((faq) => ({
-            "@type": "Question",
-            name: faq.question,
-            acceptedAnswer: { "@type": "Answer", text: faq.answer },
-          })),
-        }}
+      <PageSchema
+        lang={code}
+        path="/faq/"
+        name={t.faq.title}
+        description={t.faq.metaDescription}
+        breadcrumbs={[
+          { name: t.common.home, url: absoluteUrl(code, "/") },
+          { name: t.faq.breadcrumb },
+        ]}
+        extra={[faqNode(absoluteUrl(code, "/faq/"), faqs)]}
       />
       <PageHero
         eyebrow={t.faq.eyebrow}

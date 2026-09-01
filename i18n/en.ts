@@ -12,7 +12,7 @@ export const en: Dictionary = {
     defaultDescription:
       "Renovix Home Services provides professional home renovation and improvement services across Kuala Lumpur, Selangor and the Klang Valley. Tiling, welding, electrical, painting, ceiling, partition, plumbing, waterproofing, flooring, renovation and handyman services.",
     homeTitle:
-      "Renovix Home Services | Home Renovation & Improvement in KL & Selangor",
+      "Home Renovation & Improvement in KL & Selangor | Renovix",
     homeDescription:
       "Professional home renovation and improvement services in Kuala Lumpur, Selangor and the Klang Valley — tiling, welding, electrical, painting, ceiling, partition, plumbing, waterproofing, flooring and handyman work.",
   },

@@ -1,5 +1,13 @@
-import { JsonLd } from "@/components/service/JsonLd";
-import { siteConfig } from "@/data/site";
+import { JsonLd } from "@/components/seo/JsonLd";
+import {
+  breadcrumbNode,
+  faqNode,
+  problemArticleNode,
+  schemaGraph,
+  webPageNode,
+} from "@/components/seo/schema";
+import { getDictionary } from "@/i18n";
+import { absoluteUrl } from "@/i18n/seo";
 import { getProblemServiceDetails } from "@/data/problem-content";
 import type { ProblemDetail } from "@/data/problem-content/types";
 
@@ -8,80 +16,38 @@ type ProblemJsonLdProps = {
   lang: string;
 };
 
+/**
+ * Structured data for a problem guide: WebPage + BreadcrumbList + the guide
+ * as an Article (about the service that handles it) + the page's FAQPage.
+ */
 export function ProblemJsonLd({ problem, lang }: ProblemJsonLdProps) {
-  const canonical = `${siteConfig.url}/${lang}/problems/${problem.slug}/`;
+  const t = getDictionary("en");
+  const canonical = absoluteUrl(lang, `/problems/${problem.slug}/`);
   const { service } = getProblemServiceDetails(problem);
 
-  const breadcrumbs = [
-    {
-      "@type": "ListItem",
-      position: 1,
-      name: "Home",
-      item: `${siteConfig.url}/${lang}/`,
-    },
-    {
-      "@type": "ListItem",
-      position: 2,
-      name: "Problems",
-      item: `${siteConfig.url}/${lang}/problems/`,
-    },
-    {
-      "@type": "ListItem",
-      position: 3,
+  const nodes = [
+    webPageNode({
+      lang,
+      path: `/problems/${problem.slug}/`,
       name: problem.name,
-      item: canonical,
-    },
+      description: problem.metaDescription,
+      about: service
+        ? {
+            "@type": "Service",
+            name: service.name,
+            serviceType: service.name,
+            url: absoluteUrl("en", `/services/${service.slug}/`),
+          }
+        : undefined,
+    }),
+    breadcrumbNode(canonical, [
+      { name: t.common.home, url: absoluteUrl(lang, "/") },
+      { name: t.problemPage.breadcrumbProblems, url: absoluteUrl(lang, "/problems/") },
+      { name: problem.name },
+    ]),
+    problemArticleNode(problem, lang, service),
+    faqNode(canonical, problem.faqs),
   ];
 
-  const articleSchema = {
-    "@context": "https://schema.org",
-    "@type": "Article",
-    headline: problem.h1,
-    description: problem.metaDescription,
-    url: canonical,
-    mainEntityOfPage: canonical,
-    inLanguage: lang,
-    about: service
-      ? {
-          "@type": "Service",
-          name: service.name,
-          serviceType: service.name,
-        }
-      : undefined,
-    author: {
-      "@type": "Organization",
-      name: siteConfig.legalName,
-      url: siteConfig.url,
-    },
-    publisher: {
-      "@type": "Organization",
-      name: siteConfig.legalName,
-      url: siteConfig.url,
-    },
-    areaServed: {
-      "@type": "Place",
-      name: "Kuala Lumpur, Selangor & Klang Valley",
-    },
-  };
-
-  const faqSchema = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: problem.faqs.map((faq) => ({
-      "@type": "Question",
-      name: faq.question,
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: faq.answer,
-      },
-    })),
-  };
-
-  return (
-    <>
-      <JsonLd data={{ "@context": "https://schema.org", "@type": "BreadcrumbList", itemListElement: breadcrumbs }} />
-      <JsonLd data={articleSchema} />
-      <JsonLd data={faqSchema} />
-    </>
-  );
+  return <JsonLd data={schemaGraph(nodes)} />;
 }

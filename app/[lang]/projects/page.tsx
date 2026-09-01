@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { IconArrowRight, IconCamera, IconCheck, IconLayers } from "@/components/icons";
 import { ProjectsPortfolio } from "@/components/projects/ProjectsPortfolio";
-import { PageBreadcrumbJsonLd } from "@/components/support/PageBreadcrumbJsonLd";
+import { PageSchema } from "@/components/seo/PageSchema";
 import { PageHero } from "@/components/support/PageHero";
 import { Button } from "@/components/ui/Button";
 import { getLanguage, languages } from "@/data/languages";
@@ -11,7 +11,7 @@ import { getProjectCategories } from "@/data/i18n";
 import { projectCategories } from "@/data/projects";
 import { getDictionary } from "@/i18n";
 import { contentHref, localizedHref } from "@/i18n/hrefs";
-import { buildPageMetadata } from "@/i18n/seo";
+import { absoluteUrl, buildPageMetadata } from "@/i18n/seo";
 
 type ProjectsPageProps = {
   params: Promise<{ lang: string }>;
@@ -56,7 +56,16 @@ export default async function ProjectsPage({ params }: ProjectsPageProps) {
 
   return (
     <>
-      <PageBreadcrumbJsonLd lang={code} label={t.projects.breadcrumb} path="/projects/" />
+      <PageSchema
+        lang={code}
+        path="/projects/"
+        name={t.projects.title}
+        description={t.projects.metaDescription}
+        breadcrumbs={[
+          { name: t.common.home, url: absoluteUrl(code, "/") },
+          { name: t.projects.breadcrumb },
+        ]}
+      />
       <PageHero
         eyebrow={t.projects.eyebrow}
         title={t.projects.title}
