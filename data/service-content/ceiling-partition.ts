@@ -363,4 +363,11 @@ export const ceilingPartition: ServiceDetail = {
     },
   ],
   relatedServices: ["electrical", "painting", "general-renovation", "waterproofing"],
+  relatedProblems: [
+    "cracked-ceiling",
+    "sagging-ceiling",
+    "water-damaged-ceiling",
+    "ceiling-stains",
+    "old-plaster-ceiling",
+  ],
 };

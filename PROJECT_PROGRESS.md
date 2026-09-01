@@ -145,7 +145,61 @@
 - [x] Sub-service lists verified against spec — all 10 services match
 - [x] No duplicate paragraphs across service content
 
-## PHASE 3 — Problem Pages — [ ]
+## PHASE 3 — Problem-Based Service Architecture — [x]
+
+### Problem content model (`data/problem-content/`)
+- [x] `types.ts` — `ProblemDetail` type with all 15-page-section fields, `ProblemCategoryId`, `ProblemCategory`, `ProblemSolution`, `ProblemProcessStep`, `ProblemPropertyType`, `ProblemFaq`
+- [x] 7 content files covering the full problem brief (46 problem pages after consolidation):
+  - [x] Tiling (9): broken/cracked/loose/hollow tile, uneven tiles, grout, bathroom & kitchen tile, water seepage through tiles
+  - [x] Electrical (8): power tripping, faulty socket, faulty switch, flickering lights, short circuit, old house wiring, insufficient power points, ceiling fan wiring
+  - [x] Painting (6): peeling paint, cracked walls, mouldy walls, faded paint, uneven paint, wall surface damage
+  - [x] Ceiling (5): cracked ceiling, sagging ceiling, water-damaged ceiling, ceiling stains, old plaster ceiling
+  - [x] Plumbing (6): water leakage, leaking tap, leaking pipe, blocked drain, toilet problems, low water pressure
+  - [x] Waterproofing (6): roof leakage, bathroom leakage, balcony leakage, wall seepage, damp walls, water stains
+  - [x] Handyman (6): door problems, lock problems, curtain installation, TV mounting, shelf installation, minor home repairs
+- [x] `index.ts` registry with `getProblemDetail`, `getRelatedProblemDetails`, `getProblemsByCategory`, `getProblemsForService`, `getProblemsBySlugs`, `getProblemServiceDetails`
+- [x] Each problem has unique title, meta description, H1, subtitle, what-it-means copy, causes, warning signs, solutions, when-to-call, process, property types, FAQs
+- [x] Electrical and structural content gives no unsafe DIY instructions — it describes what a professional does and cautions against DIY
+
+### Problem page template (15 standard sections)
+- [x] Breadcrumb (visible + BreadcrumbList schema)
+- [x] Problem H1
+- [x] What the problem means
+- [x] Common causes
+- [x] Warning signs
+- [x] Possible solutions
+- [x] When professional help is needed
+- [x] Related Renovix service (+ related services, internal linking)
+- [x] Process
+- [x] Relevant property types
+- [x] Service areas (shared component; location detail pages are Phase 4)
+- [x] FAQs (with FAQPage schema)
+- [x] Related problems (internal linking)
+- [x] Quote CTA
+- [x] WhatsApp CTA
+- [x] Problem schema (BreadcrumbList + Article + FAQPage) and canonical URLs per page
+
+### Routing & data architecture
+- [x] `/en/problems/` index page grouping all problems by category
+- [x] `/en/problems/[slug]/` detail route, statically generated for all languages (`en`, `ms`, `zh`) — 46 × 3 = 138 problem pages
+- [x] Static generation for 3 languages × 46 problems (English content; non-English noindex per Phases 1–2 convention)
+
+### Internal linking
+- [x] Every problem page links to its main service, related services, quote page and service areas
+- [x] Main service pages link back to relevant problem pages via "Explore these problem pages" block
+- [x] Homepage "Common Home Issues" preview now links to real problem pages + problems library
+- [x] Navigation "Problems" link points to `/problems` index page
+
+### Quality & honesty rules
+- [x] Consolidated duplicate search intent: painted "Water Stains" merged into a single waterproofing "Water Stains" page (spec listed it under both Painting and Waterproofing) — 46 total, avoiding near-duplicate doorway pages
+- [x] Kept genuinely distinct siblings separate and cross-linked (e.g. hollow vs loose tile, wall seepage vs damp walls, water-damaged ceiling vs ceiling stains)
+- [x] No fake prices, reviews, ratings, certifications, licences, warranties, projects or experience claims
+- [x] Contact placeholders preserved (`[PHONE NUMBER]`, `[WHATSAPP NUMBER]`, `[EMAIL]`, `[ADDRESS]`)
+
+### Quality checks
+- [x] TypeScript check — PASS
+- [x] ESLint — PASS
+- [x] Production build — PASS (176 static pages; 138 problem pages + 3 problem indexes + 30 services + homepages)
 
 ## PHASE 4 — Areas / Location Pages — [ ]
 
@@ -169,4 +223,4 @@
   - `[WHATSAPP NUMBER]`
   - `[EMAIL]`
   - `[ADDRESS]`
-- Dedicated service detail pages, problem pages, location pages, projects, blog and full multilingual content are intentionally not built in Phase 1.
+- Dedicated service detail pages were built in Phase 2; problem pages were built in Phase 3. Location pages, projects, blog and full multilingual content are intentionally not built yet (Phases 4–7).

@@ -277,4 +277,12 @@ export const plumbing: ServiceDetail = {
     },
   ],
   relatedServices: ["waterproofing", "tiling", "general-renovation", "handyman"],
+  relatedProblems: [
+    "water-leakage",
+    "leaking-tap",
+    "leaking-pipe",
+    "blocked-drain",
+    "toilet-problems",
+    "low-water-pressure",
+  ],
 };

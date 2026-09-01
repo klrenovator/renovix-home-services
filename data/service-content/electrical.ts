@@ -357,4 +357,14 @@ export const electrical: ServiceDetail = {
     },
   ],
   relatedServices: ["ceiling-partition", "general-renovation", "handyman", "painting"],
+  relatedProblems: [
+    "power-tripping",
+    "faulty-socket",
+    "faulty-switch",
+    "flickering-lights",
+    "short-circuit",
+    "old-house-wiring",
+    "insufficient-power-points",
+    "ceiling-fan-wiring-problems",
+  ],
 };
