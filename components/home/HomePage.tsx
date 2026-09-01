@@ -21,7 +21,7 @@ export function HomePage({ lang }: HomePageProps) {
       <ProcessSection />
       <AreasSection lang={lang} />
       <CTASection lang={lang} />
-      <FAQPreview />
+      <FAQPreview lang={lang} />
     </>
   );
 }

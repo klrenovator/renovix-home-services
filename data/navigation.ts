@@ -13,6 +13,7 @@ export const primaryNavigation: NavigationItem[] = [
   { label: "Problems", href: "/problems" },
   { label: "Areas We Serve", href: "/areas" },
   { label: "Projects", href: "/projects" },
+  { label: "FAQ", href: "/faq" },
   { label: "About", href: "/about" },
   { label: "Contact", href: "/contact" },
 ];
@@ -23,6 +24,7 @@ export const footerNavigation: NavigationItem[] = [
   { label: "Problems", href: "/problems" },
   { label: "Areas We Serve", href: "/areas" },
   { label: "Projects", href: "/projects" },
+  { label: "FAQ", href: "/faq" },
   { label: "About", href: "/about" },
   { label: "Contact", href: "/contact" },
 ];
@@ -33,8 +35,8 @@ export const legalNavigation: NavigationItem[] = [
 ];
 
 export const mobileQuickLinks: NavigationItem[] = [
-  { label: "Get a Free Quote", href: "/#contact" },
-  { label: "WhatsApp Us", href: "/#contact", trailing: true },
+  { label: "Get a Free Quote", href: "/quote" },
+  { label: "WhatsApp Us", href: "/contact", trailing: true },
 ];
 
 export function localizeHref(href: string, lang: string): string {

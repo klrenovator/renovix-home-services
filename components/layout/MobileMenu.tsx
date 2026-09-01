@@ -59,7 +59,7 @@ export function MobileMenu({ lang }: MobileMenuProps) {
   }, [isOpen]);
 
   return (
-    <div className="lg:hidden">
+    <div className="xl:hidden">
       <button
         ref={triggerRef}
         type="button"

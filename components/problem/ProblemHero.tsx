@@ -47,7 +47,7 @@ export function ProblemHero({ problem, lang }: ProblemHeroProps) {
 
         <div className="mt-8 flex flex-col gap-3 sm:flex-row">
           <Button
-            href={localizeHref("/#contact", lang)}
+            href={localizeHref("/quote", lang)}
             variant="primary"
             icon={<IconArrowRight className="h-4 w-4" />}
           >

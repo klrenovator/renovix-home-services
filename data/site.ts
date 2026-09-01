@@ -11,6 +11,7 @@ export type SiteConfig = {
   whatsapp: string;
   email: string;
   address: string;
+  businessHours: string;
 };
 
 export const siteConfig: SiteConfig = {
@@ -27,6 +28,7 @@ export const siteConfig: SiteConfig = {
   whatsapp: "[WHATSAPP NUMBER]",
   email: "[EMAIL]",
   address: "[ADDRESS]",
+  businessHours: "[BUSINESS HOURS]",
 };
 
 export const defaultLanguage = "en";
@@ -37,27 +39,35 @@ export function isPlaceholder(value: string): boolean {
   return value.startsWith("[") && value.endsWith("]");
 }
 
+export function getContactHref(lang = "en"): string {
+  return `/${lang}/contact`;
+}
+
+export function getQuoteHref(lang = "en"): string {
+  return `/${lang}/quote`;
+}
+
 export function getWhatsAppHref(lang = "en"): string {
   if (isPlaceholder(siteConfig.whatsapp)) {
-    return `/${lang}/#contact`;
+    return getContactHref(lang);
   }
 
   const digits = siteConfig.whatsapp.replace(/[^\d]/g, "");
-  return digits ? `https://wa.me/${digits}` : `/${lang}/#contact`;
+  return digits ? `https://wa.me/${digits}` : getContactHref(lang);
 }
 
 export function getPhoneHref(lang = "en"): string {
   if (isPlaceholder(siteConfig.phone)) {
-    return `/${lang}/#contact`;
+    return getContactHref(lang);
   }
 
   const digits = siteConfig.phone.replace(/[^\d]/g, "");
-  return digits ? `tel:${digits}` : `/${lang}/#contact`;
+  return digits ? `tel:${digits}` : getContactHref(lang);
 }
 
 export function getEmailHref(lang = "en"): string {
   if (isPlaceholder(siteConfig.email)) {
-    return `/${lang}/#contact`;
+    return getContactHref(lang);
   }
 
   return `mailto:${siteConfig.email}`;
