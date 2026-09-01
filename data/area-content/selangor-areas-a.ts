@@ -5,7 +5,7 @@ export const selangorAreasA: AreaDetail[] = [
     region: "selangor",
     slug: "petaling-jaya",
     name: "Petaling Jaya",
-    title: "Home Renovation & Repair Services in Petaling Jaya | Renovix",
+    title: "Renovix Home Services | Home Renovation & Repair Services in Petaling Jaya",
     metaDescription:
       "Renovation and repair services in Petaling Jaya — from 1950s Section houses to SS terraces and Damansara condos. Rewiring, re-piping, refurbishment. Free quote.",
     h1: "Home Renovation & Repair Services in Petaling Jaya",
@@ -163,7 +163,7 @@ export const selangorAreasA: AreaDetail[] = [
     region: "selangor",
     slug: "subang-jaya",
     name: "Subang Jaya",
-    title: "Home Renovation & Repair Services in Subang Jaya | Renovix",
+    title: "Renovix Home Services | Home Renovation & Repair Services in Subang Jaya",
     metaDescription:
       "Renovation and repair services in Subang Jaya (SS12–SS19) — mature 70s-80s terraces, SS15 shoplots and condo upgrades. Free quote from Renovix.",
     h1: "Home Renovation & Repair Services in Subang Jaya",
@@ -321,7 +321,7 @@ export const selangorAreasA: AreaDetail[] = [
     region: "selangor",
     slug: "shah-alam",
     name: "Shah Alam",
-    title: "Home Renovation & Repair Services in Shah Alam | Renovix",
+    title: "Renovix Home Services | Home Renovation & Repair Services in Shah Alam",
     metaDescription:
       "Renovation and repair services in Shah Alam — spacious section housing, garden-city streets and i-City-era condos. Repairs, upgrades, repainting. Free quote.",
     h1: "Home Renovation & Repair Services in Shah Alam",
@@ -479,7 +479,7 @@ export const selangorAreasA: AreaDetail[] = [
     region: "selangor",
     slug: "puchong",
     name: "Puchong",
-    title: "Home Renovation & Repair Services in Puchong | Renovix",
+    title: "Renovix Home Services | Home Renovation & Repair Services in Puchong",
     metaDescription:
       "Renovation and repair services in Puchong, Selangor — from old-town terraces to Bandar Puteri homes and new high-rises. Free quote from Renovix.",
     h1: "Home Renovation & Repair Services in Puchong",
@@ -637,7 +637,7 @@ export const selangorAreasA: AreaDetail[] = [
     region: "selangor",
     slug: "klang",
     name: "Klang",
-    title: "Home Renovation & Repair Services in Klang | Renovix",
+    title: "Renovix Home Services | Home Renovation & Repair Services in Klang",
     metaDescription:
       "Renovation and repair services in Klang — pre-war shophouses, old-town terraces and newer Bukit Tinggi-era housing. Careful repair and renewal. Free quote.",
     h1: "Home Renovation & Repair Services in Klang",
@@ -795,7 +795,7 @@ export const selangorAreasA: AreaDetail[] = [
     region: "selangor",
     slug: "selayang",
     name: "Selayang",
-    title: "Home Renovation & Repair Services in Selayang | Renovix",
+    title: "Renovix Home Services | Home Renovation & Repair Services in Selayang",
     metaDescription:
       "Renovation and repair services in Selayang, Selangor — older flats, mature terraces and newer hillside apartments. Repairs, bathrooms, painting. Free quote.",
     h1: "Home Renovation & Repair Services in Selayang",
@@ -953,7 +953,7 @@ export const selangorAreasA: AreaDetail[] = [
     region: "selangor",
     slug: "gombak",
     name: "Gombak",
-    title: "Home Renovation & Repair Services in Gombak | Renovix",
+    title: "Renovix Home Services | Home Renovation & Repair Services in Gombak",
     metaDescription:
       "Renovation and repair services in Gombak, Selangor — kampung-style houses, older terraces and student-area rentals near IIUM. Free quote from Renovix.",
     h1: "Home Renovation & Repair Services in Gombak",
@@ -1111,7 +1111,7 @@ export const selangorAreasA: AreaDetail[] = [
     region: "selangor",
     slug: "ampang-jaya",
     name: "Ampang Jaya",
-    title: "Home Renovation & Repair Services in Ampang Jaya | Renovix",
+    title: "Renovix Home Services | Home Renovation & Repair Services in Ampang Jaya",
     metaDescription:
       "Renovation and repair services in Ampang Jaya, Selangor — Pandan townships, older apartments and mature terraces on the KL border. Free quote from Renovix.",
     h1: "Home Renovation & Repair Services in Ampang Jaya",
@@ -1269,7 +1269,7 @@ export const selangorAreasA: AreaDetail[] = [
     region: "selangor",
     slug: "kajang",
     name: "Kajang",
-    title: "Home Renovation & Repair Services in Kajang | Renovix",
+    title: "Renovix Home Services | Home Renovation & Repair Services in Kajang",
     metaDescription:
       "Renovation and repair services in Kajang, Selangor — old-town shophouses, 90s townships and newer landed estates. Free quote from Renovix.",
     h1: "Home Renovation & Repair Services in Kajang",

@@ -3,7 +3,7 @@ import type { AreaRegionTranslations } from "../types";
 export const translations: AreaRegionTranslations = {
   "kuala-lumpur": {
     name: "吉隆坡",
-    title: "吉隆坡房屋装修与维修服务 | Renovix",
+    title: "Renovix Home Services | 吉隆坡房屋装修与维修服务",
     metaDescription:
       "覆盖整个吉隆坡的房屋装修与维修服务——瓷砖、电气、水管、防水、油漆、天花、地板与家居维修。免费报价。",
     h1: "吉隆坡房屋装修与维修服务",
@@ -41,7 +41,7 @@ export const translations: AreaRegionTranslations = {
   },
   selangor: {
     name: "雪兰莪",
-    title: "雪兰莪房屋装修与维修服务 | Renovix",
+    title: "Renovix Home Services | 雪兰莪房屋装修与维修服务",
     metaDescription:
       "覆盖雪兰莪的房屋装修与维修服务——八打灵再也、梳邦再也、莎阿南、蒲种、巴生、加影、赛城等地。免费报价。",
     h1: "雪兰莪房屋装修与维修服务",

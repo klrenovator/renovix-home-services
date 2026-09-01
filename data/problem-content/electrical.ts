@@ -43,7 +43,7 @@ export const electricalProblems: ProblemDetail[] = [
     ...electricalBase,
     slug: "power-tripping",
     name: "Power Tripping",
-    title: "Power Tripping in Kuala Lumpur & Selangor | Renovix",
+    title: "Renovix Home Services | Power Tripping in KL & Selangor",
     metaDescription:
       "Keep it safe — circuit breakers that keep tripping in Kuala Lumpur & Selangor. Learn the common causes, warning signs, the right way to respond and when to call a licensed electrician.",
     h1: "Power Tripping",
@@ -162,7 +162,7 @@ export const electricalProblems: ProblemDetail[] = [
     ...electricalBase,
     slug: "faulty-socket",
     name: "Faulty Socket",
-    title: "Faulty Socket Repair in Kuala Lumpur & Selangor | Renovix",
+    title: "Renovix Home Services | Faulty Socket Repair in KL & Selangor",
     metaDescription:
       "A faulty power socket that is dead, loose, warm or sparking in Kuala Lumpur & Selangor? Learn the causes, warning signs, the safe response and when to call an electrician.",
     h1: "Faulty Socket",
@@ -281,7 +281,7 @@ export const electricalProblems: ProblemDetail[] = [
     ...electricalBase,
     slug: "faulty-switch",
     name: "Faulty Switch",
-    title: "Faulty Light Switch in Kuala Lumpur & Selangor | Renovix",
+    title: "Renovix Home Services | Faulty Light Switch in KL & Selangor",
     metaDescription:
       "A light switch that is broken, flickers, sparks or feels warm in Kuala Lumpur & Selangor? Learn the causes, warning signs, safe response and when to call an electrician.",
     h1: "Faulty Switch",
@@ -400,7 +400,7 @@ export const electricalProblems: ProblemDetail[] = [
     ...electricalBase,
     slug: "flickering-lights",
     name: "Flickering Lights",
-    title: "Flickering Lights in Kuala Lumpur & Selangor | Renovix",
+    title: "Renovix Home Services | Flickering Lights in KL & Selangor",
     metaDescription:
       "Flickering, dimming or pulsing lights in Kuala Lumpur & Selangor? Learn the common causes, warning signs, solutions and when to call an electrician for safe diagnosis.",
     h1: "Flickering Lights",
@@ -519,7 +519,7 @@ export const electricalProblems: ProblemDetail[] = [
     ...electricalBase,
     slug: "short-circuit",
     name: "Short Circuit",
-    title: "Short Circuit Repair in Kuala Lumpur & Selangor | Renovix",
+    title: "Renovix Home Services | Short Circuit Repair in KL & Selangor",
     metaDescription:
       "A short circuit in your home in Kuala Lumpur & Selangor? Learn what it is, common causes, warning signs, the safe response and when to call a licensed electrician.",
     h1: "Short Circuit",
@@ -638,7 +638,7 @@ export const electricalProblems: ProblemDetail[] = [
     ...electricalBase,
     slug: "old-house-wiring",
     name: "Old House Wiring",
-    title: "Old House Rewiring in Kuala Lumpur & Selangor | Renovix",
+    title: "Renovix Home Services | Old House Rewiring in KL & Selangor",
     metaDescription:
       "Old house wiring in Kuala Lumpur & Selangor — signs your wiring needs updating, common causes, warning signs, rewiring solutions and when to call an electrician.",
     h1: "Old House Wiring",
@@ -757,7 +757,7 @@ export const electricalProblems: ProblemDetail[] = [
     ...electricalBase,
     slug: "insufficient-power-points",
     name: "Insufficient Power Points",
-    title: "More Power Points in Kuala Lumpur & Selangor | Renovix",
+    title: "Renovix Home Services | More Power Points in KL & Selangor",
     metaDescription:
       "Not enough power points in your home in Kuala Lumpur & Selangor? Learn the causes, warning signs, the right way to add sockets and when to call an electrician.",
     h1: "Insufficient Power Points",
@@ -876,7 +876,7 @@ export const electricalProblems: ProblemDetail[] = [
     ...electricalBase,
     slug: "ceiling-fan-wiring-problems",
     name: "Ceiling Fan Wiring Problems",
-    title: "Ceiling Fan Wiring in Kuala Lumpur & Selangor | Renovix",
+    title: "Renovix Home Services | Ceiling Fan Wiring in KL & Selangor",
     metaDescription:
       "Ceiling fan wiring problems in Kuala Lumpur & Selangor — a fan that won't turn, sparks, or has no supply. Learn the causes, warning signs, solutions and when to call an electrician.",
     h1: "Ceiling Fan Wiring Problems",

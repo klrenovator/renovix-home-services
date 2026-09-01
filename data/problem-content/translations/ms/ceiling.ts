@@ -22,7 +22,7 @@ export const translations: ProblemTranslations = {
   "cracked-ceiling": {
     ...base,
     name: "Siling Retak",
-    title: "Siling Retak di Kuala Lumpur & Selangor | Renovix",
+    title: "Renovix Home Services | Siling Retak di KL & Selangor",
     metaDescription:
       "Siling retak dibaiki di Kuala Lumpur & Selangor, dengan nasihat jujur bila papan siling perlu diganti. Punca, tanda amaran dan penyelesaian.",
     h1: "Siling Retak",
@@ -78,7 +78,7 @@ export const translations: ProblemTranslations = {
   "sagging-ceiling": {
     ...base,
     name: "Siling Melendut",
-    title: "Siling Melendut di Kuala Lumpur & Selangor | Renovix",
+    title: "Renovix Home Services | Siling Melendut di KL & Selangor",
     metaDescription:
       "Siling melendut diperiksa dan dibaiki di Kuala Lumpur & Selangor sebelum ia gugur. Punca, tanda amaran dan penyelesaian.",
     h1: "Siling Melendut",
@@ -134,7 +134,7 @@ export const translations: ProblemTranslations = {
   "water-damaged-ceiling": {
     ...base,
     name: "Siling Rosak Air",
-    title: "Siling Rosak Air di Kuala Lumpur & Selangor | Renovix",
+    title: "Renovix Home Services | Siling Rosak Air di KL & Selangor",
     metaDescription:
       "Siling rosak air dibaiki di Kuala Lumpur & Selangor selepas punca kebocoran dikesan dan dihentikan. Punca, tanda dan penyelesaian.",
     h1: "Siling Rosak Air",
@@ -190,7 +190,7 @@ export const translations: ProblemTranslations = {
   "ceiling-stains": {
     ...base,
     name: "Tompok pada Siling",
-    title: "Tompok pada Siling di Kuala Lumpur & Selangor | Renovix",
+    title: "Renovix Home Services | Tompok pada Siling di KL & Selangor",
     metaDescription:
       "Tompok siling dirawat di Kuala Lumpur & Selangor dengan mengesan punca kelembapan dan menutup tompok dengan betul. Punca dan penyelesaian.",
     h1: "Tompok pada Siling",
@@ -246,7 +246,7 @@ export const translations: ProblemTranslations = {
   "old-plaster-ceiling": {
     ...base,
     name: "Siling Plaster Lama",
-    title: "Siling Plaster Lama di Kuala Lumpur & Selangor | Renovix",
+    title: "Renovix Home Services | Siling Plaster Lama di KL & Selangor",
     metaDescription:
       "Siling plaster lama dibaiki atau diganti di Kuala Lumpur & Selangor dengan sistem siling moden yang lebih selamat. Punca dan penyelesaian.",
     h1: "Siling Plaster Lama",

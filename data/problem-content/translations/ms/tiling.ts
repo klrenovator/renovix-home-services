@@ -22,7 +22,7 @@ export const translations: ProblemTranslations = {
   "broken-tile-repair": {
     ...base,
     name: "Pembaikan Jubin Pecah",
-    title: "Pembaikan Jubin Pecah di Kuala Lumpur & Selangor | Renovix",
+    title: "Renovix Home Services | Pembaikan Jubin Pecah di KL & Selangor",
     metaDescription:
       "Jubin pecah, sumbing atau retak teruk dibaiki dan diganti di Kuala Lumpur & Selangor tanpa menjubin semula seluruh lantai. Punca, tanda amaran dan penyelesaian.",
     h1: "Pembaikan Jubin Pecah",
@@ -80,7 +80,7 @@ export const translations: ProblemTranslations = {
   "cracked-tile-repair": {
     ...base,
     name: "Pembaikan Jubin Retak",
-    title: "Pembaikan Jubin Retak di Kuala Lumpur & Selangor | Renovix",
+    title: "Renovix Home Services | Pembaikan Jubin Retak di KL & Selangor",
     metaDescription:
       "Jubin retak dibaiki atau diganti di Kuala Lumpur & Selangor selepas puncanya dikenal pasti. Ketahui punca, tanda amaran dan penyelesaian yang sesuai.",
     h1: "Pembaikan Jubin Retak",
@@ -138,7 +138,7 @@ export const translations: ProblemTranslations = {
   "loose-tile-repair": {
     ...base,
     name: "Pembaikan Jubin Longgar",
-    title: "Pembaikan Jubin Longgar di Kuala Lumpur & Selangor | Renovix",
+    title: "Renovix Home Services | Pembaikan Jubin Longgar di KL & Selangor",
     metaDescription:
       "Jubin longgar dikeluarkan, dilekat semula dan dikukuhkan pada permukaan rata di Kuala Lumpur & Selangor. Ketahui punca, tanda amaran dan penyelesaiannya.",
     h1: "Pembaikan Jubin Longgar",
@@ -195,7 +195,7 @@ export const translations: ProblemTranslations = {
   "hollow-tile-problems": {
     ...base,
     name: "Masalah Jubin Berongga",
-    title: "Masalah Jubin Berongga di Kuala Lumpur & Selangor | Renovix",
+    title: "Renovix Home Services | Masalah Jubin Berongga di KL & Selangor",
     metaDescription:
       "Jubin berongga dikesan dan dibaiki di Kuala Lumpur & Selangor sebelum ia terangkat, retak atau membenarkan air masuk. Punca, tanda dan penyelesaian.",
     h1: "Masalah Jubin Berongga",
@@ -252,7 +252,7 @@ export const translations: ProblemTranslations = {
   "uneven-tiles": {
     ...base,
     name: "Jubin Tidak Rata",
-    title: "Jubin Tidak Rata di Kuala Lumpur & Selangor | Renovix",
+    title: "Renovix Home Services | Jubin Tidak Rata di KL & Selangor",
     metaDescription:
       "Jubin tidak rata dan lippage dibetulkan di Kuala Lumpur & Selangor dengan kerja leveling dan screeding. Ketahui punca, tanda amaran dan penyelesaian.",
     h1: "Jubin Tidak Rata",
@@ -309,7 +309,7 @@ export const translations: ProblemTranslations = {
   "tile-grout-problems": {
     ...base,
     name: "Masalah Grout Jubin",
-    title: "Masalah Grout Jubin di Kuala Lumpur & Selangor | Renovix",
+    title: "Renovix Home Services | Masalah Grout Jubin di KL & Selangor",
     metaDescription:
       "Grout yang retak, rapuh atau berkulat digantikan di Kuala Lumpur & Selangor supaya jubin kekal kukuh dan tertutup. Punca, tanda dan penyelesaian.",
     h1: "Masalah Grout Jubin",
@@ -366,7 +366,7 @@ export const translations: ProblemTranslations = {
   "bathroom-tile-problems": {
     ...base,
     name: "Masalah Jubin Bilik Air",
-    title: "Masalah Jubin Bilik Air di Kuala Lumpur & Selangor | Renovix",
+    title: "Renovix Home Services | Masalah Jubin Bilik Air di KL & Selangor",
     metaDescription:
       "Jubin bilik air yang retak, berongga dan rosak akibat air dibaiki di Kuala Lumpur & Selangor, termasuk kerja kalis air. Punca, tanda dan penyelesaian.",
     h1: "Masalah Jubin Bilik Air",
@@ -423,7 +423,7 @@ export const translations: ProblemTranslations = {
   "kitchen-tile-problems": {
     ...base,
     name: "Masalah Jubin Dapur",
-    title: "Masalah Jubin Dapur di Kuala Lumpur & Selangor | Renovix",
+    title: "Renovix Home Services | Masalah Jubin Dapur di KL & Selangor",
     metaDescription:
       "Jubin lantai dan dinding dapur yang rosak dibaiki di Kuala Lumpur & Selangor, termasuk grouting semula dan jubin berongga. Punca, tanda dan penyelesaian.",
     h1: "Masalah Jubin Dapur",
@@ -480,7 +480,7 @@ export const translations: ProblemTranslations = {
   "water-seepage-through-tiles": {
     ...base,
     name: "Resapan Air Melalui Jubin",
-    title: "Resapan Air Melalui Jubin di Kuala Lumpur & Selangor | Renovix",
+    title: "Renovix Home Services | Resapan Air Melalui Jubin di KL & Selangor",
     metaDescription:
       "Resapan air melalui jubin dijejak dan dihentikan di Kuala Lumpur & Selangor dengan kerja kalis air dan pembaikan grout. Punca, tanda dan penyelesaian.",
     h1: "Resapan Air Melalui Jubin",

@@ -2,7 +2,7 @@ import type { ServiceTranslation } from "../types";
 
 export const translation: ServiceTranslation = {
   name: "Renovasi & Pengubahsuaian Rumah",
-  title: "Renovasi & Pengubahsuaian Rumah di Kuala Lumpur & Selangor | Renovix",
+  title: "Renovix Home Services | Renovasi & Pengubahsuaian Rumah di KL & Selangor",
   metaDescription:
     "Kerja renovasi rumah di Kuala Lumpur & Selangor — renovasi penuh dan separa, bilik air, dapur, hacking dinding, kerja bata, plaster dan pembaikan. Sebut harga percuma.",
   h1: "Renovasi & Pengubahsuaian Rumah di Kuala Lumpur & Selangor",

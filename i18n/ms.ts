@@ -12,7 +12,7 @@ export const ms: Dictionary = {
     defaultDescription:
       "Renovix Home Services menyediakan perkhidmatan renovasi dan pembaikan rumah profesional di seluruh Kuala Lumpur, Selangor dan Lembah Klang. Kerja jubin, kimpalan, elektrik, cat, siling, partition, paip, kalis air, lantai, renovasi dan kerja am.",
     homeTitle:
-      "Renovasi & Pembaikan Rumah di KL & Selangor | Renovix",
+      "Renovix Home Services | Renovasi & Pembaikan Rumah di KL & Selangor",
     homeDescription:
       "Perkhidmatan renovasi dan pembaikan rumah di KL, Selangor dan Lembah Klang — kerja jubin, kimpalan, elektrik, cat, siling, paip dan kalis air.",
     ogBadge: "Berkhidmat di KL & Selangor · Lembah Klang",
@@ -215,7 +215,7 @@ export const ms: Dictionary = {
   },
   servicesIndex: {
     metaTitle:
-      "Perkhidmatan Kami di Kuala Lumpur & Selangor | Renovix",
+      "Renovix Home Services | Perkhidmatan di Kuala Lumpur & Selangor",
     metaDescription:
       "Terokai perkhidmatan rumah Renovix di Kuala Lumpur & Selangor: kerja jubin, kimpalan & logam, elektrik, cat, siling & partition, renovasi, paip, kalis air, lantai dan kerja am.",
     ogDescription:
@@ -264,7 +264,8 @@ export const ms: Dictionary = {
       "Kongsi butiran kerja, jenis hartanah dan lokasi anda, dan kami akan bantu tentukan langkah seterusnya.",
   },
   problemsIndex: {
-    metaTitle: "Masalah Rumah Yang Kami Selesaikan di KL & Selangor | Renovix",
+    metaTitle:
+      "Renovix Home Services | Masalah Rumah di KL & Selangor",
     metaDescription:
       "Terokai masalah rumah yang kerap kami bantu di Kuala Lumpur & Selangor — jubin, elektrik, cat, siling, paip, kalis air dan kerja am, lengkap dengan punca dan penyelesaian.",
     ogDescription:
@@ -322,7 +323,7 @@ export const ms: Dictionary = {
   },
   areasIndex: {
     metaTitle:
-      "Kawasan Perkhidmatan di KL, Selangor & Lembah Klang | Renovix",
+      "Renovix Home Services | Kawasan Perkhidmatan di KL, Selangor & Lembah Klang",
     metaDescription:
       "Renovix berkhidmat di KL, Selangor dan Lembah Klang. Lihat panduan tempatan untuk kejiranan KL dan pekan Selangor — perkhidmatan dan masalah biasa.",
     ogDescription:
@@ -491,6 +492,9 @@ export const ms: Dictionary = {
     detailsLead:
       "Hubungi Renovix Home Services terus melalui telefon, WhatsApp atau e-mel. Kami menjawab pertanyaan dalam waktu operasi dan akan beritahu dengan jujur sama ada lawatan tapak diperlukan sebelum sebut harga disediakan.",
     channels: {
+      business: "Perniagaan",
+      businessHelper:
+        "Nama rasmi syarikat, digunakan di seluruh laman web, pada invois dan dalam surat-menyurat.",
       phone: "Nombor Telefon",
       phoneHelper:
         "Telefon kami dalam waktu operasi untuk terangkan kerja yang anda perlukan.",
@@ -523,7 +527,7 @@ export const ms: Dictionary = {
     klangValleyDescription: "Terokai semua kawasan perkhidmatan",
   },
   quote: {
-    metaTitle: "Sebut Harga Perkhidmatan Rumah di KL & Selangor | Renovix",
+    metaTitle: "Renovix Home Services | Sebut Harga di KL & Selangor",
     metaDescription:
       "Minta sebut harga renovasi atau pembaikan rumah daripada Renovix untuk KL, Selangor dan Lembah Klang. Kongsi perkhidmatan, lokasi dan gambar kerja.",
     breadcrumb: "Dapatkan Sebut Harga",
@@ -685,7 +689,8 @@ export const ms: Dictionary = {
     ctaSecondary: "Terokai Perkhidmatan",
   },
   faq: {
-    metaTitle: "Soalan Lazim Perkhidmatan Rumah | Renovix KL & Selangor",
+    metaTitle:
+      "Renovix Home Services | Soalan Lazim Perkhidmatan di KL & Selangor",
     metaDescription:
       "Jawapan kepada soalan lazim tentang Renovix Home Services — pembaikan rumah, renovasi, liputan KL dan Selangor, kondominium, gambar untuk sebut harga dan kategori perkhidmatan khusus.",
     breadcrumb: "Soalan Lazim",
@@ -733,7 +738,7 @@ export const ms: Dictionary = {
       "request-quote": {
         question: "Bagaimana saya boleh meminta sebut harga?",
         answer:
-          "Gunakan borang Dapatkan Sebut Harga untuk berkongsi kerja yang diperlukan, butiran hartanah dan lokasi anda. Anda juga boleh menggunakan maklumat hubungan atau WhatsApp setelah ia disahkan. Selepas maklumat disemak, butiran lanjut atau penilaian mungkin diperlukan sebelum sebut harga disediakan.",
+          "Gunakan borang Dapatkan Sebut Harga untuk berkongsi kerja yang diperlukan, butiran hartanah dan lokasi anda. Anda juga boleh telefon atau WhatsApp kami di +601159259521, atau e-mel renovixhomeservices@gmail.com. Selepas maklumat disemak, butiran lanjut atau penilaian mungkin diperlukan sebelum sebut harga disediakan.",
       },
       "send-photos": {
         question: "Bolehkah saya hantar gambar untuk sebut harga?",

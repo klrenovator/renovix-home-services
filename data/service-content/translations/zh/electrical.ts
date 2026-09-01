@@ -2,7 +2,7 @@ import type { ServiceTranslation } from "../types";
 
 export const translation: ServiceTranslation = {
   name: "电气工程",
-  title: "吉隆坡与雪兰莪电气工程 | Renovix",
+  title: "Renovix Home Services | 吉隆坡与雪兰莪电气工程",
   metaDescription:
     "吉隆坡与雪兰莪住宅电气服务：布线与重新布线、灯具安装、加装插座、电箱升级与故障检修。免费报价。",
   h1: "吉隆坡与雪兰莪电气工程",

@@ -2,7 +2,7 @@ import type { ServiceTranslation } from "../types";
 
 export const translation: ServiceTranslation = {
   name: "Lantai & Pemasangan Lantai",
-  title: "Kerja Lantai & Pemasangan Lantai di Kuala Lumpur & Selangor | Renovix",
+  title: "Renovix Home Services | Kerja Lantai & Pemasangan Lantai di KL & Selangor",
   metaDescription:
     "Kerja lantai di Kuala Lumpur & Selangor — vinyl, SPC, laminate, parquet dan lantai kayu, penggantian, pembaikan, leveling dan skirting. Sebut harga percuma.",
   h1: "Kerja Lantai & Pemasangan Lantai di Kuala Lumpur & Selangor",

@@ -22,7 +22,7 @@ export const translations: ProblemTranslations = {
   "roof-leakage": {
     ...base,
     name: "Bumbung Bocor",
-    title: "Bumbung Bocor di Kuala Lumpur & Selangor | Renovix",
+    title: "Renovix Home Services | Bumbung Bocor di KL & Selangor",
     metaDescription:
       "Bumbung bocor dikesan dan dibaiki di Kuala Lumpur & Selangor dengan kerja kalis air yang betul. Punca, tanda amaran dan penyelesaian.",
     h1: "Bumbung Bocor",
@@ -78,7 +78,7 @@ export const translations: ProblemTranslations = {
   "bathroom-leakage": {
     ...base,
     name: "Bilik Air Bocor",
-    title: "Bilik Air Bocor di Kuala Lumpur & Selangor | Renovix",
+    title: "Renovix Home Services | Bilik Air Bocor di KL & Selangor",
     metaDescription:
       "Bilik air bocor dibaiki di Kuala Lumpur & Selangor dengan kerja kalis air semula pada kawasan basah. Punca, tanda dan penyelesaian.",
     h1: "Bilik Air Bocor",
@@ -134,7 +134,7 @@ export const translations: ProblemTranslations = {
   "balcony-leakage": {
     ...base,
     name: "Balkoni Bocor",
-    title: "Balkoni Bocor di Kuala Lumpur & Selangor | Renovix",
+    title: "Renovix Home Services | Balkoni Bocor di KL & Selangor",
     metaDescription:
       "Balkoni bocor dikalis air semula di Kuala Lumpur & Selangor untuk melindungi ruang di bawahnya. Punca, tanda dan penyelesaian.",
     h1: "Balkoni Bocor",
@@ -190,7 +190,7 @@ export const translations: ProblemTranslations = {
   "wall-seepage": {
     ...base,
     name: "Resapan Air Dinding",
-    title: "Resapan Air Dinding di Kuala Lumpur & Selangor | Renovix",
+    title: "Renovix Home Services | Resapan Air Dinding di KL & Selangor",
     metaDescription:
       "Resapan air pada dinding dirawat di Kuala Lumpur & Selangor dengan mengenal pasti arah masuk air. Punca, tanda dan penyelesaian.",
     h1: "Resapan Air Dinding",
@@ -246,7 +246,7 @@ export const translations: ProblemTranslations = {
   "damp-walls": {
     ...base,
     name: "Dinding Lembap",
-    title: "Dinding Lembap di Kuala Lumpur & Selangor | Renovix",
+    title: "Renovix Home Services | Dinding Lembap di KL & Selangor",
     metaDescription:
       "Dinding lembap dirawat di Kuala Lumpur & Selangor dengan mengenal pasti jenis kelembapan dan puncanya. Punca, tanda dan penyelesaian.",
     h1: "Dinding Lembap",
@@ -302,7 +302,7 @@ export const translations: ProblemTranslations = {
   "water-stains": {
     ...base,
     name: "Tompok Air",
-    title: "Tompok Air di Kuala Lumpur & Selangor | Renovix",
+    title: "Renovix Home Services | Tompok Air di KL & Selangor",
     metaDescription:
       "Tompok air pada dinding dan siling dijejaki serta dirawat di Kuala Lumpur & Selangor. Punca, tanda amaran dan penyelesaian.",
     h1: "Tompok Air",

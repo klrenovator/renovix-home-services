@@ -20,7 +20,7 @@ export const translations: ProblemTranslations = {
   "cracked-ceiling": {
     ...base,
     name: "天花开裂",
-    title: "吉隆坡与雪兰莪天花开裂修补 | Renovix",
+    title: "Renovix Home Services | 吉隆坡与雪兰莪天花开裂修补",
     metaDescription:
       "在吉隆坡与雪兰莪修补开裂的天花，并如实说明何时应更换板材。了解成因、警示迹象与解决方式。",
     h1: "天花开裂",
@@ -75,7 +75,7 @@ export const translations: ProblemTranslations = {
   "sagging-ceiling": {
     ...base,
     name: "天花下垂",
-    title: "吉隆坡与雪兰莪天花下垂检修 | Renovix",
+    title: "Renovix Home Services | 吉隆坡与雪兰莪天花下垂检修",
     metaDescription:
       "在吉隆坡与雪兰莪检查并修复下垂的天花，赶在掉落之前处理。了解成因、警示迹象与解决方式。",
     h1: "天花下垂",
@@ -130,7 +130,7 @@ export const translations: ProblemTranslations = {
   "water-damaged-ceiling": {
     ...base,
     name: "天花渗水受损",
-    title: "吉隆坡与雪兰莪天花渗水修复 | Renovix",
+    title: "Renovix Home Services | 吉隆坡与雪兰莪天花渗水修复",
     metaDescription:
       "在吉隆坡与雪兰莪先止漏再修复渗水受损的天花。了解成因、警示迹象与解决方式。",
     h1: "天花渗水受损",
@@ -185,7 +185,7 @@ export const translations: ProblemTranslations = {
   "ceiling-stains": {
     ...base,
     name: "天花污渍",
-    title: "吉隆坡与雪兰莪天花污渍处理 | Renovix",
+    title: "Renovix Home Services | 吉隆坡与雪兰莪天花污渍处理",
     metaDescription:
       "在吉隆坡与雪兰莪处理天花污渍：找出潮湿源头并做封渍处理。了解成因、警示迹象与解决方式。",
     h1: "天花污渍",
@@ -240,7 +240,7 @@ export const translations: ProblemTranslations = {
   "old-plaster-ceiling": {
     ...base,
     name: "老旧批荡天花",
-    title: "吉隆坡与雪兰莪老旧天花翻新 | Renovix",
+    title: "Renovix Home Services | 吉隆坡与雪兰莪老旧天花翻新",
     metaDescription:
       "在吉隆坡与雪兰莪修复或更换老旧批荡天花，改用更安全的现代天花系统。了解成因与解决方式。",
     h1: "老旧批荡天花",

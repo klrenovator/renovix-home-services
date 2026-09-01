@@ -2,7 +2,7 @@ import type { ServiceTranslation } from "../types";
 
 export const translation: ServiceTranslation = {
   name: "Servis Handyman",
-  title: "Servis Handyman & Pembaikan Rumah di Kuala Lumpur & Selangor | Renovix",
+  title: "Renovix Home Services | Servis Handyman & Pembaikan Rumah di KL & Selangor",
   metaDescription:
     "Servis handyman di Kuala Lumpur & Selangor — pemasangan dan pembaikan pintu, kunci, pemasangan TV, pemasangan rak, pemasangan perabot dan kerja pembaikan rumah kecil. Sebut harga percuma.",
   h1: "Servis Handyman & Pembaikan Rumah di Kuala Lumpur & Selangor",

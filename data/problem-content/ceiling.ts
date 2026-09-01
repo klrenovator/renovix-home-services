@@ -43,7 +43,7 @@ export const ceilingProblems: ProblemDetail[] = [
     ...ceilingBase,
     slug: "cracked-ceiling",
     name: "Cracked Ceiling",
-    title: "Cracked Ceiling Repair in Kuala Lumpur & Selangor | Renovix",
+    title: "Renovix Home Services | Cracked Ceiling Repair in KL & Selangor",
     metaDescription:
       "Cracked ceilings in Kuala Lumpur & Selangor — hairline cracks, drops and plaster cracks repaired. Learn the causes, warning signs, repair solutions and when to call a professional.",
     h1: "Cracked Ceiling",
@@ -162,7 +162,7 @@ export const ceilingProblems: ProblemDetail[] = [
     ...ceilingBase,
     slug: "sagging-ceiling",
     name: "Sagging Ceiling",
-    title: "Sagging Ceiling Repair in Kuala Lumpur & Selangor | Renovix",
+    title: "Renovix Home Services | Sagging Ceiling Repair in KL & Selangor",
     metaDescription:
       "A sagging, drooping or bowing ceiling in Kuala Lumpur & Selangor? Learn the causes, warning signs, repair and replacement solutions, and when to call a professional urgently.",
     h1: "Sagging Ceiling",
@@ -281,7 +281,7 @@ export const ceilingProblems: ProblemDetail[] = [
     ...ceilingBase,
     slug: "water-damaged-ceiling",
     name: "Water-Damaged Ceiling",
-    title: "Water-Damaged Ceiling in Kuala Lumpur & Selangor | Renovix",
+    title: "Renovix Home Services | Water-Damaged Ceiling in KL & Selangor",
     metaDescription:
       "Water damage on a ceiling in Kuala Lumpur & Selangor — stains, bubbling, sagging and leaking roofs or pipes. Learn the causes, warning signs, repair solutions and when to call a professional.",
     h1: "Water-Damaged Ceiling",
@@ -400,7 +400,7 @@ export const ceilingProblems: ProblemDetail[] = [
     ...ceilingBase,
     slug: "ceiling-stains",
     name: "Ceiling Stains",
-    title: "Ceiling Stain Repair in Kuala Lumpur & Selangor | Renovix",
+    title: "Renovix Home Services | Ceiling Stain Repair in KL & Selangor",
     metaDescription:
       "Stained ceiling in Kuala Lumpur & Selangor — water marks, yellowing and discolouration repaired. Learn the causes, warning signs, the right treatment and when to call a professional.",
     h1: "Ceiling Stains",
@@ -519,7 +519,7 @@ export const ceilingProblems: ProblemDetail[] = [
     ...ceilingBase,
     slug: "old-plaster-ceiling",
     name: "Old Plaster Ceiling",
-    title: "Old Plaster Ceiling Repair in Kuala Lumpur & Selangor",
+    title: "Renovix Home Services | Old Plaster Ceiling Repair in KL & Selangor",
     metaDescription:
       "Old, cracked or crumbling plaster ceilings in Kuala Lumpur & Selangor? Learn the causes, warning signs, repair and replacement solutions, and when to call a ceiling professional.",
     h1: "Old Plaster Ceiling",

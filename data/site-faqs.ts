@@ -21,7 +21,7 @@ export const siteFaqs: SiteFaq[] = [
     group: "getting-started",
     question: "How can I request a quote?",
     answer:
-      "Use the Get a Quote form to share the work you need, your property details and location. You can also use the contact or WhatsApp details once they are confirmed. After the information is reviewed, further details or an assessment may be needed before a quotation is prepared.",
+      "Use the Get a Quote form to share the work you need, your property details and location. You can also call or WhatsApp us on +601159259521, or email renovixhomeservices@gmail.com. After the information is reviewed, further details or an assessment may be needed before a quotation is prepared.",
   },
   {
     id: "send-photos",

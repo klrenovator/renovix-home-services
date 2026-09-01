@@ -5,7 +5,7 @@ export const klAreasB: AreaDetail[] = [
     region: "kuala-lumpur",
     slug: "mont-kiara",
     name: "Mont Kiara",
-    title: "Home Renovation & Repair Services in Mont Kiara | Renovix",
+    title: "Renovix Home Services | Home Renovation & Repair Services in Mont Kiara",
     metaDescription:
       "Renovation and repair services in Mont Kiara — high-rise condo refurbishments, re-piping, balcony waterproofing and fit-outs under strict JMB rules. Free quotation.",
     h1: "Home Renovation & Repair Services in Mont Kiara",
@@ -163,7 +163,7 @@ export const klAreasB: AreaDetail[] = [
     region: "kuala-lumpur",
     slug: "bangsar",
     name: "Bangsar",
-    title: "Home Renovation & Repair Services in Bangsar | Renovix",
+    title: "Renovix Home Services | Home Renovation & Repair Services in Bangsar",
     metaDescription:
       "Renovation and repair services in Bangsar, Kuala Lumpur — mid-century bungalows, older terraces and mature condos. Rewiring, re-piping, painting. Free quote.",
     h1: "Home Renovation & Repair Services in Bangsar",
@@ -321,7 +321,7 @@ export const klAreasB: AreaDetail[] = [
     region: "kuala-lumpur",
     slug: "bukit-jalil",
     name: "Bukit Jalil",
-    title: "Home Renovation & Repair Services in Bukit Jalil | Renovix",
+    title: "Renovix Home Services | Home Renovation & Repair Services in Bukit Jalil",
     metaDescription:
       "Renovation and repair services in Bukit Jalil, Kuala Lumpur — stadium-era landed pockets like Taman Yarl plus fast-growing high-rise precincts. Free quote from Renovix.",
     h1: "Home Renovation & Repair Services in Bukit Jalil",
@@ -479,7 +479,7 @@ export const klAreasB: AreaDetail[] = [
     region: "kuala-lumpur",
     slug: "sri-petaling",
     name: "Sri Petaling",
-    title: "Home Renovation & Repair Services in Sri Petaling | Renovix",
+    title: "Renovix Home Services | Home Renovation & Repair Services in Sri Petaling",
     metaDescription:
       "Renovation and repair services in Sri Petaling, Kuala Lumpur — 90s terrace townships, mature shop rows and new condos. Kitchens, bathrooms, roofs. Free quote.",
     h1: "Home Renovation & Repair Services in Sri Petaling",
@@ -637,7 +637,7 @@ export const klAreasB: AreaDetail[] = [
     region: "kuala-lumpur",
     slug: "old-klang-road",
     name: "Old Klang Road",
-    title: "Renovation & Repair Services along Old Klang Road, KL | Renovix",
+    title: "Renovix Home Services | Renovation & Repair Services along Old Klang Road, KL",
     metaDescription:
       "Renovation and repair services along Old Klang Road (Jalan Klang Lama), KL — Taman Desa, Sri Sentosa and new Mid Valley-area condos. Free quote from Renovix.",
     h1: "Home Renovation & Repair Services along Old Klang Road",
@@ -795,7 +795,7 @@ export const klAreasB: AreaDetail[] = [
     region: "kuala-lumpur",
     slug: "taman-melawati",
     name: "Taman Melawati",
-    title: "Home Renovation & Repair Services in Taman Melawati | Renovix",
+    title: "Renovix Home Services | Home Renovation & Repair Services in Taman Melawati",
     metaDescription:
       "Renovation and repair services in Taman Melawati, KL — hillside landed homes, older terraces and green surrounds. Roofs, drainage, waterproofing, painting. Free quote.",
     h1: "Home Renovation & Repair Services in Taman Melawati",
@@ -953,7 +953,7 @@ export const klAreasB: AreaDetail[] = [
     region: "kuala-lumpur",
     slug: "desa-parkcity",
     name: "Desa ParkCity",
-    title: "Home Renovation & Repair Services in Desa ParkCity | Renovix",
+    title: "Renovix Home Services | Home Renovation & Repair Services in Desa ParkCity",
     metaDescription:
       "Renovation and repair services in Desa ParkCity, Kuala Lumpur — master-planned homes, gated neighbourhoods and parkside condos. Fit-outs, repairs, upgrades. Free quote.",
     h1: "Home Renovation & Repair Services in Desa ParkCity",

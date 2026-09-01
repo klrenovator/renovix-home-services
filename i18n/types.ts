@@ -364,6 +364,8 @@ export type Dictionary = {
     detailsTitle: string;
     detailsLead: string;
     channels: {
+      business: string;
+      businessHelper: string;
       phone: string;
       phoneHelper: string;
       whatsapp: string;

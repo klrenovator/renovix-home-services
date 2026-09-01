@@ -3,7 +3,7 @@ import type { ServiceDetail } from "./types";
 export const tiling: ServiceDetail = {
   slug: "tiling",
   name: "Tile & Tiling",
-  title: "Tile & Tiling Services in Kuala Lumpur & Selangor | Renovix",
+  title: "Renovix Home Services | Tile & Tiling Services in KL & Selangor",
   metaDescription:
     "Professional tile installation, replacement and repair in Kuala Lumpur & Selangor. Bathroom, kitchen, floor and wall tiling, tile hacking, leveling, screeding and regrouting. Free quote.",
   h1: "Tile & Tiling Services in Kuala Lumpur & Selangor",

@@ -2,7 +2,7 @@ import type { ServiceTranslation } from "../types";
 
 export const translation: ServiceTranslation = {
   name: "Kalis Air (Waterproofing)",
-  title: "Kerja Kalis Air & Waterproofing di Kuala Lumpur & Selangor | Renovix",
+  title: "Renovix Home Services | Kerja Kalis Air & Waterproofing di KL & Selangor",
   metaDescription:
     "Kerja kalis air di Kuala Lumpur & Selangor — bilik air, balkoni, bumbung dan dinding, pembaikan kebocoran dan resapan, lapisan PU dan penutupan retak. Sebut harga percuma.",
   h1: "Kerja Kalis Air & Waterproofing di Kuala Lumpur & Selangor",

@@ -43,7 +43,7 @@ export const plumbingProblems: ProblemDetail[] = [
     ...plumbingBase,
     slug: "water-leakage",
     name: "Water Leakage",
-    title: "Water Leakage Repair in Kuala Lumpur & Selangor | Renovix",
+    title: "Renovix Home Services | Water Leakage Repair in KL & Selangor",
     metaDescription:
       "Water leakage in KL & Selangor — hidden leaks, damp patches, high water bills and dripping pipes. Learn the causes, signs and leak detection options.",
     h1: "Water Leakage",
@@ -162,7 +162,7 @@ export const plumbingProblems: ProblemDetail[] = [
     ...plumbingBase,
     slug: "leaking-tap",
     name: "Leaking Tap",
-    title: "Leaking Tap Repair in Kuala Lumpur & Selangor | Renovix",
+    title: "Renovix Home Services | Leaking Tap Repair in KL & Selangor",
     metaDescription:
       "A dripping, leaking or squeaky tap in Kuala Lumpur & Selangor? Learn the causes, warning signs, tap repair and replacement solutions, and when to call a plumber.",
     h1: "Leaking Tap",
@@ -281,7 +281,7 @@ export const plumbingProblems: ProblemDetail[] = [
     ...plumbingBase,
     slug: "leaking-pipe",
     name: "Leaking Pipe",
-    title: "Leaking Pipe Repair in Kuala Lumpur & Selangor | Renovix",
+    title: "Renovix Home Services | Leaking Pipe Repair in KL & Selangor",
     metaDescription:
       "A leaking, burst or weeping pipe in Kuala Lumpur & Selangor? Learn the causes, warning signs, pipe repair and replacement solutions, and when to call a plumber.",
     h1: "Leaking Pipe",
@@ -400,7 +400,7 @@ export const plumbingProblems: ProblemDetail[] = [
     ...plumbingBase,
     slug: "blocked-drain",
     name: "Blocked Drain",
-    title: "Blocked Drain in Kuala Lumpur & Selangor | Drain Clearing",
+    title: "Renovix Home Services | Blocked Drain in KL & Selangor",
     metaDescription:
       "A blocked drain, sink or toilet in Kuala Lumpur & Selangor? Learn the causes, warning signs, drain clearing solutions and when to call a plumber for a stubborn blockage.",
     h1: "Blocked Drain",
@@ -519,7 +519,7 @@ export const plumbingProblems: ProblemDetail[] = [
     ...plumbingBase,
     slug: "toilet-problems",
     name: "Toilet Problems",
-    title: "Toilet Repair in Kuala Lumpur & Selangor | Renovix",
+    title: "Renovix Home Services | Toilet Repair in KL & Selangor",
     metaDescription:
       "A running, blocked, leaking or weak-flushing toilet in Kuala Lumpur & Selangor? Learn the causes, warning signs, toilet repair solutions and when to call a plumber.",
     h1: "Toilet Problems",
@@ -638,7 +638,7 @@ export const plumbingProblems: ProblemDetail[] = [
     ...plumbingBase,
     slug: "low-water-pressure",
     name: "Low Water Pressure",
-    title: "Low Water Pressure in Kuala Lumpur & Selangor | Renovix",
+    title: "Renovix Home Services | Low Water Pressure in KL & Selangor",
     metaDescription:
       "Low water pressure in your home in Kuala Lumpur & Selangor — weak showers, slow taps and low flow. Learn the causes, warning signs, solutions and when to call a plumber.",
     h1: "Low Water Pressure",

@@ -43,7 +43,7 @@ export const tilingProblems: ProblemDetail[] = [
     ...tilingBase,
     slug: "broken-tile-repair",
     name: "Broken Tile Repair",
-    title: "Broken Tile Repair in Kuala Lumpur & Selangor | Renovix",
+    title: "Renovix Home Services | Broken Tile Repair in KL & Selangor",
     metaDescription:
       "Broken, chipped or shattered tiles repaired and replaced in Kuala Lumpur & Selangor without retiling the whole floor. Find causes, warning signs, solutions and when to call a professional.",
     h1: "Broken Tile Repair",
@@ -162,7 +162,7 @@ export const tilingProblems: ProblemDetail[] = [
     ...tilingBase,
     slug: "cracked-tile-repair",
     name: "Cracked Tile Repair",
-    title: "Cracked Tile Repair in Kuala Lumpur & Selangor | Renovix",
+    title: "Renovix Home Services | Cracked Tile Repair in KL & Selangor",
     metaDescription:
       "Cracked tiles repaired by Renovix across Kuala Lumpur & Selangor. Learn what causes tile cracks, the warning signs to watch for, possible solutions and when to call a tiling professional.",
     h1: "Cracked Tile Repair",
@@ -281,7 +281,7 @@ export const tilingProblems: ProblemDetail[] = [
     ...tilingBase,
     slug: "loose-tile-repair",
     name: "Loose Tile Repair",
-    title: "Loose Tile Repair in Kuala Lumpur & Selangor | Renovix",
+    title: "Renovix Home Services | Loose Tile Repair in KL & Selangor",
     metaDescription:
       "Loose or lifting tiles repaired and re-secured in Kuala Lumpur & Selangor. Learn the causes of loose tiles, warning signs, solutions and when to call a tiling professional.",
     h1: "Loose Tile Repair",
@@ -400,7 +400,7 @@ export const tilingProblems: ProblemDetail[] = [
     ...tilingBase,
     slug: "hollow-tile-problems",
     name: "Hollow Tile Problems",
-    title: "Hollow Tile Problems in Kuala Lumpur & Selangor | Renovix",
+    title: "Renovix Home Services | Hollow Tile Problems in KL & Selangor",
     metaDescription:
       "Hollow or drumming tiles in Kuala Lumpur & Selangor — what they mean, common causes, warning signs, solutions and when to call a tiling professional. Fix hollow tiles before they crack.",
     h1: "Hollow Tile Problems",
@@ -519,7 +519,7 @@ export const tilingProblems: ProblemDetail[] = [
     ...tilingBase,
     slug: "uneven-tiles",
     name: "Uneven Tiles",
-    title: "Uneven Tile Floors in Kuala Lumpur & Selangor | Renovix",
+    title: "Renovix Home Services | Uneven Tile Floors in KL & Selangor",
     metaDescription:
       "Uneven tiles, lippage and sloping floors fixed in Kuala Lumpur & Selangor. Learn the causes of uneven tiling, warning signs, levelling solutions and when to call a tiling professional.",
     h1: "Uneven Tiles",
@@ -638,7 +638,7 @@ export const tilingProblems: ProblemDetail[] = [
     ...tilingBase,
     slug: "tile-grout-problems",
     name: "Tile Grout Problems",
-    title: "Tile Grout Problems in Kuala Lumpur & Selangor | Renovix",
+    title: "Renovix Home Services | Tile Grout Problems in KL & Selangor",
     metaDescription:
       "Crumbling, stained or missing tile grout fixed in Kuala Lumpur & Selangor. Learn the causes of grout problems, warning signs, regrouting solutions and when to call a tiler.",
     h1: "Tile Grout Problems",
@@ -757,7 +757,7 @@ export const tilingProblems: ProblemDetail[] = [
     ...tilingBase,
     slug: "bathroom-tile-problems",
     name: "Bathroom Tile Problems",
-    title: "Bathroom Tile Problems in Kuala Lumpur & Selangor | Renovix",
+    title: "Renovix Home Services | Bathroom Tile Problems in KL & Selangor",
     metaDescription:
       "Bathroom tile problems in Kuala Lumpur & Selangor — cracked, loose, hollow or water-damaged bathroom tiles repaired. Learn the causes, warning signs, solutions and when to call a tiler.",
     h1: "Bathroom Tile Problems",
@@ -876,7 +876,7 @@ export const tilingProblems: ProblemDetail[] = [
     ...tilingBase,
     slug: "kitchen-tile-problems",
     name: "Kitchen Tile Problems",
-    title: "Kitchen Tile Problems in Kuala Lumpur & Selangor | Renovix",
+    title: "Renovix Home Services | Kitchen Tile Problems in KL & Selangor",
     metaDescription:
       "Kitchen tile problems in Kuala Lumpur & Selangor — cracked, hollow, stained or water-damaged kitchen tiles repaired. Learn causes, warning signs, solutions and when to call a tiler.",
     h1: "Kitchen Tile Problems",
@@ -995,7 +995,7 @@ export const tilingProblems: ProblemDetail[] = [
     ...tilingBase,
     slug: "water-seepage-through-tiles",
     name: "Water Seepage Through Tiles",
-    title: "Tile Water Seepage in Kuala Lumpur & Selangor | Renovix",
+    title: "Renovix Home Services | Tile Water Seepage in KL & Selangor",
     metaDescription:
       "Water seeping through tiles in Kuala Lumpur & Selangor — what it means, common causes, warning signs, waterproofing solutions and when to call a professional.",
     h1: "Water Seepage Through Tiles",

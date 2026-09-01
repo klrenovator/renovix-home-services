@@ -3,7 +3,7 @@ import type { ServiceDetail } from "./types";
 export const ceilingPartition: ServiceDetail = {
   slug: "ceiling-partition",
   name: "Ceiling & Partition",
-  title: "Ceiling & Partition Services in Kuala Lumpur & Selangor",
+  title: "Renovix Home Services | Ceiling & Partition Services in KL & Selangor",
   metaDescription:
     "Gypsum and plaster ceilings, false ceilings, L-box and cove lighting, plus office and room partitions in Kuala Lumpur & Selangor. Ceiling repair, replacement and design. Free quote.",
   h1: "Ceiling & Partition Services in Kuala Lumpur & Selangor",

@@ -2,7 +2,7 @@ import type { ServiceTranslation } from "../types";
 
 export const translation: ServiceTranslation = {
   name: "Kerja Jubin & Pemasangan Jubin",
-  title: "Kerja Jubin & Pemasangan Jubin di Kuala Lumpur & Selangor | Renovix",
+  title: "Renovix Home Services | Kerja Jubin & Pemasangan Jubin di KL & Selangor",
   metaDescription:
     "Pemasangan, penggantian dan pembaikan jubin di Kuala Lumpur & Selangor. Jubin bilik air, dapur, lantai dan dinding, kerja hacking, leveling, screeding dan grouting semula. Sebut harga percuma.",
   h1: "Kerja Jubin & Pemasangan Jubin di Kuala Lumpur & Selangor",

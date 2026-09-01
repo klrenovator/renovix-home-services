@@ -5,7 +5,7 @@ import { selangorAreasB } from "./selangor-areas-b";
 export const selangor: AreaRegion = {
   id: "selangor",
   name: "Selangor",
-  title: "Home Renovation & Repair Services in Selangor | Renovix",
+  title: "Renovix Home Services | Home Renovation & Repair Services in Selangor",
   metaDescription:
     "Home renovation and repair services across Selangor — Petaling Jaya, Subang Jaya, Shah Alam, Puchong, Klang, Kajang, Cyberjaya and more. Free quotation.",
   h1: "Home Renovation & Repair Services in Selangor",

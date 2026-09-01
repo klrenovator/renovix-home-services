@@ -187,7 +187,7 @@ export const zh: Dictionary = {
     },
   },
   servicesIndex: {
-    metaTitle: "吉隆坡与雪兰莪服务项目 | Renovix Home Services",
+    metaTitle: "Renovix Home Services | 吉隆坡与雪兰莪服务项目",
     metaDescription:
       "浏览 Renovix 在吉隆坡与雪兰莪的房屋服务：瓷砖、焊接与铁器、电工、油漆、天花板与隔墙、装修、水管、防水、地板及居家维修。",
     ogDescription: "覆盖吉隆坡、雪兰莪及巴生谷的完整房屋装修与改善服务。",
@@ -234,7 +234,7 @@ export const zh: Dictionary = {
       "告诉我们工程详情、房屋类型与所在位置，我们会为您说明下一步。",
   },
   problemsIndex: {
-    metaTitle: "吉隆坡与雪兰莪可解决的家居问题 | Renovix",
+    metaTitle: "Renovix Home Services | 吉隆坡与雪兰莪家居问题",
     metaDescription:
       "浏览我们在吉隆坡与雪兰莪协助处理的常见家居问题 —— 瓷砖、电工、油漆、天花板、水管、防水与居家维修，附成因与解决方案说明。",
     ogDescription: "针对巴生谷常见家居问题的清楚解答，并链接至对应的 Renovix 服务。",
@@ -284,7 +284,7 @@ export const zh: Dictionary = {
     ctaDescription: "描述您看到的情况与房屋所在位置，我们会为您建议下一步。",
   },
   areasIndex: {
-    metaTitle: "吉隆坡、雪兰莪与巴生谷服务地区 | Renovix",
+    metaTitle: "Renovix Home Services | 吉隆坡、雪兰莪与巴生谷服务地区",
     metaDescription:
       "Renovix 服务范围涵盖吉隆坡、雪兰莪及巴生谷。浏览吉隆坡各区与雪兰莪各镇的地区指南，了解各地服务、房屋类型与常见问题。",
     ogDescription: "吉隆坡、雪兰莪及整个巴生谷的本地服务地区指南。",
@@ -444,6 +444,9 @@ export const zh: Dictionary = {
     detailsLead:
       "您可通过电话、WhatsApp 或电邮直接联系 Renovix Home Services。我们在营业时间内回复咨询，并会如实告知在报价前是否需要先到现场查看。",
     channels: {
+      business: "公司名称",
+      businessHelper:
+        "公司正式名称，在全站、发票及往来函件中统一使用。",
       phone: "电话号码",
       phoneHelper: "营业时间内来电，向我们说明需要处理的工程。",
       whatsapp: "WhatsApp 号码",
@@ -473,7 +476,7 @@ export const zh: Dictionary = {
     klangValleyDescription: "浏览全部服务地区",
   },
   quote: {
-    metaTitle: "获取吉隆坡与雪兰莪房屋服务报价 | Renovix",
+    metaTitle: "Renovix Home Services | 吉隆坡与雪兰莪房屋服务报价",
     metaDescription:
       "向 Renovix 索取吉隆坡、雪兰莪及巴生谷的房屋装修、维修或改善报价。提供工程、房屋、位置与照片，以便我们进行评估。",
     breadcrumb: "获取报价",
@@ -626,7 +629,7 @@ export const zh: Dictionary = {
     ctaSecondary: "浏览服务项目",
   },
   faq: {
-    metaTitle: "房屋服务常见问答 | Renovix 吉隆坡与雪兰莪",
+    metaTitle: "Renovix Home Services | 房屋服务常见问答",
     metaDescription:
       "解答关于 Renovix Home Services 的常见问题：房屋维修、装修、吉隆坡与雪兰莪服务范围、公寓工程、报价照片，以及各服务类别。",
     breadcrumb: "常见问答",
@@ -671,7 +674,7 @@ export const zh: Dictionary = {
       "request-quote": {
         question: "我要如何索取报价？",
         answer:
-          "请通过“获取报价”表单，说明所需工程、房屋资料与所在位置。您也可以在联系方式确认后，使用电话或 WhatsApp 联系。资料审阅后，可能需要更多信息或评估，才会准备报价。",
+          "请通过“获取报价”表单，说明所需工程、房屋资料与所在位置。您也可以拨打或通过 WhatsApp 联系 +601159259521，或发送电邮至 renovixhomeservices@gmail.com。资料审阅后，可能需要更多信息或评估，才会准备报价。",
       },
       "send-photos": {
         question: "我可以发送照片以获取报价吗？",

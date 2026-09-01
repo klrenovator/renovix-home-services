@@ -4,6 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import {
   IconArrowRight,
+  IconBuilding,
   IconCalendar,
   IconChat,
   IconMail,
@@ -76,6 +77,13 @@ export default async function ContactPage({ params }: ContactPageProps) {
   const channels = t.contact.channels;
 
   const contactDetails: ContactDetail[] = [
+    {
+      label: channels.business,
+      value: siteConfig.name,
+      href: localizedHref("/about", code),
+      icon: <IconBuilding className="h-5 w-5" />,
+      helper: channels.businessHelper,
+    },
     {
       label: channels.phone,
       value: siteConfig.phone,

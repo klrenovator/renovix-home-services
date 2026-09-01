@@ -3,7 +3,7 @@ import type { ServiceDetail } from "./types";
 export const handyman: ServiceDetail = {
   slug: "handyman",
   name: "Handyman",
-  title: "Handyman Services in Kuala Lumpur & Selangor | Renovix",
+  title: "Renovix Home Services | Handyman Services in KL & Selangor",
   metaDescription:
     "Reliable handyman services in Kuala Lumpur & Selangor — door and lock repairs, TV wall mounting, furniture assembly, shelf installation, drilling and small home fixes. Free quote.",
   h1: "Handyman Services in Kuala Lumpur & Selangor",
