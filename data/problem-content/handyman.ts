@@ -43,7 +43,7 @@ export const handymanProblems: ProblemDetail[] = [
     ...handymanBase,
     slug: "door-problems",
     name: "Door Problems",
-    title: "Door Repair in Kuala Lumpur & Selangor | Sticking, Squeaking & Sagging",
+    title: "Door Repair in Kuala Lumpur & Selangor | Renovix",
     metaDescription:
       "Doors that stick, squeak, sag or will not close in Kuala Lumpur & Selangor? Learn the causes, warning signs, door repair and adjustment solutions, and when to call a handyman.",
     h1: "Door Problems",
@@ -162,7 +162,7 @@ export const handymanProblems: ProblemDetail[] = [
     ...handymanBase,
     slug: "lock-problems",
     name: "Lock Problems",
-    title: "Lock Repair in Kuala Lumpur & Selangor | Stiff, Jammed or Faulty Locks",
+    title: "Lock Repair in Kuala Lumpur & Selangor | Renovix",
     metaDescription:
       "A stiff, jammed, broken or sticking lock in Kuala Lumpur & Selangor? Learn the causes, warning signs, lock repair and replacement solutions, and when to call a handyman or locksmith.",
     h1: "Lock Problems",
@@ -400,7 +400,7 @@ export const handymanProblems: ProblemDetail[] = [
     ...handymanBase,
     slug: "tv-mounting",
     name: "TV Mounting",
-    title: "TV Mounting in Kuala Lumpur & Selangor | Secure Wall Mounting",
+    title: "TV Mounting in Kuala Lumpur & Selangor | Renovix",
     metaDescription:
       "TV wall mounting in Kuala Lumpur & Selangor — secure brackets, correct height and neat cable routing. Learn the process, safety considerations and when to call a handyman.",
     h1: "TV Mounting",

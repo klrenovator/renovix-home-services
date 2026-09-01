@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { PagePlaceholder } from "@/components/PagePlaceholder";
+import { PageSchema } from "@/components/seo/PageSchema";
 import { getLanguage, languages } from "@/data/languages";
 import { getDictionary } from "@/i18n";
-import { buildPageMetadata } from "@/i18n/seo";
+import { absoluteUrl, buildPageMetadata } from "@/i18n/seo";
 
 type TermsPageProps = {
   params: Promise<{ lang: string }>;
@@ -45,11 +46,23 @@ export default async function TermsPage({ params }: TermsPageProps) {
   const t = getDictionary(language.code);
 
   return (
-    <PagePlaceholder
-      eyebrow={t.legalPage.eyebrow}
-      title={t.legalPage.termsTitle}
-      description={t.legalPage.termsDescription}
-      lang={language.code}
-    />
+    <>
+      <PageSchema
+        lang={language.code}
+        path="/terms/"
+        name={t.legalPage.termsTitle}
+        description={t.legalPage.termsMetaDescription}
+        breadcrumbs={[
+          { name: t.common.home, url: absoluteUrl(language.code, "/") },
+          { name: t.legal.terms },
+        ]}
+      />
+      <PagePlaceholder
+        eyebrow={t.legalPage.eyebrow}
+        title={t.legalPage.termsTitle}
+        description={t.legalPage.termsDescription}
+        lang={language.code}
+      />
+    </>
   );
 }

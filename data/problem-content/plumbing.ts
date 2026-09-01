@@ -43,7 +43,7 @@ export const plumbingProblems: ProblemDetail[] = [
     ...plumbingBase,
     slug: "water-leakage",
     name: "Water Leakage",
-    title: "Water Leakage in Kuala Lumpur & Selangor | Leak Detection & Repair",
+    title: "Water Leakage Repair in Kuala Lumpur & Selangor | Renovix",
     metaDescription:
       "Water leakage in Kuala Lumpur & Selangor — hidden leaks, damp patches, high water bills and dripping pipes. Learn the causes, warning signs, leak detection solutions and when to call a plumber.",
     h1: "Water Leakage",
@@ -519,7 +519,7 @@ export const plumbingProblems: ProblemDetail[] = [
     ...plumbingBase,
     slug: "toilet-problems",
     name: "Toilet Problems",
-    title: "Toilet Problems in Kuala Lumpur & Selangor | Toilet Repair & Replacement",
+    title: "Toilet Repair in Kuala Lumpur & Selangor | Renovix",
     metaDescription:
       "A running, blocked, leaking or weak-flushing toilet in Kuala Lumpur & Selangor? Learn the causes, warning signs, toilet repair solutions and when to call a plumber.",
     h1: "Toilet Problems",

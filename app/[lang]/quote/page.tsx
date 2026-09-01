@@ -9,7 +9,7 @@ import {
   IconMapPin,
 } from "@/components/icons";
 import { QuoteForm } from "@/components/quote/QuoteForm";
-import { PageBreadcrumbJsonLd } from "@/components/support/PageBreadcrumbJsonLd";
+import { PageSchema } from "@/components/seo/PageSchema";
 import { PageHero } from "@/components/support/PageHero";
 import { Button } from "@/components/ui/Button";
 import { getLanguage, languages } from "@/data/languages";
@@ -18,7 +18,7 @@ import { serviceDetails } from "@/data/service-content";
 import { getContactHref } from "@/data/site";
 import { getDictionary } from "@/i18n";
 import { localizedHref } from "@/i18n/hrefs";
-import { buildPageMetadata } from "@/i18n/seo";
+import { absoluteUrl, buildPageMetadata } from "@/i18n/seo";
 
 type QuotePageProps = {
   params: Promise<{ lang: string }>;
@@ -75,7 +75,16 @@ export default async function QuotePage({ params }: QuotePageProps) {
 
   return (
     <>
-      <PageBreadcrumbJsonLd lang={code} label={t.quote.breadcrumb} path="/quote/" />
+      <PageSchema
+        lang={code}
+        path="/quote/"
+        name={t.quote.title}
+        description={t.quote.metaDescription}
+        breadcrumbs={[
+          { name: t.common.home, url: absoluteUrl(code, "/") },
+          { name: t.quote.breadcrumb },
+        ]}
+      />
       <PageHero
         eyebrow={t.quote.eyebrow}
         title={t.quote.title}

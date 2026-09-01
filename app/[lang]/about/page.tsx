@@ -11,14 +11,14 @@ import {
   IconShieldCheck,
   serviceIcons,
 } from "@/components/icons";
+import { PageSchema } from "@/components/seo/PageSchema";
 import { PageHero } from "@/components/support/PageHero";
-import { PageBreadcrumbJsonLd } from "@/components/support/PageBreadcrumbJsonLd";
 import { Button } from "@/components/ui/Button";
 import { getLanguage, languages } from "@/data/languages";
 import { getServiceCategories } from "@/data/i18n";
 import { getDictionary } from "@/i18n";
 import { contentHref, localizedHref } from "@/i18n/hrefs";
-import { buildPageMetadata } from "@/i18n/seo";
+import { absoluteUrl, buildPageMetadata } from "@/i18n/seo";
 
 type AboutPageProps = {
   params: Promise<{ lang: string }>;
@@ -71,7 +71,16 @@ export default async function AboutPage({ params }: AboutPageProps) {
 
   return (
     <>
-      <PageBreadcrumbJsonLd lang={code} label={t.about.breadcrumb} path="/about/" />
+      <PageSchema
+        lang={code}
+        path="/about/"
+        name={t.about.title}
+        description={t.about.metaDescription}
+        breadcrumbs={[
+          { name: t.common.home, url: absoluteUrl(code, "/") },
+          { name: t.about.breadcrumb },
+        ]}
+      />
       <PageHero
         eyebrow={t.about.eyebrow}
         title={t.about.title}

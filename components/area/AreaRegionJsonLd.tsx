@@ -1,5 +1,13 @@
-import { JsonLd } from "@/components/service/JsonLd";
-import { siteConfig } from "@/data/site";
+import { JsonLd } from "@/components/seo/JsonLd";
+import {
+  breadcrumbNode,
+  faqNode,
+  itemListNode,
+  schemaGraph,
+  webPageNode,
+} from "@/components/seo/schema";
+import { getDictionary } from "@/i18n";
+import { absoluteUrl } from "@/i18n/seo";
 import type { AreaRegion } from "@/data/area-content/types";
 
 type AreaRegionJsonLdProps = {
@@ -7,66 +15,36 @@ type AreaRegionJsonLdProps = {
   lang: string;
 };
 
+/**
+ * Structured data for a region hub: WebPage + BreadcrumbList + an ItemList of
+ * the area guides in the region + the page's FAQPage.
+ */
 export function AreaRegionJsonLd({ region, lang }: AreaRegionJsonLdProps) {
-  const canonical = `${siteConfig.url}/${lang}/areas/${region.id}/`;
+  const t = getDictionary("en");
+  const canonical = absoluteUrl(lang, `/areas/${region.id}/`);
 
-  const breadcrumbs = [
-    {
-      "@type": "ListItem",
-      position: 1,
-      name: "Home",
-      item: `${siteConfig.url}/${lang}/`,
-    },
-    {
-      "@type": "ListItem",
-      position: 2,
-      name: "Service Areas",
-      item: `${siteConfig.url}/${lang}/areas/`,
-    },
-    {
-      "@type": "ListItem",
-      position: 3,
+  const nodes = [
+    webPageNode({
+      lang,
+      path: `/areas/${region.id}/`,
       name: region.name,
-      item: canonical,
-    },
+      description: region.metaDescription,
+    }),
+    breadcrumbNode(canonical, [
+      { name: t.common.home, url: absoluteUrl(lang, "/") },
+      { name: t.areasIndex.breadcrumb, url: absoluteUrl(lang, "/areas/") },
+      { name: region.name },
+    ]),
+    itemListNode(
+      canonical,
+      `Renovix service areas in ${region.name}`,
+      region.areas.map((area) => ({
+        name: area.name,
+        url: absoluteUrl(lang, `/areas/${area.region}/${area.slug}/`),
+      })),
+    ),
+    faqNode(canonical, region.faqs),
   ];
 
-  const itemList = {
-    "@context": "https://schema.org",
-    "@type": "ItemList",
-    name: `Renovix service areas in ${region.name}`,
-    itemListElement: region.areas.map((area, index) => ({
-      "@type": "ListItem",
-      position: index + 1,
-      name: area.name,
-      url: `${siteConfig.url}/${lang}/areas/${area.region}/${area.slug}/`,
-    })),
-  };
-
-  const faqSchema = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: region.faqs.map((faq) => ({
-      "@type": "Question",
-      name: faq.question,
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: faq.answer,
-      },
-    })),
-  };
-
-  return (
-    <>
-      <JsonLd
-        data={{
-          "@context": "https://schema.org",
-          "@type": "BreadcrumbList",
-          itemListElement: breadcrumbs,
-        }}
-      />
-      <JsonLd data={itemList} />
-      <JsonLd data={faqSchema} />
-    </>
-  );
+  return <JsonLd data={schemaGraph(nodes)} />;
 }

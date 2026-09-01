@@ -11,8 +11,8 @@ import {
   IconPhone,
   IconWhatsApp,
 } from "@/components/icons";
+import { PageSchema } from "@/components/seo/PageSchema";
 import { PageHero } from "@/components/support/PageHero";
-import { PageBreadcrumbJsonLd } from "@/components/support/PageBreadcrumbJsonLd";
 import { Button, WhatsAppButton } from "@/components/ui/Button";
 import { getLanguage, languages } from "@/data/languages";
 import {
@@ -25,7 +25,7 @@ import {
 } from "@/data/site";
 import { getDictionary } from "@/i18n";
 import { contentHref, localizedHref } from "@/i18n/hrefs";
-import { buildPageMetadata } from "@/i18n/seo";
+import { absoluteUrl, buildPageMetadata } from "@/i18n/seo";
 
 type ContactPageProps = {
   params: Promise<{ lang: string }>;
@@ -114,7 +114,16 @@ export default async function ContactPage({ params }: ContactPageProps) {
 
   return (
     <>
-      <PageBreadcrumbJsonLd lang={code} label={t.contact.breadcrumb} path="/contact/" />
+      <PageSchema
+        lang={code}
+        path="/contact/"
+        name={t.contact.title}
+        description={t.contact.metaDescription}
+        breadcrumbs={[
+          { name: t.common.home, url: absoluteUrl(code, "/") },
+          { name: t.contact.breadcrumb },
+        ]}
+      />
       <PageHero
         eyebrow={t.contact.eyebrow}
         title={t.contact.title}

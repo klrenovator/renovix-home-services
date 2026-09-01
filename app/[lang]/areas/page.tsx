@@ -1,20 +1,21 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { PageSchema } from "@/components/seo/PageSchema";
+import { faqNode } from "@/components/seo/schema";
 import { Breadcrumbs } from "@/components/service/Breadcrumbs";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button, WhatsAppButton } from "@/components/ui/Button";
 import { IconArrowRight, IconMapPin, IconCompass } from "@/components/icons";
-import { JsonLd } from "@/components/service/JsonLd";
 import { AreaFaqSection } from "@/components/area/AreaFaqSection";
 import { AreaCtaSection } from "@/components/area/AreaCtaSection";
 import { getLanguage, languages } from "@/data/languages";
 import { getAreaName, getAreasIndexFaqs, getRegionName, getRegionSummary } from "@/data/i18n";
-import { getWhatsAppHref, siteConfig } from "@/data/site";
+import { getWhatsAppHref } from "@/data/site";
 import { areaRegions } from "@/data/area-content";
 import { getDictionary } from "@/i18n";
 import { contentHref, localizedHref } from "@/i18n/hrefs";
-import { buildPageMetadata } from "@/i18n/seo";
+import { absoluteUrl, buildPageMetadata } from "@/i18n/seo";
 
 type AreasPageProps = {
   params: Promise<{ lang: string }>;
@@ -58,39 +59,20 @@ export default async function AreasPage({ params }: AreasPageProps) {
   const t = getDictionary(code);
   const faqs = getAreasIndexFaqs(code);
   const guideCount = areaRegions.reduce((total, region) => total + region.areas.length, 0);
+  const canonical = absoluteUrl(code, "/areas/");
 
   return (
     <>
-      <JsonLd
-        data={{
-          "@context": "https://schema.org",
-          "@type": "BreadcrumbList",
-          itemListElement: [
-            {
-              "@type": "ListItem",
-              position: 1,
-              name: t.common.home,
-              item: `${siteConfig.url}/${code}/`,
-            },
-            {
-              "@type": "ListItem",
-              position: 2,
-              name: t.areasIndex.breadcrumb,
-              item: `${siteConfig.url}/${code}/areas/`,
-            },
-          ],
-        }}
-      />
-      <JsonLd
-        data={{
-          "@context": "https://schema.org",
-          "@type": "FAQPage",
-          mainEntity: faqs.map((faq) => ({
-            "@type": "Question",
-            name: faq.question,
-            acceptedAnswer: { "@type": "Answer", text: faq.answer },
-          })),
-        }}
+      <PageSchema
+        lang={code}
+        path="/areas/"
+        name={t.areasIndex.title}
+        description={t.areasIndex.metaDescription}
+        breadcrumbs={[
+          { name: t.common.home, url: absoluteUrl(code, "/") },
+          { name: t.areasIndex.breadcrumb },
+        ]}
+        extra={[faqNode(canonical, faqs)]}
       />
 
       <section className="relative overflow-hidden bg-navy text-white">

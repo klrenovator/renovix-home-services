@@ -162,7 +162,7 @@ export const waterproofingProblems: ProblemDetail[] = [
     ...waterproofingBase,
     slug: "bathroom-leakage",
     name: "Bathroom Leakage",
-    title: "Bathroom Leakage in Kuala Lumpur & Selangor | Bathroom Waterproofing",
+    title: "Bathroom Leakage in Kuala Lumpur & Selangor | Renovix",
     metaDescription:
       "Bathroom leakage in Kuala Lumpur & Selangor — water seeping through to the ceiling below, damp walls and failed membranes. Learn causes, warning signs, bathroom waterproofing solutions and when to call a professional.",
     h1: "Bathroom Leakage",
@@ -281,7 +281,7 @@ export const waterproofingProblems: ProblemDetail[] = [
     ...waterproofingBase,
     slug: "balcony-leakage",
     name: "Balcony Leakage",
-    title: "Balcony Leakage in Kuala Lumpur & Selangor | Balcony Waterproofing",
+    title: "Balcony Leakage in Kuala Lumpur & Selangor | Renovix",
     metaDescription:
       "Balcony leakage in Kuala Lumpur & Selangor — water seeping through balcony floor to a room below, stained ceilings and failed membranes. Learn causes, warning signs, solutions and when to call a professional.",
     h1: "Balcony Leakage",

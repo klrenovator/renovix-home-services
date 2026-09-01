@@ -43,6 +43,8 @@ export function buildPageMetadata({
 
   alternates["x-default"] = absoluteUrl("en", path);
 
+  const ogImage = ogImageUrl(lang);
+
   return {
     title: { absolute: title },
     description,
@@ -61,18 +63,42 @@ export function buildPageMetadata({
       description: ogDescription ?? description,
       locale: getOgLocale(lang),
       siteName: getDictionary(lang).meta.siteName,
+      // Explicit image (not just the file-convention route): guarantees every
+      // page carries og:image + dimensions + alt, independent of segment
+      // inheritance, and gives Twitter a valid large-image card.
+      images: [
+        {
+          url: ogImage,
+          width: 1200,
+          height: 630,
+          alt: getDictionary(lang).meta.siteName,
+        },
+      ],
     },
     twitter: {
       card: "summary_large_image",
       title,
       description: ogDescription ?? description,
+      images: [ogImage],
     },
   };
 }
 
+/**
+ * The generated Open Graph image for a language version. It is served by the
+ * `app/[lang]/opengraph-image.tsx` route (1200×630 PNG) and is shared across
+ * every page of that language.
+ */
+function ogImageUrl(lang: LanguageCode | string): string {
+  const code = getLanguageCodeSafe(lang);
+  return `${siteConfig.url}/${code}/opengraph-image`;
+}
+
 export function absoluteUrl(lang: LanguageCode | string, path: string): string {
   const normalized = path.startsWith("/") ? path : `/${path}`;
-  const suffix = normalized === "/" ? "" : normalized;
+  // The root serves as `/<lang>/` (trailing slash), so absolute URLs — and the
+  // sitemaps and hreflang alternates built from them — must use the same shape.
+  const suffix = normalized === "/" ? "/" : normalized;
 
   return `${siteConfig.url}/${lang}${suffix}`;
 }

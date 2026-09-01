@@ -281,7 +281,7 @@ export const ceilingProblems: ProblemDetail[] = [
     ...ceilingBase,
     slug: "water-damaged-ceiling",
     name: "Water-Damaged Ceiling",
-    title: "Water-Damaged Ceiling Repair in Kuala Lumpur & Selangor | Renovix",
+    title: "Water-Damaged Ceiling in Kuala Lumpur & Selangor | Renovix",
     metaDescription:
       "Water damage on a ceiling in Kuala Lumpur & Selangor — stains, bubbling, sagging and leaking roofs or pipes. Learn the causes, warning signs, repair solutions and when to call a professional.",
     h1: "Water-Damaged Ceiling",
@@ -519,7 +519,7 @@ export const ceilingProblems: ProblemDetail[] = [
     ...ceilingBase,
     slug: "old-plaster-ceiling",
     name: "Old Plaster Ceiling",
-    title: "Old Plaster Ceiling Replacement in Kuala Lumpur & Selangor | Renovix",
+    title: "Old Plaster Ceiling Repair in Kuala Lumpur & Selangor",
     metaDescription:
       "Old, cracked or crumbling plaster ceilings in Kuala Lumpur & Selangor? Learn the causes, warning signs, repair and replacement solutions, and when to call a ceiling professional.",
     h1: "Old Plaster Ceiling",

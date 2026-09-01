@@ -3,7 +3,7 @@ import type { ServiceDetail } from "./types";
 export const painting: ServiceDetail = {
   slug: "painting",
   name: "Painting",
-  title: "Painting Services in Kuala Lumpur & Selangor | Interior & Exterior",
+  title: "Painting Services in Kuala Lumpur & Selangor | Renovix",
   metaDescription:
     "Interior and exterior painting in Kuala Lumpur & Selangor — houses, condos, offices and shops. Wall preparation, crack repair, skim coat, primer and mould-resistant paints. Free quote.",
   h1: "Painting Services in Kuala Lumpur & Selangor",

@@ -1,5 +1,13 @@
-import { JsonLd } from "@/components/service/JsonLd";
-import { siteConfig } from "@/data/site";
+import { JsonLd } from "@/components/seo/JsonLd";
+import {
+  breadcrumbNode,
+  faqNode,
+  schemaGraph,
+  serviceNode,
+  webPageNode,
+} from "@/components/seo/schema";
+import { getDictionary } from "@/i18n";
+import { absoluteUrl } from "@/i18n/seo";
 import type { ServiceDetail } from "@/data/service-content/types";
 
 type ServiceJsonLdProps = {
@@ -7,85 +15,32 @@ type ServiceJsonLdProps = {
   lang: string;
 };
 
+/**
+ * Structured data for a service page: WebPage + BreadcrumbList + the Service
+ * itself (with its OfferCatalog) + the page's FAQPage. All nodes share the
+ * same `@id` graph as the rest of the site, so the service links back to the
+ * business entity and the site entity.
+ */
 export function ServiceJsonLd({ detail, lang }: ServiceJsonLdProps) {
-  const canonical = `${siteConfig.url}/${lang}/services/${detail.slug}/`;
-  const breadcrumbs = [
-    {
-      "@type": "ListItem",
-      position: 1,
-      name: "Home",
-      item: `${siteConfig.url}/${lang}/`,
-    },
-    {
-      "@type": "ListItem",
-      position: 2,
-      name: "Services",
-      item: `${siteConfig.url}/${lang}/services/`,
-    },
-    {
-      "@type": "ListItem",
-      position: 3,
+  const t = getDictionary("en");
+  const canonical = absoluteUrl(lang, `/services/${detail.slug}/`);
+
+  const nodes = [
+    webPageNode({
+      lang,
+      path: `/services/${detail.slug}/`,
       name: detail.name,
-      item: canonical,
-    },
+      description: detail.metaDescription,
+      about: { "@id": `${canonical}#service` },
+    }),
+    breadcrumbNode(canonical, [
+      { name: t.common.home, url: absoluteUrl(lang, "/") },
+      { name: t.servicePage.breadcrumbServices, url: absoluteUrl(lang, "/services/") },
+      { name: detail.name },
+    ]),
+    serviceNode(detail, lang),
+    faqNode(canonical, detail.faqs),
   ];
 
-  const catalogItems = detail.subServiceGroups?.length
-    ? detail.subServiceGroups.flatMap((group) => group.items)
-    : detail.subServices;
-
-  const serviceSchema = {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    name: detail.name,
-    serviceType: detail.name,
-    description: detail.metaDescription,
-    url: canonical,
-    provider: {
-      "@type": "LocalBusiness",
-      name: siteConfig.legalName,
-      url: siteConfig.url,
-      areaServed: {
-        "@type": "Place",
-        name: "Kuala Lumpur & Selangor",
-      },
-    },
-    areaServed: {
-      "@type": "Place",
-      name: "Kuala Lumpur, Selangor & Klang Valley",
-    },
-    hasOfferCatalog: {
-      "@type": "OfferCatalog",
-      name: `${detail.name} Services`,
-      itemListElement: catalogItems.slice(0, 20).map((subService) => ({
-        "@type": "Offer",
-        itemOffered: {
-          "@type": "Service",
-          name: subService.name,
-          description: subService.description,
-        },
-      })),
-    },
-  };
-
-  const faqSchema = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: detail.faqs.map((faq) => ({
-      "@type": "Question",
-      name: faq.question,
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: faq.answer,
-      },
-    })),
-  };
-
-  return (
-    <>
-      <JsonLd data={{ "@context": "https://schema.org", "@type": "BreadcrumbList", itemListElement: breadcrumbs }} />
-      <JsonLd data={serviceSchema} />
-      <JsonLd data={faqSchema} />
-    </>
-  );
+  return <JsonLd data={schemaGraph(nodes)} />;
 }

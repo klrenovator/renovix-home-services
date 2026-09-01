@@ -12,7 +12,7 @@ export const ms: Dictionary = {
     defaultDescription:
       "Renovix Home Services menyediakan perkhidmatan renovasi dan pembaikan rumah profesional di seluruh Kuala Lumpur, Selangor dan Lembah Klang. Kerja jubin, kimpalan, elektrik, cat, siling, partition, paip, kalis air, lantai, renovasi dan kerja am.",
     homeTitle:
-      "Renovix Home Services | Renovasi & Pembaikan Rumah di KL & Selangor",
+      "Renovasi & Pembaikan Rumah di KL & Selangor | Renovix",
     homeDescription:
       "Perkhidmatan renovasi dan pembaikan rumah profesional di Kuala Lumpur, Selangor dan Lembah Klang — kerja jubin, kimpalan, elektrik, cat, siling, partition, paip, kalis air, lantai dan kerja am.",
   },

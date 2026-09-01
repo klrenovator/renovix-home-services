@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { PagePlaceholder } from "@/components/PagePlaceholder";
+import { PageSchema } from "@/components/seo/PageSchema";
 import { getLanguage, languages } from "@/data/languages";
 import { getDictionary } from "@/i18n";
-import { buildPageMetadata } from "@/i18n/seo";
+import { absoluteUrl, buildPageMetadata } from "@/i18n/seo";
 
 type PrivacyPageProps = {
   params: Promise<{ lang: string }>;
@@ -45,11 +46,23 @@ export default async function PrivacyPage({ params }: PrivacyPageProps) {
   const t = getDictionary(language.code);
 
   return (
-    <PagePlaceholder
-      eyebrow={t.legalPage.eyebrow}
-      title={t.legalPage.privacyTitle}
-      description={t.legalPage.privacyDescription}
-      lang={language.code}
-    />
+    <>
+      <PageSchema
+        lang={language.code}
+        path="/privacy/"
+        name={t.legalPage.privacyTitle}
+        description={t.legalPage.privacyMetaDescription}
+        breadcrumbs={[
+          { name: t.common.home, url: absoluteUrl(language.code, "/") },
+          { name: t.legal.privacy },
+        ]}
+      />
+      <PagePlaceholder
+        eyebrow={t.legalPage.eyebrow}
+        title={t.legalPage.privacyTitle}
+        description={t.legalPage.privacyDescription}
+        lang={language.code}
+      />
+    </>
   );
 }

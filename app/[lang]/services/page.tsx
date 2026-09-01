@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ServiceGrid } from "@/components/home/ServiceGrid";
+import { PageSchema } from "@/components/seo/PageSchema";
+import { itemListNode } from "@/components/seo/schema";
 import { Button, WhatsAppButton } from "@/components/ui/Button";
 import { Breadcrumbs } from "@/components/service/Breadcrumbs";
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -10,7 +12,7 @@ import { getServiceCategories } from "@/data/i18n";
 import { getWhatsAppHref } from "@/data/site";
 import { getDictionary } from "@/i18n";
 import { contentHref, localizedHref } from "@/i18n/hrefs";
-import { buildPageMetadata } from "@/i18n/seo";
+import { absoluteUrl, buildPageMetadata } from "@/i18n/seo";
 
 type ServicesPageProps = {
   params: Promise<{ lang: string }>;
@@ -52,10 +54,33 @@ export default async function ServicesPage({ params }: ServicesPageProps) {
 
   const code = language.code;
   const t = getDictionary(code);
-  const highlightSlugs = getServiceCategories(code).slice(0, 4);
+  const categories = getServiceCategories(code);
+  const highlightSlugs = categories.slice(0, 4);
+  const canonical = absoluteUrl(code, "/services/");
+
+  // The full service catalogue as an ItemList. Detail pages only exist in
+  // English, so item URLs are emitted for English; other languages list the
+  // services without URLs (their detail pages are not yet translated).
+  const serviceItems = categories.map((service) => ({
+    name: service.name,
+    ...(code === "en"
+      ? { url: absoluteUrl("en", `/services/${service.slug}/`) }
+      : {}),
+  }));
 
   return (
     <>
+      <PageSchema
+        lang={code}
+        path="/services/"
+        name={t.servicesIndex.title}
+        description={t.servicesIndex.metaDescription}
+        breadcrumbs={[
+          { name: t.common.home, url: absoluteUrl(code, "/") },
+          { name: t.servicesIndex.breadcrumb },
+        ]}
+        extra={[itemListNode(canonical, t.servicesIndex.title, serviceItems)]}
+      />
       <section className="relative overflow-hidden bg-navy text-white">
         <div
           aria-hidden="true"

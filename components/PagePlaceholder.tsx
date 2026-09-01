@@ -38,7 +38,12 @@ export function PagePlaceholder({
           </Link>
         </div>
 
-        <SectionHeading eyebrow={eyebrow} title={title} description={description} />
+        <SectionHeading
+          eyebrow={eyebrow}
+          title={title}
+          description={description}
+          headingLevel={1}
+        />
 
         <div className="mt-8 flex flex-col gap-3 sm:flex-row">
           <Button
