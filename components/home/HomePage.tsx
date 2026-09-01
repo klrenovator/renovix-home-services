@@ -19,7 +19,7 @@ export function HomePage({ lang }: HomePageProps) {
       <ProblemSection lang={lang} />
       <WhySection />
       <ProcessSection />
-      <AreasSection />
+      <AreasSection lang={lang} />
       <CTASection lang={lang} />
       <FAQPreview />
     </>

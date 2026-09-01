@@ -201,7 +201,84 @@
 - [x] ESLint — PASS
 - [x] Production build — PASS (176 static pages; 138 problem pages + 3 problem indexes + 30 services + homepages)
 
-## PHASE 4 — Areas / Location Pages — [ ]
+## PHASE 4 — Areas / Location Pages — [x]
+
+### Local SEO & service area architecture
+- [x] Logical area hierarchy with clean URLs:
+  - [x] `/en/areas/` — service areas index (Klang Valley explainer + region + area links)
+  - [x] `/en/areas/kuala-lumpur/` — Kuala Lumpur hub (city location page + region hub)
+  - [x] `/en/areas/selangor/` — Selangor hub (state housing landscape + area links)
+  - [x] `/en/areas/kuala-lumpur/{neighbourhood}/` and `/en/areas/selangor/{town}/`
+- [x] Static generation for all languages (`en`, `ms`, `zh`) — 34 area routes × 3 = 102 new pages (278 total)
+
+### Published locations (31 of 32 candidates — content quality gated)
+- [x] Kuala Lumpur (city-wide page = the `/areas/kuala-lumpur/` hub) + 14 KL neighbourhood guides:
+  Cheras, Setapak, Wangsa Maju, Ampang, Kepong, Segambut, Sentul, Mont Kiara, Bangsar,
+  Bukit Jalil, Sri Petaling, Old Klang Road, Taman Melawati, Desa ParkCity
+- [x] Selangor hub + 17 town guides:
+  Petaling Jaya, Subang Jaya, Shah Alam, Puchong, Klang, Selayang, Gombak, Ampang Jaya,
+  Kajang, Seri Kembangan, Cyberjaya, Putrajaya, Kota Damansara, Sungai Buloh, Rawang,
+  Semenyih, USJ
+- [x] No mass-produced thin pages: every guide carries unique hand-written local copy
+  (local intro with internal links, 6 services with local notes, 5 property types,
+  5 local problems, 4 locally-tailored process steps, local service context, 5 FAQs,
+  related services, nearby areas) — 0 duplicate intros verified
+- [x] Distinct guides for confusable neighbours (e.g. KL Ampang vs Selangor Ampang Jaya,
+  Setapak vs Wangsa Maju, Subang Jaya vs USJ, Bukit Jalil vs Sri Petaling)
+
+### Location page template (11 standard sections per the Phase 4 spec)
+- [x] Local introduction (unique, 2 paragraphs, inline internal links)
+- [x] Services available (6 per area, each with a local reason)
+- [x] Common property types (5 per area with local notes)
+- [x] Common renovation/repair problems (5 per area with local detail)
+- [x] Relevant services → related services section (4 per area)
+- [x] Service process (4 steps tailored to the area)
+- [x] Local service context (traffic, strata/management rules, housing age, climate)
+- [x] FAQs (5 per area, area-specific)
+- [x] Problem-page links from each area ("Learn more about these problems")
+- [x] Quote CTA and WhatsApp CTA
+- [x] Visible breadcrumbs (Home › Service Areas › Region › Area)
+
+### Data architecture (`data/area-content/`)
+- [x] `types.ts` — `AreaRegion`, `AreaDetail` and supporting types
+- [x] `kuala-lumpur.ts` + `kuala-lumpur-areas-a/b.ts` — KL hub + 14 guides
+- [x] `selangor.ts` + `selangor-areas-a/b.ts` — Selangor hub + 17 guides
+- [x] `index.ts` registry — `getAreaRegion`, `getAreaDetail`, `getAreaHref`, `getNearbyAreas`, `areasIndexFaqs`
+- [x] `data/areas.ts` rebuilt to derive linked area groups from the registry
+  (single source of truth for homepage, service, problem and footer area links)
+
+### Local SEO implementation
+- [x] Local intent titles/descriptions per area ("… in Cheras, KL" etc.)
+- [x] Canonical URL per area, region and index page
+- [x] BreadcrumbList schema + visible breadcrumbs on every area route
+- [x] Service schema with `areaServed` Place (incl. `containedInPlace`) per location — no address/geo emitted
+- [x] OfferCatalog linking the area's focused services
+- [x] FAQPage schema on index, region and location pages
+- [x] ItemList schema on region hubs
+- [x] `en` indexed; `ms`/`zh` scaffolded `noindex, follow` per site convention
+- [x] No fake Google Business / NAP data — explicit "coverage, honestly stated" note on every location page
+
+### Internal linking
+- [x] Location pages → services (services available + related services cards)
+- [x] Location pages → problem guides (problem chips per area)
+- [x] Location pages → nearby areas (incl. cross-region neighbours) + region hub
+- [x] Service pages & problem pages → all 31 locations + region hubs (rebuilt shared AreasSection)
+- [x] Homepage → /areas index + region hubs + every location chip
+- [x] Footer "Areas We Serve" → region hubs + all-areas index
+- [x] Navigation "Areas We Serve" → `/areas`
+- [x] Region pages → sibling region
+
+### Honesty rules
+- [x] No invented local office, physical shop, exact service radius, local team, local projects or customer counts
+- [x] Contact placeholders preserved (`[PHONE NUMBER]`, `[WHATSAPP NUMBER]`, `[EMAIL]`, `[ADDRESS]`)
+- [x] Local facts limited to well-known public context (housing eras, transit, management rules, climate)
+
+### Quality checks
+- [x] TypeScript check — PASS
+- [x] ESLint — PASS
+- [x] Production build — PASS (278 static pages)
+- [x] 0 duplicate area intros; all service/problem/nearby slugs resolve
+- [x] Smoke-tested `/en/areas/`, region hubs and sample location pages (200s, schema, canonicals, internal links)
 
 ## PHASE 5 — Projects Portfolio — [ ]
 
@@ -223,4 +300,4 @@
   - `[WHATSAPP NUMBER]`
   - `[EMAIL]`
   - `[ADDRESS]`
-- Dedicated service detail pages were built in Phase 2; problem pages were built in Phase 3. Location pages, projects, blog and full multilingual content are intentionally not built yet (Phases 4–7).
+- Dedicated service detail pages were built in Phase 2; problem pages were built in Phase 3; the local SEO area architecture (2 region hubs + 31 unique location guides + areas index) was built in Phase 4. Projects, blog and full multilingual content are intentionally not built yet (Phases 5–7).
