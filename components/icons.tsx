@@ -302,6 +302,36 @@ export function IconHandyman(props: IconProps) {
   );
 }
 
+export function IconAlertTriangle(props: IconProps) {
+  return (
+    <IconBase {...props}>
+      <path d="M10.3 3.9 2.6 17.5A2 2 0 0 0 4.3 20.5h15.4a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z" />
+      <path d="M12 9v4" />
+      <path d="M12 17h.01" />
+    </IconBase>
+  );
+}
+
+export function IconBuilding(props: IconProps) {
+  return (
+    <IconBase {...props}>
+      <rect x="4" y="3" width="16" height="18" rx="1.5" />
+      <path d="M9 7h2M13 7h2M9 11h2M13 11h2M9 15h2M13 15h2" />
+      <path d="M8 21v-2h8v2" />
+    </IconBase>
+  );
+}
+
+export function IconTools(props: IconProps) {
+  return (
+    <IconBase {...props}>
+      <path d="M14.5 6.5a4 4 0 0 0 5 5L14 17l-3-3 5.5-5.5a4 4 0 0 0-2-2z" />
+      <path d="M3 21l6-6" />
+      <path d="M6 3a4 4 0 0 0-2 6l4-1-2-2 1-3Z" />
+    </IconBase>
+  );
+}
+
 export const serviceIcons = {
   tile: IconTile,
   welding: IconWelding,

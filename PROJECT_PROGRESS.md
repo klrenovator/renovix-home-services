@@ -86,7 +86,64 @@
 
 ---
 
-## PHASE 2 — Main Service Architecture & Service Pages — [ ]
+## PHASE 2 — Main Service Architecture & Service Pages — [x]
+
+### Service architecture
+- [x] 10 main service categories with clean URLs:
+  - [x] `/en/services/tiling/`
+  - [x] `/en/services/welding-metal-works/`
+  - [x] `/en/services/electrical/`
+  - [x] `/en/services/painting/`
+  - [x] `/en/services/ceiling-partition/`
+  - [x] `/en/services/general-renovation/`
+  - [x] `/en/services/plumbing/`
+  - [x] `/en/services/waterproofing/`
+  - [x] `/en/services/flooring/`
+  - [x] `/en/services/handyman/`
+- [x] Services index page at `/en/services/`
+- [x] Static generation for all languages (`en`, `ms`, `zh`) × 10 services
+- [x] Navigation and footer "Services" links point to the services index
+- [x] No separate Carpentry category (correctly excluded)
+
+### Service page data (`data/service-content/`)
+- [x] Full content model in `data/service-content/types.ts`
+- [x] 10 content files with complete, unique copy per service
+- [x] All 206 sub-services implemented verbatim from the Phase 2 spec:
+  - Tiling (24), Welding & Metal Works (22), Electrical (31), Painting (32),
+    Ceiling (16) & Partition (14), General Renovation (21), Plumbing (15),
+    Waterproofing (11), Flooring (10), Handyman (12)
+- [x] Registry with `getServiceDetail` / `getRelatedServiceDetails` helpers
+
+### Service page template (14 standard sections)
+- [x] Breadcrumb (visible + BreadcrumbList schema)
+- [x] H1
+- [x] Strong introduction (2 unique paragraphs with internal links)
+- [x] Service overview (+ highlights card)
+- [x] Sub-services (all listed with individual descriptions; grouped for Ceiling & Partition)
+- [x] Problems we solve (6 per service)
+- [x] Property types (6 per service)
+- [x] Our process (4 steps per service)
+- [x] Why choose Renovix (6 per service)
+- [x] Service areas (KL / Selangor / Klang Valley)
+- [x] FAQs (6 per service, with FAQPage schema)
+- [x] Related services (4 per service, internal linking)
+- [x] Quote CTA
+- [x] WhatsApp CTA
+- [x] Service schema (Service + OfferCatalog) and canonical URLs per page
+- [x] Unique title and meta description per page
+
+### Honesty rules
+- [x] No fake prices, reviews, ratings, certifications, licences, warranties, projects, experience claims or team claims
+- [x] Electrical content notes Malaysian regulatory requirements without licence claims
+- [x] Wall removal content advises proper assessment; condo renovation notes management approvals
+- [x] Contact placeholders preserved (`[PHONE NUMBER]`, `[WHATSAPP NUMBER]`, `[EMAIL]`, `[ADDRESS]`)
+
+### Quality checks
+- [x] TypeScript check — PASS
+- [x] ESLint — PASS
+- [x] Production build — PASS (38 static pages)
+- [x] Sub-service lists verified against spec — all 10 services match
+- [x] No duplicate paragraphs across service content
 
 ## PHASE 3 — Problem Pages — [ ]
 
