@@ -31,10 +31,6 @@ export const siteConfig: SiteConfig = {
   businessHours: "[BUSINESS HOURS]",
 };
 
-export const defaultLanguage = "en";
-
-export const supportedLanguages = ["en", "ms", "zh"] as const;
-
 export function isPlaceholder(value: string): boolean {
   return value.startsWith("[") && value.endsWith("]");
 }
@@ -75,11 +71,4 @@ export function getEmailHref(lang = "en"): string {
   }
 
   return `mailto:${siteConfig.email}`;
-}
-
-export function getSiteMetadata() {
-  return {
-    title: "Renovix Home Services | Home Renovation & Improvement in KL & Selangor",
-    description: siteConfig.description,
-  };
 }

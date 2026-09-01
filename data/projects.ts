@@ -20,14 +20,6 @@ export type ProjectCategory = {
   icon: ServiceIconKey;
 };
 
-export type ProjectPlaceholder = {
-  id: string;
-  category: ProjectCategoryId;
-  statusLabel: "Project placeholder";
-  title: string;
-  description: string;
-};
-
 export const projectCategories: ProjectCategory[] = [
   {
     id: "tiling",
@@ -96,14 +88,3 @@ export const projectCategories: ProjectCategory[] = [
     icon: "handyman",
   },
 ];
-
-export const projectPlaceholders: ProjectPlaceholder[] = projectCategories.map(
-  (category) => ({
-    id: `placeholder-${category.id}`,
-    category: category.id,
-    statusLabel: "Project placeholder",
-    title: `${category.label} project information pending`,
-    description:
-      "This space is reserved for verified project photos, scope and property information when it is supplied.",
-  }),
-);

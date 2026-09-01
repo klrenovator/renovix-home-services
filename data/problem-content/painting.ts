@@ -640,7 +640,7 @@ export const paintingProblems: ProblemDetail[] = [
     name: "Wall Surface Damage",
     title: "Wall Damage Repair in Kuala Lumpur & Selangor | Renovix",
     metaDescription:
-      "Damaged wall surfaces — holes, dents, scratches, water damage and crumbling plaster — repaired in Kuala Lumpur & Selangor. Learn causes, warning signs, solutions and when to call a professional.",
+      "Damaged wall surfaces — holes, dents, scratches, water damage and crumbling plaster — repaired in KL & Selangor. Learn the causes, signs and solutions.",
     h1: "Wall Surface Damage",
     subtitle:
       "Holes, dents, crumbling plaster and water-damaged walls can all be repaired. Renovix restores the surface so it looks and paints like new.",

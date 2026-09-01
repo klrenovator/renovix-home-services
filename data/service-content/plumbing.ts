@@ -5,7 +5,7 @@ export const plumbing: ServiceDetail = {
   name: "Plumbing",
   title: "Plumbing Services in Kuala Lumpur & Selangor | Renovix",
   metaDescription:
-    "Plumbing repairs and installations in Kuala Lumpur & Selangor — water leaks, pipe work, sinks, toilets, showers, water heaters and concealed pipes. Leak detection and drainage repairs. Free quote.",
+    "Plumbing repairs and installations in KL & Selangor — water leaks, pipe work, sinks, toilets, showers, water heaters and concealed pipes. Free quote.",
   h1: "Plumbing Services in Kuala Lumpur & Selangor",
   intro: [
     "Plumbing problems have a way of escalating — a dripping tap wastes water quietly, a small leak stains a ceiling, and a blocked drain makes a kitchen unusable. In Kuala Lumpur and Selangor's high-rise and landed homes, plumbing work also needs to be done with care because water moves sideways and downwards through floors and walls. Renovix provides plumbing services across the Klang Valley, from leak repair and pipe replacement to the installation of sinks, toilets, showers and water heaters.",

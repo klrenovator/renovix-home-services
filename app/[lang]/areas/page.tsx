@@ -225,6 +225,7 @@ export default async function AreasPage({ params }: AreasPageProps) {
         faqs={faqs}
         eyebrow={t.areasIndex.faqEyebrow}
         title={t.areasIndex.faqTitle}
+        description={t.areasIndex.faqDescription}
       />
       <AreaCtaSection
         name={t.common.klangValley}

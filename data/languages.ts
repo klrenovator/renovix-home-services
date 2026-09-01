@@ -50,10 +50,6 @@ export const languages: Language[] = [
   },
 ];
 
-export const languageCodes = languages.map(
-  (language) => language.code,
-) as LanguageCode[];
-
 export function isLanguageCode(value: string | undefined | null): value is LanguageCode {
   return value === "en" || value === "ms" || value === "zh";
 }

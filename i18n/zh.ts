@@ -41,6 +41,7 @@ export const zh: Dictionary = {
   },
   cta: {
     getFreeQuote: "免费获取报价",
+    quoteShort: "报价",
     requestQuote: "索取报价",
     getQuote: "获取报价",
     startQuoteRequest: "开始报价申请",
@@ -272,6 +273,7 @@ export const zh: Dictionary = {
     lead: "Renovix 在吉隆坡与雪兰莪各地提供房屋装修、维修与改善服务。每份地区指南都说明当地的住宅概况、最相关的服务，以及我们常见的问题。",
     faqEyebrow: "服务范围疑问",
     faqTitle: "关于我们的服务地区",
+    faqDescription: "为我们所服务地区的业主提供的实用解答。",
     guidesEyebrow: "我们的工作区域",
     guidesTitle: "选择要浏览的区域",
     guidesDescription:
@@ -639,7 +641,7 @@ export const zh: Dictionary = {
         answer:
           "Renovix 服务范围包括吉隆坡、雪兰莪及更广大的巴生谷。请浏览服务地区页面查看区域与本地指南，并在索取报价时附上所在位置，以便我们妥善处理。",
       },
-      kualaLumpur: {
+      "kuala-lumpur": {
         question: "你们在吉隆坡提供服务吗？",
         answer:
           "是的。吉隆坡在 Renovix 所述的服务范围之内。服务地区板块提供吉隆坡的说明与各地点页面；个别工程是否可安排，会在审阅工程内容与位置后确认。",

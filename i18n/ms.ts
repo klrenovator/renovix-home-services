@@ -14,7 +14,7 @@ export const ms: Dictionary = {
     homeTitle:
       "Renovasi & Pembaikan Rumah di KL & Selangor | Renovix",
     homeDescription:
-      "Perkhidmatan renovasi dan pembaikan rumah profesional di Kuala Lumpur, Selangor dan Lembah Klang — kerja jubin, kimpalan, elektrik, cat, siling, partition, paip, kalis air, lantai dan kerja am.",
+      "Perkhidmatan renovasi dan pembaikan rumah di KL, Selangor dan Lembah Klang — kerja jubin, kimpalan, elektrik, cat, siling, paip dan kalis air.",
   },
   a11y: {
     skipToContent: "Langkau ke kandungan utama",
@@ -48,6 +48,7 @@ export const ms: Dictionary = {
   },
   cta: {
     getFreeQuote: "Sebut Harga Percuma",
+    quoteShort: "Sebut Harga",
     requestQuote: "Minta Sebut Harga",
     getQuote: "Dapatkan Sebut Harga",
     startQuoteRequest: "Mulakan Permintaan Sebut Harga",
@@ -210,7 +211,7 @@ export const ms: Dictionary = {
   },
   servicesIndex: {
     metaTitle:
-      "Perkhidmatan Kami di Kuala Lumpur & Selangor | Renovix Home Services",
+      "Perkhidmatan Kami di Kuala Lumpur & Selangor | Renovix",
     metaDescription:
       "Terokai perkhidmatan rumah Renovix di Kuala Lumpur & Selangor: kerja jubin, kimpalan & logam, elektrik, cat, siling & partition, renovasi, paip, kalis air, lantai dan kerja am.",
     ogDescription:
@@ -299,9 +300,9 @@ export const ms: Dictionary = {
   },
   areasIndex: {
     metaTitle:
-      "Kawasan Perkhidmatan di Kuala Lumpur, Selangor & Lembah Klang | Renovix",
+      "Kawasan Perkhidmatan di KL, Selangor & Lembah Klang | Renovix",
     metaDescription:
-      "Renovix berkhidmat di Kuala Lumpur, Selangor dan Lembah Klang. Lihat panduan tempatan untuk kejiranan KL dan pekan Selangor, lengkap dengan perkhidmatan, jenis hartanah dan masalah biasa setiap kawasan.",
+      "Renovix berkhidmat di KL, Selangor dan Lembah Klang. Lihat panduan tempatan untuk kejiranan KL dan pekan Selangor — perkhidmatan dan masalah biasa.",
     ogDescription:
       "Panduan kawasan perkhidmatan tempatan untuk Kuala Lumpur, Selangor dan seluruh Lembah Klang.",
     breadcrumb: "Kawasan Perkhidmatan",
@@ -309,6 +310,8 @@ export const ms: Dictionary = {
     lead: "Renovix menyediakan perkhidmatan renovasi, pembaikan dan peningkatan rumah di seluruh Kuala Lumpur dan Selangor. Setiap panduan kawasan menerangkan konteks perumahan tempatan, perkhidmatan yang paling relevan di situ dan masalah yang kerap kami temui.",
     faqEyebrow: "Soalan Tentang Liputan",
     faqTitle: "Tentang kawasan perkhidmatan kami",
+    faqDescription:
+      "Jawapan praktikal untuk pemilik hartanah di kawasan yang kami liputi.",
     guidesEyebrow: "Kawasan Kami Bekerja",
     guidesTitle: "Pilih wilayah untuk diterokai",
     guidesDescription:
@@ -470,9 +473,9 @@ export const ms: Dictionary = {
     klangValleyDescription: "Terokai semua kawasan perkhidmatan",
   },
   quote: {
-    metaTitle: "Dapatkan Sebut Harga Perkhidmatan Rumah di KL & Selangor | Renovix",
+    metaTitle: "Sebut Harga Perkhidmatan Rumah di KL & Selangor | Renovix",
     metaDescription:
-      "Minta sebut harga renovasi, pembaikan atau peningkatan rumah daripada Renovix untuk Kuala Lumpur, Selangor dan Lembah Klang. Kongsi perkhidmatan, hartanah, lokasi dan gambar untuk membantu penilaian.",
+      "Minta sebut harga renovasi atau pembaikan rumah daripada Renovix untuk KL, Selangor dan Lembah Klang. Kongsi perkhidmatan, lokasi dan gambar kerja.",
     breadcrumb: "Dapatkan Sebut Harga",
     eyebrow: "Permintaan Sebut Harga",
     title: "Dapatkan sebut harga untuk keperluan rumah anda",
@@ -698,7 +701,7 @@ export const ms: Dictionary = {
         answer:
           "Renovix meliputi Kuala Lumpur, Selangor dan kawasan Lembah Klang yang lebih luas. Lawati halaman Kawasan Perkhidmatan untuk panduan wilayah dan kawasan tempatan, kemudian kongsi lokasi anda semasa meminta sebut harga supaya kerja dapat dipertimbangkan dengan betul.",
       },
-      kualaLumpur: {
+      "kuala-lumpur": {
         question: "Adakah anda bekerja di Kuala Lumpur?",
         answer:
           "Ya. Kuala Lumpur termasuk dalam liputan perkhidmatan Renovix yang dinyatakan. Bahagian Kawasan Perkhidmatan merangkumi panduan Kuala Lumpur dan halaman kejiranan; ketersediaan untuk sesuatu kerja disahkan selepas kerja dan lokasi disemak.",

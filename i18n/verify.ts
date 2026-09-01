@@ -7,6 +7,10 @@ import {
 import { serviceDetails } from "@/data/service-content";
 import { problemDetails } from "@/data/problem-content";
 import { areaRegions } from "@/data/area-content";
+import { siteFaqs } from "@/data/site-faqs";
+import { problemList } from "@/data/i18n/lists";
+import { languages } from "@/data/languages";
+import { getDictionary } from "./index";
 
 function diff(kind: string, listName: string, expected: string[], actual: string[]) {
   const expectedSet = new Set(expected);
@@ -66,4 +70,50 @@ export function assertCoverageInSync() {
       region.areas.map((area) => `${region.id}/${area.slug}`),
     ),
   );
+
+  assertFaqTranslationsInSync();
+  assertProblemLabelsInSync();
+}
+
+/**
+ * The FAQ answers are keyed by FAQ id in a `Record<string, …>`, so a key that
+ * does not match an id is invisible to TypeScript — it silently falls back to
+ * the English question and answer and mixes languages on a `/ms/` or `/zh/`
+ * page. This turns that class of typo into a build failure.
+ */
+function assertFaqTranslationsInSync() {
+  const ids = siteFaqs.map((faq) => faq.id);
+
+  for (const language of languages) {
+    const answers = getDictionary(language.code).faq.answers;
+
+    diff(
+      `${language.code} FAQ answer`,
+      `${language.code}.faq.answers`,
+      Object.keys(answers),
+      ids,
+    );
+  }
+}
+
+/**
+ * The problem index lists every problem in all three languages, so a slug
+ * missing from `problemList` would silently render an English card inside a
+ * Malay or Chinese page.
+ */
+function assertProblemLabelsInSync() {
+  const ids = problemDetails.map((problem) => problem.slug);
+
+  for (const language of languages) {
+    if (language.code === "en") {
+      continue;
+    }
+
+    diff(
+      `${language.code} problem card`,
+      `problemList.${language.code}`,
+      Object.keys(problemList[language.code]),
+      ids,
+    );
+  }
 }
