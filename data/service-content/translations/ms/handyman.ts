@@ -1,0 +1,88 @@
+import type { ServiceTranslation } from "../types";
+
+export const translation: ServiceTranslation = {
+  name: "Servis Handyman",
+  title: "Servis Handyman & Pembaikan Rumah di Kuala Lumpur & Selangor | Renovix",
+  metaDescription:
+    "Servis handyman di Kuala Lumpur & Selangor — pemasangan dan pembaikan pintu, kunci, pemasangan TV, pemasangan rak, pemasangan perabot dan kerja pembaikan rumah kecil. Sebut harga percuma.",
+  h1: "Servis Handyman & Pembaikan Rumah di Kuala Lumpur & Selangor",
+  intro: [
+    "Kebanyakan rumah mempunyai senarai kerja kecil yang tertangguh: pintu yang tersangkut, kunci yang keras, TV yang belum dilekapkan, rak yang belum dipasang dan beberapa lubang di dinding yang perlu ditampal.",
+    "Renovix mengendalikan kerja-kerja kecil ini dalam satu lawatan untuk rumah, kondominium dan pejabat kecil di Kuala Lumpur, Selangor dan Lembah Klang. Jika sesuatu kerja itu ternyata lebih besar daripada kerja handyman, kami akan berterus terang dan cadangkan skop yang betul seperti [kerja elektrik](/services/electrical) atau [kerja paip](/services/plumbing).",
+  ],
+  overviewTitle: "Kerja Pembaikan & Pemasangan Kecil di Rumah",
+  overviewIntro:
+    "Kerja kecil pun perlu dibuat dengan betul — penambat yang sesuai, ukuran yang tepat dan kemasan yang kemas.",
+  overviewParagraphs: [
+    "Beritahu kami senarai kerja yang anda perlukan dan kami akan sahkan apa yang boleh disiapkan dalam satu lawatan. Menggabungkan beberapa kerja kecil sekali gus lazimnya lebih praktikal berbanding menempah lawatan berasingan untuk setiap satu.",
+    "Kami membawa peralatan yang sesuai, menggunakan penambat yang betul untuk jenis dinding anda — konkrit, bata atau papan gypsum — dan mengemas kawasan kerja sebelum pulang. Jika sesuatu kerja memerlukan bahan tertentu, kami maklumkan lebih awal supaya anda boleh memilih dan menyediakannya.",
+  ],
+  highlights: [
+    { title: "Pemasangan & lekapan", description: "TV, rak, cermin, langsir dan kelengkapan dinding dipasang kukuh." },
+    { title: "Pintu & kunci", description: "Pintu yang tersangkut dilaraskan, kunci dipasang atau digantikan." },
+    { title: "Pemasangan & pembaikan kecil", description: "Perabot dipasang dan kerosakan kecil dibaiki dengan kemas." },
+    { title: "Kerja kecil digabungkan", description: "Beberapa kerja kecil diselesaikan dalam satu lawatan yang sama." },
+  ],
+  subServicesIntro: "Kerja handyman yang paling kerap diminta disenaraikan di bawah.",
+  subServices: [
+    { name: "Pemasangan & Pembaikan Pintu", description: "Pintu baharu dipasang, pintu tersangkut dilaraskan dan engsel diganti." },
+    { name: "Pemasangan Kunci", description: "Kunci pintu baharu dipasang atau digantikan." },
+    { name: "Pemasangan Rod Langsir", description: "Rod langsir dipasang lurus dan kukuh pada dinding atau siling." },
+    { name: "Pemasangan TV di Dinding", description: "TV dilekapkan pada penambat yang sesuai dengan jenis dinding." },
+    { name: "Pemasangan Perabot", description: "Perabot flat-pack dipasang mengikut arahan pengeluar." },
+    { name: "Pemasangan Rak", description: "Rak dinding dipasang rata dan mampu menanggung beban." },
+    { name: "Pembaikan Dinding Kecil", description: "Lubang paku dan kerosakan kecil ditampal dan diratakan." },
+    { name: "Menggerudi & Melekapkan", description: "Kerja gerudi dan lekapan untuk pelbagai kelengkapan rumah." },
+    { name: "Kerja Paip Kecil", description: "Pembaikan kecil seperti menukar pili atau paip sinki." },
+    { name: "Kerja Elektrik Kecil", description: "Menukar suis, soket atau lekapan lampu yang mudah." },
+    { name: "Pembaikan Rumah Am", description: "Senarai kerja pembaikan kecil di sekitar rumah." },
+    { name: "Penyelenggaraan Am", description: "Kerja penyelenggaraan berkala untuk rumah dan unit sewa." },
+  ],
+  problemsTitle: "Masalah Harian Yang Kami Selesaikan",
+  problemsIntro: "Kerja-kerja kecil ini biasanya tertangguh sehingga ia mengganggu keselesaan harian.",
+  problems: [
+    { title: "Pintu tersangkut atau tidak sejajar", description: "Pintu yang bergesel, tidak menutup rapat atau engselnya sudah longgar." },
+    { title: "Kunci rosak atau keras", description: "Kunci yang sukar dipulas atau tidak lagi selamat digunakan." },
+    { title: "TV & skrin belum dilekapkan", description: "Lekapan yang tertangguh kerana tidak pasti kekuatan dinding." },
+    { title: "Perabot belum dipasang", description: "Kotak perabot flat-pack yang masih belum dibuka." },
+    { title: "Tiada apa-apa dilekapkan pada dinding", description: "Rak, cermin dan bingkai yang menunggu untuk dipasang." },
+    { title: "Senarai kerja kecil yang bertimbun", description: "Beberapa kerja kecil yang lebih baik diselesaikan sekali gus." },
+  ],
+  propertyTypesIntro: "Jenis dinding dan peraturan bangunan menentukan cara kami melekapkan sesuatu.",
+  propertyTypes: [
+    { label: "Kondominium", note: "Kerja dalam unit mengikut waktu dan garis panduan pengurusan bangunan." },
+    { label: "Pangsapuri", note: "Pemasangan dan pembaikan kecil dalam unit pangsapuri." },
+    { label: "Rumah Teres", note: "Senarai kerja kecil di sekitar rumah teres." },
+    { label: "Semi-D & Banglo", note: "Kerja kecil di dalam dan di kawasan luar rumah." },
+    { label: "Pejabat & Kedai", note: "Pemasangan dan pembaikan kecil untuk ruang kerja." },
+    { label: "Hartanah Sewa", note: "Kerja pembaikan antara penyewa untuk unit sewa." },
+  ],
+  processTitle: "Proses Servis Handyman Kami",
+  processIntro: "Ringkas dan cepat — kami sahkan skop, buat kerja dan kemas selepasnya.",
+  processSteps: [
+    { title: "Beritahu Senarai Kerja", description: "Hantar senarai kerja anda berserta gambar jika ada." },
+    { title: "Sahkan Pendekatan", description: "Kami sahkan apa yang boleh disiapkan dan bahan yang diperlukan." },
+    { title: "Laksanakan Kerja", description: "Kerja disiapkan dengan penambat dan kaedah yang sesuai." },
+    { title: "Semak & Kemas", description: "Kami semak hasil kerja bersama anda dan kemas kawasan kerja." },
+  ],
+  whyTitle: "Kenapa Pilih Renovix untuk Servis Handyman",
+  whyIntro: "Kerja kecil yang dibuat betul menjimatkan masa dan mengelakkan kerosakan tambahan.",
+  whyChoose: [
+    { title: "Betul dari kali pertama", description: "Penambat dan kaedah yang sesuai dengan jenis dinding anda." },
+    { title: "Gabungkan beberapa kerja", description: "Beberapa kerja kecil diselesaikan dalam satu lawatan." },
+    { title: "Bersih dan berhemah", description: "Kawasan kerja dilindungi dan dikemas selepas siap." },
+    { title: "Rujukan yang jujur", description: "Jika kerja itu lebih besar, kami cadangkan skop yang betul." },
+    { title: "Penjadualan fleksibel", description: "Waktu lawatan diaturkan mengikut kesesuaian anda." },
+    { title: "Liputan KL & Selangor", description: "Kami berkhidmat di seluruh Kuala Lumpur, Selangor dan Lembah Klang." },
+  ],
+  areasNote:
+    "Servis handyman tersedia di seluruh Kuala Lumpur, Selangor dan Lembah Klang untuk rumah, unit sewa dan pejabat kecil.",
+  faqs: [
+    { question: "Kerja apa yang termasuk dalam servis handyman?", answer: "Kerja pemasangan dan pembaikan kecil seperti melekap TV, memasang rak dan langsir, memasang perabot, melaraskan pintu, menukar kunci, menampal dinding serta pembaikan paip dan elektrik yang mudah." },
+    { question: "Boleh saya tempah beberapa kerja kecil dalam satu lawatan?", answer: "Boleh, dan itu memang cara paling praktikal. Hantar senarai kerja anda supaya kami boleh anggarkan masa yang diperlukan dan menyiapkan sebanyak mungkin dalam satu lawatan." },
+    { question: "Boleh lekap TV pada dinding papan gypsum?", answer: "Boleh, tetapi ia bergantung pada kedudukan rangka di sebalik papan dan berat TV. Kami akan periksa dinding dahulu dan gunakan penambat yang sesuai, atau cadangkan lokasi lain jika dinding itu tidak selamat." },
+    { question: "Perlukah saya sediakan bahan dan kelengkapan?", answer: "Untuk barang khusus seperti kunci, rak atau bracket TV pilihan anda, lebih baik anda sediakan. Untuk kelengkapan asas dan bahan tampalan, kami boleh bawa sendiri." },
+    { question: "Adakah kerja elektrik dan paip kecil termasuk?", answer: "Ya, untuk kerja mudah seperti menukar suis, soket, lekapan lampu atau pili. Untuk kerja yang lebih besar, kami akan uruskan sebagai kerja elektrik atau kerja paip yang sewajarnya." },
+    { question: "Boleh pasang perabot dari mana-mana jenama?", answer: "Boleh, selagi arahan dan komponen lengkap. Beritahu kami bilangan dan jenis perabot supaya kami boleh anggarkan masa dengan tepat." },
+  ],
+};

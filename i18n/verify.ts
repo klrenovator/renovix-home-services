@@ -1,12 +1,17 @@
 import {
+  translatedContent,
   ALL_AREAS,
   ALL_AREA_REGIONS,
   ALL_PROBLEMS,
   ALL_SERVICES,
 } from "./coverage";
-import { serviceDetails } from "@/data/service-content";
-import { problemDetails } from "@/data/problem-content";
-import { areaRegions } from "@/data/area-content";
+import { serviceDetails, translatedServiceSlugs } from "@/data/service-content";
+import { problemDetails, translatedProblemSlugs } from "@/data/problem-content";
+import {
+  areaRegions,
+  translatedAreaRegionIds,
+  translatedAreaSlugs,
+} from "@/data/area-content";
 import { siteFaqs } from "@/data/site-faqs";
 import { problemList } from "@/data/i18n/lists";
 import { languages } from "@/data/languages";
@@ -73,6 +78,46 @@ export function assertCoverageInSync() {
 
   assertFaqTranslationsInSync();
   assertProblemLabelsInSync();
+  assertTranslationRegistriesInSync();
+}
+
+/**
+ * `i18n/coverage.ts` decides which localized pages are generated, linked and
+ * listed in the sitemap, while the translation registries hold the actual copy.
+ * If the two disagree, either a localized page is published without a
+ * translation (English leaking under a /ms/ or /zh/ URL) or a finished
+ * translation is never published. Both are build failures.
+ */
+function assertTranslationRegistriesInSync() {
+  for (const lang of ["ms", "zh"] as const) {
+    diff(
+      `${lang} service translation`,
+      `translatedContent.${lang}.service`,
+      translatedContent[lang].service,
+      translatedServiceSlugs(lang),
+    );
+
+    diff(
+      `${lang} problem translation`,
+      `translatedContent.${lang}.problem`,
+      translatedContent[lang].problem,
+      translatedProblemSlugs(lang),
+    );
+
+    diff(
+      `${lang} area translation`,
+      `translatedContent.${lang}.area`,
+      translatedContent[lang].area,
+      translatedAreaSlugs(lang),
+    );
+
+    diff(
+      `${lang} area region translation`,
+      `translatedContent.${lang}.areaRegion`,
+      translatedContent[lang].areaRegion,
+      translatedAreaRegionIds(lang),
+    );
+  }
 }
 
 /**

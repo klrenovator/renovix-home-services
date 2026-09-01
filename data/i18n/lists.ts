@@ -17,7 +17,7 @@ export const serviceList: Record<
 > = {
   ms: {
     tiling: {
-      name: "Kerja Jubin",
+      name: "Kerja Jubin & Pemasangan Jubin",
       shortDescription:
         "Pemasangan, penggantian dan pembaikan jubin untuk lantai, dinding dan bilik air.",
     },
@@ -32,52 +32,52 @@ export const serviceList: Record<
         "Pemasangan elektrik, pendawaian, pencahayaan, soket, suis dan pemeriksaan kerosakan.",
     },
     painting: {
-      name: "Kerja Cat",
+      name: "Kerja Mengecat",
       shortDescription:
         "Cat dalaman dan luaran, cat semula, sentuhan semula dan kemasan dinding.",
     },
     "ceiling-partition": {
-      name: "Siling & Partition",
+      name: "Siling & Partisyen",
       shortDescription:
         "Pembaikan siling, siling palsu, dinding partition dan pemasangan panel.",
     },
     "general-renovation": {
-      name: "Renovasi Am",
+      name: "Renovasi & Pengubahsuaian Rumah",
       shortDescription:
         "Kerja renovasi rumah am, naik taraf, pembaikan dan projek peningkatan.",
     },
     plumbing: {
-      name: "Kerja Paip",
+      name: "Kerja Paip (Plumbing)",
       shortDescription:
         "Pembaikan paip, kerja paip, baik pulih pili dan tandas, kebocoran dan saliran.",
     },
     waterproofing: {
-      name: "Kerja Kalis Air",
+      name: "Kalis Air (Waterproofing)",
       shortDescription:
         "Kerja kalis air untuk bilik air, balkoni, bumbung dan kawasan yang mudah lembap.",
     },
     flooring: {
-      name: "Kerja Lantai",
+      name: "Lantai & Pemasangan Lantai",
       shortDescription:
         "Pembaikan, penggantian dan kemasan lantai untuk pelbagai jenis lantai dan kawasan.",
     },
     handyman: {
-      name: "Kerja Am",
+      name: "Servis Handyman",
       shortDescription:
         "Bantuan yang boleh diharap untuk pembaikan rumah, kerja kecil dan penyelenggaraan harian.",
     },
   },
   zh: {
     tiling: {
-      name: "瓷砖工程",
+      name: "瓷砖与铺砖工程",
       shortDescription: "地板、墙面与浴室瓷砖的铺贴、更换与维修。",
     },
     "welding-metal-works": {
-      name: "焊接与铁器工程",
+      name: "焊接与金属工程",
       shortDescription: "金属制作、焊接、铁门、铁闸、栏杆与定制铁器。",
     },
     electrical: {
-      name: "电工服务",
+      name: "电气工程",
       shortDescription: "电路安装、布线、照明、插座、开关与故障检查。",
     },
     painting: {
@@ -85,11 +85,11 @@ export const serviceList: Record<
       shortDescription: "室内外粉刷、重新上漆、局部修补与墙面处理。",
     },
     "ceiling-partition": {
-      name: "天花板与隔墙",
+      name: "天花板与隔间工程",
       shortDescription: "天花板维修、假天花板、隔墙与面板安装。",
     },
     "general-renovation": {
-      name: "整体装修",
+      name: "综合装修工程",
       shortDescription: "整体房屋装修、升级、维修与改善工程。",
     },
     plumbing: {
@@ -101,11 +101,11 @@ export const serviceList: Record<
       shortDescription: "浴室、阳台、屋顶及容易受潮区域的防水施工。",
     },
     flooring: {
-      name: "地板工程",
+      name: "地板与地面工程",
       shortDescription: "各类地板与区域的维修、更换与表面处理。",
     },
     handyman: {
-      name: "居家维修",
+      name: "家居维修服务",
       shortDescription: "可靠的小型房屋维修、安装与日常保养服务。",
     },
   },

@@ -22,7 +22,7 @@ type ServiceJsonLdProps = {
  * business entity and the site entity.
  */
 export function ServiceJsonLd({ detail, lang }: ServiceJsonLdProps) {
-  const t = getDictionary("en");
+  const t = getDictionary(lang);
   const canonical = absoluteUrl(lang, `/services/${detail.slug}/`);
 
   const nodes = [

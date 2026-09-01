@@ -943,14 +943,159 @@ no template changes are required.
 
 ---
 
+## PHASE 10 — Malay & Chinese Localization + Real Business Details — [x] COMPLETE
+
+Every page the site publishes now exists in all three languages, and every
+contact detail on the site is the real one. `/ms/` and `/zh/` went from 11
+published pages each to **100 each — the same 100 pages English publishes**.
+
+### 1. Real business details (no placeholders left)
+- [x] `data/site.ts` rewritten with the verified details:
+      name **Renovix Home Services**, phone/WhatsApp **+601159259521**,
+      email **renovixhomeservices@gmail.com**, address **Jalan Kiara, Mont
+      Kiara, 50480 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia**,
+      hours **9:00 AM – 6:00 PM**
+- [x] `tel:+601159259521` and `https://wa.me/601159259521` (international
+      format, no invented prefill message) on every call/WhatsApp control:
+      header CTA, mobile menu, footer, contact page, quote page and every
+      service, problem and area CTA block
+- [x] Hours localized per language (`9:00 AM – 6:00 PM` / `9:00 pagi – 6:00
+      petang` / `上午 9:00 – 下午 6:00`); the address string is identical in all
+      three languages, only its labels are translated
+- [x] `getWhatsAppHref()`, `getPhoneHref()`, `getEmailHref()` are now no-arg
+      accessors reading `data/site.ts`, so there is exactly one source of truth
+- [x] Codebase audit: no `[PHONE NUMBER]`, `[WHATSAPP NUMBER]`, `[EMAIL]`,
+      `[ADDRESS]`, `[BUSINESS HOURS]`, sample numbers or `example.com`
+      addresses remain in `app/`, `components/`, `data/` or `i18n/`
+
+### 2. Structured data on real facts only
+- [x] `Organization`/`LocalBusiness` now carries `telephone`, `email`,
+      `PostalAddress`, `contactPoint`, `knowsLanguage` and `areaServed`
+- [x] `openingHoursSpecification` publishes `opens: 09:00` / `closes: 18:00`
+      with **no `dayOfWeek`** — the business stated the hours but not the days,
+      so the days are not invented
+- [x] The organization node, the WebSite node and the OfferCatalog are built
+      per language: localized description, tagline, service names, OG image and
+      same-language service URLs
+- [x] Still no ratings, reviews, review counts, prices/priceRange, geo
+      coordinates, licences, awards, registration numbers, extra branches,
+      photos, years of experience, certifications or emergency/24-7 claims
+
+### 3. Chrome, components and forms
+- [x] Header, mobile menu, footer, breadcrumbs, hero chips, CTA blocks, quote
+      form (labels, placeholders, options, validation, confirmation), contact
+      page, empty states and the 404 copy all read from the dictionaries
+- [x] New dictionary sections (`cta`, `common`, `areasBlock`, `servicePage`,
+      `problemPage`, `areaPage`, `areaRegion`, `meta.ogBadge`) added to
+      `i18n/types.ts` and filled in `en`/`ms`/`zh` — the shared `Dictionary`
+      type makes a missing key a type error, so nothing can silently fall back
+      to English
+- [x] `format(template, values)` interpolation replaced string concatenation,
+      so sentences follow each language's word order
+- [x] `WhatsAppButton` now requires a `label` prop — all 15 call sites pass the
+      translated label instead of a hardcoded English one
+- [x] `app/[lang]/opengraph-image.tsx` renders a per-language title and badge
+
+### 4. Deep content translated (the bulk of this phase)
+- [x] **10 service pages × 2 languages = 20 documents** — intro, overview,
+      highlights, sub-services, problems, property types, process, why-choose,
+      areas note and FAQs
+- [x] **46 problem pages × 2 languages = 92 documents** — what it means,
+      causes, warning signs, solutions, when to call, related-service note,
+      process and FAQs
+- [x] **31 area guides + 2 region hubs × 2 languages = 66 documents** —
+      summary, intro, service notes, property types, local problems, process,
+      local context and FAQs, written to the real character of each area
+- [x] Total: **178 new translated documents** (~55k words of Malay, ~117k
+      characters of Chinese)
+- [x] Prescribed service terminology used throughout —
+      MS: Kerja Jubin & Pemasangan Jubin, Kimpalan & Kerja Logam, Kerja
+      Elektrik, Kerja Mengecat, Siling & Partisyen, Renovasi/Pengubahsuaian
+      Rumah, Kerja Paip/Plumbing, Kalis Air/Waterproofing, Lantai & Pemasangan
+      Lantai, Servis Handyman —
+      ZH: 瓷砖与铺砖工程、焊接与金属工程、电气工程、油漆工程、天花板与隔间工程、
+      综合装修工程、水管工程、防水工程、地板与地面工程、家居维修服务
+- [x] No separate carpentry service was introduced; handyman remains the tenth
+      service
+- [x] Malay is Malaysian BM (not Indonesian), keeping the trade words
+      Malaysians actually use (plumbing, waterproofing, handyman, false
+      ceiling, water heater, floor trap, rumah landed). Chinese is Simplified
+      Chinese written for Malaysian Chinese readers (蕉赖、甲洞、满家乐、
+      八打灵再也、梳邦再也), not Mainland-specific phrasing
+
+### 5. Localized routing, links and SEO
+- [x] `i18n/coverage.ts` now lists all 10 services, 46 problems, 31 areas and
+      2 region hubs as translated for both `ms` and `zh`
+- [x] `i18n/verify.ts::assertTranslationRegistriesInSync()` diffs the coverage
+      lists against the actual translation registries at build time, so a page
+      can never be published in a language that has no copy for it
+- [x] Every internal link stays inside the active language: nav, breadcrumbs,
+      service/problem/area cards, related links, inline body links and CTAs.
+      The only cross-language links on any page are the language switcher
+- [x] `<title>`, meta description, OG title/description, canonical,
+      `<html lang>`, aria-labels and image alt text are language-specific
+- [x] hreflang `en-MY` / `ms-MY` / `zh-MY` + `x-default` on all 300 pages, with
+      correct self-reference, full reciprocity and trailing slashes
+- [x] Sitemaps: **100 URLs per language**, each with the complete four-entry
+      alternates set
+
+### 6. Defects found and fixed during verification
+- [x] **Sitemap alternates bug** — `slugOf(path, 2)` read the wrong path
+      segment, so 58 of the 100 entries per sitemap (10 services, 46 problems,
+      2 region hubs) advertised only the English alternate. Fixed to segment 1;
+      all 300 entries now carry all four alternates
+- [x] **English JSON-LD on localized pages** — the service index, the problem
+      index and the problem-guide `about` node hardcoded `/en/` service URLs.
+      They now use the same-language URL whenever a translation exists
+- [x] **Organization node was English-only on every locale** — description,
+      slogan, OG image and offer catalogue are now built per language
+- [x] Minor copy fixes: `镀锌铁` → `黑铁（mild steel）` in the Chinese welding
+      page, `repair` → `pembaikan kecil` in the Malay tiling page
+
+### 7. Testing
+- [x] `npm run type-check` — **PASS**
+- [x] `npm run lint` — **PASS** (0 errors, 0 warnings)
+- [x] `npm run build` — **PASS** (310 static routes prerendered)
+- [x] All **300 localized routes** return HTTP 200 (100 per language)
+- [x] Canonical, hreflang set, self-reference and reciprocity verified on all
+      300 pages by script
+- [x] JSON-LD parsed on all 300 pages: valid, real contact details, no invented
+      trust signals, no cross-language URLs
+- [x] English-leakage scan over all 200 `/ms/` and `/zh/` pages: the only Latin
+      strings left are the brand name, proper nouns (Mont Kiara, USJ, Taman
+      Yarl, i-City, The Strand, Goodyear, Duta, Telawi, Bandar Botanic),
+      industry abbreviations (LED, MCB, RCCB, ELCB, SPC, PU, VESA) and the
+      Malaysian trade terms listed above
+- [x] Internal-link scan: 0 cross-language links outside the language switcher
+- [x] Contact-detail scan: one phone number, one WhatsApp link, one email and
+      one address across the entire codebase
+- [x] Accessibility: correct `<html lang>` per locale, localized aria-labels,
+      skip link and breadcrumb landmarks; the Phase 9 mobile CTA is still
+      present and localized
+
+### Known issues carried forward (not introduced here)
+- The Chinese OG image renders CJK glyphs through `next/og`'s dynamic font
+  fetch (Google Fonts). That fetch is blocked in the offline build sandbox, so
+  the locally generated `/zh/opengraph-image` shows tofu boxes; it renders
+  correctly wherever the build has network access. Re-check it on the deployed
+  site — if it ever fails there, bundling a CJK font is the fix
+- For an unmatched URL under `/ms/` or `/zh/`, the first HTML frame is Next's
+  built-in 404 shell; the localized not-found page (correct in all three
+  languages) is in the payload and takes over on hydration
+- 63 English pages still carry 160–190 character meta descriptions
+- The quote form still has no backend
+- The projects portfolio still contains clearly labelled placeholders only
+
+---
+
 ## Notes
 
-- No phone number, WhatsApp number, email, address, prices, reviews, ratings, certifications, licences, warranties, years of experience, projects or team members have been invented.
-- Contact details use placeholders:
-  - `[PHONE NUMBER]`
-  - `[WHATSAPP NUMBER]`
-  - `[EMAIL]`
-  - `[ADDRESS]`
-  - `[BUSINESS HOURS]`
+- No prices, reviews, ratings, review counts, geo coordinates, certifications, licences, awards, registration numbers, warranties, years of experience, projects or team members have been invented.
+- Contact details are the real ones supplied by the business in Phase 10 (they were placeholders through Phases 1–9):
+  - Phone / WhatsApp: `+601159259521`
+  - Email: `renovixhomeservices@gmail.com`
+  - Address: `Jalan Kiara, Mont Kiara, 50480 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia`
+  - Hours: `9:00 AM – 6:00 PM` (the opening days were not stated, so no `dayOfWeek` is published in the schema)
 - Dedicated service detail pages were built in Phase 2; problem pages were built in Phase 3; the local SEO area architecture (2 region hubs + 31 unique location guides + areas index) was built in Phase 4. Phase 5 adds the supporting pages and a portfolio framework containing only clearly labelled placeholders. Phase 6 delivered the multilingual architecture and full translations for the core pages; the long-form service, problem and area catalogues remain English-only and the blog is not built. Phase 8 was the quality optimization pass (performance, accessibility, mobile & UX); the advanced quote system remains future work.
 - Phase 9 was the final QA audit: full route, multilingual, service, problem, location, conversion, SEO, performance, accessibility and code-quality review. Six genuine defects were fixed (three language-mixing bugs, the redirecting `og:image`, the missing mobile CTA and the on-demand OG route), dead code was removed and two build-time i18n guards were added. Remaining known issues are listed at the end of the Phase 9 section.
+- Phase 10 completed the localization project: all 10 service pages, 46 problem pages and 33 area guides now exist in Malay and Chinese (178 new translated documents), every contact detail is real, and each language publishes the same 100 pages. Phases 11+ remain pending.

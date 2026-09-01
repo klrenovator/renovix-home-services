@@ -53,7 +53,7 @@ export function PagePlaceholder({
           >
             {t.cta.getFreeQuote}
           </Button>
-          <WhatsAppButton href={getWhatsAppHref(code)} label={t.cta.whatsappUs} />
+          <WhatsAppButton href={getWhatsAppHref()} label={t.cta.whatsappUs} />
         </div>
 
         <p className="mt-8 max-w-2xl rounded-xl border border-slate-200 bg-surface p-4 text-sm leading-6 text-secondary">

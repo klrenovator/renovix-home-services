@@ -61,7 +61,7 @@ export function PageHero({
           </Button>
           {showWhatsApp ? (
             <WhatsAppButton
-              href={getWhatsAppHref(code)}
+              href={getWhatsAppHref()}
               variant="secondary"
               label={t.cta.whatsappUs}
             />

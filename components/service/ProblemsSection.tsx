@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { IconAlertTriangle, IconArrowRight } from "@/components/icons";
-import { localizedHref } from "@/i18n/hrefs";
+import { getDictionary } from "@/i18n";
+import { contentHref } from "@/i18n/hrefs";
 import type { ServiceDetail } from "@/data/service-content/types";
 import type { ProblemDetail } from "@/data/problem-content/types";
 
@@ -16,11 +17,13 @@ export function ProblemsSection({
   relatedProblemPages = [],
   lang,
 }: ProblemsSectionProps) {
+  const t = getDictionary(lang);
+
   return (
     <section className="section bg-white">
       <div className="container-app">
         <SectionHeading
-          eyebrow="Problems We Solve"
+          eyebrow={t.servicePage.problemsEyebrow}
           title={detail.problemsTitle}
           description={detail.problemsIntro}
         />
@@ -41,13 +44,16 @@ export function ProblemsSection({
           <div className="mt-10">
             <h3 className="flex items-center gap-3 text-xl font-bold tracking-tight text-navy">
               <span className="h-1.5 w-8 rounded-full bg-accent" aria-hidden="true" />
-              Explore these problem pages
+              {t.servicePage.relatedProblemsTitle}
             </h3>
+            <p className="mt-3 max-w-2xl text-sm leading-6 text-secondary">
+              {t.servicePage.relatedProblemsNote}
+            </p>
             <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
               {relatedProblemPages.map((problem) => (
                 <Link
                   key={problem.slug}
-                  href={localizedHref(`/problems/${problem.slug}`, lang)}
+                  href={contentHref("problem", problem.slug, lang) ?? "#"}
                   className="group flex items-center gap-3 rounded-xl border border-slate-200 bg-white p-4 shadow-soft transition-colors hover:border-brand focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
                 >
                   <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-brand/10 text-brand transition-colors group-hover:bg-brand group-hover:text-white">

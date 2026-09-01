@@ -20,7 +20,6 @@ import {
   getPhoneHref,
   getQuoteHref,
   getWhatsAppHref,
-  isPlaceholder,
   siteConfig,
 } from "@/data/site";
 import { getDictionary } from "@/i18n";
@@ -80,33 +79,33 @@ export default async function ContactPage({ params }: ContactPageProps) {
     {
       label: channels.phone,
       value: siteConfig.phone,
-      href: getPhoneHref(code),
+      href: getPhoneHref(),
       icon: <IconPhone className="h-5 w-5" />,
       helper: channels.phoneHelper,
     },
     {
       label: channels.whatsapp,
       value: siteConfig.whatsapp,
-      href: getWhatsAppHref(code),
+      href: getWhatsAppHref(),
       icon: <IconWhatsApp className="h-5 w-5" />,
       helper: channels.whatsappHelper,
     },
     {
       label: channels.email,
       value: siteConfig.email,
-      href: getEmailHref(code),
+      href: getEmailHref(),
       icon: <IconMail className="h-5 w-5" />,
       helper: channels.emailHelper,
     },
     {
       label: channels.address,
-      value: siteConfig.address,
+      value: siteConfig.address.full,
       icon: <IconMapPin className="h-5 w-5" />,
       helper: channels.addressHelper,
     },
     {
       label: channels.hours,
-      value: siteConfig.businessHours,
+      value: t.common.businessHours,
       icon: <IconCalendar className="h-5 w-5" />,
       helper: channels.hoursHelper,
     },
@@ -184,12 +183,30 @@ export default async function ContactPage({ params }: ContactPageProps) {
             <p className="mt-3 max-w-lg text-sm leading-6 text-white/75">
               {t.contact.whatsappBody}
             </p>
-            <div className="mt-6">
+            <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
               <WhatsAppButton
-                href={getWhatsAppHref(code)}
+                href={getWhatsAppHref()}
                 variant="primary"
                 label={t.cta.whatsappUs}
               />
+              <Button
+                href={getPhoneHref()}
+                variant="outline"
+                external
+                className="border-white/40 text-white hover:bg-white/10"
+                icon={<IconPhone className="h-4 w-4" />}
+              >
+                {t.cta.callNow}
+              </Button>
+              <Button
+                href={getEmailHref()}
+                variant="outline"
+                external
+                className="border-white/40 text-white hover:bg-white/10"
+                icon={<IconMail className="h-4 w-4" />}
+              >
+                {t.cta.emailUs}
+              </Button>
             </div>
             <p className="mt-4 text-xs font-medium text-white/60">
               {t.contact.whatsappNote} {siteConfig.whatsapp}
@@ -232,15 +249,13 @@ export default async function ContactPage({ params }: ContactPageProps) {
 }
 
 function ContactDetailCard({ detail }: { detail: ContactDetail }) {
-  const hasConfirmedValue = !isPlaceholder(detail.value);
-
   return (
     <article className="card flex h-full flex-col p-5 sm:p-6">
       <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-brand/10 text-brand">
         {detail.icon}
       </span>
       <h3 className="mt-4 text-base font-semibold text-navy">{detail.label}</h3>
-      {hasConfirmedValue && detail.href ? (
+      {detail.href ? (
         <a
           href={detail.href}
           className="mt-2 break-all text-sm font-semibold text-brand transition-colors hover:text-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"

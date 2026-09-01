@@ -1,6 +1,8 @@
 import { Button, WhatsAppButton } from "@/components/ui/Button";
-import { IconArrowRight } from "@/components/icons";
-import { getWhatsAppHref, siteConfig } from "@/data/site";
+import { ContactCtaLine } from "@/components/ui/ContactCtaLine";
+import { IconArrowRight, IconPhone } from "@/components/icons";
+import { getPhoneHref, getWhatsAppHref } from "@/data/site";
+import { format, getDictionary } from "@/i18n";
 import { localizedHref } from "@/i18n/hrefs";
 import type { ProblemDetail } from "@/data/problem-content/types";
 
@@ -10,7 +12,7 @@ type CtaSectionProps = {
 };
 
 export function CtaSection({ problem, lang }: CtaSectionProps) {
-  const whatsappHref = getWhatsAppHref(lang);
+  const t = getDictionary(lang);
 
   return (
     <section className="section section-surface">
@@ -26,30 +28,39 @@ export function CtaSection({ problem, lang }: CtaSectionProps) {
           />
 
           <div className="relative max-w-2xl">
-            <p className="eyebrow-light">Get a Free Quote</p>
+            <p className="eyebrow-light">{t.common.freeQuoteEyebrow}</p>
             <h2 className="h2-section mt-3 text-white">
-              Need help with {problem.name.toLowerCase()} in Kuala Lumpur &amp; Selangor?
+              {format(t.problemPage.ctaHeading, { name: problem.name })}
             </h2>
             <p className="mt-4 text-base leading-7 text-white/75">
-              Tell us about the problem and share a few photos if you have them. Our team can
-              assess the job, answer your questions and guide you on the next step and
-              quotation.
+              {t.problemPage.ctaDescription}
             </p>
 
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
               <Button
                 href={localizedHref("/quote", lang)}
                 variant="primary"
                 icon={<IconArrowRight className="h-4 w-4" />}
               >
-                Request a Quote
+                {t.cta.requestQuote}
               </Button>
-              <WhatsAppButton href={whatsappHref} variant="secondary" />
+              <WhatsAppButton
+                href={getWhatsAppHref()}
+                variant="secondary"
+                label={t.cta.whatsappUs}
+              />
+              <Button
+                href={getPhoneHref()}
+                variant="outline"
+                external
+                className="border-white/40 text-white hover:bg-white/10"
+                icon={<IconPhone className="h-4 w-4" />}
+              >
+                {t.cta.callNow}
+              </Button>
             </div>
 
-            <p className="mt-5 text-xs text-white/60">
-              Contact placeholder: {siteConfig.whatsapp}
-            </p>
+            <ContactCtaLine lang={lang} inverse />
           </div>
         </div>
       </div>

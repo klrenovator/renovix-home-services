@@ -29,7 +29,7 @@ export async function generateMetadata({
 }: ServicePageProps): Promise<Metadata> {
   const { category, lang } = await params;
   const language = getLanguage(lang);
-  const detail = getServiceDetail(category);
+  const detail = getServiceDetail(category, lang);
 
   if (!language || !detail) {
     return {};
@@ -47,14 +47,14 @@ export async function generateMetadata({
 export default async function ServiceDetailPage({ params }: ServicePageProps) {
   const { category, lang } = await params;
   const language = getLanguage(lang);
-  const detail = getServiceDetail(category);
+  const detail = getServiceDetail(category, lang);
 
   if (!language || !detail || !hasTranslation("service", detail.slug, language.code)) {
     notFound();
   }
 
-  const related = getRelatedServiceDetails(detail);
-  const relatedProblems = getProblemsBySlugs(detail.relatedProblems);
+  const related = getRelatedServiceDetails(detail, lang);
+  const relatedProblems = getProblemsBySlugs(detail.relatedProblems, lang);
 
   return (
     <>

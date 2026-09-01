@@ -11,6 +11,7 @@ import { getLanguage, languages } from "@/data/languages";
 import { getServiceCategories } from "@/data/i18n";
 import { getWhatsAppHref } from "@/data/site";
 import { getDictionary } from "@/i18n";
+import { hasTranslation } from "@/i18n/coverage";
 import { contentHref, localizedHref } from "@/i18n/hrefs";
 import { absoluteUrl, buildPageMetadata } from "@/i18n/seo";
 
@@ -58,13 +59,13 @@ export default async function ServicesPage({ params }: ServicesPageProps) {
   const highlightSlugs = categories.slice(0, 4);
   const canonical = absoluteUrl(code, "/services/");
 
-  // The full service catalogue as an ItemList. Detail pages only exist in
-  // English, so item URLs are emitted for English; other languages list the
-  // services without URLs (their detail pages are not yet translated).
+  // The full service catalogue as an ItemList. Each item points at the detail
+  // page in the current language when that translation is published, so a
+  // Malay or Chinese ItemList never links a reader back into English.
   const serviceItems = categories.map((service) => ({
     name: service.name,
-    ...(code === "en"
-      ? { url: absoluteUrl("en", `/services/${service.slug}/`) }
+    ...(hasTranslation("service", service.slug, code)
+      ? { url: absoluteUrl(code, `/services/${service.slug}/`) }
       : {}),
   }));
 
@@ -110,7 +111,7 @@ export default async function ServicesPage({ params }: ServicesPageProps) {
               {t.cta.getFreeQuote}
             </Button>
             <WhatsAppButton
-              href={getWhatsAppHref(code)}
+              href={getWhatsAppHref()}
               variant="secondary"
               label={t.cta.whatsappUs}
             />

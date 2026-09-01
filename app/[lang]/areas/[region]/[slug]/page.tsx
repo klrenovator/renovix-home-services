@@ -32,7 +32,7 @@ export async function generateMetadata({
 }: AreaDetailPageProps): Promise<Metadata> {
   const { lang, region, slug } = await params;
   const language = getLanguage(lang);
-  const area = getAreaDetail(region, slug);
+  const area = getAreaDetail(region, slug, lang);
 
   if (!language || !area) {
     return {};
@@ -53,7 +53,7 @@ export async function generateMetadata({
 export default async function AreaDetailPage({ params }: AreaDetailPageProps) {
   const { lang, region, slug } = await params;
   const language = getLanguage(lang);
-  const area = getAreaDetail(region, slug);
+  const area = getAreaDetail(region, slug, lang);
 
   if (
     !language ||

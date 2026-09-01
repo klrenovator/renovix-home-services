@@ -1,5 +1,7 @@
 import { ImageResponse } from "next/og";
 import { languages } from "@/data/languages";
+import { getServiceCategories } from "@/data/i18n";
+import { getDictionary } from "@/i18n";
 
 export const alt = "Renovix Home Services";
 export const size = {
@@ -18,7 +20,17 @@ export function generateStaticParams() {
   return languages.map((language) => ({ lang: language.code }));
 }
 
-export default function Image() {
+export default async function Image({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}) {
+  const { lang } = await params;
+  const t = getDictionary(lang);
+  const serviceLine = getServiceCategories(lang)
+    .map((service) => service.name)
+    .join(" · ");
+
   return new ImageResponse(
     (
       <div
@@ -43,7 +55,7 @@ export default function Image() {
             color: "#F4B942",
           }}
         >
-          RENOVIX HOME SERVICES
+          {t.meta.siteName.toUpperCase()}
         </div>
         <div
           style={{
@@ -57,8 +69,7 @@ export default function Image() {
             color: "#FFFFFF",
           }}
         >
-          Professional Home Renovation &amp; Improvement Services in Kuala Lumpur &amp;
-          Selangor
+          {t.meta.brandTagline}
         </div>
         <div
           style={{
@@ -68,8 +79,7 @@ export default function Image() {
             color: "#B8C7D6",
           }}
         >
-          Tiling · Welding · Electrical · Painting · Ceiling &amp; Partition · Plumbing ·
-          Waterproofing · Flooring · Renovation · Handyman
+          {serviceLine}
         </div>
         <div
           style={{
@@ -84,7 +94,7 @@ export default function Image() {
             color: "#0B1F33",
           }}
         >
-          Serving KL &amp; Selangor · Klang Valley
+          {t.meta.ogBadge}
         </div>
       </div>
     ),

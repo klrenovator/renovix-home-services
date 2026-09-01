@@ -1,16 +1,20 @@
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { getDictionary } from "@/i18n";
 import type { ServiceDetail } from "@/data/service-content/types";
 
 type ProcessSectionProps = {
   detail: ServiceDetail;
+  lang: string;
 };
 
-export function ProcessSection({ detail }: ProcessSectionProps) {
+export function ProcessSection({ detail, lang }: ProcessSectionProps) {
+  const t = getDictionary(lang);
+
   return (
     <section className="section bg-white">
       <div className="container-app">
         <SectionHeading
-          eyebrow="Our Process"
+          eyebrow={t.servicePage.processEyebrow}
           title={detail.processTitle}
           description={detail.processIntro}
         />
@@ -22,7 +26,7 @@ export function ProcessSection({ detail }: ProcessSectionProps) {
               className="relative rounded-2xl border border-slate-200/80 bg-surface p-6"
             >
               <span className="text-xs font-bold tracking-widest text-brand">
-                Step {String(index + 1).padStart(2, "0")}
+                {t.common.step} {String(index + 1).padStart(2, "0")}
               </span>
               <h3 className="mt-4 text-lg font-semibold tracking-tight text-navy">
                 {step.title}

@@ -1,19 +1,18 @@
 import { Button, WhatsAppButton } from "@/components/ui/Button";
-import { IconArrowRight } from "@/components/icons";
+import { ContactCtaLine } from "@/components/ui/ContactCtaLine";
+import { IconArrowRight, IconPhone } from "@/components/icons";
 import { getLanguageCode } from "@/data/languages";
-import { getWhatsAppHref, siteConfig } from "@/data/site";
+import { getPhoneHref, getWhatsAppHref } from "@/data/site";
+import { format, getDictionary } from "@/i18n";
 import { localizedHref } from "@/i18n/hrefs";
 
 type AreaCtaSectionProps = {
   name: string;
   lang: string;
-  /** Localized overrides used by the translated service-areas index. */
+  /** Localized overrides used by the service-areas index and region hubs. */
   eyebrow?: string;
   title?: string;
   description?: string;
-  primaryLabel?: string;
-  whatsappLabel?: string;
-  note?: string;
 };
 
 export function AreaCtaSection({
@@ -22,12 +21,9 @@ export function AreaCtaSection({
   eyebrow,
   title,
   description,
-  primaryLabel = "Request a Quote",
-  whatsappLabel = "WhatsApp Us",
-  note,
 }: AreaCtaSectionProps) {
   const code = getLanguageCode(lang);
-  const whatsappHref = getWhatsAppHref(code);
+  const t = getDictionary(code);
 
   return (
     <section id="contact" className="section section-surface scroll-mt-24">
@@ -43,33 +39,41 @@ export function AreaCtaSection({
           />
 
           <div className="relative max-w-2xl">
-            <p className="eyebrow-light">{eyebrow ?? `Get a Free Quote in ${name}`}</p>
+            <p className="eyebrow-light">
+              {eyebrow ?? format(t.areaPage.ctaEyebrow, { name })}
+            </p>
             <h2 className="h2-section mt-3 text-white">
-              {title ?? `Planning work in ${name}? Start with a free quotation.`}
+              {title ?? format(t.areaPage.ctaHeading, { name })}
             </h2>
             <p className="mt-4 text-base leading-7 text-white/75">
-              {description ??
-                "Tell us about the property and the work you have in mind — photos help. We'll arrange an assessment, answer your questions and provide a written quotation with clear scope and schedule."}
+              {description ?? t.areaPage.ctaDescription}
             </p>
 
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
               <Button
                 href={localizedHref("/quote", code)}
                 variant="primary"
                 icon={<IconArrowRight className="h-4 w-4" />}
               >
-                {primaryLabel}
+                {t.cta.requestQuote}
               </Button>
               <WhatsAppButton
-                href={whatsappHref}
+                href={getWhatsAppHref()}
                 variant="secondary"
-                label={whatsappLabel}
+                label={t.cta.whatsappUs}
               />
+              <Button
+                href={getPhoneHref()}
+                variant="outline"
+                external
+                className="border-white/40 text-white hover:bg-white/10"
+                icon={<IconPhone className="h-4 w-4" />}
+              >
+                {t.cta.callNow}
+              </Button>
             </div>
 
-            <p className="mt-5 text-xs text-white/60">
-              {note ?? `Contact placeholder: ${siteConfig.whatsapp}`}
-            </p>
+            <ContactCtaLine lang={code} inverse />
           </div>
         </div>
       </div>

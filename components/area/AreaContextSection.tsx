@@ -1,6 +1,7 @@
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { InlineLinks } from "@/components/service/InlineLinks";
 import { IconMapPin } from "@/components/icons";
+import { format, getDictionary } from "@/i18n";
 import type { AreaDetail } from "@/data/area-content/types";
 
 type AreaContextSectionProps = {
@@ -9,13 +10,15 @@ type AreaContextSectionProps = {
 };
 
 export function AreaContextSection({ area, lang }: AreaContextSectionProps) {
+  const t = getDictionary(lang);
+
   return (
     <section className="section section-surface">
       <div className="container-app grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
         <div>
           <SectionHeading
-            eyebrow="Local Service Context"
-            title={`Working in ${area.name} — What to Expect`}
+            eyebrow={t.areaPage.contextEyebrow}
+            title={format(t.areaPage.contextTitle, { name: area.name })}
             description={area.contextIntro}
           />
           <div className="mt-6 rounded-2xl border border-slate-200/80 bg-white p-6 shadow-soft">
@@ -24,14 +27,11 @@ export function AreaContextSection({ area, lang }: AreaContextSectionProps) {
                 <IconMapPin className="h-5 w-5" />
               </span>
               <h3 className="text-base font-semibold tracking-tight text-navy">
-                Coverage, honestly stated
+                {t.areaPage.coverageNoteTitle}
               </h3>
             </div>
             <p className="mt-3 text-sm leading-6 text-secondary">
-              Renovix serves {area.name} as part of our Kuala Lumpur, Selangor and Klang
-              Valley coverage. We do not publish an office address or service radius for
-              individual areas — appointments are arranged with you directly, and we
-              confirm timing and access when you enquire.
+              {t.areaPage.coverageNote}
             </p>
           </div>
         </div>

@@ -1,6 +1,7 @@
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { InlineLinks } from "@/components/service/InlineLinks";
 import { IconCheck } from "@/components/icons";
+import { getDictionary } from "@/i18n";
 import type { ServiceDetail } from "@/data/service-content/types";
 
 type OverviewSectionProps = {
@@ -9,12 +10,14 @@ type OverviewSectionProps = {
 };
 
 export function OverviewSection({ detail, lang }: OverviewSectionProps) {
+  const t = getDictionary(lang);
+
   return (
     <section className="section bg-white">
       <div className="container-app grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16">
         <div>
           <SectionHeading
-            eyebrow="Service Overview"
+            eyebrow={t.servicePage.overviewEyebrow}
             title={detail.overviewTitle}
             description={detail.overviewIntro}
           />
@@ -29,7 +32,7 @@ export function OverviewSection({ detail, lang }: OverviewSectionProps) {
 
         <div className="lg:pt-14">
           <div className="card p-6 sm:p-8">
-            <h3 className="h3-card text-navy">What this service covers</h3>
+            <h3 className="h3-card text-navy">{t.servicePage.highlightsTitle}</h3>
             <ul className="mt-5 space-y-4">
               {detail.highlights.map((highlight) => (
                 <li key={highlight.title} className="flex gap-3">

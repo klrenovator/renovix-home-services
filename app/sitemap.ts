@@ -116,13 +116,13 @@ export default async function sitemap(props: {
         entry.path === "/terms/"
           ? true
           : entry.path.startsWith("/services/")
-            ? hasTranslation("service", slugOf(entry.path, 2), language.code)
+            ? hasTranslation("service", slugOf(entry.path, 1), language.code)
             : entry.path.startsWith("/problems/")
-              ? hasTranslation("problem", slugOf(entry.path, 2), language.code)
+              ? hasTranslation("problem", slugOf(entry.path, 1), language.code)
               : entry.path.split("/").filter(Boolean).length === 2
                 ? hasTranslation(
                     "areaRegion",
-                    slugOf(entry.path, 2),
+                    slugOf(entry.path, 1),
                     language.code,
                   )
                 : hasTranslation("area", areaKeyOf(entry.path), language.code);
@@ -145,6 +145,10 @@ export default async function sitemap(props: {
   });
 }
 
+/**
+ * Nth path segment, 0-indexed against the language-less path: segment 0 of
+ * `/services/tiling/` is `services` and segment 1 is `tiling`.
+ */
 function slugOf(path: string, segment: number): string {
   return path.split("/").filter(Boolean)[segment] ?? "";
 }
