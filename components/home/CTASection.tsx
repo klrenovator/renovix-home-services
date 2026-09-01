@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/Button";
 import { WhatsAppButton } from "@/components/ui/Button";
 import { IconArrowRight } from "@/components/icons";
-import { getWhatsAppHref } from "@/data/site";
+import { getQuoteHref, getWhatsAppHref } from "@/data/site";
 
 type CTASectionProps = {
   lang: string;
@@ -35,9 +35,8 @@ export function CTASection({ lang }: CTASectionProps) {
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Button
-                href={whatsappHref}
+                href={getQuoteHref(lang)}
                 variant="primary"
-                external={whatsappHref.startsWith("http")}
                 icon={<IconArrowRight className="h-4 w-4" />}
               >
                 Request a Quote

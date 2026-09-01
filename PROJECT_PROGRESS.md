@@ -280,7 +280,52 @@
 - [x] 0 duplicate area intros; all service/problem/nearby slugs resolve
 - [x] Smoke-tested `/en/areas/`, region hubs and sample location pages (200s, schema, canonicals, internal links)
 
-## PHASE 5 — Projects Portfolio — [ ]
+## PHASE 5 — Supporting Pages & Conversion System — [x]
+
+### About page (`/en/about/`)
+- [x] Professional About page focused on workmanship, reliable service, clear communication, practical solutions and customer-focused service
+- [x] Multiple-service overview linking to all 10 service categories
+- [x] Kuala Lumpur, Selangor and Klang Valley coverage context with service-area links
+- [x] No invented company history, years in business, team size, certifications, awards, licences or reviews
+- [x] Unique metadata, canonical URL and visible + structured breadcrumbs
+
+### Contact page (`/en/contact/`)
+- [x] Contact page with the required official-detail placeholders: `[PHONE NUMBER]`, `[WHATSAPP NUMBER]`, `[EMAIL]`, `[ADDRESS]`, `[BUSINESS HOURS]`
+- [x] Contact CTA, WhatsApp CTA, quote CTA and KL / Selangor / Klang Valley service-area information
+- [x] Placeholder-aware contact helpers that do not open an unverified phone, WhatsApp or email destination
+- [x] Unique metadata, canonical URL and visible + structured breadcrumbs
+
+### Get a Quote (`/en/quote/`)
+- [x] Professional responsive quote-request form with Name, WhatsApp Number, Email, Service Required, Sub-service, Property Type, Location, Description, Preferred Date and Upload Photos fields
+- [x] Service-aware sub-service selection populated from the existing service architecture
+- [x] Clear photos-help explanation and selected-file UI
+- [x] Explicit non-instant quotation language and clear statement that no information is submitted until a secure integration is configured
+- [x] Clean front-end quote integration contract (`QuoteRequestPayload`, endpoint status placeholder) ready for a future server action or route handler
+- [x] Unique metadata, canonical URL and visible + structured breadcrumbs
+
+### Projects portfolio (`/en/projects/`)
+- [x] Filterable professional portfolio structure for Tiling, Welding, Electrical, Painting, Ceiling, Partition, Renovation, Plumbing, Waterproofing, Flooring and Handyman
+- [x] Clearly labelled placeholder project data and image placeholders only; no project names, outcomes, dates, photos or locations have been fabricated
+- [x] Category-to-service internal linking and quote CTA
+- [x] Unique metadata, canonical URL and visible + structured breadcrumbs
+
+### FAQ (`/en/faq/`)
+- [x] Comprehensive FAQ covering services, KL and Selangor coverage, condos, quotation photos, quote requests, multi-service scopes and all relevant service categories
+- [x] Service-specific FAQ relationships with direct links to the appropriate service page
+- [x] FAQPage schema, unique metadata, canonical URL and visible + structured breadcrumbs
+- [x] Homepage FAQ preview now links to the complete FAQ page
+
+### Conversion & internal-linking updates
+- [x] New `/quote` route is used by header, mobile menu and home / service / problem / area CTA paths
+- [x] FAQ added to primary, mobile and footer navigation
+- [x] Placeholder WhatsApp, phone and email helpers now safely fall back to the dedicated Contact page
+- [x] Footer includes the Business Hours placeholder
+- [x] JSON-LD serialization safely escapes `<` characters per Next.js guidance
+
+### Quality checks
+- [x] TypeScript check — PASS
+- [x] ESLint — PASS
+- [x] Production build — PASS (293 generated static pages)
 
 ## PHASE 6 — Blog & Content — [ ]
 
@@ -300,4 +345,5 @@
   - `[WHATSAPP NUMBER]`
   - `[EMAIL]`
   - `[ADDRESS]`
-- Dedicated service detail pages were built in Phase 2; problem pages were built in Phase 3; the local SEO area architecture (2 region hubs + 31 unique location guides + areas index) was built in Phase 4. Projects, blog and full multilingual content are intentionally not built yet (Phases 5–7).
+  - `[BUSINESS HOURS]`
+- Dedicated service detail pages were built in Phase 2; problem pages were built in Phase 3; the local SEO area architecture (2 region hubs + 31 unique location guides + areas index) was built in Phase 4. Phase 5 adds the supporting pages and a portfolio framework containing only clearly labelled placeholders. Blog and full multilingual content remain intentionally out of scope for Phases 6–7.

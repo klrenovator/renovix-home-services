@@ -14,6 +14,7 @@ import {
   getPhoneHref,
   getEmailHref,
   getWhatsAppHref,
+  getContactHref,
 } from "@/data/site";
 
 type FooterProps = {
@@ -129,8 +130,15 @@ export function Footer({ lang }: FooterProps) {
               <li>
                 <ContactLink
                   label="Address"
-                  href={`/${lang}/#contact`}
+                  href={getContactHref(lang)}
                   value={siteConfig.address}
+                />
+              </li>
+              <li>
+                <ContactLink
+                  label="Hours"
+                  href={getContactHref(lang)}
+                  value={siteConfig.businessHours}
                 />
               </li>
             </ul>

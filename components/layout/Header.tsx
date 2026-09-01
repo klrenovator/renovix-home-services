@@ -22,7 +22,7 @@ export function Header({ lang }: HeaderProps) {
       <div className="container-app flex h-[70px] items-center justify-between gap-4">
         <Brand href={`/${lang}`} />
 
-        <nav aria-label="Primary" className="hidden items-center lg:flex">
+        <nav aria-label="Primary" className="hidden items-center xl:flex">
           <ul className="flex items-center gap-1">
             {navigation.map((item) => (
               <li key={item.href}>
@@ -32,14 +32,14 @@ export function Header({ lang }: HeaderProps) {
           </ul>
         </nav>
 
-        <div className="hidden items-center gap-3 lg:flex">
+        <div className="hidden items-center gap-3 xl:flex">
           <LanguageSwitcher lang={lang} />
-          <Button href={localizeHref("/#contact", lang)} variant="primary">
+          <Button href={localizeHref("/quote", lang)} variant="primary">
             Get a Free Quote
           </Button>
         </div>
 
-        <div className="flex items-center gap-3 lg:hidden">
+        <div className="flex items-center gap-3 xl:hidden">
           <LanguageSwitcher lang={lang} compact />
           <MobileMenu lang={lang} />
         </div>
