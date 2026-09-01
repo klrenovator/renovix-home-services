@@ -2,29 +2,39 @@
 
 import { useState, type ChangeEvent, type FormEvent } from "react";
 import Link from "next/link";
-import type { QuoteServiceOption } from "@/data/quote";
 import { IconCamera, IconCheck, IconClipboard } from "@/components/icons";
+import type { Dictionary } from "@/i18n";
+import type { QuoteOption } from "@/data/i18n";
 
 type QuoteFormProps = {
-  serviceOptions: QuoteServiceOption[];
+  serviceOptions: QuoteOption[];
   propertyTypes: readonly string[];
   contactHref: string;
+  /** Localized quote copy, passed from the server component. */
+  t: Dictionary["quote"];
 };
 
 export function QuoteForm({
   serviceOptions,
   propertyTypes,
   contactHref,
+  t,
 }: QuoteFormProps) {
   const [selectedService, setSelectedService] = useState("");
   const [selectedSubService, setSelectedSubService] = useState("");
   const [selectedFiles, setSelectedFiles] = useState<string[]>([]);
   const [submitted, setSubmitted] = useState(false);
 
-  const service = serviceOptions.find(
-    (option) => option.value === selectedService,
-  );
+  const service = serviceOptions.find((option) => option.value === selectedService);
   const subServices = service?.subServices ?? [];
+  /**
+   * The sub-service field is shown only in languages that have translated
+   * sub-service names. English keeps the original behaviour — visible but
+   * disabled until a service is chosen.
+   */
+  const showSubService = serviceOptions.some(
+    (option) => option.subServices.length > 0,
+  );
 
   function handleServiceChange(event: ChangeEvent<HTMLSelectElement>) {
     setSelectedService(event.target.value);
@@ -33,9 +43,7 @@ export function QuoteForm({
   }
 
   function handlePhotoChange(event: ChangeEvent<HTMLInputElement>) {
-    setSelectedFiles(
-      Array.from(event.target.files ?? []).map((file) => file.name),
-    );
+    setSelectedFiles(Array.from(event.target.files ?? []).map((file) => file.name));
     setSubmitted(false);
   }
 
@@ -55,34 +63,29 @@ export function QuoteForm({
           <IconClipboard className="h-5 w-5" />
         </span>
         <div>
-          <h2 className="text-xl font-bold tracking-tight text-navy">
-            Tell us about the work
-          </h2>
-          <p className="mt-1 text-sm leading-6 text-secondary">
-            The more useful detail you share, the easier it is to understand what
-            may be needed for an assessment.
-          </p>
+          <h2 className="text-xl font-bold tracking-tight text-navy">{t.formTitle}</h2>
+          <p className="mt-1 text-sm leading-6 text-secondary">{t.formLead}</p>
         </div>
       </div>
 
       <div className="mt-6 grid gap-5 sm:grid-cols-2">
         <div>
           <label className="form-label" htmlFor="quote-name">
-            Name <span aria-hidden="true">*</span>
+            {t.labels.name} <span aria-hidden="true">*</span>
           </label>
           <input
             className="form-control"
             id="quote-name"
             name="name"
             autoComplete="name"
-            placeholder="Your name"
+            placeholder={t.placeholders.name}
             required
           />
         </div>
 
         <div>
           <label className="form-label" htmlFor="quote-whatsapp">
-            WhatsApp Number <span aria-hidden="true">*</span>
+            {t.labels.whatsapp} <span aria-hidden="true">*</span>
           </label>
           <input
             className="form-control"
@@ -90,14 +93,14 @@ export function QuoteForm({
             name="whatsappNumber"
             type="tel"
             autoComplete="tel"
-            placeholder="Your WhatsApp number"
+            placeholder={t.placeholders.whatsapp}
             required
           />
         </div>
 
         <div>
           <label className="form-label" htmlFor="quote-email">
-            Email
+            {t.labels.email}
           </label>
           <input
             className="form-control"
@@ -105,14 +108,14 @@ export function QuoteForm({
             name="email"
             type="email"
             autoComplete="email"
-            placeholder="you@example.com"
+            placeholder={t.placeholders.email}
           />
-          <p className="form-help">Optional, if you would like an email reply.</p>
+          <p className="form-help">{t.help.email}</p>
         </div>
 
         <div>
           <label className="form-label" htmlFor="quote-property-type">
-            Property Type <span aria-hidden="true">*</span>
+            {t.labels.propertyType} <span aria-hidden="true">*</span>
           </label>
           <select
             className="form-control"
@@ -122,7 +125,7 @@ export function QuoteForm({
             required
           >
             <option value="" disabled>
-              Select property type
+              {t.placeholders.propertyType}
             </option>
             {propertyTypes.map((propertyType) => (
               <option key={propertyType} value={propertyType}>
@@ -134,7 +137,7 @@ export function QuoteForm({
 
         <div>
           <label className="form-label" htmlFor="quote-service">
-            Service Required <span aria-hidden="true">*</span>
+            {t.labels.service} <span aria-hidden="true">*</span>
           </label>
           <select
             className="form-control"
@@ -145,7 +148,7 @@ export function QuoteForm({
             required
           >
             <option value="" disabled>
-              Select a service
+              {t.placeholders.service}
             </option>
             {serviceOptions.map((option) => (
               <option key={option.value} value={option.value}>
@@ -155,67 +158,68 @@ export function QuoteForm({
           </select>
         </div>
 
-        <div>
-          <label className="form-label" htmlFor="quote-sub-service">
-            Sub-service
-          </label>
-          <select
-            className="form-control"
-            id="quote-sub-service"
-            name="subService"
-            value={selectedSubService}
-            onChange={(event) => {
-              setSelectedSubService(event.target.value);
-              setSubmitted(false);
-            }}
-            disabled={!selectedService}
-          >
-            <option value="">
-              {selectedService ? "Select a sub-service (optional)" : "Choose a service first"}
-            </option>
-            {subServices.map((subService) => (
-              <option key={subService} value={subService}>
-                {subService}
+        {showSubService ? (
+          <div>
+            <label className="form-label" htmlFor="quote-sub-service">
+              {t.labels.subService}
+            </label>
+            <select
+              className="form-control"
+              id="quote-sub-service"
+              name="subService"
+              value={selectedSubService}
+              onChange={(event) => {
+                setSelectedSubService(event.target.value);
+                setSubmitted(false);
+              }}
+              disabled={!selectedService}
+            >
+              <option value="">
+                {selectedService
+                  ? t.placeholders.subService
+                  : t.placeholders.subServiceDisabled}
               </option>
-            ))}
-          </select>
-          <p className="form-help">Choose the closest option, or leave this blank.</p>
-        </div>
+              {subServices.map((subService) => (
+                <option key={subService} value={subService}>
+                  {subService}
+                </option>
+              ))}
+            </select>
+            <p className="form-help">{t.help.subService}</p>
+          </div>
+        ) : null}
 
         <div className="sm:col-span-2">
           <label className="form-label" htmlFor="quote-location">
-            Location <span aria-hidden="true">*</span>
+            {t.labels.location} <span aria-hidden="true">*</span>
           </label>
           <input
             className="form-control"
             id="quote-location"
             name="location"
             autoComplete="street-address"
-            placeholder="Area, city or neighbourhood"
+            placeholder={t.placeholders.location}
             required
           />
-          <p className="form-help">
-            Include the area in Kuala Lumpur, Selangor or the Klang Valley where
-            the work is needed.
-          </p>
+          <p className="form-help">{t.help.location}</p>
         </div>
 
         <div className="sm:col-span-2">
           <label className="form-label" htmlFor="quote-description">
-            Description <span aria-hidden="true">*</span>
+            {t.labels.description} <span aria-hidden="true">*</span>
           </label>
           <textarea
             className="form-control min-h-32 resize-y"
             id="quote-description"
             name="description"
-            placeholder="Describe the issue or work you have in mind, including any useful measurements, access details or timing considerations."
+            placeholder={t.placeholders.description}
             required
           />
         </div>
 
         <div>
           <label className="form-label" htmlFor="quote-preferred-date">
-            Preferred Date
+            {t.labels.preferredDate}
           </label>
           <input
             className="form-control"
@@ -223,17 +227,17 @@ export function QuoteForm({
             name="preferredDate"
             type="date"
           />
-          <p className="form-help">Optional. A date is a preference, not a booking.</p>
+          <p className="form-help">{t.help.preferredDate}</p>
         </div>
 
         <div>
           <label className="form-label" htmlFor="quote-photos">
-            Upload Photos
+            {t.labels.photos}
           </label>
           <div className="rounded-lg border border-dashed border-slate-300 bg-surface p-3">
             <div className="flex items-center gap-2 text-sm font-medium text-navy">
               <IconCamera className="h-4 w-4 text-brand" />
-              <span>Choose photos of the area</span>
+              <span>{t.help.photosChosen}</span>
             </div>
             <input
               className="mt-3 block w-full text-xs text-secondary file:mr-3 file:rounded-md file:border-0 file:bg-brand/10 file:px-3 file:py-2 file:text-xs file:font-semibold file:text-brand hover:file:bg-brand/15 focus-visible:outline-none"
@@ -247,25 +251,22 @@ export function QuoteForm({
             />
           </div>
           <p className="form-help" id="quote-photos-help">
-            Photos can help with assessment. They are not uploaded or sent until
-            secure quote delivery is configured.
+            {t.help.photos}
           </p>
           {selectedFiles.length > 0 ? (
             <p className="mt-2 text-xs font-medium text-navy" aria-live="polite">
-              {selectedFiles.length} {selectedFiles.length === 1 ? "photo" : "photos"}{" "}
-              selected for a future submission.
+              {selectedFiles.length}{" "}
+              {selectedFiles.length === 1
+                ? t.photosSelectedSuffix
+                : t.photosSelectedSuffixPlural}
             </p>
           ) : null}
         </div>
       </div>
 
       <div className="mt-7 rounded-xl border border-amber-200 bg-amber-50 p-4">
-        <p className="text-sm font-semibold text-navy">Quote delivery placeholder</p>
-        <p className="mt-1 text-sm leading-6 text-secondary">
-          This form is ready to connect to a secure quote-request endpoint, but
-          delivery is not configured yet. Submitting this form does not send your
-          information or photos, and it does not create an instant quote.
-        </p>
+        <p className="text-sm font-semibold text-navy">{t.deliveryTitle}</p>
+        <p className="mt-1 text-sm leading-6 text-secondary">{t.deliveryBody}</p>
       </div>
 
       {submitted ? (
@@ -276,26 +277,24 @@ export function QuoteForm({
         >
           <IconCheck className="mt-0.5 h-5 w-5 shrink-0 text-brand" />
           <p>
-            Your fields have been checked in this front-end preview. Because quote
-            delivery is not configured, no details were sent. Please use the{" "}
-            <Link href={contactHref} className="font-semibold text-brand underline underline-offset-2">
-              contact page
+            {t.submittedBodyPrefix}{" "}
+            <Link
+              href={contactHref}
+              className="font-semibold text-brand underline underline-offset-2"
+            >
+              {t.submittedLink}
             </Link>{" "}
-            while the quote inbox is being connected.
+            {t.submittedBodySuffix}
           </p>
         </div>
       ) : null}
 
       <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <p className="text-xs leading-5 text-secondary">
-          Fields marked <span aria-hidden="true">*</span> are needed to prepare a
-          future quote request.
-        </p>
+        <p className="text-xs leading-5 text-secondary">{t.help.requiredNote}</p>
         <button className="btn btn-primary w-full sm:w-auto" type="submit">
-          Submit Quote Request
+          {t.submit}
         </button>
       </div>
-
     </form>
   );
 }

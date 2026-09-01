@@ -1,17 +1,18 @@
 import Link from "next/link";
-import { siteConfig } from "@/data/site";
 
 type BrandProps = {
   href: string;
   inverse?: boolean;
+  /** Localized accessible name. */
+  label: string;
 };
 
-export function Brand({ href, inverse = false }: BrandProps) {
+export function Brand({ href, inverse = false, label }: BrandProps) {
   return (
     <Link
       href={href}
       className="group inline-flex items-center gap-2.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
-      aria-label={`${siteConfig.name} – Home`}
+      aria-label={label}
     >
       <span
         aria-hidden="true"

@@ -1,7 +1,9 @@
 import Link from "next/link";
 import { IconArrowRight, IconChevronDown } from "@/components/icons";
-import { localizeHref } from "@/data/navigation";
-import { getServiceBySlug } from "@/data/services";
+import { getLanguageCode } from "@/data/languages";
+import { getServiceName } from "@/data/i18n";
+import { getDictionary } from "@/i18n";
+import { contentHref } from "@/i18n/hrefs";
 import type { SiteFaq } from "@/data/site-faqs";
 
 type FaqAccordionProps = {
@@ -10,12 +12,18 @@ type FaqAccordionProps = {
 };
 
 export function FaqAccordion({ faqs, lang }: FaqAccordionProps) {
+  const code = getLanguageCode(lang);
+  const t = getDictionary(code);
+
   return (
     <div className="space-y-3">
       {faqs.map((faq) => {
-        const relatedService = faq.relatedServiceSlug
-          ? getServiceBySlug(faq.relatedServiceSlug)
+        const serviceName = faq.relatedServiceSlug
+          ? getServiceName(faq.relatedServiceSlug, code)
           : undefined;
+        const href = faq.relatedServiceSlug
+          ? contentHref("service", faq.relatedServiceSlug, code)
+          : null;
 
         return (
           <details
@@ -28,12 +36,12 @@ export function FaqAccordion({ faqs, lang }: FaqAccordionProps) {
             </summary>
             <div className="pr-7">
               <p className="mt-3 text-sm leading-6 text-secondary">{faq.answer}</p>
-              {relatedService ? (
+              {serviceName && href ? (
                 <Link
-                  href={localizeHref(relatedService.path, lang)}
+                  href={href}
                   className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-brand transition-colors hover:text-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
                 >
-                  Explore {relatedService.name}
+                  {t.faq.explorePrefix} {serviceName}
                   <IconArrowRight className="h-4 w-4" />
                 </Link>
               ) : null}

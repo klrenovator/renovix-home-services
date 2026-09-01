@@ -1,31 +1,35 @@
 import Link from "next/link";
 import { IconArrowRight, IconChevronDown } from "@/components/icons";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { localizeHref } from "@/data/navigation";
-import { siteFaqs } from "@/data/site-faqs";
+import { getLanguageCode } from "@/data/languages";
+import { getSiteFaqs } from "@/data/i18n";
+import { getDictionary } from "@/i18n";
+import { localizedHref } from "@/i18n/hrefs";
 
 type FAQPreviewProps = {
   lang: string;
 };
 
-const previewFaqs = siteFaqs.slice(0, 6);
-
 export function FAQPreview({ lang }: FAQPreviewProps) {
+  const code = getLanguageCode(lang);
+  const t = getDictionary(code);
+  const previewFaqs = getSiteFaqs(code).slice(0, 6);
+
   return (
     <section id="faq" className="section scroll-mt-24">
       <div className="container-app">
         <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
           <div>
             <SectionHeading
-              eyebrow="FAQ"
-              title="Common questions before you start"
-              description="A short selection of the questions homeowners ask most often. Visit the full FAQ for service-specific answers, areas and quote guidance."
+              eyebrow={t.home.faq.eyebrow}
+              title={t.home.faq.title}
+              description={t.home.faq.description}
             />
             <Link
-              href={localizeHref("/faq", lang)}
+              href={localizedHref("/faq", code)}
               className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-brand transition-colors hover:text-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
             >
-              View all frequently asked questions
+              {t.cta.viewAllFaqs}
               <IconArrowRight className="h-4 w-4" />
             </Link>
           </div>

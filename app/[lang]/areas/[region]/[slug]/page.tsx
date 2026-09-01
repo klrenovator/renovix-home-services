@@ -4,7 +4,8 @@ import { AreaPage } from "@/components/area/AreaPage";
 import { AreaJsonLd } from "@/components/area/AreaJsonLd";
 import { getLanguage, languages } from "@/data/languages";
 import { areaRegions, getAreaDetail } from "@/data/area-content";
-import { siteConfig } from "@/data/site";
+import { hasTranslation, languagesWithTranslation } from "@/i18n/coverage";
+import { buildPageMetadata } from "@/i18n/seo";
 
 type AreaDetailPageProps = {
   params: Promise<{ lang: string; region: string; slug: string }>;
@@ -13,11 +14,15 @@ type AreaDetailPageProps = {
 export function generateStaticParams() {
   return languages.flatMap((language) =>
     areaRegions.flatMap((region) =>
-      region.areas.map((area) => ({
-        lang: language.code,
-        region: region.id,
-        slug: area.slug,
-      })),
+      region.areas
+        .filter((area) =>
+          hasTranslation("area", `${region.id}/${area.slug}`, language.code),
+        )
+        .map((area) => ({
+          lang: language.code,
+          region: region.id,
+          slug: area.slug,
+        })),
     ),
   );
 }
@@ -33,26 +38,16 @@ export async function generateMetadata({
     return {};
   }
 
-  const canonicalUrl = `${siteConfig.url}/${lang}/areas/${area.region}/${area.slug}/`;
-
-  return {
-    title: {
-      absolute: area.title,
-    },
+  return buildPageMetadata({
+    lang: language.code,
+    path: `/areas/${area.region}/${area.slug}/`,
+    title: area.title,
     description: area.metaDescription,
-    alternates: {
-      canonical: canonicalUrl,
-    },
-    openGraph: {
-      title: area.title,
-      description: area.metaDescription,
-      url: canonicalUrl,
-      type: "website",
-    },
-    twitter: {
-      card: "summary_large_image",
-    },
-  };
+    availableLanguages: languagesWithTranslation(
+      "area",
+      `${area.region}/${area.slug}`,
+    ),
+  });
 }
 
 export default async function AreaDetailPage({ params }: AreaDetailPageProps) {
@@ -60,7 +55,11 @@ export default async function AreaDetailPage({ params }: AreaDetailPageProps) {
   const language = getLanguage(lang);
   const area = getAreaDetail(region, slug);
 
-  if (!language || !area) {
+  if (
+    !language ||
+    !area ||
+    !hasTranslation("area", `${area.region}/${area.slug}`, language.code)
+  ) {
     notFound();
   }
 

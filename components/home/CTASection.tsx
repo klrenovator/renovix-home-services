@@ -1,14 +1,17 @@
-import { Button } from "@/components/ui/Button";
-import { WhatsAppButton } from "@/components/ui/Button";
+import { Button, WhatsAppButton } from "@/components/ui/Button";
 import { IconArrowRight } from "@/components/icons";
+import { getLanguageCode } from "@/data/languages";
 import { getQuoteHref, getWhatsAppHref } from "@/data/site";
+import { getDictionary } from "@/i18n";
 
 type CTASectionProps = {
   lang: string;
 };
 
 export function CTASection({ lang }: CTASectionProps) {
-  const whatsappHref = getWhatsAppHref(lang);
+  const code = getLanguageCode(lang);
+  const t = getDictionary(code);
+  const cta = t.home.ctaSection;
 
   return (
     <section id="contact" className="section bg-white scroll-mt-24">
@@ -24,29 +27,26 @@ export function CTASection({ lang }: CTASectionProps) {
           />
 
           <div className="relative max-w-2xl">
-            <p className="eyebrow-light">Get Started</p>
-            <h2 className="h2-section mt-3 text-white">
-              Planning a Home Repair or Renovation?
-            </h2>
-            <p className="mt-4 text-base leading-7 text-white/75">
-              Tell us what you need and our team can assess the work and guide you on the
-              next step.
-            </p>
+            <p className="eyebrow-light">{cta.eyebrow}</p>
+            <h2 className="h2-section mt-3 text-white">{cta.title}</h2>
+            <p className="mt-4 text-base leading-7 text-white/75">{cta.description}</p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Button
-                href={getQuoteHref(lang)}
+                href={getQuoteHref(code)}
                 variant="primary"
                 icon={<IconArrowRight className="h-4 w-4" />}
               >
-                Request a Quote
+                {t.cta.requestQuote}
               </Button>
-              <WhatsAppButton href={whatsappHref} variant="secondary" />
+              <WhatsAppButton
+                href={getWhatsAppHref(code)}
+                variant="secondary"
+                label={t.cta.whatsappUs}
+              />
             </div>
 
-            <p className="mt-5 text-xs text-white/60">
-              Contact placeholder: [WHATSAPP NUMBER]
-            </p>
+            <p className="mt-5 text-xs text-white/60">{cta.note}</p>
           </div>
         </div>
       </div>

@@ -40,15 +40,13 @@ export const mobileQuickLinks: NavigationItem[] = [
 ];
 
 export function localizeHref(href: string, lang: string): string {
-  if (href === "/") {
-    return `/${lang}`;
+  if (!href.startsWith("/")) {
+    return href;
   }
 
-  if (href.startsWith("/")) {
-    return `/${lang}${href}`;
-  }
+  const normalized = href === "/" ? "/" : `${href.replace(/\/+$/, "")}/`;
 
-  return href;
+  return `/${lang}${normalized === "/" ? "" : normalized}`;
 }
 
 export function localizeNavigation(

@@ -8,9 +8,10 @@ import { PageBreadcrumbJsonLd } from "@/components/support/PageBreadcrumbJsonLd"
 import { PageHero } from "@/components/support/PageHero";
 import { Button } from "@/components/ui/Button";
 import { getLanguage, languages } from "@/data/languages";
-import { localizeHref } from "@/data/navigation";
-import { faqGroups, getFaqsByGroup, siteFaqs } from "@/data/site-faqs";
-import { getQuoteHref, siteConfig } from "@/data/site";
+import { getSiteFaqs } from "@/data/i18n";
+import { getDictionary } from "@/i18n";
+import { localizedHref } from "@/i18n/hrefs";
+import { buildPageMetadata } from "@/i18n/seo";
 
 type FaqPageProps = {
   params: Promise<{ lang: string }>;
@@ -30,98 +31,98 @@ export async function generateMetadata({
     return {};
   }
 
-  const canonicalUrl = `${siteConfig.url}/${lang}/faq/`;
-  const title = "Home Services FAQ | Renovix KL & Selangor";
-  const description =
-    "Answers to common Renovix Home Services questions about home repairs, renovation, KL and Selangor coverage, condos, quotation photos and specific service categories.";
+  const t = getDictionary(language.code);
 
-  return {
-    title: { absolute: title },
-    description,
-    alternates: { canonical: canonicalUrl },
-    openGraph: {
-      title,
-      description,
-      url: canonicalUrl,
-      type: "website",
-    },
-    twitter: { card: "summary_large_image" },
-  };
+  return buildPageMetadata({
+    lang: language.code,
+    path: "/faq/",
+    title: t.faq.metaTitle,
+    description: t.faq.metaDescription,
+    availableLanguages: languages.map((item) => item.code),
+  });
 }
 
 export default async function FaqPage({ params }: FaqPageProps) {
   const { lang } = await params;
+  const language = getLanguage(lang);
 
-  if (!getLanguage(lang)) {
+  if (!language) {
     notFound();
   }
 
+  const code = language.code;
+  const t = getDictionary(code);
+  const faqs = getSiteFaqs(code);
+
   return (
     <>
-      <PageBreadcrumbJsonLd lang={lang} label="FAQ" path="/faq/" />
+      <PageBreadcrumbJsonLd lang={code} label={t.faq.breadcrumb} path="/faq/" />
       <JsonLd
         data={{
           "@context": "https://schema.org",
           "@type": "FAQPage",
-          mainEntity: siteFaqs.map((faq) => ({
+          mainEntity: faqs.map((faq) => ({
             "@type": "Question",
             name: faq.question,
-            acceptedAnswer: {
-              "@type": "Answer",
-              text: faq.answer,
-            },
+            acceptedAnswer: { "@type": "Answer", text: faq.answer },
           })),
         }}
       />
       <PageHero
-        eyebrow="Frequently Asked Questions"
-        title="Straight answers before you request a quote"
-        description="Find answers about Renovix services, Kuala Lumpur and Selangor coverage, property types, photos for quotation and the individual home-service categories."
-        currentLabel="FAQ"
-        lang={lang}
+        eyebrow={t.faq.eyebrow}
+        title={t.faq.title}
+        description={t.faq.description}
+        currentLabel={t.faq.breadcrumb}
+        lang={code}
       />
 
       <section className="section section-surface">
         <div className="container-app grid gap-10 lg:grid-cols-[0.78fr_1.22fr] lg:gap-16">
           <aside className="lg:sticky lg:top-24 lg:self-start">
-            <p className="eyebrow">Find the right answer</p>
-            <h2 className="h2-section mt-3 text-navy">
-              Service information without the guesswork
-            </h2>
-            <p className="lead mt-4">
-              These answers describe the current service structure and next steps.
-              For service-specific scope, follow the links in each relevant answer.
-            </p>
+            <p className="eyebrow">{t.faq.asideEyebrow}</p>
+            <h2 className="h2-section mt-3 text-navy">{t.faq.asideTitle}</h2>
+            <p className="lead mt-4">{t.faq.asideLead}</p>
             <div className="mt-7 space-y-3">
               <Link
-                href={localizeHref("/services", lang)}
+                href={localizedHref("/services", code)}
                 className="flex items-center justify-between rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-navy transition-colors hover:border-brand/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
               >
-                Browse all services
+                {t.faq.browseServices}
                 <IconArrowRight className="h-4 w-4 text-brand" />
               </Link>
               <Link
-                href={localizeHref("/areas", lang)}
+                href={localizedHref("/areas", code)}
                 className="flex items-center justify-between rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-navy transition-colors hover:border-brand/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
               >
-                Explore service areas
+                {t.faq.exploreAreas}
                 <IconMapPin className="h-4 w-4 text-brand" />
               </Link>
             </div>
           </aside>
 
           <div className="space-y-12">
-            {faqGroups.map((group) => (
-              <section key={group.id} aria-labelledby={`faq-${group.id}`}>
-                <div className="mb-6">
-                  <p className="eyebrow">{group.label}</p>
-                  <h2 id={`faq-${group.id}`} className="mt-3 text-2xl font-bold tracking-tight text-navy">
-                    {group.description}
-                  </h2>
-                </div>
-                <FaqAccordion faqs={getFaqsByGroup(group.id)} lang={lang} />
-              </section>
-            ))}
+            {t.faq.groups.map((group) => {
+              const groupFaqs = faqs.filter((faq) => faq.group === group.id);
+
+              if (groupFaqs.length === 0) {
+                return null;
+              }
+
+              return (
+                <section key={group.id} aria-labelledby={`faq-${group.id}`}>
+                  <div className="mb-6">
+                    <p className="eyebrow">{group.label}</p>
+                    <h2
+                      id={`faq-${group.id}`}
+                      className="mt-3 text-2xl font-bold tracking-tight text-navy"
+                    >
+                      {group.description}
+                    </h2>
+                  </div>
+                  <FaqAccordion faqs={groupFaqs} lang={code} />
+                </section>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -137,22 +138,20 @@ export default async function FaqPage({ params }: FaqPageProps) {
               <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-white/10 text-accent">
                 <IconChat className="h-5 w-5" />
               </span>
-              <p className="eyebrow-light mt-6">Still have a question?</p>
+              <p className="eyebrow-light mt-6">{t.faq.ctaEyebrow}</p>
               <h2 className="mt-3 text-3xl font-bold tracking-tight text-white sm:text-4xl">
-                Share the job details and the question you need answered
+                {t.faq.ctaTitle}
               </h2>
               <p className="mt-4 text-base leading-7 text-white/75">
-                A quote request gives you a structured way to describe the property,
-                location and work. Photos can help with the assessment, but a quote is
-                not promised instantly.
+                {t.faq.ctaDescription}
               </p>
               <div className="mt-7">
                 <Button
-                  href={getQuoteHref(lang)}
+                  href={localizedHref("/quote", code)}
                   variant="primary"
                   icon={<IconArrowRight className="h-4 w-4" />}
                 >
-                  Get a Quote
+                  {t.cta.getQuote}
                 </Button>
               </div>
             </div>

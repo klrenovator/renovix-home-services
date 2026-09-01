@@ -7,7 +7,8 @@ import { AreaCtaSection } from "@/components/area/AreaCtaSection";
 import { getLanguage, languages } from "@/data/languages";
 import { getAreaRegion, isAreaRegionId } from "@/data/area-content";
 import { areaRegions } from "@/data/area-content";
-import { siteConfig } from "@/data/site";
+import { hasTranslation, languagesWithTranslation } from "@/i18n/coverage";
+import { buildPageMetadata } from "@/i18n/seo";
 
 type RegionPageProps = {
   params: Promise<{ lang: string; region: string }>;
@@ -15,10 +16,12 @@ type RegionPageProps = {
 
 export function generateStaticParams() {
   return languages.flatMap((language) =>
-    areaRegions.map((region) => ({
-      lang: language.code,
-      region: region.id,
-    })),
+    areaRegions
+      .filter((region) => hasTranslation("areaRegion", region.id, language.code))
+      .map((region) => ({
+        lang: language.code,
+        region: region.id,
+      })),
   );
 }
 
@@ -33,26 +36,13 @@ export async function generateMetadata({
     return {};
   }
 
-  const canonicalUrl = `${siteConfig.url}/${lang}/areas/${region.id}/`;
-
-  return {
-    title: {
-      absolute: region.title,
-    },
+  return buildPageMetadata({
+    lang: language.code,
+    path: `/areas/${region.id}/`,
+    title: region.title,
     description: region.metaDescription,
-    alternates: {
-      canonical: canonicalUrl,
-    },
-    openGraph: {
-      title: region.title,
-      description: region.metaDescription,
-      url: canonicalUrl,
-      type: "website",
-    },
-    twitter: {
-      card: "summary_large_image",
-    },
-  };
+    availableLanguages: languagesWithTranslation("areaRegion", region.id),
+  });
 }
 
 export default async function RegionPage({ params }: RegionPageProps) {
@@ -60,7 +50,7 @@ export default async function RegionPage({ params }: RegionPageProps) {
   const language = getLanguage(lang);
   const region = isAreaRegionId(regionId) ? getAreaRegion(regionId) : undefined;
 
-  if (!language || !region) {
+  if (!language || !region || !hasTranslation("areaRegion", region.id, language.code)) {
     notFound();
   }
 

@@ -6,7 +6,7 @@
 - **Market:** Kuala Lumpur, Selangor and the Klang Valley
 - **Domain:** renovixhomeservices.my
 - **Stack:** Next.js 16.3.3, React 19.2.8, TypeScript 6.0.3, Tailwind CSS 4.3.3
-- **Primary language:** English (homepage); Malay and Chinese routes scaffolded for later phases
+- **Languages:** English (`/en/`), Bahasa Melayu (`/ms/`), Simplified Chinese (`/zh/`) — see Phase 6
 
 ---
 
@@ -327,9 +327,114 @@
 - [x] ESLint — PASS
 - [x] Production build — PASS (293 generated static pages)
 
-## PHASE 6 — Blog & Content — [ ]
+## PHASE 6 — Multilingual Website (English / Bahasa Melayu / 简体中文) — [x]
 
-## PHASE 7 — Full Multilingual Content — [ ]
+> **Scope note.** The client brief for Phase 6 is the multilingual website. The
+> earlier outline in this file had labelled Phase 6 "Blog & Content" and Phase 7
+> "Full Multilingual Content"; the multilingual work has been delivered as
+> Phase 6 per the brief, and the blog remains unbuilt. Nothing from Phase 7 has
+> been started.
+
+### Languages & routing
+- [x] Three languages on equivalent URL prefixes: `/en/`, `/ms/`, `/zh/`
+- [x] Malaysian locale tags throughout: `en-MY`, `ms-MY`, `zh-MY`
+- [x] `app/[lang]/layout.tsx` is now the root layout, so `<html lang>` is correct per
+      language (`en-MY` / `ms-MY` / `zh-MY`) instead of a hardcoded `lang="en"`
+- [x] `/` 307-redirects to `/en` (no fourth duplicate homepage)
+- [x] `next/root-params` used for the localized 404, which receives no `params` prop
+
+### Translation architecture
+- [x] `i18n/types.ts` — single `Dictionary` shape; `ms.ts` and `zh.ts` are typed
+      against it, so a missing string is a TypeScript error, not a silent gap
+- [x] `i18n/en.ts`, `i18n/ms.ts`, `i18n/zh.ts` — complete UI catalogues
+      (navigation, footer, CTAs, breadcrumbs, section headings, form labels,
+      aria labels, homepage sections, all page-level copy, FAQ answers)
+- [x] `data/i18n/` — localized shared lists: 10 service names + descriptions,
+      2 region names + summaries, 31 place names (established Malaysian Chinese
+      names, e.g. 蕉赖 / 甲洞 / 孟沙 / 巴生), problem preview labels, problem
+      category labels + intros, project category labels, areas-index FAQs
+- [x] `i18n/content.ts` — deep-merge + completeness checker (`findMissingStrings`,
+      `localizeContent`) for the long-form page catalogues; it throws rather than
+      render a partly translated page
+- [x] `i18n/coverage.ts` — the single switch that decides which deep pages each
+      language publishes, with slug inventories asserted against the registries
+- [x] `i18n/hrefs.ts` — `localizedHref`, `contentHref` (returns `null` when a page
+      is untranslated so callers render plain text instead of a dead link), and
+      `switchLanguagePath` (nearest-translated-ancestor fallback)
+
+### Translation quality
+- [x] English: professional Malaysian/international business English
+- [x] Bahasa Melayu: natural Malaysian BM using local trade terms
+      (jubin, siling, partition, kalis air, sebut harga, rumah teres, rumah berkembar,
+      lembah Klang, pihak pengurusan)
+- [x] 简体中文: professional Simplified Chinese for Malaysian Chinese customers
+      (装修、瓷砖、防水、巴生谷、排屋、半独立屋、公寓、报价、管理处)
+- [x] No word-for-word translation; each language is written for its audience
+- [x] No language mixing — verified: an automated sweep of all 22 Malay and
+      Chinese pages for 34 English UI strings returned **0 matches**
+
+### SEO per language
+- [x] Correct `lang` attribute per language
+- [x] Unique localized `<title>` and meta description on every page
+- [x] Self-referencing canonical per language
+- [x] `hreflang` alternates (`en-MY` / `ms-MY` / `zh-MY`) + `x-default` → English,
+      emitted only for languages that actually publish the page
+- [x] Localized `og:locale` (`en_MY` / `ms_MY` / `zh_MY`), `og:title`, `og:description`
+- [x] Language-specific sitemaps via `generateSitemaps`: `/sitemap/en.xml` (100 URLs),
+      `/sitemap/ms.xml` (11), `/sitemap/zh.xml` (11) — each entry carries its own
+      hreflang alternates
+- [x] `robots.txt` generated, pointing at all three sitemaps
+- [x] Localized per-language 404
+
+### Language switcher
+- [x] `EN | BM | 中文` in the desktop header, mobile header and footer
+- [x] Reads the current path (`usePathname`) and links to the **equivalent page**
+      in the target language — verified: `/ms/faq` → `/en/faq/` and `/zh/faq/`
+- [x] When the equivalent page is not translated yet, it falls back to the nearest
+      translated section (`/en/services/tiling` → BM → `/ms/services`), never to a
+      404 and never to the homepage by default
+- [x] `lang` + `hreflang` attributes on each switcher link
+
+### Pages fully translated in all three languages (11 templates × 3 = 33 pages)
+- [x] Homepage, Services index, Problems index, Service Areas index
+- [x] About, Contact, Get a Quote (incl. the full form), Projects, FAQ
+- [x] Privacy Policy, Terms & Conditions, localized 404
+- [x] Header, desktop nav, mobile menu, footer, all CTAs, all breadcrumbs
+
+### Translation coverage — what is intentionally not translated yet
+The long-form content catalogues are **not** translated in this phase. Rather than
+serve English copy under a `/ms/` or `/zh/` URL, those routes are not generated for
+those languages, are excluded from their sitemaps and hreflang sets, and every link
+to them degrades to plain text or the nearest translated section:
+- [ ] 10 service detail pages (`ms`/`zh`) — English only
+- [ ] 46 problem guides (`ms`/`zh`) — English only
+- [ ] 2 region hubs + 31 area guides (`ms`/`zh`) — English only
+- [ ] Blog & content — not built
+
+Each of these turns on by adding a catalogue plus its slug to `i18n/coverage.ts`;
+no template changes are required.
+
+### Quality checks
+- [x] `npm run type-check` — PASS
+- [x] `npm run lint` — PASS
+- [x] `npm run build` — PASS (129 generated static pages)
+- [x] All 33 translated routes return 200 in `/en/`, `/ms/`, `/zh/`
+- [x] Untranslated deep routes correctly 404 in `/ms/` and `/zh/`
+- [x] Link sweep: 587 internal links across the 33 localized pages — **0 broken**,
+      0 cross-language content links; sampled deep English pages also 0 broken
+- [x] Language-mixing sweep across all Malay/Chinese pages — 0 English UI strings
+
+### Notes
+- `data/quote.ts` was removed: the quote form now builds its service, sub-service
+  and property-type options per language from `data/i18n` + `data/service-content`.
+  The sub-service field stays visible for English and is hidden where no translated
+  sub-service names exist.
+- Contact placeholders are preserved in every language:
+  `[PHONE NUMBER]`, `[WHATSAPP NUMBER]`, `[EMAIL]`, `[ADDRESS]`, `[BUSINESS HOURS]`.
+- No prices, reviews, ratings, certifications, licences, warranties, projects or
+  team claims were introduced in any language.
+
+## PHASE 7 — Blog & Content / Further Expansion — [ ]
 
 ## PHASE 8 — Advanced Quote System — [ ]
 
@@ -346,4 +451,4 @@
   - `[EMAIL]`
   - `[ADDRESS]`
   - `[BUSINESS HOURS]`
-- Dedicated service detail pages were built in Phase 2; problem pages were built in Phase 3; the local SEO area architecture (2 region hubs + 31 unique location guides + areas index) was built in Phase 4. Phase 5 adds the supporting pages and a portfolio framework containing only clearly labelled placeholders. Blog and full multilingual content remain intentionally out of scope for Phases 6–7.
+- Dedicated service detail pages were built in Phase 2; problem pages were built in Phase 3; the local SEO area architecture (2 region hubs + 31 unique location guides + areas index) was built in Phase 4. Phase 5 adds the supporting pages and a portfolio framework containing only clearly labelled placeholders. Phase 6 delivered the multilingual architecture and full translations for the core pages; the long-form service, problem and area catalogues remain English-only and the blog is not built.

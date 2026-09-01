@@ -4,16 +4,21 @@ import { notFound } from "next/navigation";
 import { Button, WhatsAppButton } from "@/components/ui/Button";
 import { Breadcrumbs } from "@/components/service/Breadcrumbs";
 import { IconArrowRight, IconAlertTriangle } from "@/components/icons";
-import { getLanguage } from "@/data/languages";
+import { getLanguage, languages } from "@/data/languages";
+import { getProblemCategories, getServiceName } from "@/data/i18n";
+import { getProblemsByCategory } from "@/data/problem-content";
 import { getWhatsAppHref } from "@/data/site";
-import { localizeHref } from "@/data/navigation";
-import { problemCategories, getProblemsByCategory } from "@/data/problem-content";
-import { getServiceBySlug } from "@/data/services";
-import { siteConfig } from "@/data/site";
+import { getDictionary } from "@/i18n";
+import { contentHref, localizedHref } from "@/i18n/hrefs";
+import { buildPageMetadata } from "@/i18n/seo";
 
 type ProblemsPageProps = {
   params: Promise<{ lang: string }>;
 };
+
+export function generateStaticParams() {
+  return languages.map((language) => ({ lang: language.code }));
+}
 
 export async function generateMetadata({
   params,
@@ -25,28 +30,16 @@ export async function generateMetadata({
     return {};
   }
 
-  const canonicalUrl = `${siteConfig.url}/${lang}/problems/`;
+  const t = getDictionary(language.code);
 
-  return {
-    title: {
-      absolute: "Home Problems We Solve in Kuala Lumpur & Selangor | Renovix",
-    },
-    description:
-      "Explore common home problems we help with across Kuala Lumpur & Selangor — tiling, electrical, painting, ceiling, plumbing, waterproofing and handyman issues explained with causes and solutions.",
-    alternates: {
-      canonical: canonicalUrl,
-    },
-    openGraph: {
-      title: "Home Problems We Solve in Kuala Lumpur & Selangor | Renovix",
-      description:
-        "Clear answers to common home problems across the Klang Valley, each linked to the right Renovix service.",
-      url: canonicalUrl,
-      type: "website",
-    },
-    twitter: {
-      card: "summary_large_image",
-    },
-  };
+  return buildPageMetadata({
+    lang: language.code,
+    path: "/problems/",
+    title: t.problemsIndex.metaTitle,
+    description: t.problemsIndex.metaDescription,
+    ogDescription: t.problemsIndex.ogDescription,
+    availableLanguages: languages.map((item) => item.code),
+  });
 }
 
 export default async function ProblemsPage({ params }: ProblemsPageProps) {
@@ -56,6 +49,10 @@ export default async function ProblemsPage({ params }: ProblemsPageProps) {
   if (!language) {
     notFound();
   }
+
+  const code = language.code;
+  const t = getDictionary(code);
+  const categories = getProblemCategories(code);
 
   return (
     <>
@@ -68,70 +65,85 @@ export default async function ProblemsPage({ params }: ProblemsPageProps) {
           <Breadcrumbs
             inverse
             items={[
-              { label: "Home", href: "/" },
-              { label: "Problems" },
+              { label: t.common.home, href: "/" },
+              { label: t.problemsIndex.breadcrumb },
             ]}
-            lang={lang}
+            lang={code}
           />
           <h1 className="max-w-3xl text-4xl font-extrabold leading-[1.08] tracking-tight sm:text-5xl">
-            Home Problems We Solve in Kuala Lumpur &amp; Selangor
+            {t.problemsIndex.title}
           </h1>
           <p className="mt-6 max-w-2xl text-base leading-7 text-white/80">
-            Most people search for a home service by describing their problem rather than the
-            service name. These pages explain each common problem, what causes it, the warning
-            signs and how Renovix fixes it — each linked to the service that handles it.
+            {t.problemsIndex.lead}
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Button
-              href={localizeHref("/quote", lang)}
+              href={localizedHref("/quote", code)}
               variant="primary"
               icon={<IconArrowRight className="h-4 w-4" />}
             >
-              Get a Free Quote
+              {t.cta.getFreeQuote}
             </Button>
-            <WhatsAppButton href={getWhatsAppHref(lang)} variant="secondary" />
+            <WhatsAppButton
+              href={getWhatsAppHref(code)}
+              variant="secondary"
+              label={t.cta.whatsappUs}
+            />
           </div>
         </div>
       </section>
 
       <section className="section section-surface">
         <div className="container-app">
-          {problemCategories.map((category) => {
+          {categories.map((category) => {
             const problems = getProblemsByCategory(category.id);
-            const service = getServiceBySlug(category.serviceSlug);
 
             return (
               <div key={category.id} className="mb-16 last:mb-0">
                 <div className="mb-6 max-w-2xl">
                   <p className="eyebrow">{category.label}</p>
                   <h2 className="h2-section mt-2 text-navy">
-                    {service?.name ?? category.label}
+                    {getServiceName(category.serviceSlug, code)}
                   </h2>
                   <p className="lead mt-3">{category.intro}</p>
                 </div>
 
                 <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                  {problems.map((problem) => (
-                    <Link
-                      key={problem.slug}
-                      href={localizeHref(`/problems/${problem.slug}`, lang)}
-                      className="card card-hover group flex h-full flex-col p-6 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
-                    >
-                      <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-accent/15 text-navy transition-colors group-hover:bg-navy group-hover:text-white">
-                        <IconAlertTriangle className="h-5 w-5" />
-                      </span>
-                      <h3 className="mt-4 text-base font-semibold tracking-tight text-navy">
-                        {problem.name}
-                      </h3>
-                      <p className="mt-2 flex-1 text-sm leading-6 text-secondary">
-                        {problem.subtitle}
-                      </p>
-                      <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-brand">
-                        View problem
-                        <IconArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-                      </span>
-                    </Link>
-                  ))}
+                  {problems.map((problem) => {
+                    const href = contentHref("problem", problem.slug, code);
+                    const classes =
+                      "card card-hover group flex h-full flex-col p-6 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent";
+
+                    const body = (
+                      <>
+                        <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-accent/15 text-navy transition-colors group-hover:bg-navy group-hover:text-white">
+                          <IconAlertTriangle className="h-5 w-5" />
+                        </span>
+                        <h3 className="mt-4 text-base font-semibold tracking-tight text-navy">
+                          {problem.name}
+                        </h3>
+                        <p className="mt-2 flex-1 text-sm leading-6 text-secondary">
+                          {problem.subtitle}
+                        </p>
+                        {href ? (
+                          <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-brand">
+                            {t.cta.viewProblem}
+                            <IconArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                          </span>
+                        ) : null}
+                      </>
+                    );
+
+                    return href ? (
+                      <Link key={problem.slug} href={href} className={classes}>
+                        {body}
+                      </Link>
+                    ) : (
+                      <article key={problem.slug} className={classes}>
+                        {body}
+                      </article>
+                    );
+                  })}
                 </div>
               </div>
             );
