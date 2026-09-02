@@ -540,6 +540,7 @@ export const en: Dictionary = {
       description: "Description",
       preferredDate: "Preferred Date",
       photos: "Upload Photos",
+      preferredContact: "Preferred contact method",
       requiredText: "(required)",
     },
     placeholders: {
@@ -555,28 +556,55 @@ export const en: Dictionary = {
         "Describe the issue or work you have in mind, including any useful measurements, access details or timing considerations.",
     },
     help: {
-      email: "Optional, if you would like an email reply.",
+      email: "Optional, unless you prefer to be contacted by email.",
       subService: "Choose the closest option, or leave this blank.",
       location:
         "Include the area in Kuala Lumpur, Selangor or the Klang Valley where the work is needed.",
       preferredDate: "Optional. A date is a preference, not a booking.",
       photos:
-        "Photos can help with assessment. They are not uploaded or sent until secure quote delivery is configured.",
+        "Photos are not attached to this form. After submitting, please send them on WhatsApp so we can assess the work.",
       photosChosen: "Choose photos of the area",
-      requiredNote:
-        "Fields marked * are needed to prepare a future quote request.",
+      requiredNote: "Fields marked * are required.",
+      preferredContact: "We will use this method first when we reply.",
+    },
+    contactMethods: {
+      whatsapp: "WhatsApp",
+      phone: "Phone call",
+      email: "Email",
+    },
+    validation: {
+      required: "This field is required.",
+      name: "Please enter your name.",
+      phone: "Please enter a valid phone number.",
+      email: "Please enter a valid email address.",
+      emailRequired: "Please enter an email address so we can reply by email.",
+      propertyType: "Please select a property type.",
+      service: "Please select a service.",
+      location: "Please enter the area where the work is needed.",
+      description: "Please describe the work you need.",
+      descriptionTooLong: "This message is too long. Please shorten it.",
+      preferredContact: "Please choose how you would like us to contact you.",
     },
     photosPrompt: "Upload Photos",
     photosSelectedSuffix: "photo",
     photosSelectedSuffixPlural: "photos",
     deliveryTitle: "How this form is delivered",
     deliveryBody:
-      "Online submission is not connected yet, so this form does not send your details or photos and does not produce an instant quote. To reach us now, WhatsApp or call +601159259521, or email renovixhomeservices@gmail.com.",
-    submittedBodyPrefix:
-      "Your fields have been checked in this preview. Because online delivery is not connected yet, nothing was sent. Please WhatsApp or call +601159259521, or use the",
-    submittedLink: "contact page",
-    submittedBodySuffix: "so we can pick up your request.",
+      "Your request is sent to our team. A quotation is not generated instantly — we review the details first and may ask for more information or photos. You can also WhatsApp or call +601159259521.",
     submit: "Submit Quote Request",
+    submitting: "Submitting your request...",
+    successTitle: "Request received",
+    successBody:
+      "Thank you! Your quote request has been received. Our team will contact you shortly.",
+    errorTitle: "We could not send your request",
+    errorBody:
+      "We couldn't submit your request right now. Please try again or contact us on WhatsApp.",
+    whatsappFallback: "If you need to reach us now, message Renovix Home Services on WhatsApp.",
+    whatsappFallbackCta: "Message us on WhatsApp",
+    whatsappFallbackMessage:
+      "Hello Renovix Home Services, I tried to send a quote request on the website but it did not go through. I would like to request a quote.",
+    privacyNote:
+      "Submitted information is used to respond to your enquiry.",
     asideEyebrow: "What happens next",
     asideTitle: "A considered assessment, not an instant promise",
     asideBody:
@@ -601,7 +629,7 @@ export const en: Dictionary = {
     ],
     statusTitle: "Form delivery status",
     statusBody:
-      "Online submission has not been connected yet, so nothing is transmitted from this page. WhatsApp, phone and email reach us directly: +601159259521 and renovixhomeservices@gmail.com.",
+      "This form sends your enquiry to Renovix Home Services. We will contact you using your preferred method. You can also reach us directly on WhatsApp or phone: +601159259521, or email renovixhomeservices@gmail.com.",
     browseEyebrow: "Not sure where to start?",
     browseTitle: "Browse the service scope before you request a quote",
     browseBody:
