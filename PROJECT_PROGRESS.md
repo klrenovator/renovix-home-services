@@ -1224,7 +1224,7 @@ missions are
 - [x] Production email delivery could not be fully verified because the
       required email-provider credentials are not configured
 
-## PHASE 13 — Brand Logo, Real Work Portfolio & Header Contact CTA — [x] COMPLETE (PR #15 + PR #16 fix)
+## PHASE 13 (PART 1) — Brand Logo, Real Work Portfolio & Header Contact CTA — [x] COMPLETE (PR #15 + PR #16 fix)
 
 ### 1. Logo (business-supplied artwork)
 - [x] Uploaded 1881×836 logo shipped under `public/images/logo/` as
@@ -1275,6 +1275,242 @@ missions are
       header + footer, green WhatsApp CTA, 21 portfolio images with alt
       text, old JPG paths 404, corrected awning photo (1284×964) renders.
 
+## PHASE 13 (PART 2) — Projects / Portfolio System, Header Language Button & Sidebar Navigation — [x] COMPLETE
+
+> **Phase numbering note.** The Phase 13 brief arrived in two parts. Part 1
+> (PRs #15 and #16) shipped the logo, the 21 real work photographs and the
+> header WhatsApp CTA. Part 2 — this section — turns that photo list into a
+> real portfolio *system* and adds the navigation improvements the brief
+> asked for. Both parts are recorded under Phase 13; Phase 14 has not been
+> started.
+
+### 1. Project data structure (`data/project-content/`)
+- [x] `types.ts` — full `Project` model: slug, service category, related
+      categories, `status`, year, main image, gallery, before/after pair,
+      verified location — plus the localized `ProjectContent` model: title,
+      short description, full description, scope of work, details rows, image
+      alt text, gallery alt text, before/after alt text, SEO title, SEO
+      description, OG title and OG description.
+- [x] Every optional field is absent unless the business supplied it. No
+      client names, site addresses, dates, prices, materials, durations,
+      testimonials or outcome claims exist anywhere in the portfolio data,
+      because none were supplied with the photographs.
+- [x] `projects.ts` — the 21 real, business-supplied work photographs carried
+      over verbatim from `data/project-photos.ts` (English copy, categories
+      and intrinsic image dimensions unchanged); `data/project-photos.ts` was
+      removed so there is one portfolio source of truth.
+- [x] `translations/` — Malay and Chinese copy for all 21 entries, typed
+      against `ProjectContent`, so a missing string is a compile error rather
+      than English leaking onto a `/ms/` or `/zh/` page.
+- [x] `index.ts` registry — `getPublishedProjects`, `getPublishedProject`,
+      `getResolvedProject(s)`, `getPublishedProjectsByCategory`,
+      `getRelatedPublishedProjects`, `getProjectCategoriesWithProjects`,
+      `getProjectServiceCategories`, `getProjectCategory`.
+- [x] `seo.ts` — one composer for `<title>`, meta description and Open Graph
+      text, used by both `generateMetadata` and the JSON-LD so they cannot
+      disagree.
+
+### 2. Publication status
+- [x] `ProjectStatus = "published" | "draft"`; only published projects are
+      generated, linked, sitemapped or indexable.
+- [x] `generateStaticParams` filters on `status === "published"` **and** on
+      translation coverage; the page component answers `notFound()` for any
+      slug that is not published.
+- [x] **Verified**: a temporary draft entry (`temp-draft-verification-only`,
+      since removed) returned **404** at `/en/`, `/ms/` and `/zh/`, did not
+      appear in the index HTML and did not appear in any sitemap. Unknown
+      slugs also return 404.
+- [x] **Verified**: `i18n/verify.ts` now diffs `ALL_PROJECTS` against the
+      *published* registry, so a draft listed in the coverage inventory fails
+      the build instead of submitting a 404 URL to search engines (observed
+      during testing: flipping every project to draft aborted the build with
+      `project slug inventory drifted`).
+- [x] No placeholder projects remain. The previous single-page photo list was
+      real business-supplied work, so it was kept and promoted into the
+      portfolio system rather than deleted.
+
+### 3. Projects index (`/{lang}/projects/`)
+- [x] Portfolio cards: image, title, service-category chip, short description,
+      **View project** link to the detail page, and the service-page link.
+- [x] Location chip supported and rendered only when a project has a verified
+      location (none do yet, so no chip is shown).
+- [x] Lightweight client-side category filter retained. Filter chips are
+      limited to categories that actually have published work — currently
+      Tiling, Welding, Electrical, Ceiling, Renovation and Plumbing — so no
+      chip leads to an empty result.
+- [x] Result counter is `aria-live` and localized: "Showing 21 projects." /
+      "Memaparkan 21 projek." / "目前显示 21 个工程。"
+- [x] `ItemList` structured data listing the published projects (emitted only
+      when at least one project is published).
+- [x] **Empty state** implemented and localized in EN / MS / ZH: explains that
+      project showcases are being updated, states that only real team work is
+      published, and offers the Phase 12 quote form plus WhatsApp. No counts,
+      statistics or completion claims. **Verified** by temporarily setting all
+      21 projects to draft: the index rendered the localized empty state at
+      all three URLs, dropped the filter chips and the `ItemList`, and the
+      build fell back to 310 pages.
+
+### 4. Project detail page (`/{lang}/projects/{slug}/`)
+- [x] New reusable route + template: hero (breadcrumb, eyebrow, H1, category /
+      location / year chips, quote + WhatsApp CTAs, main image at its own
+      aspect ratio), overview (+ scope of work), project details, gallery
+      (+ labelled before/after), services used, location, more work in the
+      same category, and the quote / WhatsApp / call CTA block.
+- [x] Every section after the overview is conditional — scope, details,
+      gallery and before/after render only when the data exists, so nothing is
+      padded with invented content.
+- [x] An honest note is repeated on each detail page: only information the
+      customer agreed to share is published.
+- [x] 21 published projects × 3 languages = **63 new pages**; the build now
+      prerenders **373** static pages (310 before).
+
+### 5. Multilingual support
+- [x] EN / MS / ZH for the index additions and the whole detail template
+      (new `projectPage` dictionary section in all three languages, typed in
+      `i18n/types.ts`).
+- [x] `project` added to `ContentKind`, `ALL_PROJECTS`, the per-language
+      coverage lists, `contentHref`, `missingPathsForLanguage`,
+      `i18n/verify.ts` and the sitemap.
+- [x] **Verified**: no English H1 leaks into any `/ms/` or `/zh/` project page
+      (all 21 slugs checked in both languages); all 63 titles are unique.
+
+### 6. Header multilingual button
+- [x] Inspected first: the header already carried the `EN | BM | 中文`
+      switcher beside the WhatsApp button from `xl` up, and a compact inline
+      switcher from `sm` to `xl`. The gap was **below 640px**, where the
+      switcher was hidden to avoid horizontal overflow.
+- [x] New `components/layout/HeaderLanguageMenu.tsx` — a fixed 40px globe
+      disclosure button that opens **the same `LanguageSwitcher` component**.
+      No second language system, no duplicated switching logic, same three
+      languages, same `switchLanguagePath` routes.
+- [x] Rendered in the header's mobile cluster immediately before the WhatsApp
+      button, only below `sm` (the inline switcher still covers `sm`→`xl` and
+      the full switcher covers `xl`+), so no width is duplicated.
+- [x] Accessible: real `<button>` with `aria-expanded` / `aria-controls` and a
+      localized `aria-label`, Escape to close, outside click / touch to close,
+      focus returned to the trigger, visible focus ring, current language
+      shown inside the button.
+- [x] **Verified in the served HTML**: mobile cluster order is
+      inline switcher → language button → WhatsApp → menu trigger.
+- [x] **Overflow measured with the real Plus Jakarta Sans metrics**
+      (not estimated): header row width 305.7px against 328px available at
+      360px (22.3px slack), 186.2px against 288px at 320px, and no overflow at
+      390 / 412 / 640 / 768 / 1024 / 1280px. The inline `EN | BM | 中文` group
+      would have been ~155px wide and pushed the 360px row to ~421px — which
+      is exactly why the disclosure button is used on phones.
+- [x] Footer language selector left functional and unchanged.
+
+### 7. Sidebar / drawer navigation
+- [x] The site's "sidebar" is the mobile drawer (`components/layout/MobileMenu.tsx`).
+      It already listed Home, Services, Problems, Areas, Projects, FAQ, About
+      and Contact; the missing legitimate page was **Get a Free Quote**
+      (`/{lang}/quote/` exists since Phase 12) and it is now the ninth entry.
+- [x] Only real routes are linked — no pages were created to fill the drawer.
+- [x] Active page state added: the drawer marks the current route with
+      `aria-current="page"` and a visible highlight (compared with trailing
+      slashes normalized, so `/en/projects/` matches `/en/projects`).
+- [x] Localized in all three languages — verified in the RSC payload:
+      `quote` = "Get a Free Quote" / "Sebut Harga Percuma" / "免费获取报价".
+- [x] Existing keyboard support retained: focus trap, Escape to close, focus
+      returned to the trigger, body scroll lock, `role="dialog"` +
+      `aria-modal`, visible focus rings on every link.
+- [x] WhatsApp remains the single green CTA in the drawer; the quote entry is
+      a plain navigation link, so the Phase 13 Part 1 header decision is
+      preserved.
+
+### 8. Images
+- [x] `next/image` everywhere; AVIF/WebP negotiation and a 31-day cache TTL
+      come from the existing `next.config.ts`.
+- [x] Hero image: `priority`, not lazy-loaded, intrinsic `width`/`height`,
+      `sizes="(min-width: 768px) 768px, 100vw"`, and rendered at its own
+      aspect ratio (portrait frames get a narrower container instead of being
+      cropped).
+- [x] Card, gallery and related-project images: `loading="lazy"`,
+      `object-cover` inside a fixed `aspect-[4/3]` box, responsive `sizes`.
+- [x] Meaningful localized alt text on every project image (verified for all
+      63 pages). The decorative logo keeps `alt=""` + `aria-hidden`.
+- [x] Before / after: modelled as a pair and rendered with visible
+      **Before** / **After** captions. No project has a before/after pair yet,
+      so nothing resembling a fake comparison is displayed.
+- [x] No new images were added. No stock, AI-generated or third-party images
+      are presented as Renovix work.
+
+### 9. SEO
+- [x] Unique `<title>` per project page: `"{title} — {category} | Renovix
+      Home Services"` (longest 81 characters), with a per-project `seoTitle`
+      override supported.
+- [x] Unique meta description per project page (the factual summary; shortest
+      is 22 Chinese characters), with a `seoDescription` override supported.
+- [x] Self-referencing canonical, four `hreflang` alternates (en-MY, ms-MY,
+      zh-MY, x-default) and `robots: index, follow` verified on all 63 pages.
+- [x] Open Graph + Twitter title, description, locale and image on every
+      project page. The project photo is *not* used as `og:image` because no
+      1.91:1 crop of it exists; the site's generated 1200×630 card is used
+      instead. A per-project OG image override is supported by the model.
+- [x] Sitemap: 21 project URLs added to each language's sitemap (121 URLs per
+      language, up from 100), each with the correct hreflang set.
+- [x] Structured data: `WebPage` + `BreadcrumbList` + `ImageObject` per
+      project page, `ItemList` on the index. **No** `Review`,
+      `aggregateRating`, `Product` or `Offer` nodes are emitted by the project
+      pages — verified against the page graph of all 63 pages.
+- [x] Internal linking, real relationships only: project → its service page
+      (and further services genuinely carried out on the same job — currently
+      only `office-renovation-ceiling-and-tiling`, whose own title names
+      ceiling and tiling work), project → sibling projects in the same
+      category, project → service areas index, project → quote, WhatsApp and
+      `tel:`.
+
+### 10. Conversion
+- [x] Project pages reuse the Phase 12 quote flow at `/{lang}/quote/` and the
+      single verified WhatsApp number. No second quote system, no duplicated
+      backend, no new API route.
+
+### 11. Security
+- [x] All project copy is rendered as React text children — no
+      `dangerouslySetInnerHTML` anywhere in the projects system. The only
+      `dangerouslySetInnerHTML` in the codebase remains `components/seo/JsonLd.tsx`,
+      which escapes `<` to `\u003c`.
+
+### 12. No-fake-content verification
+- [x] Scanned the whole projects system and the rendered EN/MS/ZH index and
+      detail pages for lorem ipsum, placeholder, dummy, sample project, fake,
+      stock photo, 100+, "N years", ratings, prices, testimonials and reviews.
+      The only matches are code comments that state the prohibition.
+- [x] `npm run audit:business` — **PASS** (it also caught an all-integer SVG
+      arc in the new globe icon that its phone-number scan read as a number;
+      the icon now uses decimal coordinates).
+
+### 13. Testing
+- [x] `npm run type-check` — **PASS**
+- [x] `npm run lint` — **PASS** (0 errors, 0 warnings)
+- [x] `npm run build` — **PASS** (373 static pages prerendered)
+- [x] `npm run audit:business` — **PASS**
+- [x] Crawled all 363 sitemap URLs: every one returns **200**; extracted every
+      internal link from all 363 pages (363 distinct targets) and every one
+      returns **200** — **no broken links**.
+- [x] Projects index, all 63 detail pages, draft 404 handling, empty state,
+      CTA links, header language button and drawer navigation verified against
+      the served production build in EN, MS and ZH.
+- [x] Header row width verified numerically at 320 / 360 / 390 / 412 / 640 /
+      768 / 1024 / 1280px using the shipped font's real metrics.
+- [ ] **Not verified**: real-browser rendering. No Chromium/Firefox binary can
+      be installed in this sandbox (`playwright install` and the Puppeteer
+      browser download both fail on the network), so the 360 / 390 / 412px,
+      tablet and desktop checks above are served-HTML plus computed-layout
+      checks, not visual screenshots. Tap-target sizes, focus visibility and
+      the drawer open/close behaviour are asserted from the markup and CSS,
+      not clicked in a browser.
+
+### 14. Still required from the owner
+- [ ] **Real project case-study data.** The portfolio currently publishes one
+      real work photograph per entry. For each project the business wants to
+      feature properly, the following are still needed before they can appear:
+      customer-approved location, completion date/year, property type, scope
+      of work, materials, before/after photographs of the same job, additional
+      gallery photographs, and permission to name the area.
+- [ ] Per-project 1.91:1 Open Graph crops, if social previews should show the
+      work itself rather than the site card.
+
 ## PHASE 14 — PENDING
 
 ## PHASE 15 — PENDING
@@ -1289,4 +1525,4 @@ missions are
   - Hours: `9:00 AM – 6:00 PM` (the opening days were not stated, so no `dayOfWeek` is published in the schema)
 - Dedicated service detail pages were built in Phase 2; problem pages were built in Phase 3; the local SEO area architecture (2 region hubs + 31 unique location guides + areas index) was built in Phase 4. Phase 5 adds the supporting pages and a portfolio framework containing only clearly labelled placeholders. Phase 6 delivered the multilingual architecture and full translations for the core pages; the long-form service, problem and area catalogues remain English-only and the blog is not built. Phase 8 was the quality optimization pass (performance, accessibility, mobile & UX); the advanced quote system remains future work.
 - Phase 9 was the final QA audit: full route, multilingual, service, problem, location, conversion, SEO, performance, accessibility and code-quality review. Six genuine defects were fixed (three language-mixing bugs, the redirecting `og:image`, the missing mobile CTA and the on-demand OG route), dead code was removed and two build-time i18n guards were added. Remaining known issues are listed at the end of the Phase 9 section.
-- Phase 10 completed the localization project: all 10 service pages, 46 problem pages and 33 area guides now exist in Malay and Chinese (178 new translated documents), every contact detail is real, and each language publishes the same 100 pages. Phase 11 completed the business information/local SEO foundation: the verified NAP is the only business data in the codebase, the Contact page presents it in full in all three languages, every page title carries the full brand, the structured data is audited and an automated business-info audit (`npm run audit:business`) guards it. Phase 12 delivered the functional quote form and Phase 13 the logo, real work-photo portfolio and header WhatsApp CTA. Phases 14–15 remain pending.
+- Phase 10 completed the localization project: all 10 service pages, 46 problem pages and 33 area guides now exist in Malay and Chinese (178 new translated documents), every contact detail is real, and each language publishes the same 100 pages. Phase 11 completed the business information/local SEO foundation: the verified NAP is the only business data in the codebase, the Contact page presents it in full in all three languages, every page title carries the full brand, the structured data is audited and an automated business-info audit (`npm run audit:business`) guards it. Phase 12 delivered the functional quote form. Phase 13 Part 1 added the logo, the real work-photo portfolio and the header WhatsApp CTA; Phase 13 Part 2 turned that photo list into a real portfolio system (typed project model, published/draft gating, 63 project detail pages, per-page SEO and structured data, localized empty state) and added the header language disclosure button plus drawer navigation with an active-page state. Phases 14–15 remain pending.

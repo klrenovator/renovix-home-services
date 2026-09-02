@@ -1,6 +1,13 @@
 import type { MetadataRoute } from "next";
 import { languages, type LanguageCode } from "@/data/languages";
-import { hasTranslation, ALL_AREAS, ALL_AREA_REGIONS, ALL_PROBLEMS, ALL_SERVICES } from "@/i18n/coverage";
+import {
+  hasTranslation,
+  ALL_AREAS,
+  ALL_AREA_REGIONS,
+  ALL_PROBLEMS,
+  ALL_PROJECTS,
+  ALL_SERVICES,
+} from "@/i18n/coverage";
 import { absoluteUrl } from "@/i18n/seo";
 import { assertCoverageInSync } from "@/i18n/verify";
 
@@ -83,7 +90,65 @@ function pathsForLanguage(lang: LanguageCode): SitemapEntry[] {
     }
   }
 
+  // Only published projects reach `ALL_PROJECTS` (asserted at build time by
+  // `i18n/verify.ts`), so a draft never appears in a sitemap.
+  for (const project of ALL_PROJECTS) {
+    if (hasTranslation("project", project, lang)) {
+      entries.push({
+        path: `/projects/${project}/`,
+        priority: 0.5,
+        changeFrequency: "monthly",
+      });
+    }
+  }
+
   return entries;
+}
+
+/** Paths that every language publishes, so no translation lookup is needed. */
+const ALWAYS_PUBLISHED = new Set([
+  "/",
+  "/services/",
+  "/problems/",
+  "/areas/",
+  "/quote/",
+  "/contact/",
+  "/about/",
+  "/projects/",
+  "/faq/",
+  "/privacy/",
+  "/terms/",
+]);
+
+/**
+ * Whether `lang` publishes `path`, i.e. whether it belongs in that language's
+ * hreflang set. The segment count is only consulted for the two-level area
+ * routes, so `/projects/` and `/problems/` are matched by prefix first.
+ */
+function isPublished(path: string, lang: LanguageCode): boolean {
+  if (ALWAYS_PUBLISHED.has(path)) {
+    return true;
+  }
+
+  if (path.startsWith("/services/")) {
+    return hasTranslation("service", slugOf(path, 1), lang);
+  }
+
+  if (path.startsWith("/problems/")) {
+    return hasTranslation("problem", slugOf(path, 1), lang);
+  }
+
+  if (path.startsWith("/projects/")) {
+    return hasTranslation("project", slugOf(path, 1), lang);
+  }
+
+  if (path.startsWith("/areas/")) {
+    return path.split("/").filter(Boolean).length === 2
+      ? hasTranslation("areaRegion", slugOf(path, 1), lang)
+      : hasTranslation("area", areaKeyOf(path), lang);
+  }
+
+  return false;
 }
 
 export default async function sitemap(props: {
@@ -102,32 +167,7 @@ export default async function sitemap(props: {
     const alternates: Record<string, string> = {};
 
     for (const language of languages) {
-      const publishes =
-        entry.path === "/" ||
-        entry.path === "/services/" ||
-        entry.path === "/problems/" ||
-        entry.path === "/areas/" ||
-        entry.path === "/quote/" ||
-        entry.path === "/contact/" ||
-        entry.path === "/about/" ||
-        entry.path === "/projects/" ||
-        entry.path === "/faq/" ||
-        entry.path === "/privacy/" ||
-        entry.path === "/terms/"
-          ? true
-          : entry.path.startsWith("/services/")
-            ? hasTranslation("service", slugOf(entry.path, 1), language.code)
-            : entry.path.startsWith("/problems/")
-              ? hasTranslation("problem", slugOf(entry.path, 1), language.code)
-              : entry.path.split("/").filter(Boolean).length === 2
-                ? hasTranslation(
-                    "areaRegion",
-                    slugOf(entry.path, 1),
-                    language.code,
-                  )
-                : hasTranslation("area", areaKeyOf(entry.path), language.code);
-
-      if (publishes) {
+      if (isPublished(entry.path, language.code)) {
         alternates[language.hreflang] = absoluteUrl(language.code, entry.path);
       }
     }

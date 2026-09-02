@@ -16,6 +16,7 @@ export function buildPageMetadata({
   path,
   title,
   description,
+  ogTitle,
   ogDescription,
   availableLanguages,
   noIndex = false,
@@ -24,6 +25,7 @@ export function buildPageMetadata({
   path: string;
   title: string;
   description: string;
+  ogTitle?: string;
   ogDescription?: string;
   availableLanguages: LanguageCode[];
   noIndex?: boolean;
@@ -59,7 +61,7 @@ export function buildPageMetadata({
     openGraph: {
       type: "website",
       url: canonical,
-      title,
+      title: ogTitle ?? title,
       description: ogDescription ?? description,
       locale: getOgLocale(lang),
       siteName: getDictionary(lang).meta.siteName,
@@ -77,7 +79,7 @@ export function buildPageMetadata({
     },
     twitter: {
       card: "summary_large_image",
-      title,
+      title: ogTitle ?? title,
       description: ogDescription ?? description,
       images: [ogImage],
     },

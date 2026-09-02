@@ -6,6 +6,8 @@
  * shape, so a missing key is a TypeScript error rather than a silent gap.
  */
 
+import type { ProjectDetailKey } from "@/data/project-content/types";
+
 export type TextItem = {
   title: string;
   description: string;
@@ -31,6 +33,8 @@ export type Dictionary = {
     closeMenu: string;
     brandHome: string;
     filterProjects: string;
+    /** Accessible name for the compact header language button. */
+    languageMenu: string;
   };
   nav: {
     home: string;
@@ -511,6 +515,17 @@ export type Dictionary = {
     emptyState: string;
     fallbackCategory: string;
     exploreServicePrefix: string;
+    /** Card link label — "View project". */
+    viewProject: string;
+    /** Accessible name for the projects list region. */
+    listRegion: string;
+    /** Page-level empty state, shown when no project is published yet. */
+    emptyEyebrow: string;
+    emptyTitle: string;
+    emptyBody: string;
+    emptyNote: string;
+    emptyCtaPrimary: string;
+    emptyCtaSecondary: string;
     futureEyebrow: string;
     futureTitle: string;
     futureLead: string;
@@ -519,6 +534,41 @@ export type Dictionary = {
     ctaTitle: string;
     ctaDescription: string;
     ctaSecondary: string;
+  };
+  /** Project detail page (`/{lang}/projects/{slug}/`). */
+  projectPage: {
+    /** `{title}` + `{category}` + the full brand, as one `<title>`. */
+    metaTitleTemplate: string;
+    eyebrow: string;
+    overviewEyebrow: string;
+    overviewTitle: string;
+    scopeEyebrow: string;
+    scopeTitle: string;
+    detailsEyebrow: string;
+    detailsTitle: string;
+    /** Localized row labels for the "Project details" list. */
+    detailLabels: Record<ProjectDetailKey, string>;
+    galleryEyebrow: string;
+    galleryTitle: string;
+    beforeLabel: string;
+    afterLabel: string;
+    servicesEyebrow: string;
+    servicesTitle: string;
+    servicesBody: string;
+    locationEyebrow: string;
+    locationTitle: string;
+    /** Shown when no verified location has been supplied for the project. */
+    locationUnverifiedBody: string;
+    /** Honest note repeated on detail pages. */
+    honestyNote: string;
+    relatedEyebrow: string;
+    /** "More {category} work". */
+    relatedTitle: string;
+    relatedEmpty: string;
+    backToProjects: string;
+    ctaEyebrow: string;
+    ctaTitle: string;
+    ctaDescription: string;
   };
   faq: {
     metaTitle: string;

@@ -2,14 +2,20 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { IconArrowRight, IconCamera, IconCheck, IconLayers } from "@/components/icons";
+import { ProjectsEmptyState } from "@/components/projects/ProjectsEmptyState";
 import { ProjectsPortfolio } from "@/components/projects/ProjectsPortfolio";
 import { PageSchema } from "@/components/seo/PageSchema";
+import { itemListNode } from "@/components/seo/schema";
 import { PageHero } from "@/components/support/PageHero";
 import { Button } from "@/components/ui/Button";
 import { getLanguage, languages } from "@/data/languages";
 import { getProjectCategories } from "@/data/i18n";
 import { projectCategories } from "@/data/projects";
-import { projectPhotos, getProjectPhotoContent } from "@/data/project-photos";
+import {
+  getProjectCategoriesWithProjects,
+  getProjectContent,
+  getPublishedProjects,
+} from "@/data/project-content";
 import { getDictionary } from "@/i18n";
 import { contentHref, localizedHref } from "@/i18n/hrefs";
 import { absoluteUrl, buildPageMetadata } from "@/i18n/seo";
@@ -53,7 +59,18 @@ export default async function ProjectsPage({ params }: ProjectsPageProps) {
 
   const code = language.code;
   const t = getDictionary(code);
+  const projects = getPublishedProjects();
+  const hasProjects = projects.length > 0;
+
   const categories = getProjectCategories(code);
+  /**
+   * Filter chips are limited to the categories that actually have published
+   * work, so the index never offers a filter that leads to an empty result.
+   */
+  const categoriesWithProjects = new Set(getProjectCategoriesWithProjects());
+  const visibleCategories = categories.filter((category) =>
+    categoriesWithProjects.has(category.id),
+  );
 
   return (
     <>
@@ -66,6 +83,20 @@ export default async function ProjectsPage({ params }: ProjectsPageProps) {
           { name: t.common.home, url: absoluteUrl(code, "/") },
           { name: t.projects.breadcrumb },
         ]}
+        extra={
+          hasProjects
+            ? [
+                itemListNode(
+                  absoluteUrl(code, "/projects/"),
+                  t.projects.breadcrumb,
+                  projects.map((project) => ({
+                    name: getProjectContent(project.slug, code).title,
+                    url: absoluteUrl(code, `/projects/${project.slug}/`),
+                  })),
+                ),
+              ]
+            : []
+        }
       />
       <PageHero
         eyebrow={t.projects.eyebrow}
@@ -98,46 +129,62 @@ export default async function ProjectsPage({ params }: ProjectsPageProps) {
               <h2 className="h2-section mt-3 text-navy">{t.projects.browseTitle}</h2>
               <p className="lead mt-4">{t.projects.browseLead}</p>
             </div>
-            <div className="mt-8">
-              <ProjectsPortfolio
-                categories={categories.map((category) => ({
-                  id: category.id,
-                  label: category.label,
-                  icon: category.icon,
-                  href: contentHref(
-                    "service",
-                    projectCategories.find((item) => item.id === category.id)
-                      ?.servicePath.replace("/services/", "") ?? "",
-                    code,
-                  ),
-                }))}
-                items={projectPhotos.map((photo) => {
-                  const content = getProjectPhotoContent(photo.id, code);
 
-                  return {
-                    id: photo.id,
-                    category: photo.category,
-                    src: photo.src,
-                    width: photo.width,
-                    height: photo.height,
-                    heading: content.heading,
-                    description: content.description,
-                    alt: content.alt,
-                  };
-                })}
-                labels={{
-                  allCategories: t.projects.allCategories,
-                  filterAria: t.a11y.filterProjects,
-                  showingPrefix: t.projects.showingPrefix,
-                  showingSuffixOne: t.projects.showingSuffixOne,
-                  showingSuffixMany: t.projects.showingSuffixMany,
-                  showingNote: t.projects.showingNote,
-                  emptyState: t.projects.emptyState,
-                  fallbackCategory: t.projects.fallbackCategory,
-                  exploreServicePrefix: t.projects.exploreServicePrefix,
-                }}
-              />
-            </div>
+            {hasProjects ? (
+              <div className="mt-8">
+                <ProjectsPortfolio
+                  categories={visibleCategories.map((category) => ({
+                    id: category.id,
+                    label: category.label,
+                    icon: category.icon,
+                    href: contentHref(
+                      "service",
+                      projectCategories.find((item) => item.id === category.id)
+                        ?.servicePath.replace("/services/", "") ?? "",
+                      code,
+                    ),
+                  }))}
+                  items={projects.map((project) => {
+                    const content = getProjectContent(project.slug, code);
+
+                    return {
+                      id: project.slug,
+                      category: project.category,
+                      src: project.image.src,
+                      width: project.image.width,
+                      height: project.image.height,
+                      heading: content.title,
+                      description: content.shortDescription,
+                      alt: content.alt,
+                      href: contentHref("project", project.slug, code),
+                      ...(project.location
+                        ? {
+                            locationLabel:
+                              project.location.area ?? project.location.region,
+                          }
+                        : {}),
+                    };
+                  })}
+                  labels={{
+                    allCategories: t.projects.allCategories,
+                    filterAria: t.a11y.filterProjects,
+                    listRegion: t.projects.listRegion,
+                    showingPrefix: t.projects.showingPrefix,
+                    showingSuffixOne: t.projects.showingSuffixOne,
+                    showingSuffixMany: t.projects.showingSuffixMany,
+                    showingNote: t.projects.showingNote,
+                    emptyState: t.projects.emptyState,
+                    fallbackCategory: t.projects.fallbackCategory,
+                    exploreServicePrefix: t.projects.exploreServicePrefix,
+                    viewProject: t.projects.viewProject,
+                  }}
+                />
+              </div>
+            ) : (
+              <div className="mt-8">
+                <ProjectsEmptyState lang={code} />
+              </div>
+            )}
           </div>
         </div>
       </section>
