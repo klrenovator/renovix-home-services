@@ -60,6 +60,10 @@ export function contentHref(
     return localizedHref(`/areas/${id}`, lang);
   }
 
+  if (kind === "project") {
+    return localizedHref(`/projects/${id}`, lang);
+  }
+
   return null;
 }
 

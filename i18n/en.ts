@@ -27,6 +27,7 @@ export const en: Dictionary = {
     closeMenu: "Close menu",
     brandHome: "Renovix Home Services – Home",
     filterProjects: "Filter project photos by service category",
+    languageMenu: "Choose language",
   },
   nav: {
     home: "Home",
@@ -666,15 +667,25 @@ export const en: Dictionary = {
     browseEyebrow: "Browse by service category",
     browseTitle: "Project photos by type of work",
     browseLead:
-      "Filter the gallery by the kind of work you are interested in. Each card links through to the matching service page.",
+      "Filter the portfolio by the kind of work you are interested in. Each card opens the project page and links through to the matching service page.",
     allCategories: "All categories",
     showingPrefix: "Showing",
-    showingSuffixOne: "photo.",
-    showingSuffixMany: "photos.",
+    showingSuffixOne: "project.",
+    showingSuffixMany: "projects.",
     showingNote: "All images are from work carried out by our team.",
     emptyState: "No photos have been published in this category yet.",
     fallbackCategory: "Service",
     exploreServicePrefix: "Explore service",
+    viewProject: "View project",
+    listRegion: "Project portfolio",
+    emptyEyebrow: "Projects",
+    emptyTitle: "Our project showcases are being updated",
+    emptyBody:
+      "Real project showcases are being updated. Contact Renovix Home Services to discuss your renovation or home improvement requirements, and we can walk you through work similar to what you have in mind.",
+    emptyNote:
+      "We only publish photographs of work our own team has carried out, with the details confirmed by the customer. Nothing on this page is a stock image or a mock-up.",
+    emptyCtaPrimary: "Get a Free Quote",
+    emptyCtaSecondary: "WhatsApp Us",
     futureEyebrow: "How this gallery grows",
     futureTitle: "What we add to each project entry",
     futureLead:
@@ -700,6 +711,46 @@ export const en: Dictionary = {
     ctaDescription:
       "Explore the service categories or share your own repair, upgrade or renovation details to begin a quote request.",
     ctaSecondary: "Explore Services",
+  },
+  projectPage: {
+    metaTitleTemplate: "{title} — {category} | Renovix Home Services",
+    eyebrow: "Project",
+    overviewEyebrow: "Project Overview",
+    overviewTitle: "About this work",
+    scopeEyebrow: "Scope",
+    scopeTitle: "Scope of work",
+    detailsEyebrow: "Project Details",
+    detailsTitle: "Confirmed details",
+    detailLabels: {
+      propertyType: "Property type",
+      workType: "Type of work",
+      completed: "Completed",
+      duration: "Duration",
+      materials: "Materials",
+    },
+    galleryEyebrow: "Gallery",
+    galleryTitle: "Photographs from this job",
+    beforeLabel: "Before",
+    afterLabel: "After",
+    servicesEyebrow: "Services Used",
+    servicesTitle: "Renovix services involved in this work",
+    servicesBody:
+      "Every project links to the service pages that describe the work in detail, including the sub-services we carry out and the process we follow.",
+    locationEyebrow: "Location",
+    locationTitle: "Where we carry out this work",
+    locationUnverifiedBody:
+      "The specific area for this job is not published. Renovix Home Services carries out tiling, ceiling, electrical, welding, plumbing and renovation work across Kuala Lumpur, Selangor and the Klang Valley.",
+    honestyNote:
+      "Only information the customer has agreed to share is published here. Client names, site addresses, dates, prices and outcome claims are not included.",
+    relatedEyebrow: "More Work",
+    relatedTitle: "More {category} work",
+    relatedEmpty:
+      "More photographs of this type of work will be added as jobs are completed and the images are cleared for publication.",
+    backToProjects: "Back to all projects",
+    ctaEyebrow: "Plan your own work",
+    ctaTitle: "Need this kind of work at your property?",
+    ctaDescription:
+      "Send us the details and photos of the work you have in mind, or message us on WhatsApp, and we can advise on the next step and prepare a quotation.",
   },
   faq: {
     metaTitle:

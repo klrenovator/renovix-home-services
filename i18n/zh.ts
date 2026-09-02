@@ -25,6 +25,7 @@ export const zh: Dictionary = {
     closeMenu: "关闭菜单",
     brandHome: "Renovix Home Services – 首页",
     filterProjects: "依服务分类筛选工程照片",
+    languageMenu: "选择语言",
   },
   nav: {
     home: "首页",
@@ -618,15 +619,25 @@ export const zh: Dictionary = {
     browseEyebrow: "依服务分类浏览",
     browseTitle: "依工程类型浏览照片",
     browseLead:
-      "依您感兴趣的工程类型筛选相册。每张卡片都会链接到相应的服务页面。",
+      "依您感兴趣的工程类型筛选工程案例。每张卡片都会打开对应的工程页面，并链接到相关的服务页面。",
     allCategories: "全部分类",
     showingPrefix: "目前显示",
-    showingSuffixOne: "张照片。",
-    showingSuffixMany: "张照片。",
+    showingSuffixOne: "个工程。",
+    showingSuffixMany: "个工程。",
     showingNote: "所有图片均来自我们团队实际施工的工程。",
     emptyState: "此分类目前尚未发布照片。",
     fallbackCategory: "服务",
     exploreServicePrefix: "了解服务",
+    viewProject: "查看工程",
+    listRegion: "工程案例集",
+    emptyEyebrow: "工程案例",
+    emptyTitle: "工程案例正在更新中",
+    emptyBody:
+      "真实工程案例正在更新中。欢迎联系 Renovix Home Services，讨论您的装修或家居改善需求，我们可以为您介绍与您构想相近的工程内容。",
+    emptyNote:
+      "我们只发布由本团队实际施工、且经客户确认可以公开的照片。本页没有任何图库图片或非实景示意图。",
+    emptyCtaPrimary: "免费索取报价",
+    emptyCtaSecondary: "WhatsApp 联系我们",
     futureEyebrow: "相册如何持续更新",
     futureTitle: "每则工程记录会加入什么",
     futureLead:
@@ -650,6 +661,46 @@ export const zh: Dictionary = {
     ctaDescription:
       "浏览服务分类，或提供您的维修、升级或装修详情，开始申请报价。",
     ctaSecondary: "浏览服务项目",
+  },
+  projectPage: {
+    metaTitleTemplate: "{title} — {category} | Renovix Home Services",
+    eyebrow: "工程案例",
+    overviewEyebrow: "工程概述",
+    overviewTitle: "关于这项工程",
+    scopeEyebrow: "工程范围",
+    scopeTitle: "工程范围",
+    detailsEyebrow: "工程详情",
+    detailsTitle: "已确认的资料",
+    detailLabels: {
+      propertyType: "房屋类型",
+      workType: "工程类型",
+      completed: "完成时间",
+      duration: "工期",
+      materials: "使用材料",
+    },
+    galleryEyebrow: "相册",
+    galleryTitle: "本工程的现场照片",
+    beforeLabel: "施工前",
+    afterLabel: "施工后",
+    servicesEyebrow: "涉及服务",
+    servicesTitle: "本工程涉及的 Renovix 服务",
+    servicesBody:
+      "每个工程都会链接到详细说明该项服务的页面，包括我们提供的子服务与施工流程。",
+    locationEyebrow: "地区",
+    locationTitle: "我们承接此类工程的地区",
+    locationUnverifiedBody:
+      "本工程的具体地区未予公开。Renovix Home Services 在吉隆坡、雪兰莪及巴生谷各地承接瓷砖、天花、电气、焊接、水管与装修工程。",
+    honestyNote:
+      "此处仅发布客户同意公开的资料。客户姓名、工程地址、日期、价格与成果说明均不在发布范围内。",
+    relatedEyebrow: "更多工程",
+    relatedTitle: "更多{category}工程",
+    relatedEmpty:
+      "工程完成且照片获准发布后，我们会陆续加入更多同类工程的照片。",
+    backToProjects: "返回全部工程",
+    ctaEyebrow: "规划您自己的工程",
+    ctaTitle: "您的物业也需要这类工程吗？",
+    ctaDescription:
+      "把您想做的工程详情与照片发给我们，或通过 WhatsApp 联系，我们会告知下一步并为您准备报价。",
   },
   faq: {
     metaTitle: "Renovix Home Services | 房屋服务常见问答",

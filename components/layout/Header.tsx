@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Brand } from "@/components/Brand";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { IconWhatsApp } from "@/components/icons";
+import { HeaderLanguageMenu } from "@/components/layout/HeaderLanguageMenu";
 import { MobileMenu } from "@/components/layout/MobileMenu";
 import { WhatsAppButton } from "@/components/ui/Button";
 import { getLanguageCode, type LanguageCode } from "@/data/languages";
@@ -62,15 +63,24 @@ export function Header({ lang }: HeaderProps) {
         </div>
 
         <div className="flex items-center gap-2 xl:hidden sm:gap-3">
-          {/* Hidden below `sm`: at 320–380px the brand lockup, the compact
-              switcher and the menu button together exceed the viewport and
-              push the header into horizontal overflow. Language switching on
-              phones stays one tap away inside the mobile menu (and footer). */}
+          {/* Language switching beside WhatsApp at every width: the inline
+              `EN | BM | 中文` group from `sm` up, and the same switcher behind
+              a fixed 40px disclosure button below it, where the brand lockup,
+              the WhatsApp button and the menu trigger leave no room for a
+              third inline group without pushing the header into horizontal
+              overflow at 320–360px. */}
           <div className="hidden sm:block">
             <LanguageSwitcher
               lang={code}
               compact
               label={t.a11y.languageNavigation}
+            />
+          </div>
+          <div className="sm:hidden">
+            <HeaderLanguageMenu
+              lang={code}
+              label={t.a11y.languageMenu}
+              listLabel={t.a11y.languageNavigation}
             />
           </div>
           {/* The primary conversion action stays visible on phones instead of
@@ -104,6 +114,8 @@ export function Header({ lang }: HeaderProps) {
               whatsapp: t.cta.whatsappUs,
               whatsappHref: getWhatsAppHref(),
               language: t.a11y.languageNavigation,
+              quote: t.cta.getFreeQuote,
+              quoteHref: localizedHref("/quote", code),
             }}
           />
         </div>

@@ -12,7 +12,7 @@ import type { LanguageCode } from "@/data/languages";
  * This module deliberately holds only slugs (no copy) so it is safe to import
  * from client components such as the language switcher.
  */
-export type ContentKind = "service" | "problem" | "area" | "areaRegion";
+export type ContentKind = "service" | "problem" | "area" | "areaRegion" | "project";
 
 /** Slugs whose translations are complete, per non-English language. */
 export const translatedContent: Record<
@@ -114,6 +114,29 @@ export const translatedContent: Record<
       "selangor/usj",
     ],
     areaRegion: ["kuala-lumpur", "selangor"],
+    project: [
+      "marble-look-floor-tiling",
+      "floor-tile-removal-hacking",
+      "plaster-ceiling-cove-lighting",
+      "plaster-ceiling-design-downlights",
+      "plaster-ceiling-pendant-lighting",
+      "timber-look-ceiling-beams",
+      "suspended-ceiling-grid",
+      "ceiling-fan-and-light-installation",
+      "chandelier-and-ceiling-fan-installation",
+      "high-ceiling-light-installation",
+      "electrical-distribution-board-wiring",
+      "electrical-db-panel-installation",
+      "electrical-cable-wiring-installation",
+      "wall-switch-installation",
+      "outdoor-switch-socket-wiring",
+      "toilet-and-basin-installation",
+      "structural-metal-welding-fabrication",
+      "pipe-and-valve-welding-works",
+      "on-site-metal-frame-welding",
+      "metal-awning-frame-installation",
+      "office-renovation-ceiling-and-tiling",
+    ],
   },
   zh: {
     service: [
@@ -210,6 +233,29 @@ export const translatedContent: Record<
       "selangor/usj",
     ],
     areaRegion: ["kuala-lumpur", "selangor"],
+    project: [
+      "marble-look-floor-tiling",
+      "floor-tile-removal-hacking",
+      "plaster-ceiling-cove-lighting",
+      "plaster-ceiling-design-downlights",
+      "plaster-ceiling-pendant-lighting",
+      "timber-look-ceiling-beams",
+      "suspended-ceiling-grid",
+      "ceiling-fan-and-light-installation",
+      "chandelier-and-ceiling-fan-installation",
+      "high-ceiling-light-installation",
+      "electrical-distribution-board-wiring",
+      "electrical-db-panel-installation",
+      "electrical-cable-wiring-installation",
+      "wall-switch-installation",
+      "outdoor-switch-socket-wiring",
+      "toilet-and-basin-installation",
+      "structural-metal-welding-fabrication",
+      "pipe-and-valve-welding-works",
+      "on-site-metal-frame-welding",
+      "metal-awning-frame-installation",
+      "office-renovation-ceiling-and-tiling",
+    ],
   },
 };
 
@@ -277,6 +323,12 @@ export function missingPathsForLanguage(lang: LanguageCode | string): string[] {
     }
   }
 
+  for (const project of ALL_PROJECTS) {
+    if (!coverage.project.includes(project)) {
+      missing.push(`/projects/${project}`);
+    }
+  }
+
   for (const region of ALL_AREA_REGIONS) {
     if (!coverage.areaRegion.includes(region)) {
       missing.push(`/areas/${region}`);
@@ -305,6 +357,30 @@ export const ALL_SERVICES = [
 ] as const;
 
 export const ALL_AREA_REGIONS = ["kuala-lumpur", "selangor"] as const;
+
+export const ALL_PROJECTS = [
+  "marble-look-floor-tiling",
+  "floor-tile-removal-hacking",
+  "plaster-ceiling-cove-lighting",
+  "plaster-ceiling-design-downlights",
+  "plaster-ceiling-pendant-lighting",
+  "timber-look-ceiling-beams",
+  "suspended-ceiling-grid",
+  "ceiling-fan-and-light-installation",
+  "chandelier-and-ceiling-fan-installation",
+  "high-ceiling-light-installation",
+  "electrical-distribution-board-wiring",
+  "electrical-db-panel-installation",
+  "electrical-cable-wiring-installation",
+  "wall-switch-installation",
+  "outdoor-switch-socket-wiring",
+  "toilet-and-basin-installation",
+  "structural-metal-welding-fabrication",
+  "pipe-and-valve-welding-works",
+  "on-site-metal-frame-welding",
+  "metal-awning-frame-installation",
+  "office-renovation-ceiling-and-tiling",
+] as const;
 
 export const ALL_PROBLEMS = [
   "broken-tile-repair",

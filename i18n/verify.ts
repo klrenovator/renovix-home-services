@@ -3,6 +3,7 @@ import {
   ALL_AREAS,
   ALL_AREA_REGIONS,
   ALL_PROBLEMS,
+  ALL_PROJECTS,
   ALL_SERVICES,
 } from "./coverage";
 import { serviceDetails, translatedServiceSlugs } from "@/data/service-content";
@@ -12,6 +13,11 @@ import {
   translatedAreaRegionIds,
   translatedAreaSlugs,
 } from "@/data/area-content";
+import {
+  getPublishedProjects,
+  projects,
+  translatedProjectSlugs,
+} from "@/data/project-content";
 import { siteFaqs } from "@/data/site-faqs";
 import { problemList } from "@/data/i18n/lists";
 import { languages } from "@/data/languages";
@@ -76,9 +82,49 @@ export function assertCoverageInSync() {
     ),
   );
 
+  // `ALL_PROJECTS` drives the sitemap, the hreflang sets and the language
+  // switcher, so it must list exactly the *published* projects — a slug in here
+  // for a draft would submit a URL that answers 404.
+  diff(
+    "project",
+    "ALL_PROJECTS",
+    [...ALL_PROJECTS],
+    getPublishedProjects().map((project) => project.slug),
+  );
+
   assertFaqTranslationsInSync();
   assertProblemLabelsInSync();
+  assertProjectDataIsSound();
   assertTranslationRegistriesInSync();
+}
+
+/**
+ * Project-specific integrity checks: slugs must be unique (two projects with
+ * the same slug would silently share a URL) and every published project must
+ * carry English copy plus a main image, because both are required to render a
+ * detail page at all.
+ */
+function assertProjectDataIsSound() {
+  const seen = new Set<string>();
+
+  for (const project of projects) {
+    if (seen.has(project.slug)) {
+      throw new Error(
+        `[i18n/verify] duplicate project slug: ${project.slug}`,
+      );
+    }
+    seen.add(project.slug);
+
+    if (project.status !== "published") {
+      continue;
+    }
+
+    if (!project.image?.src) {
+      throw new Error(
+        `[i18n/verify] published project has no main image: ${project.slug}`,
+      );
+    }
+  }
 }
 
 /**
@@ -116,6 +162,13 @@ function assertTranslationRegistriesInSync() {
       `translatedContent.${lang}.areaRegion`,
       translatedContent[lang].areaRegion,
       translatedAreaRegionIds(lang),
+    );
+
+    diff(
+      `${lang} project translation`,
+      `translatedContent.${lang}.project`,
+      translatedContent[lang].project,
+      translatedProjectSlugs(lang),
     );
   }
 }

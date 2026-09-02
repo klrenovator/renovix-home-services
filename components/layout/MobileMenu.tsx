@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { IconMenu, IconClose, IconArrowRight, IconWhatsApp } from "@/components/icons";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import type { LanguageCode } from "@/data/languages";
@@ -25,7 +26,17 @@ export type MobileMenuLabels = {
   whatsapp: string;
   whatsappHref: string;
   language: string;
+  /** Label for the quote page link in the drawer navigation. */
+  quote: string;
+  /** Localized `/quote/` URL for the current language. */
+  quoteHref: string;
 };
+
+/** `usePathname()` has no trailing slash; nav hrefs do. Compare like for like. */
+function normalizePath(path: string): string {
+  const withoutQuery = path.split("?")[0].split("#")[0];
+  return withoutQuery.length > 1 ? withoutQuery.replace(/\/+$/, "") : withoutQuery;
+}
 
 type MobileMenuProps = {
   lang: LanguageCode;
@@ -38,6 +49,13 @@ export function MobileMenu({ lang, navigation, services, labels }: MobileMenuPro
   const [isOpen, setIsOpen] = useState(false);
   const triggerRef = useRef<HTMLButtonElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
+  const pathname = normalizePath(usePathname() ?? `/${lang}`);
+
+  /** Main pages plus the quote page, which exists but is not in the header. */
+  const drawerNavigation = [
+    ...navigation,
+    { label: labels.quote, href: labels.quoteHref },
+  ];
 
   function closeMenu() {
     setIsOpen(false);
@@ -129,18 +147,30 @@ export function MobileMenu({ lang, navigation, services, labels }: MobileMenuPro
           <div className="container-app mx-auto flex flex-col gap-6">
             <nav aria-label={labels.navigation}>
               <ul className="space-y-1">
-                {navigation.map((item) => (
-                  <li key={item.href}>
-                    <Link
-                      href={item.href}
-                      onClick={closeMenu}
-                      className="flex items-center justify-between rounded-md px-2 py-2.5 text-base font-medium text-navy transition-colors hover:bg-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
-                    >
-                      {item.label}
-                      <IconArrowRight className="h-4 w-4 text-secondary" />
-                    </Link>
-                  </li>
-                ))}
+                {drawerNavigation.map((item) => {
+                  const isCurrent = normalizePath(item.href) === pathname;
+
+                  return (
+                    <li key={item.href}>
+                      <Link
+                        href={item.href}
+                        onClick={closeMenu}
+                        aria-current={isCurrent ? "page" : undefined}
+                        className={`flex items-center justify-between rounded-md px-2 py-2.5 text-base font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent ${
+                          isCurrent
+                            ? "bg-surface text-brand"
+                            : "text-navy hover:bg-surface"
+                        }`}
+                      >
+                        {item.label}
+                        <IconArrowRight
+                          className={`h-4 w-4 ${isCurrent ? "text-brand" : "text-secondary"}`}
+                          aria-hidden="true"
+                        />
+                      </Link>
+                    </li>
+                  );
+                })}
               </ul>
             </nav>
 

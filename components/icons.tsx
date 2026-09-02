@@ -191,6 +191,23 @@ export function IconCompass(props: IconProps) {
   );
 }
 
+/**
+ * Globe, used for the compact header language control.
+ *
+ * The path is written with decimal coordinates on purpose: `npm run
+ * audit:business` flags any 9–15 digit run in the source as an unverified
+ * phone number, and an all-integer SVG arc command reads as one.
+ */
+export function IconGlobe(props: IconProps) {
+  return (
+    <IconBase {...props}>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M3.2 12h17.6" />
+      <path d="M12 3.2c2.6 0 4.6 3.9 4.6 8.8s-2 8.8-4.6 8.8-4.6-3.9-4.6-8.8S9.4 3.2 12 3.2Z" />
+    </IconBase>
+  );
+}
+
 export function IconWrench(props: IconProps) {
   return (
     <IconBase {...props}>

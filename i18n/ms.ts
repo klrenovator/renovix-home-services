@@ -27,6 +27,7 @@ export const ms: Dictionary = {
     closeMenu: "Tutup menu",
     brandHome: "Renovix Home Services – Laman Utama",
     filterProjects: "Tapis gambar projek mengikut kategori perkhidmatan",
+    languageMenu: "Pilih bahasa",
   },
   nav: {
     // Short forms measured against the Plus Jakarta Sans metrics: the long
@@ -677,15 +678,25 @@ export const ms: Dictionary = {
     browseEyebrow: "Lihat mengikut kategori perkhidmatan",
     browseTitle: "Gambar projek mengikut jenis kerja",
     browseLead:
-      "Tapis galeri mengikut jenis kerja yang anda minati. Setiap kad memaut ke halaman perkhidmatan yang berkaitan.",
+      "Tapis portfolio mengikut jenis kerja yang anda minati. Setiap kad membuka halaman projek dan memaut ke halaman perkhidmatan yang berkaitan.",
     allCategories: "Semua kategori",
     showingPrefix: "Memaparkan",
-    showingSuffixOne: "gambar.",
-    showingSuffixMany: "gambar.",
+    showingSuffixOne: "projek.",
+    showingSuffixMany: "projek.",
     showingNote: "Semua imej adalah daripada kerja yang dilaksanakan oleh pasukan kami.",
     emptyState: "Tiada gambar diterbitkan dalam kategori ini buat masa ini.",
     fallbackCategory: "Perkhidmatan",
     exploreServicePrefix: "Terokai perkhidmatan",
+    viewProject: "Lihat projek",
+    listRegion: "Portfolio projek",
+    emptyEyebrow: "Projek",
+    emptyTitle: "Pameran projek kami sedang dikemas kini",
+    emptyBody:
+      "Pameran projek sebenar sedang dikemas kini. Hubungi Renovix Home Services untuk membincangkan keperluan renovasi atau pembaikan rumah anda, dan kami boleh menerangkan kerja yang serupa dengan apa yang anda fikirkan.",
+    emptyNote:
+      "Kami hanya menerbitkan gambar kerja yang dilaksanakan oleh pasukan kami sendiri, dengan butiran yang telah disahkan oleh pelanggan. Tiada apa-apa di halaman ini merupakan gambar stok atau contoh rekaan.",
+    emptyCtaPrimary: "Dapatkan Sebut Harga Percuma",
+    emptyCtaSecondary: "WhatsApp Kami",
     futureEyebrow: "Bagaimana galeri ini bertambah",
     futureTitle: "Apa yang kami tambah pada setiap entri projek",
     futureLead:
@@ -711,6 +722,46 @@ export const ms: Dictionary = {
     ctaDescription:
       "Terokai kategori perkhidmatan atau kongsi butiran pembaikan, naik taraf atau renovasi anda untuk memulakan permintaan sebut harga.",
     ctaSecondary: "Terokai Perkhidmatan",
+  },
+  projectPage: {
+    metaTitleTemplate: "{title} — {category} | Renovix Home Services",
+    eyebrow: "Projek",
+    overviewEyebrow: "Gambaran Keseluruhan Projek",
+    overviewTitle: "Mengenai kerja ini",
+    scopeEyebrow: "Skop",
+    scopeTitle: "Skop kerja",
+    detailsEyebrow: "Butiran Projek",
+    detailsTitle: "Butiran yang disahkan",
+    detailLabels: {
+      propertyType: "Jenis hartanah",
+      workType: "Jenis kerja",
+      completed: "Siap pada",
+      duration: "Tempoh",
+      materials: "Bahan",
+    },
+    galleryEyebrow: "Galeri",
+    galleryTitle: "Gambar daripada kerja ini",
+    beforeLabel: "Sebelum",
+    afterLabel: "Selepas",
+    servicesEyebrow: "Perkhidmatan Digunakan",
+    servicesTitle: "Perkhidmatan Renovix yang terlibat dalam kerja ini",
+    servicesBody:
+      "Setiap projek memaut ke halaman perkhidmatan yang menerangkan kerja secara terperinci, termasuk sub-perkhidmatan yang kami laksanakan dan proses yang kami ikuti.",
+    locationEyebrow: "Lokasi",
+    locationTitle: "Di mana kami menjalankan kerja ini",
+    locationUnverifiedBody:
+      "Kawasan khusus untuk kerja ini tidak diterbitkan. Renovix Home Services menjalankan kerja jubin, siling, elektrik, kimpalan, paip dan renovasi di seluruh Kuala Lumpur, Selangor dan Lembah Klang.",
+    honestyNote:
+      "Hanya maklumat yang pelanggan bersetuju untuk dikongsi diterbitkan di sini. Nama pelanggan, alamat tapak, tarikh, harga dan tuntutan hasil tidak disertakan.",
+    relatedEyebrow: "Kerja Lain",
+    relatedTitle: "Lagi kerja {category}",
+    relatedEmpty:
+      "Lebih banyak gambar bagi jenis kerja ini akan ditambah apabila kerja selesai dan imej dibenarkan untuk diterbitkan.",
+    backToProjects: "Kembali ke semua projek",
+    ctaEyebrow: "Rancang kerja anda sendiri",
+    ctaTitle: "Perlukan kerja seperti ini di hartanah anda?",
+    ctaDescription:
+      "Hantarkan butiran dan gambar kerja yang anda fikirkan, atau mesej kami di WhatsApp, dan kami boleh menasihatkan langkah seterusnya serta menyediakan sebut harga.",
   },
   faq: {
     metaTitle:
