@@ -26,7 +26,7 @@ export const ms: Dictionary = {
     openMenu: "Buka menu",
     closeMenu: "Tutup menu",
     brandHome: "Renovix Home Services – Laman Utama",
-    filterProjects: "Tapis contoh portfolio",
+    filterProjects: "Tapis gambar projek mengikut kategori perkhidmatan",
   },
   nav: {
     // Short forms measured against the Plus Jakarta Sans metrics: the long
@@ -50,6 +50,7 @@ export const ms: Dictionary = {
   cta: {
     getFreeQuote: "Sebut Harga Percuma",
     quoteShort: "Sebut Harga",
+    whatsappShort: "WhatsApp",
     requestQuote: "Minta Sebut Harga",
     getQuote: "Dapatkan Sebut Harga",
     startQuoteRequest: "Mulakan Permintaan Sebut Harga",
@@ -661,44 +662,38 @@ export const ms: Dictionary = {
     multipleServicesSubService: "Pelbagai perkhidmatan / skop renovasi",
   },
   projects: {
-    metaTitle: "Struktur Portfolio Projek | Renovix Home Services",
+    metaTitle: "Gambar Projek di Kuala Lumpur & Selangor | Renovix Home Services",
     metaDescription:
-      "Terokai struktur portfolio Renovix Home Services untuk kerja jubin, kimpalan, elektrik, cat, siling, partition, renovasi, paip, kalis air, lantai dan kerja am di KL dan Selangor.",
+      "Gambar projek sebenar Renovix Home Services: kerja jubin, siling plaster, pendawaian elektrik, kimpalan dan renovasi di sekitar Kuala Lumpur dan Selangor.",
     breadcrumb: "Projek",
     eyebrow: "Projek",
-    title: "Rangka portfolio yang sedia untuk butiran projek yang disahkan",
+    title: "Gambar sebenar kerja Renovix di Kuala Lumpur & Selangor",
     description:
-      "Lihat kategori perkhidmatan yang dirancangkan untuk portfolio Renovix. Gambar projek sebenar, skop dan maklumat lokasi hanya akan diterbitkan apabila ia dibekalkan dan disahkan.",
-    statusEyebrow: "Status portfolio",
-    statusTitle: "Ruang letak projek adalah disengajakan",
+      "Pilihan gambar daripada kerja sebenar Renovix, merangkumi kerja jubin, siling plaster dan lampu, pemasangan elektrik, kimpalan dan kerja logam, kelengkapan paip serta renovasi yang sedang berjalan.",
+    statusEyebrow: "Mengenai gambar ini",
+    statusTitle: "Gambar kerja yang telah kami laksanakan",
     statusBody:
-      "Tiada projek Renovix yang telah siap, gambar sebelum dan selepas, lokasi, tarikh atau keputusan yang direka untuk halaman ini. Setiap kad di bawah ditandakan dengan jelas sebagai ruang letak dan menyediakan tempat berstruktur untuk bahan portfolio sebenar apabila tersedia.",
+      "Setiap gambar di halaman ini ialah gambar kerja yang dilaksanakan oleh pasukan kami. Nama pelanggan, alamat, tarikh, kos dan keputusan tidak diterbitkan kerana maklumat itu tidak dikongsi di sini. Setiap keterangan hanya menjelaskan apa yang kelihatan dalam gambar.",
     browseEyebrow: "Lihat mengikut kategori perkhidmatan",
-    browseTitle: "Kategori portfolio untuk kerja peningkatan rumah",
+    browseTitle: "Gambar projek mengikut jenis kerja",
     browseLead:
-      "Tapis rangka ini mengikut jenis kerja yang anda minati. Pautan kategori membawa kepada maklumat perkhidmatan yang berkaitan sementara portfolio menunggu kandungan projek sebenar.",
+      "Tapis galeri mengikut jenis kerja yang anda minati. Setiap kad memaut ke halaman perkhidmatan yang berkaitan.",
     allCategories: "Semua kategori",
     showingPrefix: "Memaparkan",
-    showingSuffixOne: "ruang letak.",
-    showingSuffixMany: "ruang letak.",
-    showingNote:
-      "Tiada butiran projek atau gambar yang telah siap diterbitkan di sini.",
-    imagePlaceholder: "Ruang letak gambar",
-    statusLabel: "Ruang letak projek",
+    showingSuffixOne: "gambar.",
+    showingSuffixMany: "gambar.",
+    showingNote: "Semua imej adalah daripada kerja yang dilaksanakan oleh pasukan kami.",
+    emptyState: "Tiada gambar diterbitkan dalam kategori ini buat masa ini.",
     fallbackCategory: "Perkhidmatan",
     exploreServicePrefix: "Terokai perkhidmatan",
-    placeholderTitleSuffix: "maklumat projek belum tersedia",
-    placeholderDescription:
-      "Ruang ini dikhaskan untuk gambar projek, skop dan maklumat hartanah yang disahkan apabila dibekalkan.",
-    futureEyebrow: "Entri projek pada masa hadapan",
-    futureTitle: "Apa yang sepatutnya ada dalam maklumat portfolio yang disahkan",
+    futureEyebrow: "Bagaimana galeri ini bertambah",
+    futureTitle: "Apa yang kami tambah pada setiap entri projek",
     futureLead:
-      "Apabila bahan sebenar dibekalkan, setiap entri boleh dijadikan berguna tanpa tuntutan berlebihan: gambar tulen, skop perkhidmatan, jenis hartanah dan kawasan umum boleh ditambah hanya apabila ia disahkan.",
+      "Gambar baharu ditambah apabila kerja selesai dan imej dibenarkan untuk diterbitkan. Setiap satu diterangkan secara fakta, tanpa hasil yang direka.",
     futureItems: [
       {
-        title: "Gambar yang disahkan",
-        description:
-          "Gambar yang dibekalkan untuk penerbitan, dengan konteks yang tepat.",
+        title: "Gambar daripada kerja sebenar",
+        description: "Imej yang diambil di tapak semasa atau selepas kerja.",
       },
       {
         title: "Skop yang jelas",
@@ -712,9 +707,9 @@ export const ms: Dictionary = {
       },
     ],
     ctaEyebrow: "Rancang kerja anda sendiri",
-    ctaTitle: "Mencari perkhidmatan, bukan contoh portfolio?",
+    ctaTitle: "Mahukan kerja seperti ini di tempat anda?",
     ctaDescription:
-      "Terokai kategori perkhidmatan atau kongsi butiran pembaikan, naik taraf atau renovasi anda untuk memulakan permintaan sebut harga yang teliti.",
+      "Terokai kategori perkhidmatan atau kongsi butiran pembaikan, naik taraf atau renovasi anda untuk memulakan permintaan sebut harga.",
     ctaSecondary: "Terokai Perkhidmatan",
   },
   faq: {
