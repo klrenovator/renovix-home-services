@@ -169,8 +169,8 @@ export const projectPhotos: ProjectPhoto[] = [
     id: "metal-awning-frame-installation",
     category: "welding",
     src: "/images/projects/metal-awning-frame-installation-kl-selangor.webp",
-    width: 960,
-    height: 1280,
+    width: 1284,
+    height: 964,
   },
   {
     id: "office-renovation-ceiling-and-tiling",

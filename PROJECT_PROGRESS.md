@@ -1189,7 +1189,7 @@ the full brand and added a reproducible automated business-info audit.
   - Hours: `9:00 AM – 6:00 PM` (the opening days were not stated, so no `dayOfWeek` is published in the schema)
 - Dedicated service detail pages were built in Phase 2; problem pages were built in Phase 3; the local SEO area architecture (2 region hubs + 31 unique location guides + areas index) was built in Phase 4. Phase 5 adds the supporting pages and a portfolio framework containing only clearly labelled placeholders. Phase 6 delivered the multilingual architecture and full translations for the core pages; the long-form service, problem and area catalogues remain English-only and the blog is not built. Phase 8 was the quality optimization pass (performance, accessibility, mobile & UX); the advanced quote system remains future work.
 - Phase 9 was the final QA audit: full route, multilingual, service, problem, location, conversion, SEO, performance, accessibility and code-quality review. Six genuine defects were fixed (three language-mixing bugs, the redirecting `og:image`, the missing mobile CTA and the on-demand OG route), dead code was removed and two build-time i18n guards were added. Remaining known issues are listed at the end of the Phase 9 section.
-- Phase 10 completed the localization project: all 10 service pages, 46 problem pages and 33 area guides now exist in Malay and Chinese (178 new translated documents), every contact detail is real, and each language publishes the same 100 pages. Phase 11 completed the business information/local SEO foundation: the verified NAP is the only business data in the codebase, the Contact page presents it in full in all three languages, every page title carries the full brand, the structured data is audited and an automated business-info audit (`npm run audit:business`) guards it. Phase 12 connected the quote form to a real server-side submission and Resend email notification. Phases 13–14 remain pending.
+- Phase 10 completed the localization project: all 10 service pages, 46 problem pages and 33 area guides now exist in Malay and Chinese (178 new translated documents), every contact detail is real, and each language publishes the same 100 pages. Phase 11 completed the business information/local SEO foundation: the verified NAP is the only business data in the codebase, the Contact page presents it in full in all three languages, every page title carries the full brand, the structured data is audited and an automated business-info audit (`npm run audit:business`) guards it. Phase 12 connected the quote form to a real server-side submission and Resend email notification. Phase 13 published the business-supplied logo and the 21 real work photos (polished WebP with SEO file names and localized en/ms/zh captions) on the Projects page, and moved the header/mobile-menu contact CTA to a WhatsApp button in the official brand green; a follow-up fix corrected the sideways awning photo (PR #16). Phases 14–15 remain pending.
 missions are
       ignored (no email)
 - [x] In-memory rate limit after a valid payload (5 / 15 minutes / IP)
@@ -1224,9 +1224,60 @@ missions are
 - [x] Production email delivery could not be fully verified because the
       required email-provider credentials are not configured
 
-## PHASE 13 — PENDING
+## PHASE 13 — Brand Logo, Real Work Portfolio & Header Contact CTA — [x] COMPLETE (PR #15 + PR #16 fix)
+
+### 1. Logo (business-supplied artwork)
+- [x] Uploaded 1881×836 logo shipped under `public/images/logo/` as
+      `renovix-home-services-logo.png` + `.webp` (colour, for the white
+      header) and a white variant (for the navy footer), sized for the
+      ~40px header render.
+- [x] `components/Brand.tsx` renders the artwork via `next/image` with the
+      localized brand name kept as the link's `aria-label`.
+- [x] `app/icon.svg` unchanged: the full lockup is not legible as a favicon.
+
+### 2. Real work photos (21 uploaded JPGs → polished SEO WebP)
+- [x] All 21 genuine work photos published; the original phone-dump JPGs
+      are no longer shipped (they remain in git history).
+- [x] Polished (orientation/EXIF handling, exposure and colour
+      correction, resized, metadata stripped) and converted to high-quality
+      WebP with lowercase hyphenated, service-first SEO file names ending in
+      the verified market suffix `-kl-selangor` (no invented streets/condos).
+- [x] PR #16 fix: the awning-installation shot was uploaded rotated 90°
+      sideways; its shipped WebP is now rotated upright (1284×964 after
+      deskew/trim) and `data/project-photos.ts` carries the corrected
+      intrinsic dimensions.
+
+### 3. Projects page = real portfolio
+- [x] `data/project-photos.ts`: photo inventory (id, category, src, width,
+      height) plus per-language card copy via `getProjectPhotoContent`.
+- [x] Placeholder cards replaced by real images through `next/image`
+      (alt text + intrinsic dimensions, no layout shift) and category
+      filters.
+- [x] EN/MS/ZH page titles and 150–160-char meta descriptions, an honest
+      "About these photos" note, and factual 1–2 sentence card copy per
+      photo — no invented clients, dates, prices or results.
+- [x] Canonicals, hreflang, sitemap, robots.txt and JSON-LD untouched;
+      photo URLs live only on the existing `/projects/` page.
+
+### 4. Header/mobile contact CTA adjustment
+- [x] Yellow "Quote" button removed from the desktop header, the compact
+      mobile header and the mobile menu; an official-green WhatsApp button
+      (#25D366 / hover #1EBE57, white icon + label) sits in its place with
+      the EN | BM | 中文 switcher kept beside it.
+- [x] Get a Quote CTAs remain in page bodies, heroes and `/quote/`.
+
+### 5. Testing
+- [x] `npm run type-check` — **PASS**
+- [x] `npm run lint` — **PASS**
+- [x] `npm run build` — **PASS** (310 localized pages prerendered)
+- [x] `npm run audit:business` — **PASS** (no invented claims)
+- [x] Served build verified across en/ms/zh: titles/meta, hreflang, logo in
+      header + footer, green WhatsApp CTA, 21 portfolio images with alt
+      text, old JPG paths 404, corrected awning photo (1284×964) renders.
 
 ## PHASE 14 — PENDING
+
+## PHASE 15 — PENDING
 
 ---
 
@@ -1238,4 +1289,4 @@ missions are
   - Hours: `9:00 AM – 6:00 PM` (the opening days were not stated, so no `dayOfWeek` is published in the schema)
 - Dedicated service detail pages were built in Phase 2; problem pages were built in Phase 3; the local SEO area architecture (2 region hubs + 31 unique location guides + areas index) was built in Phase 4. Phase 5 adds the supporting pages and a portfolio framework containing only clearly labelled placeholders. Phase 6 delivered the multilingual architecture and full translations for the core pages; the long-form service, problem and area catalogues remain English-only and the blog is not built. Phase 8 was the quality optimization pass (performance, accessibility, mobile & UX); the advanced quote system remains future work.
 - Phase 9 was the final QA audit: full route, multilingual, service, problem, location, conversion, SEO, performance, accessibility and code-quality review. Six genuine defects were fixed (three language-mixing bugs, the redirecting `og:image`, the missing mobile CTA and the on-demand OG route), dead code was removed and two build-time i18n guards were added. Remaining known issues are listed at the end of the Phase 9 section.
-- Phase 10 completed the localization project: all 10 service pages, 46 problem pages and 33 area guides now exist in Malay and Chinese (178 new translated documents), every contact detail is real, and each language publishes the same 100 pages. Phase 11 completed the business information/local SEO foundation: the verified NAP is the only business data in the codebase, the Contact page presents it in full in all three languages, every page title carries the full brand, the structured data is audited and an automated business-info audit (`npm run audit:business`) guards it. Phases 12–14 remain pending.
+- Phase 10 completed the localization project: all 10 service pages, 46 problem pages and 33 area guides now exist in Malay and Chinese (178 new translated documents), every contact detail is real, and each language publishes the same 100 pages. Phase 11 completed the business information/local SEO foundation: the verified NAP is the only business data in the codebase, the Contact page presents it in full in all three languages, every page title carries the full brand, the structured data is audited and an automated business-info audit (`npm run audit:business`) guards it. Phase 12 delivered the functional quote form and Phase 13 the logo, real work-photo portfolio and header WhatsApp CTA. Phases 14–15 remain pending.
