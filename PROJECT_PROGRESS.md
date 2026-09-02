@@ -1782,7 +1782,20 @@ missions are
       descriptions add only the brand, the already-published service offer
       and a quotation invitation.
 
-### 10. Still required from the owner (unchanged)
+### 10. Git / deployment
+- [x] Branch `arena/01a062db-renovix-home-services`, commit `326b3ca`
+      ("Phase 13 (final): per-project OG images, self-contained OG fonts, zh
+      metadata, real-browser verification"), merged to `main` via **PR #19**
+      (merge commit `577b1aa`).
+- [x] Diff reviewed before commit: only the files listed above; no debug or
+      test leftovers, no secrets, no changes to business facts.
+- [x] **Vercel production deployment of `577b1aa`: state "success" —
+      "Deployment has completed"** (GitHub deployment status, 2026-09-02
+      16:45 UTC); the PR-branch preview deployment also succeeded. (The
+      sandbox cannot fetch `*.vercel.app` directly, so deployment status was
+      verified through the GitHub API.)
+
+### 11. Still required from the owner (unchanged)
 - [ ] Per-project case-study data (customer-approved location, year, property
       type, scope, materials, before/after pairs of the same job) before
       those fields can be published.
