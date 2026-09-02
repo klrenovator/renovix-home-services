@@ -22,8 +22,6 @@ export type MobileMenuLabels = {
   closeMenu: string;
   navigation: string;
   services: string;
-  quote: string;
-  quoteHref: string;
   whatsapp: string;
   whatsappHref: string;
   language: string;
@@ -176,14 +174,9 @@ export function MobileMenu({ lang, navigation, services, labels }: MobileMenuPro
               </div>
             </div>
 
+            {/* WhatsApp in the official brand green is the single menu CTA;
+                "Get a Quote" links stay in the page bodies and on /quote/. */}
             <div className="grid gap-2.5">
-              <Link
-                href={labels.quoteHref}
-                onClick={closeMenu}
-                className="btn btn-primary text-center"
-              >
-                <span>{labels.quote}</span>
-              </Link>
               <Link
                 href={labels.whatsappHref}
                 target={whatsappIsExternal ? "_blank" : undefined}

@@ -24,7 +24,7 @@ export const zh: Dictionary = {
     openMenu: "打开菜单",
     closeMenu: "关闭菜单",
     brandHome: "Renovix Home Services – 首页",
-    filterProjects: "筛选作品分类",
+    filterProjects: "依服务分类筛选工程照片",
   },
   nav: {
     home: "首页",
@@ -43,6 +43,7 @@ export const zh: Dictionary = {
   cta: {
     getFreeQuote: "免费获取报价",
     quoteShort: "报价",
+    whatsappShort: "WhatsApp",
     requestQuote: "索取报价",
     getQuote: "获取报价",
     startQuoteRequest: "开始报价申请",
@@ -602,42 +603,38 @@ export const zh: Dictionary = {
     multipleServicesSubService: "多项服务 / 装修工程",
   },
   projects: {
-    metaTitle: "工程案例架构 | Renovix Home Services",
+    metaTitle: "吉隆坡与雪兰莪工程照片 | Renovix Home Services",
     metaDescription:
-      "浏览 Renovix Home Services 的工程案例架构，涵盖吉隆坡与雪兰莪的瓷砖、焊接、电工、油漆、天花板、隔墙、装修、水管、防水、地板与居家维修。",
+      "Renovix Home Services 的真实工程照片：吉隆坡与雪兰莪的瓷砖铺设、石膏天花、电气布线、金属焊接与装修施工实录，全部为团队现场拍摄。",
     breadcrumb: "工程案例",
     eyebrow: "工程案例",
-    title: "已就绪、等待真实工程资料的案例架构",
+    title: "Renovix 在吉隆坡与雪兰莪的真实施工照片",
     description:
-      "浏览为 Renovix 案例规划的服务分类。实际的工程照片、工程范围与位置信息，只会在资料提供并经确认后发布。",
-    statusEyebrow: "案例状态",
-    statusTitle: "案例占位内容是刻意保留的",
+      "这里收录 Renovix 实际工程的照片，涵盖瓷砖铺设、石膏天花与灯具、电气安装、焊接与金属工程、卫浴洁具安装，以及进行中的装修工程。",
+    statusEyebrow: "关于这些照片",
+    statusTitle: "由我们团队施工的实拍照片",
     statusBody:
-      "本页面并未虚构任何已完成的 Renovix 工程、施工前后照片、地点、日期或成果。以下每张卡片都明确标示为占位内容，为将来真实案例资料预留结构化的位置。",
+      "本页每一张图片都是我们团队实际施工的照片。客户姓名、地址、日期、费用与成果并未在此发布，因为这些资料并未提供。每段说明只描述画面中可见的内容。",
     browseEyebrow: "依服务分类浏览",
-    browseTitle: "房屋改善工程的案例分类",
+    browseTitle: "依工程类型浏览照片",
     browseLead:
-      "依您感兴趣的工作类型筛选。在真实案例内容上线之前，分类链接会导向相关的服务信息。",
+      "依您感兴趣的工程类型筛选相册。每张卡片都会链接到相应的服务页面。",
     allCategories: "全部分类",
     showingPrefix: "目前显示",
-    showingSuffixOne: "项占位内容。",
-    showingSuffixMany: "项占位内容。",
-    showingNote: "此处尚未发布任何已完成工程的资料或照片。",
-    imagePlaceholder: "图片占位",
-    statusLabel: "工程占位内容",
+    showingSuffixOne: "张照片。",
+    showingSuffixMany: "张照片。",
+    showingNote: "所有图片均来自我们团队实际施工的工程。",
+    emptyState: "此分类目前尚未发布照片。",
     fallbackCategory: "服务",
     exploreServicePrefix: "了解服务",
-    placeholderTitleSuffix: "工程资料待提供",
-    placeholderDescription:
-      "此处保留用于将来经确认的工程照片、工程范围与房屋资料。",
-    futureEyebrow: "未来的案例条目",
-    futureTitle: "经确认的案例内容应包含什么",
+    futureEyebrow: "相册如何持续更新",
+    futureTitle: "每则工程记录会加入什么",
     futureLead:
-      "在真实资料提供后，每个条目都可以在不夸大宣传的前提下发挥作用：真实照片、工程范围、房屋类型与大致地区，只会在能够确认时加入。",
+      "工程完成且照片获准发布后，我们会陆续加入新的相片。每张照片都据实说明，不会虚构成果。",
     futureItems: [
       {
-        title: "经确认的照片",
-        description: "为发布而提供的图片，并附准确的背景说明。",
+        title: "真实工程照片",
+        description: "施工期间或完工后在现场拍摄的图片。",
       },
       {
         title: "清楚的工程范围",
@@ -649,9 +646,9 @@ export const zh: Dictionary = {
       },
     ],
     ctaEyebrow: "规划您自己的工程",
-    ctaTitle: "您在寻找服务，而不是案例示范？",
+    ctaTitle: "想在您的空间做同样的工程吗？",
     ctaDescription:
-      "浏览服务分类，或提供您的维修、升级或装修详情，开始一次审慎的报价申请。",
+      "浏览服务分类，或提供您的维修、升级或装修详情，开始申请报价。",
     ctaSecondary: "浏览服务项目",
   },
   faq: {

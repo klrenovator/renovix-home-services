@@ -144,8 +144,22 @@
     @apply border border-navy/20 bg-white text-navy hover:border-brand hover:bg-surface focus-visible:ring-brand;
   }
 
+  /**
+   * Official WhatsApp brand green (#25D366) with the documented darker hover
+   * (#1EBE57), white icon and white label — so the button reads as WhatsApp
+   * rather than as another site-coloured CTA.
+   */
   .btn-whatsapp {
-    @apply bg-navy text-white hover:bg-brand focus-visible:ring-brand;
+    @apply text-white;
+    background-color: #25d366;
+  }
+
+  .btn-whatsapp:hover {
+    background-color: #1ebe57;
+  }
+
+  .btn-whatsapp:focus-visible {
+    --tw-ring-color: #1ebe57;
   }
 
   .btn-ghost {

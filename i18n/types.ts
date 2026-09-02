@@ -50,6 +50,8 @@ export type Dictionary = {
     getFreeQuote: string;
     /** Short form for the compact mobile header button. */
     quoteShort: string;
+    /** Short header label for the WhatsApp button on phones. */
+    whatsappShort: string;
     requestQuote: string;
     getQuote: string;
     startQuoteRequest: string;
@@ -506,12 +508,9 @@ export type Dictionary = {
     showingSuffixOne: string;
     showingSuffixMany: string;
     showingNote: string;
-    imagePlaceholder: string;
-    statusLabel: string;
+    emptyState: string;
     fallbackCategory: string;
     exploreServicePrefix: string;
-    placeholderTitleSuffix: string;
-    placeholderDescription: string;
     futureEyebrow: string;
     futureTitle: string;
     futureLead: string;

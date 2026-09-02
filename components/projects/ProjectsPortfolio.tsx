@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { IconArrowRight, IconCamera, serviceIcons } from "@/components/icons";
 import type { ProjectCategoryId } from "@/data/projects";
@@ -15,6 +16,12 @@ export type PortfolioCategory = {
 export type PortfolioItem = {
   id: string;
   category: ProjectCategoryId;
+  src: string;
+  width: number;
+  height: number;
+  heading: string;
+  description: string;
+  alt: string;
 };
 
 export type PortfolioLabels = {
@@ -24,12 +31,9 @@ export type PortfolioLabels = {
   showingSuffixOne: string;
   showingSuffixMany: string;
   showingNote: string;
-  imagePlaceholder: string;
-  statusLabel: string;
   fallbackCategory: string;
   exploreServicePrefix: string;
-  titleSuffix: string;
-  description: string;
+  emptyState: string;
 };
 
 type ProjectsPortfolioProps = {
@@ -47,6 +51,17 @@ export function ProjectsPortfolio({
 }: ProjectsPortfolioProps) {
   const [activeFilter, setActiveFilter] = useState<ProjectFilter>("all");
 
+  /**
+   * Only categories that actually have published photos get a filter chip —
+   * an empty "Painting" filter would imply work is on the page when it is not.
+   */
+  const availableCategories = useMemo(
+    () => categories.filter((category) =>
+      items.some((item) => item.category === category.id),
+    ),
+    [categories, items],
+  );
+
   const shown = useMemo(
     () =>
       activeFilter === "all"
@@ -63,7 +78,7 @@ export function ProjectsPortfolio({
           label={labels.allCategories}
           onClick={() => setActiveFilter("all")}
         />
-        {categories.map((category) => (
+        {availableCategories.map((category) => (
           <FilterButton
             key={category.id}
             isActive={activeFilter === category.id}
@@ -79,61 +94,65 @@ export function ProjectsPortfolio({
         {labels.showingNote}
       </p>
 
-      <div className="mt-7 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {shown.map((item) => {
-          const category = categories.find((entry) => entry.id === item.category);
-          const Icon = category ? serviceIcons[category.icon] : IconCamera;
+      {shown.length === 0 ? (
+        <p className="mt-7 rounded-2xl border border-slate-200 bg-white p-6 text-sm text-secondary">
+          {labels.emptyState}
+        </p>
+      ) : (
+        <div className="mt-7 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {shown.map((item, index) => {
+            const category = categories.find((entry) => entry.id === item.category);
+            const Icon = category ? serviceIcons[category.icon] : IconCamera;
 
-          return (
-            <article
-              key={item.id}
-              className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-soft"
-            >
-              <div className="relative flex aspect-[16/10] items-center justify-center overflow-hidden bg-slate-100 text-slate-400">
-                <div
-                  aria-hidden="true"
-                  className="absolute -right-8 -top-8 h-32 w-32 rounded-full bg-brand/5"
-                />
-                <div
-                  aria-hidden="true"
-                  className="absolute -bottom-10 -left-8 h-36 w-36 rounded-full bg-accent/15"
-                />
-                <div className="relative flex flex-col items-center gap-2 text-center">
-                  <Icon className="h-9 w-9 text-brand/60" />
-                  <span className="text-xs font-semibold uppercase tracking-[0.14em] text-secondary">
-                    {labels.imagePlaceholder}
-                  </span>
+            return (
+              <article
+                key={item.id}
+                className="flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-soft"
+              >
+                <div className="relative aspect-[4/3] overflow-hidden bg-slate-100">
+                  <Image
+                    src={item.src}
+                    alt={item.alt}
+                    width={item.width}
+                    height={item.height}
+                    sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                    /**
+                     * The first row is above the fold on desktop; the rest load
+                     * lazily so the page keeps a light initial payload.
+                     */
+                    priority={index < 3}
+                    loading={index < 3 ? undefined : "lazy"}
+                    className="h-full w-full object-cover"
+                  />
                 </div>
-              </div>
-              <div className="p-5 sm:p-6">
-                <div className="flex items-center justify-between gap-3">
-                  <span className="rounded-full bg-accent/15 px-2.5 py-1 text-xs font-bold text-navy">
-                    {category?.label ?? labels.fallbackCategory}
-                  </span>
-                  <span className="text-xs font-semibold uppercase tracking-[0.12em] text-secondary">
-                    {labels.statusLabel}
-                  </span>
+                <div className="flex flex-1 flex-col p-5 sm:p-6">
+                  <div className="flex items-center gap-3">
+                    <span className="inline-flex items-center gap-1.5 rounded-full bg-accent/15 px-2.5 py-1 text-xs font-bold text-navy">
+                      <Icon className="h-3.5 w-3.5" aria-hidden="true" />
+                      {category?.label ?? labels.fallbackCategory}
+                    </span>
+                  </div>
+                  <h3 className="mt-4 text-lg font-semibold tracking-tight text-navy">
+                    {item.heading}
+                  </h3>
+                  <p className="mt-2 text-sm leading-6 text-secondary">
+                    {item.description}
+                  </p>
+                  {category?.href ? (
+                    <Link
+                      href={category.href}
+                      className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-brand transition-colors hover:text-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                    >
+                      {labels.exploreServicePrefix} {category.label}
+                      <IconArrowRight className="h-4 w-4" />
+                    </Link>
+                  ) : null}
                 </div>
-                <h3 className="mt-4 text-lg font-semibold tracking-tight text-navy">
-                  {category?.label ?? labels.fallbackCategory} {labels.titleSuffix}
-                </h3>
-                <p className="mt-2 text-sm leading-6 text-secondary">
-                  {labels.description}
-                </p>
-                {category?.href ? (
-                  <Link
-                    href={category.href}
-                    className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-brand transition-colors hover:text-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
-                  >
-                    {labels.exploreServicePrefix} {category.label}
-                    <IconArrowRight className="h-4 w-4" />
-                  </Link>
-                ) : null}
-              </div>
-            </article>
-          );
-        })}
-      </div>
+              </article>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }

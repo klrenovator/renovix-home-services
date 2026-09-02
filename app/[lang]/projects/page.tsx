@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/Button";
 import { getLanguage, languages } from "@/data/languages";
 import { getProjectCategories } from "@/data/i18n";
 import { projectCategories } from "@/data/projects";
+import { projectPhotos, getProjectPhotoContent } from "@/data/project-photos";
 import { getDictionary } from "@/i18n";
 import { contentHref, localizedHref } from "@/i18n/hrefs";
 import { absoluteUrl, buildPageMetadata } from "@/i18n/seo";
@@ -110,10 +111,20 @@ export default async function ProjectsPage({ params }: ProjectsPageProps) {
                     code,
                   ),
                 }))}
-                items={categories.map((category) => ({
-                  id: `placeholder-${category.id}`,
-                  category: category.id,
-                }))}
+                items={projectPhotos.map((photo) => {
+                  const content = getProjectPhotoContent(photo.id, code);
+
+                  return {
+                    id: photo.id,
+                    category: photo.category,
+                    src: photo.src,
+                    width: photo.width,
+                    height: photo.height,
+                    heading: content.heading,
+                    description: content.description,
+                    alt: content.alt,
+                  };
+                })}
                 labels={{
                   allCategories: t.projects.allCategories,
                   filterAria: t.a11y.filterProjects,
@@ -121,12 +132,9 @@ export default async function ProjectsPage({ params }: ProjectsPageProps) {
                   showingSuffixOne: t.projects.showingSuffixOne,
                   showingSuffixMany: t.projects.showingSuffixMany,
                   showingNote: t.projects.showingNote,
-                  imagePlaceholder: t.projects.imagePlaceholder,
-                  statusLabel: t.projects.statusLabel,
+                  emptyState: t.projects.emptyState,
                   fallbackCategory: t.projects.fallbackCategory,
                   exploreServicePrefix: t.projects.exploreServicePrefix,
-                  titleSuffix: t.projects.placeholderTitleSuffix,
-                  description: t.projects.placeholderDescription,
                 }}
               />
             </div>

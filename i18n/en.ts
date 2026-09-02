@@ -26,7 +26,7 @@ export const en: Dictionary = {
     openMenu: "Open menu",
     closeMenu: "Close menu",
     brandHome: "Renovix Home Services – Home",
-    filterProjects: "Filter portfolio placeholders",
+    filterProjects: "Filter project photos by service category",
   },
   nav: {
     home: "Home",
@@ -45,6 +45,7 @@ export const en: Dictionary = {
   cta: {
     getFreeQuote: "Get a Free Quote",
     quoteShort: "Quote",
+    whatsappShort: "WhatsApp",
     requestQuote: "Request a Quote",
     getQuote: "Get a Quote",
     startQuoteRequest: "Start a Quote Request",
@@ -650,42 +651,38 @@ export const en: Dictionary = {
     multipleServicesSubService: "Multiple services / renovation scope",
   },
   projects: {
-    metaTitle: "Projects Portfolio Structure | Renovix Home Services",
+    metaTitle: "Project Photos in Kuala Lumpur & Selangor | Renovix Home Services",
     metaDescription:
-      "The Renovix Home Services portfolio structure for tiling, welding, electrical, painting, ceiling, renovation and plumbing work in KL and Selangor.",
+      "Real project photos from Renovix Home Services: tiling, plaster ceiling, electrical wiring, welding and renovation work across Kuala Lumpur and Selangor.",
     breadcrumb: "Projects",
     eyebrow: "Projects",
-    title: "A portfolio framework ready for verified project details",
+    title: "Real photos from Renovix work in Kuala Lumpur & Selangor",
     description:
-      "Browse the service categories planned for the Renovix portfolio. Actual project photographs, scope and location information will only be published when they are supplied and verified.",
-    statusEyebrow: "Portfolio status",
-    statusTitle: "Project placeholders are intentional",
+      "A selection of photographs from actual Renovix jobs, covering tiling, plaster ceiling and lighting, electrical installation, welding and metal works, plumbing fixtures and renovation in progress.",
+    statusEyebrow: "About these photos",
+    statusTitle: "Photographs of work we have carried out",
     statusBody:
-      "No completed Renovix projects, before-and-after images, locations, dates or results have been fabricated for this page. Each card below is explicitly marked as a placeholder and reserves a structured place for genuine portfolio material when it becomes available.",
+      "Every image on this page is a photograph of work carried out by our team. Client names, addresses, dates, costs and results are not published because that information is not shared here. Each caption describes only what is visible in the frame.",
     browseEyebrow: "Browse by service category",
-    browseTitle: "Portfolio categories for home improvement work",
+    browseTitle: "Project photos by type of work",
     browseLead:
-      "Filter the framework by the kind of work you are interested in. The category links lead to the relevant service information while the portfolio awaits real project content.",
+      "Filter the gallery by the kind of work you are interested in. Each card links through to the matching service page.",
     allCategories: "All categories",
     showingPrefix: "Showing",
-    showingSuffixOne: "placeholder.",
-    showingSuffixMany: "placeholders.",
-    showingNote: "No completed project details or images are published here yet.",
-    imagePlaceholder: "Image placeholder",
-    statusLabel: "Project placeholder",
+    showingSuffixOne: "photo.",
+    showingSuffixMany: "photos.",
+    showingNote: "All images are from work carried out by our team.",
+    emptyState: "No photos have been published in this category yet.",
     fallbackCategory: "Service",
     exploreServicePrefix: "Explore service",
-    placeholderTitleSuffix: "project information pending",
-    placeholderDescription:
-      "This space is reserved for verified project photos, scope and property information when it is supplied.",
-    futureEyebrow: "Future project entries",
-    futureTitle: "What verified portfolio information should include",
+    futureEyebrow: "How this gallery grows",
+    futureTitle: "What we add to each project entry",
     futureLead:
-      "When real materials are supplied, each entry can be made useful without over-claiming: genuine images, the service scope, property type and general area can be added only where they are confirmed.",
+      "New photographs are added as jobs are completed and the images are cleared for publication. Each one is described factually, without invented outcomes.",
     futureItems: [
       {
-        title: "Verified photos",
-        description: "Images supplied for publication, with accurate context.",
+        title: "Photos from real jobs",
+        description: "Images taken on site during or after the work.",
       },
       {
         title: "Clear scope",
@@ -699,9 +696,9 @@ export const en: Dictionary = {
       },
     ],
     ctaEyebrow: "Plan your own work",
-    ctaTitle: "Looking for a service rather than a portfolio example?",
+    ctaTitle: "Want work like this at your place?",
     ctaDescription:
-      "Explore the service categories or share your own repair, upgrade or renovation details to begin a considered quote request.",
+      "Explore the service categories or share your own repair, upgrade or renovation details to begin a quote request.",
     ctaSecondary: "Explore Services",
   },
   faq: {

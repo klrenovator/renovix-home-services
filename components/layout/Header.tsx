@@ -1,8 +1,9 @@
 import Link from "next/link";
 import { Brand } from "@/components/Brand";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
+import { IconWhatsApp } from "@/components/icons";
 import { MobileMenu } from "@/components/layout/MobileMenu";
-import { Button } from "@/components/ui/Button";
+import { WhatsAppButton } from "@/components/ui/Button";
 import { getLanguageCode, type LanguageCode } from "@/data/languages";
 import { getServiceCategories } from "@/data/i18n";
 import { getWhatsAppHref } from "@/data/site";
@@ -51,11 +52,13 @@ export function Header({ lang }: HeaderProps) {
           </ul>
         </nav>
 
+        {/* WhatsApp is the primary contact channel for this business, so the
+            header action is the WhatsApp button in the official brand green.
+            "Get a Quote" CTAs remain throughout the page bodies and on the
+            quote page. */}
         <div className="hidden items-center gap-3 xl:flex">
           <LanguageSwitcher lang={code} label={t.a11y.languageNavigation} />
-          <Button href={localizedHref("/quote", code)} variant="primary">
-            {t.cta.getFreeQuote}
-          </Button>
+          <WhatsAppButton href={getWhatsAppHref()} label={t.cta.whatsappUs} />
         </div>
 
         <div className="flex items-center gap-2 xl:hidden sm:gap-3">
@@ -71,19 +74,21 @@ export function Header({ lang }: HeaderProps) {
             />
           </div>
           {/* The primary conversion action stays visible on phones instead of
-              hiding inside the menu. A short label plus tighter padding keeps
-              the header on one line; below 360px (where the brand lockup, the
-              button and the menu trigger no longer fit) it falls back to the
-              menu, which still carries the full-width quote and WhatsApp CTAs.
-              `aria-label` gives assistive tech the full wording and contains
-              the visible text (WCAG 2.5.3). */}
-          <Link
-            href={localizedHref("/quote", code)}
-            aria-label={t.cta.getFreeQuote}
-            className="btn btn-primary hidden whitespace-nowrap px-3 min-[360px]:inline-flex"
+              hiding inside the menu: WhatsApp in the official brand green.
+              Below 360px (where the brand lockup, the button and the menu
+              trigger no longer fit) it falls back to the menu, which still
+              carries the full-width WhatsApp CTA. `aria-label` gives assistive
+              tech the full wording and contains the visible text (WCAG 2.5.3). */}
+          <a
+            href={getWhatsAppHref()}
+            target="_blank"
+            rel="noreferrer"
+            aria-label={t.cta.whatsappUs}
+            className="btn btn-whatsapp hidden whitespace-nowrap px-3 min-[360px]:inline-flex"
           >
-            {t.cta.quoteShort}
-          </Link>
+            <IconWhatsApp className="h-4 w-4 shrink-0" aria-hidden="true" />
+            <span>{t.cta.whatsappShort}</span>
+          </a>
           <MobileMenu
             lang={code}
             navigation={navigation}
@@ -96,8 +101,6 @@ export function Header({ lang }: HeaderProps) {
               closeMenu: t.a11y.closeMenu,
               navigation: t.a11y.mobileNavigation,
               services: t.footer.services,
-              quote: t.cta.getFreeQuote,
-              quoteHref: localizedHref("/quote", code),
               whatsapp: t.cta.whatsappUs,
               whatsappHref: getWhatsAppHref(),
               language: t.a11y.languageNavigation,
