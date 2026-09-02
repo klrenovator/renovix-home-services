@@ -1511,6 +1511,117 @@ missions are
 - [ ] Per-project 1.91:1 Open Graph crops, if social previews should show the
       work itself rather than the site card.
 
+## PHASE 13 (PART 3) — Final Fixes & Verification — [x] COMPLETE
+
+> Follow-up pass over the already-implemented Phase 13 system. One genuine
+> defect was found and fixed; everything else re-verified against the served
+> production build. Phase 14 has not been started.
+
+### 1. Sidebar (mobile drawer) opening bug — root cause fixed
+- [x] **Bug**: the drawer never became visible when the menu button was
+      tapped. The trigger state, icon swap and body-scroll lock all worked,
+      but the panel occupied zero pixels.
+- [x] **Root cause**: the header carries `backdrop-blur`, and a
+      `backdrop-filter` other than `none` makes the element the **containing
+      block for fixed-positioned descendants** (Filter Effects spec §
+      backdrop-filter; implemented by Chrome, Safari and Firefox). The drawer
+      panel (`fixed inset-0 top-[70px]`) lived inside the header, so
+      `top: 70px; bottom: 0` resolved against the 70px-tall header box —
+      a zero-height, invisible panel.
+- [x] **Fix**: `components/layout/MobileMenu.tsx` now renders the open drawer
+      through `createPortal(..., document.body)`, restoring the viewport as
+      the containing block. The header's design (including the blur) is
+      unchanged; the drawer was not hidden or replaced.
+- [x] Everything else about the drawer is untouched and still holds: focus
+      trap, Escape to close (focus returned to the trigger), body scroll
+      lock, `role="dialog"` + `aria-modal`, `aria-expanded`/`aria-controls`
+      on the trigger, localized accessible names ("Open menu" / "Buka menu" /
+      "打开菜单"), active-page highlight with `aria-current="page"`, link
+      clicks close the drawer, WhatsApp CTA inside the drawer, and the
+      compact language switcher in the drawer footer. React refs and event
+      handlers work through portals, so no logic changed.
+- [x] Drawer navigation content re-verified: Home, Services, Problems,
+      Areas, Projects, FAQ, About, Contact, **Get a Free Quote** — all
+      existing routes, localized in EN/MS/ZH (verified in the served RSC
+      payload: "Get a Free Quote" / "Sebut Harga Percuma" / "免费获取报价").
+      No routes were invented.
+
+### 2. Owner-supplied photos re-verified
+- [x] All 21 published projects reference exactly the 21 owner-supplied
+      WebP photos under `public/images/projects/` — a script diffed every
+      `src` in `data/project-content/projects.ts` against the files on disk
+      (no missing files, no extra/unknown images, no stock/AI imagery).
+- [x] Image optimization re-verified against the served build: the Next.js
+      optimizer returns 200 with responsive AVIF (15.9 KB at w=828) and WebP
+      (7.3 KB at w=384) variants; hero uses `priority` +
+      `sizes="(min-width: 768px) 768px, 100vw"` with intrinsic dimensions
+      (no layout shift); card/gallery/related images are `loading="lazy"`
+      inside fixed aspect boxes with responsive `sizes`.
+- [x] Meaningful, localized alt text confirmed in served HTML (e.g. "Large
+      marble-look floor tiles laid and levelled by Renovix Home Services in
+      Kuala Lumpur."). No `image1.jpg`-style alt text.
+- [x] No before/after labels are shown anywhere, because no photo pair has
+      verified before/after status. The model supports a pair for the future.
+
+### 3. Data honesty re-verified
+- [x] Scanned the projects system for lorem ipsum, placeholder, dummy,
+      sample, fake, stock and AI-image markers — the only matches are code
+      comments stating the prohibition.
+- [x] No invented locations, customers, dates, sizes, materials, prices,
+      scope, results, reviews or statistics. Optional fields stay absent;
+      pages skip empty sections gracefully.
+- [x] `npm run audit:business` — **PASS**.
+
+### 4. Language selectors re-verified
+- [x] Header: inline `EN | BM | 中文` switcher (≥ sm) and the 40px globe
+      disclosure button (< sm, `aria-label="Choose language"` localized) both
+      present in served HTML beside the WhatsApp button.
+- [x] Language switching preserves the current page (`/en/services/` links to
+      `/ms/services/` and `/zh/services/`, with `hrefLang` attributes).
+- [x] Header, drawer and footer all render the same `LanguageSwitcher`
+      component — one language system, no duplicate implementation.
+
+### 5. SEO / structured data / draft handling re-verified (served build)
+- [x] Project pages: unique title, unique meta description, self-referencing
+      canonical, OG title/description/image (site card; no fake per-project
+      OG imagery invented since no 1.91:1 crop of the photos exists).
+- [x] JSON-LD on project pages: `WebPage` + `BreadcrumbList` + `ImageObject`
+      (plus the pre-existing site-wide business/services graph). **No**
+      `Review`, `aggregateRating`, `price` or rating fields anywhere in the
+      page graph — grep of the served HTML found none.
+- [x] Sitemaps: 22 `/projects/…` URLs per language (index + 21 published
+      projects). All 21 projects are `status: "published"`; the registry
+      filters on status, and an unknown slug (`/en/projects/nonexistent-slug/`)
+      returns **404**.
+
+### 6. Route & link verification (served production build)
+- [x] All **363** sitemap URLs crawled — every one returns **200**; no broken
+      links. Home, Services, Projects, About, Contact, Quote, FAQ, Problems
+      and Areas verified individually in EN/MS/ZH where applicable.
+- [x] WhatsApp links use the single verified number; quote links point to the
+      existing Phase 12 `/quote/` flow — no second backend.
+
+### 7. Testing
+- [x] `npm run type-check` — **PASS**
+- [x] `npm run lint` — **PASS**
+- [x] `npm run build` — **PASS** (373 static pages)
+- [x] `npm run audit:business` — **PASS**
+- [x] Portal fix confirmed present in the built client bundle
+      (`createPortal` + `id:"mobile-menu"` in the same chunk).
+- [ ] **Not verified in a real browser**: no Chromium/Firefox binary is
+      installable in this sandbox, so drawer open/close, tap targets and the
+      360/390/412px checks are asserted from the served HTML, the CSS and the
+      built bundle — not from clicked, rendered screenshots. The fixed
+      containing-block defect is a spec-level certainty, but a human
+      click-through on a phone is still the final confirmation.
+
+### 8. Still required from the owner (unchanged)
+- [ ] Per-project case-study data (customer-approved location, year, property
+      type, scope, materials, before/after pairs of the same job) before those
+      fields can be published.
+- [ ] Per-project 1.91:1 OG crops if social previews should show the work
+      itself.
+
 ## PHASE 14 — PENDING
 
 ## PHASE 15 — PENDING
