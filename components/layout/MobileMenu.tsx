@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { IconMenu, IconClose, IconArrowRight, IconWhatsApp } from "@/components/icons";
@@ -134,16 +135,26 @@ export function MobileMenu({ lang, navigation, services, labels }: MobileMenuPro
         {isOpen ? <IconClose className="h-5 w-5" /> : <IconMenu className="h-5 w-5" />}
       </button>
 
-      {isOpen ? (
-        <div
-          ref={panelRef}
-          id="mobile-menu"
-          role="dialog"
-          aria-modal="true"
-          aria-label={labels.navigation}
-          className="fixed inset-0 top-[70px] z-50 overflow-y-auto border-t border-slate-200 bg-white px-4 pb-8 pt-6 shadow-xl animate-menu-in"
-          tabIndex={-1}
-        >
+      {/* The open drawer is rendered through a portal into <body>. It cannot
+          stay inside the sticky header: the header's `backdrop-blur` sets a
+          `backdrop-filter`, which per the Filter Effects spec makes the header
+          the containing block for fixed-positioned descendants. Without the
+          portal, `fixed inset-0 top-[70px]` resolves against the 70px-tall
+          header box — a zero-height panel — so the menu never becomes visible.
+          `isOpen` can only become true from a client-side click, so
+          `document.body` always exists when this branch renders; refs and
+          React event handlers work through portals unchanged. */}
+      {isOpen
+        ? createPortal(
+            <div
+              ref={panelRef}
+              id="mobile-menu"
+              role="dialog"
+              aria-modal="true"
+              aria-label={labels.navigation}
+              className="fixed inset-0 top-[70px] z-50 overflow-y-auto border-t border-slate-200 bg-white px-4 pb-8 pt-6 shadow-xl animate-menu-in"
+              tabIndex={-1}
+            >
           <div className="container-app mx-auto flex flex-col gap-6">
             <nav aria-label={labels.navigation}>
               <ul className="space-y-1">
@@ -219,8 +230,10 @@ export function MobileMenu({ lang, navigation, services, labels }: MobileMenuPro
               </Link>
             </div>
           </div>
-        </div>
-      ) : null}
+            </div>,
+            document.body,
+          )
+        : null}
     </div>
   );
 }
