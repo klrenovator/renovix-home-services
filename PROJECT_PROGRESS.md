@@ -1622,6 +1622,171 @@ missions are
 - [ ] Per-project 1.91:1 OG crops if social previews should show the work
       itself.
 
+## PHASE 13 (PART 4) — Final SEO, OG Fonts & Real-Browser Verification — [x] COMPLETE
+
+> The closing pass of Phase 13: per-project social-preview images generated
+> from the owner-supplied photographs, the Chinese Open Graph card made
+> self-contained (no build-time Google Fonts request), enriched Chinese
+> project metadata, and — for the first time in this project — the whole site
+> clicked through in a **real Chromium browser** at every required width.
+> Phase 14 has not been started.
+
+### 1. Real browser obtained and used
+- [x] The sandbox blocks every browser CDN (Playwright, Chrome-for-Testing,
+      apt), but the npm registry is reachable — and `@sparticuz/chromium`
+      ships a real Chromium binary **inside the npm tarball**. Chromium
+      **149.0.7827.0 (HeadlessChrome)** was extracted (its AL2023
+      shared-library bundle unpacked onto `LD_LIBRARY_PATH` for this Debian
+      host) and driven with `puppeteer-core` — no changes to the site's
+      dependencies.
+- [x] **329/329 real-browser checks passed** across
+      **360 / 390 / 412 / 768 / 1024 / 1280 / 1440 px**, against the served
+      production build (`next start`).
+
+### 2. Sidebar (mobile drawer) — real click-through verification
+- [x] Hamburger clicked (mouse) at 390/412/768/1024 and **tapped (touch
+      events)** at 360: the drawer opens, portalled into `<body>`, with a
+      real box (e.g. 412×845 px at 412 width), `position: fixed`,
+      `z-index 50` (above the header's z-40), active `pointer-events`, top
+      below the 70 px header, `role="dialog"` + `aria-modal="true"`.
+- [x] Body scroll locked while open (`overflow: hidden` **and** a scripted
+      `window.scrollTo` provably cannot move the page) and restored after
+      every close path.
+- [x] Close button (the trigger toggles) closes; **Escape** closes and
+      returns focus to the trigger; the drawer is fully removed from the DOM
+      afterwards — **no invisible overlay remains**.
+- [x] Focus is moved into the dialog on open, `aria-expanded` tracks state,
+      and a **focus trap** holds through 40 consecutive Tabs.
+- [x] Link click navigates (drawer → `/en/projects/`), closes the drawer and
+      restores scroll; the drawer lists 23 links including the
+      "Get a Free Quote" CTA.
+- [x] At 1280/1440 the hamburger is hidden by design and the desktop nav is
+      present (asserted).
+- [x] Drawer verified on **localized pages** (`/ms/`, `/zh/`): localized
+      trigger label ("Buka menu" / "打开菜单"), localized navigation, open,
+      Escape-close, zero runtime errors.
+- [x] Outside-click is not implemented for the drawer because the open
+      drawer *is* the overlay (it covers everything below the header) —
+      verified as designed. The header **globe language popup** (which does
+      float) was separately click-tested: opens on tap, closes on outside
+      click, closes on Escape with focus returned, `aria-expanded` correct.
+- [x] Zero page errors, zero console errors and zero failed requests during
+      all interactions (i.e. no hydration or runtime errors).
+
+### 3. Language selector verification (real clicks)
+- [x] Header at every width: the inline `EN | BM | 中文` switcher (≥ 640 px)
+      or the 40 px globe disclosure button (< 640 px) is visible **beside the
+      WhatsApp button** (adjacency asserted in the DOM at 360–1440).
+- [x] Inline switcher clicked at 1280: `/en/services/` → `/ms/services/` →
+      `/zh/services/` → `/en/services/`, and a deep project page
+      `/en/projects/marble-look-floor-tiling/` → `/zh/…`; `<html lang>`
+      follows (`en-MY`/`ms-MY`/`zh-MY`).
+- [x] Globe disclosure clicked at 390 (tap flows): en→ms and ms→zh, correct
+      destinations.
+- [x] Drawer's compact switcher clicked at 360: en→ms. Footer switcher
+      clicked: `/en/faq/` → `/zh/faq/`.
+- [x] One switcher component (`LanguageSwitcher`) powers header, drawer and
+      footer — no duplicate translation system.
+
+### 4. Per-project Open Graph images (from the owner's photographs)
+- [x] A **1200×630 (1.91:1) social crop** generated for every published
+      project from that project's own hero photograph (libvips "attention"
+      smart crop keeps the salient work in frame). 21 progressive JPEGs
+      (quality 82 — the format every unfurler, including WhatsApp, decodes),
+      25–131 KB each, committed under `public/images/projects/og/`.
+- [x] Data model: `Project.ogImage` (typed `ProjectImage`, optional, with a
+      documented fallback to the brand card); all 21 published entries
+      populated.
+- [x] Metadata: every project page now carries `og:image` = its own crop with
+      `og:image:width/height` (1200×630), a descriptive localized
+      `og:image:alt` (the photo's alt text), and a matching
+      `twitter:card summary_large_image` + `twitter:image`. Verified in the
+      served HTML for all 63 project pages.
+- [x] `npm run audit:project-assets` (new, dependency-free): every referenced
+      project image exists on disk, the declared intrinsic dimensions match
+      the real files (built-in WebP/JPEG header parser), OG crops are exactly
+      1200×630, nothing unreferenced sits in `public/images/projects/`, and
+      the generation manifest matches the published set.
+- [x] `scripts/make-project-og-images.mjs` (new) documents/regenerates the
+      crops; `sharp` is already present via Next.js itself, so no dependency
+      was added.
+
+### 5. Chinese OG-image font issue — root cause fixed, self-contained
+- [x] Root cause found in `@vercel/og`: it bundles only **Geist Regular
+      (Latin)**. For Chinese glyphs satori falls back to **downloading Noto
+      Sans SC from fonts.googleapis.com while rendering** — the
+      "Failed to load dynamic font" warning in the offline sandbox, and a
+      nondeterministic network dependency in any online build.
+- [x] Fix: the card route now passes explicit fonts — **Plus Jakarta Sans**
+      (the site's brand face, converted from the existing local woff2 files
+      to TTF, weights 400/700/800) and a **Noto Sans SC subset** (weights
+      400/700; 700 also registers as 800, the usual one-weight-lighter CJK
+      pairing) — committed under `app/fonts/`, documented in
+      `app/fonts/README.md`, regenerated by `scripts/make-og-fonts.py`.
+- [x] The card renders with `fontFamily: "Plus Jakarta Sans, Noto Sans SC"`
+      (satori resolves per-glyph fallback), so **every** language card now
+      uses the brand typography with true weights, fully offline.
+- [x] Verified: the build log contains **zero** font-fetch warnings; the
+      served `/zh/opengraph-image/` PNG is **pixel-identical** to a local
+      reference render made with only the committed fonts (0 of 756,000
+      pixels differ), while the pre-fix image differed in 12.4% of pixels.
+- [x] `npm run audit:og-fonts` (new, dependency-free): parses the committed
+      TTFs' cmaps and proves every character the card can render (meta
+      strings + service names, all three languages) is covered — so a future
+      copy edit that introduces an uncovered glyph fails loudly instead of
+      silently degrading to the network fetch.
+
+### 6. Chinese project metadata enriched
+- [x] The Chinese project meta descriptions were 22–32 characters (the
+      English/Malay ones are ~139) — they under-used the search-snippet
+      space. Every zh project now carries a bespoke `seoDescription`:
+      its factual photo description plus the brand, the (verified) service
+      category offer for KL & Selangor and a natural quotation invitation —
+      individually written, varied phrasing, no invented facts (no dates,
+      locations, outcomes or measurements), ~55–75 characters.
+- [x] `getProjectSeo` feeds meta description, `og:description` and JSON-LD
+      description from one source, so all three improved together.
+
+### 7. SEO / structured data / links re-verified on the final build
+- [x] Sitemaps: **363 URLs** (121 per language), all returning **200**.
+- [x] 63 project pages: **63 unique `<title>`s**, meta descriptions present
+      (CJK-aware length check), self-referencing canonicals, per-project
+      `og:image` crop + dimensions + alt, Twitter large-image cards, and
+      JSON-LD graphs containing `WebPage` + `BreadcrumbList` + `ImageObject`
+      with **no** `Review`, `aggregateRating` or price anywhere.
+- [x] Internal link crawl of all 363 pages: **363 unique internal links, all
+      resolving** — no broken links; **48 image references, all 200**.
+- [x] `robots.txt` (with sitemap declarations), the `/` → `/en/` 308 redirect
+      and the three prerendered OG cards all verified.
+- [x] Responsive: **no horizontal overflow** at any of the seven widths on
+      home, projects index, project detail and services (measured
+      `scrollWidth` vs `clientWidth` in the real browser).
+
+### 8. Testing summary
+- [x] `npm run type-check` — **PASS**
+- [x] `npm run lint` — **PASS** (0 problems; unused imports in the two new
+      scripts removed)
+- [x] `npm run build` — **PASS** (373 static pages, zero warnings)
+- [x] `npm run audit:business` — **PASS**
+- [x] `npm run audit:og-fonts` — **PASS** (new)
+- [x] `npm run audit:project-assets` — **PASS** (new)
+- [x] Real-browser suite — **329/329 PASS** (screenshots of home + a project
+      page saved at all seven widths for the record)
+- [x] Served-site SEO sweep — **ALL CHECKS PASSED**
+
+### 9. Data honesty (unchanged standard)
+- [x] No customer names, addresses, completion dates, prices, materials
+      lists, measurements, before/after claims, reviews, ratings,
+      testimonials, certifications or results were invented. The new OG crops
+      are derived from the owner-supplied photographs only; the new Chinese
+      descriptions add only the brand, the already-published service offer
+      and a quotation invitation.
+
+### 10. Still required from the owner (unchanged)
+- [ ] Per-project case-study data (customer-approved location, year, property
+      type, scope, materials, before/after pairs of the same job) before
+      those fields can be published.
+
 ## PHASE 14 — PENDING
 
 ## PHASE 15 — PENDING
@@ -1636,4 +1801,4 @@ missions are
   - Hours: `9:00 AM – 6:00 PM` (the opening days were not stated, so no `dayOfWeek` is published in the schema)
 - Dedicated service detail pages were built in Phase 2; problem pages were built in Phase 3; the local SEO area architecture (2 region hubs + 31 unique location guides + areas index) was built in Phase 4. Phase 5 adds the supporting pages and a portfolio framework containing only clearly labelled placeholders. Phase 6 delivered the multilingual architecture and full translations for the core pages; the long-form service, problem and area catalogues remain English-only and the blog is not built. Phase 8 was the quality optimization pass (performance, accessibility, mobile & UX); the advanced quote system remains future work.
 - Phase 9 was the final QA audit: full route, multilingual, service, problem, location, conversion, SEO, performance, accessibility and code-quality review. Six genuine defects were fixed (three language-mixing bugs, the redirecting `og:image`, the missing mobile CTA and the on-demand OG route), dead code was removed and two build-time i18n guards were added. Remaining known issues are listed at the end of the Phase 9 section.
-- Phase 10 completed the localization project: all 10 service pages, 46 problem pages and 33 area guides now exist in Malay and Chinese (178 new translated documents), every contact detail is real, and each language publishes the same 100 pages. Phase 11 completed the business information/local SEO foundation: the verified NAP is the only business data in the codebase, the Contact page presents it in full in all three languages, every page title carries the full brand, the structured data is audited and an automated business-info audit (`npm run audit:business`) guards it. Phase 12 delivered the functional quote form. Phase 13 Part 1 added the logo, the real work-photo portfolio and the header WhatsApp CTA; Phase 13 Part 2 turned that photo list into a real portfolio system (typed project model, published/draft gating, 63 project detail pages, per-page SEO and structured data, localized empty state) and added the header language disclosure button plus drawer navigation with an active-page state. Phases 14–15 remain pending.
+- Phase 10 completed the localization project: all 10 service pages, 46 problem pages and 33 area guides now exist in Malay and Chinese (178 new translated documents), every contact detail is real, and each language publishes the same 100 pages. Phase 11 completed the business information/local SEO foundation: the verified NAP is the only business data in the codebase, the Contact page presents it in full in all three languages, every page title carries the full brand, the structured data is audited and an automated business-info audit (`npm run audit:business`) guards it. Phase 12 delivered the functional quote form. Phase 13 Part 1 added the logo, the real work-photo portfolio and the header WhatsApp CTA; Phase 13 Part 2 turned that photo list into a real portfolio system (typed project model, published/draft gating, 63 project detail pages, per-page SEO and structured data, localized empty state) and added the header language disclosure button plus drawer navigation with an active-page state; Phase 13 Part 3 fixed the drawer's containing-block defect via a body portal and re-verified everything against the served build. Phase 13 Part 4 closed the phase: per-project 1.91:1 OG crops generated from the owner's photographs, a self-contained OG font stack (Plus Jakarta Sans + Noto Sans SC subsets) that removed the build-time Google Fonts dependency and fixed the Chinese card, enriched Chinese project meta descriptions, two new dependency-free audits (`audit:og-fonts`, `audit:project-assets`), and the first full real-Chromium click-through (329/329 checks at 360/390/412/768/1024/1280/1440, plus a 363-URL/63-project-page served-site sweep — all passing). Phases 14–15 remain pending.

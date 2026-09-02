@@ -96,6 +96,14 @@ export type Project = {
   year?: number;
   /** Hero / main image. Required for a published project. */
   image: ProjectImage;
+  /**
+   * 1200×630 (1.91:1) social-preview crop of the main photograph, generated
+   * from that same owner-supplied photo by `scripts/make-project-og-images.mjs`
+   * (libvips attention crop — never stock, AI or competitor imagery). Used as
+   * `og:image` / `twitter:image` on the project page; when absent the page
+   * falls back to the branded site card.
+   */
+  ogImage?: ProjectImage;
   /** Additional photographs of the same job. */
   gallery?: ProjectImage[];
   /** Before / after frames of the same job, when both exist. */

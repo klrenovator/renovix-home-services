@@ -33,6 +33,11 @@ export const projects: Project[] = [
       width: 1600,
       height: 900,
     },
+    ogImage: {
+      src: "/images/projects/og/marble-look-floor-tiling-og.jpg",
+      width: 1200,
+      height: 630,
+    },
   },
   {
     slug: "floor-tile-removal-hacking",
@@ -42,6 +47,11 @@ export const projects: Project[] = [
       src: "/images/projects/floor-tile-removal-hacking-kl-selangor.webp",
       width: 780,
       height: 1040,
+    },
+    ogImage: {
+      src: "/images/projects/og/floor-tile-removal-hacking-og.jpg",
+      width: 1200,
+      height: 630,
     },
   },
   {
@@ -53,6 +63,11 @@ export const projects: Project[] = [
       width: 1125,
       height: 1109,
     },
+    ogImage: {
+      src: "/images/projects/og/plaster-ceiling-cove-lighting-og.jpg",
+      width: 1200,
+      height: 630,
+    },
   },
   {
     slug: "plaster-ceiling-design-downlights",
@@ -62,6 +77,11 @@ export const projects: Project[] = [
       src: "/images/projects/plaster-ceiling-design-downlights-kl-selangor.webp",
       width: 1080,
       height: 810,
+    },
+    ogImage: {
+      src: "/images/projects/og/plaster-ceiling-design-downlights-og.jpg",
+      width: 1200,
+      height: 630,
     },
   },
   {
@@ -73,6 +93,11 @@ export const projects: Project[] = [
       width: 750,
       height: 989,
     },
+    ogImage: {
+      src: "/images/projects/og/plaster-ceiling-pendant-lighting-og.jpg",
+      width: 1200,
+      height: 630,
+    },
   },
   {
     slug: "timber-look-ceiling-beams",
@@ -82,6 +107,11 @@ export const projects: Project[] = [
       src: "/images/projects/timber-look-ceiling-beams-condo-kl-selangor.webp",
       width: 963,
       height: 1280,
+    },
+    ogImage: {
+      src: "/images/projects/og/timber-look-ceiling-beams-og.jpg",
+      width: 1200,
+      height: 630,
     },
   },
   {
@@ -93,6 +123,11 @@ export const projects: Project[] = [
       width: 1600,
       height: 900,
     },
+    ogImage: {
+      src: "/images/projects/og/suspended-ceiling-grid-og.jpg",
+      width: 1200,
+      height: 630,
+    },
   },
   {
     slug: "ceiling-fan-and-light-installation",
@@ -102,6 +137,11 @@ export const projects: Project[] = [
       src: "/images/projects/ceiling-fan-and-light-installation-kl-selangor.webp",
       width: 720,
       height: 1280,
+    },
+    ogImage: {
+      src: "/images/projects/og/ceiling-fan-and-light-installation-og.jpg",
+      width: 1200,
+      height: 630,
     },
   },
   {
@@ -113,6 +153,11 @@ export const projects: Project[] = [
       width: 470,
       height: 620,
     },
+    ogImage: {
+      src: "/images/projects/og/chandelier-and-ceiling-fan-installation-og.jpg",
+      width: 1200,
+      height: 630,
+    },
   },
   {
     slug: "high-ceiling-light-installation",
@@ -122,6 +167,11 @@ export const projects: Project[] = [
       src: "/images/projects/high-ceiling-light-installation-kl-selangor.webp",
       width: 607,
       height: 1080,
+    },
+    ogImage: {
+      src: "/images/projects/og/high-ceiling-light-installation-og.jpg",
+      width: 1200,
+      height: 630,
     },
   },
   {
@@ -133,6 +183,11 @@ export const projects: Project[] = [
       width: 756,
       height: 1008,
     },
+    ogImage: {
+      src: "/images/projects/og/electrical-distribution-board-wiring-og.jpg",
+      width: 1200,
+      height: 630,
+    },
   },
   {
     slug: "electrical-db-panel-installation",
@@ -142,6 +197,11 @@ export const projects: Project[] = [
       src: "/images/projects/electrical-db-panel-installation-kl-selangor.webp",
       width: 607,
       height: 1080,
+    },
+    ogImage: {
+      src: "/images/projects/og/electrical-db-panel-installation-og.jpg",
+      width: 1200,
+      height: 630,
     },
   },
   {
@@ -153,6 +213,11 @@ export const projects: Project[] = [
       width: 810,
       height: 1080,
     },
+    ogImage: {
+      src: "/images/projects/og/electrical-cable-wiring-installation-og.jpg",
+      width: 1200,
+      height: 630,
+    },
   },
   {
     slug: "wall-switch-installation",
@@ -162,6 +227,11 @@ export const projects: Project[] = [
       src: "/images/projects/wall-switch-installation-kl-selangor.webp",
       width: 581,
       height: 1032,
+    },
+    ogImage: {
+      src: "/images/projects/og/wall-switch-installation-og.jpg",
+      width: 1200,
+      height: 630,
     },
   },
   {
@@ -173,6 +243,11 @@ export const projects: Project[] = [
       width: 607,
       height: 1080,
     },
+    ogImage: {
+      src: "/images/projects/og/outdoor-switch-socket-wiring-og.jpg",
+      width: 1200,
+      height: 630,
+    },
   },
   {
     slug: "toilet-and-basin-installation",
@@ -182,6 +257,11 @@ export const projects: Project[] = [
       src: "/images/projects/toilet-and-basin-installation-kl-selangor.webp",
       width: 810,
       height: 1080,
+    },
+    ogImage: {
+      src: "/images/projects/og/toilet-and-basin-installation-og.jpg",
+      width: 1200,
+      height: 630,
     },
   },
   {
@@ -193,6 +273,11 @@ export const projects: Project[] = [
       width: 788,
       height: 1400,
     },
+    ogImage: {
+      src: "/images/projects/og/structural-metal-welding-fabrication-og.jpg",
+      width: 1200,
+      height: 630,
+    },
   },
   {
     slug: "pipe-and-valve-welding-works",
@@ -202,6 +287,11 @@ export const projects: Project[] = [
       src: "/images/projects/pipe-and-valve-welding-works-kl-selangor.webp",
       width: 788,
       height: 1400,
+    },
+    ogImage: {
+      src: "/images/projects/og/pipe-and-valve-welding-works-og.jpg",
+      width: 1200,
+      height: 630,
     },
   },
   {
@@ -213,6 +303,11 @@ export const projects: Project[] = [
       width: 900,
       height: 1600,
     },
+    ogImage: {
+      src: "/images/projects/og/on-site-metal-frame-welding-og.jpg",
+      width: 1200,
+      height: 630,
+    },
   },
   {
     slug: "metal-awning-frame-installation",
@@ -222,6 +317,11 @@ export const projects: Project[] = [
       src: "/images/projects/metal-awning-frame-installation-kl-selangor.webp",
       width: 1284,
       height: 964,
+    },
+    ogImage: {
+      src: "/images/projects/og/metal-awning-frame-installation-og.jpg",
+      width: 1200,
+      height: 630,
     },
   },
   {
@@ -233,6 +333,11 @@ export const projects: Project[] = [
       src: "/images/projects/office-renovation-ceiling-and-tiling-kl-selangor.webp",
       width: 960,
       height: 1280,
+    },
+    ogImage: {
+      src: "/images/projects/og/office-renovation-ceiling-and-tiling-og.jpg",
+      width: 1200,
+      height: 630,
     },
   },
 ];
