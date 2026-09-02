@@ -9,7 +9,9 @@
     "start": "next start",
     "lint": "eslint",
     "type-check": "next typegen && tsc --noEmit",
-    "audit:business": "node scripts/audit-business-info.mjs"
+    "audit:business": "node scripts/audit-business-info.mjs",
+    "audit:og-fonts": "node scripts/audit-og-fonts.mjs",
+    "audit:project-assets": "node scripts/audit-project-assets.mjs"
   },
   "dependencies": {
     "next": "16.3.3",

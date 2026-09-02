@@ -49,6 +49,19 @@ export async function generateMetadata({
     description: seo.description,
     ogTitle: seo.ogTitle,
     ogDescription: seo.ogDescription,
+    // The page-specific social preview: a 1.91:1 crop of this project's own
+    // photograph (see `Project.ogImage`). Projects without one fall back to
+    // the branded site card.
+    ...(project.ogImage
+      ? {
+          ogImage: {
+            url: project.ogImage.src,
+            width: project.ogImage.width,
+            height: project.ogImage.height,
+            alt: project.content.alt,
+          },
+        }
+      : {}),
     availableLanguages: languagesWithTranslation("project", project.slug),
   });
 }
