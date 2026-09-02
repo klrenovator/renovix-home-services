@@ -550,6 +550,7 @@ export const ms: Dictionary = {
       description: "Penerangan",
       preferredDate: "Tarikh Pilihan",
       photos: "Muat Naik Gambar",
+      preferredContact: "Cara hubungan pilihan",
       requiredText: "(wajib)",
     },
     placeholders: {
@@ -565,28 +566,56 @@ export const ms: Dictionary = {
         "Terangkan masalah atau kerja yang anda rancang, termasuk ukuran, butiran akses atau pertimbangan masa yang berguna.",
     },
     help: {
-      email: "Pilihan, jika anda mahukan balasan melalui e-mel.",
+      email: "Pilihan, kecuali anda mahu dihubungi melalui e-mel.",
       subService: "Pilih pilihan yang paling hampir, atau biarkan kosong.",
       location:
         "Sertakan kawasan di Kuala Lumpur, Selangor atau Lembah Klang tempat kerja diperlukan.",
       preferredDate: "Pilihan. Tarikh hanyalah keutamaan, bukan tempahan.",
       photos:
-        "Gambar boleh membantu penilaian. Gambar tidak dimuat naik atau dihantar sehingga penghantaran sebut harga yang selamat dikonfigurasikan.",
+        "Gambar tidak dilampirkan pada borang ini. Selepas menghantar, sila hantar gambar melalui WhatsApp supaya kami dapat menilai kerja.",
       photosChosen: "Pilih gambar kawasan berkenaan",
-      requiredNote:
-        "Ruangan bertanda * diperlukan untuk menyediakan permintaan sebut harga.",
+      requiredNote: "Ruangan bertanda * wajib diisi.",
+      preferredContact: "Kami akan guna cara ini dahulu apabila membalas.",
+    },
+    contactMethods: {
+      whatsapp: "WhatsApp",
+      phone: "Panggilan telefon",
+      email: "E-mel",
+    },
+    validation: {
+      required: "Ruangan ini wajib diisi.",
+      name: "Sila masukkan nama anda.",
+      phone: "Sila masukkan nombor telefon yang sah.",
+      email: "Sila masukkan alamat e-mel yang sah.",
+      emailRequired: "Sila masukkan alamat e-mel supaya kami boleh membalas melalui e-mel.",
+      propertyType: "Sila pilih jenis hartanah.",
+      service: "Sila pilih perkhidmatan.",
+      location: "Sila masukkan kawasan tempat kerja diperlukan.",
+      description: "Sila terangkan kerja yang anda perlukan.",
+      descriptionTooLong: "Mesej ini terlalu panjang. Sila ringkaskan.",
+      preferredContact: "Sila pilih cara anda mahu kami menghubungi anda.",
     },
     photosPrompt: "Muat Naik Gambar",
     photosSelectedSuffix: "gambar",
     photosSelectedSuffixPlural: "gambar",
     deliveryTitle: "Cara borang ini dihantar",
     deliveryBody:
-      "Penghantaran dalam talian belum disambungkan, jadi borang ini tidak menghantar butiran atau gambar anda dan tidak menjana sebut harga serta-merta. Untuk menghubungi kami sekarang, WhatsApp atau telefon +601159259521, atau e-mel renovixhomeservices@gmail.com.",
-    submittedBodyPrefix:
-      "Ruangan anda telah disemak dalam pratonton ini. Oleh sebab penghantaran dalam talian belum disambungkan, tiada butiran dihantar. Sila WhatsApp atau telefon +601159259521, atau gunakan",
-    submittedLink: "halaman hubungan",
-    submittedBodySuffix: "supaya kami boleh menerima permintaan anda.",
+      "Permintaan anda dihantar kepada pasukan kami. Sebut harga tidak dijana serta-merta — kami semak butiran dahulu dan mungkin meminta maklumat atau gambar lanjut. Anda juga boleh WhatsApp atau telefon +601159259521.",
     submit: "Hantar Permintaan Sebut Harga",
+    submitting: "Menghantar permintaan anda...",
+    successTitle: "Permintaan diterima",
+    successBody:
+      "Terima kasih! Permintaan sebut harga anda telah diterima. Pasukan kami akan menghubungi anda tidak lama lagi.",
+    errorTitle: "Permintaan tidak dapat dihantar",
+    errorBody:
+      "Kami tidak dapat menghantar permintaan anda buat masa ini. Sila cuba lagi atau hubungi kami di WhatsApp.",
+    whatsappFallback:
+      "Jika anda perlu menghubungi kami sekarang, mesej Renovix Home Services di WhatsApp.",
+    whatsappFallbackCta: "Mesej kami di WhatsApp",
+    whatsappFallbackMessage:
+      "Helo Renovix Home Services, saya cuba hantar permintaan sebut harga di laman web tetapi tidak berjaya. Saya ingin meminta sebut harga.",
+    privacyNote:
+      "Maklumat yang dihantar digunakan untuk membalas pertanyaan anda.",
     asideEyebrow: "Apa yang berlaku seterusnya",
     asideTitle: "Penilaian yang teliti, bukan janji serta-merta",
     asideBody:
@@ -611,7 +640,7 @@ export const ms: Dictionary = {
     ],
     statusTitle: "Status penghantaran borang",
     statusBody:
-      "Penghantaran dalam talian belum disambungkan, jadi tiada maklumat dihantar daripada halaman ini. WhatsApp, telefon dan e-mel sampai terus kepada kami: +601159259521 dan renovixhomeservices@gmail.com.",
+      "Borang ini menghantar pertanyaan anda kepada Renovix Home Services. Kami akan menghubungi anda menggunakan cara pilihan anda. Anda juga boleh terus WhatsApp atau telefon +601159259521, atau e-mel renovixhomeservices@gmail.com.",
     browseEyebrow: "Tidak pasti dari mana hendak mula?",
     browseTitle: "Lihat skop perkhidmatan sebelum meminta sebut harga",
     browseBody:

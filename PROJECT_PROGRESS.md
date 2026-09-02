@@ -1189,4 +1189,53 @@ the full brand and added a reproducible automated business-info audit.
   - Hours: `9:00 AM – 6:00 PM` (the opening days were not stated, so no `dayOfWeek` is published in the schema)
 - Dedicated service detail pages were built in Phase 2; problem pages were built in Phase 3; the local SEO area architecture (2 region hubs + 31 unique location guides + areas index) was built in Phase 4. Phase 5 adds the supporting pages and a portfolio framework containing only clearly labelled placeholders. Phase 6 delivered the multilingual architecture and full translations for the core pages; the long-form service, problem and area catalogues remain English-only and the blog is not built. Phase 8 was the quality optimization pass (performance, accessibility, mobile & UX); the advanced quote system remains future work.
 - Phase 9 was the final QA audit: full route, multilingual, service, problem, location, conversion, SEO, performance, accessibility and code-quality review. Six genuine defects were fixed (three language-mixing bugs, the redirecting `og:image`, the missing mobile CTA and the on-demand OG route), dead code was removed and two build-time i18n guards were added. Remaining known issues are listed at the end of the Phase 9 section.
+- Phase 10 completed the localization project: all 10 service pages, 46 problem pages and 33 area guides now exist in Malay and Chinese (178 new translated documents), every contact detail is real, and each language publishes the same 100 pages. Phase 11 completed the business information/local SEO foundation: the verified NAP is the only business data in the codebase, the Contact page presents it in full in all three languages, every page title carries the full brand, the structured data is audited and an automated business-info audit (`npm run audit:business`) guards it. Phase 12 connected the quote form to a real server-side submission and Resend email notification. Phases 13–14 remain pending.
+missions are
+      ignored (no email)
+- [x] In-memory rate limit after a valid payload (5 / 15 minutes / IP)
+- [x] Origin allow-list for browser `Origin` headers
+
+### 5. Multilingual form
+- [x] English, Malay and Simplified Chinese labels, placeholders, required
+      messages, validation, submit, loading, success, error, privacy note and
+      WhatsApp fallback — no English fallback on `/ms/` or `/zh/`
+- [x] `noValidate` so the browser does not inject English HTML5 bubbles
+
+### 6. Accessibility, mobile, privacy, SEO
+- [x] Labels, `aria-required`, `aria-invalid`, `aria-describedby`, `role="alert"`
+      / `status`, visible focus, 16px inputs, 44px-tall controls
+- [x] Form stacks cleanly at 360 / 390 / 412px (full-width inputs, stacked
+      radios below `sm`)
+- [x] Concise privacy note: submitted information is used to respond to the
+      enquiry — no unsupported legal claims
+- [x] Canonicals, hreflang, metadata, sitemap and robots.txt unchanged
+- [x] No analytics platform added (none is installed)
+
+### 7. Testing
+- [x] `npm run type-check` — **PASS**
+- [x] `npm run lint` — **PASS** (0 errors, 0 warnings)
+- [x] `npm run build` — **PASS** (`/api/quote` emitted as a dynamic route;
+      300 localized pages still prerendered)
+- [x] Form API tests: empty / invalid email / invalid phone / oversize message
+      / unknown service rejected; honeypot ignored; valid payload without
+      email credentials returns **503** (not 200)
+- [x] English, Malay and Chinese quote pages verified
+- [x] Mobile UX and accessibility checks above
+- [x] Production email delivery could not be fully verified because the
+      required email-provider credentials are not configured
+
+## PHASE 13 — PENDING
+
+## PHASE 14 — PENDING
+
+---
+
+- No prices, reviews, ratings, review counts, geo coordinates, certifications, licences, awards, registration numbers, warranties, years of experience, projects or team members have been invented.
+- Contact details are the real ones supplied by the business in Phase 10 (they were placeholders through Phases 1–9):
+  - Phone / WhatsApp: `+601159259521`
+  - Email: `renovixhomeservices@gmail.com`
+  - Address: `Jalan Kiara, Mont Kiara, 50480 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia`
+  - Hours: `9:00 AM – 6:00 PM` (the opening days were not stated, so no `dayOfWeek` is published in the schema)
+- Dedicated service detail pages were built in Phase 2; problem pages were built in Phase 3; the local SEO area architecture (2 region hubs + 31 unique location guides + areas index) was built in Phase 4. Phase 5 adds the supporting pages and a portfolio framework containing only clearly labelled placeholders. Phase 6 delivered the multilingual architecture and full translations for the core pages; the long-form service, problem and area catalogues remain English-only and the blog is not built. Phase 8 was the quality optimization pass (performance, accessibility, mobile & UX); the advanced quote system remains future work.
+- Phase 9 was the final QA audit: full route, multilingual, service, problem, location, conversion, SEO, performance, accessibility and code-quality review. Six genuine defects were fixed (three language-mixing bugs, the redirecting `og:image`, the missing mobile CTA and the on-demand OG route), dead code was removed and two build-time i18n guards were added. Remaining known issues are listed at the end of the Phase 9 section.
 - Phase 10 completed the localization project: all 10 service pages, 46 problem pages and 33 area guides now exist in Malay and Chinese (178 new translated documents), every contact detail is real, and each language publishes the same 100 pages. Phase 11 completed the business information/local SEO foundation: the verified NAP is the only business data in the codebase, the Contact page presents it in full in all three languages, every page title carries the full brand, the structured data is audited and an automated business-info audit (`npm run audit:business`) guards it. Phases 12–14 remain pending.

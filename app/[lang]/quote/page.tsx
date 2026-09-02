@@ -15,7 +15,7 @@ import { Button } from "@/components/ui/Button";
 import { getLanguage, languages } from "@/data/languages";
 import { getQuoteServiceOptions } from "@/data/i18n";
 import { serviceDetails } from "@/data/service-content";
-import { getContactHref } from "@/data/site";
+import { getContactHref, getWhatsAppHref } from "@/data/site";
 import { getDictionary } from "@/i18n";
 import { localizedHref } from "@/i18n/hrefs";
 import { absoluteUrl, buildPageMetadata } from "@/i18n/seo";
@@ -100,7 +100,8 @@ export default async function QuotePage({ params }: QuotePageProps) {
           <QuoteForm
             serviceOptions={getQuoteServiceOptions(code, subServicesBySlug)}
             propertyTypes={t.quote.propertyTypes}
-            contactHref={getContactHref(code)}
+            whatsappHref={getWhatsAppHref()}
+            lang={code}
             t={t.quote}
           />
 

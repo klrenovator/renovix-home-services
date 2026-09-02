@@ -38,7 +38,7 @@ const OFFICIAL = {
   closes: "18:00",
 };
 
-const SOURCE_DIRS = ["app", "components", "data", "i18n"];
+const SOURCE_DIRS = ["app", "components", "data", "i18n", "lib"];
 const SOURCE_EXTENSIONS = new Set([".ts", ".tsx"]);
 const SITE_FILE = "data/site.ts";
 const SCHEMA_FILE = "components/seo/schema.ts";

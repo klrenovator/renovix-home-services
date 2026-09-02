@@ -412,6 +412,7 @@ export type Dictionary = {
       description: string;
       preferredDate: string;
       photos: string;
+      preferredContact: string;
       /** Spoken-only "(required)" suffix for required-field labels. */
       requiredText: string;
     };
@@ -434,16 +435,41 @@ export type Dictionary = {
       photos: string;
       photosChosen: string;
       requiredNote: string;
+      preferredContact: string;
+    };
+    contactMethods: {
+      whatsapp: string;
+      phone: string;
+      email: string;
+    };
+    validation: {
+      required: string;
+      name: string;
+      phone: string;
+      email: string;
+      emailRequired: string;
+      propertyType: string;
+      service: string;
+      location: string;
+      description: string;
+      descriptionTooLong: string;
+      preferredContact: string;
     };
     photosPrompt: string;
     photosSelectedSuffix: string;
     photosSelectedSuffixPlural: string;
     deliveryTitle: string;
     deliveryBody: string;
-    submittedBodyPrefix: string;
-    submittedLink: string;
-    submittedBodySuffix: string;
     submit: string;
+    submitting: string;
+    successTitle: string;
+    successBody: string;
+    errorTitle: string;
+    errorBody: string;
+    whatsappFallback: string;
+    whatsappFallbackCta: string;
+    whatsappFallbackMessage: string;
+    privacyNote: string;
     asideEyebrow: string;
     asideTitle: string;
     asideBody: string;

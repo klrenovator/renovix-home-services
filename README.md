@@ -34,6 +34,22 @@ Renovix Home Services – Home Renovation & Improvement Services in Kuala Lumpur
 | `npm run type-check` | Generate Next.js route types, then TypeScript check (`next typegen && tsc --noEmit`) |
 | `npm run audit:business` | Business information audit — one verified phone, WhatsApp, email, address and opening-hours source; no placeholders, no invented SEO signals |
 
+## Quote form email (production)
+
+The `/en/quote/`, `/ms/quote/` and `/zh/quote/` form posts to a Next.js Route Handler at `/api/quote/`. The handler validates the submission on the server and emails a lead notification through [Resend](https://resend.com).
+
+Without the variables below, the website still runs. Quote submissions then fail with a localized error and a WhatsApp fallback — they never show a fake success state.
+
+Copy `.env.example` to `.env.local` for local development, or set the same keys in Vercel.
+
+| Variable | Required for delivery | Purpose |
+| --- | --- | --- |
+| `RESEND_API_KEY` | Yes | Resend API key. Server-side only. |
+| `QUOTE_FROM_EMAIL` | Yes | From address on a domain verified in Resend, e.g. `Renovix Home Services <noreply@renovixhomeservices.my>`. |
+| `QUOTE_NOTIFICATION_EMAIL` | No | Inbox for new leads. Defaults to `renovixhomeservices@gmail.com`. |
+
+Do not commit real API keys or `.env.local`.
+
 ## Version notes
 
 - Tailwind CSS v4 uses the `@tailwindcss/postcss` plugin. `autoprefixer` is not installed — Tailwind v4 handles vendor prefixing internally.
