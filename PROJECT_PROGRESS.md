@@ -1931,7 +1931,52 @@ missions are
       `e1e1f3c` — state "success" ("Deployment has completed",
       2026-09-03 05:33 UTC)**.
 
-## PHASE 14 — PENDING
+## PHASE 14 — Automatic Sitemap Consolidation at `/sitemap.xml` — [x] COMPLETE
+
+**Problem found:** the site used `generateSitemaps()` in `app/sitemap.ts`, which
+publishes per-language sitemaps at `/sitemap/{lang}.xml` but leaves
+`https://renovixhomeservices.my/sitemap.xml` — the canonical sitemap URL, and
+the one Google expects — a **404**. `robots.txt` also advertised the three
+child URLs instead of a main sitemap.
+
+**Fix (verified on the served production build):**
+
+- [x] `app/sitemap.ts` consolidated into a **single native sitemap** served at
+      `/sitemap.xml`: 408 URLs (3 languages × 136 pages) generated from the
+      same content registries that generate the pages, so a new service /
+      problem / area / project / translation is picked up automatically on the
+      next deploy. Each entry keeps its full hreflang set (`en-MY`, `ms-MY`,
+      `zh-MY`, `x-default`), priority and changefreq; a `Map` keyed by URL
+      guarantees no duplicates. The build-time `assertCoverageInSync()` guard
+      is preserved.
+- [x] `lib/sitemap.ts` added as the single source of truth for the sitemap URL
+      and the reviewed content date (`CONTENT_LAST_MODIFIED`), replacing the
+      local constant; documented why no per-request/build-date `lastmod` is
+      emitted (no per-page timestamps exist; faking them would misrepresent
+      unchanged pages).
+- [x] `app/robots.ts` now emits a single `Sitemap:
+      https://renovixhomeservices.my/sitemap.xml` line (previously three child
+      URLs). Rules unchanged (`Allow: /`, `Disallow: /_next/` only).
+- [x] `next.config.ts`: permanent 308 redirects from the retired
+      `/sitemap/{en,ms,zh}.xml` to `/sitemap.xml`, so crawlers and Search
+      Console entries that learned the old child URLs keep working.
+- [x] Note for the future: Next.js 16 registers `app/sitemap.ts` at
+      `/sitemap.xml` itself, so a custom `app/sitemap.xml/route.ts` alongside
+      it fails the build with a route/metadata conflict. If the site ever
+      approaches the 50,000-URL sitemap limit, the split must replace
+      `app/sitemap.ts` with custom route handlers (children + index), not add
+      to it. 408 URLs today — no split needed.
+- [x] `SITEMAP.md` added: architecture, GSC instructions (submit
+      `/sitemap.xml` once only), and the discovery-≠-indexing caveat.
+
+**Verification (all green):** `npm run build`, `lint`, `type-check` and the
+three audit scripts pass; `/sitemap.xml` and `/robots.txt` return 200 with
+`application/xml` / the correct `Sitemap:` line; the XML is well-formed with
+408 unique entries, all HTTPS on the production domain, trailing-slash shape
+matching the served canonicals, no query variants, no `/api/*` or private
+routes; **all 408 sitemap URLs fetched against the served build return 200,
+are not `noindex`, and each page's canonical matches its sitemap `<loc>`
+exactly**; `/sitemap/{en,ms,zh}.xml` now 308-redirect to `/sitemap.xml`.
 
 ## PHASE 15 — PENDING
 
