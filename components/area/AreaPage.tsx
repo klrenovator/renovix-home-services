@@ -1,5 +1,8 @@
 import { AreaHero } from "@/components/area/AreaHero";
+import { AreaAnswerFirstSection } from "@/components/area/AreaAnswerFirstSection";
 import { AreaServicesSection } from "@/components/area/AreaServicesSection";
+import { AreaIntentMatrixSection } from "@/components/area/AreaIntentMatrixSection";
+import { AreaPricingSection } from "@/components/area/AreaPricingSection";
 import { AreaPropertyTypesSection } from "@/components/area/AreaPropertyTypesSection";
 import { AreaProblemsSection } from "@/components/area/AreaProblemsSection";
 import { AreaProcessSection } from "@/components/area/AreaProcessSection";
@@ -19,7 +22,10 @@ export function AreaPage({ area, lang }: AreaPageProps) {
   return (
     <>
       <AreaHero area={area} lang={lang} />
+      <AreaAnswerFirstSection area={area} lang={lang} />
       <AreaServicesSection area={area} lang={lang} />
+      <AreaIntentMatrixSection area={area} lang={lang} />
+      <AreaPricingSection area={area} lang={lang} />
       <AreaPropertyTypesSection area={area} lang={lang} />
       <AreaProblemsSection area={area} lang={lang} />
       <AreaProcessSection area={area} lang={lang} />

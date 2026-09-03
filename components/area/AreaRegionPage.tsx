@@ -16,6 +16,7 @@ import { format, getDictionary } from "@/i18n";
 import { contentHref, localizedHref } from "@/i18n/hrefs";
 import { getServiceCategories } from "@/data/i18n";
 import { getOtherRegion } from "@/data/area-content";
+import { getDistrictsForRegion } from "@/data/locations";
 import type { AreaRegion } from "@/data/area-content/types";
 
 type AreaRegionPageProps = {
@@ -27,6 +28,7 @@ export function AreaRegionPage({ region, lang }: AreaRegionPageProps) {
   const t = getDictionary(lang);
   const categories = getServiceCategories(lang);
   const other = getOtherRegion(region, lang);
+  const districts = getDistrictsForRegion(region.id);
 
   return (
     <>
@@ -136,6 +138,58 @@ export function AreaRegionPage({ region, lang }: AreaRegionPageProps) {
           </div>
         </div>
       </section>
+
+      {/* District & Municipal Breakdown */}
+      {districts.length > 0 ? (
+        <section className="section bg-white border-t border-slate-100">
+          <div className="container-app">
+            <SectionHeading
+              eyebrow={t.areaPage.hierarchyEyebrow}
+              title={format(t.areaRegion.districtsTitle, { name: region.name })}
+              description={t.areaRegion.districtsDescription}
+            />
+
+            <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {districts.map((district) => (
+                <div
+                  key={district.id}
+                  className="rounded-2xl border border-slate-200/80 bg-surface p-6 shadow-soft"
+                >
+                  <h3 className="text-base font-bold text-navy">
+                    {district.name}
+                  </h3>
+                  <p className="mt-2 text-xs leading-5 text-secondary">
+                    {district.description}
+                  </p>
+
+                  <ul className="mt-4 flex flex-wrap gap-1.5 border-t border-slate-200/60 pt-4">
+                    {district.locationSlugs.map((slug) => {
+                      const areaObj = region.areas.find((a) => a.slug === slug);
+                      const href = contentHref("area", `${region.id}/${slug}`, lang);
+                      const label = areaObj?.name ?? slug;
+
+                      return (
+                        <li key={slug}>
+                          {href ? (
+                            <Link
+                              href={href}
+                              className="chip text-xs hover:border-brand hover:text-brand"
+                            >
+                              {label}
+                            </Link>
+                          ) : (
+                            <span className="chip text-xs">{label}</span>
+                          )}
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      ) : null}
 
       <section className="section section-surface">
         <div className="container-app">

@@ -2106,7 +2106,53 @@ quoted. All three are fixed and now guarded by the audit.
       build now reads RM8 (EN tiling), RM1.20 (EN painting), RM5.50 (MS
       flooring) and RM3.50 (ZH ceiling) — each matching its own table.
 
-## PHASE 15 — PENDING
+## PHASE 15 — Malaysia + Klang Valley Location Domination — [x]
+
+### 1. Location hierarchy & centralized data source of truth
+- [x] Scalable, single-source location hierarchy architecture:
+      **Malaysia → State / Federal Territory → District → City / Town → Neighbourhood → Sub-area / Kampung**.
+- [x] Centralized database in `data/locations/registry.ts` maintaining for every location:
+      `id`, `slug`, `name`, `level`, `country`, `state`, `district`, `city`, `town`, `neighbourhood`, `parentLocationId`, `aliases`, `nearbyLocationSlugs`, `propertyContext` (housing eras, property types, strata density, access considerations), `serviceRelevance` (primary services, urgent services, common problems), `status` (active / planned), `published`, `seo` metadata, `lastReviewed` (`2026-09-03`), and `qualityScore`.
+- [x] All 46 active locations across Kuala Lumpur (18 neighbourhoods) and Selangor (28 cities/townships) mapped to their official administrative districts (e.g., Petaling, Hulu Langat, Klang, Gombak, Sepang, Segambut, Lembah Pantai, Kepong, Seputeh, Wangsa Maju, Batu, Cheras).
+- [x] Documented future expansion roadmap (Penang, Johor, Negeri Sembilan) with status `planned` and gated (`published: false`) so no thin, empty, or unverified pages are ever generated.
+
+### 2. Search Intent Matrix & Modifier Strategy
+- [x] Typed `LocationServiceMatrixEntry` in `data/locations/intent-matrix.ts` connecting:
+      **Location + Service + Sub-Service + Problem + Search Intent Modifier + Phase 14 Pricing Reference**.
+- [x] Intelligently chosen intent modifiers:
+      - `"near_me"`: natural phrasing ("plumber in Shah Alam near me", "electrician Mont Kiara near me").
+      - `"best_reliable"`: objective, trustworthy phrasing ("reliable contractor", "trusted local service" — no boastful unverified claims).
+      - `"affordable_cost"`: transparent starting rates from single-source Phase 14 pricing.
+      - `"repair"` vs `"installation"` vs `"replacement"`: clearly distinguished project scopes.
+      - `"residential"` (terrace, condo, semi-D, bungalow) vs `"commercial"` (shoplots, offices).
+      - `"emergency_triage"`: strictly restricted by automated audit to genuine safety-critical faults (electrical power tripping/hazards and active pipe bursts/water leaks).
+- [x] Zero duplicate doorway pages: every location guide delivers unique, condition-led insights into local housing stock, strata management rules, and renovation sequences.
+
+### 3. Answer-First & Local Pricing Transparency Components
+- [x] **`AreaAnswerFirstSection.tsx`**: Direct, answer-first responses for humans, search engines, and LLM answer engines (AEO/GEO/LLMO) on service coverage, indicative starting rates, urgent support policy, and quotation steps.
+- [x] **`AreaPricingSection.tsx`**: Location pricing transparency component linking the area's top services directly to Phase 14 centralized starting prices in `data/pricing/pricing.ts`, highlighting local cost factors (high-rise strata permits/lift booking vs mature landed house replumbing/rewiring).
+- [x] **`AreaIntentMatrixSection.tsx`**: Search intent matrix section organizing local work into three clear pillars: *Repairs & Troubleshooting*, *Installations & Upgrades*, and *Full House & Commercial Modernisation*, with deep links to service and problem guides.
+- [x] **`AreaHero.tsx` & `AreaRegionPage.tsx`**: Enhanced with administrative district badges and District & Township explorer sections.
+- [x] **`AreasPage.tsx` (`/areas/`)**: Upgraded to a comprehensive Malaysia & Klang Valley master coverage directory featuring active coverage guides, district grouping explorer, and transparent future expansion roadmap.
+
+### 4. Multilingual Implementation (EN, MS, ZH)
+- [x] Full localization across English, Bahasa Melayu, and Simplified Chinese for all new components, dictionary keys, answer-first blocks, pricing notes, search-intent categories, and hierarchy labels.
+- [x] Zero hardcoded English strings on `/ms/` or `/zh/` pages; type-safe dictionary enforcement in `i18n/types.ts`.
+
+### 5. Quality Gate & Programmatic Safety Audit (`npm run audit:locations`)
+- [x] Quality score evaluation engine in `data/locations/quality-score.ts` enforcing the 7 Phase 15 rules: search intent, verified coverage, unique local context, service relevance, unique FAQs, genuine nearby connections, and single-sourced pricing.
+- [x] New dependency-free automated audit script (`scripts/audit-locations.mjs`) registered in `package.json` (`npm run audit:locations`), mechanically verifying registry integrity, district groupings, matrix entries, emergency claims safety, pricing references, and multilingual coverage.
+
+### 6. Technical & SEO Validation
+- [x] `npm run type-check` — **PASS**
+- [x] `npm run lint` — **PASS** (0 errors, 0 warnings)
+- [x] `npm run build` — **PASS** (417 static localized pages generated)
+- [x] `npm run audit:business`, `audit:og-fonts`, `audit:project-assets`, `audit:pricing`, `audit:locations` — **all PASS**
+- [x] Served-site sweep & JSON-LD schema verification: all pages return HTTP 200 with valid `WebPage`, `BreadcrumbList`, `Service` (with `Place` / `containedInPlace`), `FAQPage`, and `Organization` / `LocalBusiness` schemas.
+
+---
+
+## PHASE 16 — Full Search + AI Authority — PENDING
 
 ---
 

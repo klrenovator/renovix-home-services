@@ -351,6 +351,18 @@ export const zh: Dictionary = {
     ctaTitle: "正在规划巴生谷的房屋工程？",
     ctaDescription:
       "告诉我们房屋情况与您想进行的工程 —— 照片会有帮助。我们会审阅详情、解答您的疑问，并在准备报价前为您说明下一步。",
+    // Phase 15 hierarchy & coverage explorer
+    hierarchyEyebrow: "服务覆盖架构",
+    hierarchyTitle: "马来西亚与雪隆服务覆盖层级",
+    hierarchyDescription:
+      "探索我们在吉隆坡与雪兰莪各行政区、市镇及主要社区的完整服务覆盖体系。",
+    activeCoverageTitle: "现行正式服务区域（雪隆地区）",
+    expansionRoadmapTitle: "未来扩展路线规划",
+    expansionRoadmapBody:
+      "Renovix 目前专注于吉隆坡、雪兰莪及大巴生谷都会区。未来扩展至槟城、柔佛及森美兰的计划正在规划中，我们坚持不以虚标服务承诺降低施工水准。",
+    districtExplorerTitle: "按行政区划浏览",
+    districtExplorerDescription:
+      "按本地市政行政区快速查找您的市镇或所在社区。",
   },
   areaRegion: {
     breadcrumbAreas: "服务地区",
@@ -372,6 +384,9 @@ export const zh: Dictionary = {
     ctaTitle: "正在规划本区域的工程？",
     ctaDescription:
       "告诉我们您所在的地区、房屋类型与工程需求，我们会为您说明下一步。",
+    districtsTitle: "{name}各行政区与市镇群",
+    districtsDescription:
+      "按{name}本地行政与市政区划分类整理。",
   },
   areaPage: {
     breadcrumbAreas: "服务地区",
@@ -410,6 +425,35 @@ export const zh: Dictionary = {
     ctaTitle: "正在规划本地区的工程？",
     ctaDescription:
       "告诉我们房屋类型、工程需求与所在位置，我们会为您说明下一步。",
+    // Phase 15 local SEO & search-intent
+    answerFirstEyebrow: "直接解答",
+    answerFirstTitle: "{name}房屋维修与翻新直接解答",
+    answerFirstDescription:
+      "关于我们在{name}的服务范围、起步价格、紧急协助和报价流程的清晰说明。",
+    coverageLabel: "服务范围与附近支援",
+    pricingLabel: "起步价格与预算估计",
+    emergencyLabel: "紧急维修与安全政策",
+    quotationLabel: "如何获取正式报价",
+    pricingEyebrow: "透明价格",
+    pricingTitle: "{name}各项服务起步参考价",
+    pricingDescription:
+      "雪隆地区主要服务的标准起步费率。最终报价将在现场评估物业状况后明确列出。",
+    pricingDisclaimer:
+      "价格从所列金额起。最终报价取决于实际现场状况、施工范围、材料选择、出入便利度及安装要求。",
+    pricingFactorsTitle: "{name}本地工程成本因素",
+    pricingFactorsBody:
+      "高层公寓需配合物业管理处准证与电梯预约；成熟排屋则需预先评估旧式暗管与老化电线状况。",
+    matrixEyebrow: "服务范围与施工意向",
+    matrixTitle: "{name}热门翻新与维修项目",
+    matrixDescription:
+      "我们在此区域经常承接的各类住宅与商业服务需求。",
+    matrixRepair: "维修与故障排除",
+    matrixInstall: "安装与升级改造",
+    matrixFullReno: "全屋翻新与商业装修",
+    matrixUrgentTag: "紧急安全排查",
+    hierarchyEyebrow: "地区层级架构",
+    districtLabel: "行政区划",
+    stateLabel: "州属/联邦直辖区",
   },
   about: {
     metaTitle: "关于 Renovix Home Services | 吉隆坡与雪兰莪",
@@ -895,6 +939,7 @@ export const zh: Dictionary = {
   common: {
     home: "首页",
     serviceAreas: "服务地区",
+    malaysia: "马来西亚",
     kualaLumpur: "吉隆坡",
     selangor: "雪兰莪",
     klangValley: "巴生谷",
