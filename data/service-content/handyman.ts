@@ -232,7 +232,7 @@ export const handyman: ServiceDetail = {
   faqs: [
     {
       question: "How much does handyman service cost in Malaysia?",
-      answer: "Typically RM40–200 per hour, common RM60–100/hour in KL & Selangor, min 1 hour. Door hinge RM80–180, lock RM120–280, picture hanging RM30–60, TV mount RM150–300, wardrobe assembly RM120–250, regrout RM250–550, silicone RM80–180. Call-out RM80 central waived if proceed. Final depends on task, materials and access.",
+      answer: "Typically RM60–200 per hour, common RM60–100/hour in KL & Selangor, min 1 hour. Door hinge RM80–180, lock RM120–280, picture hanging from RM60, TV mount RM150–300, wardrobe assembly RM120–250, regrout RM250–550, silicone RM80–180. Call-out RM80 central waived if proceed. Final depends on task, materials and access.",
     },
 
     {
@@ -304,7 +304,7 @@ export const handyman: ServiceDetail = {
   costFactors: [
     {
       title: "Task Complexity",
-      description: "Simple picture hanging RM30–60 vs TV mounting RM150–300 vs wardrobe assembly RM120–250.",
+      description: "Simple picture hanging from RM60 vs TV mounting RM150–300 vs wardrobe assembly RM120–250.",
     },
     {
       title: "Skill Type",
@@ -328,11 +328,11 @@ export const handyman: ServiceDetail = {
     },
   ],
   duration: {
-    intro: "Handyman jobs are usually same-day, scheduled next-day for most jobs.",
+    intro: "Most handyman jobs are scheduled next-day in KL & Selangor, depending on workload.",
     items: [
       { label: "Door Hinge / Lock", value: "30 minutes – 2 hours per door" },
       { label: "TV Mounting / Shelf", value: "30 minutes – 2 hours per item" },
-      { label: "Picture Hanging", value: "15–30 minutes per piece, RM30–60 heavy" },
+      { label: "Picture Hanging", value: "15–30 minutes per piece, from RM60 for heavy pieces" },
       { label: "Wardrobe Assembly", value: "1–3 hours standard, RM120–250" },
       { label: "Regrout / Silicone", value: "2–5 hours per bathroom" },
       { label: "Minor Repairs (Multiple)", value: "Half day hourly RM60–100" },
@@ -355,8 +355,8 @@ export const handyman: ServiceDetail = {
   excludesTitle: "What may be quoted separately",
   answerFirst: [
     {
-      question: "How much does handyman service cost in Malaysia?",
-      answer: "Handyman services in Malaysia typically charge RM40–RM200 per hour depending on complexity, with common rate RM60–RM100 per hour in KL & Selangor, minimum 1 hour. Fixed jobs: door hinge RM80–180, lock change RM120–280, picture hanging RM30–60 per heavy piece, TV wall mount RM150–300 with bracket, wardrobe assembly RM120–250, regrout bathroom wall RM250–550, silicone redo RM80–180. Call-out RM80 KL central waived if you proceed, RM150 outlying. Final price depends on task, materials and access.",
+      question: "What does handyman service typically cost in KL & Selangor?",
+      answer: "Handyman services in Malaysia typically charge RM60–RM200 per hour depending on complexity, with common rate RM60–RM100 per hour in KL & Selangor, minimum 1 hour. Fixed jobs: door hinge RM80–180, lock change RM120–280, picture hanging from RM60 per heavy piece, TV wall mount RM150–300 with bracket, wardrobe assembly RM120–250, regrout bathroom wall RM250–550, silicone redo RM80–180. Call-out RM80 KL central waived if you proceed, RM150 outlying. Final price depends on task, materials and access.",
     },
     {
       question: "What does handyman service include?",
@@ -364,11 +364,11 @@ export const handyman: ServiceDetail = {
     },
     {
       question: "Can handyman do TV mounting and shelf installation?",
-      answer: "Yes, TV wall mount with bracket RM150–300, shelf installation and curtain rail similar, picture hanging RM30–60 per heavy piece. We check wall type (concrete vs drywall), weight, height and include level check and testing. Takes 30 minutes to 2 hours per item. Bracket and shelf excluded if client supply, installation only.",
+      answer: "Yes, TV wall mount with bracket RM150–300, shelf installation and curtain rail similar, picture hanging from RM60 per heavy piece. We check wall type (concrete vs drywall), weight, height and include level check and testing. Takes 30 minutes to 2 hours per item. Bracket and shelf excluded if client supply, installation only.",
     },
     {
       question: "How quickly can handyman come?",
-      answer: "Most small jobs next-day in KL & Selangor depending on workload. We give realistic date when you enquire and confirm before arriving. Emergency same-day possible for urgent door or lock issues. Share photos, location and task list on WhatsApp for fastest fixed quote.",
+      answer: "Most small jobs next-day in KL & Selangor depending on workload. We give realistic date when you enquire and confirm before arriving. For urgent door or lock issues, mention it when you enquire and the earliest available slot will be offered. Share photos, location and task list on WhatsApp for fastest fixed quote.",
     },
   ],
   searchIntents: [

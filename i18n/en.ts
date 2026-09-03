@@ -87,6 +87,7 @@ export const en: Dictionary = {
     address: "Address",
     hours: "Hours",
     rights: "All rights reserved.",
+    machineReadable: "Machine-readable data",
   },
   home: {
     hero: {

@@ -7,7 +7,21 @@ import {
 } from "@/components/icons";
 import { format, getDictionary } from "@/i18n";
 import { getDistrictForLocation } from "@/data/locations";
+import { getPricingById } from "@/data/pricing";
 import type { AreaDetail } from "@/data/area-content/types";
+
+/**
+ * Formats a centralized starting price exactly as the catalogue states it:
+ * whole ringgit stay whole (`RM80`), decimals keep two places (`RM1.20`).
+ */
+function formatStartingPrice(id: string): string {
+  const entry = getPricingById(id);
+  if (!entry) return "RM—";
+  const figure = Number.isInteger(entry.startingPrice)
+    ? String(entry.startingPrice)
+    : entry.startingPrice.toFixed(2);
+  return `RM${figure}`;
+}
 
 type AreaAnswerFirstSectionProps = {
   area: AreaDetail;
@@ -48,12 +62,16 @@ export function AreaAnswerFirstSection({ area, lang }: AreaAnswerFirstSectionPro
           : lang === "zh"
             ? `${area.name} 的房屋维修与翻新起步价格是多少？`
             : `How much do home services start from in ${area.name}?`,
+      // The figures below are read from the centralized pricing catalogue
+      // (`data/pricing/pricing.ts`) at render time — they are never typed
+      // here, so a catalogue update can never leave this section quoting a
+      // stale price on 138 area pages.
       answer:
         lang === "ms"
-          ? `Kadar permulaan kami berpandukan harga telus: pemeriksaan paip bermula RM80, pembaikan paip dari RM150, mengecat dari RM1.20/kps, jubin dari RM8/kps, dan lantai SPC dari RM5.50/kps. Sebut harga akhir bergantung kepada keadaan tapak, jenis hartanah dan akses.`
+          ? `Kadar permulaan kami berpandukan harga telus: pemeriksaan paip bermula ${formatStartingPrice("plumbing-callout")}, pembaikan paip dari ${formatStartingPrice("plumbing-pipe-leak-visible")}, mengecat dari ${formatStartingPrice("painting-interior")}/kps, jubin dari ${formatStartingPrice("tiling-floor-ceramic")}/kps, dan lantai SPC dari ${formatStartingPrice("flooring-spc")}/kps. Sebut harga akhir bergantung kepada keadaan tapak, jenis hartanah dan akses.`
           : lang === "zh"
-            ? `我们采用全雪隆统一的透明起步费率：水喉排查 RM80 起，水管维修 RM150 起，油漆粉刷每平方尺 RM1.20 起，瓷砖铺设每平方尺 RM8 起，SPC 地板每平方尺 RM5.50 起。最终报价根据现场实际状况与出入要求明确列出。`
-            : `We follow transparent Klang Valley benchmark rates: plumbing inspection from RM80, pipe repairs from RM150, interior painting from RM1.20/sqft, ceramic tiling from RM8/sqft, and SPC click flooring from RM5.50/sqft. Final quotes reflect actual site conditions and property access.`,
+            ? `我们采用全雪隆统一的透明起步费率：水喉排查 ${formatStartingPrice("plumbing-callout")} 起，水管维修 ${formatStartingPrice("plumbing-pipe-leak-visible")} 起，油漆粉刷每平方尺 ${formatStartingPrice("painting-interior")} 起，瓷砖铺设每平方尺 ${formatStartingPrice("tiling-floor-ceramic")} 起，SPC 地板每平方尺 ${formatStartingPrice("flooring-spc")} 起。最终报价根据现场实际状况与出入要求明确列出。`
+            : `We follow transparent Klang Valley benchmark rates: plumbing inspection from ${formatStartingPrice("plumbing-callout")}, pipe repairs from ${formatStartingPrice("plumbing-pipe-leak-visible")}, interior painting from ${formatStartingPrice("painting-interior")}/sqft, ceramic tiling from ${formatStartingPrice("tiling-floor-ceramic")}/sqft, and SPC click flooring from ${formatStartingPrice("flooring-spc")}/sqft. Final quotes reflect actual site conditions and property access.`,
     },
     {
       icon: IconAlertTriangle,

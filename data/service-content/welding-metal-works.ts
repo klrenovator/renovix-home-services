@@ -282,7 +282,7 @@ export const weldingMetalWorks: ServiceDetail = {
   faqs: [
     {
       question: "How much does window grille cost in Malaysia?",
-      answer: "Mild steel window grille from RM12–18 psf, wrought iron RM13–20, stainless steel RM30–50. Main gate mild steel RM18–30, stainless RM40–65. Full house grille RM3k–7k. Welding repair from RM150. Prices 2026 Klang Valley, depends on material, design, size and finishing.",
+      answer: "Mild steel window grille from RM12–18 psf, wrought iron RM13–20, stainless steel from RM30 psf quoted per design. Main gate mild steel RM18–30, stainless RM40–65. Full-house grille packages quoted per site measurement. Welding repair from RM150. Prices 2026 Klang Valley, depends on material, design, size and finishing.",
     },
 
     {
@@ -358,7 +358,7 @@ export const weldingMetalWorks: ServiceDetail = {
     },
     {
       title: "Design Complexity",
-      description: "Simple slotted vs full bunga (flower) pattern — each line of bunga adds RM3–4 psf, full coverage higher.",
+      description: "Simple slotted vs full bunga (flower) pattern — each line of bunga pattern adds to the cost, full coverage higher.",
     },
     {
       title: "Size & Type",
@@ -407,7 +407,7 @@ export const weldingMetalWorks: ServiceDetail = {
   answerFirst: [
     {
       question: "How much does grille and gate cost in Malaysia?",
-      answer: "Window grille mild steel starts from RM12–RM18 per sqft, wrought iron RM13–RM20, stainless steel RM30–RM50 in 2026 KL & Selangor. Main gate mild steel from RM18–RM30 psf, stainless steel RM40–RM65. Full house wrought iron grille can be RM3,000–RM7,100 depending on windows and doors. Welding repair from RM150 per job. Final price depends on material, design with bunga, size and finishing.",
+      answer: "Window grille mild steel starts from RM12–RM18 per sqft, wrought iron RM13–RM20, stainless steel from RM30 per sqft quoted per design in 2026 KL & Selangor. Main gate mild steel from RM18–RM30 psf, stainless steel RM40–RM65. Full-house grille packages are quoted per site measurement depending on windows and doors. Welding repair from RM150 per job. Final price depends on material, design with bunga, size and finishing.",
     },
     {
       question: "What does window grille installation include?",

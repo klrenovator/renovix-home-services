@@ -125,7 +125,7 @@ export const translation: ServiceTranslation = {
     {
       title: "Keluli Tahan Karat",
       description:
-        "Tahan karat, RM30–50 sekaki persegi grill tingkap, RM40–65 pintu pagar, tidak perlu dicat, rupa moden.",
+        "Tahan karat, dari RM30 sekaki persegi grill tingkap dikira mengikut reka bentuk, RM40–65 pintu pagar, tidak perlu dicat, rupa moden.",
     },
     {
       title: "Aluminium & Kaca",
@@ -154,7 +154,7 @@ export const translation: ServiceTranslation = {
     {
       title: "Kerumitan Reka Bentuk",
       description:
-        "Corak slotted ringkas berbanding bunga penuh — setiap baris bunga menambah RM3–4 sekaki persegi, liputan penuh lebih tinggi.",
+        "Corak slotted ringkas berbanding bunga penuh — setiap baris corak bunga menambah kos, liputan penuh lebih tinggi.",
     },
     {
       title: "Saiz & Jenis",
@@ -208,7 +208,7 @@ export const translation: ServiceTranslation = {
     {
       question: "Berapa kos grill dan pintu pagar di Malaysia?",
       answer:
-        "Grill tingkap mild steel bermula dari RM12–RM18 sekaki persegi, wrought iron RM13–RM20, keluli tahan karat RM30–RM50 pada 2026 di KL & Selangor. Pintu pagar utama mild steel dari RM18–RM30 sekaki persegi, keluli tahan karat RM40–RM65. Grill wrought iron untuk rumah penuh boleh mencecah RM3,000–RM7,100 bergantung pada bilangan tingkap dan pintu. Pembaikan kimpalan dari RM150 setiap kerja. Harga akhir bergantung pada bahan, reka bentuk bunga, saiz dan kemasan.",
+        "Grill tingkap mild steel bermula dari RM12–RM18 sekaki persegi, wrought iron RM13–RM20, keluli tahan karat dari RM30 sekaki persegi dikira mengikut reka bentuk pada 2026 di KL & Selangor. Pintu pagar utama mild steel dari RM18–RM30 sekaki persegi, keluli tahan karat RM40–RM65. Pakej grill rumah penuh disebut harga mengikut ukuran tapak bergantung pada bilangan tingkap dan pintu. Pembaikan kimpalan dari RM150 setiap kerja. Harga akhir bergantung pada bahan, reka bentuk bunga, saiz dan kemasan.",
     },
     {
       question: "Apa yang termasuk dalam pemasangan grill tingkap?",

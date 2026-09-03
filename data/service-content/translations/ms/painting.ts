@@ -168,7 +168,7 @@ export const translation: ServiceTranslation = {
     {
       title: "Saiz & Ketinggian",
       description:
-        "Pangsapuri kecil 500–800 kaki persegi RM800–1200, teres 1000–1500 RM1500–2500, semi-D RM3000–5000; rumah dua tingkat perlukan perancah.",
+        "Pangsapuri kecil 500–800 kaki persegi dari RM1500, teres 1000–1500 RM1500–2500, semi-D RM3000–5000; rumah dua tingkat perlukan perancah.",
     },
     {
       title: "Bilangan Warna & Lapisan",
@@ -217,7 +217,7 @@ export const translation: ServiceTranslation = {
     {
       question: "Berapa kos mengecat rumah di Malaysia?",
       answer:
-        "Cat dalaman bermula dari RM1.20–RM2.50 sekaki persegi untuk pakej asas dan RM2.50–RM4.00 sekaki persegi untuk khidmat penuh termasuk cat pada 2026. Cat luaran bermula dari RM1.50 sekaki persegi asas dan RM3.00–RM4.50 premium. Pangsapuri kecil 500–800 kaki persegi RM800–RM1,200, teres 1000–1500 kaki persegi RM1,500–RM2,500, semi-D RM3,000–RM5,000, pakej rumah penuh 20x70 RM3,500–RM7,000. Harga akhir bergantung pada keadaan dinding, jenama cat, bilangan warna dan ketinggian.",
+        "Cat dalaman bermula dari RM1.20–RM2.50 sekaki persegi untuk pakej asas dan RM2.50–RM4.00 sekaki persegi untuk khidmat penuh termasuk cat pada 2026. Cat luaran bermula dari RM1.50 sekaki persegi asas dan RM3.00–RM4.50 premium. Pangsapuri kecil 500–800 kaki persegi dari RM1,500, teres 1000–1500 kaki persegi RM1,500–RM2,500, semi-D RM3,000–RM5,000, pakej rumah penuh 20x70 RM3,500–RM7,000. Harga akhir bergantung pada keadaan dinding, jenama cat, bilangan warna dan ketinggian.",
     },
     {
       question: "Apa yang termasuk dalam kerja cat dalaman?",
@@ -225,14 +225,14 @@ export const translation: ServiceTranslation = {
         "Cat dalaman termasuk pembersihan permukaan, pengamplasan ringan, menutup retak, primer dan 2 lapisan cat emulsi pertengahan berserta masking dan perlindungan. Mengambil masa 2–4 hari untuk 1000 kaki persegi. Cat premium seperti Nippon, Jotun dan Dulux, rawatan anti-kulat RM300–800 dan pembaikan dinding besar disebut harga berasingan.",
     },
     {
-      question: "Berapa lama kerja mengecat mengambil masa?",
+      question: "Berapa lama biasanya kerja mengecat mengambil masa?",
       answer:
         "Pangsapuri kecil 2–3 hari, teres 3–5 hari dalaman dan 4–7 hari rumah penuh, semi-D atau banglo 5–8 hari dalaman. Touch-up satu dinding setengah hari hingga 1 hari. Luaran rumah teres 3–6 hari bergantung cuaca. Pengeringan 2–4 jam antara lapisan.",
     },
     {
       question: "Perlukah saya beli cat sendiri?",
       answer:
-        "Boleh, tetapi khidmat penuh kami sudah termasuk cat premium (Nippon, Jotun, Dulux) dalam harga dari RM3.50 sekaki persegi, jadi anda tidak perlu menganggar kuantiti. Jika anda bekalkan cat sendiri, kadar kerja sahaja RM500–RM1,800 bergantung saiz, dan risiko lebih atau kurang tempahan ditanggung anda.",
+        "Boleh, tetapi khidmat penuh kami sudah termasuk cat premium (Nippon, Jotun, Dulux) dalam harga dari RM3.50 sekaki persegi, jadi anda tidak perlu menganggar kuantiti. Jika anda bekalkan cat sendiri, kerja sahaja dikira mengikut saiz dan keadaan dinding, dan risiko lebih atau kurang tempahan ditanggung anda.",
     },
   ],
 };

@@ -108,7 +108,7 @@ export const translation: ServiceTranslation = {
     {
       title: "瓷砖与地板",
       description:
-        "供应连安装：陶瓷 RM10–18、瓷质 RM14–28、SPC RM5.50–11.50、乙烯基 RM4.70–7.00。",
+        "供应连安装：陶瓷 RM8–15、瓷质 RM14–28、SPC RM5.50–11.50、乙烯基 RM4.70–7.00。",
     },
     {
       title: "电力与水管",
@@ -147,7 +147,7 @@ export const translation: ServiceTranslation = {
     {
       title: "房产类型与面积",
       description:
-        "公寓轻度 RM20–40、全屋 RM50–150；排屋轻度 RM10–30、全屋 RM30–120；半独立式轻度 RM10–25、全屋 RM25–100。",
+        "公寓轻度 RM20–40、全屋 RM50–150；排屋轻度 RM20–30、全屋 RM30–120；半独立式轻度 RM20–25、全屋 RM25–100。",
     },
     {
       title: "敲除与结构",

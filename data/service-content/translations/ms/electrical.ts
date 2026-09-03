@@ -178,12 +178,12 @@ export const translation: ServiceTranslation = {
     {
       title: "DB & Naik Taraf",
       description:
-        "Kotak DB RM400–1500, naik taraf panel dengan permohonan TNB RM2500, pendawaian semula rumah penuh RM4k–15k.",
+        "Kotak DB RM400–1500, naik taraf panel dengan permohonan TNB RM2500, pendawaian semula rumah penuh RM5k–12k.",
     },
     {
       title: "Kecemasan & Ketinggian",
       description:
-        "Kecemasan di luar waktu kerja RM150–300 sejam, siling melebihi 12 kaki dikenakan tambahan, pemeriksaan RM200–500.",
+        "Panggilan kecemasan kerosakan RM150–300 sejam, siling melebihi 12 kaki dikenakan tambahan, pemeriksaan RM200–500.",
     },
   ],
   duration: {

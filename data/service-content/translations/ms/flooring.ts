@@ -112,7 +112,7 @@ export const translation: ServiceTranslation = {
     {
       title: "Jubin Seramik & Porselin",
       description:
-        "Seramik RM10–18, porselin RM14–28, format besar RM22–45 bekal dan pasang — pilihan jika jubin lebih sesuai.",
+        "Seramik RM8–15, porselin RM14–28 bekal dan pasang; format besar dikira mengikut kerja — pilihan jika jubin lebih sesuai.",
     },
     {
       title: "Underlay & Skirting",
@@ -136,7 +136,7 @@ export const translation: ServiceTranslation = {
     {
       title: "Saiz Kawasan",
       description:
-        "Kawasan lebih besar lebih rendah sekaki persegi; pemasangan terus dari kilang dari RM2.19 sekaki persegi minimum 500 kaki persegi, RM3.97 minimum 800 kaki persegi untuk premium.",
+        "Kawasan lebih besar lebih rendah sekaki persegi; pemasang terus dari kilang mengiklankan kadar lebih rendah dengan syarat keluasan minimum untuk kerja pukal.",
     },
     {
       title: "Keadaan Lantai Asas",
@@ -189,7 +189,7 @@ export const translation: ServiceTranslation = {
     {
       question: "Berapa kos lantai SPC di Malaysia?",
       answer:
-        "Bahan lantai SPC berharga RM4–RM9 sekaki persegi, pemasangan RM2–RM4 sekaki persegi, bekal dan pasang dari RM5.50 sekaki persegi untuk asas (4+1mm) sehingga RM7.50 untuk 7.5mm IXPE pada 2026. Untuk rumah 1000 kaki persegi, kos tambahan SPC berbanding vinyl ialah RM500–RM1,500 tetapi jangka hayatnya 5–10 tahun lebih panjang. Vinyl LVT bermula dari RM4.70 bekal dan pasang. Harga akhir bergantung pada ketebalan, luas kawasan, keadaan lantai asas dan corak.",
+        "Bahan lantai SPC berharga RM4.70–RM9 sekaki persegi, pemasangan RM2–RM4 sekaki persegi, bekal dan pasang dari RM5.50 sekaki persegi untuk asas (4+1mm) sehingga RM7.50 untuk 7.5mm IXPE pada 2026. Untuk rumah 1000 kaki persegi, kos tambahan SPC berbanding vinyl ialah RM500–RM1,500 tetapi jangka hayatnya 5–10 tahun lebih panjang. Vinyl LVT bermula dari RM4.70 bekal dan pasang. Harga akhir bergantung pada ketebalan, luas kawasan, keadaan lantai asas dan corak.",
     },
     {
       question: "Apa yang termasuk dalam pemasangan lantai?",
@@ -199,10 +199,10 @@ export const translation: ServiceTranslation = {
     {
       question: "Adakah lantai SPC lebih murah daripada jubin?",
       answer:
-        "Kos bahan SPC asas dan seramik biasa boleh hampir sama, tetapi pemasangan SPC jauh lebih rendah dan pantas kerana sistem click-lock berbanding kerja jubin yang intensif. Jumlah bajet projek SPC selalunya lebih berbaloi untuk rupa moden tanpa jadual yang panjang. Jubin pula RM10–18 seramik dan RM14–28 porselin bekal dan pasang.",
+        "Kos bahan SPC asas dan seramik biasa boleh hampir sama, tetapi pemasangan SPC jauh lebih rendah dan pantas kerana sistem click-lock berbanding kerja jubin yang intensif. Jumlah bajet projek SPC selalunya lebih berbaloi untuk rupa moden tanpa jadual yang panjang. Jubin pula RM8–15 seramik dan RM14–28 porselin bekal dan pasang.",
     },
     {
-      question: "Berapa lama pemasangan lantai mengambil masa?",
+      question: "Berapa lama biasanya pemasangan lantai mengambil masa?",
       answer:
         "SPC atau vinyl 500 kaki persegi mengambil 1–2 hari, 1000 kaki persegi 2–3 hari untuk susunan lurus. Laminate 1–3 hari. Hacking lantai lama 1–3 hari termasuk pelupusan. Levelling lantai asas setengah hari termasuk pengeringan. Corak herringbone mengambil masa lebih lama.",
     },

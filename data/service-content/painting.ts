@@ -332,7 +332,7 @@ export const painting: ServiceDetail = {
   faqs: [
     {
       question: "How much does house painting cost in Malaysia?",
-      answer: "Interior painting starts from RM1.20–RM2.50 psf basic, RM2.50–RM4.00 psf full service with paint (2026). Exterior from RM1.50 psf basic, RM3.00–RM4.50 premium. Small apartment RM800–1200, terrace RM1500–2500, semi-D RM3000–5000, full house 20x70 RM3500–7000. Final quotation depends on wall condition, paint brand, colours and access.",
+      answer: "Interior painting starts from RM1.20–RM2.50 psf basic, RM2.50–RM4.00 psf full service with paint (2026). Exterior from RM1.50 psf basic, RM3.00–RM4.50 premium. Small apartment from RM1500, terrace RM1500–2500, semi-D RM3000–5000, full house 20x70 RM3500–7000. Final quotation depends on wall condition, paint brand, colours and access.",
     },
 
     {
@@ -412,7 +412,7 @@ export const painting: ServiceDetail = {
     },
     {
       title: "Area Size & Height",
-      description: "Small apartment 500–800 sqft RM800–1200, terrace 1000–1500 RM1500–2500, semi-D RM3000–5000; double-storey needs scaffolding.",
+      description: "Small apartment 500–800 sqft from RM1500, terrace 1000–1500 RM1500–2500, semi-D RM3000–5000; double-storey needs scaffolding.",
     },
     {
       title: "Number of Colours & Coats",
@@ -456,8 +456,8 @@ export const painting: ServiceDetail = {
   excludesTitle: "What may be quoted separately",
   answerFirst: [
     {
-      question: "How much does house painting cost in Malaysia?",
-      answer: "Interior painting starts from RM1.20–RM2.50 per sqft basic and RM2.50–RM4.00 per sqft full service with paint in 2026. Exterior starts from RM1.50 psf basic and RM3.00–RM4.50 premium. Small apartment 500–800 sqft costs RM800–RM1,200, terrace 1000–1500 sqft RM1,500–RM2,500, semi-D RM3,000–RM5,000, full house 20x70 package RM3,500–RM7,000. Final price depends on wall condition, paint brand, colours and height.",
+      question: "What does house painting typically cost in KL & Selangor?",
+      answer: "Interior painting starts from RM1.20–RM2.50 per sqft basic and RM2.50–RM4.00 per sqft full service with paint in 2026. Exterior starts from RM1.50 psf basic and RM3.00–RM4.50 premium. Small apartment 500–800 sqft from RM1,500, terrace 1000–1500 sqft RM1,500–RM2,500, semi-D RM3,000–RM5,000, full house 20x70 package RM3,500–RM7,000. Final price depends on wall condition, paint brand, colours and height.",
     },
     {
       question: "What does interior painting include?",
@@ -469,7 +469,7 @@ export const painting: ServiceDetail = {
     },
     {
       question: "Do I need to buy paint myself?",
-      answer: "You can, but our full service includes premium paints (Nippon, Jotun, Dulux) in the price from RM3.50 per sqft, so you don't need to estimate quantity. If you supply paint, labour-only rate is RM500–RM1,800 depending on size, and you carry risk of over/under ordering.",
+      answer: "You can, but our full service includes premium paints (Nippon, Jotun, Dulux) in the price from RM3.50 per sqft, so you don't need to estimate quantity. If you supply paint, labour-only work is quoted by size and wall condition, and you carry risk of over/under ordering.",
     },
   ],
   searchIntents: [

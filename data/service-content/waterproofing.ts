@@ -297,11 +297,11 @@ export const waterproofing: ServiceDetail = {
     },
     {
       title: "Waterproofing System",
-      description: "Cementitious RM8–14, PU RM12–20, torch-on RM10–18, crystalline RM15–25, polyurea premium RM30–60 psf.",
+      description: "Cementitious RM8–14, PU RM12–20, torch-on RM10–18, crystalline RM15–25 psf; polyurea premium systems quoted per project.",
     },
     {
       title: "Surface Preparation",
-      description: "Cleaning, crack repair, fillets at upstands, primer — skipping prep is #1 reason waterproofing fails.",
+      description: "Cleaning, crack repair, fillets at upstands, primer — skipping prep is the most common reason waterproofing fails.",
     },
     {
       title: "Tiling Reinstatement",
@@ -341,7 +341,7 @@ export const waterproofing: ServiceDetail = {
   excludesTitle: "What may be quoted separately",
   answerFirst: [
     {
-      question: "How much does waterproofing cost in Malaysia?",
+      question: "What does waterproofing typically cost in KL & Selangor?",
       answer:
         "Waterproofing costs start from RM8 per sqft for cementitious and RM8–RM15 for torch-on membrane in KL & Selangor. A full bathroom re-waterproofing with tile hack, membrane, flood test and retiling starts from RM1,500 to RM5,000. PU injection for ceiling leaks starts from RM350–RM650 flat per bathroom ceiling. Flat roof from RM8–RM25 per sqft. Final price depends on area size, existing damage, system and access.",
     },

@@ -292,7 +292,7 @@ export const tiling: ServiceDetail = {
   faqs: [
     {
       question: "How much does tiling cost in Malaysia?",
-      answer: "Tiling costs start from RM8 per sqft for standard ceramic supply & lay, RM14–RM28 for mid-range 60x60cm porcelain, and RM22–RM45 for large-format porcelain in KL & Selangor. Small areas 10–100 sqft start from RM300–500, bathroom complete from RM1,700 for 120 sqft combined. Final quotation depends on tile size, material, pattern, surface condition and whether hacking or waterproofing is needed.",
+      answer: "Tiling costs start from RM8 per sqft for standard ceramic supply & lay, RM14–RM28 for mid-range 60x60cm porcelain in KL & Selangor. Large-format porcelain and marble cost more and are quoted per job after checking the substrate. Small areas 10–100 sqft start from RM300–500, bathroom complete from RM1,700 for 120 sqft combined. Final quotation depends on tile size, material, pattern, surface condition and whether hacking or waterproofing is needed.",
     },
 
     {
@@ -345,7 +345,7 @@ export const tiling: ServiceDetail = {
     },
     {
       title: "Large-Format Porcelain",
-      description: "80x80cm, 60x120cm+ RM10–22 psf supply, RM22–55 supply & lay, needs perfectly level substrate to avoid lippage.",
+      description: "80x80cm, 60x120cm+ RM10–22 psf supply; supply & lay quoted per job, needs perfectly level substrate to avoid lippage.",
     },
     {
       title: "Homogeneous & Full-Body",
@@ -368,7 +368,7 @@ export const tiling: ServiceDetail = {
     },
     {
       title: "Tile Material",
-      description: "Ceramic RM8–15, porcelain RM14–28, large-format RM22–45, marble RM30–90 supply & lay.",
+      description: "Ceramic RM8–15, porcelain RM14–28 supply & lay; large-format porcelain and marble quoted per job.",
     },
     {
       title: "Pattern Complexity",
@@ -416,8 +416,8 @@ export const tiling: ServiceDetail = {
   excludesTitle: "What may be quoted separately",
   answerFirst: [
     {
-      question: "How much does tiling cost in Malaysia?",
-      answer: "Tiling costs start from RM8 per sqft for standard ceramic floor or wall tiling supply & lay in KL & Selangor, RM14–RM28 for mid-range 60x60cm porcelain, and RM22–RM45 for large-format porcelain. Small repair jobs start from RM150 for a few tiles, bathroom complete from RM1,700 for 120 sqft combined. Final price depends on tile size, material, pattern, surface condition and whether hacking or waterproofing is needed.",
+      question: "What does tiling typically cost in KL & Selangor?",
+      answer: "Tiling costs start from RM8 per sqft for standard ceramic floor or wall tiling supply & lay in KL & Selangor, RM14–RM28 for mid-range 60x60cm porcelain. Large-format porcelain costs more and is quoted per job after checking the substrate. Small repair jobs start from RM150 for a few tiles, bathroom complete from RM1,700 for 120 sqft combined. Final price depends on tile size, material, pattern, surface condition and whether hacking or waterproofing is needed.",
     },
     {
       question: "What does bathroom tiling include?",

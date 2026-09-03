@@ -162,7 +162,7 @@ export const translation: ServiceTranslation = {
     },
   ],
   duration: {
-    intro: "Kebanyakan pembaikan paip selesai pada hari yang sama; kebocoran tersembunyi dan kerja paip renovasi mengambil masa lebih lama.",
+    intro: "Kebanyakan pembaikan paip yang ketara disiapkan dalam satu lawatan; kebocoran tersembunyi dan kerja paip renovasi mengambil masa lebih lama.",
     items: [
       { label: "Panggilan & Pemeriksaan", value: "30–60 minit di tapak" },
       { label: "Paip Bocor Kelihatan", value: "1–3 jam" },

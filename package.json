@@ -13,7 +13,8 @@
     "audit:og-fonts": "node scripts/audit-og-fonts.mjs",
     "audit:project-assets": "node scripts/audit-project-assets.mjs",
     "audit:pricing": "node scripts/audit-pricing.mjs",
-    "audit:locations": "node scripts/audit-locations.mjs"
+    "audit:locations": "node scripts/audit-locations.mjs",
+    "audit:authority": "node scripts/audit-authority.mjs"
   },
   "dependencies": {
     "next": "16.3.3",

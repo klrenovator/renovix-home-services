@@ -316,6 +316,178 @@ for (const [slug, rows] of byService) {
 note("Every service headline price appears in that service's own pricing table.");
 
 /* ------------------------------------------------------------------------ */
+/* 8. Service-page copy quotes only prices the catalogue backs (Phase 16)    */
+/* ------------------------------------------------------------------------ */
+
+/*
+ * Section 7 guards the headline. This rule guards every other RM figure a
+ * reader meets in Renovix's own voice on a service page (answer-first
+ * answers, FAQs, pricing intros, durations, cost factors): the quoted number
+ * must fall inside one of that service's own pricing-row ranges, or inside
+ * a row range of another service named on the same line (a cross-service
+ * reference such as tiling quoting the waterproofing membrane rate).
+ *
+ * Exemptions, each documented:
+ * - `materials` arrays describe third-party material supply rates, not
+ *   Renovix quotes, and are labelled as supply-only context.
+ * - Lines mentioning TNB state the utility's own application fee.
+ * - `general-renovation` project totals at/above RM10k (k-suffixed) are
+ *   hand-verified psf-x-area derivations of the rows beside them.
+ *
+ * Translations are checked differently: numbers are never translated, so
+ * every RM figure in an MS/ZH service file must already exist in the English
+ * file for that service — otherwise a translation invented (or dropped) a
+ * price. And outside `data/service-content/` + `data/pricing/`, no RM figure
+ * may appear at all (problems, areas, projects, FAQs and dictionaries must
+ * never contradict the single source of truth).
+ */
+const SERVICE_KEYWORDS = {
+  plumbing: ["plumbing", "plumber", "pipe", "tap", "toilet", "drain", "water heater"],
+  waterproofing: ["waterproof", "membrane", "torch-on", "pu injection", "flood test", "cementitious"],
+  tiling: ["tiling", "tile", "ceramic", "porcelain", "marble", "mosaic", "hacking", "screed", "grout"],
+  painting: ["painting", "paint"],
+  electrical: ["electrical", "wiring", "socket", "db box", "downlight", "fan", "lighting", "power point", "piping"],
+  flooring: ["flooring", "spc", "vinyl", "laminate"],
+  "ceiling-partition": ["ceiling", "partition", "plaster", "drywall", "cornice", "l-box"],
+  "welding-metal-works": ["welding", "grille", "gate", "metal", "steel", "wrought", "stainless", "railing", "awning"],
+  "general-renovation": ["renovation", "kitchen", "bathroom", "extension", "cabinet", "countertop"],
+  handyman: ["handyman", "mounting", "grout", "silicone", "lock", "hinge"],
+};
+
+/** Ranges of the `materials: [...]` array in a service source file. */
+function materialsRanges(source) {
+  const ranges = [];
+  let from = 0;
+  while (true) {
+    const key = source.indexOf("materials:", from);
+    if (key < 0) break;
+    const open = source.indexOf("[", key);
+    let depth = 0;
+    let close = open;
+    for (; close < source.length; close += 1) {
+      if (source[close] === "[") depth += 1;
+      if (source[close] === "]") {
+        depth -= 1;
+        if (depth === 0) break;
+      }
+    }
+    ranges.push([key, close]);
+    from = close + 1;
+  }
+  return ranges;
+}
+
+function expandPrice(raw, suffix) {
+  const value = Number(raw.replace(/,/g, ""));
+  if (!suffix) return value;
+  if (suffix.toLowerCase() === "k") return value * 1000;
+  if (suffix.toLowerCase() === "m") return value * 1000000;
+  return value;
+}
+
+function lineOf(source, index) {
+  return source.slice(0, index).split("\n").length;
+}
+
+const PRICE_FIGURE = /RM\s?([0-9][0-9,]*(?:\.[0-9]+)?)\s*([kKmM])?\b/g;
+
+const enPriceSets = new Map();
+
+for (const slug of serviceSlugs) {
+  const file = join(SERVICE_DIR, `${slug}.ts`);
+  const source = readFileSync(file, "utf8");
+  const ranges = materialsRanges(source);
+  const inMaterials = (index) => ranges.some(([a, b]) => index >= a && index <= b);
+  const ownRanges = (byService.get(slug) ?? [])
+    .filter((row) => row.priceRange)
+    .map((row) => [row.priceRange.min, row.priceRange.max]);
+  const inOwn = (n) => ownRanges.some(([a, b]) => n >= a && n <= b);
+  const enNumbers = new Set();
+
+  for (const match of source.matchAll(PRICE_FIGURE)) {
+    enNumbers.add(expandPrice(match[1], match[2]));
+    if (inMaterials(match.index)) continue;
+    const line = source.split("\n")[lineOf(source, match.index) - 1];
+    if (/TNB/i.test(line)) continue;
+    const value = expandPrice(match[1], match[2]);
+    if (slug === "general-renovation" && match[2] && value >= 10000) continue;
+    if (inOwn(value)) continue;
+    const covered = [...byService.keys()].some(
+      (other) =>
+        other !== slug &&
+        (SERVICE_KEYWORDS[other] ?? []).some((word) => line.toLowerCase().includes(word)) &&
+        (byService.get(other) ?? []).some(
+          (row) => row.priceRange && value >= row.priceRange.min && value <= row.priceRange.max,
+        ),
+    );
+    if (!covered) {
+      fail(`${slug}.ts line ${lineOf(source, match.index)} quotes ${match[0]}, backed by no pricing row.`);
+    }
+  }
+
+  enPriceSets.set(slug, enNumbers);
+}
+
+note("Every service-page price claim is backed by a pricing row (materials supply context exempt).");
+
+for (const lang of ["ms", "zh"]) {
+  for (const slug of serviceSlugs) {
+    const file = join(SERVICE_DIR, "translations", lang, `${slug}.ts`);
+    const source = readFileSync(file, "utf8");
+    const allowed = enPriceSets.get(slug) ?? new Set();
+    for (const match of source.matchAll(PRICE_FIGURE)) {
+      if (!allowed.has(expandPrice(match[1], match[2]))) {
+        fail(`${lang}/${slug}.ts quotes ${match[0]}, which the English page never states.`);
+      }
+    }
+  }
+}
+
+note("MS/ZH service copy quotes no price the English page does not state.");
+
+const PRICE_FREE_DIRS = [
+  join(ROOT, "data", "problem-content"),
+  join(ROOT, "data", "area-content"),
+  join(ROOT, "data", "project-content"),
+  join(ROOT, "data", "locations"),
+  join(ROOT, "data", "i18n"),
+];
+
+const PRICE_FREE_FILES = [
+  join(ROOT, "data", "site-faqs.ts"),
+  join(ROOT, "i18n", "en.ts"),
+  join(ROOT, "i18n", "ms.ts"),
+  join(ROOT, "i18n", "zh.ts"),
+];
+
+function collectTsFiles(dir) {
+  return readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {
+    const full = join(dir, entry.name);
+    if (entry.isDirectory()) return collectTsFiles(full);
+    return full.endsWith(".ts") ? [full] : [];
+  });
+}
+
+for (const dir of PRICE_FREE_DIRS) {
+  for (const file of collectTsFiles(dir)) {
+    const source = readFileSync(file, "utf8");
+    const hit = source.match(/RM\s?[0-9]/);
+    if (hit) {
+      fail(`${file.replace(`${ROOT}/`, "")} quotes a price outside the pricing catalogue.`);
+    }
+  }
+}
+
+for (const file of PRICE_FREE_FILES) {
+  const source = readFileSync(file, "utf8");
+  if (/RM\s?[0-9]/.test(source)) {
+    fail(`${file.replace(`${ROOT}/`, "")} quotes a price outside the pricing catalogue.`);
+  }
+}
+
+note("Problems, areas, projects, locations, FAQs and dictionaries quote no prices.");
+
+/* ------------------------------------------------------------------------ */
 /* Report                                                                    */
 /* ------------------------------------------------------------------------ */
 

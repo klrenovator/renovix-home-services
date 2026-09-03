@@ -355,7 +355,7 @@ export const plumbing: ServiceDetail = {
     },
   ],
   duration: {
-    intro: "Most plumbing repairs are same-day; concealed leaks and renovation plumbing take longer.",
+    intro: "Most visible plumbing repairs are completed in a single visit; concealed leaks and renovation plumbing take longer.",
     items: [
       { label: "Call-out & Inspection", value: "30–60 minutes on site" },
       { label: "Visible Pipe Leak", value: "1–3 hours" },
@@ -383,7 +383,7 @@ export const plumbing: ServiceDetail = {
   excludesTitle: "What may be quoted separately",
   answerFirst: [
     {
-      question: "How much does plumbing repair cost in Malaysia?",
+      question: "What does plumbing repair typically cost in KL & Selangor?",
       answer:
         "Plumbing repair prices can start from RM150 for visible pipe leaks in KL & Selangor, from RM100 for drain unblocking and from RM160 for basin tap replacement. Concealed in-wall leaks start from RM450 because they need detection, wall opening and basic skim. Final cost depends on pipe material, accessibility, scope and whether hacking or tiling is needed.",
     },

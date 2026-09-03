@@ -139,7 +139,7 @@ export const selangorAreasC: AreaDetail[] = [
       {
         question: "Can you refurbish a student rental unit between tenancies?",
         answer:
-          "Yes. Tell us the vacant dates and we will quote and schedule durable, practical refurbishment to fit that window.",
+          "Yes. Tell us the vacant dates and we will quote and schedule durable, practical refurbishment to fit that window, following the condominium rules where they apply.",
       },
       {
         question: "Do renovation jobs here need the management's approval?",
@@ -313,7 +313,7 @@ export const selangorAreasC: AreaDetail[] = [
       {
         question: "Can you refurbish a rented home between tenancies?",
         answer:
-          "Yes. Tell us the vacant dates and we will quote and schedule durable, practical refurbishment to fit that window.",
+          "Yes. Tell us the vacant dates and we will quote and schedule durable, practical refurbishment to fit that window, prioritising the wet areas tenants notice first.",
       },
       {
         question: "How do I get a quote for Bandar Utama?",
@@ -969,12 +969,12 @@ export const selangorAreasC: AreaDetail[] = [
       {
         question: "Can you refurbish a rental unit between tenancies?",
         answer:
-          "Yes. Tell us the vacant dates and we will quote and schedule durable, practical refurbishment to fit that window.",
+          "Yes. Share the vacant dates and photos of each room, and we will quote a practical refurbishment that fits the window between tenancies.",
       },
       {
         question: "Do condominium jobs here need management approval?",
         answer:
-          "Most strata buildings require renovation notices, deposits and permitted working hours. We provide the scope details for your application and work within the rules.",
+          "Most strata blocks here require a renovation notice, a refundable deposit and work within permitted hours. Tell us your block's rules at enquiry and we will plan the scope around them.",
       },
       {
         question: "How do I get a quote for Bandar Sri Damansara?",
@@ -1630,7 +1630,7 @@ export const selangorAreasC: AreaDetail[] = [
       {
         question: "Do condominium jobs here need management approval?",
         answer:
-          "Most strata buildings require renovation notices, deposits and permitted working hours. We provide the scope details for your application and work within the rules.",
+          "Where the apartment management requires it, renovation notices, deposits and permitted working hours apply. We provide the scope details for your application before work starts.",
       },
       {
         question: "How do I get a quote for Bandar Baru Klang?",
@@ -1789,7 +1789,7 @@ export const selangorAreasC: AreaDetail[] = [
       {
         question: "Can you refurbish a rental home between tenancies?",
         answer:
-          "Yes. Tell us the vacant dates and we will quote and schedule durable, practical refurbishment to fit that window.",
+          "Yes. Share the vacant dates and photos of each room, and we will quote a practical refurbishment that fits the window between tenancies.",
       },
       {
         question: "Do you handle small handyman jobs in Sepang?",

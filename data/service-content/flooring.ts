@@ -222,7 +222,7 @@ export const flooring: ServiceDetail = {
   faqs: [
     {
       question: "How much does SPC flooring cost in Malaysia?",
-      answer: "Material RM4–9 psf, install RM2–4 psf, supply & install from RM5.50 entry to RM7.50 for 7.5mm IXPE. Vinyl from RM4.70. Laminate RM6–12, ceramic RM10–18, porcelain RM14–28. For 1000 sqft, SPC over vinyl extra RM500–1500. Final depends on thickness, area, subfloor and pattern.",
+      answer: "Material RM4.70–9 psf, install RM2–4 psf, supply & install from RM5.50 entry to RM7.50 for 7.5mm IXPE. Vinyl from RM4.70. Laminate RM6–12, ceramic RM8–15, porcelain RM14–28. For 1000 sqft, SPC over vinyl extra RM500–1500. Final depends on thickness, area, subfloor and pattern.",
     },
 
     {
@@ -279,7 +279,7 @@ export const flooring: ServiceDetail = {
     },
     {
       title: "Ceramic & Porcelain Tiles",
-      description: "Ceramic RM10–18, porcelain RM14–28, large-format RM22–45 supply & install — alternative where tiles preferred.",
+      description: "Ceramic RM8–15, porcelain RM14–28 supply & install; large-format quoted per job — alternative where tiles preferred.",
     },
     {
       title: "Underlay & Skirting",
@@ -298,7 +298,7 @@ export const flooring: ServiceDetail = {
     },
     {
       title: "Area Size",
-      description: "Larger areas lower per sqft; factory direct install from RM2.19 psf min 500 sqft, RM3.97 psf min 800 sqft for premium.",
+      description: "Larger areas lower per sqft; factory-direct installers advertise lower rates with minimum-area requirements for bulk jobs.",
     },
     {
       title: "Subfloor Condition",
@@ -345,8 +345,8 @@ export const flooring: ServiceDetail = {
   excludesTitle: "What may be quoted separately",
   answerFirst: [
     {
-      question: "How much does SPC flooring cost in Malaysia?",
-      answer: "SPC flooring material costs RM4–RM9 per sqft, installation RM2–RM4 psf, supply & install from RM5.50 psf entry (4+1mm) to RM7.50 for 7.5mm IXPE in 2026. For 1000 sqft home, extra cost of SPC over vinyl is RM500–RM1,500 but lasts 5–10 years longer. Vinyl LVT starts from RM4.70 supply & install. Final price depends on thickness, area, subfloor condition and pattern.",
+      question: "What does flooring typically cost in KL & Selangor?",
+      answer: "SPC flooring material costs RM4.70–RM9 per sqft, installation RM2–RM4 psf, supply & install from RM5.50 psf entry (4+1mm) to RM7.50 for 7.5mm IXPE in 2026. For 1000 sqft home, extra cost of SPC over vinyl is RM500–RM1,500 but lasts 5–10 years longer. Vinyl LVT starts from RM4.70 supply & install. Final price depends on thickness, area, subfloor condition and pattern.",
     },
     {
       question: "What does flooring installation include?",
@@ -354,7 +354,7 @@ export const flooring: ServiceDetail = {
     },
     {
       question: "Is SPC flooring cheaper than tiles?",
-      answer: "Material cost of entry-level SPC and basic ceramic can be similar, but SPC installation is significantly lower and faster due to click-lock vs labour-intensive tiling. Total project budget for SPC is often more cost-effective for modern look without extended timeline. Tiles cost RM10–18 ceramic and RM14–28 porcelain supply & install.",
+      answer: "Material cost of entry-level SPC and basic ceramic can be similar, but SPC installation is significantly lower and faster due to click-lock vs labour-intensive tiling. Total project budget for SPC is often more cost-effective for modern look without extended timeline. Tiles cost RM8–15 ceramic and RM14–28 porcelain supply & install.",
     },
     {
       question: "How long does flooring installation take?",

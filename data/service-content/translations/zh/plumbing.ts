@@ -159,7 +159,7 @@ export const translation: ServiceTranslation = {
     },
   ],
   duration: {
-    intro: "多数水管维修可当天完成；暗藏漏水与装修水管工程需时较长。",
+    intro: "多数外露水管维修一次上门即可完成；暗藏漏水与装修水管工程需时较长。",
     items: [
       { label: "上门与检查", value: "现场 30–60 分钟" },
       { label: "外露水管漏水", value: "1–3 小时" },

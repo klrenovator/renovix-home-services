@@ -35,16 +35,23 @@ Renovix Home Services – Home Renovation & Improvement Services in Kuala Lumpur
 | `npm run audit:business` | Business information audit — one verified phone, WhatsApp, email, address and opening-hours source; no placeholders, no invented SEO signals |
 | `npm run audit:og-fonts` | Verifies every character the OG cards render is covered by the committed font subsets |
 | `npm run audit:project-assets` | Verifies every published project image exists, matches its declared dimensions and nothing unreferenced is published |
-| `npm run audit:pricing` | Pricing audit — prices single-sourced in `data/pricing/pricing.ts`, coherent ranges, full MS/ZH row coverage, nothing presented as a final price |
+| `npm run audit:pricing` | Pricing audit — prices single-sourced in `data/pricing/pricing.ts`, coherent ranges, full MS/ZH row coverage, nothing presented as a final price, every service-page price claim backed by a row, no prices outside the catalogue |
+| `npm run audit:authority` | Search + AI authority audit — no fabricated claims, urgency language only where genuine, all cross-references resolve, index pages iterate the registries, one question per page, unique metadata per language, AI feeds in sync, alt text everywhere |
 
 ## Pricing data
 
 Indicative *starting* prices live in one place, `data/pricing/pricing.ts`. Malay
 and Chinese files under `data/pricing/translations/` reword the scope and
 duration only — they cannot contain a price, and `npm run audit:pricing` fails
-the build if one appears. The same entries feed three consumers so they can
+the build if one appears. The same entries feed every consumer so they can
 never disagree: the pricing table on each service page, the answer-first copy,
-and the machine-readable feed at `/ai/pricing.json` for answer engines.
+the location pricing sections, and the machine-readable feeds at
+`/ai/pricing.json` and `/ai/business.json` for answer engines (plus the
+crawler summary at `/llms.txt`, linked from the footer). All three documents
+are generated at build time from `lib/ai-knowledge.ts`, which derives every
+fact from the same registries the pages render. `npm run audit:authority`
+additionally fails if any AI-feed file hardcodes a price, and if any price
+appears anywhere outside the service pages and the catalogue.
 
 ## Quote form email (production)
 
