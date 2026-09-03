@@ -157,7 +157,7 @@ export const klAreasB: AreaDetail[] = [
     ],
     relatedServices: ["plumbing", "waterproofing", "general-renovation", "handyman"],
     relatedProblems: ["bathroom-leakage", "balcony-leakage", "low-water-pressure", "uneven-paint"],
-    nearbyAreas: ["segambut", "bangsar", "desa-parkcity"],
+    nearbyAreas: ["sri-hartamas", "segambut", "bangsar"],
   },
   {
     region: "kuala-lumpur",
@@ -315,7 +315,7 @@ export const klAreasB: AreaDetail[] = [
     ],
     relatedServices: ["general-renovation", "electrical", "plumbing", "painting"],
     relatedProblems: ["old-house-wiring", "mouldy-walls", "wall-seepage", "peeling-paint"],
-    nearbyAreas: ["old-klang-road", "mont-kiara", "petaling-jaya"],
+    nearbyAreas: ["brickfields-mid-valley", "damansara-heights", "old-klang-road"],
   },
   {
     region: "kuala-lumpur",
@@ -789,7 +789,7 @@ export const klAreasB: AreaDetail[] = [
     ],
     relatedServices: ["plumbing", "waterproofing", "general-renovation", "painting"],
     relatedProblems: ["blocked-drain", "water-leakage", "low-water-pressure", "cracked-walls"],
-    nearbyAreas: ["bangsar", "bukit-jalil", "petaling-jaya"],
+    nearbyAreas: ["brickfields-mid-valley", "bangsar", "bukit-jalil"],
   },
   {
     region: "kuala-lumpur",
@@ -1105,6 +1105,6 @@ export const klAreasB: AreaDetail[] = [
     ],
     relatedServices: ["flooring", "electrical", "general-renovation", "handyman"],
     relatedProblems: ["bathroom-leakage", "tile-grout-problems", "flickering-lights", "minor-home-repairs"],
-    nearbyAreas: ["kepong", "mont-kiara", "sungai-buloh"],
+    nearbyAreas: ["kepong", "bandar-sri-damansara", "sungai-buloh"],
   },
 ];

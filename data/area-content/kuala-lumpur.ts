@@ -1,6 +1,7 @@
 import type { AreaRegion } from "./types";
 import { klAreasA } from "./kuala-lumpur-areas-a";
 import { klAreasB } from "./kuala-lumpur-areas-b";
+import { klAreasC } from "./kuala-lumpur-areas-c";
 
 export const kualaLumpur: AreaRegion = {
   id: "kuala-lumpur",
@@ -81,7 +82,7 @@ export const kualaLumpur: AreaRegion = {
     {
       question: "Which parts of Kuala Lumpur do you cover?",
       answer:
-        "We serve neighbourhoods across the city, including Cheras, Setapak, Wangsa Maju, Ampang, Kepong, Segambut, Sentul, Mont Kiara, Bangsar, Bukit Jalil, Sri Petaling, Old Klang Road, Taman Melawati and Desa ParkCity. If your area is not listed, ask us — we cover most of the Klang Valley.",
+        "We serve neighbourhoods across the city, including Cheras, Setapak, Wangsa Maju, Ampang, Kepong, Segambut, Sentul, Mont Kiara, Bangsar, Bukit Jalil, Sri Petaling, Old Klang Road, Taman Melawati, Desa ParkCity, TTDI (Taman Tun Dr Ismail), Damansara Heights, Sri Hartamas and Brickfields & Mid Valley. If your area is not listed, ask us — we cover most of the Klang Valley.",
     },
     {
       question: "Can you work in strata buildings like condominiums?",
@@ -104,5 +105,5 @@ export const kualaLumpur: AreaRegion = {
         "Both. Handyman repairs, a single leaking tap or a cracked tile are welcome alongside larger renovation projects.",
     },
   ],
-  areas: [...klAreasA, ...klAreasB],
+  areas: [...klAreasA, ...klAreasB, ...klAreasC],
 };

@@ -1,6 +1,7 @@
 import type { AreaRegion } from "./types";
 import { selangorAreasA } from "./selangor-areas-a";
 import { selangorAreasB } from "./selangor-areas-b";
+import { selangorAreasC } from "./selangor-areas-c";
 
 export const selangor: AreaRegion = {
   id: "selangor",
@@ -12,7 +13,7 @@ export const selangor: AreaRegion = {
   summary:
     "Malaysia's most developed state — from 1950s Petaling Jaya and royal Klang to fast-growing corridors like Puchong, Kota Damansara and Cyberjaya.",
   intro: [
-    "Selangor surrounds Kuala Lumpur on three sides and holds the widest range of housing in the Klang Valley. Petaling Jaya began in the 1950s as the region's first planned satellite town; Shah Alam was planned as a garden city; Klang carries pre-war shophouse heritage as the royal town; and the corridors between them — Puchong, Subang Jaya, USJ, Kajang, Seri Kembangan, Kota Damansara, Sungai Buloh, Rawang and Semenyih — have grown into some of the country's largest residential belts. At the southern edge, Cyberjaya and Putrajaya form a newer planned cluster.",
+    "Selangor surrounds Kuala Lumpur on three sides and holds the widest range of housing in the Klang Valley. Petaling Jaya began in the 1950s as the region's first planned satellite town; Shah Alam was planned as a garden city; Klang carries pre-war shophouse heritage as the royal town; and the corridors between them — Puchong, Subang Jaya, USJ, Bandar Sunway, Kajang, Seri Kembangan, Bangi, Balakong, Kota Damansara, Sungai Buloh, Bandar Sri Damansara, Rawang and Semenyih — have grown into some of the country's largest residential belts, with the Bandar Utama and Mutiara Damansara cluster carrying the Damansara corridor west from the city. At the southern edge, Cyberjaya, Putrajaya and Sepang form the newer planned and airport corridor.",
     "That spread means the right renovation scope differs sharply by town. A 1950s PJ house needs different work than a 1990s USJ terrace or a 2010s Cyberjaya apartment. Renovix covers [tiling](/services/tiling), [electrical](/services/electrical), [plumbing](/services/plumbing), [waterproofing](/services/waterproofing), [painting](/services/painting), [ceiling](/services/ceiling-partition), [flooring](/services/flooring), [handyman](/services/handyman) and [renovation](/services/general-renovation) services across Selangor's main towns, with dedicated guides below.",
   ],
   landscapeIntro:
@@ -81,7 +82,7 @@ export const selangor: AreaRegion = {
     {
       question: "Which Selangor towns do you cover?",
       answer:
-        "Our main guides cover Petaling Jaya, Subang Jaya, Shah Alam, Puchong, Klang, Selayang, Gombak, Ampang Jaya, Kajang, Seri Kembangan, Cyberjaya, Putrajaya, Kota Damansara, Sungai Buloh, Rawang, Semenyih and USJ. If your area is nearby, ask us — we serve most of the Klang Valley.",
+        "Our main guides cover Petaling Jaya, Subang Jaya, Shah Alam, Puchong, Klang, Selayang, Gombak, Ampang Jaya, Kajang, Seri Kembangan, Cyberjaya, Putrajaya, Kota Damansara, Sungai Buloh, Rawang, Semenyih, USJ, Bandar Sunway, Bandar Utama, Mutiara Damansara, Damansara Perdana, Ara Damansara, Bandar Sri Damansara, Bangi, Serdang, Balakong, Bandar Baru Klang and Sepang. If your area is nearby, ask us — we serve most of the Klang Valley.",
     },
     {
       question: "Do you charge travel fees for Selangor jobs?",
@@ -104,5 +105,5 @@ export const selangor: AreaRegion = {
         "No. Handyman repairs and single-room jobs are welcome alongside full renovations.",
     },
   ],
-  areas: [...selangorAreasA, ...selangorAreasB],
+  areas: [...selangorAreasA, ...selangorAreasB, ...selangorAreasC],
 };

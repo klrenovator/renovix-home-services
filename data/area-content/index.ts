@@ -139,12 +139,12 @@ export const areasIndexFaqs: AreaFaq[] = [
   {
     question: "Which areas do you serve?",
     answer:
-      "We serve Kuala Lumpur and Selangor — our main guides cover 14 KL neighbourhoods and 17 Selangor towns, with more areas served on request across the Klang Valley.",
+      "We serve Kuala Lumpur and Selangor — our main guides cover 18 KL neighbourhoods and 28 Selangor towns, with more areas served on request across the Klang Valley.",
   },
   {
     question: "What is the Klang Valley?",
     answer:
-      "The Klang Valley is the metropolitan region centred on Kuala Lumpur and surrounding Selangor towns — Petaling Jaya, Subang Jaya, Shah Alam, Klang, Kajang and the rest. When we say we serve the Klang Valley, we mean Kuala Lumpur plus these Selangor districts.",
+      "The Klang Valley is the metropolitan region centred on Kuala Lumpur and surrounding Selangor towns — Petaling Jaya, Subang Jaya, Shah Alam, Klang, Kajang, Bangi, Sepang and the rest. When we say we serve the Klang Valley, we mean Kuala Lumpur plus these Selangor districts.",
   },
   {
     question: "My area isn't listed. Can you still help?",

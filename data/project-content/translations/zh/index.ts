@@ -5,126 +5,228 @@ export const zhProjectTranslations: ProjectTranslations = {
     title: "仿云石地砖铺设",
     shortDescription: "大尺寸仿云石地砖已铺贴并调平，完成面上仍放着水平尺与抹刀。",
     alt: "Renovix Home Services 在吉隆坡铺设并调平的大尺寸仿云石地砖。",
+    scopeOfWork: [
+      "测量放线并铺贴大尺寸仿云石地砖",
+      "边铺贴边调平地砖表面",
+      "用水平尺检查完成面"
+    ],
     seoDescription: "大尺寸仿云石地砖已铺贴并调平，完成面上仍放着水平尺与抹刀。Renovix Home Services 提供吉隆坡与雪兰莪瓷砖铺设服务，免费获取报价。",
   },
   "floor-tile-removal-hacking": {
     title: "重铺前的旧地砖拆除",
     shortDescription: "走道与入口处的旧地砖被凿除，为新地砖饰面整理底层水泥面。",
     alt: "工人在走道拆除旧地砖，为 Renovix Home Services 的铺砖工程作准备。",
+    scopeOfWork: [
+      "拆除现有地砖",
+      "凿除并清理旧黏结层",
+      "为新铺砖整理底层基面"
+    ],
     seoDescription: "走道与入口处的旧地砖被凿除，为新地砖整理底层水泥面。Renovix Home Services 的拆砖与重铺服务覆盖吉隆坡与雪兰莪，欢迎免费报价。",
   },
   "plaster-ceiling-cove-lighting": {
     title: "石膏天花与灯槽照明",
     shortDescription: "客厅内的凹入式石膏天花，配以暖色灯槽照明、筒灯与吊扇。",
     alt: "Renovix Home Services 在雪兰莪安装的石膏天花，配灯槽照明、筒灯与吊扇。",
+    scopeOfWork: [
+      "搭建并封板凹入式石膏天花",
+      "预留灯槽凹位以安装隐藏式照明",
+      "安装筒灯与吊扇",
+      "完成暖色灯槽照明的收尾"
+    ],
     seoDescription: "客厅凹入式石膏天花，配暖色灯槽照明、筒灯与吊扇。Renovix Home Services 提供吉隆坡与雪兰莪石膏天花工程，免费获取报价。",
   },
   "plaster-ceiling-design-downlights": {
     title: "石膏天花造型与筒灯",
     shortDescription: "分格造型的石膏天花，内藏灯带、射灯，中央设有吊扇。",
     alt: "Renovix Home Services 完成的分格石膏天花，内藏灯带与筒灯。",
+    scopeOfWork: [
+      "搭建分格造型石膏天花",
+      "预留隐藏式灯带凹位",
+      "安装射灯与中央吊扇"
+    ],
     seoDescription: "分格造型石膏天花，内藏灯带与射灯，中央设有吊扇。查看这项天花板工程的照片，Renovix Home Services 免费报价。",
   },
   "plaster-ceiling-pendant-lighting": {
     title: "石膏天花与吊灯",
     shortDescription: "开放式客饭厅的层叠式石膏天花，装有嵌入式筒灯、吊扇与吊灯。",
     alt: "Renovix Home Services 在吉隆坡安装的层叠式石膏天花、筒灯与吊灯。",
+    scopeOfWork: [
+      "搭建层叠式石膏天花",
+      "将筒灯嵌入天花",
+      "安装吊扇与吊灯"
+    ],
     seoDescription: "开放式客饭厅的层叠式石膏天花，装有筒灯、吊扇与吊灯。Renovix Home Services 在吉隆坡与雪兰莪承接天花板工程，欢迎免费报价。",
   },
   "timber-look-ceiling-beams": {
     title: "仿木纹天花横梁",
     shortDescription: "公寓客厅的石膏天花，配上仿木纹横梁造型、灯槽照明与吊扇。",
     alt: "Renovix Home Services 完成的公寓天花，配仿木纹横梁、灯槽照明与吊扇。",
+    scopeOfWork: [
+      "搭建石膏天花",
+      "加装仿木纹横梁造型",
+      "安装灯槽照明与吊扇"
+    ],
     seoDescription: "公寓客厅石膏天花配仿木纹横梁、灯槽照明与吊扇。想为家里做类似天花造型？Renovix Home Services 免费报价。",
+    details: [{ key: "propertyType", value: "公寓" }],
   },
   "suspended-ceiling-grid": {
     title: "吊顶龙骨安装",
     shortDescription: "商用单位内已安装完成的金属吊顶龙骨，随时可以封上天花板材。",
     alt: "Renovix Home Services 在巴生谷商用单位安装的金属吊顶龙骨。",
+    scopeOfWork: [
+      "放线并调平吊顶龙骨",
+      "在天花区域安装金属龙骨",
+      "为封上天花板材做好龙骨准备"
+    ],
     seoDescription: "商用单位内安装完成的金属吊顶龙骨，可随时封上天花板材。Renovix Home Services 承接吉隆坡与雪兰莪商用吊顶工程，免费获取报价。",
+    details: [{ key: "propertyType", value: "商用单位" }],
   },
   "ceiling-fan-and-light-installation": {
     title: "吊扇与灯具安装",
     shortDescription: "吊扇与灯具已完成布线并安装在带灯槽照明的凹入式石膏天花上。",
     alt: "Renovix Home Services 在雪兰莪于石膏天花安装的吊扇与灯具。",
+    scopeOfWork: [
+      "吊扇的布线安装",
+      "石膏天花上灯具的安装与测试"
+    ],
     seoDescription: "吊扇与灯具已布线并安装在带灯槽的石膏天花上。Renovix Home Services 提供吉隆坡与雪兰莪吊扇与灯具安装，免费获取报价。",
   },
   "chandelier-and-ceiling-fan-installation": {
     title: "水晶吊灯与吊扇安装",
     shortDescription: "装饰吊灯、吊扇与筒灯已在设有灯槽照明的客厅安装并测试完成。",
     alt: "Renovix Home Services 在吉隆坡客厅安装的吊灯、吊扇与筒灯。",
+    scopeOfWork: [
+      "安装装饰吊灯",
+      "安装吊扇",
+      "安装并测试筒灯"
+    ],
     seoDescription: "装饰吊灯、吊扇与筒灯已在客厅安装并测试完成。有吊灯或吊扇安装需求？Renovix Home Services 免费报价。",
   },
   "high-ceiling-light-installation": {
     title: "高处灯具安装",
     shortDescription: "在商用建筑内使用剪式升降平台，于高天花位置进行灯具安装工作。",
     alt: "电工使用剪式升降平台为 Renovix Home Services 在巴生谷安装高处灯具。",
+    scopeOfWork: [
+      "用剪式升降平台搭建高处作业通道",
+      "在高天花位置安装灯具",
+      "安装后测试照明"
+    ],
     seoDescription: "使用剪式升降平台，在商用建筑高天花位置安装灯具。Renovix Home Services 承接吉隆坡与雪兰莪高处灯具安装，欢迎免费报价。",
+    details: [{ key: "propertyType", value: "商用建筑" }],
   },
   "electrical-distribution-board-wiring": {
     title: "配电箱布线",
     shortDescription: "壁挂式配电箱已完成布线，配有色标线路、断路器与端子排。",
     alt: "Renovix Home Services 完成布线的壁挂式配电箱，配色标线路与断路器。",
+    scopeOfWork: [
+      "将配电箱固定上墙",
+      "将色标线路接入配电箱",
+      "把断路器接到端子排"
+    ],
     seoDescription: "壁挂式配电箱完成布线，配有色标线路、断路器与端子排。Renovix Home Services 提供配电箱安装与布线，免费获取报价。",
   },
   "electrical-db-panel-installation": {
     title: "电箱与控制柜安装",
     shortDescription: "电工在电气安装工程中，为控制柜接驳并端接进线电缆。",
     alt: "电工为 Renovix Home Services 在吉隆坡的控制柜端接电缆。",
+    scopeOfWork: [
+      "在控制柜端接进线电缆",
+      "完成电气安装中控制柜的接驳"
+    ],
     seoDescription: "电工为控制柜接驳并端接进线电缆。Renovix Home Services 在吉隆坡与雪兰莪承接电箱与控制柜安装，欢迎免费报价。",
   },
   "electrical-cable-wiring-installation": {
     title: "电缆布线安装",
     shortDescription: "电气安装期间，在天花高度将电缆穿入软管并整理排布。",
     alt: "电工在天花高度将电缆穿入软管，进行 Renovix Home Services 的电气安装。",
+    scopeOfWork: [
+      "在天花高度敷设电缆",
+      "把电缆整理穿入软管"
+    ],
     seoDescription: "电气安装期间，电缆在天花高度穿入软管并整理排布。Renovix Home Services 提供吉隆坡与雪兰莪电缆布线服务，免费获取报价。",
   },
   "wall-switch-installation": {
     title: "墙面开关安装",
     shortDescription: "室内电气工程中，墙面开关正在接线并固定入暗盒。",
     alt: "电工为 Renovix Home Services 在雪兰莪把墙面开关接线并装入暗盒。",
+    scopeOfWork: [
+      "墙面开关接线",
+      "把开关固定入暗盒"
+    ],
     seoDescription: "墙面开关正在接线并固定入暗盒。需要安装或更换开关插座？Renovix Home Services 免费报价。",
   },
   "outdoor-switch-socket-wiring": {
     title: "户外开关与插座布线",
     shortDescription: "现场进行户外开关与插座点位的接线与固定安装。",
     alt: "电工在现场为 Renovix Home Services 在巴生谷接驳户外开关与插座点位。",
+    scopeOfWork: [
+      "户外开关与插座点位接线",
+      "把户外点位固定到墙面"
+    ],
     seoDescription: "户外开关与插座点位的接线与固定安装。Renovix Home Services 提供吉隆坡与雪兰莪户外电气布线，免费获取报价。",
   },
   "toilet-and-basin-installation": {
     title: "马桶与洗手盆安装",
     shortDescription: "壁挂式洗手盆与连体马桶已在完成铺砖的浴室内安装并接驳妥当。",
     alt: "Renovix Home Services 在吉隆坡铺砖浴室内安装的马桶与壁挂洗手盆。",
+    scopeOfWork: [
+      "安装壁挂式洗手盆",
+      "安装连体马桶",
+      "接驳给水与排污"
+    ],
     seoDescription: "壁挂式洗手盆与连体马桶已在铺砖浴室内安装接驳妥当。Renovix Home Services 提供马桶与洗手盆安装服务，免费获取报价。",
   },
   "structural-metal-welding-fabrication": {
     title: "结构钢件加工焊接",
     shortDescription: "长条钢构件正在车间内焊接加工，接缝处可见焊接弧光。",
     alt: "焊工在车间为 Renovix Home Services 加工长条钢构件（雪兰莪）。",
+    scopeOfWork: [
+      "切割并准备钢构件",
+      "焊接钢构件接缝",
+      "在车间完成钢件加工"
+    ],
     seoDescription: "长条钢构件在车间内焊接加工，接缝处可见焊接弧光。Renovix Home Services 承接吉隆坡与雪兰莪钢件加工焊接，免费报价。",
   },
   "pipe-and-valve-welding-works": {
     title: "管道与阀门焊接工程",
     shortDescription: "在加工场进行管道与法兰阀门的焊接作业，完成的组件已排列待装。",
     alt: "焊工在加工场为 Renovix Home Services 焊接管道与法兰阀门。",
+    scopeOfWork: [
+      "管道与法兰阀门的焊接",
+      "把完成的组件排列好，准备安装"
+    ],
     seoDescription: "管道与法兰阀门在加工场焊接完成，组件排列待装。Renovix Home Services 提供管道焊接工程，免费获取报价。",
   },
   "on-site-metal-frame-welding": {
     title: "现场金属框架焊接",
     shortDescription: "现场金属工程中，金属框架在混凝土楼板上就位焊接。",
     alt: "焊工在混凝土楼板上焊接金属框架，属 Renovix Home Services 的现场金属工程。",
+    scopeOfWork: [
+      "把金属框架就位焊接",
+      "在混凝土楼板上固定框架"
+    ],
     seoDescription: "金属框架在混凝土楼板上就位焊接。Renovix Home Services 在吉隆坡与雪兰莪承接现场金属工程，欢迎免费报价。",
   },
   "metal-awning-frame-installation": {
     title: "金属遮阳棚骨架安装",
     shortDescription: "钢制支撑骨架已横跨屋面固定，形成遮阳棚覆盖层的结构。",
     alt: "Renovix Home Services 在雪兰莪屋面安装的钢制遮阳棚支撑骨架。",
+    scopeOfWork: [
+      "把钢制支撑骨架横跨屋面固定",
+      "搭起遮阳棚覆盖层的支撑结构"
+    ],
     seoDescription: "钢制支撑骨架横跨屋面固定，构成遮阳棚结构。想为住家或店面加装遮阳棚？Renovix Home Services 免费报价。",
   },
   "office-renovation-ceiling-and-tiling": {
     title: "办公空间装修进行中",
     shortDescription: "商用室内正在装修，上方是吊顶骨架，地面地砖正以调平卡子逐块铺设。",
     alt: "Renovix Home Services 施工中的办公室内部，进行天花骨架与地砖铺设。",
+    scopeOfWork: [
+      "办公室内部的吊顶骨架施工",
+      "用调平卡子铺设地砖",
+      "办公室装修中的地砖铺设"
+    ],
     seoDescription: "商用室内装修进行中：上方吊顶骨架，地砖以调平卡子逐块铺设。Renovix Home Services 承接办公室装修工程，免费获取报价。",
+    details: [{ key: "propertyType", value: "办公室" }],
   },
 };
