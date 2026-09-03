@@ -59,6 +59,15 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
   },
+  /**
+   * Google Search Console site ownership. Next.js renders this as
+   * `<meta name="google-site-verification" content="…">` in the head of every
+   * page. Any one page carrying the tag is enough for Google to verify the
+   * site; emitting it everywhere keeps it on the homepage (and every locale).
+   */
+  verification: {
+    google: "CIc-da9G9QfriX7tAeKqS3w5YF2tt4GKnjV8IMSGP8o",
+  },
 };
 
 export const viewport: Viewport = {
