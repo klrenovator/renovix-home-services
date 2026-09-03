@@ -392,6 +392,18 @@ export const ms: Dictionary = {
     ctaTitle: "Merancang kerja rumah di Lembah Klang?",
     ctaDescription:
       "Beritahu kami tentang hartanah dan kerja yang anda rancang — gambar amat membantu. Kami akan menyemak butirannya, menjawap soalan anda dan menasihati langkah seterusnya sebelum sebut harga disediakan.",
+    // Phase 15 hierarchy & coverage explorer
+    hierarchyEyebrow: "Seni Bina Liputan",
+    hierarchyTitle: "Hierarki Liputan Malaysia & Lembah Klang",
+    hierarchyDescription:
+      "Terokai liputan perkhidmatan komprehensif kami merentasi daerah, perbandaran, dan kejiranan di Kuala Lumpur dan Selangor.",
+    activeCoverageTitle: "Lokasi Perkhidmatan Aktif (Lembah Klang)",
+    expansionRoadmapTitle: "Pelan Hala Tuju Pengembangan Masa Depan",
+    expansionRoadmapBody:
+      "Renovix beroperasi secara aktif di seluruh Kuala Lumpur, Selangor, dan Lembah Klang. Pengembangan ke Pulau Pinang, Johor, dan Negeri Sembilan dirancang untuk fasa masa depan tanpa menjejaskan mutu kerja tempatan.",
+    districtExplorerTitle: "Terokai Mengikut Daerah Pentadbiran",
+    districtExplorerDescription:
+      "Cari perbandaran atau kejiranan anda yang dikumpulkan mengikut daerah pentadbiran tempatan.",
   },
   areaRegion: {
     breadcrumbAreas: "Kawasan Perkhidmatan",
@@ -414,6 +426,9 @@ export const ms: Dictionary = {
     ctaTitle: "Merancang kerja di wilayah ini?",
     ctaDescription:
       "Kongsi kawasan anda, jenis hartanah dan kerja yang diperlukan, dan kami akan bantu tentukan langkah seterusnya.",
+    districtsTitle: "Daerah & Kelompok Perbandaran di {name}",
+    districtsDescription:
+      "Disusun mengikut daerah pentadbiran dan perbandaran tempatan di {name}.",
   },
   areaPage: {
     breadcrumbAreas: "Kawasan Perkhidmatan",
@@ -452,6 +467,35 @@ export const ms: Dictionary = {
     ctaTitle: "Merancang kerja di kawasan ini?",
     ctaDescription:
       "Kongsi jenis hartanah, kerja yang diperlukan dan lokasi anda, dan kami akan bantu tentukan langkah seterusnya.",
+    // Phase 15 local SEO & search-intent
+    answerFirstEyebrow: "Jawapan Terus",
+    answerFirstTitle: "Jawapan Terus untuk Perkhidmatan Rumah di {name}",
+    answerFirstDescription:
+      "Fakta terus mengenai liputan, harga permulaan, bantuan segera, dan proses sebut harga di {name}.",
+    coverageLabel: "Liputan Perkhidmatan & Berdekatan Saya",
+    pricingLabel: "Harga Permulaan & Anggaran",
+    emergencyLabel: "Pembaikan Segera & Dasar Keselamatan",
+    quotationLabel: "Cara Mendapatkan Sebut Harga Bertulis",
+    pricingEyebrow: "Ketelusan Harga",
+    pricingTitle: "Harga Permulaan Indikatif di {name}",
+    pricingDescription:
+      "Kadar permulaan standard Lembah Klang untuk perkhidmatan utama kami. Sebut harga akhir disahkan selepas penilaian keadaan hartanah anda.",
+    pricingDisclaimer:
+      "Harga bermula daripada jumlah yang dinyatakan. Sebut harga akhir bergantung pada keadaan tapak, skop, bahan, kebolehcapaian dan keperluan pemasangan.",
+    pricingFactorsTitle: "Faktor Kos Tempatan di {name}",
+    pricingFactorsBody:
+      "Bangunan strata bertingkat tinggi memerlukan permit pengurusan dan tempahan lif; rumah teres matang mungkin memerlukan penilaian paip dan pendawaian lama.",
+    matrixEyebrow: "Skop & Niat Carian",
+    matrixTitle: "Skop Renovasi & Pembaikan Popular di {name}",
+    matrixDescription:
+      "Permintaan perkhidmatan kediaman dan komersial biasa yang kami kendalikan di kawasan kejiranan ini.",
+    matrixRepair: "Pembaikan & Mengesan Masalah",
+    matrixInstall: "Pemasangan & Naik Taraf",
+    matrixFullReno: "Renovasi Penuh & Komersial",
+    matrixUrgentTag: "Bantuan Keselamatan Segera",
+    hierarchyEyebrow: "Hierarki Lokasi",
+    districtLabel: "Daerah",
+    stateLabel: "Negeri / Wilayah",
   },
   about: {
     metaTitle: "Tentang Renovix Home Services | KL & Selangor",
@@ -964,6 +1008,7 @@ export const ms: Dictionary = {
   common: {
     home: "Laman Utama",
     serviceAreas: "Kawasan Perkhidmatan",
+    malaysia: "Malaysia",
     kualaLumpur: "Kuala Lumpur",
     selangor: "Selangor",
     klangValley: "Lembah Klang",

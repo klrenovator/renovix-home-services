@@ -6,13 +6,14 @@ import { faqNode } from "@/components/seo/schema";
 import { Breadcrumbs } from "@/components/service/Breadcrumbs";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button, WhatsAppButton } from "@/components/ui/Button";
-import { IconArrowRight, IconMapPin, IconCompass } from "@/components/icons";
+import { IconArrowRight, IconMapPin, IconCompass, IconBuilding, IconCheck } from "@/components/icons";
 import { AreaFaqSection } from "@/components/area/AreaFaqSection";
 import { AreaCtaSection } from "@/components/area/AreaCtaSection";
 import { getLanguage, languages } from "@/data/languages";
 import { getAreaName, getAreasIndexFaqs, getRegionName, getRegionSummary } from "@/data/i18n";
 import { getWhatsAppHref } from "@/data/site";
 import { areaRegions } from "@/data/area-content";
+import { districtGroups, getStateCoverage } from "@/data/locations";
 import { getDictionary } from "@/i18n";
 import { contentHref, localizedHref } from "@/i18n/hrefs";
 import { absoluteUrl, buildPageMetadata } from "@/i18n/seo";
@@ -60,6 +61,7 @@ export default async function AreasPage({ params }: AreasPageProps) {
   const faqs = getAreasIndexFaqs(code);
   const guideCount = areaRegions.reduce((total, region) => total + region.areas.length, 0);
   const canonical = absoluteUrl(code, "/areas/");
+  const allStates = getStateCoverage();
 
   return (
     <>
@@ -135,6 +137,7 @@ export default async function AreasPage({ params }: AreasPageProps) {
         </div>
       </section>
 
+      {/* Region & Area Guides Directory */}
       <section className="section bg-white">
         <div className="container-app">
           <SectionHeading
@@ -199,23 +202,115 @@ export default async function AreasPage({ params }: AreasPageProps) {
             })}
           </div>
 
-          <div className="mt-12 rounded-2xl border border-slate-200/80 bg-surface p-6 sm:p-8">
-            <div className="flex items-center gap-3">
-              <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-brand/10 text-brand">
-                <IconCompass className="h-5 w-5" />
-              </span>
-              <h3 className="text-lg font-bold tracking-tight text-navy">
-                {t.areasIndex.klangValleyTitle}
-              </h3>
+          {/* District Explorer */}
+          <div className="mt-16 border-t border-slate-100 pt-12">
+            <SectionHeading
+              eyebrow={t.areasIndex.hierarchyEyebrow}
+              title={t.areasIndex.districtExplorerTitle}
+              description={t.areasIndex.districtExplorerDescription}
+            />
+
+            <div className="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {districtGroups.map((district) => (
+                <div
+                  key={district.id}
+                  className="rounded-2xl border border-slate-200/80 bg-surface p-6 shadow-soft"
+                >
+                  <div className="flex items-center justify-between gap-2">
+                    <h4 className="text-base font-bold text-navy">
+                      {district.name}
+                    </h4>
+                    <span className="text-xs font-semibold text-brand">
+                      {district.regionId === "kuala-lumpur" ? t.common.kualaLumpur : t.common.selangor}
+                    </span>
+                  </div>
+
+                  <p className="mt-2 text-xs leading-5 text-secondary">
+                    {district.description}
+                  </p>
+
+                  <div className="mt-4 flex flex-wrap gap-1.5 border-t border-slate-200/60 pt-4">
+                    {district.locationSlugs.map((slug) => {
+                      const region = areaRegions.find((r) => r.id === district.regionId);
+                      const areaObj = region?.areas.find((a) => a.slug === slug);
+                      const href = contentHref("area", `${district.regionId}/${slug}`, code);
+                      const label = areaObj?.name ?? slug;
+
+                      return (
+                        <span key={slug}>
+                          {href ? (
+                            <Link
+                              href={href}
+                              className="chip text-xs hover:border-brand hover:text-brand"
+                            >
+                              {label}
+                            </Link>
+                          ) : (
+                            <span className="chip text-xs">{label}</span>
+                          )}
+                        </span>
+                      );
+                    })}
+                  </div>
+                </div>
+              ))}
             </div>
-            {t.areasIndex.klangValleyParagraphs.map((paragraph) => (
-              <p
-                key={paragraph.slice(0, 40)}
-                className="mt-4 max-w-3xl text-sm leading-6 text-secondary"
-              >
-                {paragraph}
+          </div>
+
+          {/* Klang Valley & Malaysia Hierarchy Coverage */}
+          <div className="mt-16 grid gap-8 lg:grid-cols-2">
+            <div className="rounded-2xl border border-slate-200/80 bg-surface p-6 sm:p-8">
+              <div className="flex items-center gap-3">
+                <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-brand/10 text-brand">
+                  <IconCompass className="h-5 w-5" />
+                </span>
+                <h3 className="text-lg font-bold tracking-tight text-navy">
+                  {t.areasIndex.klangValleyTitle}
+                </h3>
+              </div>
+              {t.areasIndex.klangValleyParagraphs.map((paragraph) => (
+                <p
+                  key={paragraph.slice(0, 40)}
+                  className="mt-4 text-sm leading-6 text-secondary"
+                >
+                  {paragraph}
+                </p>
+              ))}
+            </div>
+
+            <div className="rounded-2xl border border-slate-200/80 bg-surface p-6 sm:p-8">
+              <div className="flex items-center gap-3">
+                <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-emerald-500/10 text-emerald-600">
+                  <IconBuilding className="h-5 w-5" />
+                </span>
+                <h3 className="text-lg font-bold tracking-tight text-navy">
+                  {t.areasIndex.expansionRoadmapTitle}
+                </h3>
+              </div>
+              <p className="mt-4 text-sm leading-6 text-secondary">
+                {t.areasIndex.expansionRoadmapBody}
               </p>
-            ))}
+              <div className="mt-6 space-y-2.5 border-t border-slate-200/60 pt-4">
+                {allStates.map((state) => (
+                  <div
+                    key={state.id}
+                    className="flex items-center justify-between text-xs"
+                  >
+                    <span className="font-medium text-navy">{state.name}</span>
+                    {state.published ? (
+                      <span className="inline-flex items-center gap-1 font-semibold text-emerald-600">
+                        <IconCheck className="h-3.5 w-3.5" />
+                        {state.totalPublishedGuides} {t.areasIndex.guidesCountSuffix}
+                      </span>
+                    ) : (
+                      <span className="font-medium text-slate-400">
+                        {code === "ms" ? "Dirancang" : code === "zh" ? "未来规划" : "Planned Roadmap"}
+                      </span>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </section>

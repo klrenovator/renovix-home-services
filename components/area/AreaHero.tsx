@@ -6,6 +6,7 @@ import { getPhoneHref, getWhatsAppHref } from "@/data/site";
 import { getDictionary } from "@/i18n";
 import { localizedHref } from "@/i18n/hrefs";
 import { getAreaRegion } from "@/data/area-content";
+import { getDistrictForLocation } from "@/data/locations";
 import type { AreaDetail } from "@/data/area-content/types";
 
 type AreaHeroProps = {
@@ -16,6 +17,7 @@ type AreaHeroProps = {
 export function AreaHero({ area, lang }: AreaHeroProps) {
   const t = getDictionary(lang);
   const region = getAreaRegion(area.region, lang);
+  const district = getDistrictForLocation(area.slug);
 
   return (
     <section className="relative overflow-hidden bg-navy text-white">
@@ -77,6 +79,11 @@ export function AreaHero({ area, lang }: AreaHeroProps) {
             <IconMapPin className="h-3.5 w-3.5 text-accent" />
             {region?.name ?? t.common.klangValley}
           </li>
+          {district ? (
+            <li className="rounded-full border border-white/15 bg-white/10 px-3 py-1.5 text-xs font-medium text-white/90">
+              {district.name}
+            </li>
+          ) : null}
           <li className="rounded-full border border-white/15 bg-white/10 px-3 py-1.5 text-xs font-medium text-white/90">
             {t.common.klangValley}
           </li>

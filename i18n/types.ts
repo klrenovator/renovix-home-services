@@ -283,6 +283,15 @@ export type Dictionary = {
     ctaEyebrow: string;
     ctaTitle: string;
     ctaDescription: string;
+    // Phase 15 hierarchy & coverage explorer
+    hierarchyEyebrow: string;
+    hierarchyTitle: string;
+    hierarchyDescription: string;
+    activeCoverageTitle: string;
+    expansionRoadmapTitle: string;
+    expansionRoadmapBody: string;
+    districtExplorerTitle: string;
+    districtExplorerDescription: string;
   };
   areaRegion: {
     breadcrumbAreas: string;
@@ -309,6 +318,8 @@ export type Dictionary = {
     exploreOther: string;
     ctaTitle: string;
     ctaDescription: string;
+    districtsTitle: string;
+    districtsDescription: string;
   };
   areaPage: {
     breadcrumbAreas: string;
@@ -360,6 +371,30 @@ export type Dictionary = {
     ctaEyebrow: string;
     ctaTitle: string;
     ctaDescription: string;
+    // Phase 15 local SEO & search-intent
+    answerFirstEyebrow: string;
+    answerFirstTitle: string;
+    answerFirstDescription: string;
+    coverageLabel: string;
+    pricingLabel: string;
+    emergencyLabel: string;
+    quotationLabel: string;
+    pricingEyebrow: string;
+    pricingTitle: string;
+    pricingDescription: string;
+    pricingDisclaimer: string;
+    pricingFactorsTitle: string;
+    pricingFactorsBody: string;
+    matrixEyebrow: string;
+    matrixTitle: string;
+    matrixDescription: string;
+    matrixRepair: string;
+    matrixInstall: string;
+    matrixFullReno: string;
+    matrixUrgentTag: string;
+    hierarchyEyebrow: string;
+    districtLabel: string;
+    stateLabel: string;
   };
   about: {
     metaTitle: string;
@@ -641,6 +676,7 @@ export type Dictionary = {
   common: {
     home: string;
     serviceAreas: string;
+    malaysia: string;
     kualaLumpur: string;
     selangor: string;
     klangValley: string;

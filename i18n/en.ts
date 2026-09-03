@@ -385,6 +385,18 @@ export const en: Dictionary = {
     ctaTitle: "Planning home work in the Klang Valley?",
     ctaDescription:
       "Tell us about the property and the work you have in mind — photos help. We will review the details, answer your questions and guide the next step before a quotation is prepared.",
+    // Phase 15 hierarchy & coverage explorer
+    hierarchyEyebrow: "Coverage Architecture",
+    hierarchyTitle: "Malaysia & Klang Valley Coverage Hierarchy",
+    hierarchyDescription:
+      "Explore our comprehensive service coverage across Kuala Lumpur and Selangor districts, townships, and neighbourhoods.",
+    activeCoverageTitle: "Active Service Locations (Klang Valley)",
+    expansionRoadmapTitle: "Future Expansion Roadmap",
+    expansionRoadmapBody:
+      "Renovix actively operates across Kuala Lumpur, Selangor, and the Greater Klang Valley. Expansion into Penang, Johor, and Negeri Sembilan is planned for future phases without compromising local workmanship.",
+    districtExplorerTitle: "Explore by Administrative District",
+    districtExplorerDescription:
+      "Find your township or neighbourhood grouped by local municipal districts.",
   },
   areaRegion: {
     breadcrumbAreas: "Service Areas",
@@ -407,6 +419,9 @@ export const en: Dictionary = {
     ctaTitle: "Planning work in this region?",
     ctaDescription:
       "Share your area, property type and the work you need, and we will guide the next step.",
+    districtsTitle: "Districts & Township Clusters in {name}",
+    districtsDescription:
+      "Organised by local administrative and municipal districts across {name}.",
   },
   areaPage: {
     breadcrumbAreas: "Service Areas",
@@ -445,6 +460,35 @@ export const en: Dictionary = {
     ctaTitle: "Planning work in this area?",
     ctaDescription:
       "Share your property type, the work you need and your location, and we will guide the next step.",
+    // Phase 15 local SEO & search-intent
+    answerFirstEyebrow: "Direct Answers",
+    answerFirstTitle: "Direct Answers for Home Services in {name}",
+    answerFirstDescription:
+      "Direct facts about our coverage, starting prices, urgent support, and quotation process in {name}.",
+    coverageLabel: "Service Coverage & Near Me",
+    pricingLabel: "Starting Pricing & Estimates",
+    emergencyLabel: "Urgent Repairs & Emergency Policy",
+    quotationLabel: "How to Get a Written Quote",
+    pricingEyebrow: "Transparent Pricing",
+    pricingTitle: "Indicative Starting Prices in {name}",
+    pricingDescription:
+      "Standard Klang Valley starting rates for our most requested services. Final quotes are confirmed after assessing your property condition.",
+    pricingDisclaimer:
+      "Prices start from the stated amount. Final quotation depends on actual site condition, scope, materials, accessibility and installation requirements.",
+    pricingFactorsTitle: "Local Cost Factors in {name}",
+    pricingFactorsBody:
+      "High-rise strata buildings require management permits and lift booking; mature landed houses may require assessment of older concealed piping and wiring.",
+    matrixEyebrow: "Search Intent & Scopes",
+    matrixTitle: "Popular Renovation & Repair Scopes in {name}",
+    matrixDescription:
+      "Common residential and commercial service requests we handle across this neighbourhood.",
+    matrixRepair: "Repairs & Troubleshooting",
+    matrixInstall: "Installations & Upgrades",
+    matrixFullReno: "Full House & Commercial",
+    matrixUrgentTag: "Urgent Safety Triage",
+    hierarchyEyebrow: "Location Hierarchy",
+    districtLabel: "District",
+    stateLabel: "State / Territory",
   },
   about: {
     metaTitle: "About Renovix Home Services | KL & Selangor",
@@ -949,6 +993,7 @@ export const en: Dictionary = {
   common: {
     home: "Home",
     serviceAreas: "Service Areas",
+    malaysia: "Malaysia",
     kualaLumpur: "Kuala Lumpur",
     selangor: "Selangor",
     klangValley: "Klang Valley",
