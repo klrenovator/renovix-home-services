@@ -1918,10 +1918,18 @@ missions are
       types are set only where the photo content states them.
 
 ### 6. Git / deployment
-- [ ] To be filled in after commit/PR/merge (kept as a checklist until
-      the merge completes).
-- [ ] Vercel production deployment verified via the GitHub deployments
-      API.
+- [x] Branch `arena/01a06315-renovix-home-services`, commit `1b462ff`
+      ("Phase 13 (expansion): 15 new Klang Valley area guides, project
+      property types & scope of work"), merged to `main` via **PR #21**
+      (merge commit `e1e1f3c`).
+- [x] Diff reviewed before commit: only the files listed above; no debug
+      or test leftovers, no secrets, no changes to business facts.
+- [x] **Vercel deployment verified through the GitHub deployments API**
+      (the sandbox cannot fetch `*.vercel.app` directly): PR-branch
+      preview of `1b462ff` — state "success" ("Deployment has
+      completed", 2026-09-03 05:30 UTC); **production deployment of
+      `e1e1f3c` — state "success" ("Deployment has completed",
+      2026-09-03 05:33 UTC)**.
 
 ## PHASE 14 — PENDING
 
