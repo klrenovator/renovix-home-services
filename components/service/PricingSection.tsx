@@ -27,6 +27,34 @@ export function PricingSection({ detail, lang }: PricingSectionProps) {
   const disclaimer = detail.pricing?.disclaimer ?? t.servicePage.pricingDisclaimer;
   const lastReviewed = PRICING_LAST_REVIEWED;
 
+  /**
+   * The answer-first line must quote a price a reader can actually act on.
+   *
+   * Taking `Math.min` across every row was wrong whenever a service mixes
+   * units: tiling's cheapest row is tile *hacking* at RM2 per sqft, so the
+   * summary read "Starting from RM2 per sqft" above a table whose cheapest
+   * actual tiling job is RM8 — a figure nobody could be quoted. Each service's
+   * own `startingFromNote` states the headline price with the job it belongs
+   * to, and it is localized, so it is used when present. The lowest row is
+   * only a fallback, and then only among rows sharing the most common unit.
+   */
+  const headlineEntries = (() => {
+    const unitCounts = new Map<string, number>();
+    for (const entry of entries) {
+      unitCounts.set(entry.unit, (unitCounts.get(entry.unit) ?? 0) + 1);
+    }
+    const [commonUnit] = [...unitCounts.entries()].sort((a, b) => b[1] - a[1])[0];
+    return entries.filter((entry) => entry.unit === commonUnit);
+  })();
+
+  const cheapest = headlineEntries.reduce((low, entry) =>
+    entry.startingPrice < low.startingPrice ? entry : low,
+  );
+
+  const headline =
+    detail.pricing?.startingFromNote ??
+    `${t.servicePage.startingFrom} RM${cheapest.startingPrice} ${getPricingUnitsLabel(cheapest.unit, lang)}`;
+
   return (
     <section className="section bg-white">
       <div className="container-app">
@@ -42,11 +70,8 @@ export function PricingSection({ detail, lang }: PricingSectionProps) {
             {format(t.servicePage.pricingTitle, { name: detail.name })}
           </h3>
           <p className="mt-3 text-[15px] leading-7 text-secondary">
-            <span className="font-semibold text-navy">
-              {t.servicePage.startingFrom} RM{Math.min(...entries.map((e) => e.startingPrice))}{" "}
-              {getPricingUnitsLabel(entries[0].unit, lang)}
-            </span>{" "}
-            — {pricingIntro} {disclaimer}
+            <span className="font-semibold text-navy">{headline}</span> — {pricingIntro}{" "}
+            {disclaimer}
           </p>
           <p className="mt-3 text-xs text-secondary">
             {t.servicePage.lastReviewedLabel}: {lastReviewed} · {t.servicePage.pricingNote}

@@ -259,6 +259,62 @@ for (const file of copyFiles) {
 }
 note("No entry claims a fixed, guaranteed, cheapest or final price.");
 
+
+/* ------------------------------------------------------------------------ */
+/* 7. Each service's headline price matches a real row                       */
+/* ------------------------------------------------------------------------ */
+
+/*
+ * The answer-first line on a service page quotes one headline figure. It must
+ * be a price a reader could actually be quoted — i.e. it must appear in that
+ * service's own pricing table. A service that mixes units (tiling sells both
+ * per-sqft laying and per-sqft hacking, plus per-job repairs) must not
+ * advertise its cheapest ancillary row as the headline for the whole service.
+ */
+const byService = new Map();
+for (const entry of entries) {
+  if (!entry.serviceSlug) continue;
+  if (!byService.has(entry.serviceSlug)) byService.set(entry.serviceSlug, []);
+  byService.get(entry.serviceSlug).push(entry);
+}
+
+for (const [slug, rows] of byService) {
+  const source = readFileSync(join(SERVICE_DIR, `${slug}.ts`), "utf8");
+  const note = source.match(/startingFromNote: "((?:[^"\\]|\\.)*)"/);
+
+  if (!note) {
+    fail(`${slug}.ts has a pricing table but no startingFromNote headline.`);
+    continue;
+  }
+
+  const quoted = [...note[1].matchAll(/RM([0-9][0-9,]*(?:\.[0-9]+)?)/g)].map((m) =>
+    Number(m[1].replace(/,/g, "")),
+  );
+
+  if (quoted.length === 0) {
+    fail(`${slug}.ts startingFromNote quotes no price.`);
+    continue;
+  }
+
+  const available = new Set();
+  for (const row of rows) {
+    available.add(row.startingPrice);
+    if (row.priceRange) {
+      available.add(row.priceRange.min);
+      available.add(row.priceRange.max);
+    }
+  }
+
+  const unmatched = quoted.filter((price) => !available.has(price));
+  if (unmatched.length > 0) {
+    fail(
+      `${slug}.ts headline quotes RM${unmatched.join(", RM")}, which appears in no ${slug} pricing row.`,
+    );
+  }
+}
+
+note("Every service headline price appears in that service's own pricing table.");
+
 /* ------------------------------------------------------------------------ */
 /* Report                                                                    */
 /* ------------------------------------------------------------------------ */

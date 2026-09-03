@@ -87,7 +87,7 @@ export const translation: ServiceTranslation = {
   pricing: {
     intro:
       "万能工服务按小时计价，特定维修则按项目固定收费。吉隆坡常见价位为每小时 RM60–RM100，最少 1 小时。",
-    startingFromNote: "每小时 RM60 起，固定项目 RM30 起",
+    startingFromNote: "每小时 RM60 起，固定项目 RM60 起",
     disclaimer:
       "价格为起始价。最终报价取决于实际现场情况、工程范围、材料、可达性及安装要求。",
     tableIntro: "巴生谷常见万能工项目的参考起始价。",

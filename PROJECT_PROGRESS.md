@@ -2070,6 +2070,42 @@ Session" list.
       its disclaimer and its review date. No fixed, guaranteed or "cheapest"
       claim exists anywhere in the pricing system.
 
+### 7. Three pricing defects found on review and fixed
+A follow-up pass over the merged Phase 14 data found three genuine defects —
+all of them cases where the site could show a price nobody could actually be
+quoted. All three are fixed and now guarded by the audit.
+
+- [x] **Decimal prices were truncated to whole ringgit.** Six entries stored a
+      rounded integer where the research states a decimal:
+      `painting-interior` 1 → **1.20**, `painting-exterior` 2 → **1.50**,
+      `flooring-spc` 5 → **5.50**, `flooring-vinyl` 4 → **4.70**,
+      `ceiling-flat` 3 → **3.50**, `partition-drywall` 7 → **7.50** (each
+      `priceRange.min` corrected to match). The pricing table was therefore
+      advertising figures *below* the researched rate — e.g. "RM1 per sqft"
+      for interior painting against a real RM1.20. The `researchNote` on each
+      entry already recorded the correct decimal, so no new price was invented:
+      the stored number was simply brought back in line with its own source.
+- [x] **The answer-first headline took `Math.min` across mixed units.** On
+      tiling that produced "Starting from RM2 per sqft" — the tile *hacking*
+      rate — above a table whose cheapest actual tiling job is RM8. The
+      headline now uses each service's own localized `startingFromNote`, which
+      names the job the price belongs to ("Starting from RM8 per sqft for
+      ceramic floor tiling"); the lowest row is only a fallback, and then only
+      among rows sharing the service's most common unit.
+- [x] **Handyman advertised a price with no matching row.** The headline read
+      "fixed jobs from RM30" while the cheapest handyman row is RM60. Corrected
+      to RM60 in English, Malay and Chinese.
+- [x] **New audit rule (check 7)**: every price quoted in a service's
+      `startingFromNote` must appear as a `startingPrice`, range minimum or
+      range maximum in that same service's rows. This is the check that caught
+      the handyman defect, and it makes all three classes of error a build
+      failure rather than something a reader has to notice.
+- [x] Re-verified after the fixes: `type-check`, `lint`, `build` and all four
+      audits **PASS**; **408/408 sitemap URLs return 200**; structured data
+      **150/150 checks, 0 failures**; and the rendered headline on the served
+      build now reads RM8 (EN tiling), RM1.20 (EN painting), RM5.50 (MS
+      flooring) and RM3.50 (ZH ceiling) — each matching its own table.
+
 ## PHASE 15 — PENDING
 
 ---
