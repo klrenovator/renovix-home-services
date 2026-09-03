@@ -1800,6 +1800,129 @@ missions are
       type, scope, materials, before/after pairs of the same job) before
       those fields can be published.
 
+## PHASE 13 (PART 5) — Klang Valley Area Expansion, Project Property Types & Scope of Work — [x] COMPLETE
+
+> The expansion pass of Phase 13. Three tasks: (A) 15 new area guides for
+> well-known Klang Valley locations not yet covered; (B) `propertyType` on
+> the projects whose own photographs/titles establish it; (C) `scopeOfWork`
+> bullets for all 21 published projects. Phase 14 has not been started.
+
+### 1. Task A — 15 new area guides (Klang Valley expansion)
+- [x] **New KL guides (4)**: TTDI (Taman Tun Dr Ismail), Damansara Heights
+      (Bukit Damansara), Sri Hartamas, Brickfields & Mid Valley — KL goes
+      **14 → 18 neighbourhoods**.
+- [x] **New Selangor guides (11)**: Bandar Sunway, Bandar Utama, Mutiara
+      Damansara, Damansara Perdana, Ara Damansara, Bandar Sri Damansara,
+      Bangi, Serdang, Balakong, Bandar Baru Klang, Sepang — Selangor goes
+      **17 → 28 towns**. Site total **31 → 46 area guides**.
+- [x] Every new guide follows the existing architecture exactly
+      (`data/area-content/kuala-lumpur-areas-c.ts`,
+      `selangor-areas-c.ts`, registered in the hubs): unique intro (3
+      paragraphs with internal links), 6 locally-noted services, 5
+      property types with era-aware labels, 5 local problems, 4
+      locally-tailored process steps, local context, 5 FAQs, related
+      services/problems and nearby-area cross-links. Depth matches the
+      Cheras baseline; 0 duplicate intros.
+- [x] Full **Malay and Chinese** translations written for all 15
+      (`data/area-content/translations/{ms,zh}/kuala-lumpur-c.ts` +
+      `selangor-c.ts`, registered in the per-language index files) —
+      15 × 2 = 30 new translated documents.
+- [x] i18n plumbing: 15 new keys in `i18n/coverage.ts` (`ALL_AREAS` +
+      the `ms`/`zh` area inventories — the build-time coverage guard
+      verifies the sync); 15 established Chinese names in
+      `data/i18n/lists.ts` `areaNames` (e.g. 敦依斯迈花园, 白沙罗高原,
+      斯里哈达马斯, 十五碑, 双威镇, 万达镇, 珍珠白沙罗, 白沙罗柏兰岭,
+      阿拉白沙罗, 斯里白沙罗镇, 万宜, 沙登, 无拉港, 巴生新镇, 雪邦).
+- [x] Cross-linking: 20 existing guides gained nearby-area links to the
+      new towns (e.g. Cheras→Balakong, Subang Jaya→Bandar Sunway,
+      Kajang→Bangi, Klang→Bandar Baru Klang); region hubs' FAQ town
+      lists, the Selangor hub intro and the areas-index FAQs updated to
+      the new counts (18 / 28). Homepage and services areas sections
+      derive from the registry, so no hardcoded counts needed updating.
+- [x] **Uniqueness sweep**: a cross-file check found 14 duplicated
+      service/property-type notes inside the new guides (the pre-existing
+      guides have none); all were rewritten to be area-specific — verified
+      **0 duplicates** across the new EN/MS/ZH content afterwards.
+- [x] New pages get the same per-page SEO as existing guides
+      (self-canonical, hreflang ×4, OG/Twitter, BreadcrumbList + Service
+      scoped to the area, FAQPage) via the shared metadata builders —
+      verified in the served-site sweep below. Page count: **363 → 408**
+      URLs (136 per language). The 15 new zh area names never appear on
+      the OG card, so no font regeneration was needed
+      (`npm run audit:og-fonts` still PASS).
+
+### 2. Task B — project `propertyType` (only where the photos establish it)
+- [x] Every one of the 21 projects was re-checked against its own photo,
+      title, description and alt text. **Exactly 4** carry a property
+      type, because only 4 have an unambiguous signal:
+  - `timber-look-ceiling-beams` → **Condominium** / Kondominium / 公寓
+    (the description states a condominium living room)
+  - `suspended-ceiling-grid` → **Commercial unit** / Unit komersial /
+    商用单位 (grid installed across a commercial unit)
+  - `high-ceiling-light-installation` → **Commercial building** /
+    Bangunan komersial / 商用建筑 (high-level work inside a commercial
+    building)
+  - `office-renovation-ceiling-and-tiling` → **Office** / Pejabat /
+    办公室 (office interior mid-renovation)
+- [x] The other 17 projects stay **unset** — no signal, no invented
+      attribution. Set in `projects.ts` + `translations/{ms,zh}/index.ts`
+      via `details: [{ key: "propertyType", ... }]`, rendered by the
+      existing `ProjectDetailsSection` with the localized label.
+
+### 3. Task C — `scopeOfWork` for all 21 published projects
+- [x] 2–3 short work-item bullets per project inserted into EN
+      `projectContent` and the MS/ZH translation files (21 × 3 = 63
+      entries), placed after each project's `alt`.
+- [x] Derived **only** from each project's own title, slug, short
+      description and alt text — no invented dates, durations, rooms,
+      sizes, materials, brands, costs, locations or outcomes. Example
+      (`marble-look-floor-tiling`): setting out and laying large-format
+      marble-effect floor tiles; levelling the surface as work proceeds;
+      checking the finished floor with a spirit level.
+- [x] Rendered by the existing overview section
+      (`ProjectOverviewSection`); `getProjectSeo` reused so metadata and
+      JSON-LD stay consistent. Translation shape TypeScript-checked
+      (scopeOfWork is part of the typed `ProjectContent`).
+
+### 4. Testing
+- [x] `npm run type-check` — **PASS** (validates all Task B/C insertions
+      in all three languages)
+- [x] `npm run lint` — **PASS** (0 problems)
+- [x] `npm run build` — **PASS** (**408** static localized pages, up from
+      363; 3 sitemaps of 136 URLs each)
+- [x] `npm run audit:business` — **PASS**
+- [x] `npm run audit:og-fonts` — **PASS**
+- [x] `npm run audit:project-assets` — **PASS**
+- [x] **Real-browser suite — 154/154 PASS** (Chromium 149 via
+      @sparticuz/chromium + puppeteer-core in the scratch dir): 22 pages
+      (EN/MS/ZH home, areas index, hubs, new + old area guides, projects
+      index, project details, services, problems, quote) × 7 widths
+      (360/390/412/768/1024/1280/1440). Checked per visit: HTTP 200,
+      exactly one H1, correct `<html lang>`, no horizontal overflow, zero
+      page/console errors, every image loaded, the mobile drawer opens
+      (≤1024px), the globe language menu opens and navigates (<640px),
+      and the desktop switcher navigates (≥640px).
+- [x] **Served-site sweep — 408/408 URLs PASS, 0 failures**: every
+      sitemap URL returns 200; unique titles and descriptions site-wide
+      (0 duplicates); self-canonicals; hreflang sets (self, all three
+      languages, `x-default` → English, every alternate resolves); OG +
+      Twitter tags; valid JSON-LD with no `Review`/`AggregateRating`/
+      price; every internal link and image reference resolves; robots.txt
+      intact.
+
+### 5. Data honesty (unchanged standard)
+- [x] The new guides contain only publicly known context about each town
+      (housing eras, transit, institutions, strata rules) — no invented
+      statistics, prices, offices, projects or customer counts. Project
+      scope bullets derive from each photo's own description; property
+      types are set only where the photo content states them.
+
+### 6. Git / deployment
+- [ ] To be filled in after commit/PR/merge (kept as a checklist until
+      the merge completes).
+- [ ] Vercel production deployment verified via the GitHub deployments
+      API.
+
 ## PHASE 14 — PENDING
 
 ## PHASE 15 — PENDING
@@ -1814,4 +1937,4 @@ missions are
   - Hours: `9:00 AM – 6:00 PM` (the opening days were not stated, so no `dayOfWeek` is published in the schema)
 - Dedicated service detail pages were built in Phase 2; problem pages were built in Phase 3; the local SEO area architecture (2 region hubs + 31 unique location guides + areas index) was built in Phase 4. Phase 5 adds the supporting pages and a portfolio framework containing only clearly labelled placeholders. Phase 6 delivered the multilingual architecture and full translations for the core pages; the long-form service, problem and area catalogues remain English-only and the blog is not built. Phase 8 was the quality optimization pass (performance, accessibility, mobile & UX); the advanced quote system remains future work.
 - Phase 9 was the final QA audit: full route, multilingual, service, problem, location, conversion, SEO, performance, accessibility and code-quality review. Six genuine defects were fixed (three language-mixing bugs, the redirecting `og:image`, the missing mobile CTA and the on-demand OG route), dead code was removed and two build-time i18n guards were added. Remaining known issues are listed at the end of the Phase 9 section.
-- Phase 10 completed the localization project: all 10 service pages, 46 problem pages and 33 area guides now exist in Malay and Chinese (178 new translated documents), every contact detail is real, and each language publishes the same 100 pages. Phase 11 completed the business information/local SEO foundation: the verified NAP is the only business data in the codebase, the Contact page presents it in full in all three languages, every page title carries the full brand, the structured data is audited and an automated business-info audit (`npm run audit:business`) guards it. Phase 12 delivered the functional quote form. Phase 13 Part 1 added the logo, the real work-photo portfolio and the header WhatsApp CTA; Phase 13 Part 2 turned that photo list into a real portfolio system (typed project model, published/draft gating, 63 project detail pages, per-page SEO and structured data, localized empty state) and added the header language disclosure button plus drawer navigation with an active-page state; Phase 13 Part 3 fixed the drawer's containing-block defect via a body portal and re-verified everything against the served build. Phase 13 Part 4 closed the phase: per-project 1.91:1 OG crops generated from the owner's photographs, a self-contained OG font stack (Plus Jakarta Sans + Noto Sans SC subsets) that removed the build-time Google Fonts dependency and fixed the Chinese card, enriched Chinese project meta descriptions, two new dependency-free audits (`audit:og-fonts`, `audit:project-assets`), and the first full real-Chromium click-through (329/329 checks at 360/390/412/768/1024/1280/1440, plus a 363-URL/63-project-page served-site sweep — all passing). Phases 14–15 remain pending.
+- Phase 10 completed the localization project: all 10 service pages, 46 problem pages and 33 area guides now exist in Malay and Chinese (178 new translated documents), every contact detail is real, and each language publishes the same 100 pages. Phase 11 completed the business information/local SEO foundation: the verified NAP is the only business data in the codebase, the Contact page presents it in full in all three languages, every page title carries the full brand, the structured data is audited and an automated business-info audit (`npm run audit:business`) guards it. Phase 12 delivered the functional quote form. Phase 13 Part 1 added the logo, the real work-photo portfolio and the header WhatsApp CTA; Phase 13 Part 2 turned that photo list into a real portfolio system (typed project model, published/draft gating, 63 project detail pages, per-page SEO and structured data, localized empty state) and added the header language disclosure button plus drawer navigation with an active-page state; Phase 13 Part 3 fixed the drawer's containing-block defect via a body portal and re-verified everything against the served build. Phase 13 Part 4 closed the first brief: per-project 1.91:1 OG crops generated from the owner's photographs, a self-contained OG font stack (Plus Jakarta Sans + Noto Sans SC subsets) that removed the build-time Google Fonts dependency and fixed the Chinese card, enriched Chinese project meta descriptions, two new dependency-free audits (`audit:og-fonts`, `audit:project-assets`), and the first full real-Chromium click-through (329/329 checks at 360/390/412/768/1024/1280/1440, plus a 363-URL served-site sweep — all passing). Phase 13 Part 5 closed the expansion brief: 15 new area guides (KL 14→18, Selangor 17→28; 46 total) with full EN/MS/ZH copy and i18n coverage, `propertyType` set on exactly the 4 projects whose photos establish it, `scopeOfWork` for all 21 projects in three languages, and a full re-verification (408-URL served-site sweep, 154/154 real-browser checks, all audits green). Phases 14–15 remain pending.

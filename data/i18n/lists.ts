@@ -119,23 +119,23 @@ export const regionList: Record<
     "kuala-lumpur": {
       name: "Kuala Lumpur",
       summary:
-        "Panduan untuk bandar Kuala Lumpur serta 14 kawasan kejiranan — daripada pangsapuri bandar hingga rumah teres yang lebih lama.",
+        "Panduan untuk bandar Kuala Lumpur serta 18 kawasan kejiranan — daripada pangsapuri bandar hingga rumah teres yang lebih lama.",
     },
     selangor: {
       name: "Selangor",
       summary:
-        "Panduan untuk Selangor serta 17 pekan — meliputi perumahan teres, kondominium dan rumah berkembar di seluruh negeri.",
+        "Panduan untuk Selangor serta 28 pekan — meliputi perumahan teres, kondominium dan rumah berkembar di seluruh negeri.",
     },
   },
   zh: {
     "kuala-lumpur": {
       name: "吉隆坡",
       summary:
-        "吉隆坡市区及 14 个地段的指南 —— 从市中心公寓到较早建成的排屋区。",
+        "吉隆坡市区及 18 个地段的指南 —— 从市中心公寓到较早建成的排屋区。",
     },
     selangor: {
       name: "雪兰莪",
-      summary: "雪兰莪及 17 个城镇的指南 —— 涵盖全州的排屋、公寓与半独立屋住宅区。",
+      summary: "雪兰莪及 28 个城镇的指南 —— 涵盖全州的排屋、公寓与半独立屋住宅区。",
     },
   },
 };
@@ -161,6 +161,10 @@ export const areaNames: Record<NonEnglish, Record<string, string>> = {
     "kuala-lumpur/old-klang-road": "旧巴生路",
     "kuala-lumpur/taman-melawati": "美拉华蒂花园",
     "kuala-lumpur/desa-parkcity": "帝沙公园城",
+    "kuala-lumpur/taman-tun-dr-ismail": "敦依斯迈花园",
+    "kuala-lumpur/damansara-heights": "白沙罗高原",
+    "kuala-lumpur/sri-hartamas": "斯里哈达马斯",
+    "kuala-lumpur/brickfields-mid-valley": "十五碑",
     "selangor/petaling-jaya": "八打灵再也",
     "selangor/subang-jaya": "梳邦再也",
     "selangor/shah-alam": "莎阿南",
@@ -178,6 +182,17 @@ export const areaNames: Record<NonEnglish, Record<string, string>> = {
     "selangor/rawang": "万挠",
     "selangor/semenyih": "士毛月",
     "selangor/usj": "USJ",
+    "selangor/bandar-sunway": "双威镇",
+    "selangor/bandar-utama": "万达镇",
+    "selangor/mutiara-damansara": "珍珠白沙罗",
+    "selangor/damansara-perdana": "白沙罗柏兰岭",
+    "selangor/ara-damansara": "阿拉白沙罗",
+    "selangor/bandar-sri-damansara": "斯里白沙罗镇",
+    "selangor/bangi": "万宜",
+    "selangor/serdang": "沙登",
+    "selangor/balakong": "无拉港",
+    "selangor/bandar-baru-klang": "巴生新镇",
+    "selangor/sepang": "雪邦",
   },
 };
 
@@ -328,7 +343,7 @@ export const areasIndexFaqList: Record<
     {
       question: "Kawasan mana yang anda layani?",
       answer:
-        "Kami melayani Kuala Lumpur dan Selangor — panduan utama kami merangkumi 14 kawasan kejiranan di Kuala Lumpur dan 17 pekan di Selangor, dengan kawasan lain di Lembah Klang dilayan atas permintaan.",
+        "Kami melayani Kuala Lumpur dan Selangor — panduan utama kami merangkumi 18 kawasan kejiranan di Kuala Lumpur dan 28 pekan di Selangor, dengan kawasan lain di Lembah Klang dilayan atas permintaan.",
     },
     {
       question: "Apakah itu Lembah Klang?",
@@ -350,7 +365,7 @@ export const areasIndexFaqList: Record<
     {
       question: "你们的服务范围涵盖哪些地区？",
       answer:
-        "我们的服务涵盖吉隆坡与雪兰莪 —— 主要指南包括吉隆坡 14 个地段与雪兰莪 17 个城镇，巴生谷其他地区亦可按需求安排。",
+        "我们的服务涵盖吉隆坡与雪兰莪 —— 主要指南包括吉隆坡 18 个地段与雪兰莪 28 个城镇，巴生谷其他地区亦可按需求安排。",
     },
     {
       question: "什么是巴生谷？",

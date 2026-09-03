@@ -157,7 +157,7 @@ export const selangorAreasB: AreaDetail[] = [
     ],
     relatedServices: ["plumbing", "waterproofing", "general-renovation", "painting"],
     relatedProblems: ["bathroom-leakage", "old-house-wiring", "blocked-drain", "toilet-problems"],
-    nearbyAreas: ["kajang", "puchong", "cyberjaya"],
+    nearbyAreas: ["serdang", "balakong", "puchong"],
   },
   {
     region: "selangor",
@@ -315,7 +315,7 @@ export const selangorAreasB: AreaDetail[] = [
     ],
     relatedServices: ["flooring", "electrical", "general-renovation", "handyman"],
     relatedProblems: ["uneven-paint", "tile-grout-problems", "insufficient-power-points", "minor-home-repairs"],
-    nearbyAreas: ["putrajaya", "seri-kembangan", "puchong"],
+    nearbyAreas: ["putrajaya", "sepang", "puchong"],
   },
   {
     region: "selangor",
@@ -473,7 +473,7 @@ export const selangorAreasB: AreaDetail[] = [
     ],
     relatedServices: ["painting", "plumbing", "electrical", "general-renovation"],
     relatedProblems: ["mouldy-walls", "leaking-tap", "insufficient-power-points", "faded-paint"],
-    nearbyAreas: ["cyberjaya", "seri-kembangan", "kajang"],
+    nearbyAreas: ["cyberjaya", "sepang", "bangi"],
   },
   {
     region: "selangor",
@@ -631,7 +631,7 @@ export const selangorAreasB: AreaDetail[] = [
     ],
     relatedServices: ["general-renovation", "plumbing", "waterproofing", "flooring"],
     relatedProblems: ["bathroom-leakage", "leaking-pipe", "tile-grout-problems", "uneven-paint"],
-    nearbyAreas: ["sungai-buloh", "petaling-jaya", "selayang"],
+    nearbyAreas: ["bandar-utama", "mutiara-damansara", "sungai-buloh"],
   },
   {
     region: "selangor",
@@ -789,7 +789,7 @@ export const selangorAreasB: AreaDetail[] = [
     ],
     relatedServices: ["general-renovation", "plumbing", "waterproofing", "painting"],
     relatedProblems: ["roof-leakage", "old-house-wiring", "water-leakage", "mouldy-walls"],
-    nearbyAreas: ["kota-damansara", "kepong", "rawang"],
+    nearbyAreas: ["bandar-sri-damansara", "kota-damansara", "kepong"],
   },
   {
     region: "selangor",
@@ -1105,7 +1105,7 @@ export const selangorAreasB: AreaDetail[] = [
     ],
     relatedServices: ["general-renovation", "waterproofing", "painting", "plumbing"],
     relatedProblems: ["roof-leakage", "mouldy-walls", "old-house-wiring", "water-leakage"],
-    nearbyAreas: ["kajang", "rawang", "seri-kembangan"],
+    nearbyAreas: ["kajang", "bangi", "seri-kembangan"],
   },
   {
     region: "selangor",
@@ -1263,6 +1263,6 @@ export const selangorAreasB: AreaDetail[] = [
     ],
     relatedServices: ["general-renovation", "waterproofing", "plumbing", "painting"],
     relatedProblems: ["bathroom-leakage", "leaking-pipe", "roof-leakage", "blocked-drain"],
-    nearbyAreas: ["subang-jaya", "shah-alam", "puchong"],
+    nearbyAreas: ["bandar-sunway", "subang-jaya", "puchong"],
   },
 ];
