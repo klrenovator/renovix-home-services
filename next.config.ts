@@ -44,6 +44,25 @@ const nextConfig: NextConfig = {
         destination: "/en/",
         permanent: true,
       },
+      // The sitemap was consolidated into the single native `/sitemap.xml`
+      // (see `app/sitemap.ts`). These permanent redirects keep any crawler or
+      // Search Console entry that previously learned a per-language sitemap
+      // URL (`/sitemap/en.xml`, …) working instead of 404ing.
+      {
+        source: "/sitemap/en.xml",
+        destination: "/sitemap.xml",
+        permanent: true,
+      },
+      {
+        source: "/sitemap/ms.xml",
+        destination: "/sitemap.xml",
+        permanent: true,
+      },
+      {
+        source: "/sitemap/zh.xml",
+        destination: "/sitemap.xml",
+        permanent: true,
+      },
     ];
   },
 };
