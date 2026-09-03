@@ -331,6 +331,11 @@ export const painting: ServiceDetail = {
     "Interior and exterior painting services are available across Kuala Lumpur, Selangor and the wider Klang Valley, including landed homes and high-rise units.",
   faqs: [
     {
+      question: "How much does house painting cost in Malaysia?",
+      answer: "Interior painting starts from RM1.20–RM2.50 psf basic, RM2.50–RM4.00 psf full service with paint (2026). Exterior from RM1.50 psf basic, RM3.00–RM4.50 premium. Small apartment RM800–1200, terrace RM1500–2500, semi-D RM3000–5000, full house 20x70 RM3500–7000. Final quotation depends on wall condition, paint brand, colours and access.",
+    },
+
+    {
       question: "How long does a painting job take?",
       answer:
         "A single room can often be completed in a day or two, while a full house interior takes longer depending on size, preparation needs and the number of coats. We give a realistic schedule before starting.",
@@ -360,6 +365,136 @@ export const painting: ServiceDetail = {
       answer:
         "Each has its place: spraying is efficient for suitable large surfaces, while rolling is common for interior walls and offers good control. We recommend the best method for your surface and finish.",
     },
+  ],
+
+  pricing: {
+    intro: "Painting cost in KL & Selangor depends on wall condition, paint brand (Nippon, Jotun, Dulux), number of colours, height and whether interior, exterior or full house.",
+    startingFromNote: "Starting from RM1.20 per sqft for interior wall painting",
+    disclaimer: "Prices start from the stated amount. Final quotation depends on actual site condition, scope, materials, accessibility and installation requirements.",
+    tableIntro: "Common painting jobs with indicative starting prices for Klang Valley homes.",
+  },
+  materialsIntro: "We use standard painting materials from mid-range to premium brands suited to Malaysian humidity and weather.",
+  materials: [
+    {
+      title: "Interior Emulsion Paint",
+      description: "Vinilex 5000, EasyWash, Dulux, Jotun Majestic — mid-range cost, wide colour choices, washable.",
+    },
+    {
+      title: "Exterior Weatherbond Paint",
+      description: "Nippon Weatherbond, Jotun Jotashield, Dulux Weathershield — UV and rain protection for exterior walls.",
+    },
+    {
+      title: "Primer & Sealer",
+      description: "Wall sealer and primer for new and repaint surfaces, improves adhesion and covers stains.",
+    },
+    {
+      title: "Anti-Mould & Anti-Fungal",
+      description: "For damp areas, bathrooms and kitchens — add-on RM300–800, prevents mould growth.",
+    },
+    {
+      title: "Putty & Skim Coat",
+      description: "Crack filling, skim coat and surface repair before painting for smooth finish.",
+    },
+    {
+      title: "Special Finishes",
+      description: "Limewash, textured, heat-reflective where requested — priced separately.",
+    },
+  ],
+  costFactorsIntro: "Painting quotes vary because wall condition and access change prep time and material needs.",
+  costFactors: [
+    {
+      title: "Wall Condition",
+      description: "New vs old walls needing crack patching, scraping old paint RM2.50 psf, mould treatment, skim coating.",
+    },
+    {
+      title: "Paint Brand & Type",
+      description: "Regular emulsion vs anti-mould, heat-resistant or weatherbond — premium lasts longer but costs more.",
+    },
+    {
+      title: "Area Size & Height",
+      description: "Small apartment 500–800 sqft RM800–1200, terrace 1000–1500 RM1500–2500, semi-D RM3000–5000; double-storey needs scaffolding.",
+    },
+    {
+      title: "Number of Colours & Coats",
+      description: "More colours = more labour and cutting; 2–3 coats recommended for durability.",
+    },
+    {
+      title: "Interior vs Exterior",
+      description: "Interior RM1.20–2.50 psf basic, RM2.50–4.00 premium 2026; exterior RM1.50 psf basic, RM5–6 psf market, RM3.00–4.50 premium.",
+    },
+    {
+      title: "Access & Protection",
+      description: "Furniture covering, floor protection, high ceilings, grille painting RM3 psf, scraping RM2.50 psf.",
+    },
+  ],
+  duration: {
+    intro: "Painting duration depends on prep, drying between coats and weather for exterior.",
+    items: [
+      { label: "Small Apartment (500–800 sqft)", value: "2–3 days interior" },
+      { label: "Terrace House (1000–1500 sqft)", value: "3–5 days interior, 4–7 days full house" },
+      { label: "Semi-D / Bungalow (2000+ sqft)", value: "5–8 days interior, 7–12 days full house" },
+      { label: "Single Room / Touch-up", value: "Half day to 1 day per wall RM200–500" },
+      { label: "Exterior Only", value: "3–6 days for terrace, weather dependent" },
+      { label: "Wall Repair + Painting", value: "1–3 days extra for crack, mould, skim and drying" },
+    ],
+    note: "Drying time 2–4 hours between coats, longer in humid or rainy season for exterior.",
+  },
+  includes: [
+    "Surface cleaning and light sanding",
+    "Crack filling and minor putty",
+    "Primer/sealer where needed",
+    "2 coats of emulsion paint (mid-range brand)",
+    "Masking, floor protection and basic cleaning",
+  ],
+  excludes: [
+    "Major plastering or hacking",
+    "Premium paint upgrade (Dulux, Nippon premium, Jotun) if not specified",
+    "Scaffolding for high exterior walls beyond standard",
+    "Grille, gate, woodwork painting unless listed",
+  ],
+  includesTitle: "What painting usually includes",
+  excludesTitle: "What may be quoted separately",
+  answerFirst: [
+    {
+      question: "How much does house painting cost in Malaysia?",
+      answer: "Interior painting starts from RM1.20–RM2.50 per sqft basic and RM2.50–RM4.00 per sqft full service with paint in 2026. Exterior starts from RM1.50 psf basic and RM3.00–RM4.50 premium. Small apartment 500–800 sqft costs RM800–RM1,200, terrace 1000–1500 sqft RM1,500–RM2,500, semi-D RM3,000–RM5,000, full house 20x70 package RM3,500–RM7,000. Final price depends on wall condition, paint brand, colours and height.",
+    },
+    {
+      question: "What does interior painting include?",
+      answer: "Interior painting includes surface cleaning, light sanding, crack filling, primer and 2 coats of mid-range emulsion paint with masking and protection. Takes 2–4 days for 1000 sqft. Premium paints like Nippon, Jotun and Dulux, anti-mould treatment RM300–800 and major wall repairs are quoted separately.",
+    },
+    {
+      question: "How long does painting take?",
+      answer: "Small apartment 2–3 days, terrace 3–5 days interior and 4–7 days full house, semi-D/bungalow 5–8 days interior. Single wall touch-up half day to 1 day. Exterior terrace 3–6 days weather dependent. Drying 2–4 hours between coats.",
+    },
+    {
+      question: "Do I need to buy paint myself?",
+      answer: "You can, but our full service includes premium paints (Nippon, Jotun, Dulux) in the price from RM3.50 per sqft, so you don't need to estimate quantity. If you supply paint, labour-only rate is RM500–RM1,800 depending on size, and you carry risk of over/under ordering.",
+    },
+  ],
+  searchIntents: [
+    "house painting service",
+    "painting service near me",
+    "interior painting",
+    "exterior painting",
+    "repainting house",
+    "professional painter",
+    "affordable painting service",
+    "wall painting cost",
+    "house painting cost KL",
+    "painter near me",
+  ],
+  entityKeywords: [
+    "painting service",
+    "house painting",
+    "interior painting",
+    "exterior painting",
+    "wall painting",
+    "repainting",
+    "Nippon paint",
+    "Jotun",
+    "Dulux",
+    "anti-mould paint",
   ],
   relatedServices: ["ceiling-partition", "waterproofing", "general-renovation", "handyman"],
   relatedProblems: [

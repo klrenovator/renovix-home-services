@@ -179,6 +179,38 @@ export type Dictionary = {
     ctaHeading: string;
     ctaTitle: string;
     ctaDescription: string;
+    // Phase 14 pricing & authority
+    pricingEyebrow: string;
+    pricingTitle: string;
+    pricingDescription: string;
+    pricingDisclaimer: string;
+    pricingNote: string;
+    startingFrom: string;
+    priceTableService: string;
+    priceTableScope: string;
+    priceTablePrice: string;
+    priceTableUnit: string;
+    costFactorsEyebrow: string;
+    costFactorsTitle: string;
+    costFactorsDescription: string;
+    materialsEyebrow: string;
+    materialsTitle: string;
+    materialsDescription: string;
+    durationEyebrow: string;
+    durationTitle: string;
+    durationDescription: string;
+    durationNote: string;
+    includesEyebrow: string;
+    includesTitle: string;
+    excludesTitle: string;
+    answerFirstEyebrow: string;
+    answerFirstTitle: string;
+    answerFirstDescription: string;
+    quotePromptTitle: string;
+    quotePromptBody: string;
+    lastReviewedLabel: string;
+    viewPricing: string;
+    pricingFactorsTitle: string;
   };
   problemsIndex: {
     metaTitle: string;

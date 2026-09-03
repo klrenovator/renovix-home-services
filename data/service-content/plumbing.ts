@@ -26,8 +26,7 @@ export const plumbing: ServiceDetail = {
     },
     {
       title: "Pipe installation & replacement",
-      description:
-        "New pipes installed and old, corroded or leaking pipes replaced.",
+      description: "New pipes installed and old, corroded or leaking pipes replaced.",
     },
     {
       title: "Sanitary fitting installation",
@@ -189,22 +188,22 @@ export const plumbing: ServiceDetail = {
     {
       title: "Locate the Problem",
       description:
-        "For repairs, we trace the leak, blockage or fault to its actual source.",
+        "For repairs, we trace the leak, blockage or fault to its actual source using visual checks and, for concealed leaks, thermal and acoustic tools where needed.",
     },
     {
       title: "Assessment & Recommendation",
       description:
-        "We explain the options — repair or replace — and confirm the approach and quotation.",
+        "We explain the options — repair or replace — with photos where helpful, and confirm the approach, materials and quotation before starting.",
     },
     {
       title: "Carry Out the Work",
       description:
-        "The repair or installation is completed, with concealed work coordinated with other trades.",
+        "The repair or installation is completed, with concealed work coordinated with waterproofing, tiling and renovation trades.",
     },
     {
       title: "Testing & Handover",
       description:
-        "Water flow and connections are tested for leaks, and the area is cleaned up.",
+        "Water flow, pressure and connections are tested for leaks, the area is cleaned, and handover is confirmed with you.",
     },
   ],
   whyTitle: "Why Choose Renovix for Plumbing",
@@ -246,9 +245,14 @@ export const plumbing: ServiceDetail = {
     "Plumbing repair, installation and renovation services are available across Kuala Lumpur, Selangor and the wider Klang Valley.",
   faqs: [
     {
+      question: "How much does plumbing repair cost in Malaysia?",
+      answer:
+        "Plumbing repair prices start from RM150 for visible pipe leaks and from RM100–RM120 for basic call-out and inspection in KL central (waived if you proceed). Tap replacement starts from RM160, toilet mechanism repair from RM120, drain unblocking from RM100, and concealed in-wall leak repair from RM450 depending on accessibility, pipe material and whether hacking or waterproofing is needed. Final quotation depends on actual site condition and scope.",
+    },
+    {
       question: "How do I find a hidden water leak?",
       answer:
-        "Signs include damp patches, staining, musty smells, unusually high water bills and a drop in pressure. We trace concealed leaks systematically — checking pipe routes and fittings — before opening up walls or floors.",
+        "Signs include damp patches, staining, musty smells, unusually high water bills and a drop in pressure. We trace concealed leaks systematically — checking pipe routes and fittings with thermal imaging or acoustic detection where needed — before opening up walls or floors.",
     },
     {
       question: "Should I repair or replace my leaking pipes?",
@@ -263,7 +267,7 @@ export const plumbing: ServiceDetail = {
     {
       question: "What is involved in water heater installation?",
       answer:
-        "The heater needs correct water connections, secure mounting and an appropriate electrical supply. We handle the plumbing side and coordinate the electrical connection so the installation is complete and tested.",
+        "The heater needs correct water connections, secure mounting and an appropriate electrical supply. Storage heater installation labour starts from RM280, instant heater from RM150, excluding the heater unit and any electrical upgrade. We handle the plumbing side and coordinate the electrical connection so the installation is complete and tested.",
     },
     {
       question: "Why does my toilet keep running?",
@@ -275,6 +279,11 @@ export const plumbing: ServiceDetail = {
       answer:
         "Some condominium management bodies have requirements for certain plumbing works, especially anything affecting common areas or the building's main lines. We can advise on what to check with your management.",
     },
+    {
+      question: "What affects the final plumbing quotation?",
+      answer:
+        "Final cost depends on leak type (visible vs concealed), pipe material (PVC, copper), length affected, accessibility (high-rise, tight ceiling), need for hacking, waterproofing and tiling reinstatement, parts required and whether it is an emergency call. Sending photos, location and measurements helps us give a more accurate assessment.",
+    },
   ],
   relatedServices: ["waterproofing", "tiling", "general-renovation", "handyman"],
   relatedProblems: [
@@ -284,5 +293,139 @@ export const plumbing: ServiceDetail = {
     "blocked-drain",
     "toilet-problems",
     "low-water-pressure",
+  ],
+  pricing: {
+    intro:
+      "Plumbing costs in KL & Selangor depend on whether the leak is visible or concealed, pipe material, accessibility and whether hacking or reinstatement is needed. Prices start from RM80 for inspection and from RM150 for visible repairs.",
+    startingFromNote: "Starting from RM150 for visible pipe leak repair",
+    disclaimer:
+      "Prices start from the stated amount. Final quotation depends on actual site condition, scope, materials, accessibility and installation requirements.",
+    tableIntro: "Common plumbing jobs with indicative starting prices for Klang Valley homes.",
+  },
+  materialsIntro:
+    "We use standard plumbing materials suited to Malaysian residential and commercial properties.",
+  materials: [
+    {
+      title: "PVC & ABS Pipes",
+      description: "Common for water supply and drainage in homes, cost-effective and corrosion-resistant.",
+    },
+    {
+      title: "Copper & Stainless Fittings",
+      description: "Used where durability and heat resistance matter, such as water heater connections.",
+    },
+    {
+      title: "Tap Cartridges & Valves",
+      description: "Standard cartridges, angle valves and stop cocks for basin, kitchen and shower mixers.",
+    },
+    {
+      title: "Toilet Mechanisms",
+      description: "Fill valves, flappers, flush valves and seals for common toilet models.",
+    },
+    {
+      title: "Floor Traps & Sealant",
+      description: "Replacement traps, silicone and waterproof sealant to prevent odours and seepage.",
+    },
+  ],
+  costFactorsIntro:
+    "Plumbing quotations vary because every leak and installation has different access and material needs.",
+  costFactors: [
+    {
+      title: "Visible vs Concealed Leak",
+      description: "Visible leaks are quicker to fix; concealed leaks need detection, opening and reinstatement.",
+    },
+    {
+      title: "Pipe Material",
+      description: "PVC/ABS is easier to replace than copper which needs soldering or compression fittings.",
+    },
+    {
+      title: "Accessibility",
+      description: "Condo access, tight ceilings, boxed-up pipes and high-level work add labour time.",
+    },
+    {
+      title: "Length & Severity",
+      description: "Single joint vs full pipe run, and whether water damage has spread to walls or floors.",
+    },
+    {
+      title: "Hacking & Reinstatement",
+      description: "In-wall leaks need hacking, cement skim, waterproofing and tiling — quoted separately.",
+    },
+    {
+      title: "Parts & Fixtures",
+      description: "Tap brand, toilet model, water heater type and whether electrical upgrade is needed.",
+    },
+  ],
+  duration: {
+    intro: "Most plumbing repairs are same-day; concealed leaks and renovation plumbing take longer.",
+    items: [
+      { label: "Call-out & Inspection", value: "30–60 minutes on site" },
+      { label: "Visible Pipe Leak", value: "1–3 hours" },
+      { label: "Tap / Toilet Mechanism", value: "30 minutes – 2 hours" },
+      { label: "Drain Unblocking", value: "30 minutes – 2 hours, hydro jetting half day" },
+      { label: "Concealed In-Wall Leak", value: "Half day to 1 day including detection and skim" },
+      { label: "Water Heater Installation", value: "1–3 hours excluding electrical upgrade" },
+    ],
+    note: "Condo management approval, lift booking and water shutdown windows can extend scheduling.",
+  },
+  includes: [
+    "Leak tracing and diagnosis",
+    "Pipe repair or replacement for affected section",
+    "Tap, toilet mechanism or floor trap replacement where listed",
+    "Water flow and leak testing before handover",
+    "Basic cleaning of work area",
+  ],
+  excludes: [
+    "Full hacking and tiling reinstatement (quoted separately)",
+    "Waterproofing membrane unless specified",
+    "Water heater unit itself and major electrical rewiring",
+    "Concealed slab leak flooring reinstatement",
+  ],
+  includesTitle: "What plumbing service usually includes",
+  excludesTitle: "What may be quoted separately",
+  answerFirst: [
+    {
+      question: "How much does plumbing repair cost in Malaysia?",
+      answer:
+        "Plumbing repair prices can start from RM150 for visible pipe leaks in KL & Selangor, from RM100 for drain unblocking and from RM160 for basin tap replacement. Concealed in-wall leaks start from RM450 because they need detection, wall opening and basic skim. Final cost depends on pipe material, accessibility, scope and whether hacking or tiling is needed.",
+    },
+    {
+      question: "What does plumbing service include?",
+      answer:
+        "It includes leak detection, pipe installation or replacement, tap and toilet mechanism repair or replacement, sink, basin, shower and water heater installation, floor trap replacement and drain clearing, with water testing before handover. Hacking, tiling and waterproofing reinstatement are quoted separately where required.",
+    },
+    {
+      question: "When should I call a plumber for a leak?",
+      answer:
+        "Call when you see damp patches, ceiling stains, musty smells, unusually high water bills, low pressure, continuous tap dripping or a toilet that keeps running. Early repair prevents water from spreading into walls, floors and electrical points.",
+    },
+    {
+      question: "Can a leaking pipe be repaired without hacking?",
+      answer:
+        "Yes for accessible pipes — we can replace the section or reseal the joint. For concealed in-wall or slab leaks, a small opening is usually needed to reach the pipe. We plan the least disruptive route and coordinate waterproofing and tiling reinstatement where needed.",
+    },
+  ],
+  searchIntents: [
+    "plumber near me",
+    "plumbing repair near me",
+    "emergency plumber",
+    "leaking pipe repair",
+    "water leak repair",
+    "toilet repair",
+    "blocked drain",
+    "tap replacement cost",
+    "plumbing installation",
+    "affordable plumber KL",
+    "reliable plumber Selangor",
+  ],
+  entityKeywords: [
+    "plumbing service",
+    "plumber",
+    "pipe leak repair",
+    "water leak detection",
+    "concealed pipe",
+    "tap replacement",
+    "toilet repair",
+    "drain unblocking",
+    "water heater installation",
+    "floor trap",
   ],
 };

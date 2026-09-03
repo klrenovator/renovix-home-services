@@ -28,6 +28,35 @@ export type ServiceFaq = {
   answer: string;
 };
 
+export type ServiceMaterial = {
+  title: string;
+  description: string;
+};
+
+export type ServiceCostFactor = {
+  title: string;
+  description: string;
+};
+
+export type ServiceDuration = {
+  intro: string;
+  items: { label: string; value: string }[];
+  note?: string;
+};
+
+export type ServicePricingInfo = {
+  intro: string;
+  startingFromNote: string;
+  disclaimer: string;
+  tableIntro?: string;
+  priceListIntro?: string;
+};
+
+export type ServiceAnswer = {
+  question: string;
+  answer: string;
+};
+
 export type ServiceDetail = {
   slug: string;
   name: string;
@@ -60,4 +89,18 @@ export type ServiceDetail = {
   faqs: ServiceFaq[];
   relatedServices: string[];
   relatedProblems?: string[];
+  // Phase 14 enhancements
+  pricing?: ServicePricingInfo;
+  materialsIntro?: string;
+  materials?: ServiceMaterial[];
+  costFactorsIntro?: string;
+  costFactors?: ServiceCostFactor[];
+  duration?: ServiceDuration;
+  includes?: string[];
+  excludes?: string[];
+  includesTitle?: string;
+  excludesTitle?: string;
+  answerFirst?: ServiceAnswer[];
+  searchIntents?: string[];
+  entityKeywords?: string[];
 };

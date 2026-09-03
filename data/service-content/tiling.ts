@@ -291,6 +291,11 @@ export const tiling: ServiceDetail = {
     "Tile installation, repair and renovation services are available across Kuala Lumpur, Selangor and the wider Klang Valley — from condos in the city centre to landed homes in the suburbs.",
   faqs: [
     {
+      question: "How much does tiling cost in Malaysia?",
+      answer: "Tiling costs start from RM8 per sqft for standard ceramic supply & lay, RM14–RM28 for mid-range 60x60cm porcelain, and RM22–RM45 for large-format porcelain in KL & Selangor. Small areas 10–100 sqft start from RM300–500, bathroom complete from RM1,700 for 120 sqft combined. Final quotation depends on tile size, material, pattern, surface condition and whether hacking or waterproofing is needed.",
+    },
+
+    {
       question: "Can new tiles be laid over existing tiles?",
       answer:
         "In some cases yes, but it depends on the condition of the existing tiles, the resulting floor height and the type of new tile. We check the surface first and recommend removal where a direct overlay would compromise the result.",
@@ -320,6 +325,136 @@ export const tiling: ServiceDetail = {
       answer:
         "We do our best to match size, shade and finish. Where the original tile is no longer available, we suggest the closest match or a compatible alternative.",
     },
+  ],
+
+  pricing: {
+    intro: "Tiling cost in KL & Selangor depends on tile size, material (ceramic vs porcelain vs large-format), pattern, area and surface preparation. Standard ceramic starts from RM8 per sqft supply & lay.",
+    startingFromNote: "Starting from RM8 per sqft for ceramic floor tiling",
+    disclaimer: "Prices start from the stated amount. Final quotation depends on actual site condition, scope, materials, accessibility and installation requirements.",
+    tableIntro: "Common tiling jobs with indicative starting prices for Klang Valley homes.",
+  },
+  materialsIntro: "We work with standard tiling materials suited to Malaysian homes, from cost-effective ceramic to large-format porcelain.",
+  materials: [
+    {
+      title: "Ceramic Tiles",
+      description: "Cost-effective 30x30 to 60x60cm, RM2–RM6 psf supply only, suitable for walls and low-traffic floors.",
+    },
+    {
+      title: "Porcelain Tiles",
+      description: "Dense, low-porosity 60x60cm mid-range RM5–12 psf supply, RM14–28 supply & lay, ideal for heavy use and wet areas.",
+    },
+    {
+      title: "Large-Format Porcelain",
+      description: "80x80cm, 60x120cm+ RM10–22 psf supply, RM22–55 supply & lay, needs perfectly level substrate to avoid lippage.",
+    },
+    {
+      title: "Homogeneous & Full-Body",
+      description: "Full-body colour for high-traffic, RM15–40 psf supply, long-term durability.",
+    },
+    {
+      title: "Mosaic & Decorative",
+      description: "Glass, stone, ceramic mosaic RM15–60 psf for feature walls, borders, shower niches.",
+    },
+    {
+      title: "Tile Adhesive, Grout & Screed",
+      description: "Polymer-modified adhesive, grout, tile spacers and screed for leveling — prep adds RM3–8 psf if needed.",
+    },
+  ],
+  costFactorsIntro: "Tiling looks straightforward but prep, tile size and pattern decide the final cost and whether tiles stay flat.",
+  costFactors: [
+    {
+      title: "Tile Size",
+      description: "Large-format 80x80cm+ needs perfect leveling and skilled laying to avoid lippage, adding RM5–15 psf labour.",
+    },
+    {
+      title: "Tile Material",
+      description: "Ceramic RM8–15, porcelain RM14–28, large-format RM22–45, marble RM30–90 supply & lay.",
+    },
+    {
+      title: "Pattern Complexity",
+      description: "Straight lay is standard; herringbone or chevron adds RM5–12 psf for cutting and alignment.",
+    },
+    {
+      title: "Surface Condition",
+      description: "Uneven or soft screed needs grinding or self-levelling at RM3–8 psf, discovered after hacking.",
+    },
+    {
+      title: "Area Size & Access",
+      description: "Small areas 10–100 sqft RM300–500 minimum, larger areas lower per sqft; condo lift and protection add time.",
+    },
+    {
+      title: "Waterproofing & Hacking",
+      description: "Bathroom tiling needs waterproofing before tiling; old tile hacking RM2–6 psf plus disposal.",
+    },
+  ],
+  duration: {
+    intro: "Tiling duration depends on hacking, leveling, waterproofing curing and area size.",
+    items: [
+      { label: "Floor Tiling (100–200 sqft)", value: "2–4 days including prep" },
+      { label: "Bathroom Complete (60–120 sqft)", value: "4–7 days with waterproofing coordination" },
+      { label: "Tile Repair (few tiles)", value: "2–5 hours" },
+      { label: "Tile Hacking & Removal", value: "1–2 days per 100 sqft" },
+      { label: "Large-Format Porcelain", value: "3–5 days per 100–200 sqft, needs careful leveling" },
+      { label: "Grouting & Skirting", value: "Half day after laying, plus cleaning" },
+    ],
+    note: "Waterproofing flood test needs 24–72 hours before tiling. Condo working hours may extend schedule.",
+  },
+  includes: [
+    "Surface assessment and leveling check",
+    "Tile adhesive and grout for specified area",
+    "Tile cutting for edges, corners and pipe points",
+    "Laying with consistent joints and level check",
+    "Basic cleaning after completion",
+  ],
+  excludes: [
+    "Tiles if client-supplied (labour only)",
+    "Hacking old tiles and screeding unless specified",
+    "Waterproofing membrane (quoted separately)",
+    "Sanitary fittings and plumbing points",
+  ],
+  includesTitle: "What tiling usually includes",
+  excludesTitle: "What may be quoted separately",
+  answerFirst: [
+    {
+      question: "How much does tiling cost in Malaysia?",
+      answer: "Tiling costs start from RM8 per sqft for standard ceramic floor or wall tiling supply & lay in KL & Selangor, RM14–RM28 for mid-range 60x60cm porcelain, and RM22–RM45 for large-format porcelain. Small repair jobs start from RM150 for a few tiles, bathroom complete from RM1,700 for 120 sqft combined. Final price depends on tile size, material, pattern, surface condition and whether hacking or waterproofing is needed.",
+    },
+    {
+      question: "What does bathroom tiling include?",
+      answer: "Complete bathroom tiling includes surface prep, leveling check, waterproofing coordination, floor and wall tile installation with clean joints, grout and skirting, and cleaning. Waterproofing membrane itself is quoted separately if needed, typically from RM8 per sqft, and takes 5–8 days including curing and flood test.",
+    },
+    {
+      question: "Can you repair broken or hollow tiles without retiling whole floor?",
+      answer: "Yes. We remove only the damaged tiles, check the base for hollow or uneven screed, re-bed and secure new matching tiles with regrouting. Cost starts from RM150 for a few tiles. If many tiles are hollow, full retiling is recommended to avoid future cracking.",
+    },
+    {
+      question: "How long does tiling take?",
+      answer: "Floor tiling 100–200 sqft takes 2–4 days including prep, bathroom complete 4–7 days with waterproofing, tile repair a few hours, and hacking 1–2 days per 100 sqft. Large-format tiles take longer due to leveling requirements. Waterproofing needs 24–72 hour flood test before tiling.",
+    },
+  ],
+  searchIntents: [
+    "tiling contractor",
+    "tile installation",
+    "bathroom tiling",
+    "tile repair",
+    "tiling contractor near me",
+    "affordable tiling service",
+    "professional tiler KL",
+    "tile hacking",
+    "floor tiling cost",
+    "wall tiling",
+  ],
+  entityKeywords: [
+    "tiling service",
+    "tile installation",
+    "ceramic tile",
+    "porcelain tile",
+    "bathroom tiling",
+    "tile repair",
+    "tile hacking",
+    "floor screeding",
+    "tile leveling",
+    "grout",
   ],
   relatedServices: ["waterproofing", "general-renovation", "flooring", "plumbing"],
   relatedProblems: [
