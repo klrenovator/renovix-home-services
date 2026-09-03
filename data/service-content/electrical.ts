@@ -326,6 +326,11 @@ export const electrical: ServiceDetail = {
     "Electrical installation, repair and inspection services are available across Kuala Lumpur, Selangor and the wider Klang Valley.",
   faqs: [
     {
+      question: "How much does electrical wiring cost in Malaysia?",
+      answer: "Socket addition from RM80 per point, lighting point from RM60, fan install from RM80, DB box single-phase RM400 and 3-phase RM800, full house wiring from RM5k for 1-storey terrace and RM8k for 2-storey. Concealed wiring 30–50% more. Emergency hourly RM150–300. Final quotation depends on points, distance, wall type and phase.",
+    },
+
+    {
       question: "When should a house be rewired?",
       answer:
         "Signs include frequent tripping, warm sockets, outdated wiring materials, and a DB box that cannot handle modern loads. If you are planning a major renovation, it is often the most cost-effective time to rewire.",
@@ -355,6 +360,136 @@ export const electrical: ServiceDetail = {
       answer:
         "Concealed wiring looks cleaner and is the common choice during renovation, but it must be planned before walls and ceilings are finished. Surface wiring is a practical alternative where chasing is not possible.",
     },
+  ],
+
+  pricing: {
+    intro: "Electrical pricing is per point for sockets and lights, per unit for fans and DB boxes, and per project for full house wiring. Concealed wiring costs 30–50% more than exposed casing.",
+    startingFromNote: "Starting from RM60 per point for lighting and socket",
+    disclaimer: "Prices start from the stated amount. Final quotation depends on actual site condition, scope, materials, accessibility and installation requirements.",
+    tableIntro: "Common electrical jobs with indicative starting prices for Klang Valley.",
+  },
+  materialsIntro: "We use standard electrical materials compliant with Malaysian requirements, with brand options for sockets and DB components.",
+  materials: [
+    {
+      title: "Cables (1.5mm, 2.5mm, 4mm)",
+      description: "1.5mm for lighting RM1.80–2.50/m, 2.5mm for power RM2.50–3.50/m, 4mm for heavy load RM4–5.50/m.",
+    },
+    {
+      title: "Sockets & Switches",
+      description: "13A single/double sockets, 15A aircond, 20A heater, 2-way switches — Hager, Schneider, MK options.",
+    },
+    {
+      title: "Light Fittings & Downlights",
+      description: "Recessed downlights, track, pendant, LED strip — fitting supply optional, installation from RM30 min 6 units.",
+    },
+    {
+      title: "Ceiling Fan & Hook",
+      description: "Fan hook, regulator, remote receiver — installation with casing RM150, install only RM80.",
+    },
+    {
+      title: "DB Box, MCB, RCCB, ELCB",
+      description: "Consumer unit single-phase RM400, 3-phase RM800, MCB, RCCB, ELCB — labelling and testing included.",
+    },
+    {
+      title: "Trunking & Conduit",
+      description: "PVC casing, conduit for exposed vs concealed wiring — concealed costs more due to hacking.",
+    },
+  ],
+  costFactorsIntro: "Electrical cost depends on wiring method, distance, wall type and number of points.",
+  costFactors: [
+    {
+      title: "Concealed vs Exposed",
+      description: "Exposed casing cheaper; concealed needs wall hacking and patching, 30–50% more.",
+    },
+    {
+      title: "Number of Points",
+      description: "Lighting RM60–120 per point, socket RM80–150 per point, outdoor waterproof RM120–200; bulk lower per point.",
+    },
+    {
+      title: "Distance & Wall Type",
+      description: "Long cable runs and concrete hacking increase labour; landed vs condo access differs.",
+    },
+    {
+      title: "Load & Phase",
+      description: "Single-phase vs 3-phase, heavy load 4mm/6mm cable for aircond, water heater, oven.",
+    },
+    {
+      title: "DB & Upgrades",
+      description: "DB box RM400–1500, panel upgrade with TNB application RM2500, full house rewiring RM4k–15k.",
+    },
+    {
+      title: "Emergency & Height",
+      description: "After-hours emergency RM150–300/hour, high ceiling >12ft extra, inspection RM200–500.",
+    },
+  ],
+  duration: {
+    intro: "Electrical jobs range from quick point additions to multi-day full house wiring.",
+    items: [
+      { label: "Socket / Light Point", value: "30–60 minutes per point" },
+      { label: "Ceiling Fan", value: "45–90 minutes per fan" },
+      { label: "DB Box Replacement", value: "Half day including testing" },
+      { label: "Troubleshooting / Power Trip", value: "1–3 hours diagnosis and minor repair" },
+      { label: "Partial Rewiring (Kitchen/Living)", value: "1–3 days" },
+      { label: "Full House Wiring (Terrace)", value: "5–10 days for 1-storey RM5k–8k, 2-storey RM8k–12k" },
+    ],
+    note: "Condo management hours, TNB shutdown and plaster patching can extend timeline.",
+  },
+  includes: [
+    "Cable run and connection for specified points",
+    "Socket, switch or light fitting installation (fitting excluded if client supply)",
+    "DB box with MCB/RCCB and labelling where listed",
+    "Testing and commissioning",
+    "Basic cleaning",
+  ],
+  excludes: [
+    "Light fittings, fans, water heaters themselves if not specified",
+    "Major hacking and plaster reinstatement beyond standard",
+    "TNB application and meter upgrade (RM2500)",
+    "Concealed wiring plaster and paint touch-up",
+  ],
+  includesTitle: "What electrical service usually includes",
+  excludesTitle: "What may be quoted separately",
+  answerFirst: [
+    {
+      question: "How much does electrical wiring cost in Malaysia?",
+      answer: "Power socket addition starts from RM80 per point, lighting point from RM60, ceiling fan installation from RM80 install only and RM150 with casing, DB box single-phase from RM400 and 3-phase from RM800, full house wiring from RM5,000 for 1-storey terrace and RM8,000 for 2-storey in KL & Selangor. Concealed wiring costs 30–50% more than exposed. Final price depends on number of points, distance, wall type and phase.",
+    },
+    {
+      question: "What does electrical installation include?",
+      answer: "It includes cable laying, socket and switch points, light fitting installation, fan hook and balancing, DB box replacement with MCB/RCCB and testing. Light fittings, fans and appliances themselves are excluded if client-supplied. Major hacking, plaster and TNB application are quoted separately.",
+    },
+    {
+      question: "How long does full house wiring take?",
+      answer: "Full house wiring takes 5–10 days for terrace houses — 1-storey RM5k–8k and 2-storey RM8k–12k including DB box and points. Partial rewiring for kitchen or living takes 1–3 days. Socket or light point addition is 30–60 minutes per point. Timeline depends on concealed vs exposed and condo management hours.",
+    },
+    {
+      question: "Do I need approval for electrical work in condo?",
+      answer: "Yes, most condominiums require management approval for DB upgrades, additional points affecting common lines and any hacking. Electrical work should follow Suruhanjaya Tenaga requirements and be done by competent personnel. We advise what to check with your management before starting.",
+    },
+  ],
+  searchIntents: [
+    "electrician near me",
+    "electrical wiring",
+    "socket installation",
+    "light installation",
+    "ceiling fan installation",
+    "DB box installation",
+    "power tripping repair",
+    "emergency electrician",
+    "electrical repair near me",
+    "house wiring cost",
+  ],
+  entityKeywords: [
+    "electrical service",
+    "electrician",
+    "wiring",
+    "power point",
+    "lighting point",
+    "ceiling fan",
+    "DB box",
+    "MCB",
+    "RCCB",
+    "power tripping",
   ],
   relatedServices: ["ceiling-partition", "general-renovation", "handyman", "painting"],
   relatedProblems: [

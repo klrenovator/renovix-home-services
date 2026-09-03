@@ -281,6 +281,11 @@ export const weldingMetalWorks: ServiceDetail = {
     "Welding, fabrication and metal repair services are available across Kuala Lumpur, Selangor and the wider Klang Valley, with site visits arranged for measurement and installation.",
   faqs: [
     {
+      question: "How much does window grille cost in Malaysia?",
+      answer: "Mild steel window grille from RM12–18 psf, wrought iron RM13–20, stainless steel RM30–50. Main gate mild steel RM18–30, stainless RM40–65. Full house grille RM3k–7k. Welding repair from RM150. Prices 2026 Klang Valley, depends on material, design, size and finishing.",
+    },
+
+    {
       question: "What is the difference between mild steel and stainless steel?",
       answer:
         "Mild steel is strong and cost-effective, but needs painting to resist rust. Stainless steel resists corrosion naturally and suits outdoor, wet or low-maintenance applications. We help you choose based on your location, usage and budget.",
@@ -310,6 +315,136 @@ export const weldingMetalWorks: ServiceDetail = {
       answer:
         "Typical gate projects take a few days from measurement to installation, depending on size, design complexity and material availability. We give a realistic timeline after the first assessment.",
     },
+  ],
+
+  pricing: {
+    intro: "Welding and metal works pricing depends on material (mild steel, wrought iron, stainless steel), design complexity, size and finishing like powder coating.",
+    startingFromNote: "Starting from RM12 per sqft for mild steel window grille",
+    disclaimer: "Prices start from the stated amount. Final quotation depends on actual site condition, scope, materials, accessibility and installation requirements.",
+    tableIntro: "Common welding and metal works with indicative starting prices for Klang Valley.",
+  },
+  materialsIntro: "We fabricate with standard metal materials, with finish options for durability and appearance.",
+  materials: [
+    {
+      title: "Mild Steel",
+      description: "Most common for grilles and gates, cost-effective RM12–18 psf window grille, RM18–30 gate, needs paint for rust protection.",
+    },
+    {
+      title: "Wrought Iron",
+      description: "Decorative patterns, RM13–20 psf, heavier, classic look for landed houses.",
+    },
+    {
+      title: "Stainless Steel",
+      description: "Corrosion-resistant, RM30–50 psf window grille, RM40–65 gate, no painting needed, modern look.",
+    },
+    {
+      title: "Aluminium & Glass",
+      description: "For awning, railing with glass, lightweight, low maintenance.",
+    },
+    {
+      title: "Powder Coating & Paint",
+      description: "Protective finish for mild steel, colour options, extends lifespan.",
+    },
+    {
+      title: "Autogate Motor & Accessories",
+      description: "Hinges, rollers, locks, autogate arm — motor quoted separately.",
+    },
+  ],
+  costFactorsIntro: "Metal works cost is driven by material, design, size and installation complexity.",
+  costFactors: [
+    {
+      title: "Material Choice",
+      description: "Mild steel cheapest, wrought iron mid, stainless steel premium 2–3x due to material and welding skill.",
+    },
+    {
+      title: "Design Complexity",
+      description: "Simple slotted vs full bunga (flower) pattern — each line of bunga adds RM3–4 psf, full coverage higher.",
+    },
+    {
+      title: "Size & Type",
+      description: "Window grille vs sliding vs main gate swing vs sliding; larger area lower per psf but higher total.",
+    },
+    {
+      title: "Finishing",
+      description: "Basic paint vs powder coating, galvanizing for outdoor durability.",
+    },
+    {
+      title: "Installation Access",
+      description: "Ground floor vs high floor balcony, wall condition for anchoring, need for hacking.",
+    },
+    {
+      title: "Repair vs Fabrication",
+      description: "Welding repair RM150–800 per job vs new fabrication RM12–65 psf plus 7–14 days lead time.",
+    },
+  ],
+  duration: {
+    intro: "Metal works need fabrication lead time plus installation.",
+    items: [
+      { label: "Welding Repair", value: "1–4 hours on site" },
+      { label: "Window Grille (per unit)", value: "3–7 days fabrication + 1 day install" },
+      { label: "Main Gate (Mild Steel)", value: "7–14 days fabrication + 1–2 days install" },
+      { label: "Main Gate (Stainless Steel)", value: "10–21 days fabrication + 1–2 days install" },
+      { label: "Railing / Fencing (per foot run)", value: "5–10 days" },
+      { label: "Awning Metal Frame", value: "5–10 days structure, plus roofing sheet" },
+    ],
+    note: "Custom designs with detailed bunga need longer. Site measurement before fabrication is essential.",
+  },
+  includes: [
+    "Site measurement and design discussion",
+    "Fabrication in workshop",
+    "Installation with welding and anchoring",
+    "Hinges, rollers for gates, basic paint for mild steel",
+    "Touch-up and cleaning",
+  ],
+  excludes: [
+    "Autogate motor and wiring",
+    "ACP or polycarbonate roofing sheet for awning",
+    "Concrete footing or pillar repair",
+    "Powder coating premium unless specified",
+  ],
+  includesTitle: "What welding & metal works usually includes",
+  excludesTitle: "What may be quoted separately",
+  answerFirst: [
+    {
+      question: "How much does grille and gate cost in Malaysia?",
+      answer: "Window grille mild steel starts from RM12–RM18 per sqft, wrought iron RM13–RM20, stainless steel RM30–RM50 in 2026 KL & Selangor. Main gate mild steel from RM18–RM30 psf, stainless steel RM40–RM65. Full house wrought iron grille can be RM3,000–RM7,100 depending on windows and doors. Welding repair from RM150 per job. Final price depends on material, design with bunga, size and finishing.",
+    },
+    {
+      question: "What does window grille installation include?",
+      answer: "Includes measurement, fabrication, installation with welding and anchoring, hinges/rollers for gates and basic paint for mild steel. Excludes autogate motor, ACP/polycarbonate sheet for awning and concrete footing. Takes 3–7 days fabrication plus 1 day install for window grille, 7–14 days for main gate.",
+    },
+    {
+      question: "Can you repair my existing gate or grille?",
+      answer: "Yes, welding repair service from RM150 covers on-site repair for gate, grille, railing, fence or awning structure — broken hinges, wall brackets, rusted sections. We inspect, weld, reinforce and touch-up paint. For heavily rusted or bent gates, replacement is recommended.",
+    },
+    {
+      question: "How long does gate fabrication take?",
+      answer: "Mild steel main gate 7–14 days fabrication plus 1–2 days install, stainless steel 10–21 days due to material and finishing. Window grille 3–7 days plus 1 day install. Custom decorative bunga patterns add time. Site measurement is done first to ensure accurate fit.",
+    },
+  ],
+  searchIntents: [
+    "welding contractor",
+    "grille installation",
+    "gate fabrication",
+    "window grille",
+    "main gate",
+    "welding repair",
+    "metal gate cost",
+    "railing installation",
+    "awning installation",
+    "welding service near me",
+  ],
+  entityKeywords: [
+    "welding",
+    "metal works",
+    "window grille",
+    "main gate",
+    "wrought iron",
+    "stainless steel",
+    "mild steel",
+    "railing",
+    "awning",
+    "gate repair",
   ],
   relatedServices: ["general-renovation", "painting", "handyman", "electrical"],
 };

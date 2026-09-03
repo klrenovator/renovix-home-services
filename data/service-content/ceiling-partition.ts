@@ -332,6 +332,11 @@ export const ceilingPartition: ServiceDetail = {
     "Ceiling installation, repair and partition services are available across Kuala Lumpur, Selangor and the wider Klang Valley, for homes, offices and commercial premises.",
   faqs: [
     {
+      question: "How much does plaster ceiling cost in KL?",
+      answer: "Flat plaster ceiling RM3.50–6.00 psf, L-box RM15–25 per foot run, cornice RM6–10 pfr, floating/island RM18+ psf. Drywall partition RM7.50–10 psf standard, RM12–15 moisture, RM15–20 soundproof. Ceiling repair minimum RM700. Prices for 2026 Klang Valley, depends on area, height, design and lighting.",
+    },
+
+    {
       question: "What is the difference between gypsum and plaster ceilings?",
       answer:
         "Both are common ceiling systems. Gypsum board is a manufactured panel that is fast to install and easy to finish with skim coating, while traditional plaster ceilings are applied wet and skimmed smooth. We advise on the best system for your ceiling design and condition.",
@@ -361,6 +366,135 @@ export const ceilingPartition: ServiceDetail = {
       answer:
         "A standard partition reduces everyday noise between rooms. Where more quiet is needed — bedrooms, meeting rooms or studios — sound insulation can be built into the partition construction.",
     },
+  ],
+
+  pricing: {
+    intro: "Ceiling and partition pricing depends on design complexity, area, height and type. Flat plaster ceiling starts from RM3.50 per sqft, drywall partition from RM7.50.",
+    startingFromNote: "Starting from RM3.50 per sqft for flat plaster ceiling",
+    disclaimer: "Prices start from the stated amount. Final quotation depends on actual site condition, scope, materials, accessibility and installation requirements.",
+    tableIntro: "Common ceiling and partition jobs with indicative starting prices for Klang Valley.",
+  },
+  materialsIntro: "We use 9mm gypsum board for ceilings and 12mm double-sided for partitions with metal framing, plus options for moisture and soundproofing.",
+  materials: [
+    {
+      title: "Gypsum Board 9mm",
+      description: "Standard for flat plaster ceiling, smooth finish, hides wiring and aircond ducts.",
+    },
+    {
+      title: "Gypsum Board 12mm",
+      description: "Double-sided for drywall partition, stronger for room division.",
+    },
+    {
+      title: "Metal Stud & Track",
+      description: "Galvanized metal framing for ceiling and partition structure.",
+    },
+    {
+      title: "Cornice & Cove",
+      description: "Decorative cornice RM6–10 per foot run, L-box light trough for ambient LED.",
+    },
+    {
+      title: "Moisture-Resistant Board",
+      description: "Green board for kitchens or near bathrooms RM12–15 psf.",
+    },
+    {
+      title: "Rockwool Acoustic Insulation",
+      description: "For soundproof partition RM15–20 psf, reduces noise and heat.",
+    },
+  ],
+  costFactorsIntro: "Ceiling and partition cost is driven by design, height, lighting integration and insulation needs.",
+  costFactors: [
+    {
+      title: "Ceiling Design",
+      description: "Flat RM3.50–6.00 psf, L-box RM15–25 pfr, floating/island RM18+ psf, cornice RM6–10 pfr.",
+    },
+    {
+      title: "Partition Type",
+      description: "Standard drywall RM7.50–10, moisture RM12–15, soundproof with rockwool RM15–20, laminated/glass RM25+ psf.",
+    },
+    {
+      title: "Area & Height",
+      description: "Min 500 sqft for RM4.50 flat rate; high ceilings need scaffolding and extra labour.",
+    },
+    {
+      title: "Lighting & Wiring",
+      description: "Downlight wiring + install RM80 per point, LED strip, concealed wiring — not included in ceiling psf.",
+    },
+    {
+      title: "Surface & Access",
+      description: "Existing ceiling removal, condo lift, protection, working hour restrictions.",
+    },
+    {
+      title: "Repair vs New",
+      description: "Ceiling repair minimum trip RM700, full replacement higher due to reinforcement.",
+    },
+  ],
+  duration: {
+    intro: "Ceiling and partition are quick vs major renovation but need drying for jointing.",
+    items: [
+      { label: "Flat Ceiling (300–500 sqft)", value: "2–4 days" },
+      { label: "L-Box & Light Trough", value: "3–5 days including cove" },
+      { label: "Drywall Partition (100–200 sqft)", value: "2–4 days" },
+      { label: "Ceiling Repair (Cracked/Sagging)", value: "1–3 days" },
+      { label: "Office Partition with Glass", value: "5–10 days depending on glass" },
+      { label: "Jointing & Finishing", value: "Half day to 1 day drying before paint" },
+    ],
+    note: "Painting is usually after ceiling, not included in psf. Lighting points installed after ceiling frame.",
+  },
+  includes: [
+    "Gypsum board and metal framing for specified area",
+    "Jointing, skim and paint-ready finish",
+    "L-box or light trough frame where listed",
+    "Basic protection and cleaning",
+  ],
+  excludes: [
+    "Painting (RM1.20–2.50 psf interior)",
+    "Lighting fittings and wiring (downlight RM80 per point)",
+    "Cornice beyond standard unless specified",
+    "Glass, laminated finishes beyond gypsum",
+  ],
+  includesTitle: "What ceiling & partition usually includes",
+  excludesTitle: "What may be quoted separately",
+  answerFirst: [
+    {
+      question: "How much does plaster ceiling cost in Malaysia?",
+      answer: "Flat plaster ceiling costs RM3.50–RM6.00 per sqft in KL & Selangor in 2026, with some contractors at RM5.50–RM8.00. L-box light trough RM15–RM25 per foot run, cornice RM6–10 pfr, floating/island from RM18 psf. Drywall partition from RM7.50–RM10 psf standard, RM12–15 moisture-resistant, RM15–20 soundproof with rockwool. Ceiling repair minimum RM700 per trip. Final price depends on area, height, design and lighting.",
+    },
+    {
+      question: "What does plaster ceiling installation include?",
+      answer: "Flat ceiling includes 9mm gypsum board, metal frame, jointing and skim to paint-ready finish for specified area. Excludes painting, lighting points and cornice beyond standard. L-box includes light trough frame for concealed LED strip, excludes LED strip and wiring. Takes 2–4 days for 300–500 sqft.",
+    },
+    {
+      question: "How long does ceiling and partition take?",
+      answer: "Flat ceiling 300–500 sqft 2–4 days, L-box 3–5 days, drywall partition 100–200 sqft 2–4 days, ceiling repair 1–3 days. Jointing needs drying before paint. Office with glass partition 5–10 days. Condo management hours may extend schedule.",
+    },
+    {
+      question: "Can plaster ceiling hide wiring and aircond pipes?",
+      answer: "Yes, flat plaster ceiling is designed to conceal messy electrical wires, aircond piping and ducts behind aesthetic panels, creating clean modern look. We plan access panels where needed for future maintenance and coordinate lighting points during framing.",
+    },
+  ],
+  searchIntents: [
+    "plaster ceiling",
+    "ceiling installation",
+    "partition wall",
+    "drywall partition",
+    "false ceiling",
+    "ceiling repair",
+    "ceiling contractor near me",
+    "office partition",
+    "L-box ceiling",
+    "plaster ceiling cost",
+  ],
+  entityKeywords: [
+    "plaster ceiling",
+    "ceiling installation",
+    "partition wall",
+    "drywall",
+    "gypsum board",
+    "L-box",
+    "false ceiling",
+    "cornice",
+    "suspended ceiling",
+    "office partition",
   ],
   relatedServices: ["electrical", "painting", "general-renovation", "waterproofing"],
   relatedProblems: [

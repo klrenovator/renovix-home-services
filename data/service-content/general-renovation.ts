@@ -276,6 +276,11 @@ export const generalRenovation: ServiceDetail = {
     "Full and partial renovation services are available across Kuala Lumpur, Selangor and the wider Klang Valley, for landed homes, condos, apartments and commercial spaces.",
   faqs: [
     {
+      question: "How much does house renovation cost in Malaysia?",
+      answer: "Light refresh RM20–60 psf, mid-range RM70–150, major RM160–300+ psf. 800 sqft apartment mid-range RM56k–120k, 1000–1200 sqft 3-bed RM70k–180k, 2-storey terrace full interior RM60k–250k. Kitchen RM8k–35k, bathroom full RM8k–25k per bathroom. Final depends on scope, property type, materials and hacking.",
+    },
+
+    {
       question: "What is the difference between full and partial renovation?",
       answer:
         "A full renovation covers the whole property — typically all rooms, all services and finishes. A partial renovation focuses on specific areas such as a bathroom, kitchen or section of the house. We help you decide based on your budget, condition of the home and what you want to achieve.",
@@ -305,6 +310,136 @@ export const generalRenovation: ServiceDetail = {
       answer:
         "We cover the core building works and coordinate the related trades — tiling, electrical, plumbing, painting and waterproofing — so the project is managed as one coordinated job.",
     },
+  ],
+
+  pricing: {
+    intro: "General renovation pricing is per sqft for overall scope, or per job for kitchen, bathroom and extension. Mid-range renovation in KL is RM70–RM150 per sqft.",
+    startingFromNote: "Starting from RM20 per sqft for light refresh, RM70 for mid-range",
+    disclaimer: "Prices start from the stated amount. Final quotation depends on actual site condition, scope, materials, accessibility and installation requirements.",
+    tableIntro: "Common renovation scopes with indicative starting prices for Klang Valley.",
+  },
+  materialsIntro: "Renovation uses combined materials from all trades — we coordinate tiling, electrical, plumbing, painting and carpentry.",
+  materials: [
+    {
+      title: "Tiling & Flooring",
+      description: "Ceramic RM10–18, porcelain RM14–28, SPC RM5.50–11.50, vinyl RM4.70–7.00 supply & install.",
+    },
+    {
+      title: "Electrical & Plumbing",
+      description: "Cables, sockets, DB box RM400–1500, PVC pipes, fittings, water heater points.",
+    },
+    {
+      title: "Plaster Ceiling & Partition",
+      description: "Flat ceiling RM3.50–6 psf, L-box RM15–25 pfr, drywall partition RM7.50–10 psf.",
+    },
+    {
+      title: "Painting",
+      description: "Interior RM1.20–4.00 psf, exterior RM1.50–6.00 psf, premium brands Nippon, Jotun, Dulux.",
+    },
+    {
+      title: "Waterproofing",
+      description: "Bathroom RM1500–5000 all-in, cementitious RM8–14, torch-on RM10–18, PU RM12–20 psf.",
+    },
+    {
+      title: "Carpentry & Countertop",
+      description: "Kitchen cabinets RM150–600 per foot run, countertop granite/quartz RM250–1200 psf — coordinated.",
+    },
+  ],
+  costFactorsIntro: "Renovation cost varies widely because scope, property type and material grade change everything.",
+  costFactors: [
+    {
+      title: "Scope of Work",
+      description: "Light refresh RM20–60 psf vs mid-range RM70–150 vs major overhaul RM160–300+ psf.",
+    },
+    {
+      title: "Property Type & Size",
+      description: "Condo RM20–40 light, RM50–150 full; terrace RM10–30 light, RM30–120 full; semi-D RM10–25 light, RM25–100 full.",
+    },
+    {
+      title: "Hacking & Structure",
+      description: "Hacking wall/floor tiles RM2000–3000 per area, hacking & rebuilding walls RM50–80 psf, extension RM150–300 psf.",
+    },
+    {
+      title: "Material Grade",
+      description: "Flooring RM8–50 psf, countertop RM250–1200 psf, cabinets RM150–600 per foot run — premium vs budget.",
+    },
+    {
+      title: "M&E Points",
+      description: "Lighting point RM65–90, power point RM100–150, water heater/aircond RM200–280, new piping RM350–550 per point.",
+    },
+    {
+      title: "Condo vs Landed",
+      description: "Condo needs management approval, deposit, lift booking, restricted hours — adds time and cost.",
+    },
+  ],
+  duration: {
+    intro: "Renovation duration depends on whether it's refresh, full interior or extension.",
+    items: [
+      { label: "Minor Refresh (800–1000 sqft)", value: "1–2 weeks — painting, minor fixes" },
+      { label: "Kitchen Renovation", value: "2–4 weeks including hacking, tiling, plumbing, electrical" },
+      { label: "Bathroom Full Renovation", value: "2–3 weeks per bathroom with waterproofing" },
+      { label: "Mid-Range Full Interior (1000 sqft condo)", value: "4–10 weeks" },
+      { label: "Full Interior Terrace (1600–2000 sqft)", value: "6–14 weeks" },
+      { label: "House Extension", value: "6–12 weeks for structure, plus finishing" },
+    ],
+    note: "Material lead time (tiles, cabinets) and condo approvals affect schedule. We sequence trades to keep site efficient.",
+  },
+  includes: [
+    "Scope planning and trade sequencing",
+    "Hacking, tiling, plumbing, electrical, ceiling, painting as per quotation",
+    "Waterproofing for wet areas before tiling",
+    "Coordination with carpentry and other trades",
+    "Site cleaning and handover",
+  ],
+  excludes: [
+    "Kitchen cabinets and wardrobes unless specified (RM150–600 per foot run)",
+    "Appliances, sanitary ware, light fittings, fans unless listed",
+    "Major structural approval and submission fees",
+    "Furniture and decoration",
+  ],
+  includesTitle: "What general renovation usually includes",
+  excludesTitle: "What may be quoted separately",
+  answerFirst: [
+    {
+      question: "How much does house renovation cost in Malaysia?",
+      answer: "Light refresh costs RM20–RM60 per sqft, mid-range renovation RM70–RM150 psf, major overhaul RM160–RM300+ psf in KL & Selangor in 2026. For 800 sqft apartment mid-range RM56k–RM120k, 1000–1200 sqft 3-bedroom RM70k–RM180k, 2-storey terrace 1600–2000 sqft full interior RM60k–RM250k. Kitchen cabinets RM150–600 per foot run, bathroom full RM8k–25k per bathroom. Final price depends on scope, property type, material grade and hacking needs.",
+    },
+    {
+      question: "What does general renovation include?",
+      answer: "General renovation includes hacking, tiling, flooring, plumbing, electrical, plaster ceiling, partition, waterproofing and painting as per quotation, coordinated in right sequence. It can include kitchen countertop base, bathroom waterproofing and tiling. Cabinets, appliances, sanitary ware and light fittings are usually quoted separately. Takes 4–10 weeks for 1000 sqft condo mid-range.",
+    },
+    {
+      question: "How long does house renovation take?",
+      answer: "Minor refresh 1–2 weeks, kitchen 2–4 weeks, bathroom 2–3 weeks per bathroom, mid-range full interior condo 1000 sqft 4–10 weeks, terrace 1600–2000 sqft 6–14 weeks, house extension 6–12 weeks. Duration depends on hacking, material lead time, drying/curing and condo management hours.",
+    },
+    {
+      question: "Do you handle condo renovation approvals?",
+      answer: "We are used to working within management corporation requirements — permitted hours, lift bookings, debris removal, renovation deposits and contractor registration. We include these in schedule and quotation and advise what to check with your management. Approval itself is by JMB/MC.",
+    },
+  ],
+  searchIntents: [
+    "house renovation contractor",
+    "home renovation cost",
+    "general renovation",
+    "kitchen renovation",
+    "bathroom renovation",
+    "house extension cost",
+    "renovation contractor near me",
+    "affordable renovation KL",
+    "reliable renovation contractor",
+    "renovation quotation",
+  ],
+  entityKeywords: [
+    "general renovation",
+    "house renovation",
+    "home renovation",
+    "kitchen renovation",
+    "bathroom renovation",
+    "house extension",
+    "renovation contractor",
+    "tiling",
+    "plumbing",
+    "electrical",
   ],
   relatedServices: ["tiling", "electrical", "plumbing", "painting"],
   relatedProblems: [

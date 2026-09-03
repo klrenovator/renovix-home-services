@@ -221,6 +221,11 @@ export const flooring: ServiceDetail = {
     "Flooring installation, replacement and repair services are available across Kuala Lumpur, Selangor and the wider Klang Valley.",
   faqs: [
     {
+      question: "How much does SPC flooring cost in Malaysia?",
+      answer: "Material RM4–9 psf, install RM2–4 psf, supply & install from RM5.50 entry to RM7.50 for 7.5mm IXPE. Vinyl from RM4.70. Laminate RM6–12, ceramic RM10–18, porcelain RM14–28. For 1000 sqft, SPC over vinyl extra RM500–1500. Final depends on thickness, area, subfloor and pattern.",
+    },
+
+    {
       question: "What is the difference between vinyl, SPC and laminate flooring?",
       answer:
         "Vinyl is a flexible, fully waterproof sheet or plank option. SPC is a rigid core floor with strong water resistance and stability. Laminate has a printed wood-look surface over a fibreboard core and is cost-effective, but less suited to wet areas. We help you match the floor to each room.",
@@ -250,6 +255,135 @@ export const flooring: ServiceDetail = {
       answer:
         "A single room can often be done in a day or two; larger homes take longer depending on area, subfloor preparation and the material. We give a schedule after measuring the space.",
     },
+  ],
+
+  pricing: {
+    intro: "Flooring cost depends on material (SPC, vinyl, laminate), thickness, area size, subfloor condition and pattern. SPC starts from RM5.50 per sqft supply & install.",
+    startingFromNote: "Starting from RM4.70 per sqft for vinyl and RM5.50 for SPC supply & install",
+    disclaimer: "Prices start from the stated amount. Final quotation depends on actual site condition, scope, materials, accessibility and installation requirements.",
+    tableIntro: "Common flooring jobs with indicative starting prices for Klang Valley.",
+  },
+  materialsIntro: "We supply and install standard flooring materials with click-lock or glue-down systems suited to Malaysian homes.",
+  materials: [
+    {
+      title: "SPC Flooring (Stone Polymer Composite)",
+      description: "4+1mm entry RM5.50, 5+1mm RM6.00, 6+1mm RM6.50, 7.5mm IXPE RM7.50 supply & install, 100% waterproof, rigid core.",
+    },
+    {
+      title: "Vinyl LVT",
+      description: "3mm entry RM4.70, premium 4–5mm RM4.50–7.00 supply & install, flexible PVC, softer underfoot.",
+    },
+    {
+      title: "Laminate Flooring",
+      description: "RM6–12 supply & install, wood-look, needs dry conditions.",
+    },
+    {
+      title: "Ceramic & Porcelain Tiles",
+      description: "Ceramic RM10–18, porcelain RM14–28, large-format RM22–45 supply & install — alternative where tiles preferred.",
+    },
+    {
+      title: "Underlay & Skirting",
+      description: "IXPE/EVA underlay pre-attached for premium SPC, skirting for tidy edge finish.",
+    },
+    {
+      title: "Self-Levelling & Screed",
+      description: "For uneven subfloor, adds RM3–8 psf — biggest hidden variable in flooring cost.",
+    },
+  ],
+  costFactorsIntro: "Flooring quotes vary because subfloor condition and material thickness change labour and prep.",
+  costFactors: [
+    {
+      title: "Material & Thickness",
+      description: "SPC entry vs 7.5mm IXPE, vinyl 3mm vs 5mm, laminate grade — thicker wear layer costs more.",
+    },
+    {
+      title: "Area Size",
+      description: "Larger areas lower per sqft; factory direct install from RM2.19 psf min 500 sqft, RM3.97 psf min 800 sqft for premium.",
+    },
+    {
+      title: "Subfloor Condition",
+      description: "Flat sound subfloor adds little; uneven needs levelling/screeding RM3–8 psf, old tile hacking RM2 psf.",
+    },
+    {
+      title: "Pattern Complexity",
+      description: "Straight lay standard; herringbone/chevron requires intricate cutting, higher rate.",
+    },
+    {
+      title: "Furniture & Access",
+      description: "Furniture moving, old flooring removal, condo lift protection, disposal — confirm if included.",
+    },
+    {
+      title: "Skirting & Finishing",
+      description: "Skirting, transition strips, stair nosing — optional but affects final look.",
+    },
+  ],
+  duration: {
+    intro: "SPC and vinyl are faster than tiling due to click-lock system.",
+    items: [
+      { label: "SPC / Vinyl (500 sqft)", value: "1–2 days straight lay" },
+      { label: "SPC / Vinyl (1000 sqft)", value: "2–3 days" },
+      { label: "Laminate Flooring", value: "1–3 days per 500–1000 sqft" },
+      { label: "Old Floor Hacking", value: "1–3 days plus disposal" },
+      { label: "Subfloor Levelling", value: "Half day to 1 day plus drying" },
+      { label: "Floor Repair (Swollen/Damaged)", value: "Half day to 2 days" },
+    ],
+    note: "SPC can often be laid over existing flat well-bonded tiles, avoiding hacking cost and disruption.",
+  },
+  includes: [
+    "Flooring material for specified area plus 5–10% wastage",
+    "Underlay if not pre-attached",
+    "Installation with click-lock or glue-down",
+    "Basic cleaning",
+  ],
+  excludes: [
+    "Furniture moving and old flooring removal unless specified",
+    "Subfloor levelling and screeding RM3–8 psf",
+    "Skirting, transition strips unless listed",
+    "Hacking existing tiles RM2 psf",
+  ],
+  includesTitle: "What flooring installation usually includes",
+  excludesTitle: "What may be quoted separately",
+  answerFirst: [
+    {
+      question: "How much does SPC flooring cost in Malaysia?",
+      answer: "SPC flooring material costs RM4–RM9 per sqft, installation RM2–RM4 psf, supply & install from RM5.50 psf entry (4+1mm) to RM7.50 for 7.5mm IXPE in 2026. For 1000 sqft home, extra cost of SPC over vinyl is RM500–RM1,500 but lasts 5–10 years longer. Vinyl LVT starts from RM4.70 supply & install. Final price depends on thickness, area, subfloor condition and pattern.",
+    },
+    {
+      question: "What does flooring installation include?",
+      answer: "Supply and install includes SPC/vinyl planks with 5–10% wastage allowance, underlay if not pre-attached, click-lock installation and basic cleaning. Furniture moving, old floor hacking RM2 psf, levelling RM3–8 psf and skirting are quoted separately. SPC can often be laid over existing flat tiles to avoid hacking.",
+    },
+    {
+      question: "Is SPC flooring cheaper than tiles?",
+      answer: "Material cost of entry-level SPC and basic ceramic can be similar, but SPC installation is significantly lower and faster due to click-lock vs labour-intensive tiling. Total project budget for SPC is often more cost-effective for modern look without extended timeline. Tiles cost RM10–18 ceramic and RM14–28 porcelain supply & install.",
+    },
+    {
+      question: "How long does flooring installation take?",
+      answer: "SPC or vinyl 500 sqft takes 1–2 days, 1000 sqft 2–3 days straight lay. Laminate 1–3 days. Old floor hacking 1–3 days plus disposal. Subfloor levelling half day plus drying. Herringbone pattern takes longer.",
+    },
+  ],
+  searchIntents: [
+    "flooring installer near me",
+    "SPC flooring",
+    "vinyl flooring",
+    "flooring installation cost",
+    "flooring replacement",
+    "laminate flooring",
+    "damaged flooring repair",
+    "affordable flooring KL",
+    "flooring contractor",
+    "SPC flooring price",
+  ],
+  entityKeywords: [
+    "flooring service",
+    "SPC flooring",
+    "vinyl flooring",
+    "laminate flooring",
+    "floor installation",
+    "floor repair",
+    "subfloor",
+    "underlay",
+    "skirting",
+    "floor hacking",
   ],
   relatedServices: ["tiling", "general-renovation", "handyman", "waterproofing"],
 };

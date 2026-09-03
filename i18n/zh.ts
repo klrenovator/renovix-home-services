@@ -234,6 +234,46 @@ export const zh: Dictionary = {
     ctaTitle: "您的住家需要这项服务？",
     ctaDescription:
       "告诉我们工程详情、房屋类型与所在位置，我们会为您说明下一步。",
+    pricingEyebrow: "价格指引",
+    pricingTitle: "{name}在马来西亚的费用",
+    pricingDescription:
+      "基于2026年吉隆坡、雪兰莪与巴生谷最新市场调研的参考起始价。最终报价取决于实际现场情况、工程范围、材料与安装要求。",
+    pricingDisclaimer:
+      "价格为起始价。最终报价取决于实际现场情况、工程范围、材料、可达性及安装要求。",
+    pricingNote:
+      "请提供照片、尺寸与位置以获得更准确的评估。价格会定期复核。",
+    startingFrom: "起始价",
+    priceTableService: "服务",
+    priceTableScope: "范围",
+    priceTablePrice: "起始价格",
+    priceTableUnit: "单位",
+    costFactorsEyebrow: "费用因素",
+    costFactorsTitle: "哪些因素影响{name}的费用？",
+    costFactorsDescription:
+      "了解影响价格的因素，有助您公平比较报价，并为评估准备有用的资料。",
+    materialsEyebrow: "材料",
+    materialsTitle: "{name}常用材料",
+    materialsDescription:
+      "材料会根据房屋类型、使用需求与预算来选择。我们使用适合马来西亚住宅的标准建材。",
+    durationEyebrow: "工期",
+    durationTitle: "{name}需要多长时间？",
+    durationDescription:
+      "工期取决于工程范围、现场情况以及是否需要干燥或固化时间。",
+    durationNote:
+      "时间线为参考，实际进度会在评估后于报价单中确认。",
+    includesEyebrow: "范围",
+    includesTitle: "通常包含",
+    excludesTitle: "通常不包含",
+    answerFirstEyebrow: "快速解答",
+    answerFirstTitle: "关于{name}的常见问题",
+    answerFirstDescription:
+      "针对客户与搜索引擎最常询问本服务的问题，提供直接解答。",
+    quotePromptTitle: "需要更准确的报价？",
+    quotePromptBody:
+      "请提供受影响区域的照片、尺寸、房屋类型与位置。我们会先审核资料，再为您说明下一步，然后提供报价。",
+    lastReviewedLabel: "最后更新",
+    viewPricing: "查看价格指引",
+    pricingFactorsTitle: "影响价格的因素",
   },
   problemsIndex: {
     metaTitle: "Renovix Home Services | 吉隆坡与雪兰莪家居问题",

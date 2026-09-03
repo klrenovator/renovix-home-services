@@ -264,6 +264,46 @@ export const ms: Dictionary = {
     ctaTitle: "Perlukan perkhidmatan ini untuk rumah anda?",
     ctaDescription:
       "Kongsi butiran kerja, jenis hartanah dan lokasi anda, dan kami akan bantu tentukan langkah seterusnya.",
+    pricingEyebrow: "Panduan Harga",
+    pricingTitle: "Kos {name} di Malaysia",
+    pricingDescription:
+      "Anggaran harga permulaan berdasarkan kajian pasaran semasa 2026 untuk Kuala Lumpur, Selangor dan Lembah Klang. Sebut harga akhir bergantung pada keadaan tapak sebenar, skop, bahan dan keperluan pemasangan.",
+    pricingDisclaimer:
+      "Harga bermula dari jumlah yang dinyatakan. Sebut harga akhir bergantung pada keadaan tapak sebenar, skop kerja, bahan, akses dan keperluan pemasangan.",
+    pricingNote:
+      "Hantar gambar, ukuran dan lokasi untuk penilaian lebih tepat. Harga disemak secara berkala.",
+    startingFrom: "Bermula dari",
+    priceTableService: "Perkhidmatan",
+    priceTableScope: "Skop",
+    priceTablePrice: "Harga Permulaan",
+    priceTableUnit: "Unit",
+    costFactorsEyebrow: "Faktor Kos",
+    costFactorsTitle: "Apa yang mempengaruhi kos {name}?",
+    costFactorsDescription:
+      "Memahami faktor yang mempengaruhi harga membantu anda membandingkan sebut harga secara adil dan menyediakan butiran berguna untuk penilaian.",
+    materialsEyebrow: "Bahan",
+    materialsTitle: "Bahan biasa untuk {name}",
+    materialsDescription:
+      "Bahan dipilih berdasarkan jenis hartanah, kegunaan dan bajet. Kami menggunakan bahan standard yang sesuai untuk rumah di Malaysia.",
+    durationEyebrow: "Tempoh",
+    durationTitle: "Berapa lama {name} mengambil masa?",
+    durationDescription:
+      "Tempoh bergantung pada skop, keadaan tapak dan masa pengeringan atau curing jika berkaitan.",
+    durationNote:
+      "Jangka masa adalah anggaran. Jadual sebenar disahkan dalam sebut harga selepas penilaian.",
+    includesEyebrow: "Skop",
+    includesTitle: "Apa yang biasanya termasuk",
+    excludesTitle: "Apa yang biasanya tidak termasuk",
+    answerFirstEyebrow: "Jawapan Pantas",
+    answerFirstTitle: "Soalan biasa tentang {name}",
+    answerFirstDescription:
+      "Jawapan terus kepada soalan yang paling kerap ditanya pelanggan dan enjin carian tentang perkhidmatan ini.",
+    quotePromptTitle: "Perlukan harga lebih tepat?",
+    quotePromptBody:
+      "Kongsi gambar kawasan terjejas, ukuran, jenis hartanah dan lokasi. Kami semak butiran dahulu dan bantu tentukan langkah seterusnya sebelum sebut harga.",
+    lastReviewedLabel: "Semakan terakhir",
+    viewPricing: "Lihat panduan harga",
+    pricingFactorsTitle: "Apa yang mempengaruhi harga",
   },
   problemsIndex: {
     metaTitle:

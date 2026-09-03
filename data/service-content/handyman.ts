@@ -231,6 +231,11 @@ export const handyman: ServiceDetail = {
     "Handyman services are available across Kuala Lumpur, Selangor and the wider Klang Valley, for homes, apartments, offices and rental properties.",
   faqs: [
     {
+      question: "How much does handyman service cost in Malaysia?",
+      answer: "Typically RM40–200 per hour, common RM60–100/hour in KL & Selangor, min 1 hour. Door hinge RM80–180, lock RM120–280, picture hanging RM30–60, TV mount RM150–300, wardrobe assembly RM120–250, regrout RM250–550, silicone RM80–180. Call-out RM80 central waived if proceed. Final depends on task, materials and access.",
+    },
+
+    {
       question: "What kind of jobs does a handyman cover?",
       answer:
         "Doors, locks, curtain rods, TV mounting, furniture assembly, shelves, drilling and mounting, minor wall repairs, and small plumbing and electrical jobs. If a job needs a specialist trade, we will tell you honestly and point you to the right service.",
@@ -260,6 +265,135 @@ export const handyman: ServiceDetail = {
       answer:
         "We assemble standard flat-pack and ready-to-assemble furniture from common brands. For unusual or complex items, let us know what it is when you enquire and we will confirm.",
     },
+  ],
+
+  pricing: {
+    intro: "Handyman pricing is hourly for general tasks or fixed per job for specific repairs. Typical rate in KL is RM60–RM100 per hour, minimum 1 hour.",
+    startingFromNote: "Starting from RM60 per hour, fixed jobs from RM30",
+    disclaimer: "Prices start from the stated amount. Final quotation depends on actual site condition, scope, materials, accessibility and installation requirements.",
+    tableIntro: "Common handyman jobs with indicative starting prices for Klang Valley.",
+  },
+  materialsIntro: "Handyman uses basic hardware and fittings for small repairs and installations.",
+  materials: [
+    {
+      title: "Door Hardware",
+      description: "Hinges, locks, handles, strike plates — door hinge RM80–180, lock change RM120–280.",
+    },
+    {
+      title: "Mounting Hardware",
+      description: "Wall plugs, screws, brackets for TV, shelf, curtain rail — TV mount RM150–300 with bracket.",
+    },
+    {
+      title: "Grout & Silicone",
+      description: "Tile grout and silicone sealant for bathroom and kitchen — regrout RM250–550, silicone RM80–180.",
+    },
+    {
+      title: "Flat-Pack & Assembly Parts",
+      description: "Wardrobe, bed, shelf assembly RM120–250 standard, IKEA kitchen units per unit count.",
+    },
+    {
+      title: "Sealant & Touch-up",
+      description: "Sealant, filler, touch-up paint for small repairs — single-wall painting RM200–500.",
+    },
+    {
+      title: "Basic Tools",
+      description: "Drill, level, ladder, silicone gun — labour includes tools, materials extra.",
+    },
+  ],
+  costFactorsIntro: "Handyman cost depends on task type, skill required and time needed.",
+  costFactors: [
+    {
+      title: "Task Complexity",
+      description: "Simple picture hanging RM30–60 vs TV mounting RM150–300 vs wardrobe assembly RM120–250.",
+    },
+    {
+      title: "Skill Type",
+      description: "General handyman RM60–100/hour, specialist (electrical, plumbing) higher if needed.",
+    },
+    {
+      title: "Duration",
+      description: "Minimum 1 hour, small jobs fixed from photos on WhatsApp, call-out RM80 KL central waived if proceed, RM150 outlying.",
+    },
+    {
+      title: "Materials & Parts",
+      description: "Labour excludes materials; lock brand, bracket type, grout area affect total.",
+    },
+    {
+      title: "Access & Height",
+      description: "High ceiling, ladder needed, wall type concrete vs drywall, condo lift booking.",
+    },
+    {
+      title: "Number of Tasks",
+      description: "Multiple small tasks combined can be hourly RM60–100, more efficient than per job.",
+    },
+  ],
+  duration: {
+    intro: "Handyman jobs are usually same-day, scheduled next-day for most jobs.",
+    items: [
+      { label: "Door Hinge / Lock", value: "30 minutes – 2 hours per door" },
+      { label: "TV Mounting / Shelf", value: "30 minutes – 2 hours per item" },
+      { label: "Picture Hanging", value: "15–30 minutes per piece, RM30–60 heavy" },
+      { label: "Wardrobe Assembly", value: "1–3 hours standard, RM120–250" },
+      { label: "Regrout / Silicone", value: "2–5 hours per bathroom" },
+      { label: "Minor Repairs (Multiple)", value: "Half day hourly RM60–100" },
+    ],
+    note: "Small jobs scheduled according to current workload; we give realistic date when you enquire and confirm before arriving.",
+  },
+  includes: [
+    "Labour and basic tools for specified tasks",
+    "Installation, repair, alignment and testing",
+    "Basic cleaning after work",
+    "Fixed quote from photos on WhatsApp for most jobs",
+  ],
+  excludes: [
+    "Materials, brackets, locks, grout unless specified",
+    "Specialist electrical or plumbing beyond handyman scope",
+    "Full room painting beyond touch-up (refer to painting specialist)",
+    "Furniture moving beyond work area",
+  ],
+  includesTitle: "What handyman service usually includes",
+  excludesTitle: "What may be quoted separately",
+  answerFirst: [
+    {
+      question: "How much does handyman service cost in Malaysia?",
+      answer: "Handyman services in Malaysia typically charge RM40–RM200 per hour depending on complexity, with common rate RM60–RM100 per hour in KL & Selangor, minimum 1 hour. Fixed jobs: door hinge RM80–180, lock change RM120–280, picture hanging RM30–60 per heavy piece, TV wall mount RM150–300 with bracket, wardrobe assembly RM120–250, regrout bathroom wall RM250–550, silicone redo RM80–180. Call-out RM80 KL central waived if you proceed, RM150 outlying. Final price depends on task, materials and access.",
+    },
+    {
+      question: "What does handyman service include?",
+      answer: "Handyman includes small carpentry, grouting, silicone, picture hanging, door and cabinet repair, TV mounting, flat-pack assembly, lock/door work, minor repairs and installations. Labour includes basic tools, materials extra. Whole-room painting is referred to painting specialist. Most jobs quoted fixed from photos on WhatsApp.",
+    },
+    {
+      question: "Can handyman do TV mounting and shelf installation?",
+      answer: "Yes, TV wall mount with bracket RM150–300, shelf installation and curtain rail similar, picture hanging RM30–60 per heavy piece. We check wall type (concrete vs drywall), weight, height and include level check and testing. Takes 30 minutes to 2 hours per item. Bracket and shelf excluded if client supply, installation only.",
+    },
+    {
+      question: "How quickly can handyman come?",
+      answer: "Most small jobs next-day in KL & Selangor depending on workload. We give realistic date when you enquire and confirm before arriving. Emergency same-day possible for urgent door or lock issues. Share photos, location and task list on WhatsApp for fastest fixed quote.",
+    },
+  ],
+  searchIntents: [
+    "handyman near me",
+    "handyman service",
+    "handyman service near me",
+    "door repair",
+    "TV mounting",
+    "shelf installation",
+    "lock replacement",
+    "affordable handyman",
+    "reliable handyman KL",
+    "minor home repairs",
+  ],
+  entityKeywords: [
+    "handyman service",
+    "handyman",
+    "door repair",
+    "TV mounting",
+    "shelf installation",
+    "lock replacement",
+    "flat-pack assembly",
+    "grout",
+    "silicone",
+    "minor repairs",
   ],
   relatedServices: ["plumbing", "electrical", "painting", "general-renovation"],
   relatedProblems: [

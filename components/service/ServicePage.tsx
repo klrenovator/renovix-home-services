@@ -1,7 +1,13 @@
 import { ServiceHero } from "@/components/service/ServiceHero";
 import { OverviewSection } from "@/components/service/OverviewSection";
+import { AnswerFirstSection } from "@/components/service/AnswerFirstSection";
 import { SubServicesSection } from "@/components/service/SubServicesSection";
 import { ProblemsSection } from "@/components/service/ProblemsSection";
+import { PricingSection } from "@/components/service/PricingSection";
+import { CostFactorsSection } from "@/components/service/CostFactorsSection";
+import { MaterialsSection } from "@/components/service/MaterialsSection";
+import { DurationSection } from "@/components/service/DurationSection";
+import { IncludesExcludesSection } from "@/components/service/IncludesExcludesSection";
 import { PropertyTypesSection } from "@/components/service/PropertyTypesSection";
 import { ProcessSection } from "@/components/service/ProcessSection";
 import { WhySection } from "@/components/service/WhySection";
@@ -23,9 +29,15 @@ export function ServicePage({ detail, related, relatedProblems, lang }: ServiceP
   return (
     <>
       <ServiceHero detail={detail} lang={lang} />
+      <AnswerFirstSection detail={detail} lang={lang} />
       <OverviewSection detail={detail} lang={lang} />
       <SubServicesSection detail={detail} lang={lang} />
       <ProblemsSection detail={detail} relatedProblemPages={relatedProblems} lang={lang} />
+      <PricingSection detail={detail} lang={lang} />
+      <CostFactorsSection detail={detail} lang={lang} />
+      <MaterialsSection detail={detail} lang={lang} />
+      <DurationSection detail={detail} lang={lang} />
+      <IncludesExcludesSection detail={detail} lang={lang} />
       <PropertyTypesSection detail={detail} lang={lang} />
       <ProcessSection detail={detail} lang={lang} />
       <WhySection detail={detail} lang={lang} />

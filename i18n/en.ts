@@ -259,6 +259,46 @@ export const en: Dictionary = {
     ctaTitle: "Need this service for your home?",
     ctaDescription:
       "Share the details of the work, your property type and location, and we will guide the next step.",
+    pricingEyebrow: "Pricing Guidance",
+    pricingTitle: "{name} Cost in Malaysia",
+    pricingDescription:
+      "Indicative starting prices based on current 2026 market research for Kuala Lumpur, Selangor and the Klang Valley. Final quotation depends on actual site condition, scope, materials and installation requirements.",
+    pricingDisclaimer:
+      "Prices start from the stated amount. Final quotation depends on actual site condition, scope, materials, accessibility and installation requirements.",
+    pricingNote:
+      "Send photos, measurements and location for a more accurate assessment. Prices are reviewed regularly.",
+    startingFrom: "Starting from",
+    priceTableService: "Service",
+    priceTableScope: "Scope",
+    priceTablePrice: "Starting Price",
+    priceTableUnit: "Unit",
+    costFactorsEyebrow: "Cost Factors",
+    costFactorsTitle: "What affects the cost of {name}?",
+    costFactorsDescription:
+      "Understanding what drives price helps you compare quotes fairly and prepare useful details for assessment.",
+    materialsEyebrow: "Materials",
+    materialsTitle: "Common materials for {name}",
+    materialsDescription:
+      "Materials are chosen based on property type, usage and budget. We use standard trade materials suited to Malaysian homes.",
+    durationEyebrow: "Duration",
+    durationTitle: "How long does {name} take?",
+    durationDescription:
+      "Duration depends on scope, site condition and drying or curing time where relevant.",
+    durationNote:
+      "Timelines are indicative. Actual schedule is confirmed in the quotation after assessment.",
+    includesEyebrow: "Scope",
+    includesTitle: "What is typically included",
+    excludesTitle: "What is typically not included",
+    answerFirstEyebrow: "Quick Answers",
+    answerFirstTitle: "Common questions about {name}",
+    answerFirstDescription:
+      "Direct answers to the questions customers and search engines ask most often about this service.",
+    quotePromptTitle: "Need a more accurate price?",
+    quotePromptBody:
+      "Share photos of the affected area, measurements, property type and location. We review the details first and guide the next step before a quotation.",
+    lastReviewedLabel: "Last reviewed",
+    viewPricing: "View pricing guidance",
+    pricingFactorsTitle: "What affects pricing",
   },
   problemsIndex: {
     metaTitle:
