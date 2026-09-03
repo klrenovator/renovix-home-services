@@ -111,7 +111,7 @@ export const translation: ServiceTranslation = {
     {
       title: "Jubin & Lantai",
       description:
-        "Seramik RM10–18, porselin RM14–28, SPC RM5.50–11.50, vinyl RM4.70–7.00 bekal dan pasang.",
+        "Seramik RM8–15, porselin RM14–28, SPC RM5.50–11.50, vinyl RM4.70–7.00 bekal dan pasang.",
     },
     {
       title: "Elektrik & Paip",
@@ -150,7 +150,7 @@ export const translation: ServiceTranslation = {
     {
       title: "Jenis & Saiz Hartanah",
       description:
-        "Kondominium RM20–40 ringan, RM50–150 penuh; teres RM10–30 ringan, RM30–120 penuh; semi-D RM10–25 ringan, RM25–100 penuh.",
+        "Kondominium RM20–40 ringan, RM50–150 penuh; teres RM20–30 ringan, RM30–120 penuh; semi-D RM20–25 ringan, RM25–100 penuh.",
     },
     {
       title: "Hacking & Struktur",

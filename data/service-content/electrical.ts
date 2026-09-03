@@ -415,11 +415,11 @@ export const electrical: ServiceDetail = {
     },
     {
       title: "DB & Upgrades",
-      description: "DB box RM400–1500, panel upgrade with TNB application RM2500, full house rewiring RM4k–15k.",
+      description: "DB box RM400–1500, panel upgrade with TNB application RM2500, full house rewiring RM5k–12k.",
     },
     {
       title: "Emergency & Height",
-      description: "After-hours emergency RM150–300/hour, high ceiling >12ft extra, inspection RM200–500.",
+      description: "Urgent fault call-out RM150–300/hour, high ceiling >12ft extra, inspection RM200–500.",
     },
   ],
   duration: {
@@ -451,7 +451,7 @@ export const electrical: ServiceDetail = {
   excludesTitle: "What may be quoted separately",
   answerFirst: [
     {
-      question: "How much does electrical wiring cost in Malaysia?",
+      question: "What does electrical work typically cost in KL & Selangor?",
       answer: "Power socket addition starts from RM80 per point, lighting point from RM60, ceiling fan installation from RM80 install only and RM150 with casing, DB box single-phase from RM400 and 3-phase from RM800, full house wiring from RM5,000 for 1-storey terrace and RM8,000 for 2-storey in KL & Selangor. Concealed wiring costs 30–50% more than exposed. Final price depends on number of points, distance, wall type and phase.",
     },
     {

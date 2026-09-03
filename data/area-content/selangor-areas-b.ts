@@ -942,7 +942,7 @@ export const selangorAreasB: AreaDetail[] = [
       {
         question: "How do we start?",
         answer:
-          "Message us with your area and the work in mind. We arrange a free assessment and follow with a written quotation.",
+          "Message us with your Rawang neighbourhood and the work in mind. We arrange a free assessment and follow with a written quotation.",
       },
     ],
     relatedServices: ["general-renovation", "waterproofing", "plumbing", "painting"],
@@ -1100,7 +1100,7 @@ export const selangorAreasB: AreaDetail[] = [
       {
         question: "How do we start?",
         answer:
-          "Message us with your area and the work in mind. We arrange a free assessment and follow with a written quotation.",
+          "Message us with your Semenyih address and photos of the work area. We arrange a free assessment and follow with a written quotation.",
       },
     ],
     relatedServices: ["general-renovation", "waterproofing", "painting", "plumbing"],

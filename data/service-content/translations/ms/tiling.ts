@@ -167,7 +167,7 @@ export const translation: ServiceTranslation = {
     {
       title: "Porselin Format Besar",
       description:
-        "80x80cm, 60x120cm ke atas, RM10–22 bekalan, RM22–55 bekal dan pasang, perlukan permukaan yang benar-benar rata untuk elak lippage.",
+        "80x80cm, 60x120cm ke atas, RM10–22 bekalan; bekal dan pasang dikira mengikut kerja, perlukan permukaan yang benar-benar rata untuk elak lippage.",
     },
     {
       title: "Homogeneous & Full-Body",
@@ -196,7 +196,7 @@ export const translation: ServiceTranslation = {
     {
       title: "Bahan Jubin",
       description:
-        "Seramik RM8–15, porselin RM14–28, format besar RM22–45, marmar RM30–90 bekal dan pasang.",
+        "Seramik RM8–15, porselin RM14–28 bekal dan pasang; format besar dan marmar dikira mengikut kerja.",
     },
     {
       title: "Kerumitan Corak",
@@ -250,7 +250,7 @@ export const translation: ServiceTranslation = {
     {
       question: "Berapa kos kerja jubin di Malaysia?",
       answer:
-        "Kerja jubin bermula dari RM8 sekaki persegi untuk jubin seramik lantai atau dinding standard bekal dan pasang di KL & Selangor, RM14–RM28 untuk porselin 60x60cm pertengahan, dan RM22–RM45 untuk porselin format besar. Kerja pembaikan kecil bermula dari RM150 untuk beberapa keping jubin, bilik air lengkap dari RM1,700 untuk 120 kaki persegi gabungan. Harga akhir bergantung pada saiz jubin, bahan, corak, keadaan permukaan serta sama ada hacking atau kalis air diperlukan.",
+        "Kerja jubin bermula dari RM8 sekaki persegi untuk jubin seramik lantai atau dinding standard bekal dan pasang di KL & Selangor, RM14–RM28 untuk porselin 60x60cm pertengahan. Porselin format besar dan marmar berharga lebih tinggi dan dikira mengikut kerja selepas pemeriksaan substrat. Kerja pembaikan kecil bermula dari RM150 untuk beberapa keping jubin, bilik air lengkap dari RM1,700 untuk 120 kaki persegi gabungan. Harga akhir bergantung pada saiz jubin, bahan, corak, keadaan permukaan serta sama ada hacking atau kalis air diperlukan.",
     },
     {
       question: "Apa yang termasuk dalam kerja jubin bilik air?",

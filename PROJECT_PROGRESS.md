@@ -2152,7 +2152,125 @@ quoted. All three are fixed and now guarded by the audit.
 
 ---
 
-## PHASE 16 — Full Search + AI Authority — PENDING
+## PHASE 16 — Full Search + AI Authority — [x] COMPLETE
+
+The authority-building phase. No new page types, no doorway pages, no
+keyword-stuffed copy: the work was (1) a full pricing-contradiction audit with
+fixes across all 3 languages, (2) a centralized AI-readable knowledge layer,
+(3) two permanent audits, (4) honest-claim remediation, (5) duplication and
+cannibalization remediation, and (6) the strategic map + governance docs for
+all future SEO growth.
+
+### 1. Pricing authority — full contradiction audit and remediation (§19)
+- [x] Mechanically compared every RM figure in every service file's
+      Renovix-voice copy (answer-first, FAQs, pricing, duration, cost factors)
+      against that service's centralized pricing rows. Found and fixed genuine
+      contradictions where pages advertised prices no row backs: handyman
+      hourly RM40 (row min RM60) and picture-hanging RM30 (row min RM60);
+      painting apartment RM800 (full-house row min RM1500) and an unrowed
+      labour-only range; tiling/flooring large-format and marble ranges with
+      no backing rows; welding full-house and stainless-steel figures above
+      every row; unrowed polyurea/bunga/factory-direct/ceramic cross-refs.
+      Fixes align copy to researched row values or convert claims to honest
+      per-job/per-design quotations — no new prices invented anywhere.
+- [x] Same fixes applied to the Malay and Chinese mirrors (numbers are never
+      translated, so mirrors were located by their identical figures).
+- [x] Found and fixed a structural single-source violation: Phase 15's
+      `AreaAnswerFirstSection` hardcoded 5 starting prices into component code
+      across 138 area pages. It now renders them from `getPricingById`
+      through localized templates, so catalogue updates can never leave stale
+      prices behind.
+- [x] New permanent rule 8 in `npm run audit:pricing`: every service-page
+      price claim must sit inside a pricing-row range (own service, or a named
+      cross-service row); MS/ZH may quote only figures the English page
+      states; problems/areas/projects/locations/FAQs/dictionaries quote no
+      prices at all. All documented exemptions (materials supply context, TNB
+      utility fees, hand-verified general-renovation project totals) are
+      recorded in the audit source.
+
+### 2. AI-readable business knowledge (§33) + llms.txt
+- [x] `lib/ai-knowledge.ts`: single builder deriving company info, contact,
+      areas (46 guides), services (10, with row-backed price notes),
+      problems (46), projects (21), process and limitations from the same
+      registries the pages render.
+- [x] `/ai/business.json` (new, prerendered): full business knowledge for
+      assistants. `/llms.txt` (new, prerendered): crawler summary with
+      services, guides, areas, quoting process and limitations.
+- [x] Footer links `/llms.txt` (localized label) for feed discovery.
+- [x] Caught and fixed the mixed-unit headline defect in the new feed during
+      verification (tiling showed the RM2 hacking rate): AI headlines now use
+      each service's audited `startingFromNote`, which names the job.
+
+### 3. Claim honesty (§9, §40)
+- [x] Removed 2 "guaranteed workmanship/quality" meta descriptions
+      (locations registry), all unverified "same-day"/"after-hours" promises
+      (handyman, plumbing, electrical) and the "#1 reason" phrasing — replaced
+      with conditional scheduling language and measured terms, in EN+MS+ZH.
+- [x] Verified clean: no 24/7, ranking, credential, award or "cheapest"
+      claims; "near me" only in intent metadata (1–2 per service, never in
+      prose); "emergency" only in safety-critical triage, the sagging-ceiling
+      safety question and fire-escape design context.
+
+### 4. Duplication + cannibalization (§23, §24)
+- [x] 8 service pages asked the identical cost question in both `faqs` and
+      `answerFirst` with near-identical answers — retitled the answer-first
+      questions to their starting-price role (EN), plus 2 MS duration pairs.
+- [x] 5 area-guide answers were pasted verbatim across pages (How-do-we-start,
+      rental refurbishment ×2, strata approval ×3) — each rewritten with
+      honest area-grounded detail. Audit now enforces: one question per page,
+      no identical Q+A across pages (312 meta descriptions + 312 H1s verified
+      unique per language).
+
+### 5. New permanent audit — `npm run audit:authority`
+- [x] Dependency-free script enforcing: no fabricated claims; urgency language
+      only in allowlisted triage contexts; every related-service/problem,
+      nearby-area, problem→service and intent-matrix slug resolves; index
+      pages iterate the registries + sitemap guard stays wired (orphan audit);
+      page-aware FAQ uniqueness; per-language metadata uniqueness; AI feeds
+      exist, read the shared builder, hardcode no prices, and are footer-
+      linked; alt text on every rendered image.
+
+### 6. Strategy docs (§36, §38)
+- [x] `CONTENT_MAP.md`: the 10 topic clusters, 46 problem guides, 46 area
+      guides, intent→page mapping, accepted gaps (flooring/welding problem
+      guides, painting/waterproofing project proof, blog), an intent-mapped
+      7-piece guide backlog (build only with real research, EN+MS+ZH
+      together), the AI layer inventory and monitoring readiness.
+- [x] `CONTENT_GOVERNANCE.md`: the 10 binding rules for all future content
+      (never fabricate, single-source pricing, no thin/doorway pages, honest
+      urgency, multilingual discipline, schema honesty, generated AI layer,
+      image rules, conversion without dark patterns, change checklist).
+- [x] Deliberately built NO new content pages: quality over page count. No
+      service×location doorways (would be 460 near-duplicates), no speculative
+      guides, no thin translations.
+
+### 7. Verification (all green)
+- [x] `npm run type-check` — PASS; `npm run lint` — PASS (0 problems);
+      `npm run build` — PASS (408 sitemap URLs + 3 AI/static routes).
+- [x] All 6 audits PASS: business, og-fonts, project-assets, pricing
+      (incl. new rule 8), locations, authority (new).
+- [x] Served-site sweep: **408/408 sitemap URLs return 200**; 13-page sample
+      (EN/MS/ZH home, service, problem, area, projects, FAQ, quote, contact,
+      about): exactly one H1, correct `html lang`, self-canonicals,
+      hreflang ×4, 4 JSON-LD blocks each, zero Review/AggregateRating;
+      `/llms.txt`, `/ai/business.json` (10 services / 46 areas / 46 problems /
+      21 projects), `/ai/pricing.json` (51 entries) all 200 with correct
+      content types; area pages render catalogue prices; fixed copy confirmed
+      live (handyman RM60–200, no RM40).
+- [x] No client-JS added (feeds, audits and copy only); static-first
+      performance profile unchanged. No browser click-through suite exists in
+      this environment, so none is claimed — responsiveness and interaction
+      verification is deferred to the Final Phase.
+
+### 8. Data honesty (unchanged standard)
+- [x] No prices, reviews, ratings, coordinates, licences, certifications,
+      awards, experience claims, projects, team members or outcomes invented.
+      Every corrected figure already existed in the researched pricing
+      catalogue; every rewritten answer uses only established process facts.
+
+---
+
+## FINAL PHASE — Final Audit, Stabilization & Launch Readiness — STATUS: PENDING
 
 ---
 

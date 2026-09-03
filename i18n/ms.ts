@@ -92,6 +92,7 @@ export const ms: Dictionary = {
     address: "Alamat",
     hours: "Waktu Operasi",
     rights: "Hak cipta terpelihara.",
+    machineReadable: "Data mesra mesin",
   },
   home: {
     hero: {

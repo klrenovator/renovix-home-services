@@ -95,6 +95,7 @@ export type Dictionary = {
     address: string;
     hours: string;
     rights: string;
+    machineReadable: string;
   };
   home: {
     hero: {

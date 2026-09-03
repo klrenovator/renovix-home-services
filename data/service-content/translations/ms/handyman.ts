@@ -134,7 +134,7 @@ export const translation: ServiceTranslation = {
     {
       title: "Kerumitan Kerja",
       description:
-        "Gantung gambar ringkas RM30–60 berbanding pemasangan TV RM150–300 dan pemasangan almari RM120–250.",
+        "Gantung gambar ringkas dari RM60 berbanding pemasangan TV RM150–300 dan pemasangan almari RM120–250.",
     },
     {
       title: "Jenis Kemahiran",
@@ -163,11 +163,11 @@ export const translation: ServiceTranslation = {
     },
   ],
   duration: {
-    intro: "Kerja handyman biasanya selesai pada hari yang sama, dan kebanyakannya dijadualkan pada hari berikutnya.",
+    intro: "Kebanyakan kerja handyman dijadualkan pada hari berikutnya di KL & Selangor, bergantung pada beban kerja.",
     items: [
       { label: "Engsel / Kunci Pintu", value: "30 minit – 2 jam setiap pintu" },
       { label: "Pemasangan TV / Rak", value: "30 minit – 2 jam setiap item" },
-      { label: "Gantung Gambar", value: "15–30 minit setiap keping, RM30–60 untuk yang berat" },
+      { label: "Gantung Gambar", value: "15–30 minit setiap keping, dari RM60 untuk yang berat" },
       { label: "Pemasangan Almari", value: "1–3 jam standard, RM120–250" },
       { label: "Grouting Semula / Silikon", value: "2–5 jam setiap bilik air" },
       { label: "Pembaikan Kecil (Beberapa Tugas)", value: "Setengah hari kadar sejam RM60–100" },
@@ -192,7 +192,7 @@ export const translation: ServiceTranslation = {
     {
       question: "Berapa kos khidmat handyman di Malaysia?",
       answer:
-        "Khidmat handyman di Malaysia biasanya dikenakan RM40–RM200 sejam bergantung kerumitan, dengan kadar biasa RM60–RM100 sejam di KL & Selangor, minimum 1 jam. Kerja kadar tetap: engsel pintu RM80–180, tukar kunci RM120–280, gantung gambar RM30–60 setiap keping berat, pemasangan TV RM150–300 termasuk bracket, pemasangan almari RM120–250, grouting semula dinding bilik air RM250–550, silikon RM80–180. Panggilan RM80 di tengah KL diketepikan jika anda teruskan, RM150 di kawasan luar. Harga akhir bergantung pada tugas, bahan dan akses.",
+        "Khidmat handyman di Malaysia biasanya dikenakan RM60–RM200 sejam bergantung kerumitan, dengan kadar biasa RM60–RM100 sejam di KL & Selangor, minimum 1 jam. Kerja kadar tetap: engsel pintu RM80–180, tukar kunci RM120–280, gantung gambar dari RM60 setiap keping berat, pemasangan TV RM150–300 termasuk bracket, pemasangan almari RM120–250, grouting semula dinding bilik air RM250–550, silikon RM80–180. Panggilan RM80 di tengah KL diketepikan jika anda teruskan, RM150 di kawasan luar. Harga akhir bergantung pada tugas, bahan dan akses.",
     },
     {
       question: "Apa yang termasuk dalam khidmat handyman?",
@@ -202,12 +202,12 @@ export const translation: ServiceTranslation = {
     {
       question: "Boleh handyman pasang TV dan rak dinding?",
       answer:
-        "Boleh. Pemasangan TV dengan bracket RM150–300, pemasangan rak dan rel langsir lebih kurang sama, gantung gambar RM30–60 setiap keping berat. Kami periksa jenis dinding (konkrit atau drywall), berat, ketinggian dan buat pemeriksaan aras serta ujian. Mengambil 30 minit hingga 2 jam setiap item. Bracket dan rak tidak termasuk jika dibekalkan pelanggan.",
+        "Boleh. Pemasangan TV dengan bracket RM150–300, pemasangan rak dan rel langsir lebih kurang sama, gantung gambar dari RM60 setiap keping berat. Kami periksa jenis dinding (konkrit atau drywall), berat, ketinggian dan buat pemeriksaan aras serta ujian. Mengambil 30 minit hingga 2 jam setiap item. Bracket dan rak tidak termasuk jika dibekalkan pelanggan.",
     },
     {
       question: "Berapa cepat handyman boleh datang?",
       answer:
-        "Kebanyakan kerja kecil boleh dijadualkan pada hari berikutnya di KL & Selangor bergantung pada beban kerja. Kami beri tarikh yang realistik semasa anda bertanya dan sahkan sebelum tiba. Kerja kecemasan pada hari sama mungkin boleh diatur untuk masalah pintu atau kunci yang mendesak. Hantar gambar, lokasi dan senarai tugas di WhatsApp untuk sebut harga tetap paling pantas.",
+        "Kebanyakan kerja kecil boleh dijadualkan pada hari berikutnya di KL & Selangor bergantung pada beban kerja. Kami beri tarikh yang realistik semasa anda bertanya dan sahkan sebelum tiba. Untuk masalah pintu atau kunci yang mendesak, maklumkan semasa bertanya dan slot paling awal akan ditawarkan. Hantar gambar, lokasi dan senarai tugas di WhatsApp untuk sebut harga tetap paling pantas.",
     },
   ],
 };

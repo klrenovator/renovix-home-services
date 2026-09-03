@@ -440,7 +440,7 @@ export const locationsRegistry: LocationEntity[] = [
     publicPath: "/areas/kuala-lumpur/sentul",
     seo: {
       title: "Renovix Home Services | Home Renovation & Repair in Sentul, KL",
-      metaDescription: "Professional condo renovations, plumbing, electrical, and painting in Sentul East & West. Transparent rates, guaranteed workmanship.",
+      metaDescription: "Professional condo renovations, plumbing, electrical, and painting in Sentul East & West. Transparent rates, careful workmanship.",
       h1: "Home Renovation & Repair Services in Sentul, Kuala Lumpur",
       searchIntents: ["sentul plumber", "condo renovation sentul", "electrician sentul kl"],
       targetModifiers: ["near_me", "repair", "affordable_cost", "residential"],
@@ -1452,7 +1452,7 @@ export const locationsRegistry: LocationEntity[] = [
     publicPath: "/areas/selangor/usj",
     seo: {
       title: "Renovix Home Services | Home Renovation & Repair in USJ, Subang Jaya",
-      metaDescription: "Full home renovation, kitchen extension, re-piping, and rewiring in USJ 1–27 and Taipan. Experienced local contractors, guaranteed quality.",
+      metaDescription: "Full home renovation, kitchen extension, re-piping, and rewiring in USJ 1–27 and Taipan. Local contractors focused on detailed finishing.",
       h1: "Home Renovation & Repair Services in USJ, Subang Jaya",
       searchIntents: ["usj renovation contractor", "plumber usj taipan near me", "electrician usj subang"],
       targetModifiers: ["near_me", "repair", "best_reliable", "contractor_specialist"],

@@ -111,7 +111,7 @@ export const translation: ServiceTranslation = {
     {
       title: "陶瓷与瓷质地砖",
       description:
-        "供应连安装：陶瓷 RM10–18、瓷质 RM14–28、大板 RM22–45 — 偏好瓷砖时的替代方案。",
+        "供应连安装：陶瓷 RM8–15、瓷质 RM14–28；大板按项目报价 — 偏好瓷砖时的替代方案。",
     },
     {
       title: "静音垫与踢脚线",
@@ -135,7 +135,7 @@ export const translation: ServiceTranslation = {
     {
       title: "面积大小",
       description:
-        "面积越大单价越低；工厂直装最低 500 平方英尺每平方英尺 RM2.19 起，高端最低 800 平方英尺 RM3.97 起。",
+        "面积越大单价越低；工厂直装对批量工程常以最低面积要求提供较低报价。",
     },
     {
       title: "基层状况",
@@ -188,7 +188,7 @@ export const translation: ServiceTranslation = {
     {
       question: "马来西亚 SPC 地板多少钱？",
       answer:
-        "2026 年 SPC 地板材料每平方英尺 RM4–RM9，安装 RM2–RM4，供应连安装从入门 4+1mm 每平方英尺 RM5.50 起，至 7.5mm IXPE RM7.50。以 1000 平方英尺住宅计算，SPC 比乙烯基多花 RM500–RM1,500，但使用寿命长 5–10 年。LVT 乙烯基地板供应连安装从 RM4.70 起。最终价格取决于厚度、面积、基层状况与花样。",
+        "2026 年 SPC 地板材料每平方英尺 RM4.70–RM9，安装 RM2–RM4，供应连安装从入门 4+1mm 每平方英尺 RM5.50 起，至 7.5mm IXPE RM7.50。以 1000 平方英尺住宅计算，SPC 比乙烯基多花 RM500–RM1,500，但使用寿命长 5–10 年。LVT 乙烯基地板供应连安装从 RM4.70 起。最终价格取决于厚度、面积、基层状况与花样。",
     },
     {
       question: "地板安装包含什么？",
@@ -198,7 +198,7 @@ export const translation: ServiceTranslation = {
     {
       question: "SPC 地板比瓷砖便宜吗？",
       answer:
-        "入门级 SPC 与普通陶瓷砖的材料成本可能相近，但 SPC 采用锁扣安装，比人工密集的铺砖更快也更省工钱。若想要现代外观又不想工期太长，SPC 的整体预算通常更划算。瓷砖供应连安装为陶瓷 RM10–18、瓷质 RM14–28。",
+        "入门级 SPC 与普通陶瓷砖的材料成本可能相近，但 SPC 采用锁扣安装，比人工密集的铺砖更快也更省工钱。若想要现代外观又不想工期太长，SPC 的整体预算通常更划算。瓷砖供应连安装为陶瓷 RM8–15、瓷质 RM14–28。",
     },
     {
       question: "地板安装需要多长时间？",

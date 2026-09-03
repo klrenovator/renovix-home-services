@@ -84,6 +84,7 @@ export const zh: Dictionary = {
     address: "地址",
     hours: "营业时间",
     rights: "版权所有。",
+    machineReadable: "机器可读数据",
   },
   home: {
     hero: {

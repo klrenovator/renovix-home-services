@@ -144,12 +144,12 @@ export const translation: ServiceTranslation = {
     {
       title: "Sistem Kalis Air",
       description:
-        "Cementitious RM8–14, PU RM12–20, torch-on RM10–18, crystalline RM15–25, polyurea premium RM30–60 sekaki persegi.",
+        "Cementitious RM8–14, PU RM12–20, torch-on RM10–18, crystalline RM15–25 sekaki persegi; sistem premium polyurea disebut harga mengikut projek.",
     },
     {
       title: "Penyediaan Permukaan",
       description:
-        "Pembersihan, pembaikan retak, fillet di sudut dan primer — melangkau penyediaan ialah punca nombor satu kegagalan kalis air.",
+        "Pembersihan, pembaikan retak, fillet di sudut dan primer — melangkau penyediaan ialah punca paling biasa kegagalan kalis air.",
     },
     {
       title: "Pemasangan Semula Jubin",

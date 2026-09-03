@@ -322,7 +322,7 @@ export const generalRenovation: ServiceDetail = {
   materials: [
     {
       title: "Tiling & Flooring",
-      description: "Ceramic RM10–18, porcelain RM14–28, SPC RM5.50–11.50, vinyl RM4.70–7.00 supply & install.",
+      description: "Ceramic RM8–15, porcelain RM14–28, SPC RM5.50–11.50, vinyl RM4.70–7.00 supply & install.",
     },
     {
       title: "Electrical & Plumbing",
@@ -353,7 +353,7 @@ export const generalRenovation: ServiceDetail = {
     },
     {
       title: "Property Type & Size",
-      description: "Condo RM20–40 light, RM50–150 full; terrace RM10–30 light, RM30–120 full; semi-D RM10–25 light, RM25–100 full.",
+      description: "Condo RM20–40 light, RM50–150 full; terrace RM20–30 light, RM30–120 full; semi-D RM20–25 light, RM25–100 full.",
     },
     {
       title: "Hacking & Structure",
@@ -401,7 +401,7 @@ export const generalRenovation: ServiceDetail = {
   excludesTitle: "What may be quoted separately",
   answerFirst: [
     {
-      question: "How much does house renovation cost in Malaysia?",
+      question: "What does home renovation typically cost in KL & Selangor?",
       answer: "Light refresh costs RM20–RM60 per sqft, mid-range renovation RM70–RM150 psf, major overhaul RM160–RM300+ psf in KL & Selangor in 2026. For 800 sqft apartment mid-range RM56k–RM120k, 1000–1200 sqft 3-bedroom RM70k–RM180k, 2-storey terrace 1600–2000 sqft full interior RM60k–RM250k. Kitchen cabinets RM150–600 per foot run, bathroom full RM8k–25k per bathroom. Final price depends on scope, property type, material grade and hacking needs.",
     },
     {

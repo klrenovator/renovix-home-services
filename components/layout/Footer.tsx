@@ -36,6 +36,10 @@ export function Footer({ lang }: FooterProps) {
   const legal = [
     { label: t.legal.privacy, href: localizedHref("/privacy", code) },
     { label: t.legal.terms, href: localizedHref("/terms", code) },
+    // Machine-readable business knowledge for answer engines and assistants
+    // (Phase 16). Same-origin route, generated at build time from the same
+    // registries the pages render.
+    { label: t.footer.machineReadable, href: "/llms.txt" },
   ];
 
   const services = getServiceCategories(code);

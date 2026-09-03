@@ -172,12 +172,12 @@ export const translation: ServiceTranslation = {
     {
       title: "配电箱与升级",
       description:
-        "配电箱 RM400–1500，含 TNB 申请的电箱升级 RM2500，全屋重新布线 RM4k–15k。",
+        "配电箱 RM400–1500，含 TNB 申请的电箱升级 RM2500，全屋重新布线 RM5k–12k。",
     },
     {
       title: "紧急与高度",
       description:
-        "非工作时间紧急服务每小时 RM150–300，超过 12 尺高天花另计，检查 RM200–500。",
+        "紧急故障上门每小时 RM150–300，超过 12 尺高天花另计，检查 RM200–500。",
     },
   ],
   duration: {

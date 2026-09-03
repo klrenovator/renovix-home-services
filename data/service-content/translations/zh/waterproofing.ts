@@ -141,12 +141,12 @@ export const translation: ServiceTranslation = {
     {
       title: "防水系统",
       description:
-        "水泥基 RM8–14、PU RM12–20、热熔 RM10–18、结晶 RM15–25、聚脲高端 RM30–60 每平方英尺。",
+        "水泥基 RM8–14、PU RM12–20、热熔 RM10–18、结晶 RM15–25 每平方英尺；聚脲高端系统按项目报价。",
     },
     {
       title: "基面处理",
       description:
-        "清洁、裂缝修补、阴角加强与底涂 — 省略基面处理是防水失败的头号原因。",
+        "清洁、裂缝修补、阴角加强与底涂 — 省略基面处理是防水失败最常见的原因。",
     },
     {
       title: "瓷砖复原",
