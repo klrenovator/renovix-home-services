@@ -142,4 +142,130 @@ export const translation: ServiceTranslation = {
         "Kami akan padankan saiz, kemasan dan warna sedekat mungkin. Jika model asal sudah tidak dikeluarkan, kami cadangkan pilihan paling hampir, atau cara susun atur yang menjadikan perbezaan itu kurang ketara.",
     },
   ],
+
+  pricing: {
+    intro:
+      "Kos kerja jubin di KL & Selangor bergantung pada saiz jubin, bahan (seramik, porselin atau format besar), corak, luas kawasan dan penyediaan permukaan. Seramik standard bermula dari RM8 sekaki persegi bekal dan pasang.",
+    startingFromNote: "Bermula dari RM8 sekaki persegi untuk jubin lantai seramik",
+    disclaimer:
+      "Harga bermula dari jumlah yang dinyatakan. Sebut harga akhir bergantung pada keadaan tapak sebenar, skop kerja, bahan, akses dan keperluan pemasangan.",
+    tableIntro: "Kerja jubin biasa berserta harga permulaan anggaran untuk rumah di Lembah Klang.",
+  },
+  materialsIntro:
+    "Kami bekerja dengan bahan jubin standard yang sesuai untuk rumah di Malaysia, daripada seramik yang menjimatkan sehingga porselin format besar.",
+  materials: [
+    {
+      title: "Jubin Seramik",
+      description:
+        "Menjimatkan, 30x30 hingga 60x60cm, RM2–RM6 sekaki persegi bekalan sahaja, sesuai untuk dinding dan lantai kurang sibuk.",
+    },
+    {
+      title: "Jubin Porselin",
+      description:
+        "Padat dan rendah keliangan, 60x60cm pertengahan RM5–12 bekalan, RM14–28 bekal dan pasang, sesuai untuk kegunaan berat dan kawasan basah.",
+    },
+    {
+      title: "Porselin Format Besar",
+      description:
+        "80x80cm, 60x120cm ke atas, RM10–22 bekalan, RM22–55 bekal dan pasang, perlukan permukaan yang benar-benar rata untuk elak lippage.",
+    },
+    {
+      title: "Homogeneous & Full-Body",
+      description:
+        "Warna penuh untuk kawasan lalu lalang tinggi, RM15–40 sekaki persegi bekalan, tahan lama.",
+    },
+    {
+      title: "Mozek & Hiasan",
+      description:
+        "Mozek kaca, batu dan seramik RM15–60 sekaki persegi untuk dinding ciri, border dan niche pancuran.",
+    },
+    {
+      title: "Pelekat Jubin, Grout & Screed",
+      description:
+        "Pelekat polimer, grout, spacer dan screed untuk leveling — kerja penyediaan menambah RM3–8 sekaki persegi jika perlu.",
+    },
+  ],
+  costFactorsIntro:
+    "Kerja jubin nampak mudah, tetapi penyediaan, saiz jubin dan corak menentukan kos akhir serta sama ada jubin kekal rata.",
+  costFactors: [
+    {
+      title: "Saiz Jubin",
+      description:
+        "Format besar 80x80cm ke atas perlukan leveling sempurna dan pemasangan mahir untuk elak lippage, menambah RM5–15 sekaki persegi kos kerja.",
+    },
+    {
+      title: "Bahan Jubin",
+      description:
+        "Seramik RM8–15, porselin RM14–28, format besar RM22–45, marmar RM30–90 bekal dan pasang.",
+    },
+    {
+      title: "Kerumitan Corak",
+      description:
+        "Susunan lurus adalah standard; herringbone atau chevron menambah RM5–12 sekaki persegi untuk pemotongan dan penjajaran.",
+    },
+    {
+      title: "Keadaan Permukaan",
+      description:
+        "Screed tidak rata atau lembut perlu dicanai atau di-level, RM3–8 sekaki persegi, biasanya ditemui selepas hacking.",
+    },
+    {
+      title: "Saiz Kawasan & Akses",
+      description:
+        "Kawasan kecil 10–100 kaki persegi minimum RM300–500, kawasan besar lebih rendah sekaki persegi; lif kondominium dan perlindungan menambah masa.",
+    },
+    {
+      title: "Kalis Air & Hacking",
+      description:
+        "Jubin bilik air perlukan kalis air dahulu; hacking jubin lama RM2–6 sekaki persegi berserta pelupusan.",
+    },
+  ],
+  duration: {
+    intro: "Tempoh kerja jubin bergantung pada hacking, leveling, masa curing kalis air dan luas kawasan.",
+    items: [
+      { label: "Jubin Lantai (100–200 kaki persegi)", value: "2–4 hari termasuk penyediaan" },
+      { label: "Bilik Air Lengkap (60–120 kaki persegi)", value: "4–7 hari dengan penyelarasan kalis air" },
+      { label: "Pembaikan Jubin (beberapa keping)", value: "2–5 jam" },
+      { label: "Hacking & Pembuangan Jubin", value: "1–2 hari setiap 100 kaki persegi" },
+      { label: "Porselin Format Besar", value: "3–5 hari setiap 100–200 kaki persegi, perlukan leveling teliti" },
+      { label: "Grouting & Skirting", value: "Setengah hari selepas pemasangan, termasuk pembersihan" },
+    ],
+    note: "Ujian banjir kalis air perlukan 24–72 jam sebelum menjubin. Waktu kerja kondominium boleh melanjutkan jadual.",
+  },
+  includes: [
+    "Penilaian permukaan dan pemeriksaan aras",
+    "Pelekat jubin dan grout untuk kawasan yang dinyatakan",
+    "Pemotongan jubin untuk tepi, sudut dan titik paip",
+    "Pemasangan dengan sambungan seragam dan pemeriksaan aras",
+    "Pembersihan asas selepas siap",
+  ],
+  excludes: [
+    "Jubin jika dibekalkan pelanggan (kos kerja sahaja)",
+    "Hacking jubin lama dan screeding kecuali dinyatakan",
+    "Membran kalis air (disebut harga berasingan)",
+    "Kelengkapan sanitari dan titik paip",
+  ],
+  includesTitle: "Apa yang biasanya termasuk dalam kerja jubin",
+  excludesTitle: "Apa yang mungkin disebut harga berasingan",
+  answerFirst: [
+    {
+      question: "Berapa kos kerja jubin di Malaysia?",
+      answer:
+        "Kerja jubin bermula dari RM8 sekaki persegi untuk jubin seramik lantai atau dinding standard bekal dan pasang di KL & Selangor, RM14–RM28 untuk porselin 60x60cm pertengahan, dan RM22–RM45 untuk porselin format besar. Kerja pembaikan kecil bermula dari RM150 untuk beberapa keping jubin, bilik air lengkap dari RM1,700 untuk 120 kaki persegi gabungan. Harga akhir bergantung pada saiz jubin, bahan, corak, keadaan permukaan serta sama ada hacking atau kalis air diperlukan.",
+    },
+    {
+      question: "Apa yang termasuk dalam kerja jubin bilik air?",
+      answer:
+        "Kerja jubin bilik air lengkap termasuk penyediaan permukaan, pemeriksaan aras, penyelarasan kalis air, pemasangan jubin lantai dan dinding dengan sambungan kemas, grout dan skirting, serta pembersihan. Membran kalis air itu sendiri disebut harga berasingan jika perlu, biasanya dari RM8 sekaki persegi, dan mengambil 5–8 hari termasuk curing dan ujian banjir.",
+    },
+    {
+      question: "Boleh baiki jubin pecah atau berongga tanpa menjubin semula seluruh lantai?",
+      answer:
+        "Boleh. Kami keluarkan hanya jubin yang rosak, periksa lapisan bawah untuk masalah berongga atau screed tidak rata, kemudian pasang semula jubin padanan berserta grouting. Kos bermula dari RM150 untuk beberapa keping. Jika terlalu banyak jubin berongga, kami cadangkan menjubin semula untuk elak retak berulang.",
+    },
+    {
+      question: "Berapa lama kerja jubin mengambil masa?",
+      answer:
+        "Jubin lantai 100–200 kaki persegi mengambil 2–4 hari termasuk penyediaan, bilik air lengkap 4–7 hari dengan kalis air, pembaikan jubin beberapa jam, dan hacking 1–2 hari setiap 100 kaki persegi. Jubin format besar mengambil masa lebih lama kerana keperluan leveling. Kalis air perlukan ujian banjir 24–72 jam sebelum menjubin.",
+    },
+  ],
 };

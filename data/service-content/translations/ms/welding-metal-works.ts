@@ -100,4 +100,130 @@ export const translation: ServiceTranslation = {
     { question: "Adakah sekatan untuk gril dan pagar di kondominium?", answer: "Ya, kebanyakan pengurusan bangunan mempunyai garis panduan mengenai reka bentuk, warna dan pemasangan gril. Kami cadangkan anda mendapatkan kelulusan pengurusan terlebih dahulu, dan kami akan bekerja mengikut garis panduan tersebut." },
     { question: "Berapa lama masa untuk fabrikasi dan memasang pagar khas?", answer: "Selepas ukuran dan reka bentuk dipersetujui, fabrikasi mengambil beberapa hari bergantung pada saiz dan kemasan, diikuti satu hari pemasangan. Jangka masa sebenar diberikan bersama sebut harga." },
   ],
+
+  pricing: {
+    intro:
+      "Harga kerja kimpalan dan besi bergantung pada bahan (mild steel, wrought iron, keluli tahan karat), kerumitan reka bentuk, saiz dan kemasan seperti powder coating.",
+    startingFromNote: "Bermula dari RM12 sekaki persegi untuk grill tingkap mild steel",
+    disclaimer:
+      "Harga bermula dari jumlah yang dinyatakan. Sebut harga akhir bergantung pada keadaan tapak sebenar, skop kerja, bahan, akses dan keperluan pemasangan.",
+    tableIntro: "Kerja kimpalan dan besi biasa berserta harga permulaan anggaran untuk Lembah Klang.",
+  },
+  materialsIntro:
+    "Kami membuat fabrikasi menggunakan bahan besi standard dengan pilihan kemasan untuk ketahanan dan rupa.",
+  materials: [
+    {
+      title: "Mild Steel",
+      description:
+        "Paling biasa untuk grill dan pintu pagar, menjimatkan pada RM12–18 sekaki persegi grill tingkap dan RM18–30 pintu pagar, perlu dicat untuk elak karat.",
+    },
+    {
+      title: "Wrought Iron",
+      description:
+        "Corak berukir, RM13–20 sekaki persegi, lebih berat, rupa klasik untuk rumah landed.",
+    },
+    {
+      title: "Keluli Tahan Karat",
+      description:
+        "Tahan karat, RM30–50 sekaki persegi grill tingkap, RM40–65 pintu pagar, tidak perlu dicat, rupa moden.",
+    },
+    {
+      title: "Aluminium & Kaca",
+      description:
+        "Untuk awning dan railing berkaca, ringan dan mudah diselenggara.",
+    },
+    {
+      title: "Powder Coating & Cat",
+      description:
+        "Kemasan pelindung untuk mild steel, pilihan warna, memanjangkan jangka hayat.",
+    },
+    {
+      title: "Motor Autogate & Aksesori",
+      description:
+        "Engsel, roller, kunci dan lengan autogate — motor disebut harga berasingan.",
+    },
+  ],
+  costFactorsIntro:
+    "Kos kerja besi dipengaruhi bahan, reka bentuk, saiz dan kerumitan pemasangan.",
+  costFactors: [
+    {
+      title: "Pilihan Bahan",
+      description:
+        "Mild steel paling murah, wrought iron pertengahan, keluli tahan karat premium 2–3 kali ganda kerana bahan dan kemahiran kimpalan.",
+    },
+    {
+      title: "Kerumitan Reka Bentuk",
+      description:
+        "Corak slotted ringkas berbanding bunga penuh — setiap baris bunga menambah RM3–4 sekaki persegi, liputan penuh lebih tinggi.",
+    },
+    {
+      title: "Saiz & Jenis",
+      description:
+        "Grill tingkap berbanding sliding, pintu pagar swing berbanding sliding; kawasan besar lebih rendah sekaki persegi tetapi jumlah lebih tinggi.",
+    },
+    {
+      title: "Kemasan",
+      description:
+        "Cat asas berbanding powder coating, galvanizing untuk ketahanan luaran.",
+    },
+    {
+      title: "Akses Pemasangan",
+      description:
+        "Aras bawah berbanding balkoni tingkat tinggi, keadaan dinding untuk anchoring dan keperluan hacking.",
+    },
+    {
+      title: "Baiki vs Fabrikasi",
+      description:
+        "Pembaikan kimpalan RM150–800 setiap kerja berbanding fabrikasi baharu RM12–65 sekaki persegi dengan lead time 7–14 hari.",
+    },
+  ],
+  duration: {
+    intro: "Kerja besi memerlukan masa fabrikasi berserta masa pemasangan.",
+    items: [
+      { label: "Pembaikan Kimpalan", value: "1–4 jam di tapak" },
+      { label: "Grill Tingkap (setiap unit)", value: "3–7 hari fabrikasi + 1 hari pemasangan" },
+      { label: "Pintu Pagar Utama (Mild Steel)", value: "7–14 hari fabrikasi + 1–2 hari pemasangan" },
+      { label: "Pintu Pagar Utama (Keluli Tahan Karat)", value: "10–21 hari fabrikasi + 1–2 hari pemasangan" },
+      { label: "Railing / Pagar (setiap kaki panjang)", value: "5–10 hari" },
+      { label: "Rangka Besi Awning", value: "5–10 hari untuk struktur, tambah kepingan bumbung" },
+    ],
+    note: "Reka bentuk khas dengan bunga terperinci mengambil masa lebih lama. Pengukuran di tapak sebelum fabrikasi adalah wajib.",
+  },
+  includes: [
+    "Pengukuran di tapak dan perbincangan reka bentuk",
+    "Fabrikasi di bengkel",
+    "Pemasangan dengan kimpalan dan anchoring",
+    "Engsel dan roller untuk pintu pagar, cat asas untuk mild steel",
+    "Kemasan semula dan pembersihan",
+  ],
+  excludes: [
+    "Motor autogate dan pendawaian",
+    "Kepingan bumbung ACP atau polycarbonate untuk awning",
+    "Tapak konkrit atau pembaikan tiang",
+    "Powder coating premium kecuali dinyatakan",
+  ],
+  includesTitle: "Apa yang biasanya termasuk dalam kerja kimpalan & besi",
+  excludesTitle: "Apa yang mungkin disebut harga berasingan",
+  answerFirst: [
+    {
+      question: "Berapa kos grill dan pintu pagar di Malaysia?",
+      answer:
+        "Grill tingkap mild steel bermula dari RM12–RM18 sekaki persegi, wrought iron RM13–RM20, keluli tahan karat RM30–RM50 pada 2026 di KL & Selangor. Pintu pagar utama mild steel dari RM18–RM30 sekaki persegi, keluli tahan karat RM40–RM65. Grill wrought iron untuk rumah penuh boleh mencecah RM3,000–RM7,100 bergantung pada bilangan tingkap dan pintu. Pembaikan kimpalan dari RM150 setiap kerja. Harga akhir bergantung pada bahan, reka bentuk bunga, saiz dan kemasan.",
+    },
+    {
+      question: "Apa yang termasuk dalam pemasangan grill tingkap?",
+      answer:
+        "Ia termasuk pengukuran, fabrikasi, pemasangan dengan kimpalan dan anchoring, engsel atau roller untuk pintu pagar, serta cat asas untuk mild steel. Tidak termasuk motor autogate, kepingan ACP atau polycarbonate untuk awning dan tapak konkrit. Grill tingkap mengambil 3–7 hari fabrikasi berserta 1 hari pemasangan, pintu pagar utama 7–14 hari.",
+    },
+    {
+      question: "Boleh baiki pintu pagar atau grill sedia ada?",
+      answer:
+        "Boleh. Khidmat pembaikan kimpalan dari RM150 merangkumi kerja di tapak untuk pintu pagar, grill, railing, pagar atau struktur awning — engsel patah, pendakap dinding dan bahagian berkarat. Kami periksa, kimpal, kukuhkan dan sapu cat semula. Untuk pintu pagar yang terlalu berkarat atau bengkok, penggantian lebih berbaloi.",
+    },
+    {
+      question: "Berapa lama fabrikasi pintu pagar mengambil masa?",
+      answer:
+        "Pintu pagar utama mild steel 7–14 hari fabrikasi berserta 1–2 hari pemasangan, keluli tahan karat 10–21 hari kerana bahan dan kemasan. Grill tingkap 3–7 hari berserta 1 hari pemasangan. Corak bunga khas mengambil masa lebih lama. Pengukuran di tapak dibuat dahulu untuk memastikan ukuran tepat.",
+    },
+  ],
 };

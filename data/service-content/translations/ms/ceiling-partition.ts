@@ -118,4 +118,129 @@ export const translation: ServiceTranslation = {
     { question: "Adakah dinding partisyen menanggung beban?", answer: "Partisyen kering yang kami bina bukan dinding menanggung beban. Ia membahagi ruang sahaja. Jika anda ingin membuang dinding sedia ada, ia perlu diperiksa dahulu kerana sesetengah dinding memang struktur." },
     { question: "Sejauh mana partisyen boleh menahan bunyi?", answer: "Partisyen biasa mengurangkan sedikit bunyi. Untuk privasi yang lebih baik, bahan penebat boleh dimasukkan ke dalam rangka dan papan berlapis digunakan — ia mengurangkan bunyi dengan ketara walaupun tidak menghapuskannya sepenuhnya." },
   ],
+
+  pricing: {
+    intro:
+      "Harga siling dan partition bergantung pada kerumitan reka bentuk, luas kawasan, ketinggian dan jenis pemasangan. Siling plaster rata bermula dari RM3.50 sekaki persegi, partition drywall dari RM7.50.",
+    startingFromNote: "Bermula dari RM3.50 sekaki persegi untuk siling plaster rata",
+    disclaimer:
+      "Harga bermula dari jumlah yang dinyatakan. Sebut harga akhir bergantung pada keadaan tapak sebenar, skop kerja, bahan, akses dan keperluan pemasangan.",
+    tableIntro: "Kerja siling dan partition biasa berserta harga permulaan anggaran untuk Lembah Klang.",
+  },
+  materialsIntro:
+    "Kami menggunakan papan gipsum 9mm untuk siling dan 12mm dua belah untuk partition dengan rangka besi, berserta pilihan kalis lembap dan kedap bunyi.",
+  materials: [
+    {
+      title: "Papan Gipsum 9mm",
+      description:
+        "Standard untuk siling plaster rata, kemasan licin, menyembunyikan pendawaian dan ducting penyaman udara.",
+    },
+    {
+      title: "Papan Gipsum 12mm",
+      description:
+        "Dua belah untuk partition drywall, lebih kukuh untuk membahagi ruang.",
+    },
+    {
+      title: "Stud & Track Besi",
+      description:
+        "Rangka besi bergalvani untuk struktur siling dan partition.",
+    },
+    {
+      title: "Cornice & Cove",
+      description:
+        "Cornice hiasan RM6–10 sekaki panjang, light trough L-box untuk LED ambien.",
+    },
+    {
+      title: "Papan Kalis Lembap",
+      description:
+        "Green board untuk dapur atau berhampiran bilik air, RM12–15 sekaki persegi.",
+    },
+    {
+      title: "Penebat Akustik Rockwool",
+      description:
+        "Untuk partition kedap bunyi RM15–20 sekaki persegi, mengurangkan bunyi dan haba.",
+    },
+  ],
+  costFactorsIntro:
+    "Kos siling dan partition dipengaruhi reka bentuk, ketinggian, integrasi lampu dan keperluan penebat.",
+  costFactors: [
+    {
+      title: "Reka Bentuk Siling",
+      description:
+        "Rata RM3.50–6.00 sekaki persegi, L-box RM15–25 sekaki panjang, floating atau island RM18+ sekaki persegi, cornice RM6–10 sekaki panjang.",
+    },
+    {
+      title: "Jenis Partition",
+      description:
+        "Drywall standard RM7.50–10, kalis lembap RM12–15, kedap bunyi dengan rockwool RM15–20, laminated atau kaca RM25+ sekaki persegi.",
+    },
+    {
+      title: "Luas & Ketinggian",
+      description:
+        "Minimum 500 kaki persegi untuk kadar rata RM4.50; siling tinggi perlukan perancah dan kos kerja tambahan.",
+    },
+    {
+      title: "Lampu & Pendawaian",
+      description:
+        "Pendawaian dan pemasangan downlight RM80 setiap titik, jalur LED dan pendawaian tersembunyi — tidak termasuk dalam kadar sekaki persegi siling.",
+    },
+    {
+      title: "Permukaan & Akses",
+      description:
+        "Pembuangan siling sedia ada, lif kondominium, perlindungan dan sekatan waktu kerja.",
+    },
+    {
+      title: "Baiki vs Baharu",
+      description:
+        "Pembaikan siling minimum RM700 setiap trip, penggantian penuh lebih tinggi kerana kerja pengukuhan.",
+    },
+  ],
+  duration: {
+    intro: "Kerja siling dan partition lebih pantas berbanding renovasi besar, tetapi jointing perlukan masa mengering.",
+    items: [
+      { label: "Siling Rata (300–500 kaki persegi)", value: "2–4 hari" },
+      { label: "L-Box & Light Trough", value: "3–5 hari termasuk cove" },
+      { label: "Partition Drywall (100–200 kaki persegi)", value: "2–4 hari" },
+      { label: "Pembaikan Siling (Retak/Melendut)", value: "1–3 hari" },
+      { label: "Partition Pejabat dengan Kaca", value: "5–10 hari bergantung pada kaca" },
+      { label: "Jointing & Kemasan", value: "Setengah hari hingga 1 hari pengeringan sebelum mengecat" },
+    ],
+    note: "Kerja mengecat biasanya selepas siling dan tidak termasuk dalam kadar sekaki persegi. Titik lampu dipasang selepas rangka siling siap.",
+  },
+  includes: [
+    "Papan gipsum dan rangka besi untuk kawasan yang dinyatakan",
+    "Jointing, skim dan kemasan sedia untuk dicat",
+    "Rangka L-box atau light trough jika disenaraikan",
+    "Perlindungan asas dan pembersihan",
+  ],
+  excludes: [
+    "Kerja mengecat (RM1.20–2.50 sekaki persegi dalaman)",
+    "Lampu dan pendawaian (downlight RM80 setiap titik)",
+    "Cornice melebihi standard kecuali dinyatakan",
+    "Kaca dan kemasan laminated selain gipsum",
+  ],
+  includesTitle: "Apa yang biasanya termasuk dalam kerja siling & partition",
+  excludesTitle: "Apa yang mungkin disebut harga berasingan",
+  answerFirst: [
+    {
+      question: "Berapa kos siling plaster di Malaysia?",
+      answer:
+        "Siling plaster rata berharga RM3.50–RM6.00 sekaki persegi di KL & Selangor pada 2026, dengan sesetengah kontraktor pada RM5.50–RM8.00. Light trough L-box RM15–RM25 sekaki panjang, cornice RM6–10 sekaki panjang, floating atau island dari RM18 sekaki persegi. Partition drywall dari RM7.50–RM10 sekaki persegi standard, RM12–15 kalis lembap, RM15–20 kedap bunyi dengan rockwool. Pembaikan siling minimum RM700 setiap trip. Harga akhir bergantung pada luas, ketinggian, reka bentuk dan lampu.",
+    },
+    {
+      question: "Apa yang termasuk dalam pemasangan siling plaster?",
+      answer:
+        "Siling rata termasuk papan gipsum 9mm, rangka besi, jointing dan skim sehingga sedia untuk dicat bagi kawasan yang dinyatakan. Tidak termasuk kerja mengecat, titik lampu dan cornice melebihi standard. L-box termasuk rangka light trough untuk jalur LED tersembunyi tetapi tidak termasuk jalur LED dan pendawaian. Mengambil masa 2–4 hari untuk 300–500 kaki persegi.",
+    },
+    {
+      question: "Berapa lama kerja siling dan partition mengambil masa?",
+      answer:
+        "Siling rata 300–500 kaki persegi 2–4 hari, L-box 3–5 hari, partition drywall 100–200 kaki persegi 2–4 hari, pembaikan siling 1–3 hari. Jointing perlukan masa mengering sebelum dicat. Pejabat dengan partition kaca 5–10 hari. Waktu kerja kondominium boleh melanjutkan jadual.",
+    },
+    {
+      question: "Bolehkah siling plaster menyembunyikan wayar dan paip penyaman udara?",
+      answer:
+        "Boleh. Siling plaster rata memang direka untuk menyembunyikan wayar elektrik, paip dan ducting penyaman udara di sebalik panel yang kemas, memberi rupa moden dan bersih. Kami merancang access panel di tempat yang perlu untuk penyelenggaraan masa depan dan menyelaraskan titik lampu semasa kerja rangka.",
+    },
+  ],
 };

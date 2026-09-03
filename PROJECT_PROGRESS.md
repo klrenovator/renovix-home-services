@@ -1189,7 +1189,7 @@ the full brand and added a reproducible automated business-info audit.
   - Hours: `9:00 AM – 6:00 PM` (the opening days were not stated, so no `dayOfWeek` is published in the schema)
 - Dedicated service detail pages were built in Phase 2; problem pages were built in Phase 3; the local SEO area architecture (2 region hubs + 31 unique location guides + areas index) was built in Phase 4. Phase 5 adds the supporting pages and a portfolio framework containing only clearly labelled placeholders. Phase 6 delivered the multilingual architecture and full translations for the core pages; the long-form service, problem and area catalogues remain English-only and the blog is not built. Phase 8 was the quality optimization pass (performance, accessibility, mobile & UX); the advanced quote system remains future work.
 - Phase 9 was the final QA audit: full route, multilingual, service, problem, location, conversion, SEO, performance, accessibility and code-quality review. Six genuine defects were fixed (three language-mixing bugs, the redirecting `og:image`, the missing mobile CTA and the on-demand OG route), dead code was removed and two build-time i18n guards were added. Remaining known issues are listed at the end of the Phase 9 section.
-- Phase 10 completed the localization project: all 10 service pages, 46 problem pages and 33 area guides now exist in Malay and Chinese (178 new translated documents), every contact detail is real, and each language publishes the same 100 pages. Phase 11 completed the business information/local SEO foundation: the verified NAP is the only business data in the codebase, the Contact page presents it in full in all three languages, every page title carries the full brand, the structured data is audited and an automated business-info audit (`npm run audit:business`) guards it. Phase 12 connected the quote form to a real server-side submission and Resend email notification. Phase 13 published the business-supplied logo and the 21 real work photos (polished WebP with SEO file names and localized en/ms/zh captions) on the Projects page, and moved the header/mobile-menu contact CTA to a WhatsApp button in the official brand green; a follow-up fix corrected the sideways awning photo (PR #16). Phases 14–15 remain pending.
+- Phase 10 completed the localization project: all 10 service pages, 46 problem pages and 33 area guides now exist in Malay and Chinese (178 new translated documents), every contact detail is real, and each language publishes the same 100 pages. Phase 11 completed the business information/local SEO foundation: the verified NAP is the only business data in the codebase, the Contact page presents it in full in all three languages, every page title carries the full brand, the structured data is audited and an automated business-info audit (`npm run audit:business`) guards it. Phase 12 connected the quote form to a real server-side submission and Resend email notification. Phase 13 published the business-supplied logo and the 21 real work photos (polished WebP with SEO file names and localized en/ms/zh captions) on the Projects page, and moved the header/mobile-menu contact CTA to a WhatsApp button in the official brand green; a follow-up fix corrected the sideways awning photo (PR #16). Phase 14 delivered the sitemap consolidation at `/sitemap.xml` (Part 1) and then completed the authoritative service platform (Part 2): the pricing rows and every new service-page section (pricing, materials, cost factors, duration, includes/excludes, answer-first Q&A) now exist in Malay and Chinese, prices remain single-sourced in `data/pricing/pricing.ts` and are never translated, a machine-readable feed is served at `/ai/pricing.json`, and a new `npm run audit:pricing` guards the whole system. Phase 15 remains pending.
 missions are
       ignored (no email)
 - [x] In-memory rate limit after a valid payload (5 / 15 minutes / IP)
@@ -1931,7 +1931,7 @@ missions are
       `e1e1f3c` — state "success" ("Deployment has completed",
       2026-09-03 05:33 UTC)**.
 
-## PHASE 14 — Automatic Sitemap Consolidation at `/sitemap.xml` — [x] COMPLETE
+## PHASE 14 (Part 1) — Automatic Sitemap Consolidation at `/sitemap.xml` — [x] COMPLETE
 
 **Problem found:** the site used `generateSitemaps()` in `app/sitemap.ts`, which
 publishes per-language sitemaps at `/sitemap/{lang}.xml` but leaves
@@ -1978,6 +1978,134 @@ routes; **all 408 sitemap URLs fetched against the served build return 200,
 are not `noindex`, and each page's canonical matches its sitemap `<loc>`
 exactly**; `/sitemap/{en,ms,zh}.xml` now 308-redirect to `/sitemap.xml`.
 
+## PHASE 14 (Part 2) — Authoritative Service Platform: pricing, materials, AEO/GEO — [x] COMPLETE
+
+Phase 14 had been merged half-finished (PR #24, "Phase 14 WIP — 50% complete").
+The English service pages already carried the new authority sections, but the
+Malay and Chinese pages fell back to English for all of them, the pricing rows
+had no Chinese copy at all, and there was no machine-readable feed, audit or
+verification. This part closes every item on that PR's "Pending — Next
+Session" list.
+
+### 1. Pricing translations completed (the main gap)
+- [x] `data/pricing/translations/ms.ts` finished — was 21 of 51 rows, now all
+      **51** (electrical, flooring, ceiling & partition, welding, renovation
+      and handyman added).
+- [x] `data/pricing/translations/zh.ts` created — all **51** rows in Chinese.
+- [x] `data/pricing/translations/index.ts` registry plus
+      `getPricingTranslation(id, lang)`.
+- [x] Both files typed against `PricingTranslation`, so a missing or misnamed
+      field is a compile error rather than English leaking onto a localized
+      page.
+- [x] **Prices are never translated.** Translations carry wording only
+      (`scope`, `duration`, optional includes/excludes/factors); every number,
+      unit, range and currency is read from the English source of truth in
+      `pricing.ts`. `localizePricing()` merges the two, so a translation can
+      change a sentence but can never change a price.
+- [x] `getPricingForService(slug, lang)`, `getAllPricing(lang)` and the summary
+      builder are now language-aware, and the approved MS/ZH disclaimers are
+      applied through `getPricingDisclaimer(lang)` instead of always emitting
+      the English one.
+- [x] `PricingSection` reads the localized rows and takes its "last reviewed"
+      date from `LAST_REVIEWED` instead of a hard-coded string that could drift.
+
+### 2. Service page copy localized (MS + ZH × 10 services)
+- [x] Every Phase 14 section now exists in Malay and Chinese for all ten
+      services: `pricing` (intro, starting-from note, disclaimer, table intro),
+      `materialsIntro` + `materials`, `costFactorsIntro` + `costFactors`,
+      `duration` (intro, items, note), `includes` / `excludes` with their
+      titles, and the four `answerFirst` Q&As — **20 files, 60 new localized
+      sections**.
+- [x] Structural fields (`searchIntents`, `entityKeywords`) stay English by
+      design: they are search-intent metadata, not reader-facing copy, and the
+      English page remains the canonical source.
+- [x] Verified on the served build: no `/ms/` or `/zh/` service page contains
+      the English disclaimer or the English "What affects pricing" heading, and
+      each carries its own localized equivalent.
+
+### 3. Machine-readable pricing feed
+- [x] `app/ai/pricing.json/route.ts` serves the whole priced catalogue at
+      **`/ai/pricing.json`** (prerendered, `force-static`) from
+      `getAiReadablePricing()` — the same registry the pages render, so the
+      feed cannot drift from the site.
+- [x] Every figure ships with its scope, unit, factors, disclaimer and
+      `lastReviewed`, so an answer engine cannot honestly quote a number as a
+      final price. Verified: 200, 51 entries, `lastReviewed 2026-09-03`.
+
+### 4. New audit: `npm run audit:pricing`
+- [x] Dependency-free script (`scripts/audit-pricing.mjs`) enforcing that:
+      prices live only in `pricing.ts` (a price field in any translation fails);
+      every entry has an id, service, unit, starting price, scope, factors,
+      disclaimer and a well-formed `lastReviewed`; ids are unique; every range
+      is coherent (`min ≤ max`) and never begins above its own "starting from"
+      figure; each `serviceSlug` is a real service; MS and ZH cover every row
+      and translate no stale id; and nothing claims a "fixed", "guaranteed",
+      "final" or "cheapest" price.
+- [x] Registered in `package.json` and documented in `README.md` (which now
+      also lists the previously undocumented `audit:og-fonts` and
+      `audit:project-assets`, plus a "Pricing data" section explaining the
+      single-source rule).
+
+### 5. Verification (all green)
+- [x] `npm run type-check` — **PASS**
+- [x] `npm run lint` — **PASS** (0 problems)
+- [x] `npm run build` — **PASS** (408 static localized pages + `/ai/pricing.json`)
+- [x] `npm run audit:business`, `audit:og-fonts`, `audit:project-assets`,
+      `audit:pricing` — **all PASS**
+- [x] **Structured data re-verified against the served production build:**
+      all 30 service pages (10 services × EN/MS/ZH) return 200 and each emits
+      **WebPage + BreadcrumbList + Service + FAQPage** in one `@graph`, with no
+      `Review`, `AggregateRating` or `price`/`priceCurrency` node — **250/250
+      checks passed, 0 failures**. Prices stay in the visible table where they
+      are labelled "starting from" and dated, and are deliberately *not*
+      emitted as schema `Offer` prices.
+- [x] **Served-site sweep — 408/408 sitemap URLs return 200, 0 failures.**
+
+### 6. Data honesty
+- [x] Every RM figure comes from the 2026 Klang Valley market research already
+      recorded in Phase 14 Part 1; no new prices were invented in this part and
+      no existing figure was changed — the translations only reworded scope and
+      duration around the same numbers.
+- [x] Every price is presented as "starting from", beside its cost factors,
+      its disclaimer and its review date. No fixed, guaranteed or "cheapest"
+      claim exists anywhere in the pricing system.
+
+### 7. Three pricing defects found on review and fixed
+A follow-up pass over the merged Phase 14 data found three genuine defects —
+all of them cases where the site could show a price nobody could actually be
+quoted. All three are fixed and now guarded by the audit.
+
+- [x] **Decimal prices were truncated to whole ringgit.** Six entries stored a
+      rounded integer where the research states a decimal:
+      `painting-interior` 1 → **1.20**, `painting-exterior` 2 → **1.50**,
+      `flooring-spc` 5 → **5.50**, `flooring-vinyl` 4 → **4.70**,
+      `ceiling-flat` 3 → **3.50**, `partition-drywall` 7 → **7.50** (each
+      `priceRange.min` corrected to match). The pricing table was therefore
+      advertising figures *below* the researched rate — e.g. "RM1 per sqft"
+      for interior painting against a real RM1.20. The `researchNote` on each
+      entry already recorded the correct decimal, so no new price was invented:
+      the stored number was simply brought back in line with its own source.
+- [x] **The answer-first headline took `Math.min` across mixed units.** On
+      tiling that produced "Starting from RM2 per sqft" — the tile *hacking*
+      rate — above a table whose cheapest actual tiling job is RM8. The
+      headline now uses each service's own localized `startingFromNote`, which
+      names the job the price belongs to ("Starting from RM8 per sqft for
+      ceramic floor tiling"); the lowest row is only a fallback, and then only
+      among rows sharing the service's most common unit.
+- [x] **Handyman advertised a price with no matching row.** The headline read
+      "fixed jobs from RM30" while the cheapest handyman row is RM60. Corrected
+      to RM60 in English, Malay and Chinese.
+- [x] **New audit rule (check 7)**: every price quoted in a service's
+      `startingFromNote` must appear as a `startingPrice`, range minimum or
+      range maximum in that same service's rows. This is the check that caught
+      the handyman defect, and it makes all three classes of error a build
+      failure rather than something a reader has to notice.
+- [x] Re-verified after the fixes: `type-check`, `lint`, `build` and all four
+      audits **PASS**; **408/408 sitemap URLs return 200**; structured data
+      **150/150 checks, 0 failures**; and the rendered headline on the served
+      build now reads RM8 (EN tiling), RM1.20 (EN painting), RM5.50 (MS
+      flooring) and RM3.50 (ZH ceiling) — each matching its own table.
+
 ## PHASE 15 — PENDING
 
 ---
@@ -1990,4 +2118,4 @@ exactly**; `/sitemap/{en,ms,zh}.xml` now 308-redirect to `/sitemap.xml`.
   - Hours: `9:00 AM – 6:00 PM` (the opening days were not stated, so no `dayOfWeek` is published in the schema)
 - Dedicated service detail pages were built in Phase 2; problem pages were built in Phase 3; the local SEO area architecture (2 region hubs + 31 unique location guides + areas index) was built in Phase 4. Phase 5 adds the supporting pages and a portfolio framework containing only clearly labelled placeholders. Phase 6 delivered the multilingual architecture and full translations for the core pages; the long-form service, problem and area catalogues remain English-only and the blog is not built. Phase 8 was the quality optimization pass (performance, accessibility, mobile & UX); the advanced quote system remains future work.
 - Phase 9 was the final QA audit: full route, multilingual, service, problem, location, conversion, SEO, performance, accessibility and code-quality review. Six genuine defects were fixed (three language-mixing bugs, the redirecting `og:image`, the missing mobile CTA and the on-demand OG route), dead code was removed and two build-time i18n guards were added. Remaining known issues are listed at the end of the Phase 9 section.
-- Phase 10 completed the localization project: all 10 service pages, 46 problem pages and 33 area guides now exist in Malay and Chinese (178 new translated documents), every contact detail is real, and each language publishes the same 100 pages. Phase 11 completed the business information/local SEO foundation: the verified NAP is the only business data in the codebase, the Contact page presents it in full in all three languages, every page title carries the full brand, the structured data is audited and an automated business-info audit (`npm run audit:business`) guards it. Phase 12 delivered the functional quote form. Phase 13 Part 1 added the logo, the real work-photo portfolio and the header WhatsApp CTA; Phase 13 Part 2 turned that photo list into a real portfolio system (typed project model, published/draft gating, 63 project detail pages, per-page SEO and structured data, localized empty state) and added the header language disclosure button plus drawer navigation with an active-page state; Phase 13 Part 3 fixed the drawer's containing-block defect via a body portal and re-verified everything against the served build. Phase 13 Part 4 closed the first brief: per-project 1.91:1 OG crops generated from the owner's photographs, a self-contained OG font stack (Plus Jakarta Sans + Noto Sans SC subsets) that removed the build-time Google Fonts dependency and fixed the Chinese card, enriched Chinese project meta descriptions, two new dependency-free audits (`audit:og-fonts`, `audit:project-assets`), and the first full real-Chromium click-through (329/329 checks at 360/390/412/768/1024/1280/1440, plus a 363-URL served-site sweep — all passing). Phase 13 Part 5 closed the expansion brief: 15 new area guides (KL 14→18, Selangor 17→28; 46 total) with full EN/MS/ZH copy and i18n coverage, `propertyType` set on exactly the 4 projects whose photos establish it, `scopeOfWork` for all 21 projects in three languages, and a full re-verification (408-URL served-site sweep, 154/154 real-browser checks, all audits green). Phases 14–15 remain pending.
+- Phase 10 completed the localization project: all 10 service pages, 46 problem pages and 33 area guides now exist in Malay and Chinese (178 new translated documents), every contact detail is real, and each language publishes the same 100 pages. Phase 11 completed the business information/local SEO foundation: the verified NAP is the only business data in the codebase, the Contact page presents it in full in all three languages, every page title carries the full brand, the structured data is audited and an automated business-info audit (`npm run audit:business`) guards it. Phase 12 delivered the functional quote form. Phase 13 Part 1 added the logo, the real work-photo portfolio and the header WhatsApp CTA; Phase 13 Part 2 turned that photo list into a real portfolio system (typed project model, published/draft gating, 63 project detail pages, per-page SEO and structured data, localized empty state) and added the header language disclosure button plus drawer navigation with an active-page state; Phase 13 Part 3 fixed the drawer's containing-block defect via a body portal and re-verified everything against the served build. Phase 13 Part 4 closed the first brief: per-project 1.91:1 OG crops generated from the owner's photographs, a self-contained OG font stack (Plus Jakarta Sans + Noto Sans SC subsets) that removed the build-time Google Fonts dependency and fixed the Chinese card, enriched Chinese project meta descriptions, two new dependency-free audits (`audit:og-fonts`, `audit:project-assets`), and the first full real-Chromium click-through (329/329 checks at 360/390/412/768/1024/1280/1440, plus a 363-URL served-site sweep — all passing). Phase 13 Part 5 closed the expansion brief: 15 new area guides (KL 14→18, Selangor 17→28; 46 total) with full EN/MS/ZH copy and i18n coverage, `propertyType` set on exactly the 4 projects whose photos establish it, `scopeOfWork` for all 21 projects in three languages, and a full re-verification (408-URL served-site sweep, 154/154 real-browser checks, all audits green). Phase 14 delivered the sitemap consolidation at `/sitemap.xml` (Part 1) and then completed the authoritative service platform (Part 2): the pricing rows and every new service-page section (pricing, materials, cost factors, duration, includes/excludes, answer-first Q&A) now exist in Malay and Chinese, prices remain single-sourced in `data/pricing/pricing.ts` and are never translated, a machine-readable feed is served at `/ai/pricing.json`, and a new `npm run audit:pricing` guards the whole system. Phase 15 remains pending.

@@ -1,4 +1,5 @@
 import { pricingEntries } from "./pricing";
+import { getPricingTranslation } from "./translations";
 import type { PricingEntry, ServicePricingSummary } from "./types";
 import { getServiceName } from "@/data/i18n";
 import { siteConfig } from "@/data/site";
@@ -12,12 +13,52 @@ export const PRICING_DISCLAIMER_MS =
 export const PRICING_DISCLAIMER_ZH =
   "价格为起始价。最终报价取决于实际现场情况、工程范围、材料、可达性及安装要求。";
 
-export function getAllPricing(): PricingEntry[] {
-  return pricingEntries;
+/** The disclaimer approved for each published language. */
+export function getPricingDisclaimer(lang: string = "en"): string {
+  if (lang === "ms") return PRICING_DISCLAIMER_MS;
+  if (lang === "zh") return PRICING_DISCLAIMER_ZH;
+  return PRICING_DISCLAIMER_EN;
 }
 
-export function getPricingForService(serviceSlug: string): PricingEntry[] {
-  return pricingEntries.filter((entry) => entry.serviceSlug === serviceSlug);
+/**
+ * Merges the localized copy over an entry. Every numeric field (price, range,
+ * unit, currency) is taken from the English source of truth, so a translation
+ * can only ever change wording — never a price.
+ */
+function localizePricing(entry: PricingEntry, lang: string): PricingEntry {
+  if (lang === "en") {
+    return entry;
+  }
+
+  const translation = getPricingTranslation(entry.id, lang);
+  const disclaimer = getPricingDisclaimer(lang);
+
+  if (!translation) {
+    return { ...entry, disclaimer };
+  }
+
+  return {
+    ...entry,
+    scope: translation.scope ?? entry.scope,
+    includes: translation.includes ?? entry.includes,
+    excludes: translation.excludes ?? entry.excludes,
+    factors: translation.factors ?? entry.factors,
+    duration: translation.duration ?? entry.duration,
+    disclaimer: translation.disclaimer ?? disclaimer,
+  };
+}
+
+export function getAllPricing(lang: string = "en"): PricingEntry[] {
+  return pricingEntries.map((entry) => localizePricing(entry, lang));
+}
+
+export function getPricingForService(
+  serviceSlug: string,
+  lang: string = "en",
+): PricingEntry[] {
+  return pricingEntries
+    .filter((entry) => entry.serviceSlug === serviceSlug)
+    .map((entry) => localizePricing(entry, lang));
 }
 
 export function getPricingById(id: string): PricingEntry | undefined {
@@ -38,7 +79,7 @@ export function getServicePricingSummaries(lang: string = "en"): ServicePricingS
   const serviceSlugs = Array.from(new Set(pricingEntries.map((e) => e.serviceSlug)));
 
   return serviceSlugs.map((slug) => {
-    const entries = getPricingForService(slug);
+    const entries = getPricingForService(slug, lang);
     const min = Math.min(...entries.map((e) => e.startingPrice));
     const serviceName = getServiceName(slug, lang, entries[0]?.serviceName ?? slug);
 
@@ -114,7 +155,7 @@ export function getServicePricingSummaries(lang: string = "en"): ServicePricingS
       startingFrom: min,
       startingFromLabel: `From RM ${min}`,
       unit: entries[0]?.unit ?? "per_job",
-      disclaimer: PRICING_DISCLAIMER_EN,
+      disclaimer: getPricingDisclaimer(lang),
       factorsIntro: info.factorsIntro,
       factors: allFactors.map((f) => ({ title: f, description: "" })),
       lastReviewed: LAST_REVIEWED,
