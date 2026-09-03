@@ -109,4 +109,130 @@ export const translation: ServiceTranslation = {
     { question: "Adakah water heater dan aircond perlu pendawaian khas?", answer: "Ya. Kedua-duanya menarik beban tinggi dan sepatutnya mempunyai litar sendiri dengan kabel bersaiz betul, isolator dan perlindungan yang sesuai." },
     { question: "Pendawaian tersembunyi atau pendawaian permukaan lebih baik?", answer: "Pendawaian tersembunyi lebih kemas dan sesuai semasa renovasi kerana dinding memang akan dihack. Pendawaian permukaan menggunakan trunking lebih cepat, lebih murah dan lebih mudah diselenggara untuk kerja tambahan." },
   ],
+
+  pricing: {
+    intro:
+      "Harga kerja elektrik dikira setiap titik untuk soket dan lampu, setiap unit untuk kipas dan kotak DB, dan setiap projek untuk pendawaian rumah penuh. Pendawaian tersembunyi 30–50% lebih mahal berbanding casing luaran.",
+    startingFromNote: "Bermula dari RM60 setiap titik untuk lampu dan soket",
+    disclaimer:
+      "Harga bermula dari jumlah yang dinyatakan. Sebut harga akhir bergantung pada keadaan tapak sebenar, skop kerja, bahan, akses dan keperluan pemasangan.",
+    tableIntro: "Kerja elektrik biasa berserta harga permulaan anggaran untuk Lembah Klang.",
+  },
+  materialsIntro:
+    "Kami menggunakan bahan elektrik standard yang mematuhi keperluan di Malaysia, dengan pilihan jenama untuk soket dan komponen DB.",
+  materials: [
+    {
+      title: "Kabel (1.5mm, 2.5mm, 4.0mm)",
+      description:
+        "1.5mm untuk lampu RM1.80–2.50/m, 2.5mm untuk kuasa RM2.50–3.50/m, 4mm untuk beban berat RM4–5.50/m.",
+    },
+    {
+      title: "Soket & Suis",
+      description:
+        "Soket 13A tunggal atau kembar, 15A penyaman udara, 20A pemanas air, suis 2 hala — pilihan Hager, Schneider, MK.",
+    },
+    {
+      title: "Lampu & Downlight",
+      description:
+        "Downlight tanam, track, pendant dan jalur LED — bekalan lampu pilihan, pemasangan dari RM30 minimum 6 unit.",
+    },
+    {
+      title: "Kipas Siling & Cangkuk",
+      description:
+        "Cangkuk kipas, regulator dan penerima remote — pemasangan dengan casing RM150, pemasangan sahaja RM80.",
+    },
+    {
+      title: "Kotak DB, MCB, RCCB, ELCB",
+      description:
+        "Unit pengguna satu fasa RM400, tiga fasa RM800, MCB, RCCB, ELCB — pelabelan dan ujian disertakan.",
+    },
+    {
+      title: "Trunking & Konduit",
+      description:
+        "Casing PVC dan konduit untuk pendawaian luaran atau tersembunyi — tersembunyi lebih mahal kerana kerja hacking.",
+    },
+  ],
+  costFactorsIntro:
+    "Kos elektrik bergantung pada kaedah pendawaian, jarak, jenis dinding dan bilangan titik.",
+  costFactors: [
+    {
+      title: "Tersembunyi vs Luaran",
+      description:
+        "Casing luaran lebih murah; pendawaian tersembunyi perlu hacking dan tampalan dinding, 30–50% lebih mahal.",
+    },
+    {
+      title: "Bilangan Titik",
+      description:
+        "Lampu RM60–120 setiap titik, soket RM80–150 setiap titik, soket kalis air luar RM120–200; kerja pukal lebih rendah setiap titik.",
+    },
+    {
+      title: "Jarak & Jenis Dinding",
+      description:
+        "Larian kabel panjang dan hacking konkrit menambah kos kerja; akses rumah landed berbeza dengan kondominium.",
+    },
+    {
+      title: "Beban & Fasa",
+      description:
+        "Satu fasa berbanding tiga fasa, kabel 4mm atau 6mm untuk beban berat seperti penyaman udara, pemanas air dan ketuhar.",
+    },
+    {
+      title: "DB & Naik Taraf",
+      description:
+        "Kotak DB RM400–1500, naik taraf panel dengan permohonan TNB RM2500, pendawaian semula rumah penuh RM4k–15k.",
+    },
+    {
+      title: "Kecemasan & Ketinggian",
+      description:
+        "Kecemasan di luar waktu kerja RM150–300 sejam, siling melebihi 12 kaki dikenakan tambahan, pemeriksaan RM200–500.",
+    },
+  ],
+  duration: {
+    intro: "Kerja elektrik berbeza daripada penambahan titik yang cepat sehingga pendawaian rumah penuh berhari-hari.",
+    items: [
+      { label: "Titik Soket / Lampu", value: "30–60 minit setiap titik" },
+      { label: "Kipas Siling", value: "45–90 minit setiap kipas" },
+      { label: "Penggantian Kotak DB", value: "Setengah hari termasuk ujian" },
+      { label: "Troubleshooting / Trip Kuasa", value: "1–3 jam diagnosis dan pembaikan kecil" },
+      { label: "Pendawaian Separa (Dapur/Ruang Tamu)", value: "1–3 hari" },
+      { label: "Pendawaian Rumah Penuh (Teres)", value: "5–10 hari; 1 tingkat RM5k–8k, 2 tingkat RM8k–12k" },
+    ],
+    note: "Waktu kerja kondominium, penutupan bekalan TNB dan tampalan plaster boleh melanjutkan jadual.",
+  },
+  includes: [
+    "Larian kabel dan sambungan untuk titik yang dinyatakan",
+    "Pemasangan soket, suis atau lampu (lampu tidak termasuk jika dibekalkan pelanggan)",
+    "Kotak DB dengan MCB/RCCB dan pelabelan seperti disenaraikan",
+    "Ujian dan pentauliahan",
+    "Pembersihan asas",
+  ],
+  excludes: [
+    "Lampu, kipas dan pemanas air itu sendiri jika tidak dinyatakan",
+    "Hacking besar dan pemasangan semula plaster melebihi standard",
+    "Permohonan TNB dan naik taraf meter (RM2500)",
+    "Tampalan plaster dan cat untuk pendawaian tersembunyi",
+  ],
+  includesTitle: "Apa yang biasanya termasuk dalam kerja elektrik",
+  excludesTitle: "Apa yang mungkin disebut harga berasingan",
+  answerFirst: [
+    {
+      question: "Berapa kos pendawaian elektrik di Malaysia?",
+      answer:
+        "Penambahan soket kuasa bermula dari RM80 setiap titik, titik lampu dari RM60, pemasangan kipas siling dari RM80 untuk pemasangan sahaja dan RM150 dengan casing, kotak DB satu fasa dari RM400 dan tiga fasa dari RM800, pendawaian rumah penuh dari RM5,000 untuk teres 1 tingkat dan RM8,000 untuk 2 tingkat di KL & Selangor. Pendawaian tersembunyi 30–50% lebih mahal berbanding luaran. Harga akhir bergantung pada bilangan titik, jarak, jenis dinding dan fasa.",
+    },
+    {
+      question: "Apa yang termasuk dalam pemasangan elektrik?",
+      answer:
+        "Ia termasuk pemasangan kabel, titik soket dan suis, pemasangan lampu, cangkuk kipas dan pengimbangan, penggantian kotak DB dengan MCB/RCCB serta ujian. Lampu, kipas dan peralatan itu sendiri tidak termasuk jika dibekalkan pelanggan. Hacking besar, plaster dan permohonan TNB disebut harga berasingan.",
+    },
+    {
+      question: "Berapa lama pendawaian rumah penuh mengambil masa?",
+      answer:
+        "Pendawaian rumah penuh mengambil 5–10 hari untuk rumah teres — 1 tingkat RM5k–8k dan 2 tingkat RM8k–12k termasuk kotak DB dan titik. Pendawaian separa untuk dapur atau ruang tamu mengambil 1–3 hari. Penambahan titik soket atau lampu 30–60 minit setiap titik. Jadual bergantung pada pendawaian tersembunyi atau luaran serta waktu kerja kondominium.",
+    },
+    {
+      question: "Perlukah kelulusan untuk kerja elektrik di kondominium?",
+      answer:
+        "Ya, kebanyakan kondominium memerlukan kelulusan pengurusan untuk naik taraf DB, penambahan titik yang menyentuh talian bersama dan sebarang kerja hacking. Kerja elektrik hendaklah mengikut keperluan Suruhanjaya Tenaga dan dilakukan oleh orang kompeten. Kami akan nyatakan perkara yang perlu anda semak dengan pihak pengurusan sebelum kerja bermula.",
+    },
+  ],
 };

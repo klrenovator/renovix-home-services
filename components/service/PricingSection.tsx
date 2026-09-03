@@ -3,7 +3,11 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { IconArrowRight } from "@/components/icons";
 import { getDictionary, format } from "@/i18n";
 import { localizedHref } from "@/i18n/hrefs";
-import { getPricingForService, getPricingUnitsLabel } from "@/data/pricing";
+import {
+  getPricingForService,
+  getPricingUnitsLabel,
+  LAST_REVIEWED as PRICING_LAST_REVIEWED,
+} from "@/data/pricing";
 import type { ServiceDetail } from "@/data/service-content/types";
 
 type PricingSectionProps = {
@@ -13,7 +17,7 @@ type PricingSectionProps = {
 
 export function PricingSection({ detail, lang }: PricingSectionProps) {
   const t = getDictionary(lang);
-  const entries = getPricingForService(detail.slug);
+  const entries = getPricingForService(detail.slug, lang);
 
   if (entries.length === 0) {
     return null;
@@ -21,7 +25,7 @@ export function PricingSection({ detail, lang }: PricingSectionProps) {
 
   const pricingIntro = detail.pricing?.intro ?? t.servicePage.pricingDescription;
   const disclaimer = detail.pricing?.disclaimer ?? t.servicePage.pricingDisclaimer;
-  const lastReviewed = "2026-09-03";
+  const lastReviewed = PRICING_LAST_REVIEWED;
 
   return (
     <section className="section bg-white">

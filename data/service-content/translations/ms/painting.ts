@@ -109,4 +109,130 @@ export const translation: ServiceTranslation = {
     { question: "Bagaimana anda merawat dinding berkulat?", answer: "Kulat dibersihkan dan dirawat, punca kelembapan diperiksa, kemudian primer dan cat anti-kulat digunakan. Jika kelembapan datang daripada kebocoran atau kalis air yang gagal, kerja itu perlu dibaiki dahulu." },
     { question: "Cat sembur atau cat roller lebih baik?", answer: "Cat sembur lebih sekata dan pantas untuk permukaan besar, pagar dan gril, tetapi memerlukan lebih banyak masking. Roller lebih praktikal untuk kerja dalaman biasa dan lebih mudah dikawal di ruang berperabot." },
   ],
+
+  pricing: {
+    intro:
+      "Kos mengecat di KL & Selangor bergantung pada keadaan dinding, jenama cat (Nippon, Jotun, Dulux), bilangan warna, ketinggian dan sama ada kerja dalaman, luaran atau rumah penuh.",
+    startingFromNote: "Bermula dari RM1.20 sekaki persegi untuk cat dinding dalaman",
+    disclaimer:
+      "Harga bermula dari jumlah yang dinyatakan. Sebut harga akhir bergantung pada keadaan tapak sebenar, skop kerja, bahan, akses dan keperluan pemasangan.",
+    tableIntro: "Kerja mengecat biasa berserta harga permulaan anggaran untuk rumah di Lembah Klang.",
+  },
+  materialsIntro:
+    "Kami menggunakan bahan cat standard daripada jenama pertengahan hingga premium yang sesuai dengan kelembapan dan cuaca Malaysia.",
+  materials: [
+    {
+      title: "Cat Emulsi Dalaman",
+      description:
+        "Vinilex 5000, EasyWash, Dulux, Jotun Majestic — kos pertengahan, pilihan warna luas, boleh dicuci.",
+    },
+    {
+      title: "Cat Weatherbond Luaran",
+      description:
+        "Nippon Weatherbond, Jotun Jotashield, Dulux Weathershield — perlindungan UV dan hujan untuk dinding luar.",
+    },
+    {
+      title: "Primer & Sealer",
+      description:
+        "Sealer dan primer untuk permukaan baharu dan cat semula, meningkatkan lekatan dan menutup kesan noda.",
+    },
+    {
+      title: "Anti-Kulat & Anti-Fungal",
+      description:
+        "Untuk kawasan lembap, bilik air dan dapur — tambahan RM300–800, menghalang pertumbuhan kulat.",
+    },
+    {
+      title: "Putty & Skim Coat",
+      description:
+        "Menutup retak, skim coat dan pembaikan permukaan sebelum mengecat untuk kemasan licin.",
+    },
+    {
+      title: "Kemasan Khas",
+      description:
+        "Limewash, bertekstur dan pemantul haba jika diminta — disebut harga berasingan.",
+    },
+  ],
+  costFactorsIntro:
+    "Sebut harga cat berbeza kerana keadaan dinding dan akses mengubah masa penyediaan serta keperluan bahan.",
+  costFactors: [
+    {
+      title: "Keadaan Dinding",
+      description:
+        "Dinding baharu berbanding dinding lama yang perlu tampalan retak, mengikis cat lama RM2.50 sekaki persegi, rawatan kulat dan skim coat.",
+    },
+    {
+      title: "Jenama & Jenis Cat",
+      description:
+        "Emulsi biasa berbanding anti-kulat, tahan haba atau weatherbond — premium bertahan lebih lama tetapi lebih mahal.",
+    },
+    {
+      title: "Saiz & Ketinggian",
+      description:
+        "Pangsapuri kecil 500–800 kaki persegi RM800–1200, teres 1000–1500 RM1500–2500, semi-D RM3000–5000; rumah dua tingkat perlukan perancah.",
+    },
+    {
+      title: "Bilangan Warna & Lapisan",
+      description:
+        "Lebih banyak warna bermakna lebih banyak kerja dan cutting; 2–3 lapisan disyorkan untuk ketahanan.",
+    },
+    {
+      title: "Dalaman vs Luaran",
+      description:
+        "Dalaman RM1.20–2.50 sekaki persegi asas, RM2.50–4.00 premium 2026; luaran RM1.50 asas, RM5–6 harga pasaran, RM3.00–4.50 premium.",
+    },
+    {
+      title: "Akses & Perlindungan",
+      description:
+        "Menutup perabot, melindungi lantai, siling tinggi, mengecat grill RM3 sekaki persegi, mengikis cat RM2.50 sekaki persegi.",
+    },
+  ],
+  duration: {
+    intro: "Tempoh mengecat bergantung pada penyediaan, masa pengeringan antara lapisan dan cuaca untuk kerja luaran.",
+    items: [
+      { label: "Pangsapuri Kecil (500–800 kaki persegi)", value: "2–3 hari dalaman" },
+      { label: "Rumah Teres (1000–1500 kaki persegi)", value: "3–5 hari dalaman, 4–7 hari rumah penuh" },
+      { label: "Semi-D / Banglo (2000+ kaki persegi)", value: "5–8 hari dalaman, 7–12 hari rumah penuh" },
+      { label: "Satu Bilik / Touch-up", value: "Setengah hari hingga 1 hari setiap dinding, RM200–500" },
+      { label: "Luaran Sahaja", value: "3–6 hari untuk rumah teres, bergantung cuaca" },
+      { label: "Baiki Dinding + Cat", value: "Tambahan 1–3 hari untuk retak, kulat, skim dan pengeringan" },
+    ],
+    note: "Masa pengeringan 2–4 jam antara lapisan, lebih lama pada musim lembap atau hujan untuk kerja luaran.",
+  },
+  includes: [
+    "Pembersihan permukaan dan pengamplasan ringan",
+    "Menutup retak dan kerja putty kecil",
+    "Primer atau sealer jika perlu",
+    "2 lapisan cat emulsi (jenama pertengahan)",
+    "Masking, perlindungan lantai dan pembersihan asas",
+  ],
+  excludes: [
+    "Kerja plaster atau hacking besar",
+    "Naik taraf cat premium (Dulux, Nippon premium, Jotun) jika tidak dinyatakan",
+    "Perancah untuk dinding luar tinggi melebihi standard",
+    "Cat grill, pintu pagar dan kerja kayu kecuali disenaraikan",
+  ],
+  includesTitle: "Apa yang biasanya termasuk dalam kerja mengecat",
+  excludesTitle: "Apa yang mungkin disebut harga berasingan",
+  answerFirst: [
+    {
+      question: "Berapa kos mengecat rumah di Malaysia?",
+      answer:
+        "Cat dalaman bermula dari RM1.20–RM2.50 sekaki persegi untuk pakej asas dan RM2.50–RM4.00 sekaki persegi untuk khidmat penuh termasuk cat pada 2026. Cat luaran bermula dari RM1.50 sekaki persegi asas dan RM3.00–RM4.50 premium. Pangsapuri kecil 500–800 kaki persegi RM800–RM1,200, teres 1000–1500 kaki persegi RM1,500–RM2,500, semi-D RM3,000–RM5,000, pakej rumah penuh 20x70 RM3,500–RM7,000. Harga akhir bergantung pada keadaan dinding, jenama cat, bilangan warna dan ketinggian.",
+    },
+    {
+      question: "Apa yang termasuk dalam kerja cat dalaman?",
+      answer:
+        "Cat dalaman termasuk pembersihan permukaan, pengamplasan ringan, menutup retak, primer dan 2 lapisan cat emulsi pertengahan berserta masking dan perlindungan. Mengambil masa 2–4 hari untuk 1000 kaki persegi. Cat premium seperti Nippon, Jotun dan Dulux, rawatan anti-kulat RM300–800 dan pembaikan dinding besar disebut harga berasingan.",
+    },
+    {
+      question: "Berapa lama kerja mengecat mengambil masa?",
+      answer:
+        "Pangsapuri kecil 2–3 hari, teres 3–5 hari dalaman dan 4–7 hari rumah penuh, semi-D atau banglo 5–8 hari dalaman. Touch-up satu dinding setengah hari hingga 1 hari. Luaran rumah teres 3–6 hari bergantung cuaca. Pengeringan 2–4 jam antara lapisan.",
+    },
+    {
+      question: "Perlukah saya beli cat sendiri?",
+      answer:
+        "Boleh, tetapi khidmat penuh kami sudah termasuk cat premium (Nippon, Jotun, Dulux) dalam harga dari RM3.50 sekaki persegi, jadi anda tidak perlu menganggar kuantiti. Jika anda bekalkan cat sendiri, kadar kerja sahaja RM500–RM1,800 bergantung saiz, dan risiko lebih atau kurang tempahan ditanggung anda.",
+    },
+  ],
 };

@@ -89,4 +89,125 @@ export const translation: ServiceTranslation = {
     { question: "Kenapa tandas saya asyik mengalir air?", answer: "Biasanya kerana flush valve atau inlet valve dalam tangki tidak menutup rapat. Komponen ini boleh diganti tanpa menukar keseluruhan tandas." },
     { question: "Perlukah kelulusan untuk kerja paip di kondominium?", answer: "Kebanyakan pengurusan bangunan memerlukan notis atau permohonan untuk kerja yang melibatkan hacking atau paip utama. Kerja pembaikan kecil dalam unit lazimnya tidak, tetapi kami tetap mengikut peraturan bangunan anda." },
   ],
+
+  pricing: {
+    intro:
+      "Kos kerja paip di KL & Selangor bergantung pada sama ada kebocoran itu kelihatan atau tersembunyi, jenis bahan paip, akses dan sama ada kerja hacking serta pembaikan semula diperlukan. Harga bermula dari RM80 untuk pemeriksaan dan dari RM150 untuk pembaikan yang mudah diakses.",
+    startingFromNote: "Bermula dari RM150 untuk pembaikan paip bocor yang kelihatan",
+    disclaimer:
+      "Harga bermula dari jumlah yang dinyatakan. Sebut harga akhir bergantung pada keadaan tapak sebenar, skop kerja, bahan, akses dan keperluan pemasangan.",
+    tableIntro: "Kerja paip yang biasa berserta harga permulaan anggaran untuk rumah di Lembah Klang.",
+  },
+  materialsIntro:
+    "Kami menggunakan bahan paip standard yang sesuai untuk kediaman dan premis komersial di Malaysia.",
+  materials: [
+    {
+      title: "Paip PVC & ABS",
+      description:
+        "Biasa digunakan untuk bekalan air dan pembetungan di rumah, menjimatkan dan tahan karat.",
+    },
+    {
+      title: "Penyambung Tembaga & Keluli Tahan Karat",
+      description:
+        "Digunakan apabila ketahanan dan rintangan haba penting, seperti sambungan pemanas air.",
+    },
+    {
+      title: "Kartrij Pili & Injap",
+      description:
+        "Kartrij standard, angle valve dan stop cock untuk pili singki, dapur dan pancuran.",
+    },
+    {
+      title: "Mekanisme Tandas",
+      description:
+        "Fill valve, flapper, flush valve dan pengedap untuk model tandas biasa.",
+    },
+    {
+      title: "Floor Trap & Pengedap",
+      description:
+        "Penggantian floor trap, silikon dan pengedap kalis air untuk elak bau serta resapan.",
+    },
+  ],
+  costFactorsIntro:
+    "Sebut harga kerja paip berbeza kerana setiap kebocoran dan pemasangan mempunyai keperluan akses dan bahan yang berlainan.",
+  costFactors: [
+    {
+      title: "Bocor Kelihatan vs Tersembunyi",
+      description:
+        "Kebocoran yang kelihatan lebih cepat dibaiki; kebocoran tersembunyi perlu pengesanan, pembukaan dan pembaikan semula.",
+    },
+    {
+      title: "Bahan Paip",
+      description:
+        "PVC/ABS lebih mudah diganti berbanding tembaga yang perlu pematerian atau penyambung mampatan.",
+    },
+    {
+      title: "Akses",
+      description:
+        "Akses kondominium, siling sempit, paip yang ditutup kabinet dan kerja di aras tinggi menambah masa kerja.",
+    },
+    {
+      title: "Panjang & Keterukan",
+      description:
+        "Satu sambungan berbanding satu larian paip penuh, dan sama ada kerosakan air sudah merebak ke dinding atau lantai.",
+    },
+    {
+      title: "Hacking & Pembaikan Semula",
+      description:
+        "Kebocoran dalam dinding perlu hacking, skim simen, kalis air dan jubin — disebut harga berasingan.",
+    },
+    {
+      title: "Bahagian & Kelengkapan",
+      description:
+        "Jenama pili, model tandas, jenis pemanas air dan sama ada naik taraf elektrik diperlukan.",
+    },
+  ],
+  duration: {
+    intro: "Kebanyakan pembaikan paip selesai pada hari yang sama; kebocoran tersembunyi dan kerja paip renovasi mengambil masa lebih lama.",
+    items: [
+      { label: "Panggilan & Pemeriksaan", value: "30–60 minit di tapak" },
+      { label: "Paip Bocor Kelihatan", value: "1–3 jam" },
+      { label: "Pili / Mekanisme Tandas", value: "30 minit – 2 jam" },
+      { label: "Membersih Saluran Tersumbat", value: "30 minit – 2 jam, hydro jetting setengah hari" },
+      { label: "Kebocoran Dalam Dinding", value: "Setengah hari hingga 1 hari termasuk pengesanan dan skim" },
+      { label: "Pemasangan Pemanas Air", value: "1–3 jam tidak termasuk naik taraf elektrik" },
+    ],
+    note: "Kelulusan pengurusan kondominium, tempahan lif dan waktu tutup air boleh melanjutkan jadual kerja.",
+  },
+  includes: [
+    "Pengesanan dan diagnosis kebocoran",
+    "Pembaikan atau penggantian paip pada bahagian terlibat",
+    "Penggantian pili, mekanisme tandas atau floor trap seperti disenaraikan",
+    "Ujian aliran air dan kebocoran sebelum serahan",
+    "Pembersihan asas kawasan kerja",
+  ],
+  excludes: [
+    "Kerja hacking dan pemasangan semula jubin sepenuhnya (sebut harga berasingan)",
+    "Membran kalis air kecuali dinyatakan",
+    "Unit pemanas air itu sendiri dan pendawaian elektrik besar",
+    "Pembaikan semula lantai untuk kebocoran dalam slab",
+  ],
+  includesTitle: "Apa yang biasanya termasuk dalam kerja paip",
+  excludesTitle: "Apa yang mungkin disebut harga berasingan",
+  answerFirst: [
+    {
+      question: "Berapa kos pembaikan paip di Malaysia?",
+      answer:
+        "Harga pembaikan paip boleh bermula dari RM150 untuk paip bocor yang kelihatan di KL & Selangor, dari RM100 untuk membersih saluran tersumbat dan dari RM160 untuk penggantian pili singki. Kebocoran tersembunyi dalam dinding bermula dari RM450 kerana memerlukan pengesanan, pembukaan dinding dan skim asas. Kos akhir bergantung pada bahan paip, akses, skop kerja serta sama ada hacking atau kerja jubin diperlukan.",
+    },
+    {
+      question: "Apa yang termasuk dalam khidmat kerja paip?",
+      answer:
+        "Ia termasuk pengesanan kebocoran, pemasangan atau penggantian paip, pembaikan atau penggantian pili dan mekanisme tandas, pemasangan singki, besen, pancuran dan pemanas air, penggantian floor trap serta membersih saluran, dengan ujian air sebelum serahan. Hacking, kerja jubin dan kalis air disebut harga berasingan jika diperlukan.",
+    },
+    {
+      question: "Bila saya patut panggil tukang paip untuk kebocoran?",
+      answer:
+        "Panggil apabila anda nampak tompok lembap, kesan air di siling, bau hapak, bil air tiba-tiba tinggi, tekanan air lemah, pili menitis berterusan atau tandas yang asyik mengalir. Pembaikan awal menghalang air daripada merebak ke dinding, lantai dan titik elektrik.",
+    },
+    {
+      question: "Bolehkah paip bocor dibaiki tanpa hacking?",
+      answer:
+        "Boleh untuk paip yang mudah diakses — kami boleh ganti bahagian terlibat atau kedap semula sambungan. Untuk kebocoran dalam dinding atau slab, bukaan kecil biasanya diperlukan untuk sampai ke paip. Kami rancang laluan yang paling kurang mengganggu dan selaraskan kerja kalis air serta jubin selepas itu.",
+    },
+  ],
 };

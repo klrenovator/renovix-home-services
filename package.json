@@ -11,7 +11,8 @@
     "type-check": "next typegen && tsc --noEmit",
     "audit:business": "node scripts/audit-business-info.mjs",
     "audit:og-fonts": "node scripts/audit-og-fonts.mjs",
-    "audit:project-assets": "node scripts/audit-project-assets.mjs"
+    "audit:project-assets": "node scripts/audit-project-assets.mjs",
+    "audit:pricing": "node scripts/audit-pricing.mjs"
   },
   "dependencies": {
     "next": "16.3.3",
