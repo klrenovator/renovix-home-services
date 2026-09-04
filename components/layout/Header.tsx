@@ -25,6 +25,7 @@ export function Header({ lang }: HeaderProps) {
     { label: t.nav.problems, href: "/problems" },
     { label: t.nav.areas, href: "/areas" },
     { label: t.nav.projects, href: "/projects" },
+    { label: t.nav.blog, href: "/blog" },
     { label: t.nav.faq, href: "/faq" },
     { label: t.nav.about, href: "/about" },
     { label: t.nav.contact, href: "/contact" },

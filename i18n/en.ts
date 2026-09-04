@@ -35,6 +35,7 @@ export const en: Dictionary = {
     problems: "Problems",
     areas: "Areas We Serve",
     projects: "Projects",
+    blog: "Guides",
     faq: "FAQ",
     about: "About",
     contact: "Contact",
@@ -750,6 +751,58 @@ export const en: Dictionary = {
     notSureOption: "Not sure / multiple services",
     notSureSubService: "Not sure — please advise",
     multipleServicesSubService: "Multiple services / renovation scope",
+  },
+  blogIndex: {
+    metaTitle: "Renovix Home Services | Home Renovation Guides for KL & Selangor",
+    metaDescription:
+      "Practical guides on renovation costs, materials, repairs and maintenance for homes in Kuala Lumpur and Selangor — written around our own price list, with no invented figures.",
+    ogDescription:
+      "Cost guides, material comparisons and repair diagnostics for Klang Valley homes.",
+    breadcrumb: "Guides",
+    title: "Home Renovation & Repair Guides for Kuala Lumpur & Selangor",
+    lead: "Straight answers to the questions people ask before hiring anyone: what work costs, which material suits which room, how to tell a repair from a rebuild, and when a problem needs a professional. Every price quoted comes from our own published rates.",
+    eyebrow: "Knowledge Hub",
+    gridTitle: "Browse our guides",
+    gridDescription:
+      "Each guide answers one question properly and links to the service, problem and area pages it relates to.",
+    categoryEyebrow: "Category",
+    readGuide: "Read guide",
+    ctaEyebrow: "Get Started",
+    ctaTitle: "Still not sure which scope you need?",
+    ctaDescription:
+      "Describe the work and send a few photographs. We will tell you what the evidence points to before quoting.",
+  },
+  blogPage: {
+    breadcrumbBlog: "Guides",
+    answerEyebrow: "The short answer",
+    keyPointsTitle: "Key points",
+    publishedLabel: "Published",
+    updatedLabel: "Updated",
+    writtenByLabel: "Written by",
+    pricingNote:
+      "Rates below come from our published price list and are starting prices — the final quotation depends on the actual site condition and scope.",
+    faqsEyebrow: "FAQs",
+    faqsTitle: "Questions people ask about this",
+    relatedServicesTitle: "Services this guide relates to",
+    relatedSubServicesTitle: "Specific work covered here",
+    relatedProblemsTitle: "Related problem guides",
+    relatedProjectsTitle: "Related project work",
+    relatedAreasTitle: "Areas where we do this work",
+    relatedArticlesTitle: "Related guides",
+    relatedAreasDescription:
+      "Local guides for the areas where this work comes up most often.",
+    ctaHeading: "Need this done in Kuala Lumpur or Selangor?",
+    ctaDescription:
+      "Tell us about the property and what you are seeing. We will advise on the next step before a quotation is prepared.",
+  },
+  guideLinks: {
+    eyebrow: "Knowledge Hub",
+    serviceTitle: "Guides about {name}",
+    subServiceTitle: "Guides about {name}",
+    problemTitle: "Guides that explain this further",
+    areaTitle: "Guides for homes in {name}",
+    description:
+      "Background reading on cost, materials and what the work involves.",
   },
   projects: {
     metaTitle: "Project Photos in Kuala Lumpur & Selangor | Renovix Home Services",

@@ -69,10 +69,19 @@ export function GET() {
     lines.push(`- [${area.name}](${area.url})`);
   }
 
+  // Knowledge Hub: the educational layer, listed so assistants can cite the
+  // guide that actually answers a question rather than a commercial page.
+  lines.push(``, `## Guides`, ``, knowledge.knowledgeHub.description, ``);
+
+  for (const article of knowledge.knowledgeHub.articles) {
+    lines.push(`- [${article.title}](${article.url})`);
+  }
+
   lines.push(
     ``,
     `## More`,
     ``,
+    `- [Knowledge hub](${knowledge.knowledgeHub.index})`,
     `- [Real project portfolio](${knowledge.projects.index})`,
     `- [Frequently asked questions](${knowledge.keyPages.faq})`,
     `- [About](${knowledge.keyPages.about})`,

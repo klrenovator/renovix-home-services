@@ -48,6 +48,8 @@ export type Dictionary = {
     problems: string;
     areas: string;
     projects: string;
+    /** Knowledge Hub / guides. */
+    blog: string;
     faq: string;
     about: string;
     contact: string;
@@ -581,6 +583,55 @@ export type Dictionary = {
     notSureOption: string;
     notSureSubService: string;
     multipleServicesSubService: string;
+  };
+  /** Knowledge Hub index (`/{lang}/blog/`). */
+  blogIndex: {
+    metaTitle: string;
+    metaDescription: string;
+    ogDescription: string;
+    breadcrumb: string;
+    title: string;
+    lead: string;
+    eyebrow: string;
+    gridTitle: string;
+    gridDescription: string;
+    /** Label above the category grouping, e.g. "Cost guides". */
+    categoryEyebrow: string;
+    readGuide: string;
+    ctaEyebrow: string;
+    ctaTitle: string;
+    ctaDescription: string;
+  };
+  /** Article detail page (`/{lang}/blog/{slug}/`). */
+  blogPage: {
+    breadcrumbBlog: string;
+    answerEyebrow: string;
+    keyPointsTitle: string;
+    publishedLabel: string;
+    updatedLabel: string;
+    /** Byline — the business, never an invented author persona. */
+    writtenByLabel: string;
+    pricingNote: string;
+    faqsEyebrow: string;
+    faqsTitle: string;
+    relatedServicesTitle: string;
+    relatedSubServicesTitle: string;
+    relatedProblemsTitle: string;
+    relatedProjectsTitle: string;
+    relatedAreasTitle: string;
+    relatedArticlesTitle: string;
+    relatedAreasDescription: string;
+    ctaHeading: string;
+    ctaDescription: string;
+  };
+  /** "Guides" cross-links rendered on service, sub-service and problem pages. */
+  guideLinks: {
+    eyebrow: string;
+    serviceTitle: string;
+    subServiceTitle: string;
+    problemTitle: string;
+    areaTitle: string;
+    description: string;
   };
   projects: {
     metaTitle: string;

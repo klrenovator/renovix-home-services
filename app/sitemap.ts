@@ -12,6 +12,7 @@ import { absoluteUrl } from "@/i18n/seo";
 import { CONTENT_LAST_MODIFIED } from "@/lib/sitemap";
 import { assertCoverageInSync } from "@/i18n/verify";
 import { getAllSubServices, subServiceLanguages } from "@/data/sub-services";
+import { articleLanguages, getArticles } from "@/data/blog";
 
 /** True when `lang` publishes a given sub-service (route path). */
 function isSubServicePublished(serviceSlug: string, slug: string, lang: LanguageCode): boolean {
@@ -64,6 +65,7 @@ function pathsForLanguage(lang: LanguageCode): SitemapEntry[] {
     { path: "/contact/", priority: 0.8, changeFrequency: "monthly" },
     { path: "/about/", priority: 0.7, changeFrequency: "yearly" },
     { path: "/projects/", priority: 0.6, changeFrequency: "monthly" },
+    { path: "/blog/", priority: 0.8, changeFrequency: "monthly" },
     { path: "/faq/", priority: 0.6, changeFrequency: "monthly" },
     { path: "/privacy/", priority: 0.2, changeFrequency: "yearly" },
     { path: "/terms/", priority: 0.2, changeFrequency: "yearly" },
@@ -84,6 +86,18 @@ function pathsForLanguage(lang: LanguageCode): SitemapEntry[] {
       entries.push({
         path: `/services/${sub.serviceSlug}/${sub.slug}/`,
         priority: 0.75,
+        changeFrequency: "monthly",
+      });
+    }
+  }
+
+  // Knowledge Hub articles. Every article ships in all three languages, so
+  // each publishes here and carries a complete hreflang set.
+  for (const article of getArticles()) {
+    if (articleLanguages(article.slug).includes(lang)) {
+      entries.push({
+        path: `/blog/${article.slug}/`,
+        priority: 0.65,
         changeFrequency: "monthly",
       });
     }
@@ -144,6 +158,7 @@ const ALWAYS_PUBLISHED = new Set([
   "/contact/",
   "/about/",
   "/projects/",
+  "/blog/",
   "/faq/",
   "/privacy/",
   "/terms/",
@@ -170,6 +185,10 @@ function isPublished(path: string, lang: LanguageCode): boolean {
 
   if (path.startsWith("/problems/")) {
     return hasTranslation("problem", slugOf(path, 1), lang);
+  }
+
+  if (path.startsWith("/blog/")) {
+    return articleLanguages(slugOf(path, 1)).includes(lang);
   }
 
   if (path.startsWith("/projects/")) {

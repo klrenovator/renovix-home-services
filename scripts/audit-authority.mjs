@@ -72,6 +72,7 @@ const CONTENT_DIRS = [
   join(ROOT, "data", "area-content"),
   join(ROOT, "data", "project-content"),
   join(ROOT, "data", "locations"),
+  join(ROOT, "data", "blog"),
 ];
 
 const CONTENT_FILES = CONTENT_DIRS.flatMap(collectTsFiles).filter(

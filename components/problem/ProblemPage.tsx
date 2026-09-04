@@ -9,6 +9,8 @@ import { AreasSection } from "@/components/service/AreasSection";
 import { FaqSection } from "@/components/problem/FaqSection";
 import { RelatedProblemsSection } from "@/components/problem/RelatedProblemsSection";
 import { CtaSection } from "@/components/problem/CtaSection";
+import { GuideLinksSection } from "@/components/blog/GuideLinksSection";
+import { getArticlesForProblem } from "@/data/blog";
 import { IconAlertTriangle, IconCheck, IconShieldCheck } from "@/components/icons";
 import { getRelatedProblemDetails } from "@/data/problem-content";
 import { format, getDictionary } from "@/i18n";
@@ -57,6 +59,12 @@ export function ProblemPage({ problem, lang }: ProblemPageProps) {
       <PropertyTypesSection problem={problem} lang={lang} />
       <AreasSection areasNote={problem.areasNote} lang={lang} />
       <FaqSection problem={problem} lang={lang} />
+      <GuideLinksSection
+        articles={getArticlesForProblem(problem.slug)}
+        scope="problem"
+        name={problem.name}
+        lang={lang}
+      />
       {related.length > 0 ? (
         <RelatedProblemsSection problems={related} lang={lang} />
       ) : null}

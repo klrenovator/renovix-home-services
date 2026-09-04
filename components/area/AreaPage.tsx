@@ -11,6 +11,8 @@ import { AreaFaqSection } from "@/components/area/AreaFaqSection";
 import { AreaRelatedServicesSection } from "@/components/area/AreaRelatedServicesSection";
 import { NearbyAreasSection } from "@/components/area/NearbyAreasSection";
 import { AreaCtaSection } from "@/components/area/AreaCtaSection";
+import { GuideLinksSection } from "@/components/blog/GuideLinksSection";
+import { getArticlesForLocation } from "@/data/blog";
 import type { AreaDetail } from "@/data/area-content/types";
 
 type AreaPageProps = {
@@ -32,6 +34,13 @@ export function AreaPage({ area, lang }: AreaPageProps) {
       <AreaContextSection area={area} lang={lang} />
       <AreaFaqSection name={area.name} faqs={area.faqs} lang={lang} />
       <AreaRelatedServicesSection area={area} lang={lang} />
+      <GuideLinksSection
+        surface
+        articles={getArticlesForLocation(`${area.region}/${area.slug}`)}
+        scope="area"
+        name={area.name}
+        lang={lang}
+      />
       <NearbyAreasSection area={area} lang={lang} />
       <AreaCtaSection name={area.name} lang={lang} />
     </>
