@@ -40,6 +40,8 @@ Renovix Home Services – Home Renovation & Improvement Services in Kuala Lumpur
 | `npm run audit:authority` | Search + AI authority audit — no fabricated claims, urgency language only where genuine, all cross-references resolve, index pages iterate the registries, one question per page, unique metadata per language, AI feeds in sync, alt text everywhere |
 | `npm run audit:subservices` | Sub-service audit — lists the 51 priced sub-services, verifies authored pages are unique, belong to a real service, reference a real `pricingId` and carry all three language blocks |
 | `npm run audit:blog` | Blog audit — every related slug and pricing id resolves, no hard-coded prices, EN/MS/ZH complete, unique metadata per language, no orphan articles |
+| `npm run audit:quote` | Quote-flow audit — API security invariants, registry integrity, truthful photo handling, i18n completeness, conversion-event hooks, quote-page SEO |
+| `npm run audit:analytics` | Analytics audit — provider exclusivity (GA4 xor GTM, single `page_view`), no fabricated IDs, all conversion events wired, PII cannot reach events, Web Vitals reporting, consent defaults, conditional CSP, privacy disclosure in EN/MS/ZH |
 
 ## Pricing data
 
@@ -71,6 +73,20 @@ Copy `.env.example` to `.env.local` for local development, or set the same keys 
 | `QUOTE_NOTIFICATION_EMAIL` | No | Inbox for new leads. Defaults to `renovixhomeservices@gmail.com`. |
 
 Do not commit real API keys or `.env.local`.
+
+## Analytics & measurement (Phase 24)
+
+Measurement is **code-complete but OWNER-PENDING**: with no measurement IDs
+configured, *no* analytics script loads at all and the site behaves exactly as
+before. All IDs come from environment variables (documented in
+`.env.example`); none are hardcoded and none were invented. GA4 loads either
+through the Google tag directly (`NEXT_PUBLIC_GA4_MEASUREMENT_ID`) **or**
+through Google Tag Manager (`NEXT_PUBLIC_GTM_CONTAINER_ID`) — never both.
+Core Web Vitals (LCP, INP, CLS + FCP, TTFB) are measured from real users via
+`next/web-vitals` and reported as non-interaction events. Conversion events
+carry no personal data — see `PHASE_24_ANALYTICS.md` for the full event
+catalogue, funnel definition, privacy posture and the owner activation
+checklist, and `npm run audit:analytics` for the enforced invariants.
 
 ## Version notes
 

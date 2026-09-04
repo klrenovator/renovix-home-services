@@ -39,6 +39,10 @@ export function TrackedLink({
       href={href}
       className={className}
       aria-label={ariaLabel}
+      // Marker for the delegated click tracker in Measurement.tsx: this link
+      // emits its own (richer-context) event, so the global listener must
+      // skip it — one click, one event.
+      data-renovix-tracked=""
       {...(isExternalHttp ? { target: "_blank", rel: "noreferrer" } : {})}
       onClick={() => trackConversionEvent(event, context)}
     >

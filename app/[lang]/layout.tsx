@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import "../globals.css";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { Measurement } from "@/components/analytics/Measurement";
 import { SiteSchema } from "@/components/seo/SiteSchema";
 import { getLanguage, languages } from "@/data/languages";
 import { siteConfig } from "@/data/site";
@@ -102,6 +103,10 @@ export default async function LocaleLayout({
         <Header lang={code} />
         <main id="main">{children}</main>
         <Footer lang={code} />
+        {/* Phase 24 — privacy-conscious measurement (GA4/GTM/Clarity load
+            only when the owner configures real IDs; see PHASE_24_ANALYTICS.md).
+            Rendered once for every language route. */}
+        <Measurement />
       </body>
     </html>
   );

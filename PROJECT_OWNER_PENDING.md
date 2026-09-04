@@ -1,9 +1,31 @@
-# PROJECT OWNER-PENDING DATA — Phase 22
+# PROJECT OWNER-PENDING DATA — Phases 22 & 24
 
 Status: **OWNER-PENDING**. Nothing on this list blocks the site; every item is
 optional metadata the business can supply to strengthen project proof. Nothing
 here may be invented, estimated or placeholder-filled in the meantime — the
 project pages already render correctly with only the data that exists.
+
+## Phase 24 — analytics & measurement activation (all measurement is OFF until IDs are supplied)
+
+The measurement system is fully coded (`PHASE_24_ANALYTICS.md`). Today, with
+no IDs configured, **no analytics script loads at all**. Each service below
+activates only when its real ID is set as an environment variable in Vercel →
+Project → Settings → Environment Variables (or `.env.local` locally), followed
+by a redeploy. Never invent or placeholder these IDs — a wrong ID sends the
+data to someone else's account.
+
+| Service wanted | Owner provides | Goes into | Effect once supplied |
+| --- | --- | --- | --- |
+| Google Analytics 4 (recommended baseline) | GA4 Measurement ID (`G-…`) from Admin → Data streams | `NEXT_PUBLIC_GA4_MEASUREMENT_ID` | Page views + all conversion events + web-vitals events flow to GA4; page_view sent exactly once per route across EN/MS/ZH |
+| Google Ads conversions (only if running ads) | Conversion ID (`AW-…`) + one label per action: quote success, WhatsApp click, phone click | `NEXT_PUBLIC_GOOGLE_ADS_CONVERSION_ID`, `NEXT_PUBLIC_GOOGLE_ADS_QUOTE_LABEL`, `NEXT_PUBLIC_GOOGLE_ADS_WHATSAPP_LABEL`, `NEXT_PUBLIC_GOOGLE_ADS_PHONE_LABEL` | Those three actions count as Google Ads conversions |
+| Microsoft Clarity (optional recordings) | Clarity Project ID | `NEXT_PUBLIC_CLARITY_PROJECT_ID` | Session recordings load at browser idle with default text masking kept on |
+| Google Tag Manager (only if tag management is preferred over direct GA4) | GTM Container ID (`GTM-…`) | `NEXT_PUBLIC_GTM_CONTAINER_ID` | Container loads instead of the direct Google tag — GA4 and any conversions must then be configured inside the container (exact steps in PHASE_24_ANALYTICS.md §3); GTM and direct GA4 are mutually exclusive by design |
+
+GA4 settings the owner may want after activation: data retention 14 months,
+the (optional) three custom dimensions `language` / `service` / `surface`.
+After activating anything, browse the site and confirm data in the provider's
+own UI (GA4 Realtime / Ads conversions diagnostics / Clarity sessions) before
+calling it live — code-complete is not live-verified.
 
 ## Phase 22 — quote form go-live & lead handling (highest priority)
 

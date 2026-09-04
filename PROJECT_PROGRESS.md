@@ -3202,3 +3202,116 @@ sitemap grew by exactly 21 URLs (7 locations × 3 languages) to 654.
       localized titles and no English leakage on `/ms/` or `/zh/`
 - [x] `/llms.txt` and `/ai/business.json` verified to report 53 guides in the
       correct 21 KL / 32 Selangor district hierarchy
+
+---
+
+## Phase 24 — Analytics, Conversion Tracking, Web Vitals & Measurement — [x] CODE COMPLETE (OWNER IDs PENDING)
+
+Measurement implementation only — built on the stable Phase 18–23
+architecture, with zero changes to content, routing, canonicals, schema or the
+quote flow's behaviour. Full documentation: `PHASE_24_ANALYTICS.md`.
+
+### 1. Current-state audit (nothing duplicated)
+
+Before this phase: **no** GA4, GTM, Google Ads, Meta Pixel or Clarity tags
+anywhere, and no Web Vitals measurement. What did exist was reused: Phase 22's
+platform-neutral event layer (`lib/analytics.ts`), `TrackedLink`, and the six
+quote-flow conversion events buffered on `window.__renovixAnalytics` —
+Phase 24 is the provider connection that layer was designed for. Search
+Console verification (already live in the locale layout metadata) was left
+untouched and is now guarded by an audit assertion.
+
+### 2. Architecture
+
+- `lib/analytics-config.ts` — single source of truth for provider IDs:
+  format-validated env vars only (a malformed ID = provider stays OFF, with a
+  build-time warning); resolves the exclusive delivery route
+  (`ga4` | `gtm` | `none`); derives CSP origin additions that are **empty
+  while no provider is configured**, so the strict pre-Phase-24 CSP is
+  byte-for-byte unchanged today.
+- `lib/analytics.ts` — still platform-neutral (the Phase 22 audit still
+  passes): now with the full event set, a closed-key PII sanitiser with
+  length caps, and a provider sink + exactly-once replay of pre-mount events.
+- `components/analytics/Measurement.tsx` — the only provider glue, one small
+  client component mounted once in the locale root layout for all EN/MS/ZH
+  routes (~10.5 KB gzipped including the web-vitals library): script loading
+  (gtag.js/gtm.js `afterInteractive`, Clarity `lazyOnload`), Consent Mode
+  defaults pushed before any tag runs, `page_view` exactly once per route
+  (initial + client navigations, deduped), delegated document-level click
+  tracking, and Core Web Vitals reporting.
+
+### 3. No duplicate tracking — structural guarantees
+
+GA4-direct and GTM are mutually exclusive (GTM wins if both are set, with a
+build warning); the Google tag runs with `send_page_view:false` and exactly
+one page-view sender exists; one click listener for the whole site;
+`TrackedLink`-instrumented links are marked so the delegated listener skips
+them (one click → one event); the pre-mount replay is WeakSet-guarded; no
+Meta Pixel or other tags exist (audit-blocked from returning).
+
+### 4. Conversion events & funnel
+
+Ten conversion events (Phase 22's six + `email_click`, `service_cta_click`,
+`subservice_cta_click`) plus `page_view` and `web_vitals` define the funnel:
+Landing → Service/Sub-service (`service_cta_click`/`subservice_cta_click`
+wired on all four service/sub-service quote CTAs via data attributes) →
+`quote_form_start` → `quote_form_submit` → `quote_form_success`, and the
+alternative WhatsApp/phone/email path (`whatsapp_click`/`phone_click`/
+`email_click` via the delegated listener covering header, footer, heroes, CTA
+blocks, contact page and the quote quick-path/fallbacks). Multilingual by
+construction: every route is language-prefixed and every event carries
+`language`; at most three optional GA4 custom dimensions
+(`language`/`service`/`surface`).
+
+### 5. Web Vitals & performance discipline
+
+LCP, INP, CLS + FCP and TTFB measured from real users via `useReportWebVitals`
+(deprecated FID excluded), reported once per load as non-interaction
+`web_vitals` events via `transport_type:"beacon"` (CLS ×1000 for integer
+values); console output in dev for debugging. No site change chased a
+synthetic score; analytics loads deferred (afterInteractive / lazyOnload,
+~10.5 KB gzipped chunk) and does not block hydration or first paint. With no
+IDs configured, zero measurement bytes ship beyond the inert bootstrap.
+
+### 6. Privacy
+
+No PII can reach analytics: context passes a closed allowlist
+(surface/service/subservice/reason/lang, length-capped); the click tracker
+classifies by URL scheme only and never reads link text; quote-form content
+never enters events. Consent Mode defaults deny all advertising signals
+(`ad_storage`/`ad_user_data`/`ad_personalization`) with analytics-only
+first-party storage granted and Google signals off; Clarity (if activated)
+keeps default text masking. The Privacy Policy gained a "Website measurement"
+section in EN, MS and ZH. CSP loosens only for configured providers.
+
+### 7. OWNER-PENDING (nothing invented)
+
+GA4 Measurement ID, GTM Container ID, Google Ads conversion ID + labels, and
+Clarity Project ID are all absent and documented in `.env.example`,
+`PROJECT_OWNER_PENDING.md` (new Phase 24 section) and
+`PHASE_24_ANALYTICS.md` §12 (activation checklist). Google Ads conversion
+tracking is fully wired behind its four variables — each conversion arms only
+with its ID *and* label; in GTM mode conversions map inside the container.
+**No live-analytics verification is claimed**: no real property has received
+data, and no SEO/performance conclusions are drawn from data that does not
+exist yet.
+
+### 8. Validation
+
+- [x] `npm run type-check` — **PASS**
+- [x] `npm run lint` — **PASS** (0 problems)
+- [x] `npm run build` — **PASS** (665 static pages, unchanged)
+- [x] `npm run audit:analytics` (new) — **PASS** (provider exclusivity, no
+      fabricated IDs, event wiring, PII guards, web-vitals reporting, consent
+      defaults, conditional CSP, EN/MS/ZH privacy disclosure, Search Console
+      verification intact)
+- [x] All ten existing audits — **PASS** (no regressions; the Phase 22
+      quote-flow audit still enforces the event layer's platform neutrality)
+- [x] Production-build HTML inspection: with IDs unset no provider
+      script/CSP change exists and CTA data attributes render on service and
+      sub-service pages in all languages; with dummy-format local IDs the CSP
+      widens exactly for the enabled providers and gtag.js/gtm.js templates
+      ship gated by mode (GTM wins when both are set, with the build warning)
+- [ ] Headless-browser click-through could not run in this sandbox (no
+      browser available) — live event delivery to a real property is verified
+      by the owner per the checklist, never assumed

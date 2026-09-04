@@ -12,6 +12,15 @@ type ButtonBaseProps = {
   external?: boolean;
   href: string;
   ariaLabel?: string;
+  /**
+   * Phase 24 conversion tracking, read by the delegated click listener in
+   * components/analytics/Measurement.tsx. Only coarse tokens are allowed
+   * (e.g. `service_cta_click` with registry slugs) — never labels, URLs with
+   * user content, or any personal data.
+   */
+  analyticsEvent?: string;
+  analyticsService?: string;
+  analyticsSubService?: string;
 };
 
 const variantClasses: Record<ButtonVariant, string> = {
@@ -30,6 +39,9 @@ export function Button({
   external = false,
   href,
   ariaLabel,
+  analyticsEvent,
+  analyticsService,
+  analyticsSubService,
 }: ButtonBaseProps) {
   const classes = `btn ${variantClasses[variant]} ${className}`.trim();
 
@@ -40,16 +52,29 @@ export function Button({
     </>
   );
 
+  const analyticsAttributes = {
+    ...(analyticsEvent ? { "data-analytics-event": analyticsEvent } : {}),
+    ...(analyticsService ? { "data-analytics-service": analyticsService } : {}),
+    ...(analyticsSubService ? { "data-analytics-subservice": analyticsSubService } : {}),
+  };
+
   if (external) {
     return (
-      <a className={classes} href={href} aria-label={ariaLabel} target={href.startsWith("http") ? "_blank" : undefined} rel={href.startsWith("http") ? "noreferrer" : undefined}>
+      <a
+        className={classes}
+        href={href}
+        aria-label={ariaLabel}
+        target={href.startsWith("http") ? "_blank" : undefined}
+        rel={href.startsWith("http") ? "noreferrer" : undefined}
+        {...analyticsAttributes}
+      >
         {content}
       </a>
     );
   }
 
   return (
-    <Link className={classes} href={href} aria-label={ariaLabel}>
+    <Link className={classes} href={href} aria-label={ariaLabel} {...analyticsAttributes}>
       {content}
     </Link>
   );

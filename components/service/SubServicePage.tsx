@@ -82,7 +82,14 @@ export function SubServicePage({ detail, lang }: SubServicePageProps) {
             </p>
           ) : null}
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-            <Button href={localizedHref("/quote", lang)} variant="primary" icon={<IconArrowRight className="h-4 w-4" />}>
+            <Button
+              href={localizedHref("/quote", lang)}
+              variant="primary"
+              icon={<IconArrowRight className="h-4 w-4" />}
+              analyticsEvent="subservice_cta_click"
+              analyticsService={serviceSlug}
+              analyticsSubService={detail.slug}
+            >
               {t.cta.getFreeQuote}
             </Button>
             <WhatsAppButton href={getWhatsAppHref()} variant="secondary" label={t.cta.whatsappUs} />
@@ -372,7 +379,14 @@ export function SubServicePage({ detail, lang }: SubServicePageProps) {
               <h2 className="h2-section mt-3 text-white">{format(t.subServicePage.ctaHeading, { name })}</h2>
               <p className="mt-4 text-base leading-7 text-white/75">{t.servicePage.ctaDescription}</p>
               <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-                <Button href={localizedHref("/quote", lang)} variant="primary" icon={<IconArrowRight className="h-4 w-4" />}>
+                <Button
+                  href={localizedHref("/quote", lang)}
+                  variant="primary"
+                  icon={<IconArrowRight className="h-4 w-4" />}
+                  analyticsEvent="subservice_cta_click"
+                  analyticsService={serviceSlug}
+                  analyticsSubService={detail.slug}
+                >
                   {t.cta.requestQuote}
                 </Button>
                 <WhatsAppButton href={getWhatsAppHref()} variant="secondary" label={t.cta.whatsappUs} />

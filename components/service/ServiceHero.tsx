@@ -54,6 +54,8 @@ export function ServiceHero({ detail, lang }: ServiceHeroProps) {
             href={localizedHref("/quote", lang)}
             variant="primary"
             icon={<IconArrowRight className="h-4 w-4" />}
+            analyticsEvent="service_cta_click"
+            analyticsService={detail.slug}
           >
             {t.cta.getFreeQuote}
           </Button>
