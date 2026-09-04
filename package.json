@@ -14,7 +14,8 @@
     "audit:project-assets": "node scripts/audit-project-assets.mjs",
     "audit:pricing": "node scripts/audit-pricing.mjs",
     "audit:locations": "node scripts/audit-locations.mjs",
-    "audit:authority": "node scripts/audit-authority.mjs"
+    "audit:authority": "node scripts/audit-authority.mjs",
+    "audit:subservices": "node scripts/audit-subservices.mjs"
   },
   "dependencies": {
     "next": "16.3.3",

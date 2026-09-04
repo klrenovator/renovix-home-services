@@ -276,6 +276,20 @@ export const zh: Dictionary = {
     viewPricing: "查看价格指引",
     pricingFactorsTitle: "影响价格的因素",
   },
+  subServicePage: {
+    suitableEyebrow: "这项服务适合你吗？",
+    suitableTitle: "{name} 何时是最佳选择",
+    projectEyebrow: "我们的工程",
+    projectTitle: "查看我们完成的 {service} 工程",
+    projectDescription: "Renovix 在吉隆坡与雪兰莪完成的实际 {service} 工程。",
+    relatedSubTitle: "其他 {service} 服务",
+    backToService: "返回 {service}",
+    includedEyebrow: "包含哪些内容",
+    includedTitle: "{name} 通常包含的项目",
+    excludedTitle: "通常不包含的内容",
+    ctaHeading: "需要在吉隆坡与雪兰莪进行 {name} 吗？",
+    processTitle: "我们如何执行 {name}",
+  },
   problemsIndex: {
     metaTitle: "Renovix Home Services | 吉隆坡与雪兰莪家居问题",
     metaDescription:

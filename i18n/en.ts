@@ -301,6 +301,21 @@ export const en: Dictionary = {
     viewPricing: "View pricing guidance",
     pricingFactorsTitle: "What affects pricing",
   },
+  subServicePage: {
+    suitableEyebrow: "Is this the right service?",
+    suitableTitle: "When {name} is the right choice",
+    projectEyebrow: "Our Work",
+    projectTitle: "See our {service} project work",
+    projectDescription:
+      "Real {service} projects Renovix has completed in Kuala Lumpur & Selangor.",
+    relatedSubTitle: "Other {service} services",
+    backToService: "Back to {service}",
+    includedEyebrow: "What's included",
+    includedTitle: "Typically included in {name}",
+    excludedTitle: "What is typically not included",
+    ctaHeading: "Need {name} in Kuala Lumpur & Selangor?",
+    processTitle: "How we carry out {name}",
+  },
   problemsIndex: {
     metaTitle:
       "Renovix Home Services | Home Problems in Kuala Lumpur & Selangor",

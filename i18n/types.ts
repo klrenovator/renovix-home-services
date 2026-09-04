@@ -219,6 +219,20 @@ export type Dictionary = {
     viewPricing: string;
     pricingFactorsTitle: string;
   };
+  subServicePage: {
+    suitableEyebrow: string;
+    suitableTitle: string;
+    projectEyebrow: string;
+    projectTitle: string;
+    projectDescription: string;
+    relatedSubTitle: string;
+    backToService: string;
+    includedEyebrow: string;
+    includedTitle: string;
+    excludedTitle: string;
+    ctaHeading: string;
+    processTitle: string;
+  };
   problemsIndex: {
     metaTitle: string;
     metaDescription: string;
