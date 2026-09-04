@@ -15,6 +15,9 @@ import { waterproofingSystemsCompared } from "./content/waterproofing-systems-co
 import { regroutSiliconeMaintenance } from "./content/regrout-silicone-maintenance";
 import { oldHouseWiringWarningSigns } from "./content/old-house-wiring-warning-signs";
 import { metalGrilleGateBuyingGuide } from "./content/metal-grille-gate-buying-guide";
+import { flooringSubfloorPreparation } from "./content/flooring-subfloor-preparation";
+import { plumbingWaterPressureDiagnosis } from "./content/plumbing-water-pressure-diagnosis";
+import { ceilingPartitionMaterialChoice } from "./content/ceiling-partition-material-choice";
 
 /**
  * Phase 20 Knowledge Hub registry.
@@ -34,6 +37,9 @@ export const articles: ArticleDefinition[] = [
   regroutSiliconeMaintenance,
   oldHouseWiringWarningSigns,
   metalGrilleGateBuyingGuide,
+  flooringSubfloorPreparation,
+  plumbingWaterPressureDiagnosis,
+  ceilingPartitionMaterialChoice,
 ];
 
 /** Category labels per language — used by the hub filter chips and the cards. */
