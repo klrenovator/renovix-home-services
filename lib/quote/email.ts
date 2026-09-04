@@ -64,19 +64,12 @@ function buildRows(payload: QuotePayload, submittedAt: string): { label: string;
     { label: "Phone", value: payload.phone },
     { label: "Email", value: dash(payload.email) },
     { label: "Requested service", value: payload.serviceLabel },
-    { label: "Sub-service", value: dash(payload.subService) },
-    { label: "Property type", value: payload.propertyType },
+    { label: "Sub-service", value: dash(payload.subServiceLabel) },
+    { label: "Property type", value: payload.propertyTypeLabel },
     { label: "Location", value: payload.location },
     { label: "Preferred contact method", value: CONTACT_METHOD_LABEL[payload.preferredContact] },
     { label: "Preferred date", value: dash(payload.preferredDate) },
     { label: "Project details", value: payload.description },
-    {
-      label: "Photos noted on the form",
-      value:
-        payload.photoCount > 0
-          ? `${payload.photoCount} selected (not attached — ask the customer to send them on WhatsApp)`
-          : "None",
-    },
     { label: "Website language", value: localeLabel(payload.locale as QuoteLocale) },
     { label: "Submitted", value: `${submittedAt} (Malaysia time)` },
   ];

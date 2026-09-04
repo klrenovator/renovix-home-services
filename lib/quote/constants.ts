@@ -21,6 +21,28 @@ export const QUOTE_SERVICE_VALUES = [
 
 export type QuoteServiceValue = (typeof QUOTE_SERVICE_VALUES)[number];
 
+/**
+ * Stable property-type IDs. The quote form submits these IDs (never the
+ * localized display labels), so the server can validate the value against a
+ * fixed list and the notification email stays language-independent. Display
+ * labels live in the UI dictionaries (`t.quote.propertyTypes[id]`).
+ */
+export const QUOTE_PROPERTY_TYPE_IDS = [
+  "condominium-apartment",
+  "terrace-landed-house",
+  "semi-detached-bungalow",
+  "shop-office-commercial",
+  "other-not-sure",
+] as const;
+
+export type QuotePropertyTypeId = (typeof QUOTE_PROPERTY_TYPE_IDS)[number];
+
+export function isQuotePropertyTypeId(
+  value: string,
+): value is QuotePropertyTypeId {
+  return (QUOTE_PROPERTY_TYPE_IDS as readonly string[]).includes(value);
+}
+
 export const PREFERRED_CONTACT_METHODS = ["whatsapp", "phone", "email"] as const;
 
 export type PreferredContactMethod = (typeof PREFERRED_CONTACT_METHODS)[number];

@@ -642,6 +642,10 @@ export const ms: Dictionary = {
     formTitle: "Beritahu kami tentang kerja anda",
     formLead:
       "Semakin banyak butiran berguna yang anda kongsi, semakin mudah untuk kami memahami apa yang mungkin diperlukan bagi penilaian.",
+    sections: {
+      contact: "Bagaimana kami boleh menghubungi anda?",
+      job: "Tentang kerja",
+    },
     labels: {
       name: "Nama",
       whatsapp: "Nombor WhatsApp",
@@ -652,7 +656,6 @@ export const ms: Dictionary = {
       location: "Lokasi",
       description: "Penerangan",
       preferredDate: "Tarikh Pilihan",
-      photos: "Muat Naik Gambar",
       preferredContact: "Cara hubungan pilihan",
       requiredText: "(wajib)",
     },
@@ -662,21 +665,19 @@ export const ms: Dictionary = {
       email: "anda@contoh.com",
       propertyType: "Pilih jenis hartanah",
       service: "Pilih perkhidmatan",
-      subService: "Pilih sub-perkhidmatan (pilihan)",
+      subService: "Pilih kerja khusus (pilihan)",
       subServiceDisabled: "Pilih perkhidmatan dahulu",
       location: "Kawasan, bandar atau kejiranan",
       description:
         "Terangkan masalah atau kerja yang anda rancang, termasuk ukuran, butiran akses atau pertimbangan masa yang berguna.",
     },
     help: {
+      phone: "Nombor untuk kami menghubungi anda — WhatsApp atau panggilan, mengikut pilihan anda di bawah.",
       email: "Pilihan, kecuali anda mahu dihubungi melalui e-mel.",
       subService: "Pilih pilihan yang paling hampir, atau biarkan kosong.",
       location:
         "Sertakan kawasan di Kuala Lumpur, Selangor atau Lembah Klang tempat kerja diperlukan.",
       preferredDate: "Pilihan. Tarikh hanyalah keutamaan, bukan tempahan.",
-      photos:
-        "Gambar tidak dilampirkan pada borang ini. Selepas menghantar, sila hantar gambar melalui WhatsApp supaya kami dapat menilai kerja.",
-      photosChosen: "Pilih gambar kawasan berkenaan",
       requiredNote: "Ruangan bertanda * wajib diisi.",
       preferredContact: "Kami akan guna cara ini dahulu apabila membalas.",
     },
@@ -693,14 +694,18 @@ export const ms: Dictionary = {
       emailRequired: "Sila masukkan alamat e-mel supaya kami boleh membalas melalui e-mel.",
       propertyType: "Sila pilih jenis hartanah.",
       service: "Sila pilih perkhidmatan.",
+      subService: "Sila pilih sub-perkhidmatan daripada senarai.",
       location: "Sila masukkan kawasan tempat kerja diperlukan.",
       description: "Sila terangkan kerja yang anda perlukan.",
       descriptionTooLong: "Mesej ini terlalu panjang. Sila ringkaskan.",
       preferredContact: "Sila pilih cara anda mahu kami menghubungi anda.",
     },
-    photosPrompt: "Muat Naik Gambar",
-    photosSelectedSuffix: "gambar",
-    photosSelectedSuffixPlural: "gambar",
+    whatsappQuickTitle: "Lebih suka WhatsApp?",
+    whatsappQuickBody:
+      "Tak perlu isi borang — terus mesej kami dan kongsi butiran dalam sembang.",
+    whatsappQuickCta: "Sembang di WhatsApp",
+    whatsappQuickMessage:
+      "Helo Renovix Home Services, saya ingin bertanya tentang sebut harga untuk kerja perkhidmatan rumah.",
     deliveryTitle: "Cara borang ini dihantar",
     deliveryBody:
       "Permintaan anda dihantar kepada pasukan kami. Sebut harga tidak dijana serta-merta — kami semak butiran dahulu dan mungkin meminta maklumat atau gambar lanjut. Anda juga boleh WhatsApp atau telefon +601159259521.",
@@ -708,7 +713,13 @@ export const ms: Dictionary = {
     submitting: "Menghantar permintaan anda...",
     successTitle: "Permintaan diterima",
     successBody:
-      "Terima kasih! Permintaan sebut harga anda telah diterima. Pasukan kami akan menghubungi anda tidak lama lagi.",
+      "Terima kasih! Permintaan sebut harga anda telah diterima. Pasukan kami akan menghubungi anda menggunakan cara pilihan anda.",
+    successPhotosTitle: "Ada gambar kerja tersebut?",
+    successPhotosBody:
+      "Gambar membantu penilaian awal. Hantar gambar kepada kami melalui WhatsApp selepas permintaan ini.",
+    successPhotosCta: "Hantar gambar di WhatsApp",
+    successPhotosMessage:
+      "Helo Renovix Home Services, saya baru sahaja menghantar permintaan sebut harga untuk {service}. Berikut ialah gambar kerja tersebut.",
     errorTitle: "Permintaan tidak dapat dihantar",
     errorBody:
       "Kami tidak dapat menghantar permintaan anda buat masa ini. Sila cuba lagi atau hubungi kami di WhatsApp.",
@@ -744,6 +755,30 @@ export const ms: Dictionary = {
     statusTitle: "Status penghantaran borang",
     statusBody:
       "Borang ini menghantar pertanyaan anda kepada Renovix Home Services. Kami akan menghubungi anda menggunakan cara pilihan anda. Anda juga boleh terus WhatsApp atau telefon +601159259521, atau e-mel renovixhomeservices@gmail.com.",
+    faqEyebrow: "Soalan sebut harga",
+    faqTitle: "Soalan lazim",
+    faqs: [
+      {
+        question: "Bagaimana saya meminta sebut harga?",
+        answer:
+          "Isi borang di halaman ini dengan perkhidmatan, jenis hartanah, lokasi dan penerangan ringkas — atau mesej kami di WhatsApp. Setiap permintaan disemak, dan kami akan menghubungi anda menggunakan cara hubungan pilihan anda.",
+      },
+      {
+        question: "Adakah saya akan menerima sebut harga serta-merta?",
+        answer:
+          "Tidak. Sebut harga tidak dijana serta-merta. Butiran disemak dahulu, dan bergantung kepada kerja, maklumat lanjut, gambar atau penilaian mungkin diperlukan sebelum sebut harga disediakan.",
+      },
+      {
+        question: "Boleh saya hantar gambar kerja?",
+        answer:
+          "Ya. Selepas menghantar borang, hantar gambar anda melalui WhatsApp. Gambar yang jelas bersama penerangan ringkas membantu penilaian awal, tetapi tidak menggantikan penilaian jika diperlukan.",
+      },
+      {
+        question: "Kawasan manakah yang diliputi?",
+        answer:
+          "Kuala Lumpur, Selangor dan Lembah Klang. Sertakan kawasan anda dalam permintaan sebut harga supaya lokasi dapat dipertimbangkan dengan betul.",
+      },
+    ],
     browseEyebrow: "Tidak pasti dari mana hendak mula?",
     browseTitle: "Lihat skop perkhidmatan sebelum meminta sebut harga",
     browseBody:
@@ -752,16 +787,14 @@ export const ms: Dictionary = {
     coverageTitle: "Kerja di seluruh Kuala Lumpur, Selangor & Lembah Klang",
     coverageBody:
       "Sertakan kejiranan atau bandar anda dalam permintaan sebut harga. Anda juga boleh menggunakan panduan kawasan perkhidmatan untuk memahami konteks liputan tempatan.",
-    propertyTypes: [
-      "Kondominium / apartmen",
-      "Rumah teres / rumah bumi",
-      "Rumah berkembar / banglo",
-      "Kedai / pejabat / ruang komersial",
-      "Lain-lain / belum pasti",
-    ],
+    propertyTypes: {
+      "condominium-apartment": "Kondominium / apartmen",
+      "terrace-landed-house": "Rumah teres / rumah bumi",
+      "semi-detached-bungalow": "Rumah berkembar / banglo",
+      "shop-office-commercial": "Kedai / pejabat / ruang komersial",
+      "other-not-sure": "Lain-lain / belum pasti",
+    },
     notSureOption: "Tidak pasti / pelbagai perkhidmatan",
-    notSureSubService: "Tidak pasti — sila nasihatkan",
-    multipleServicesSubService: "Pelbagai perkhidmatan / skop renovasi",
   },
   blogIndex: {
     metaTitle: "Renovix Home Services | Panduan Renovasi Rumah untuk KL & Selangor",

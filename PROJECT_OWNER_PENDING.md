@@ -1,11 +1,32 @@
-# PROJECT OWNER-PENDING DATA — Phase 21
+# PROJECT OWNER-PENDING DATA — Phase 22
 
 Status: **OWNER-PENDING**. Nothing on this list blocks the site; every item is
 optional metadata the business can supply to strengthen project proof. Nothing
 here may be invented, estimated or placeholder-filled in the meantime — the
 project pages already render correctly with only the data that exists.
 
-## How data gets in
+## Phase 22 — quote form go-live & lead handling (highest priority)
+
+The improved quote flow (Phase 22) is fully coded and tested, but live email
+delivery and a few business decisions remain with the owner. Until then the
+API honestly answers 503 "unavailable" and the form offers the WhatsApp
+fallback — nothing is silently lost or faked.
+
+| What is needed | Goes into | Effect once supplied |
+| --- | --- | --- |
+| `RESEND_API_KEY` | Vercel → Project → Settings → Environment Variables (or `.env` locally) | Enables live email delivery through the existing Resend integration |
+| Verified sender domain in Resend (e.g. `renovixhomeservices.my`) | Resend dashboard → Domains | Required by Resend before `QUOTE_FROM_EMAIL` can send |
+| `QUOTE_FROM_EMAIL` (e.g. `Renovix Home Services <noreply@renovixhomeservices.my>`) | Same env config | The From address on lead notifications; must be on the verified domain |
+| `QUOTE_NOTIFICATION_EMAIL` (final recipient inbox) | Same env config | Inbox that receives quote requests; currently defaults to the public business email `renovixhomeservices@gmail.com` |
+| Approval of the final form field set | Reply in this thread | Current set: name, phone/WhatsApp, email (optional), preferred contact method, property type, service, sub-service (optional, registry), location, description, preferred date (optional). Budget and in-form photo upload were deliberately NOT added — budget because quoting depends on scope, photo upload because the current email architecture cannot carry attachments truthfully; photos flow through WhatsApp instead |
+| Any lead-routing rules (e.g. different recipient per service, WhatsApp alert on top of email) | New code in a later phase | Today every submission goes to one recipient; routing logic is not built |
+
+No secrets belong in the repository — `.env.example` documents the variables;
+the values themselves are configured in the hosting dashboard. Live delivery
+should only be declared "verified" after a real end-to-end test with these
+credentials, which has not happened yet.
+
+## How project-proof data gets in (Phase 21)
 
 | Owner supplies | Goes into | Field(s) |
 | --- | --- | --- |
