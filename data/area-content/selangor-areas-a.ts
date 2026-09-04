@@ -473,7 +473,7 @@ export const selangorAreasA: AreaDetail[] = [
     ],
     relatedServices: ["waterproofing", "painting", "general-renovation", "electrical"],
     relatedProblems: ["mouldy-walls", "roof-leakage", "wall-seepage", "blocked-drain"],
-    nearbyAreas: ["klang", "bandar-baru-klang", "subang-jaya"],
+    nearbyAreas: ["klang", "bandar-baru-klang", "subang-jaya", "setia-alam"],
   },
   {
     region: "selangor",
@@ -631,7 +631,7 @@ export const selangorAreasA: AreaDetail[] = [
     ],
     relatedServices: ["general-renovation", "plumbing", "waterproofing", "flooring"],
     relatedProblems: ["bathroom-leakage", "blocked-drain", "water-leakage", "uneven-paint"],
-    nearbyAreas: ["bandar-sunway", "sri-petaling", "seri-kembangan"],
+    nearbyAreas: ["bandar-sunway", "sri-petaling", "seri-kembangan", "bandar-kinrara"],
   },
   {
     region: "selangor",
@@ -947,7 +947,7 @@ export const selangorAreasA: AreaDetail[] = [
     ],
     relatedServices: ["plumbing", "waterproofing", "painting", "handyman"],
     relatedProblems: ["water-leakage", "bathroom-leakage", "power-tripping", "faded-paint"],
-    nearbyAreas: ["gombak", "kepong", "rawang"],
+    nearbyAreas: ["gombak", "kepong", "rawang", "batu-caves"],
   },
   {
     region: "selangor",
@@ -1421,6 +1421,6 @@ export const selangorAreasA: AreaDetail[] = [
     ],
     relatedServices: ["general-renovation", "waterproofing", "plumbing", "painting"],
     relatedProblems: ["bathroom-leakage", "roof-leakage", "old-house-wiring", "faded-paint"],
-    nearbyAreas: ["bangi", "semenyih", "seri-kembangan"],
+    nearbyAreas: ["bangi", "semenyih", "seri-kembangan", "bandar-mahkota-cheras"],
   },
 ];

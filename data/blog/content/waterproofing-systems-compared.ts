@@ -25,6 +25,8 @@ export const waterproofingSystemsCompared: ArticleDefinition = {
     "kuala-lumpur/kepong",
     "selangor/klang",
     "selangor/rawang",
+    "selangor/setia-alam",
+    "selangor/bandar-mahkota-cheras",
   ],
   relatedProjects: [],
   pricingIds: [

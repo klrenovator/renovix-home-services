@@ -25,6 +25,7 @@ export const bathroomRebuildCostGuide: ArticleDefinition = {
     "kuala-lumpur/mont-kiara",
     "selangor/petaling-jaya",
     "selangor/subang-jaya",
+    "selangor/bandar-kinrara",
   ],
   relatedProjects: ["toilet-and-basin-installation"],
   pricingIds: [

@@ -789,7 +789,7 @@ export const klAreasB: AreaDetail[] = [
     ],
     relatedServices: ["plumbing", "waterproofing", "general-renovation", "painting"],
     relatedProblems: ["blocked-drain", "water-leakage", "low-water-pressure", "cracked-walls"],
-    nearbyAreas: ["brickfields-mid-valley", "bangsar", "bukit-jalil"],
+    nearbyAreas: ["brickfields-mid-valley", "bangsar", "bukit-jalil", "taman-desa"],
   },
   {
     region: "kuala-lumpur",

@@ -61,12 +61,31 @@ export function GET() {
     ``,
     `## Service areas (${knowledge.serviceArea.areaGuides.length} local guides)`,
     ``,
+    `${knowledge.serviceArea.summary}`,
+    ``,
     `- [All areas](${knowledge.serviceArea.areasIndex})`,
     ``,
   );
 
-  for (const area of knowledge.serviceArea.areaGuides) {
-    lines.push(`- [${area.name}](${area.url})`);
+  // Grouped by state and administrative district from the single location
+  // registry, so an assistant can answer "do you cover X?" with the correct
+  // hierarchy rather than a flat, ambiguous list of place names.
+  for (const region of knowledge.serviceArea.regions) {
+    lines.push(
+      `### ${region.name} — ${region.publishedGuides} guides`,
+      ``,
+      `- [${region.name} overview](${region.url})`,
+      ``,
+    );
+
+    for (const district of region.districts) {
+      const places = district.locations
+        .map((location) => `[${location.name}](${location.url})`)
+        .join(", ");
+      lines.push(`- **${district.name}**: ${places}`);
+    }
+
+    lines.push(``);
   }
 
   // Knowledge Hub: the educational layer, listed so assistants can cite the

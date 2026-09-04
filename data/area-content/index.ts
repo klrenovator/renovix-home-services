@@ -139,7 +139,7 @@ export const areasIndexFaqs: AreaFaq[] = [
   {
     question: "Which areas do you serve?",
     answer:
-      "We serve Kuala Lumpur and Selangor — our main guides cover 18 KL neighbourhoods and 28 Selangor towns, with more areas served on request across the Klang Valley.",
+      "We serve Kuala Lumpur and Selangor — our main guides cover 21 Kuala Lumpur neighbourhoods and 32 Selangor towns, with more areas served on request across the Klang Valley.",
   },
   {
     question: "What is the Klang Valley?",

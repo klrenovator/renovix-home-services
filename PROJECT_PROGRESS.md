@@ -3005,3 +3005,200 @@ numbers, emails, locations or free text.
 Final approval of the field set, `RESEND_API_KEY`, verified Resend sender
 domain, `QUOTE_FROM_EMAIL`, `QUOTE_NOTIFICATION_EMAIL` (final recipient) and
 any lead-routing requirements. None of these block the improved flow.
+
+---
+
+## PHASE 23 — Location Architecture, Local SEO & Location-Data Reconciliation — [x] COMPLETE
+
+Phase 23 closed the location architecture: one authoritative model, an
+accurate count, seven genuinely justified new locations, and an audit that
+proves the reconciliation instead of asserting a hard-coded number.
+
+### 1. One authoritative location model (the reconciliation)
+
+`data/locations/registry.ts` is the source of truth for the hierarchy
+(Malaysia → state/federal territory → district → city/town →
+neighbourhood → kampung → sub-area), and `data/area-content/` holds the
+published copy for exactly the same set. Phase 23 made that relationship
+*enforced* rather than assumed. `npm run audit:locations` now derives the
+inventory from the repository and proves every consumer agrees with it:
+
+- registry ↔ area guides are the same set (a published entity without a page,
+  or a page without an entity, fails the build);
+- every `publicPath` matches the real route;
+- every published location sits in exactly one district group, and no slug is
+  claimed by two districts;
+- `stateCoverage.totalPublishedGuides` is compared against the registry
+  instead of being trusted;
+- `i18n/coverage.ts` `ALL_AREAS` and both the `ms` and `zh` area lists match
+  the guide inventory exactly — so canonical, hreflang and the sitemap cannot
+  drift from the content;
+- `data/i18n/lists.ts` carries a Chinese place name for every location.
+
+Adding a location is now a pure data change; a half-wired one is a build
+failure.
+
+### 2. Accurate count (the audit correction, now self-maintaining)
+
+The documented count was corrected and, more importantly, de-hard-coded. The
+old script asserted "18 KL / 28 Selangor" as literals; the new one reports
+whatever the registry actually publishes and reconciles it everywhere.
+
+| | Before Phase 23 | After Phase 23 |
+| --- | --- | --- |
+| Kuala Lumpur guides | 18 | **21** |
+| Selangor guides | 28 | **32** |
+| Total location guides | 46 | **53** |
+| District groups | 12 | **13** |
+| Search-intent matrix entries | 16 | **24** |
+| Sitemap `<loc>` URLs | 633 | **654** |
+| Static pages built | 644 | **665** |
+
+Stale counts were fixed in `CONTENT_MAP.md`, `CONTENT_GOVERNANCE.md`,
+`SITEMAP.md`, the `/areas/` FAQ copy (EN/MS/ZH) and `stateCoverage`.
+
+### 3. Seven new locations — each with a reason to exist
+
+No page was created because a place name exists. Each addition closes a real
+coverage gap where the housing stock, and therefore the advice, genuinely
+differs from the parent area's guide:
+
+**Kuala Lumpur**
+
+- **KL City Centre** (`sub_area`) — the KLCC / Bukit Bintang / Imbi high-rise
+  core: the city's largest strata renovation market and the one where building
+  rules, not scope, set the schedule. Previously only reachable via the region
+  hub.
+- **Taman Desa** (`neighbourhood`) — the Seputeh mid-rise belt: 1980s walk-up
+  apartments and terraces with a distinct, well-documented ageing profile
+  (leaks between stacked units, JMB rather than a management office).
+- **Kampung Baru** (`kampung`) — the Malay heritage enclave: traditional raised
+  timber houses need timber, rot and roof work, not the condo fit-out advice on
+  every other KL page. This is the kampung tier of the hierarchy being used for
+  what it is actually for.
+
+**Selangor**
+
+- **Setia Alam** (`town`) — large self-contained township whose 2000s–2010s
+  landed stock ages on a completely different timetable from Shah Alam's
+  original numbered sections.
+- **Bandar Kinrara** (`town`) — mature Puchong-side township now dominated by
+  services renewal (concealed pipe corrosion, first-cycle waterproofing
+  failure, outgrown distribution boards).
+- **Batu Caves** (`town`) — Gombak-district town below a hill catchment; roof
+  detailing, drainage and external damp are the recurring theme, plus
+  festival-period access.
+- **Bandar Mahkota Cheras** (`town`) — Hulu Langat township on the *Selangor*
+  side of the Cheras border. Different local authority from Cheras KL, which
+  materially changes extension approvals; the guide says so explicitly.
+
+A new KL district group (`kl-city-core`, "KL City Centre & Kampung Baru
+District") was added; the others joined existing districts.
+
+### 4. Page quality — no doorway pages
+
+Every new guide carries the full 13-section `AreaPage`: locally-noted
+services, property types with local notes, five local problems, process,
+local-context copy, five FAQs, related services, related problems, nearby
+areas, blog links, headline pricing from the central catalogue and both CTAs.
+The audit enforces this mechanically for **all** 53 guides:
+
+- unique title, meta description, H1 and summary (duplicate = FAIL);
+- intro ≥ 400 chars and local context ≥ 300 chars of real copy;
+- ≥ 4 FAQs, ≥ 4 local problems, ≥ 3 related services, ≥ 3 related problems,
+  ≥ 2 nearby areas;
+- registry quality gate: ≥ 2 search intents, ≥ 3 primary services, ≥ 3
+  property types, housing eras, access considerations, aliases.
+
+No `[Service] in [Location]` repetition, and still no `/{service}-in-{area}/`
+doorway URLs — location × service intent stays with the guides plus the intent
+matrix.
+
+### 5. Search modifiers, used honestly
+
+Modifiers (`near me`, `repair`, `installation`, `affordable/cost`,
+`contractor`, `residential`, `replacement`) are applied per location where the
+intent is real, not sprayed onto every page. The emergency modifier remains
+restricted to genuine safety faults — electrical hazards and active
+plumbing/waterproofing leaks — and the audit fails any other use. New honesty
+checks reject "cheapest", "#1 / number one", price guarantees, invented branch
+offices and fabricated review counts anywhere in location data.
+
+### 6. Multilingual — genuinely localized, not substituted
+
+All seven guides ship complete in EN/MS/ZH (new
+`translations/{ms,zh}/{kuala-lumpur,selangor}-d.ts`). The copy is written for
+each audience — Malay uses the terminology homeowners actually use (rumah
+kampung, dapur basah, strata, papan agihan); Chinese uses established
+Malaysian Chinese place names (甘榜峇鲁, 实达阿南, 金銮镇, 黑风洞,
+蕉赖皇冠城). The audit rejects a translation that reuses the English meta
+description or H1, that has too few FAQs, or whose `serviceNotes` count does
+not match the English service list (which would silently misalign the notes),
+and it verifies each translations `index.ts` actually re-exports every batch.
+
+### 7. Location ↔ everything link graph
+
+- **Location → service / sub-service / problem**: guides link 6 services with
+  local notes plus related services and problems; all slugs are validated.
+- **Service / problem → location**: unchanged shared `AreasSection`, now
+  covering 53 guides.
+- **Location ↔ location**: reciprocal `nearbyAreas` links were added on
+  Old Klang Road, Shah Alam, Puchong, Selayang and Kajang so no new page is an
+  orphan. The audit now **fails on any location with zero inbound nearby-area
+  links**.
+- **Location ↔ blog**: five articles gained the newly relevant locations
+  (56 blog → location references, all validated).
+- **Location ↔ project**: no project location was invented. The audit
+  explicitly records that unknown project locations stay unknown and validates
+  any owner-supplied one against a real guide.
+
+Two genuine data bugs were caught by the new graph validation and fixed:
+nine registry entities listed the *problem* slug `roof-leakage` inside
+`primaryServices` (now `waterproofing`).
+
+### 8. Pricing stays centralized
+
+No location page contains a price. The audit fails on any `RM…` literal in
+area content, the intent matrix still stores only `pricingId` (no
+`startingPrice` / `unit` literals), and all 24 matrix entries are compared
+against `data/pricing/pricing.ts` for price, unit, starting-from semantics,
+sub-service slug/name and service. Eight new intent entries were added for the
+new locations, each resolving to a real catalogue row.
+
+### 9. Schema & AI/GEO data
+
+Schema per location page is unchanged and valid: `BreadcrumbList`, `WebPage`,
+`Service`/`OfferCatalog` with `Place` service areas, `FAQPage` — no invented
+addresses, branches, opening hours or coordinates. On the AI side,
+`lib/ai-knowledge.ts` now derives a `serviceArea.regions` tree from the single
+location registry (state → district → location, with each location's hierarchy
+`level`), and `/llms.txt` renders coverage grouped by state and district
+instead of a flat list — so an assistant answering "do you cover X?" gets the
+correct hierarchy. `/ai/business.json` and `/ai/pricing.json` carry no
+contradictory coverage; both are generated from the same registries the pages
+render.
+
+### 10. Indexing quality
+
+Only complete, translated, published guides reach the sitemap: a location is
+emitted per language only when that language actually publishes it, and the
+coverage lists are asserted against the guide inventory at build time. The
+sitemap grew by exactly 21 URLs (7 locations × 3 languages) to 654.
+
+### 11. Validation
+
+- [x] `npm run type-check` — **PASS**
+- [x] `npm run lint` — **PASS** (0 problems)
+- [x] `npm run build` — **PASS** (665 static pages, 654 sitemap URLs)
+- [x] `npm run audit:locations` — **PASS** (rewritten: reconciliation, quality
+      gate, duplicate-content, honesty, link graph/orphans, blog and project
+      graphs, intent matrix, pricing single-source, EN/MS/ZH completeness,
+      canonical/hreflang/sitemap coverage)
+- [x] `audit:business`, `audit:og-fonts`, `audit:project-assets`,
+      `audit:pricing`, `audit:projects`, `audit:authority`,
+      `audit:subservices`, `audit:blog`, `audit:quote` — **all PASS**
+- [x] Rendered HTML verified for the new pages in all three languages:
+      correct canonical, full `en-MY`/`ms-MY`/`zh-MY`/`x-default` hreflang set,
+      localized titles and no English leakage on `/ms/` or `/zh/`
+- [x] `/llms.txt` and `/ai/business.json` verified to report 53 guides in the
+      correct 21 KL / 32 Selangor district hierarchy

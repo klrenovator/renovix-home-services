@@ -79,7 +79,7 @@ That's all. After that:
 
 ## Scalability
 
-One sitemap file comfortably covers the whole site (633 URLs today; Google's
+One sitemap file comfortably covers the whole site (654 URLs today; Google's
 limit is 50,000 URLs / 50 MB uncompressed per file). If the site ever
 approaches that limit, split into child sitemaps + a sitemap index — see the
 note in `app/sitemap.ts` for the Next.js 16-specific constraints (the split

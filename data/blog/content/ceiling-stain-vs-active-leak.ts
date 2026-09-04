@@ -24,6 +24,7 @@ export const ceilingStainVsActiveLeak: ArticleDefinition = {
     "kuala-lumpur/setapak",
     "selangor/subang-jaya",
     "selangor/klang",
+    "selangor/batu-caves",
   ],
   relatedProjects: ["plaster-ceiling-cove-lighting"],
   pricingIds: ["waterproofing-pu-injection", "ceiling-repair", "plumbing-callout", "plumbing-hidden-leak"],
