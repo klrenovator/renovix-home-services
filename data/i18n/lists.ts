@@ -196,41 +196,6 @@ export const areaNames: Record<NonEnglish, Record<string, string>> = {
   },
 };
 
-export const problemPreviewLabels: Record<NonEnglish, Record<string, string>> = {
-  ms: {
-    "broken-tile-repair": "Jubin Pecah",
-    "water-leakage": "Kebocoran Air",
-    "cracked-walls": "Dinding Retak",
-    "peeling-paint": "Cat Mengelupas",
-    "mouldy-walls": "Dinding Berkulat",
-    "power-tripping": "Elektrik Terputus",
-    "faulty-socket": "Soket Rosak",
-    "water-damaged-ceiling": "Siling Rosak",
-    "bathroom-leakage": "Bilik Air Bocor",
-    "blocked-drain": "Saliran Tersumbat",
-    "loose-tile-repair": "Jubin Longgar",
-    "roof-leakage": "Bumbung Bocor",
-    "door-problems": "Masalah Pintu",
-    "minor-home-repairs": "Pembaikan Rumah Am",
-  },
-  zh: {
-    "broken-tile-repair": "瓷砖破裂",
-    "water-leakage": "漏水问题",
-    "cracked-walls": "墙面裂缝",
-    "peeling-paint": "油漆剥落",
-    "mouldy-walls": "墙面发霉",
-    "power-tripping": "电源跳闸",
-    "faulty-socket": "插座故障",
-    "water-damaged-ceiling": "天花板受损",
-    "bathroom-leakage": "浴室渗漏",
-    "blocked-drain": "排水堵塞",
-    "loose-tile-repair": "瓷砖松动",
-    "roof-leakage": "屋顶漏水",
-    "door-problems": "门的问题",
-    "minor-home-repairs": "一般房屋维修",
-  },
-};
-
 export const problemCategoryList: Record<
   NonEnglish,
   Record<string, { label: string; intro: string }>

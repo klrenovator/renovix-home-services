@@ -1,25 +1,47 @@
 import type { ServiceIcon } from "@/components/icons";
+import type { ProblemCategoryId } from "@/data/problem-content/types";
 
+/**
+ * Homepage problem preview SELECTION ONLY.
+ *
+ * Phase 18 tech-debt fix: this module no longer duplicates problem labels or
+ * hrefs. It holds the curated order of the homepage preview tiles plus the
+ * icon each category renders with. Every user-visible label and URL is derived
+ * from the authoritative problem-content registry (`data/problem-content`) via
+ * `getProblemPreviews()` in `data/i18n`.
+ */
 export type ProblemCategory = {
   id: string;
   label: string;
   icon: ServiceIcon;
-  href: string;
+  href?: string;
 };
 
-export const problems: ProblemCategory[] = [
-  { id: "broken-tile-repair", label: "Broken Tiles", icon: "tile", href: "/problems/broken-tile-repair" },
-  { id: "water-leakage", label: "Water Leakage", icon: "plumbing", href: "/problems/water-leakage" },
-  { id: "cracked-walls", label: "Wall Cracks", icon: "ceiling", href: "/problems/cracked-walls" },
-  { id: "peeling-paint", label: "Peeling Paint", icon: "painting", href: "/problems/peeling-paint" },
-  { id: "mouldy-walls", label: "Mouldy Walls", icon: "waterproofing", href: "/problems/mouldy-walls" },
-  { id: "power-tripping", label: "Power Tripping", icon: "electrical", href: "/problems/power-tripping" },
-  { id: "faulty-socket", label: "Faulty Socket", icon: "electrical", href: "/problems/faulty-socket" },
-  { id: "water-damaged-ceiling", label: "Ceiling Damage", icon: "ceiling", href: "/problems/water-damaged-ceiling" },
-  { id: "bathroom-leakage", label: "Bathroom Leakage", icon: "waterproofing", href: "/problems/bathroom-leakage" },
-  { id: "blocked-drain", label: "Blocked Drain", icon: "plumbing", href: "/problems/blocked-drain" },
-  { id: "loose-tile-repair", label: "Loose Tiles", icon: "tile", href: "/problems/loose-tile-repair" },
-  { id: "roof-leakage", label: "Roof Leakage", icon: "waterproofing", href: "/problems/roof-leakage" },
-  { id: "door-problems", label: "Door Problems", icon: "handyman", href: "/problems/door-problems" },
-  { id: "minor-home-repairs", label: "General Home Repairs", icon: "handyman", href: "/problems/minor-home-repairs" },
+/** Icon per authoritative problem-content category. */
+export const problemCategoryIcons: Record<ProblemCategoryId, ServiceIcon> = {
+  tiling: "tile",
+  electrical: "electrical",
+  painting: "painting",
+  ceiling: "ceiling",
+  plumbing: "plumbing",
+  waterproofing: "waterproofing",
+  handyman: "handyman",
+};
+
+/** Curated homepage preview order — every slug must exist in problem-content. */
+export const problemPreviewSlugs: string[] = [
+  "broken-tile-repair",
+  "water-leakage",
+  "cracked-walls",
+  "peeling-paint",
+  "mouldy-walls",
+  "power-tripping",
+  "faulty-socket",
+  "water-damaged-ceiling",
+  "bathroom-leakage",
+  "blocked-drain",
+  "loose-tile-repair",
+  "roof-leakage",
+  "door-problems",
+  "minor-home-repairs",
 ];

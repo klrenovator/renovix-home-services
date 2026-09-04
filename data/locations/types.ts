@@ -112,9 +112,12 @@ export type LocationServiceMatrixEntry = {
   subServiceName?: string;
   problemSlug?: string;
   problemName?: string;
-  pricingId?: string; // Links to data/pricing/pricing.ts
-  startingPrice?: number;
-  unit?: string;
+  /**
+   * The ONLY pricing link. Effective starting price and unit are always
+   * resolved from data/pricing/pricing.ts via this id (see
+   * `resolveIntentPricing`). Never store a duplicate price/unit literal here.
+   */
+  pricingId?: string;
   intentModifiers: IntentModifier[];
   searchQueryExamples: string[];
   localContextNote: string;

@@ -36,6 +36,29 @@ less — quality over page count.
   when content materially changes — never `now()`, never the build date.
   Never display an "updated" date the content did not earn.
 
+### 2a. Search-intent pricing derives — it never duplicates (Phase 18, binding)
+
+- **The search intent matrix (`data/locations/intent-matrix.ts`) must NEVER
+  maintain an independent price or unit source.** It stores `pricingId` and
+  nothing else about money.
+- The chain is one-directional and non-negotiable:
+  **`pricingId` → `data/pricing/pricing.ts` → derived effective price / unit /
+  sub-service** via `resolveIntentPricing()`. Adding `startingPrice:` or
+  `unit:` back to a matrix entry is a defect, and the locations audit fails on it.
+- The same rule applies to any future registry that references pricing
+  (sub-service pages, blog cost guides, schema `priceSpecification`): reference
+  the row, derive the value; never copy the number.
+- **Audits must compare effective values, not merely reference existence.**
+  Verifying that a `pricingId` resolves is not sufficient. `audit:locations`
+  compares price, unit, `starting_from` semantics, sub-service slug, sub-service
+  label and the owning service, and `audit:authority` validates the references
+  themselves. Any future pricing drift must FAIL the audit.
+- Semantic mapping is part of correctness: an intent may only reference a
+  pricing row that describes the same work. Re-point the intent, or add a
+  genuine catalogue row supported by the existing research methodology — never
+  keep a convenient but unrelated row, and never invent a price to fit.
+- Never weaken an audit rule to turn a FAIL into a PASS. Fix the data.
+
 ## 3. No thin, doorway or mass-generated pages
 
 - No keyword-stuffed copy, no exact-match anchor repetition, no stuffing

@@ -8,6 +8,21 @@
 - **Stack:** Next.js 16.3.3, React 19.2.8, TypeScript 6.0.3, Tailwind CSS 4.3.3
 - **Languages:** English (`/en/`), Bahasa Melayu (`/ms/`), Simplified Chinese (`/zh/`) — see Phase 6
 
+### Current site inventory (verified in Phase 18, `npm run build` + `sitemap.xml`)
+
+| Item | Count |
+|---|---|
+| Service pillar pages | 10 per language |
+| Problem guides | 46 per language |
+| Area guides | **46** (+ 2 region hubs + areas index) per language |
+| Projects | 21 per language |
+| **Canonical pages per language** | **136** |
+| **Canonical URLs total (3 languages)** | **408** |
+| Pricing rows (`data/pricing/pricing.ts`) | **51** |
+| Search-intent matrix entries | 16 (all pricing derived from `pricingId`) |
+| Pricing entries corrected in Phase 18 | **10 price mismatches + 1 unit mismatch + 12 sub-service slug mismatches** (Phase 17 audit) |
+| Audit scripts | 6, all PASS |
+
 ---
 
 ## PHASE 1 — Foundation, Design System & Homepage — [x]
@@ -925,7 +940,7 @@ no template changes are required.
       robots, 3 OG images)
 
 ### Known issues carried forward (not defects introduced here)
-- Deep content (10 services, 46 problems, 33 area pages) is English-only, so
+- Deep content (10 services, 46 problems, area guides — 33 at the time, **46 today**) was English-only at this point, so
   `/ms/` and `/zh/` publish 11 pages each. Their index pages list the
   catalogues in the right language but the cards are not links, because the
   target pages do not exist in that language yet. Translating the catalogues
@@ -1187,11 +1202,43 @@ the full brand and added a reproducible automated business-info audit.
   - Email: `renovixhomeservices@gmail.com`
   - Address: `Jalan Kiara, Mont Kiara, 50480 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia`
   - Hours: `9:00 AM – 6:00 PM` (the opening days were not stated, so no `dayOfWeek` is published in the schema)
-- Dedicated service detail pages were built in Phase 2; problem pages were built in Phase 3; the local SEO area architecture (2 region hubs + 31 unique location guides + areas index) was built in Phase 4. Phase 5 adds the supporting pages and a portfolio framework containing only clearly labelled placeholders. Phase 6 delivered the multilingual architecture and full translations for the core pages; the long-form service, problem and area catalogues remain English-only and the blog is not built. Phase 8 was the quality optimization pass (performance, accessibility, mobile & UX); the advanced quote system remains future work.
+- Dedicated service detail pages were built in Phase 2; problem pages were built in Phase 3; the local SEO area architecture (2 region hubs + 31 unique location guides + areas index) was built in Phase 4 and later expanded to **46 area guides** in Phase 13 Part 5. Phase 5 adds the supporting pages and a portfolio framework containing only clearly labelled placeholders. Phase 6 delivered the multilingual architecture and full translations for the core pages; the long-form service, problem and area catalogues remain English-only and the blog is not built. Phase 8 was the quality optimization pass (performance, accessibility, mobile & UX); the advanced quote system remains future work.
 - Phase 9 was the final QA audit: full route, multilingual, service, problem, location, conversion, SEO, performance, accessibility and code-quality review. Six genuine defects were fixed (three language-mixing bugs, the redirecting `og:image`, the missing mobile CTA and the on-demand OG route), dead code was removed and two build-time i18n guards were added. Remaining known issues are listed at the end of the Phase 9 section.
-- Phase 10 completed the localization project: all 10 service pages, 46 problem pages and 33 area guides now exist in Malay and Chinese (178 new translated documents), every contact detail is real, and each language publishes the same 100 pages. Phase 11 completed the business information/local SEO foundation: the verified NAP is the only business data in the codebase, the Contact page presents it in full in all three languages, every page title carries the full brand, the structured data is audited and an automated business-info audit (`npm run audit:business`) guards it. Phase 12 connected the quote form to a real server-side submission and Resend email notification. Phase 13 published the business-supplied logo and the 21 real work photos (polished WebP with SEO file names and localized en/ms/zh captions) on the Projects page, and moved the header/mobile-menu contact CTA to a WhatsApp button in the official brand green; a follow-up fix corrected the sideways awning photo (PR #16). Phase 14 delivered the sitemap consolidation at `/sitemap.xml` (Part 1) and then completed the authoritative service platform (Part 2): the pricing rows and every new service-page section (pricing, materials, cost factors, duration, includes/excludes, answer-first Q&A) now exist in Malay and Chinese, prices remain single-sourced in `data/pricing/pricing.ts` and are never translated, a machine-readable feed is served at `/ai/pricing.json`, and a new `npm run audit:pricing` guards the whole system. Phases 15 and 16 are complete; the Final Phase below records the final audit and launch-readiness status.
-missions are
-      ignored (no email)
+- Phase 10 completed the localization project: all 10 service pages, 46 problem pages and the area guides (33 at the time; **46 today** after the Phase 13 Part 5 expansion) now exist in Malay and Chinese (178 new translated documents), every contact detail is real, and each language publishes the same 100 pages. Phase 11 completed the business information/local SEO foundation: the verified NAP is the only business data in the codebase, the Contact page presents it in full in all three languages, every page title carries the full brand, the structured data is audited and an automated business-info audit (`npm run audit:business`) guards it. Phase 12 connected the quote form to a real, secured server-side submission path with Resend email notification code; live email delivery stays owner-gated until `RESEND_API_KEY` and a verified `QUOTE_FROM_EMAIL` are configured. Phase 13 published the business-supplied logo and the 21 real work photos (polished WebP with SEO file names and localized en/ms/zh captions) on the Projects page, and moved the header/mobile-menu contact CTA to a WhatsApp button in the official brand green; a follow-up fix corrected the sideways awning photo (PR #16). Phase 14 delivered the sitemap consolidation at `/sitemap.xml` (Part 1) and then completed the authoritative service platform (Part 2): the pricing rows and every new service-page section (pricing, materials, cost factors, duration, includes/excludes, answer-first Q&A) now exist in Malay and Chinese, prices remain single-sourced in `data/pricing/pricing.ts` and are never translated, a machine-readable feed is served at `/ai/pricing.json`, and a new `npm run audit:pricing` guards the whole system. Phase 15 shipped the location architecture but left the search intent matrix disconnected and drifting; **Phase 18 fixed that data integrity** (see the Phase 18 section). Phase 16 is complete; the Final Phase below records the final audit and launch-readiness status.
+
+## PHASE 12 — Quote Form Backend & Resend Integration — [x] CODE COMPLETE · ⚪ LIVE EMAIL DELIVERY OWNER-GATED
+
+> **Section restored in Phase 18.** The heading and introduction of this section
+> were lost in an earlier edit, leaving the checklist below orphaned under
+> Phase 11. The checklist itself is unchanged; only the missing introduction and
+> an honest status statement have been reconstructed from the code in
+> `app/api/quote/route.ts` and `lib/quote/*`.
+
+### Status (honest)
+
+| Area | Status | Evidence |
+|---|---|---|
+| Server-side quote submission (Route Handler) | ✅ **COMPLETE** | `app/api/quote/route.ts` (`runtime = "nodejs"`, `dynamic = "force-dynamic"`) |
+| Payload validation | ✅ **COMPLETE** | `lib/quote/validation.ts` — required fields, email/phone formats, length caps, known service slugs, honeypot |
+| Abuse controls | ✅ **COMPLETE** | `lib/quote/rate-limit.ts` (5 submissions / 15 minutes / IP), `lib/quote/origin.ts` (origin allow-list), `QUOTE_MAX_BODY_BYTES` size guard |
+| Resend integration code | ✅ **COMPLETE** | `lib/quote/email.ts` — reads `RESEND_API_KEY` + `QUOTE_FROM_EMAIL`, builds and posts the notification |
+| Multilingual form UI (EN/MS/ZH) | ✅ **COMPLETE** | `components/quote/QuoteForm.tsx` + dictionaries; no English fallback on `/ms/` or `/zh/` |
+| **Live email delivery in production** | ⚪ **OWNER-GATED — NOT COMPLETE** | The owner must create a Resend API key and verify a sender domain, then set `RESEND_API_KEY` and `QUOTE_FROM_EMAIL`. Until then the endpoint returns an honest **503 `unavailable`** instead of pretending to have sent mail. |
+
+### What was built
+
+The Phase 5 quote form was UI-only. Phase 12 connected it to a real, secured
+server-side submission path: a Next.js Route Handler at `/api/quote` that
+validates the payload, rejects spam and oversized bodies, rate-limits by IP,
+enforces an origin allow-list, and — when email credentials are configured —
+sends the enquiry to the business inbox through Resend. No submission is ever
+silently reported as delivered: if the provider is not configured, the API
+answers 503 and the form shows the WhatsApp fallback.
+
+### Checklist
+
+- [x] `/api/quote` Route Handler with validation, spam and size guards; spam
+      submissions are ignored (no email)
 - [x] In-memory rate limit after a valid payload (5 / 15 minutes / IP)
 - [x] Origin allow-list for browser `Origin` headers
 
@@ -2105,7 +2152,20 @@ quoted. All three are fixed and now guarded by the audit.
       build now reads RM8 (EN tiling), RM1.20 (EN painting), RM5.50 (MS
       flooring) and RM3.50 (ZH ceiling) — each matching its own table.
 
-## PHASE 15 — Malaysia + Klang Valley Location Domination — [x] COMPLETE
+## PHASE 15 — Malaysia + Klang Valley Location Domination — [x] COMPLETE (data integrity completed in Phase 18)
+
+> **Status correction (Phase 18).** Phase 17's master audit found that the
+> Phase 15 search intent matrix, while typed and audited, kept its own
+> hand-typed `startingPrice`/`unit`/sub-service values which had drifted from
+> the single-source catalogue (10 price mismatches, 1 unit mismatch, 12
+> sub-service slug mismatches, plus several semantic mismatches). No wrong
+> price ever reached a user — the matrix renders nothing today and area pages
+> price from catalogue headlines — but the data set was a latent integrity
+> risk and the audit's "pricing matches" check only verified that the
+> `pricingId` existed. **Phase 18 removed the duplicate price/unit source, made
+> `pricingId` authoritative, corrected every mapping and taught the audits to
+> compare effective values.** Location registry ↔ area-content reconciliation
+> remains scheduled for Phase 23.
 
 ### 1. Location hierarchy & centralized data source of truth
 - [x] Scalable, single-source location hierarchy architecture:
@@ -2325,3 +2385,119 @@ architecture rather than adding another SEO or content system.
       were not available here and are not claimed as completed.
 - [x] Genuine remaining issues are limited to those deployment-owner checks;
       no known source, build, audit or sitemap failure remains in this branch.
+
+---
+
+## PHASE 18 — Core Technical, Data Integrity & Documentation Fix — [x] COMPLETE
+
+Scope: fix every technical/data-integrity issue the Phase 17 master deep audit
+identified, before any new page family is created. Coding only — no owner input
+required, no new pages, no fabricated data.
+
+### 1. Search intent matrix — single source of truth
+
+- [x] `data/locations/types.ts`: the mutable `startingPrice` and `unit` fields
+      were **removed** from `LocationServiceMatrixEntry`. `pricingId` is now the
+      only pricing link.
+- [x] `data/locations/intent-matrix.ts`: every price/unit literal deleted; new
+      `resolveIntentPricing()` resolver derives effective starting price, unit,
+      currency, pricing type, catalogue sub-service, formatted amount,
+      `lastReviewed` and disclaimer from `getPricingById(pricingId)`.
+      "Starting from" semantics and catalogue units are preserved verbatim.
+- [x] No price was invented and no arbitrary catalogue row was created. Every
+      intent was either derived from its existing row or **re-pointed to the
+      correct existing row**, and the surrounding copy (sub-service name, local
+      context note, search-query examples) was corrected so the intent and the
+      price describe the same service.
+
+| Phase 17 ID | Intent | Was | Now (derived from pricing.ts) |
+|---|---|---|---|
+| P-01 | `shah-alam-roof-waterproofing` | `waterproofing-flat-roof`, hand-typed RM15/sqft, sub-service `roof-leak-repair` | `waterproofing-flat-roof` → **RM8/sqft**, sub-service `flat-roof-waterproofing`; copy re-scoped to flat roof / roof terrace membrane work |
+| P-02 | `petaling-jaya-flooring-spc` | slug `spc-flooring-installation` | slug `spc-flooring` → RM5.50/sqft (unchanged price) |
+| P-03 | `petaling-jaya-electrical-rewire` | `electrical-db-box`, RM650/**job** vs catalogue RM400/**unit** | re-pointed to **`electrical-full-wiring`** → **RM5,000/job**, slug `full-house-wiring` — the honest concept for a rewire/DB-upgrade intent |
+| P-04 | `cheras-waterproofing-bathroom` | RM1,800/bathroom | **RM1,500/bathroom** from `waterproofing-bathroom-hack` |
+| P-05 | `cheras-tiling-repair` | `tiling-floor-ceramic` (a *new-installation* row) | re-pointed to **`tiling-repair`** → RM150/job, slug `tile-repair` |
+| P-06 | `mont-kiara-condo-renovation` | `renovation-bathroom-full` RM8,000/**bathroom** for a condo refurbishment | re-pointed to **`renovation-mid`** → RM70/**sqft**, slug `mid-range-renovation` |
+| P-07 | `mont-kiara-electrical-safety` | RM80/job | **RM150/job** from `electrical-troubleshoot`, slug `troubleshooting` |
+| P-08 | `subang-jaya-plumbing-repiping` | `plumbing-water-heater-install` (wrong service concept) | re-pointed to **`plumbing-pipe-leak-visible`** → RM150/job, slug `pipe-leak-repair`; the note states plainly that whole-house re-piping is quoted after inspection |
+| P-09 | `usj-kitchen-extension-renovation` | `renovation-kitchen`, hand-typed RM15,000/job | re-pointed to **`renovation-extension`** → RM150/sqft, slug `house-extension` |
+| P-10 | `bangsar-house-modernisation` | `renovation-bathroom-full` per bathroom | re-pointed to **`renovation-mid`** → RM70/sqft |
+| P-11 | `ttdi-waterproofing-roof-terrace` | RM15/sqft | **RM8/sqft** (`waterproofing-flat-roof`), copy re-scoped |
+| P-12 | `puchong-bathroom-waterproofing` | RM1,800/bathroom | **RM1,500/bathroom** |
+| P-13 | `kajang-landed-roof-leak-repair` | RM15/sqft | **RM8/sqft**, copy re-scoped |
+| P-14 | `klang-metal-welding-grille` | RM28/sqft, slug `security-grilles` | **RM12/sqft** from `welding-grille-window`, slug `window-grille` |
+| P-15 / P-16 | `cyberjaya-condo-painting-spc`, `shah-alam-plumbing-leak` | correct values, non-catalogue slugs/names | now derived; slugs `interior-painting`, `pipe-leak-repair` |
+
+Result: **10 numeric mismatches, 1 unit mismatch and 12 sub-service slug
+mismatches resolved; 16/16 intents now derive their pricing.**
+
+### 2. Automated audits strengthened
+
+- [x] `scripts/audit-locations.mjs` — the "pricing matches" check no longer just
+      confirms that a `pricingId` exists. It now parses all 51 catalogue rows and,
+      for every intent entry, fails with a precise message on:
+      a stale/unknown `pricingId`; an unparsable catalogue price or missing unit;
+      a `pricingType` that is not `starting_from`; a `subServiceSlug` that is not
+      a catalogue sub-service; a `subServiceSlug`/`subServiceName` that does not
+      belong to the referenced row; and a service/`pricingId` service mismatch
+      (semantic guard). It also **fails if the matrix reintroduces any
+      independent `startingPrice`/`unit` literal**, or if `resolveIntentPricing()`
+      disappears. Error messages name the intent id, the pricingId, and the
+      expected vs actual value/unit/sub-service.
+- [x] `scripts/audit-authority.mjs` — validates every intent-matrix `pricingId`
+      and `subServiceSlug` against the pricing catalogue, and fails on a
+      sub-service declared without a `pricingId`.
+- [x] Drift verified to FAIL: temporarily re-pointing the roof intents to
+      `waterproofing-balcony` produced 6 explicit failures; the change was
+      reverted. No audit rule was weakened to obtain a PASS.
+
+### 3. Documentation
+
+- [x] `PROJECT_PROGRESS.md`: the missing **PHASE 12 — Quote Form Backend &
+      Resend Integration** heading and introduction were reconstructed above the
+      orphaned checklist, with an honest status table — backend/code
+      **COMPLETE**, **live email delivery OWNER-GATED** until `RESEND_API_KEY`
+      and a verified `QUOTE_FROM_EMAIL` are set (the endpoint returns 503 until
+      then). Live delivery is *not* marked complete anywhere.
+- [x] Stale counts corrected via a verified inventory table in the Overview:
+      46 area guides · 136 canonical pages per language · 408 canonical URLs ·
+      51 pricing rows · 10 affected pricing entries from the Phase 17 audit.
+      Historical sentences that quoted "33 area guides" now carry the current
+      figure.
+- [x] Phase 15 re-stated accurately: complete, with its data-integrity debt
+      closed here in Phase 18; registry ↔ area-content reconciliation stays
+      Phase 23.
+- [x] `CONTENT_GOVERNANCE.md`: new binding rule — search-intent pricing must
+      never maintain an independent price/unit source.
+
+### 4. Safe technical debt
+
+- [x] Legacy homepage problem-preview duplication removed. `data/problems.ts`
+      no longer stores 14 duplicated labels/hrefs plus 28 duplicated MS/ZH
+      labels; it now holds only the curated preview order and the per-category
+      icon. `getProblemPreviews()` derives every label and slug from the
+      authoritative `data/problem-content` registry in all three languages, and
+      `problemPreviewLabels` was deleted from `data/i18n/lists.ts`. Homepage
+      markup, routes and URLs are unchanged.
+- [x] No large refactor, no route changes, no unrelated architecture touched.
+
+### 5. Testing
+
+- [x] `npm run type-check` — **PASS**
+- [x] `npm run lint` — **PASS** (0 problems)
+- [x] `npm run build` — **PASS**
+- [x] `npm run audit:business` — **PASS**
+- [x] `npm run audit:og-fonts` — **PASS**
+- [x] `npm run audit:project-assets` — **PASS**
+- [x] `npm run audit:pricing` — **PASS** (51 rows)
+- [x] `npm run audit:locations` — **PASS** (now with 16 intents value-compared)
+- [x] `npm run audit:authority` — **PASS**
+- [x] Sitemap still emits **408 `<loc>` URLs**; no canonical URL disappeared
+- [x] No user-visible price contradicts `data/pricing/pricing.ts`; no language
+      fallback introduced; no fabricated data added
+- [x] No real-browser verification is claimed — static verification only
+
+### Out of scope (deliberately not started)
+
+Sub-service pages, blog pages, new location pages, projects/photos, GA4/GTM,
+Search Console analysis, owner data — all remain Phase 19+ work.
