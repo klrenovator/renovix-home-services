@@ -306,6 +306,21 @@ export const ms: Dictionary = {
     viewPricing: "Lihat panduan harga",
     pricingFactorsTitle: "Apa yang mempengaruhi harga",
   },
+  subServicePage: {
+    suitableEyebrow: "Adakah ini servis yang betul?",
+    suitableTitle: "Bila {name} ialah pilihan yang sesuai",
+    projectEyebrow: "Kerja Kami",
+    projectTitle: "Lihat projek kerja {service} kami",
+    projectDescription:
+      "Projek {service} sebenar yang Renovix siapkan di Kuala Lumpur & Selangor.",
+    relatedSubTitle: "Servis {service} yang lain",
+    backToService: "Kembali ke {service}",
+    includedEyebrow: "Apa yang termasuk",
+    includedTitle: "Biasanya termasuk dalam {name}",
+    excludedTitle: "Apa yang biasanya tidak termasuk",
+    ctaHeading: "Perlukan {name} di Kuala Lumpur & Selangor?",
+    processTitle: "Cara kami menjalankan {name}",
+  },
   problemsIndex: {
     metaTitle:
       "Renovix Home Services | Masalah Rumah di KL & Selangor",

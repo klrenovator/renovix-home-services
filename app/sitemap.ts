@@ -11,6 +11,13 @@ import {
 import { absoluteUrl } from "@/i18n/seo";
 import { CONTENT_LAST_MODIFIED } from "@/lib/sitemap";
 import { assertCoverageInSync } from "@/i18n/verify";
+import { getAllSubServices, subServiceLanguages } from "@/data/sub-services";
+
+/** True when `lang` publishes a given sub-service (route path). */
+function isSubServicePublished(serviceSlug: string, slug: string, lang: LanguageCode): boolean {
+  const sub = getAllSubServices().find((item) => item.slug === slug && item.serviceSlug === serviceSlug);
+  return Boolean(sub && subServiceLanguages(sub.slug).includes(lang));
+}
 
 // The sitemap is the only place a stale slug would silently produce a URL that
 // 404s (and a wrong hreflang set). The sitemap is generated at build time, so
@@ -67,6 +74,16 @@ function pathsForLanguage(lang: LanguageCode): SitemapEntry[] {
       entries.push({
         path: `/services/${service}/`,
         priority: 0.8,
+        changeFrequency: "monthly",
+      });
+    }
+  }
+
+  for (const sub of getAllSubServices()) {
+    if (subServiceLanguages(sub.slug).includes(lang)) {
+      entries.push({
+        path: `/services/${sub.serviceSlug}/${sub.slug}/`,
+        priority: 0.75,
         changeFrequency: "monthly",
       });
     }
@@ -143,6 +160,11 @@ function isPublished(path: string, lang: LanguageCode): boolean {
   }
 
   if (path.startsWith("/services/")) {
+    const segments = path.split("/").filter(Boolean).length;
+    // Two-level service routes: /services/{category}/{sub-service}/
+    if (segments >= 3) {
+      return isSubServicePublished(slugOf(path, 1), slugOf(path, 2), lang);
+    }
     return hasTranslation("service", slugOf(path, 1), lang);
   }
 

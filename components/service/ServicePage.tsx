@@ -14,6 +14,7 @@ import { WhySection } from "@/components/service/WhySection";
 import { AreasSection } from "@/components/service/AreasSection";
 import { FaqSection } from "@/components/service/FaqSection";
 import { RelatedServicesSection } from "@/components/service/RelatedServicesSection";
+import { ServiceSubLinksSection } from "@/components/service/ServiceProjectsSection";
 import { CtaSection } from "@/components/service/CtaSection";
 import type { ServiceDetail } from "@/data/service-content/types";
 import type { ProblemDetail } from "@/data/problem-content/types";
@@ -32,6 +33,7 @@ export function ServicePage({ detail, related, relatedProblems, lang }: ServiceP
       <AnswerFirstSection detail={detail} lang={lang} />
       <OverviewSection detail={detail} lang={lang} />
       <SubServicesSection detail={detail} lang={lang} />
+      <ServiceSubLinksSection serviceSlug={detail.slug} serviceName={detail.name} lang={lang} />
       <ProblemsSection detail={detail} relatedProblemPages={relatedProblems} lang={lang} />
       <PricingSection detail={detail} lang={lang} />
       <CostFactorsSection detail={detail} lang={lang} />
