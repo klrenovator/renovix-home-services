@@ -28,6 +28,7 @@ export const pricingEntries: PricingEntry[] = [
   },
   {
     id: "plumbing-pipe-leak-visible",
+    isHeadline: true,
     serviceSlug: "plumbing",
     serviceName: "Plumbing",
     subService: "Visible Pipe Leak Repair",
@@ -194,6 +195,7 @@ export const pricingEntries: PricingEntry[] = [
   },
   {
     id: "waterproofing-flat-roof",
+    isHeadline: true,
     serviceSlug: "waterproofing",
     serviceName: "Waterproofing",
     subService: "Flat Roof Waterproofing",
@@ -257,6 +259,7 @@ export const pricingEntries: PricingEntry[] = [
   // ========== TILING ==========
   {
     id: "tiling-floor-ceramic",
+    isHeadline: true,
     serviceSlug: "tiling",
     serviceName: "Tile & Tiling",
     subService: "Floor Tile Installation (Ceramic)",
@@ -364,6 +367,7 @@ export const pricingEntries: PricingEntry[] = [
   // ========== PAINTING ==========
   {
     id: "painting-interior",
+    isHeadline: true,
     serviceSlug: "painting",
     serviceName: "Painting",
     subService: "Interior Wall Painting",
@@ -469,6 +473,7 @@ export const pricingEntries: PricingEntry[] = [
   },
   {
     id: "electrical-light-point",
+    isHeadline: true,
     serviceSlug: "electrical",
     serviceName: "Electrical",
     subService: "Lighting Point Installation",
@@ -593,6 +598,7 @@ export const pricingEntries: PricingEntry[] = [
   },
   {
     id: "flooring-vinyl",
+    isHeadline: true,
     serviceSlug: "flooring",
     serviceName: "Flooring",
     subService: "Vinyl Flooring Installation",
@@ -675,6 +681,7 @@ export const pricingEntries: PricingEntry[] = [
   // ========== CEILING & PARTITION ==========
   {
     id: "ceiling-flat",
+    isHeadline: true,
     serviceSlug: "ceiling-partition",
     serviceName: "Ceiling & Partition",
     subService: "Flat Plaster Ceiling",
@@ -761,6 +768,7 @@ export const pricingEntries: PricingEntry[] = [
   // ========== WELDING & METAL WORKS ==========
   {
     id: "welding-grille-window",
+    isHeadline: true,
     serviceSlug: "welding-metal-works",
     serviceName: "Welding & Metal Works",
     subService: "Window Grille Fabrication",
@@ -866,6 +874,7 @@ export const pricingEntries: PricingEntry[] = [
   // ========== GENERAL RENOVATION ==========
   {
     id: "renovation-minor",
+    isHeadline: true,
     serviceSlug: "general-renovation",
     serviceName: "General Renovation",
     subService: "Minor Refresh / Light Refurbishment",
@@ -970,6 +979,7 @@ export const pricingEntries: PricingEntry[] = [
   // ========== HANDYMAN ==========
   {
     id: "handyman-hourly",
+    isHeadline: true,
     serviceSlug: "handyman",
     serviceName: "Handyman",
     subService: "Hourly Handyman Service",

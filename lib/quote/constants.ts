@@ -7,7 +7,6 @@ export const QUOTE_LIMITS = {
   email: { max: 254 },
   propertyType: { max: 80 },
   service: { max: 80 },
-  serviceLabel: { max: 120 },
   subService: { max: 200 },
   location: { min: 2, max: 200 },
   description: { min: 1, max: 4000 },
@@ -34,6 +33,9 @@ export type QuoteLocale = (typeof QUOTE_LOCALES)[number];
 export const QUOTE_HONEYPOT_FIELD = "companyWebsite";
 
 export const QUOTE_ENDPOINT = "/api/quote/";
+
+/** Maximum encoded JSON request body accepted by the public quote endpoint. */
+export const QUOTE_MAX_BODY_BYTES = 64_000;
 
 export function isQuoteServiceValue(value: string): value is QuoteServiceValue {
   return (QUOTE_SERVICE_VALUES as readonly string[]).includes(value);

@@ -97,14 +97,6 @@ export const translation: ServiceTranslation = {
     { question: "Adakah anda mengendalikan semua trade atau sebahagian sahaja?", answer: "Kami mengendalikan kerja binaan, paip, elektrik, kalis air, jubin, siling, partisyen, lantai dan cat sebagai satu skop yang diselaraskan, supaya anda tidak perlu menguruskan tukang secara berasingan." },
   ],
 
-  pricing: {
-    intro:
-      "Harga renovasi am dikira sekaki persegi untuk skop keseluruhan, atau setiap projek untuk dapur, bilik air dan sambungan rumah. Renovasi pertengahan di KL ialah RM70–RM150 sekaki persegi.",
-    startingFromNote: "Bermula dari RM20 sekaki persegi untuk pengubahsuaian ringan, RM70 untuk pertengahan",
-    disclaimer:
-      "Harga bermula dari jumlah yang dinyatakan. Sebut harga akhir bergantung pada keadaan tapak sebenar, skop kerja, bahan, akses dan keperluan pemasangan.",
-    tableIntro: "Skop renovasi biasa berserta harga permulaan anggaran untuk Lembah Klang.",
-  },
   materialsIntro:
     "Renovasi menggunakan gabungan bahan daripada semua bidang — kami menyelaraskan kerja jubin, elektrik, paip, cat dan kabinet.",
   materials: [

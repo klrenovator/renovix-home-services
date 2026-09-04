@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { PagePlaceholder } from "@/components/PagePlaceholder";
+import { LegalPage } from "@/components/LegalPage";
 import { PageSchema } from "@/components/seo/PageSchema";
 import { getLanguage, languages } from "@/data/languages";
 import { getDictionary } from "@/i18n";
@@ -57,10 +57,10 @@ export default async function PrivacyPage({ params }: PrivacyPageProps) {
           { name: t.legal.privacy },
         ]}
       />
-      <PagePlaceholder
-        eyebrow={t.legalPage.eyebrow}
+      <LegalPage
         title={t.legalPage.privacyTitle}
         description={t.legalPage.privacyDescription}
+        sections={t.legalPage.privacySections}
         lang={language.code}
       />
     </>

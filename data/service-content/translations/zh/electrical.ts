@@ -104,14 +104,6 @@ export const translation: ServiceTranslation = {
     { question: "暗线好还是明线好？", answer: "装修期间墙面本来就要打，暗线更美观。明线走线槽则施工更快、费用更低，日后维护与加装也更方便。" },
   ],
 
-  pricing: {
-    intro:
-      "电力工程按点位计价（插座与灯位）、按台计价（风扇与配电箱），全屋布线则按项目计价。暗线比明装线槽贵 30–50%。",
-    startingFromNote: "灯位与插座每个点位 RM60 起",
-    disclaimer:
-      "价格为起始价。最终报价取决于实际现场情况、工程范围、材料、可达性及安装要求。",
-    tableIntro: "巴生谷常见电力工程的参考起始价。",
-  },
   materialsIntro:
     "我们使用符合马来西亚规范的标准电料，插座与配电箱组件提供品牌选择。",
   materials: [

@@ -90,14 +90,6 @@ export const translation: ServiceTranslation = {
     { question: "Perlukah kelulusan untuk kerja paip di kondominium?", answer: "Kebanyakan pengurusan bangunan memerlukan notis atau permohonan untuk kerja yang melibatkan hacking atau paip utama. Kerja pembaikan kecil dalam unit lazimnya tidak, tetapi kami tetap mengikut peraturan bangunan anda." },
   ],
 
-  pricing: {
-    intro:
-      "Kos kerja paip di KL & Selangor bergantung pada sama ada kebocoran itu kelihatan atau tersembunyi, jenis bahan paip, akses dan sama ada kerja hacking serta pembaikan semula diperlukan. Harga bermula dari RM80 untuk pemeriksaan dan dari RM150 untuk pembaikan yang mudah diakses.",
-    startingFromNote: "Bermula dari RM150 untuk pembaikan paip bocor yang kelihatan",
-    disclaimer:
-      "Harga bermula dari jumlah yang dinyatakan. Sebut harga akhir bergantung pada keadaan tapak sebenar, skop kerja, bahan, akses dan keperluan pemasangan.",
-    tableIntro: "Kerja paip yang biasa berserta harga permulaan anggaran untuk rumah di Lembah Klang.",
-  },
   materialsIntro:
     "Kami menggunakan bahan paip standard yang sesuai untuk kediaman dan premis komersial di Malaysia.",
   materials: [

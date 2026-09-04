@@ -5,9 +5,9 @@ import { mainSitemapUrl } from "@/lib/sitemap";
 /**
  * robots.txt is generated per the Next.js metadata route convention.
  *
- * Everything indexable is allowed: the only disallow is `/_next/` (framework
- * assets, never content). No page of the site is blocked, and CSS/JS needed
- * for rendering stay crawlable.
+ * Everything is crawlable. Framework assets are deliberately not blocked:
+ * search engines need CSS, JavaScript and optimized-image responses to render
+ * and evaluate the same experience users receive.
  *
  * `Sitemap:` points at the site's single canonical sitemap, generated natively
  * by `app/sitemap.ts` from the content registries (all languages, with
@@ -21,7 +21,6 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: "*",
       allow: "/",
-      disallow: ["/_next/"],
     },
     sitemap: mainSitemapUrl(),
     host: siteConfig.url,

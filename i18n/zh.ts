@@ -921,14 +921,105 @@ export const zh: Dictionary = {
     eyebrow: "法律信息",
     privacyTitle: "隐私政策",
     privacyDescription:
-      "完整隐私政策将在后续阶段补充。如有任何隐私相关问题，请联系 Renovix Home Services：+601159259521 或 renovixhomeservices@gmail.com。",
-    privacyMetaDescription: "Renovix Home Services 网站与服务的隐私政策。",
+      "说明 Renovix Home Services 如何处理您选择通过本网站及报价渠道提交的信息。",
+    privacyMetaDescription: "Renovix Home Services 网站、报价表单与联系渠道的隐私政策。",
     termsTitle: "条款与条件",
     termsDescription:
-      "完整条款与条件将在后续阶段补充。如有任何疑问，请联系 Renovix Home Services：+601159259521 或 renovixhomeservices@gmail.com。",
-    termsMetaDescription: "使用 Renovix Home Services 网站与服务的条款与条件。",
-    placeholderNote:
-      "此页面正在为后续项目阶段准备。完整内容将在提供后补充。",
+      "使用 Renovix Home Services 网站、索取报价及联系本公司的基本条款。",
+    termsMetaDescription: "使用 Renovix Home Services 网站及索取服务的条款与条件。",
+    privacySections: [
+      {
+        title: "本政策的范围",
+        paragraphs: [
+          "本政策说明 Renovix Home Services 如何处理您选择通过本网站、报价表单、电邮或 WhatsApp 提交的信息。",
+        ],
+      },
+      {
+        title: "您可能提供的信息",
+        paragraphs: [
+          "报价表单可能会询问了解及回复您的询问所需的信息。请只提供与工程有关的资料。",
+        ],
+        items: [
+          "您的姓名与电话号码，以及您选择提供的电邮地址。",
+          "房屋类型、所需服务、可选细项服务、地点、工程说明、首选联系方法与期望日期。",
+          "您在表单中选择的图片文件数量。目前的表单不会把这些文件上传到本网站；如有需要，表单会请您另外通过 WhatsApp 发送照片。",
+        ],
+      },
+      {
+        title: "信息如何使用",
+        paragraphs: [
+          "Renovix 会使用询问信息来回复您、了解工程需求、安排沟通或现场评估、准备报价，并保留适当的询问记录。信息也会用于保护公开表单免受垃圾信息与滥用。",
+        ],
+      },
+      {
+        title: "服务供应商与信息分享",
+        paragraphs: [
+          "当电邮发送功能完成配置后，报价提交内容会通过 Resend 发送到公司收件箱。电邮与 WhatsApp 是各自拥有政策的独立通信服务。Renovix 不出售询问信息。为处理询问或履行已同意的服务，或在法律要求时，信息可能会提供给有需要的人员或供应商。",
+        ],
+      },
+      {
+        title: "保存与安全",
+        paragraphs: [
+          "询问信息只会在回复、管理服务、履行法律或会计责任，或解决争议所合理需要的期间内保存。由于每项询问不同，本页不指定固定保存期限。Renovix 会对网站与通信渠道采取实际的保护措施，但任何互联网传输都无法保证绝对安全。",
+        ],
+      },
+      {
+        title: "问题与请求",
+        paragraphs: [
+          "如有隐私问题，或希望查阅、更正或删除您提交的信息，请通过 +601159259521 或 renovixhomeservices@gmail.com 联系 Renovix Home Services。采取行动前可能需要核实请求，并会按照适用要求处理。",
+        ],
+      },
+      {
+        title: "政策更新",
+        paragraphs: [
+          "当网站、报价流程或适用要求发生变化时，本政策可能会更新。本页所发布的版本即为当前版本。",
+        ],
+      },
+    ],
+    termsSections: [
+      {
+        title: "使用本网站",
+        paragraphs: [
+          "您可以使用本网站了解 Renovix Home Services、查看已发布的服务信息、申请评估及联系本公司。请勿滥用网站、尝试干扰网站，或提交违法、有害或与询问无关的信息。",
+        ],
+      },
+      {
+        title: "报价与服务信息",
+        paragraphs: [
+          "网站公布的价格是参考起始价，并非最终报价。服务可用性、工程范围、材料、出入条件、现场状况与所需批准须另行确认。针对具体项目发出的书面报价或其他书面协议，将以其内容为准，涵盖该项目的范围、价格、时间与不包括项目。",
+        ],
+      },
+      {
+        title: "您提交的信息",
+        paragraphs: [
+          "您有责任提供足以让 Renovix 回复的准确联系及工程资料。除非通过合适渠道特别要求，请勿在报价表单中提交密码、支付卡资料、身份证件或其他敏感信息。",
+        ],
+      },
+      {
+        title: "第三方通信渠道",
+        paragraphs: [
+          "本网站可能链接至 WhatsApp、电邮及其他由第三方运营的服务。其可用性与信息处理受各自的条款与政策约束。Renovix 不负责控制范围以外的第三方服务。",
+        ],
+      },
+      {
+        title: "安全与服务可用性",
+        paragraphs: [
+          "服务覆盖主要为吉隆坡、雪兰莪与更广的巴生谷，但具体工程仍须经过评估与排期。如存在即时危险，本网站不能取代紧急服务或专业安全意见。",
+        ],
+      },
+      {
+        title: "网站内容",
+        paragraphs: [
+          "本网站的文字、品牌、版面与已发布的工程图片仅供本网站的信息与业务用途。未经许可，请勿复制、重新发布或作商业使用。Renovix 可以更正、更新或删除网站内容，但不保证每个页面持续可用。",
+        ],
+      },
+      {
+        title: "联系我们",
+        paragraphs: [
+          "如对本条款有疑问，请通过 +601159259521 或 renovixhomeservices@gmail.com 联系 Renovix Home Services。本网站条款不取代特定项目的书面报价或协议。",
+        ],
+      },
+    ],
   },
   notFound: {
     eyebrow: "404",

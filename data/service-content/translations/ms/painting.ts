@@ -110,14 +110,6 @@ export const translation: ServiceTranslation = {
     { question: "Cat sembur atau cat roller lebih baik?", answer: "Cat sembur lebih sekata dan pantas untuk permukaan besar, pagar dan gril, tetapi memerlukan lebih banyak masking. Roller lebih praktikal untuk kerja dalaman biasa dan lebih mudah dikawal di ruang berperabot." },
   ],
 
-  pricing: {
-    intro:
-      "Kos mengecat di KL & Selangor bergantung pada keadaan dinding, jenama cat (Nippon, Jotun, Dulux), bilangan warna, ketinggian dan sama ada kerja dalaman, luaran atau rumah penuh.",
-    startingFromNote: "Bermula dari RM1.20 sekaki persegi untuk cat dinding dalaman",
-    disclaimer:
-      "Harga bermula dari jumlah yang dinyatakan. Sebut harga akhir bergantung pada keadaan tapak sebenar, skop kerja, bahan, akses dan keperluan pemasangan.",
-    tableIntro: "Kerja mengecat biasa berserta harga permulaan anggaran untuk rumah di Lembah Klang.",
-  },
   materialsIntro:
     "Kami menggunakan bahan cat standard daripada jenama pertengahan hingga premium yang sesuai dengan kelembapan dan cuaca Malaysia.",
   materials: [

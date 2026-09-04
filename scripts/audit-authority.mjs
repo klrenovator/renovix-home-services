@@ -433,7 +433,7 @@ const aiChecks = [
   ["lib/ai-knowledge.ts", "problemDetails", "knowledge builder derives problems from the registry"],
   ["lib/ai-knowledge.ts", "areaRegions", "knowledge builder derives areas from the registry"],
   ["lib/ai-knowledge.ts", "getPublishedProjects", "knowledge builder derives projects from the registry"],
-  ["lib/ai-knowledge.ts", "getPricingForService", "knowledge builder derives prices from the catalogue"],
+  ["lib/ai-knowledge.ts", "getServicePricingHeadline", "knowledge builder derives prices from the catalogue"],
 ];
 
 for (const [file, token, label] of aiChecks) {

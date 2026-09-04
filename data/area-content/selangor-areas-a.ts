@@ -1090,7 +1090,7 @@ export const selangorAreasA: AreaDetail[] = [
       {
         question: "Our ceilings stain in the wet season. Can you fix it permanently?",
         answer:
-          "If the cause is the roof, yes — we repair the roof covering and flashing, then make good the ceiling below. Treating only the stain guarantees a return visit.",
+          "If the cause is the roof, yes — we repair the roof covering and flashing, then make good the ceiling below. Treating only the stain often leaves the underlying problem unresolved.",
       },
       {
         question: "Is rewiring an old Gombak house worth it?",

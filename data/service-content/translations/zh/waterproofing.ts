@@ -83,14 +83,6 @@ export const translation: ServiceTranslation = {
     { question: "防水能解决墙面受潮发霉吗？", answer: "如果潮气来自外部渗水或潮湿区域，可以。若是通风不良或冷凝造成的，处理方式不同，我们会如实说明。" },
   ],
 
-  pricing: {
-    intro:
-      "吉隆坡与雪兰莪的防水价格取决于面积、系统类型，以及是否需要敲砖。水泥基防水从每平方英尺 RM8 起，热熔卷材 RM8–RM15，PU 液体 RM12–RM20。浴室全包配套从 RM1,500 起，PU 灌浆从 RM350 起，平屋顶从每平方英尺 RM8 起。",
-    startingFromNote: "每平方英尺 RM8 起，浴室全包配套 RM1,500 起",
-    disclaimer:
-      "价格为起始价。最终报价取决于实际现场情况、工程范围、材料、可达性及安装要求。",
-    tableIntro: "根据 2026 年巴生谷市场调查整理的防水参考价格。",
-  },
   materialsIntro:
     "我们尽量采用具备厂商技术支援的品牌防水系统，并按基面与暴露环境选择。",
   materials: [

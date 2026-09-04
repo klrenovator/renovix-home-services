@@ -257,12 +257,6 @@ export const flooring: ServiceDetail = {
     },
   ],
 
-  pricing: {
-    intro: "Flooring cost depends on material (SPC, vinyl, laminate), thickness, area size, subfloor condition and pattern. SPC starts from RM5.50 per sqft supply & install.",
-    startingFromNote: "Starting from RM4.70 per sqft for vinyl and RM5.50 for SPC supply & install",
-    disclaimer: "Prices start from the stated amount. Final quotation depends on actual site condition, scope, materials, accessibility and installation requirements.",
-    tableIntro: "Common flooring jobs with indicative starting prices for Klang Valley.",
-  },
   materialsIntro: "We supply and install standard flooring materials with click-lock or glue-down systems suited to Malaysian homes.",
   materials: [
     {

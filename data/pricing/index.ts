@@ -39,6 +39,7 @@ function localizePricing(entry: PricingEntry, lang: string): PricingEntry {
 
   return {
     ...entry,
+    subService: translation.subService ?? entry.subService,
     scope: translation.scope ?? entry.scope,
     includes: translation.includes ?? entry.includes,
     excludes: translation.excludes ?? entry.excludes,
@@ -69,10 +70,62 @@ export function getPricingBySubService(subServiceSlug: string): PricingEntry | u
   return pricingEntries.find((entry) => entry.subServiceSlug === subServiceSlug);
 }
 
+/** Keep decimal catalogue values readable without turning RM1.20 into RM1.2. */
+export function formatPricingAmount(amount: number): string {
+  return Number.isInteger(amount) ? String(amount) : amount.toFixed(2);
+}
+
+const STARTING_FROM_LABELS: Record<string, string> = {
+  en: "Starting from",
+  ms: "Bermula dari",
+  zh: "起始价",
+};
+
+function getHeadlineEntries(entries: PricingEntry[]): PricingEntry[] {
+  const marked = entries.filter((entry) => entry.isHeadline);
+
+  if (marked.length > 0) {
+    return marked;
+  }
+
+  // Defensive fallback for a newly added service: never mix units when a
+  // service has no explicitly marked headline row yet.
+  const unitCounts = new Map<string, number>();
+  for (const entry of entries) {
+    unitCounts.set(entry.unit, (unitCounts.get(entry.unit) ?? 0) + 1);
+  }
+  const commonUnit = [...unitCounts.entries()].sort((a, b) => b[1] - a[1])[0]?.[0];
+  return commonUnit ? entries.filter((entry) => entry.unit === commonUnit) : entries;
+}
+
+export function getHeadlinePricingEntry(
+  serviceSlug: string,
+  lang: string = "en",
+): PricingEntry | undefined {
+  const entries = getPricingForService(serviceSlug, lang);
+  return getHeadlineEntries(entries).sort((a, b) => a.startingPrice - b.startingPrice)[0];
+}
+
+/** A localized, row-backed headline used by pages and AI-readable summaries. */
+export function getServicePricingHeadline(
+  serviceSlug: string,
+  lang: string = "en",
+): string | undefined {
+  const entry = getHeadlinePricingEntry(serviceSlug, lang);
+  if (!entry) return undefined;
+
+  const amount = `RM${formatPricingAmount(entry.startingPrice)}`;
+  const unit = getPricingUnitsLabel(entry.unit, lang);
+
+  if (lang === "zh") {
+    return `${amount} ${unit} 起`;
+  }
+
+  return `${STARTING_FROM_LABELS[lang] ?? STARTING_FROM_LABELS.en} ${amount} ${unit}`;
+}
+
 export function getStartingPriceForService(serviceSlug: string): number | undefined {
-  const entries = getPricingForService(serviceSlug);
-  if (entries.length === 0) return undefined;
-  return Math.min(...entries.map((e) => e.startingPrice));
+  return getHeadlinePricingEntry(serviceSlug)?.startingPrice;
 }
 
 export function getServicePricingSummaries(lang: string = "en"): ServicePricingSummary[] {
@@ -80,7 +133,8 @@ export function getServicePricingSummaries(lang: string = "en"): ServicePricingS
 
   return serviceSlugs.map((slug) => {
     const entries = getPricingForService(slug, lang);
-    const min = Math.min(...entries.map((e) => e.startingPrice));
+    const headlineEntry = getHeadlinePricingEntry(slug, lang);
+    const min = headlineEntry?.startingPrice ?? entries[0]?.startingPrice ?? 0;
     const serviceName = getServiceName(slug, lang, entries[0]?.serviceName ?? slug);
 
     const summaries: Record<string, { headline: string; intro: string; factorsIntro: string }> = {
@@ -153,8 +207,10 @@ export function getServicePricingSummaries(lang: string = "en"): ServicePricingS
       headline: info.headline,
       intro: info.intro,
       startingFrom: min,
-      startingFromLabel: `From RM ${min}`,
-      unit: entries[0]?.unit ?? "per_job",
+      startingFromLabel:
+        getServicePricingHeadline(slug, lang) ??
+        `${STARTING_FROM_LABELS[lang] ?? STARTING_FROM_LABELS.en} RM${formatPricingAmount(min)} per job`,
+      unit: headlineEntry?.unit ?? entries[0]?.unit ?? "per_job",
       disclaimer: getPricingDisclaimer(lang),
       factorsIntro: info.factorsIntro,
       factors: allFactors.map((f) => ({ title: f, description: "" })),
@@ -183,6 +239,7 @@ export function getAiReadablePricing() {
       priceRange: entry.priceRange,
       currency: entry.currency,
       pricingType: entry.pricingType,
+      isHeadline: entry.isHeadline,
       scope: entry.scope,
       includes: entry.includes,
       excludes: entry.excludes,
@@ -191,7 +248,6 @@ export function getAiReadablePricing() {
       disclaimer: entry.disclaimer,
       duration: entry.duration,
       lastReviewed: entry.lastReviewed,
-      researchNote: entry.researchNote,
       intentModifiers: entry.intentModifiers,
     })),
     summary: getServicePricingSummaries("en").map((s) => ({

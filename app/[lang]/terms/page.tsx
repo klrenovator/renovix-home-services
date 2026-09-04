@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { PagePlaceholder } from "@/components/PagePlaceholder";
+import { LegalPage } from "@/components/LegalPage";
 import { PageSchema } from "@/components/seo/PageSchema";
 import { getLanguage, languages } from "@/data/languages";
 import { getDictionary } from "@/i18n";
@@ -57,10 +57,10 @@ export default async function TermsPage({ params }: TermsPageProps) {
           { name: t.legal.terms },
         ]}
       />
-      <PagePlaceholder
-        eyebrow={t.legalPage.eyebrow}
+      <LegalPage
         title={t.legalPage.termsTitle}
         description={t.legalPage.termsDescription}
+        sections={t.legalPage.termsSections}
         lang={language.code}
       />
     </>

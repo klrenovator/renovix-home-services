@@ -87,14 +87,6 @@ export const translation: ServiceTranslation = {
     { question: "共管公寓做水管工程需要批准吗？", answer: "涉及打墙或主管道的工程，多数管理层要求先申报或申请。单位内的小型维修一般不需要，但我们仍会依照您所在建筑的规定施工。" },
   ],
 
-  pricing: {
-    intro:
-      "吉隆坡与雪兰莪的水管工程费用，取决于漏水是外露还是暗藏、水管材质、可达性，以及是否需要敲墙与修复。检查从 RM80 起，外露维修从 RM150 起。",
-    startingFromNote: "外露水管漏水维修 RM150 起",
-    disclaimer:
-      "价格为起始价。最终报价取决于实际现场情况、工程范围、材料、可达性及安装要求。",
-    tableIntro: "巴生谷住宅常见水管工程的参考起始价。",
-  },
   materialsIntro:
     "我们使用适合马来西亚住宅与商业物业的标准水管材料。",
   materials: [

@@ -86,14 +86,6 @@ export const translation: ServiceTranslation = {
     { question: "Boleh pasang perabot dari mana-mana jenama?", answer: "Boleh, selagi arahan dan komponen lengkap. Beritahu kami bilangan dan jenis perabot supaya kami boleh anggarkan masa dengan tepat." },
   ],
 
-  pricing: {
-    intro:
-      "Harga handyman dikira sejam untuk kerja am atau kadar tetap setiap kerja untuk pembaikan tertentu. Kadar biasa di KL ialah RM60–RM100 sejam, minimum 1 jam.",
-    startingFromNote: "Bermula dari RM60 sejam, kerja kadar tetap dari RM60",
-    disclaimer:
-      "Harga bermula dari jumlah yang dinyatakan. Sebut harga akhir bergantung pada keadaan tapak sebenar, skop kerja, bahan, akses dan keperluan pemasangan.",
-    tableIntro: "Kerja handyman biasa berserta harga permulaan anggaran untuk Lembah Klang.",
-  },
   materialsIntro:
     "Kerja handyman menggunakan perkakasan dan kelengkapan asas untuk pembaikan serta pemasangan kecil.",
   materials: [

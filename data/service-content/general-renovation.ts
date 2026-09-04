@@ -312,12 +312,6 @@ export const generalRenovation: ServiceDetail = {
     },
   ],
 
-  pricing: {
-    intro: "General renovation pricing is per sqft for overall scope, or per job for kitchen, bathroom and extension. Mid-range renovation in KL is RM70–RM150 per sqft.",
-    startingFromNote: "Starting from RM20 per sqft for light refresh, RM70 for mid-range",
-    disclaimer: "Prices start from the stated amount. Final quotation depends on actual site condition, scope, materials, accessibility and installation requirements.",
-    tableIntro: "Common renovation scopes with indicative starting prices for Klang Valley.",
-  },
   materialsIntro: "Renovation uses combined materials from all trades — we coordinate tiling, electrical, plumbing, painting and carpentry.",
   materials: [
     {

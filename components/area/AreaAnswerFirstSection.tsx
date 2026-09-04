@@ -7,7 +7,7 @@ import {
 } from "@/components/icons";
 import { format, getDictionary } from "@/i18n";
 import { getDistrictForLocation } from "@/data/locations";
-import { getPricingById } from "@/data/pricing";
+import { formatPricingAmount, getPricingById } from "@/data/pricing";
 import type { AreaDetail } from "@/data/area-content/types";
 
 /**
@@ -17,10 +17,7 @@ import type { AreaDetail } from "@/data/area-content/types";
 function formatStartingPrice(id: string): string {
   const entry = getPricingById(id);
   if (!entry) return "RM—";
-  const figure = Number.isInteger(entry.startingPrice)
-    ? String(entry.startingPrice)
-    : entry.startingPrice.toFixed(2);
-  return `RM${figure}`;
+  return `RM${formatPricingAmount(entry.startingPrice)}`;
 }
 
 type AreaAnswerFirstSectionProps = {
@@ -102,7 +99,7 @@ export function AreaAnswerFirstSection({ area, lang }: AreaAnswerFirstSectionPro
         lang === "ms"
           ? `Hantarkan gambar, butiran kerosakan atau skop renovasi bersama lokasi anda melalui WhatsApp atau borang sebut harga dalam talian kami. Kami akan memberikan anggaran awal dan mengatur lawatan tapak jika diperlukan.`
           : lang === "zh"
-            ? `您可以通过 WhatsApp 或在线报价表单，将房屋现场照片、损坏情况或装修需求连同具体位置发送给我们。我们会先行评估并安排专业人员现场勘察，为您提供清晰无隐藏收费的正式报价。`
+            ? `您可以通过 WhatsApp 或在线报价表单，将房屋现场照片、损坏情况或装修需求连同具体位置发送给我们。我们会先行评估并安排现场勘察，再为您说明正式报价。`
             : `Send photos, descriptions of the issue or scope, and your location via WhatsApp or our online quote form. We review the details, provide clear initial guidance, and arrange an on-site visit for a formal written quotation.`,
     },
   ];

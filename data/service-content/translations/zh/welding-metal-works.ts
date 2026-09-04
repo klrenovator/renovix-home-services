@@ -95,14 +95,6 @@ export const translation: ServiceTranslation = {
     { question: "订制一套铁门需要多久？", answer: "尺寸与设计确认后，制作通常需要数天，视尺寸与表面处理而定，之后再安排一天安装。实际工期会随报价一并说明。" },
   ],
 
-  pricing: {
-    intro:
-      "焊接与铁工价格取决于材料（低碳钢、锻铁、不锈钢）、设计复杂度、尺寸，以及静电喷涂等表面处理。",
-    startingFromNote: "低碳钢窗花每平方英尺 RM12 起",
-    disclaimer:
-      "价格为起始价。最终报价取决于实际现场情况、工程范围、材料、可达性及安装要求。",
-    tableIntro: "巴生谷常见焊接与铁工的参考起始价。",
-  },
   materialsIntro:
     "我们使用标准金属材料制作，并提供兼顾耐用与外观的表面处理选项。",
   materials: [

@@ -94,14 +94,6 @@ export const translation: ServiceTranslation = {
     { question: "你们承接所有工种，还是只做部分？", answer: "我们把土建、水管、电气、防水、瓷砖、天花、隔间、地板与油漆整合为一个统一协调的范围，您不必分别对接各个师傅。" },
   ],
 
-  pricing: {
-    intro:
-      "一般装修按整体范围以每平方英尺计价，厨房、浴室与扩建则按项目计价。吉隆坡中档装修约为每平方英尺 RM70–RM150。",
-    startingFromNote: "轻度翻新每平方英尺 RM20 起，中档 RM70 起",
-    disclaimer:
-      "价格为起始价。最终报价取决于实际现场情况、工程范围、材料、可达性及安装要求。",
-    tableIntro: "巴生谷常见装修范围的参考起始价。",
-  },
   materialsIntro:
     "装修会用到各工种的材料 — 我们统筹瓷砖、电力、水管、油漆与木工。",
   materials: [

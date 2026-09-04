@@ -84,14 +84,6 @@ export const translation: ServiceTranslation = {
     { question: "任何品牌的家具都能组装吗？", answer: "只要说明书与配件齐全都可以。请告知家具的数量与类型，方便我们准确估算时间。" },
   ],
 
-  pricing: {
-    intro:
-      "万能工服务按小时计价，特定维修则按项目固定收费。吉隆坡常见价位为每小时 RM60–RM100，最少 1 小时。",
-    startingFromNote: "每小时 RM60 起，固定项目 RM60 起",
-    disclaimer:
-      "价格为起始价。最终报价取决于实际现场情况、工程范围、材料、可达性及安装要求。",
-    tableIntro: "巴生谷常见万能工项目的参考起始价。",
-  },
   materialsIntro:
     "万能工使用基本五金与配件处理小型维修与安装。",
   materials: [

@@ -248,14 +248,6 @@ export const waterproofing: ServiceDetail = {
     "damp-walls",
     "water-stains",
   ],
-  pricing: {
-    intro:
-      "Waterproofing price in KL & Selangor depends on area, system and whether tiles need hacking. Cementitious starts from RM8 per sqft, torch-on from RM8–RM15, PU liquid from RM12–RM20. Full bathroom all-in from RM1,500, PU injection from RM350, flat roof from RM8 per sqft.",
-    startingFromNote: "Starting from RM8 per sqft, bathroom all-in from RM1,500",
-    disclaimer:
-      "Prices start from the stated amount. Final quotation depends on actual site condition, scope, materials, accessibility and installation requirements.",
-    tableIntro: "Indicative waterproofing pricing based on 2026 market research for Klang Valley.",
-  },
   materialsIntro:
     "We use branded waterproofing systems with manufacturer technical backup where possible, selected for substrate and exposure.",
   materials: [

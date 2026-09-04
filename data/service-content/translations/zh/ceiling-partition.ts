@@ -114,14 +114,6 @@ export const translation: ServiceTranslation = {
     { question: "隔间墙的隔音效果如何？", answer: "普通隔间只能降低部分声音。若需要更好的私密性，可以在龙骨内填入隔音材料并使用双层板，能明显降低噪音，但无法完全隔绝。" },
   ],
 
-  pricing: {
-    intro:
-      "天花与间隔墙价格取决于设计复杂度、面积、高度与类型。平面石膏天花从每平方英尺 RM3.50 起，石膏板间隔墙从 RM7.50 起。",
-    startingFromNote: "平面石膏天花每平方英尺 RM3.50 起",
-    disclaimer:
-      "价格为起始价。最终报价取决于实际现场情况、工程范围、材料、可达性及安装要求。",
-    tableIntro: "巴生谷常见天花与间隔墙工程的参考起始价。",
-  },
   materialsIntro:
     "天花使用 9mm 石膏板，间隔墙使用双面 12mm 石膏板配金属骨架，另有防潮与隔音选项。",
   materials: [

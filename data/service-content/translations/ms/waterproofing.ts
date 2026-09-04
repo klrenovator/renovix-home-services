@@ -86,14 +86,6 @@ export const translation: ServiceTranslation = {
     { question: "Boleh kalis air menghentikan lembap dan kulat pada dinding?", answer: "Boleh, jika kelembapan itu datang daripada air yang meresap dari luar atau dari kawasan basah. Jika ia berpunca daripada pengudaraan yang lemah atau kondensasi, rawatan berbeza diperlukan dan kami akan berterus terang mengenainya." },
   ],
 
-  pricing: {
-    intro:
-      "Harga kerja kalis air di KL & Selangor bergantung pada luas kawasan, sistem yang digunakan dan sama ada jubin perlu dipecahkan. Cementitious bermula dari RM8 sekaki persegi, torch-on RM8–RM15, PU cecair RM12–RM20. Pakej penuh bilik air bermula dari RM1,500, suntikan PU dari RM350, bumbung rata dari RM8 sekaki persegi.",
-    startingFromNote: "Bermula dari RM8 sekaki persegi, pakej penuh bilik air dari RM1,500",
-    disclaimer:
-      "Harga bermula dari jumlah yang dinyatakan. Sebut harga akhir bergantung pada keadaan tapak sebenar, skop kerja, bahan, akses dan keperluan pemasangan.",
-    tableIntro: "Harga anggaran kerja kalis air berdasarkan kajian pasaran 2026 untuk Lembah Klang.",
-  },
   materialsIntro:
     "Kami menggunakan sistem kalis air berjenama dengan sokongan teknikal pengeluar jika boleh, dipilih mengikut permukaan dan pendedahan cuaca.",
   materials: [

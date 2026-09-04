@@ -368,12 +368,6 @@ export const ceilingPartition: ServiceDetail = {
     },
   ],
 
-  pricing: {
-    intro: "Ceiling and partition pricing depends on design complexity, area, height and type. Flat plaster ceiling starts from RM3.50 per sqft, drywall partition from RM7.50.",
-    startingFromNote: "Starting from RM3.50 per sqft for flat plaster ceiling",
-    disclaimer: "Prices start from the stated amount. Final quotation depends on actual site condition, scope, materials, accessibility and installation requirements.",
-    tableIntro: "Common ceiling and partition jobs with indicative starting prices for Klang Valley.",
-  },
   materialsIntro: "We use 9mm gypsum board for ceilings and 12mm double-sided for partitions with metal framing, plus options for moisture and soundproofing.",
   materials: [
     {
