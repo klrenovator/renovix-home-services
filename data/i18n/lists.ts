@@ -193,6 +193,13 @@ export const areaNames: Record<NonEnglish, Record<string, string>> = {
     "selangor/balakong": "无拉港",
     "selangor/bandar-baru-klang": "巴生新镇",
     "selangor/sepang": "雪邦",
+    "kuala-lumpur/kl-city-centre": "吉隆坡市中心",
+    "kuala-lumpur/taman-desa": "Taman Desa",
+    "kuala-lumpur/kampung-baru": "甘榜峇鲁",
+    "selangor/setia-alam": "实达阿南",
+    "selangor/bandar-kinrara": "金銮镇",
+    "selangor/batu-caves": "黑风洞",
+    "selangor/bandar-mahkota-cheras": "蕉赖皇冠城",
   },
 };
 
@@ -335,7 +342,7 @@ export const areasIndexFaqList: Record<
     {
       question: "Kawasan mana yang anda layani?",
       answer:
-        "Kami melayani Kuala Lumpur dan Selangor — panduan utama kami merangkumi 18 kawasan kejiranan di Kuala Lumpur dan 28 pekan di Selangor, dengan kawasan lain di Lembah Klang dilayan atas permintaan.",
+        "Kami melayani Kuala Lumpur dan Selangor — panduan utama kami merangkumi 21 kawasan kejiranan di Kuala Lumpur dan 32 pekan di Selangor, dengan kawasan lain di Lembah Klang dilayan atas permintaan.",
     },
     {
       question: "Apakah itu Lembah Klang?",
@@ -357,7 +364,7 @@ export const areasIndexFaqList: Record<
     {
       question: "你们的服务范围涵盖哪些地区？",
       answer:
-        "我们的服务涵盖吉隆坡与雪兰莪 —— 主要指南包括吉隆坡 18 个地段与雪兰莪 28 个城镇，巴生谷其他地区亦可按需求安排。",
+        "我们的服务涵盖吉隆坡与雪兰莪 —— 主要指南包括吉隆坡 21 个地段与雪兰莪 32 个城镇，巴生谷其他地区亦可按需求安排。",
     },
     {
       question: "什么是巴生谷？",

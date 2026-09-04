@@ -2,6 +2,7 @@ import { siteConfig, getWhatsAppHref, getPhoneHref } from "@/data/site";
 import { serviceDetails } from "@/data/service-content";
 import { problemDetails } from "@/data/problem-content";
 import { areaRegions } from "@/data/area-content";
+import { getActiveStateCoverage, getLocationBySlug } from "@/data/locations";
 import { getProjectContent, getPublishedProjects } from "@/data/project-content";
 import { getArticleText, getArticles } from "@/data/blog";
 import {
@@ -62,6 +63,28 @@ export function getAiKnowledge() {
       summary:
         "Kuala Lumpur, Selangor and the wider Klang Valley, Malaysia. No other states are served.",
       places: ["Kuala Lumpur", "Selangor", "Klang Valley"],
+      // The coverage tree is derived from the single location registry
+      // (data/locations), so the machine-readable feed can never disagree
+      // with the published area guides about where the business works.
+      regions: getActiveStateCoverage().map((state) => ({
+        id: state.id,
+        name: state.name,
+        publishedGuides: state.totalPublishedGuides,
+        url: absoluteUrl("en", `/areas/${state.id}/`),
+        districts: state.districts.map((district) => ({
+          name: district.name,
+          locations: district.locationSlugs
+            .map((slug) => getLocationBySlug(slug, state.id))
+            .filter((location): location is NonNullable<typeof location> =>
+              Boolean(location),
+            )
+            .map((location) => ({
+              name: location.name,
+              level: location.level,
+              url: absoluteUrl("en", `/areas/${location.regionId}/${location.slug}/`),
+            })),
+        })),
+      })),
       areaGuides: areas.map((area) => ({
         name: area.name,
         url: absoluteUrl("en", `/areas/${area.region}/${area.slug}/`),

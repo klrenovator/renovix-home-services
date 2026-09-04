@@ -64,7 +64,9 @@ less — quality over page count.
 - No keyword-stuffed copy, no exact-match anchor repetition, no stuffing
   "near me / best / cheap / emergency" where it does not belong.
 - No `/{service}-in-{area}/` or per-keyword doorway pages. Location intent is
-  served by the 46 area guides + the intent matrix.
+  served by the 53 area guides + the intent matrix (`audit:locations` enforces
+  the quality gate: unique metadata, real local context, FAQs and inbound
+  links, so a thin location page cannot ship).
 - No new page for every theoretical keyword. Map intent to the correct
   existing page (see CONTENT_MAP.md §4). New pages only for genuinely new,
   valuable coverage, in EN+MS+ZH together with unique metadata.

@@ -2,6 +2,7 @@ import type { AreaRegion } from "./types";
 import { selangorAreasA } from "./selangor-areas-a";
 import { selangorAreasB } from "./selangor-areas-b";
 import { selangorAreasC } from "./selangor-areas-c";
+import { selangorAreasD } from "./selangor-areas-d";
 
 export const selangor: AreaRegion = {
   id: "selangor",
@@ -105,5 +106,5 @@ export const selangor: AreaRegion = {
         "No. Handyman repairs and single-room jobs are welcome alongside full renovations.",
     },
   ],
-  areas: [...selangorAreasA, ...selangorAreasB, ...selangorAreasC],
+  areas: [...selangorAreasA, ...selangorAreasB, ...selangorAreasC, ...selangorAreasD],
 };

@@ -24,6 +24,7 @@ export const condoRenovationApprovalChecklist: ArticleDefinition = {
     "selangor/cyberjaya",
     "selangor/bandar-sunway",
     "selangor/kota-damansara",
+    "kuala-lumpur/kl-city-centre",
   ],
   relatedProjects: ["office-renovation-ceiling-and-tiling"],
   pricingIds: [],

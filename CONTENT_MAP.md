@@ -56,10 +56,12 @@ tap; "Why is my wall paint peeling?" → peeling paint). Emergency framing is
 restricted to the audited triage set (power faults, active pipe bursts, the
 sagging-ceiling safety question) — see CONTENT_GOVERNANCE.md.
 
-## 3. Location map (46 guides + 2 hubs + index)
+## 3. Location map (53 guides + 2 hubs + index)
 
 `/{lang}/areas/` → `/{lang}/areas/kuala-lumpur/` + `/{lang}/areas/selangor/`
-→ 18 KL neighbourhood guides + 28 Selangor town guides. Every guide carries
+→ 21 Kuala Lumpur guides + 32 Selangor guides (verified by
+`npm run audit:locations`, which derives the count from the registry rather
+than from a number written here). Every guide carries
 district context (Phase 15 hierarchy), 6 locally-noted services, property
 types, local problems, process, pricing from the centralized catalogue
 (rendered through `getPricingById` / `getStartingRatesForLocation` — never
@@ -67,8 +69,8 @@ typed into the page), FAQs and nearby-area links.
 
 Location × service intent is served by the existing guides plus the intent
 matrix (`data/locations/intent-matrix.ts`), NOT by service×location doorway
-pages. No `/{service}-in-{area}/` URLs exist and none are planned: 10 × 46 =
-460 near-duplicate pages would destroy more authority than they create.
+pages. No `/{service}-in-{area}/` URLs exist and none are planned: 10 × 53 =
+530 near-duplicate pages would destroy more authority than they create.
 
 ## 4. Intent → page mapping (where each intent ranks/answers)
 

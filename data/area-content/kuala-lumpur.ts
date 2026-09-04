@@ -2,6 +2,7 @@ import type { AreaRegion } from "./types";
 import { klAreasA } from "./kuala-lumpur-areas-a";
 import { klAreasB } from "./kuala-lumpur-areas-b";
 import { klAreasC } from "./kuala-lumpur-areas-c";
+import { klAreasD } from "./kuala-lumpur-areas-d";
 
 export const kualaLumpur: AreaRegion = {
   id: "kuala-lumpur",
@@ -105,5 +106,5 @@ export const kualaLumpur: AreaRegion = {
         "Both. Handyman repairs, a single leaking tap or a cracked tile are welcome alongside larger renovation projects.",
     },
   ],
-  areas: [...klAreasA, ...klAreasB, ...klAreasC],
+  areas: [...klAreasA, ...klAreasB, ...klAreasC, ...klAreasD],
 };

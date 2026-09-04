@@ -31,6 +31,8 @@ export const oldHouseWiringWarningSigns: ArticleDefinition = {
     "kuala-lumpur/old-klang-road",
     "selangor/klang",
     "selangor/petaling-jaya",
+    "kuala-lumpur/kampung-baru",
+    "kuala-lumpur/taman-desa",
   ],
   relatedProjects: [
     "electrical-distribution-board-wiring",
