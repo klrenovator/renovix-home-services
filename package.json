@@ -19,7 +19,13 @@
     "audit:subservices": "node scripts/audit-subservices.mjs",
     "audit:blog": "node scripts/audit-blog.mjs",
     "audit:quote": "node scripts/audit-quote-flow.mjs",
-    "audit:analytics": "node scripts/audit-analytics.mjs"
+    "audit:analytics": "node scripts/audit-analytics.mjs",
+    "audit:security": "node scripts/audit-security.mjs",
+    "audit:sitemap": "node scripts/audit-sitemap.mjs",
+    "audit:schema": "node scripts/audit-schema.mjs",
+    "audit:multilingual": "node scripts/audit-multilingual.mjs",
+    "audit:routes": "node scripts/audit-routes.mjs",
+    "audit:live": "node scripts/phase25-live-qa.mjs"
   },
   "dependencies": {
     "next": "16.3.3",

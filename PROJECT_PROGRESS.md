@@ -8,22 +8,22 @@
 - **Stack:** Next.js 16.3.3, React 19.2.8, TypeScript 6.0.3, Tailwind CSS 4.3.3
 - **Languages:** English (`/en/`), Bahasa Melayu (`/ms/`), Simplified Chinese (`/zh/`) — see Phase 6
 
-### Current site inventory (verified in Phase 21, `npm run build` + `sitemap.xml`)
+### Current site inventory (verified in Phase 25, `npm run build` + served `/sitemap.xml`)
 
 | Item | Count |
 |---|---|
 | Service pillar pages | 10 per language |
 | Sub-service pages | 51 per language |
 | Problem guides | 57 per language (10 categories) |
-| Area guides | **46** (+ 2 region hubs + areas index) per language |
+| Area guides | **53** (21 Kuala Lumpur + 32 Selangor) + 2 region hubs + areas index per language |
 | Projects | 21 per language |
 | Knowledge Hub (`/blog/`) | hub + **12** guides per language |
-| **Canonical pages per language** | **211** |
-| **Canonical URLs total (3 languages)** | **633** |
+| **Canonical pages per language** | **218** |
+| **Canonical URLs total (3 languages)** | **654** |
+| Static pages built | **665** |
 | Pricing rows (`data/pricing/pricing.ts`) | **51** |
-| Search-intent matrix entries | 16 (all pricing derived from `pricingId`) |
-| Pricing entries corrected in Phase 18 | **10 price mismatches + 1 unit mismatch + 12 sub-service slug mismatches** (Phase 17 audit) |
-| Audit scripts | 10, all PASS |
+| Search-intent matrix entries | **24** (all pricing derived from `pricingId`) |
+| Audit scripts | 16 static + 1 live server QA |
 
 ---
 
@@ -3315,3 +3315,123 @@ exist yet.
 - [ ] Headless-browser click-through could not run in this sandbox (no
       browser available) — live event delivery to a real property is verified
       by the owner per the checklist, never assumed
+
+---
+
+## PHASE 25 — Final Owner Data, Live Deployment, Real-World QA & Production Verification — [x] COMPLETE (as a production-readiness checkpoint)
+
+Phase 25 is the final production-readiness checkpoint. No new architecture was
+introduced. Missing business facts were not invented. Nothing is marked
+"live verified" unless it was actually requested over HTTP.
+
+### 1. Owner business data
+
+Verified against `data/site.ts` (the only source) and the served contact
+page. Nothing below was invented in this phase:
+
+| Field | Value | Status |
+|---|---|---|
+| Business name | Renovix Home Services | Code + live verified |
+| Phone / WhatsApp | +601159259521 | Code + live verified (`tel:` / `wa.me`) |
+| Email | renovixhomeservices@gmail.com | Code + live verified (`mailto:`) |
+| Address | Jalan Kiara, Mont Kiara, 50480 Kuala Lumpur… | Code + live verified |
+| Hours | 9:00 AM – 6:00 PM (days not stated) | Code + live verified; schema still has **no** `dayOfWeek` |
+| Service area | Kuala Lumpur, Selangor, Klang Valley | Code + live verified |
+| Certifications / reviews / years | not supplied | Correctly unpublished (OWNER-PENDING if the owner later supplies them) |
+
+### 2. Resend / email
+
+- Code verified: validation, honeypot, origin allow-list (apex + www), 64 KB
+  body cap, rate limit (5 / 15 min / IP → 429), honest **503 `unavailable`**
+  without credentials, `X-Robots-Tag: noindex`.
+- Live production email delivery: **not tested** and **not claimed**. No
+  `RESEND_API_KEY` / `QUOTE_FROM_EMAIL` in this environment. A real submission
+  test that delivers mail remains OWNER-PENDING.
+
+### 3. Domain / DNS / HTTPS
+
+- Production hostname resolves and serves the site (Vercel). HTTPS is live
+  (SecurityHeaders.com grade **A**, HSTS `max-age=63072000`).
+- Search Console HTML file and `google-site-verification` meta are live.
+- Canonicals, sitemap `<loc>`s and `robots.txt` `Host:` all use the apex
+  `https://renovixhomeservices.my`.
+- Live fetchers follow **apex → www** before `/en/`. That www/non-www
+  preference is a Vercel domain setting, not application code. Changing it
+  from the repo would risk a redirect loop. **Owner action:** set
+  `renovixhomeservices.my` as the primary domain so www redirects *to* apex.
+
+### 4–6. Sitemap, robots.txt, Search Console
+
+- Served `/sitemap.xml`: **654** unique HTTPS apex URLs, 218 per language,
+  no duplicates, no staging hosts. Full local sweep: **654/654 HTTP 200**.
+- `/robots.txt`: `Allow: /`, `Host: https://renovixhomeservices.my`,
+  `Sitemap: https://renovixhomeservices.my/sitemap.xml`. Live verified.
+- Search Console: verification token live. Sitemap submission and indexing
+  performance: **Insufficient real-world data for performance conclusions.**
+
+### 7–13. Multilingual, services, pricing, locations, conversion, mobile/desktop
+
+- EN/MS/ZH homepages, tiling, quote, contact, a problem, a location, a blog
+  guide and a project page: self-canonical, `en-MY`/`ms-MY`/`zh-MY`/`x-default`,
+  one H1, skip-link, no accidental `noindex`, no analytics vendors while IDs
+  are unset, WhatsApp/phone/email match `data/site.ts`.
+- All 10 services 200. Carpentry 404. No English chrome on `/ms/` or `/zh/`.
+- Pricing remains centralized (51 rows). Visible tiling headline still
+  "Starting from RM8 per sqft".
+- Stale MS/ZH homepage region summaries (18 KL / 28 Selangor) corrected to
+  **21 / 32** to match the Phase 23 registry.
+- Quote form: labels, `aria-required`, honeypot, no fake file input, WhatsApp
+  fallback. Local API tests as above.
+
+### 14–18. Performance, accessibility, SEO, schema, security
+
+- Real-browser PageSpeed: **not available** (public PSI quota exhausted;
+  sandbox TLS to the production IP is reset). Local SSG profile unchanged
+  (665 static pages; `/api/quote` dynamic). Not claimed as a Core Web Vitals
+  field measurement.
+- Accessibility (served HTML): skip link, landmarks, one H1, labelled quote
+  fields, spoken "(required)", focus-visible, 16px inputs, reduced-motion.
+  Real-device click-through is still OWNER-PENDING.
+- Schema: Organization/LocalBusiness + WebSite on every page; Service +
+  FAQPage + BreadcrumbList on service pages; Article + FAQPage on problem
+  and blog pages; ImageObject on projects. No Review / AggregateRating.
+- Security: CSP + nosniff + referrer-policy + permissions-policy already
+  live (SecurityHeaders A). Phase 25 added `frame-ancestors 'none'` and
+  `X-Frame-Options: DENY`. No secrets in source. Quote origin/size/rate
+  guards intact.
+
+### 19–22. Links, cleanup, docs, audits
+
+- Full sitemap sweep 654/654 200; sampled internal links resolve; unknown
+  slugs 404.
+- No unused production artifacts deleted (historical phase reports kept).
+- `PROJECT_PROGRESS.md` inventory updated off the stale Phase 21 633/46
+  figures.
+- New static audits: `audit:security`, `audit:sitemap`, `audit:schema`,
+  `audit:multilingual`, `audit:routes`. Live server QA: `audit:live`.
+
+### 23–24. Status vocabulary used in this phase
+
+- Code verified / Build verified / Static verification passed / Live
+  verified (HTTP) / Owner pending / Not yet testable.
+- Owner remaining actions are only those that cannot be done in code —
+  listed in `PROJECT_OWNER_PENDING.md` and the Phase 25 report.
+
+### 25. Test results (this phase)
+
+- [x] `npm run type-check` — PASS
+- [x] `npm run lint` — PASS
+- [x] `npm run build` — PASS (665 static pages)
+- [x] Existing audits (business, og-fonts, project-assets, pricing,
+      locations, authority, subservices, blog, quote, analytics, projects)
+      — PASS
+- [x] New audits (security, sitemap, schema, multilingual, routes) — PASS
+- [x] `npm run audit:live` against `next start` — PASS (654/654 sitemap
+      URLs 200; quote API honest 503 / 403 / 400 / 413 / 429)
+- [ ] Live Resend delivery — owner pending
+- [ ] Live analytics property — owner pending (no IDs)
+- [ ] Search Console indexing performance — insufficient real-world data
+- [ ] Real-device / PageSpeed field data — not yet testable here
+
+Phase 25 stops here. Ongoing SEO/content/analytics work after this is
+normal post-launch maintenance, not a new build phase.

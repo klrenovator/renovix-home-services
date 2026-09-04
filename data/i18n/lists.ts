@@ -119,23 +119,23 @@ export const regionList: Record<
     "kuala-lumpur": {
       name: "Kuala Lumpur",
       summary:
-        "Panduan untuk bandar Kuala Lumpur serta 18 kawasan kejiranan — daripada pangsapuri bandar hingga rumah teres yang lebih lama.",
+        "Panduan untuk bandar Kuala Lumpur serta 21 kawasan kejiranan — daripada pangsapuri bandar hingga rumah teres yang lebih lama.",
     },
     selangor: {
       name: "Selangor",
       summary:
-        "Panduan untuk Selangor serta 28 pekan — meliputi perumahan teres, kondominium dan rumah berkembar di seluruh negeri.",
+        "Panduan untuk Selangor serta 32 pekan — meliputi perumahan teres, kondominium dan rumah berkembar di seluruh negeri.",
     },
   },
   zh: {
     "kuala-lumpur": {
       name: "吉隆坡",
       summary:
-        "吉隆坡市区及 18 个地段的指南 —— 从市中心公寓到较早建成的排屋区。",
+        "吉隆坡市区及 21 个地段的指南 —— 从市中心公寓到较早建成的排屋区。",
     },
     selangor: {
       name: "雪兰莪",
-      summary: "雪兰莪及 28 个城镇的指南 —— 涵盖全州的排屋、公寓与半独立屋住宅区。",
+      summary: "雪兰莪及 32 个城镇的指南 —— 涵盖全州的排屋、公寓与半独立屋住宅区。",
     },
   },
 };

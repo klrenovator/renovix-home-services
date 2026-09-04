@@ -42,6 +42,12 @@ Renovix Home Services – Home Renovation & Improvement Services in Kuala Lumpur
 | `npm run audit:blog` | Blog audit — every related slug and pricing id resolves, no hard-coded prices, EN/MS/ZH complete, unique metadata per language, no orphan articles |
 | `npm run audit:quote` | Quote-flow audit — API security invariants, registry integrity, truthful photo handling, i18n completeness, conversion-event hooks, quote-page SEO |
 | `npm run audit:analytics` | Analytics audit — provider exclusivity (GA4 xor GTM, single `page_view`), no fabricated IDs, all conversion events wired, PII cannot reach events, Web Vitals reporting, consent defaults, conditional CSP, privacy disclosure in EN/MS/ZH |
+| `npm run audit:security` | Security audit — CSP/clickjacking headers, quote-endpoint guards, no secrets in source, env gitignore |
+| `npm run audit:sitemap` | Sitemap/robots source-of-truth audit — 654 URLs from the registries, apex host, no invented lastmod |
+| `npm run audit:schema` | Structured-data honesty — required entity types present, no reviews/ratings/awards/opening days |
+| `npm run audit:multilingual` | EN/MS/ZH coverage complete; stale 18/28 location counts cannot return |
+| `npm run audit:routes` | App Router tree matches the intended public architecture; no Carpentry category |
+| `npm run audit:live` | Live QA against a running `next start` (654 sitemap URLs, SEO/schema spot checks, quote API) |
 
 ## Pricing data
 
