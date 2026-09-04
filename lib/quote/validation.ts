@@ -1,15 +1,21 @@
 import { getLanguage } from "@/data/languages";
 import { getServiceName } from "@/data/i18n";
 import { getDictionary } from "@/i18n";
+import { getSubServicesByService } from "@/data/sub-services";
 import {
   isPreferredContactMethod,
   isQuoteLocale,
+  isQuotePropertyTypeId,
   isQuoteServiceValue,
   QUOTE_HONEYPOT_FIELD,
   QUOTE_LIMITS,
   type PreferredContactMethod,
   type QuoteLocale,
+  type QuotePropertyTypeId,
 } from "./constants";
+import { isValidEmail, isValidIsoDate, isValidPhone } from "./validators";
+
+export { isValidEmail, isValidIsoDate, isValidPhone, normalizePhone } from "./validators";
 
 export type QuoteFieldName =
   | "name"
@@ -27,10 +33,14 @@ export type QuotePayload = {
   name: string;
   phone: string;
   email: string;
-  propertyType: string;
+  propertyTypeId: QuotePropertyTypeId;
+  /** English label for the notification email. */
+  propertyTypeLabel: string;
   service: string;
   serviceLabel: string;
   subService: string;
+  /** English registry name for the notification email (empty when none). */
+  subServiceLabel: string;
   location: string;
   description: string;
   preferredDate: string;
@@ -50,6 +60,15 @@ function getServiceLabel(service: string, locale: QuoteLocale): string {
   }
 
   return getServiceName(service, locale, service);
+}
+
+/**
+ * English label for a property-type ID. The email notification is written for
+ * the business, so it always renders the English dictionary label regardless
+ * of the language the customer used.
+ */
+function getPropertyTypeLabel(id: QuotePropertyTypeId): string {
+  return getDictionary("en").quote.propertyTypes[id];
 }
 
 function asRecord(value: unknown): Record<string, unknown> | null {
@@ -76,53 +95,33 @@ function collapseWhitespace(value: string): string {
   return value.replace(/\s+/g, " ").trim();
 }
 
-export function normalizePhone(value: string): string {
-  const stripped = value.trim().replace(/[\s().-]/g, "");
-
-  if (stripped.startsWith("00")) {
-    return `+${stripped.slice(2)}`;
+/**
+ * Phase 19 registry check: a sub-service may only be submitted for the service
+ * it is registered under. Free-text sub-service values are rejected — the form
+ * submits registry slugs, never display names.
+ */
+function resolveSubService(
+  subServiceSlug: string,
+  service: string,
+): { slug: string; label: string } | null {
+  if (subServiceSlug.length === 0) {
+    return { slug: "", label: "" };
   }
 
-  return stripped;
-}
-
-export function isValidPhone(value: string): boolean {
-  const normalized = normalizePhone(value);
-
-  if (!/^\+?[0-9]{8,15}$/.test(normalized)) {
-    return false;
+  if (service === "not-sure-or-multiple-services") {
+    // "Not sure" has no registry sub-services; choosing one is contradictory.
+    return null;
   }
 
-  const digits = normalized.replace(/\D/g, "");
-
-  return digits.length >= 8 && digits.length <= 15;
-}
-
-export function isValidEmail(value: string): boolean {
-  if (value.length === 0 || value.length > QUOTE_LIMITS.email.max) {
-    return false;
-  }
-
-  if (value.includes("..") || value.includes(" ")) {
-    return false;
-  }
-
-  return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(value);
-}
-
-export function isValidIsoDate(value: string): boolean {
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) {
-    return false;
-  }
-
-  const [year, month, day] = value.split("-").map(Number);
-  const date = new Date(Date.UTC(year, month - 1, day));
-
-  return (
-    date.getUTCFullYear() === year &&
-    date.getUTCMonth() === month - 1 &&
-    date.getUTCDate() === day
+  const registered = getSubServicesByService(service).find(
+    (item) => item.slug === subServiceSlug,
   );
+
+  if (!registered) {
+    return null;
+  }
+
+  return { slug: registered.slug, label: registered.en.name };
 }
 
 export function escapeHtml(value: string): string {
@@ -187,9 +186,9 @@ export function parseQuotePayload(input: unknown): QuoteValidationResult {
   }
 
   const propertyTypeRaw = readString(record.propertyType, QUOTE_LIMITS.propertyType.max);
-  const propertyType = propertyTypeRaw === null ? null : collapseWhitespace(propertyTypeRaw);
+  const propertyType = propertyTypeRaw === null ? null : propertyTypeRaw.trim();
 
-  if (propertyType === null || propertyType.length === 0) {
+  if (propertyType === null || !isQuotePropertyTypeId(propertyType)) {
     fields.propertyType = true;
   }
 
@@ -201,7 +200,8 @@ export function parseQuotePayload(input: unknown): QuoteValidationResult {
   }
 
   const subServiceRaw = readString(record.subService ?? "", QUOTE_LIMITS.subService.max);
-  const subService = subServiceRaw === null ? null : collapseWhitespace(subServiceRaw);
+  const subService =
+    subServiceRaw === null ? null : collapseWhitespace(subServiceRaw);
 
   if (subService === null) {
     fields.subService = true;
@@ -259,10 +259,23 @@ export function parseQuotePayload(input: unknown): QuoteValidationResult {
     }
   }
 
+  // Relationship checks run only when the individual fields themselves are
+  // well-formed, so the client always receives actionable field errors first.
+  let resolvedSubService: { slug: string; label: string } | null = null;
+
+  if (!fields.service && !fields.subService && service && subService !== null) {
+    resolvedSubService = resolveSubService(subService, service);
+
+    if (!resolvedSubService) {
+      fields.subService = true;
+    }
+  }
+
   if (Object.keys(fields).length > 0) {
     return { ok: false, reason: "validation", fields };
   }
 
+  const propertyTypeId = propertyType as QuotePropertyTypeId;
   const resolvedServiceLabel = getServiceLabel(service as string, locale);
 
   return {
@@ -271,10 +284,12 @@ export function parseQuotePayload(input: unknown): QuoteValidationResult {
       name: name as string,
       phone: phone as string,
       email: email as string,
-      propertyType: propertyType as string,
+      propertyTypeId,
+      propertyTypeLabel: getPropertyTypeLabel(propertyTypeId),
       service: service as string,
       serviceLabel: resolvedServiceLabel,
-      subService: subService as string,
+      subService: (resolvedSubService as { slug: string; label: string }).slug,
+      subServiceLabel: (resolvedSubService as { slug: string; label: string }).label,
       location: location as string,
       description: description as string,
       preferredDate: preferredDate as string,

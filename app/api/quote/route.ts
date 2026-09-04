@@ -17,6 +17,8 @@ function json(body: QuoteResponseBody, status: number, extraHeaders?: HeadersIni
     status,
     headers: {
       "Cache-Control": "no-store",
+      // The API endpoint is not a page; keep it out of search indexes.
+      "X-Robots-Tag": "noindex, nofollow",
       ...extraHeaders,
     },
   });
@@ -24,7 +26,11 @@ function json(body: QuoteResponseBody, status: number, extraHeaders?: HeadersIni
 
 export async function POST(request: Request) {
   try {
-    if (!isAllowedOrigin(request.headers.get("origin"), request.url)) {
+    if (!isAllowedOrigin(
+      request.headers.get("origin"),
+      request.url,
+      request.headers.get("host"),
+    )) {
       return json({ ok: false, error: "forbidden" }, 403);
     }
 

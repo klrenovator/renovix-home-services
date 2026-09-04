@@ -2866,3 +2866,142 @@ which files/fields each goes into. Nothing on the list blocks the build.
 - [x] Rendered HTML verified for EN/MS/ZH project pages and sub-service
       pages (genuine-only project sections)
 - [x] Static verification only — no real-browser testing is claimed
+
+## Phase 22 — Quote Form, CRO & Lead-Conversion Optimization — [x] COMPLETE
+
+Builds on the Phase 12 quote backend. No duplicate quote system was created:
+the same `/api/quote` Route Handler, the same validation pipeline, the same
+Resend integration and the same site WhatsApp configuration serve the improved
+flow. Security was preserved and strengthened, never weakened.
+
+### 1. Audit of the existing system (what was kept)
+
+Everything Phase 12 built survives intact: secure Route Handler
+(`runtime = "nodejs"`, `force-dynamic`), server-side validation, honeypot,
+in-memory rate limit (5 / 15 min / IP), origin allow-list, 64 KB body-size
+cap (header + actual byte length), HTML escaping in the email template, and
+the honest 503 when email delivery is unconfigured. Additions in this phase:
+`X-Robots-Tag: noindex, nofollow` on every API response, and the origin check
+now also compares the `Origin` host against the request's `Host` header so a
+proxied same-origin request is recognized correctly (a non-browser client
+forging both headers could already omit `Origin` entirely — validation and
+rate limiting still apply to everything).
+
+### 2. Truthful photo handling (the Phase 12 half-truth removed)
+
+Phase 12 shipped a file input plus a `photoCount`, but the photos were never
+transmitted and the notification email asked the business to request them
+again. Phase 22 removes the fake input entirely instead of pretending.
+Photos are now handled through an honest, working channel: after a
+successful submission the success panel offers a localized "send photos on
+WhatsApp" action with a pre-filled message that names the chosen service.
+The email no longer renders a photos row. (A real upload path — object
+storage + signed URLs + server-side MIME/size/count validation — remains the
+documented option if the owner wants in-form uploads later.)
+
+### 3. Registry-based service → sub-service selection
+
+`getQuoteServiceOptions(lang)` now builds both levels from the Phase 19
+sub-service registry: every option submits a stable registry slug with a
+genuinely localized name (`sub[code].name`) in EN/MS/ZH — previously MS/ZH
+offered no sub-service choice and EN offered free-text service-content names.
+The server validates the relationship: `resolveSubService` accepts a slug only
+under its registered parent service, rejects free-text values, and rejects
+any sub-service under "Not sure / multiple services" (which now offers none,
+removing the old contradictory pseudo-options). Property types submit stable
+IDs (`condominium-apartment` …) validated against a constant list; localized
+labels are display-only, and the notification email renders English labels
+for the business.
+
+### 4. UX / CRO / accessibility
+
+- Two logical sections ("How can we contact you?" / "About the work") with
+  mobile-first single-column stacking and `sm` two-column grouping.
+- Progressive disclosure: the sub-service select appears only once a concrete
+  service is chosen; the "not sure" path stays short.
+- Required/optional states are visible (asterisk + spoken "(required)"),
+  email/`preferred date`/`sub-service` clearly marked optional with helper
+  text; phone helper explains what the number is used for.
+- Validation errors are associated (`aria-invalid` + `aria-describedby` +
+  `role="alert"`), and the first invalid control receives focus; server-side
+  field errors map back onto the same UI.
+- Loading state: spinner inside the disabled submit button plus an
+  `aria-live` polite status; the whole fieldset locks during submit and after
+  success.
+- Success state: focus moves to a `role="status"` panel with the clear next
+  step (photo handoff on WhatsApp); failure state keeps the request retryable
+  with the WhatsApp fallback (pre-filled, localized).
+- Date input can no longer be set to a past date (`min` is applied after
+  hydration, keeping SSR markup stable); `noValidate` still prevents English
+  browser bubbles on `/ms/` and `/zh/`.
+- A no-form WhatsApp quick path sits above the form for customers who prefer
+  chat — same `getWhatsAppHref()` configuration as every other CTA.
+
+### 5. Multilingual
+
+All new copy ships complete in EN/MS/ZH (typed dictionary — a missing key is
+a build error): section headings, sub-service validation message, WhatsApp
+quick-path strings, success photo-handoff strings, four quote FAQs, and
+property-type labels keyed by stable ID. MS/ZH placeholder cleanup (the ZH
+dictionary carried a stray `nina.v@example.com` example email). Verified in
+rendered HTML: no English leaks onto `/ms/` or `/zh/`, registry sub-service
+labels localized per language, all hreflang/canonical sets intact.
+
+### 6. SEO / AEO
+
+The quote page gained four answer-first FAQs (request process, no instant
+quotation, photos via WhatsApp, coverage) rendered as visible accordions and
+as an `FAQPage` JSON-LD node built from the same data — the only new
+structured data, from genuine business facts. Canonical, hreflang
+(en-MY/ms-MY/zh-MY/x-default) and the sitemap entry are unchanged; the API
+endpoint is explicitly `noindex`. No guarantees, response-time promises or
+review counts were added anywhere.
+
+### 7. Analytics hooks (Phase 24 preparation)
+
+`lib/analytics.ts` defines the typed conversion events — `quote_form_start`,
+`quote_form_submit`, `quote_form_success`, `quote_form_error`,
+`whatsapp_click`, `phone_click` — and buffers them on
+`window.__renovixAnalytics` with timestamps. No platform, cookie or network
+call is loaded (Phase 24's job). `components/analytics/TrackedLink.tsx` is
+the click interface; the form fires the four funnel events with coarse
+context only (language, service slug, failure class) — never names, phone
+numbers, emails, locations or free text.
+
+### 8. Validation
+
+- [x] `npm run type-check` — **PASS**
+- [x] `npm run lint` — **PASS** (0 problems)
+- [x] `npm run build` — **PASS** (644 static pages, unchanged)
+- [x] `npm run audit:quote` — **PASS** (new: API invariants, registry
+      alignment, truthful photo handling, i18n completeness, analytics-PII,
+      page wiring)
+- [x] `npm run audit:business` — **PASS** (one regression caught and fixed:
+      a fictional example phone number in the placeholder was removed)
+- [x] `npm run audit:og-fonts`, `audit:project-assets`, `audit:pricing`,
+      `audit:locations`, `audit:authority`, `audit:subservices`,
+      `audit:blog`, `audit:projects` — **all PASS**
+- [x] Live API tests against `next start` — **25/25 PASS**: honest 503
+      without credentials; 400 + field list for empty/invalid email/invalid
+      phone/invalid date/email-contact-without-address; free-text
+      sub-service rejected; cross-service sub-service (tiling slug under
+      plumbing) rejected; sub-service under "not sure" rejected;
+      display-label property type rejected (IDs enforced); honeypot silently
+      ignored (200, no email); 70 KB body → 413; foreign origin → 403;
+      production + proxied-host origins allowed; GET → 405; rate limit
+      6th hit → 429 with correct sequence `503×5 → 429`; `X-Robots-Tag`
+      present
+- [x] Rendered EN/MS/ZH quote HTML verified (localized options, headings,
+      FAQs + FAQPage node, WhatsApp quick path, honeypot, no file input)
+- [x] Sitemap: 633 `<loc>` URLs unchanged; `/quote/` carries the full
+      hreflang set
+- [x] Real Resend delivery **not** claimed — `RESEND_API_KEY` and
+      `QUOTE_FROM_EMAIL` remain owner-pending (see
+      `PROJECT_OWNER_PENDING.md`); without them the API answers 503 and the
+      form shows the WhatsApp fallback by design
+
+### 9. Owner-pending (documented in `PROJECT_OWNER_PENDING.md`)
+
+Final approval of the field set, `RESEND_API_KEY`, verified Resend sender
+domain, `QUOTE_FROM_EMAIL`, `QUOTE_NOTIFICATION_EMAIL` (final recipient) and
+any lead-routing requirements. None of these block the improved flow.

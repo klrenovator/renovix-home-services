@@ -17,7 +17,8 @@
     "audit:locations": "node scripts/audit-locations.mjs",
     "audit:authority": "node scripts/audit-authority.mjs",
     "audit:subservices": "node scripts/audit-subservices.mjs",
-    "audit:blog": "node scripts/audit-blog.mjs"
+    "audit:blog": "node scripts/audit-blog.mjs",
+    "audit:quote": "node scripts/audit-quote-flow.mjs"
   },
   "dependencies": {
     "next": "16.3.3",

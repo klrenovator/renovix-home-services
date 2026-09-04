@@ -7,10 +7,16 @@
  */
 
 import type { ProjectDetailKey } from "@/data/project-content/types";
+import type { QuotePropertyTypeId } from "@/lib/quote/constants";
 
 export type TextItem = {
   title: string;
   description: string;
+};
+
+export type QuoteFaq = {
+  question: string;
+  answer: string;
 };
 
 export type LegalSection = {
@@ -497,6 +503,11 @@ export type Dictionary = {
     heroPrimary: string;
     formTitle: string;
     formLead: string;
+    /** Grouped-section headings inside the form. */
+    sections: {
+      contact: string;
+      job: string;
+    };
     labels: {
       name: string;
       whatsapp: string;
@@ -507,7 +518,6 @@ export type Dictionary = {
       location: string;
       description: string;
       preferredDate: string;
-      photos: string;
       preferredContact: string;
       /** Spoken-only "(required)" suffix for required-field labels. */
       requiredText: string;
@@ -524,12 +534,11 @@ export type Dictionary = {
       description: string;
     };
     help: {
+      phone: string;
       email: string;
       subService: string;
       location: string;
       preferredDate: string;
-      photos: string;
-      photosChosen: string;
       requiredNote: string;
       preferredContact: string;
     };
@@ -546,20 +555,29 @@ export type Dictionary = {
       emailRequired: string;
       propertyType: string;
       service: string;
+      subService: string;
       location: string;
       description: string;
       descriptionTooLong: string;
       preferredContact: string;
     };
-    photosPrompt: string;
-    photosSelectedSuffix: string;
-    photosSelectedSuffixPlural: string;
+    /** WhatsApp alternative shown before/next to the form (no form needed). */
+    whatsappQuickTitle: string;
+    whatsappQuickBody: string;
+    whatsappQuickCta: string;
+    whatsappQuickMessage: string;
     deliveryTitle: string;
     deliveryBody: string;
     submit: string;
     submitting: string;
     successTitle: string;
     successBody: string;
+    /** Truthful photo handoff: photos are sent on WhatsApp after submitting. */
+    successPhotosTitle: string;
+    successPhotosBody: string;
+    successPhotosCta: string;
+    /** `wa.me` prefill; `{service}` is replaced with the chosen service label. */
+    successPhotosMessage: string;
     errorTitle: string;
     errorBody: string;
     whatsappFallback: string;
@@ -573,16 +591,18 @@ export type Dictionary = {
     steps: TextItem[];
     statusTitle: string;
     statusBody: string;
+    faqEyebrow: string;
+    faqTitle: string;
+    faqs: QuoteFaq[];
     browseEyebrow: string;
     browseTitle: string;
     browseBody: string;
     coverageEyebrow: string;
     coverageTitle: string;
     coverageBody: string;
-    propertyTypes: string[];
+    /** Display labels keyed by the stable property-type IDs. */
+    propertyTypes: Record<QuotePropertyTypeId, string>;
     notSureOption: string;
-    notSureSubService: string;
-    multipleServicesSubService: string;
   };
   /** Knowledge Hub index (`/{lang}/blog/`). */
   blogIndex: {

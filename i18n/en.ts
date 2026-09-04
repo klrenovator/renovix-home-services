@@ -632,6 +632,10 @@ export const en: Dictionary = {
     formTitle: "Tell us about the work",
     formLead:
       "The more useful detail you share, the easier it is to understand what may be needed for an assessment.",
+    sections: {
+      contact: "How can we contact you?",
+      job: "About the work",
+    },
     labels: {
       name: "Name",
       whatsapp: "WhatsApp Number",
@@ -642,7 +646,6 @@ export const en: Dictionary = {
       location: "Location",
       description: "Description",
       preferredDate: "Preferred Date",
-      photos: "Upload Photos",
       preferredContact: "Preferred contact method",
       requiredText: "(required)",
     },
@@ -652,21 +655,19 @@ export const en: Dictionary = {
       email: "you@example.com",
       propertyType: "Select property type",
       service: "Select a service",
-      subService: "Select a sub-service (optional)",
+      subService: "Select the specific work (optional)",
       subServiceDisabled: "Choose a service first",
       location: "Area, city or neighbourhood",
       description:
         "Describe the issue or work you have in mind, including any useful measurements, access details or timing considerations.",
     },
     help: {
+      phone: "The number we reach you on — WhatsApp or a call, based on your preference below.",
       email: "Optional, unless you prefer to be contacted by email.",
       subService: "Choose the closest option, or leave this blank.",
       location:
         "Include the area in Kuala Lumpur, Selangor or the Klang Valley where the work is needed.",
       preferredDate: "Optional. A date is a preference, not a booking.",
-      photos:
-        "Photos are not attached to this form. After submitting, please send them on WhatsApp so we can assess the work.",
-      photosChosen: "Choose photos of the area",
       requiredNote: "Fields marked * are required.",
       preferredContact: "We will use this method first when we reply.",
     },
@@ -683,14 +684,18 @@ export const en: Dictionary = {
       emailRequired: "Please enter an email address so we can reply by email.",
       propertyType: "Please select a property type.",
       service: "Please select a service.",
+      subService: "Please choose a sub-service from the list.",
       location: "Please enter the area where the work is needed.",
       description: "Please describe the work you need.",
       descriptionTooLong: "This message is too long. Please shorten it.",
       preferredContact: "Please choose how you would like us to contact you.",
     },
-    photosPrompt: "Upload Photos",
-    photosSelectedSuffix: "photo",
-    photosSelectedSuffixPlural: "photos",
+    whatsappQuickTitle: "Prefer WhatsApp?",
+    whatsappQuickBody:
+      "No form needed — message us directly and share the details in the chat.",
+    whatsappQuickCta: "Chat on WhatsApp",
+    whatsappQuickMessage:
+      "Hello Renovix Home Services, I would like to ask about a quote for home service work.",
     deliveryTitle: "How this form is delivered",
     deliveryBody:
       "Your request is sent to our team. A quotation is not generated instantly — we review the details first and may ask for more information or photos. You can also WhatsApp or call +601159259521.",
@@ -698,7 +703,13 @@ export const en: Dictionary = {
     submitting: "Submitting your request...",
     successTitle: "Request received",
     successBody:
-      "Thank you! Your quote request has been received. Our team will contact you shortly.",
+      "Thank you! Your quote request has been received. Our team will contact you using your preferred method.",
+    successPhotosTitle: "Have photos of the work?",
+    successPhotosBody:
+      "Photos help with the initial assessment. Send them to us on WhatsApp after this request.",
+    successPhotosCta: "Send photos on WhatsApp",
+    successPhotosMessage:
+      "Hello Renovix Home Services, I have just submitted a quote request for {service}. Here are photos of the work.",
     errorTitle: "We could not send your request",
     errorBody:
       "We couldn't submit your request right now. Please try again or contact us on WhatsApp.",
@@ -733,6 +744,30 @@ export const en: Dictionary = {
     statusTitle: "Form delivery status",
     statusBody:
       "This form sends your enquiry to Renovix Home Services. We will contact you using your preferred method. You can also reach us directly on WhatsApp or phone: +601159259521, or email renovixhomeservices@gmail.com.",
+    faqEyebrow: "Quote questions",
+    faqTitle: "Frequently asked questions",
+    faqs: [
+      {
+        question: "How do I request a quote?",
+        answer:
+          "Fill in the form on this page with the service, property type, location and a short description — or message us on WhatsApp. Each request is reviewed, and we contact you using your preferred contact method.",
+      },
+      {
+        question: "Will I receive a quotation instantly?",
+        answer:
+          "No. A quotation is not generated instantly. The details are reviewed first, and depending on the work, more information, photos or an assessment may be needed before a quotation is prepared.",
+      },
+      {
+        question: "Can I send photos of the work?",
+        answer:
+          "Yes. After submitting the form, send your photos on WhatsApp. Clear photos together with a short description help with the initial assessment, but they do not replace an assessment where one is needed.",
+      },
+      {
+        question: "Which areas do you cover?",
+        answer:
+          "Kuala Lumpur, Selangor and the wider Klang Valley. Include your area in the quote request so the location can be considered properly.",
+      },
+    ],
     browseEyebrow: "Not sure where to start?",
     browseTitle: "Browse the service scope before you request a quote",
     browseBody:
@@ -741,16 +776,14 @@ export const en: Dictionary = {
     coverageTitle: "Work across Kuala Lumpur, Selangor & the Klang Valley",
     coverageBody:
       "Include your neighbourhood or city in the quote request. You can also use the service area guides to understand the local coverage context.",
-    propertyTypes: [
-      "Condominium / apartment",
-      "Terrace / landed house",
-      "Semi-detached / bungalow",
-      "Shop / office / commercial space",
-      "Other / not sure yet",
-    ],
+    propertyTypes: {
+      "condominium-apartment": "Condominium / apartment",
+      "terrace-landed-house": "Terrace / landed house",
+      "semi-detached-bungalow": "Semi-detached / bungalow",
+      "shop-office-commercial": "Shop / office / commercial space",
+      "other-not-sure": "Other / not sure yet",
+    },
     notSureOption: "Not sure / multiple services",
-    notSureSubService: "Not sure — please advise",
-    multipleServicesSubService: "Multiple services / renovation scope",
   },
   blogIndex: {
     metaTitle: "Renovix Home Services | Home Renovation Guides for KL & Selangor",

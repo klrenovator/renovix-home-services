@@ -17,6 +17,7 @@ import type {
 } from "@/data/problem-content/types";
 import { projectCategories, type ProjectCategory } from "@/data/projects";
 import { areasIndexFaqs } from "@/data/area-content";
+import { getSubServicesByService } from "@/data/sub-services";
 import type { AreaDetail, AreaFaq } from "@/data/area-content/types";
 import {
   areaNames,
@@ -228,52 +229,49 @@ export function getSiteFaqs(lang: LanguageCode | string): SiteFaq[] {
   });
 }
 
+export type QuoteSubServiceOption = {
+  /** Phase 19 registry slug — the value the form submits. */
+  value: string;
+  /** Localized registry name shown to the customer. */
+  label: string;
+};
+
 export type QuoteOption = {
   value: string;
   label: string;
-  subServices: string[];
+  subServices: QuoteSubServiceOption[];
 };
 
 /**
- * Quote form options for a language. English keeps the full sub-service list
- * derived from the service architecture; the other languages expose the
- * service categories only, because the sub-service names come from service
- * content that is not translated yet and mixing them in would put two
- * languages in the same form.
+ * Quote form options for a language, built from the Phase 19 sub-service
+ * registry. Sub-services are submitted as registry slugs with genuinely
+ * localized names in every language (each registry entry ships complete
+ * en/ms/zh copy), so a `/ms/` or `/zh/` form never mixes in English option
+ * labels. "Not sure / multiple services" deliberately offers no sub-service
+ * choice — the description field carries that context instead.
  */
 export function getQuoteServiceOptions(
   lang: LanguageCode | string,
-  subServices: Record<string, string[]>,
 ): QuoteOption[] {
   const code = getLanguageCode(lang);
   const t = getDictionary(code);
   const categories = getServiceCategories(code);
 
-  const additional: QuoteOption[] = [
-    {
-      value: "not-sure-or-multiple-services",
-      label: t.quote.notSureOption,
-      subServices: [t.quote.notSureSubService, t.quote.multipleServicesSubService],
-    },
-  ];
-
-  if (code === "en") {
-    return [
-      ...additional,
-      ...categories.map((service) => ({
-        value: service.slug,
-        label: service.name,
-        subServices: [t.quote.notSureSubService, ...(subServices[service.slug] ?? [])],
-      })),
-    ];
-  }
+  const notSure: QuoteOption = {
+    value: "not-sure-or-multiple-services",
+    label: t.quote.notSureOption,
+    subServices: [],
+  };
 
   return [
-    ...additional,
+    notSure,
     ...categories.map((service) => ({
       value: service.slug,
       label: service.name,
-      subServices: [],
+      subServices: getSubServicesByService(service.slug).map((sub) => ({
+        value: sub.slug,
+        label: sub[code].name,
+      })),
     })),
   ];
 }

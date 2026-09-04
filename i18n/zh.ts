@@ -589,6 +589,10 @@ export const zh: Dictionary = {
     heroPrimary: "开始报价申请",
     formTitle: "告诉我们工程详情",
     formLead: "您提供的资料越详细，我们越容易判断评估时可能需要什么。",
+    sections: {
+      contact: "我们如何联系您？",
+      job: "工程详情",
+    },
     labels: {
       name: "姓名",
       whatsapp: "WhatsApp 号码",
@@ -599,30 +603,27 @@ export const zh: Dictionary = {
       location: "所在位置",
       description: "工程说明",
       preferredDate: "期望日期",
-      photos: "上传照片",
       preferredContact: "首选联系方式",
       requiredText: "（必填）",
     },
     placeholders: {
       name: "您的姓名",
       whatsapp: "您的 WhatsApp 号码",
-      email: "nina.v@example.com",
+      email: "you@example.com",
       propertyType: "请选择房屋类型",
       service: "请选择服务",
-      subService: "请选择细项服务（可选）",
+      subService: "请选择具体工程（可选）",
       subServiceDisabled: "请先选择服务",
       location: "地区、城市或地段",
       description:
         "请描述您想处理的问题或工程，包括有用的尺寸、出入安排或时间考虑。",
     },
     help: {
+      phone: "我们通过此号码联系您——按您下方选择的方式，使用 WhatsApp 或电话。",
       email: "选填，除非您希望我们通过电邮联系。",
       subService: "选择最接近的选项，或留空。",
       location: "请注明工程所在的吉隆坡、雪兰莪或巴生谷地区。",
       preferredDate: "选填。日期只是您的偏好，并非预约。",
-      photos:
-        "本表单不会附上照片。提交后，请通过 WhatsApp 发送照片，以便我们评估工程。",
-      photosChosen: "选择该区域的照片",
       requiredNote: "标示 * 的栏位为必填。",
       preferredContact: "我们会优先通过此方式回复您。",
     },
@@ -639,21 +640,28 @@ export const zh: Dictionary = {
       emailRequired: "请输入电邮地址，以便我们通过电邮回复。",
       propertyType: "请选择房屋类型。",
       service: "请选择服务。",
+      subService: "请从列表中选择细项服务。",
       location: "请输入工程所在地区。",
       description: "请说明您需要的工程内容。",
       descriptionTooLong: "留言过长，请精简后再提交。",
       preferredContact: "请选择您希望我们联系您的方式。",
     },
-    photosPrompt: "上传照片",
-    photosSelectedSuffix: "张照片",
-    photosSelectedSuffixPlural: "张照片",
+    whatsappQuickTitle: "更喜欢用 WhatsApp？",
+    whatsappQuickBody: "无需填写表格——直接发信息给我们，在对话中说明详情。",
+    whatsappQuickCta: "用 WhatsApp 联系",
+    whatsappQuickMessage: "您好，Renovix Home Services，我想咨询房屋服务工程的报价。",
     deliveryTitle: "本表单的提交方式",
     deliveryBody:
       "您的申请会发送给我们的团队。报价不会即时生成 —— 我们会先审阅资料，并可能需要更多信息或照片。您也可以拨打或通过 WhatsApp 联系 +601159259521。",
     submit: "提交报价申请",
     submitting: "正在提交您的申请...",
     successTitle: "申请已收到",
-    successBody: "谢谢！我们已收到您的报价申请。我们的团队会尽快与您联系。",
+    successBody: "谢谢！我们已收到您的报价申请。我们的团队会通过您选择的方式与您联系。",
+    successPhotosTitle: "有工程照片吗？",
+    successPhotosBody: "照片有助于初步评估。提交此申请后，请通过 WhatsApp 发送给我们。",
+    successPhotosCta: "通过 WhatsApp 发送照片",
+    successPhotosMessage:
+      "您好，Renovix Home Services，我刚提交了{service}的报价申请，以下是工程的照片。",
     errorTitle: "申请未能发送",
     errorBody: "目前无法提交您的申请。请再试一次，或通过 WhatsApp 联系我们。",
     whatsappFallback: "如需立即联系，请通过 WhatsApp 联系 Renovix Home Services。",
@@ -684,6 +692,30 @@ export const zh: Dictionary = {
     statusTitle: "表单提交状态",
     statusBody:
       "此表单会将您的咨询发送给 Renovix Home Services。我们会通过您选择的方式与您联系。您也可以直接拨打或通过 WhatsApp 联系 +601159259521，或发送电邮至 renovixhomeservices@gmail.com。",
+    faqEyebrow: "报价相关问题",
+    faqTitle: "常见问题",
+    faqs: [
+      {
+        question: "如何申请报价？",
+        answer:
+          "在此页面填写服务、房屋类型、位置和简要说明——或直接通过 WhatsApp 联系我们。每项申请都会经过审阅，我们会按您选择的方式与您联系。",
+      },
+      {
+        question: "报价会即时生成吗？",
+        answer:
+          "不会。报价不会即时生成。我们会先审阅资料；视工程情况，可能需要更多信息、照片或实地评估，才会准备报价。",
+      },
+      {
+        question: "可以发送工程照片吗？",
+        answer:
+          "可以。提交表格后，请通过 WhatsApp 发送照片。清晰的照片加上简要说明有助于初步评估，但不能取代必要的实地评估。",
+      },
+      {
+        question: "服务范围包括哪些地区？",
+        answer:
+          "吉隆坡、雪兰莪及巴生谷一带。请在报价申请中注明您所在的地区，以便我们妥善考虑地点因素。",
+      },
+    ],
     browseEyebrow: "不确定从何开始？",
     browseTitle: "索取报价前，先浏览服务范围",
     browseBody:
@@ -692,16 +724,14 @@ export const zh: Dictionary = {
     coverageTitle: "工程覆盖吉隆坡、雪兰莪与巴生谷",
     coverageBody:
       "请在报价申请中注明您所在的地段或城市。您也可以通过服务地区指南，了解当地的覆盖情况。",
-    propertyTypes: [
-      "公寓 / 组屋",
-      "排屋 / 有地住宅",
-      "半独立屋 / 洋房",
-      "店铺 / 办公室 / 商业空间",
-      "其他 / 尚未确定",
-    ],
+    propertyTypes: {
+      "condominium-apartment": "公寓 / 组屋",
+      "terrace-landed-house": "排屋 / 有地住宅",
+      "semi-detached-bungalow": "半独立屋 / 洋房",
+      "shop-office-commercial": "店铺 / 办公室 / 商业空间",
+      "other-not-sure": "其他 / 尚未确定",
+    },
     notSureOption: "不确定 / 需要多项服务",
-    notSureSubService: "不确定 —— 请给予建议",
-    multipleServicesSubService: "多项服务 / 装修工程",
   },
   blogIndex: {
     metaTitle: "Renovix Home Services | 吉隆坡与雪兰莪住宅装修指南",
