@@ -1121,6 +1121,13 @@ export const en: Dictionary = {
         ],
       },
       {
+        title: "Website measurement",
+        paragraphs: [
+          "When measurement is enabled, this website uses Google Analytics to understand, in aggregate, which pages are visited and which contact options are used. Measurement is configured not to receive names, phone numbers, email addresses, quote form content or other personal information, and advertising features are switched off.",
+          "If the session-recording tool Microsoft Clarity is switched on, it runs with its default on-screen text masking left enabled, so text is not readable in recordings. You can block measurement scripts through common browser privacy settings or extensions; the website continues to work normally without them.",
+        ],
+      },
+      {
         title: "Retention and security",
         paragraphs: [
           "Enquiry information is kept only for as long as reasonably needed to respond, administer a service, meet legal or accounting duties, or resolve a dispute. A fixed retention period is not stated because it depends on the enquiry. Renovix applies practical safeguards to the website and its communication channels, but no internet transmission can be made completely secure.",

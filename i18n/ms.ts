@@ -1136,6 +1136,13 @@ export const ms: Dictionary = {
         ],
       },
       {
+        title: "Pengukuran laman web",
+        paragraphs: [
+          "Apabila pengukuran diaktifkan, laman web ini menggunakan Google Analytics untuk memahami secara agregat halaman mana yang dilawati dan pilihan hubungan mana yang digunakan. Pengukuran ini dikonfigurasi supaya tidak menerima nama, nombor telefon, alamat e-mel, kandungan borang sebut harga atau maklumat peribadi lain, dan ciri pengiklanan dimatikan.",
+          "Jika alat rakaman sesi Microsoft Clarity diaktifkan, ia berjalan dengan penutupan teks (text masking) lalainya yang kekal aktif, jadi teks pada skrin tidak dapat dibaca dalam rakaman. Anda boleh menyekat skrip pengukuran melalui tetapan privasi penyemak imbas atau sambungan biasa; laman web ini tetap berfungsi seperti biasa tanpanya.",
+        ],
+      },
+      {
         title: "Penyimpanan dan keselamatan",
         paragraphs: [
           "Maklumat pertanyaan disimpan hanya selama yang munasabah diperlukan untuk membalas, mengurus perkhidmatan, memenuhi kewajipan undang-undang atau perakaunan, atau menyelesaikan pertikaian. Tempoh tetap tidak dinyatakan kerana ia bergantung pada pertanyaan. Renovix menggunakan perlindungan praktikal pada laman web dan saluran komunikasi, tetapi tiada penghantaran internet boleh dijamin selamat sepenuhnya.",

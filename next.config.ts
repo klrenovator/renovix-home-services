@@ -1,15 +1,38 @@
 import type { NextConfig } from "next";
+import { analyticsConfigWarnings, analyticsCspSources } from "./lib/analytics-config";
+
+/**
+ * Analytics origins enter the Content-Security-Policy only when the matching
+ * provider ID is configured (see lib/analytics-config.ts). With no provider
+ * configured the policy below is byte-for-byte the pre-Phase-24 policy, so
+ * the strict default never loosens speculatively.
+ */
+const analyticsCsp = analyticsCspSources();
+
+for (const warning of analyticsConfigWarnings) {
+  console.warn(`[analytics config] ${warning}`);
+}
+
+function withOrigins(base: string, origins: string[]): string {
+  return origins.length > 0 ? `${base} ${origins.join(" ")}` : base;
+}
 
 const contentSecurityPolicy = [
   "default-src 'self'",
-  `script-src 'self' 'unsafe-inline'${process.env.NODE_ENV === "development" ? " 'unsafe-eval'" : ""}`,
+  withOrigins(
+    `script-src 'self' 'unsafe-inline'${process.env.NODE_ENV === "development" ? " 'unsafe-eval'" : ""}`,
+    analyticsCsp.scriptSources,
+  ),
   "style-src 'self' 'unsafe-inline'",
-  "img-src 'self' data: blob:",
+  withOrigins("img-src 'self' data: blob:", analyticsCsp.imgSources),
   "font-src 'self' data:",
-  "connect-src 'self'",
+  withOrigins("connect-src 'self'", analyticsCsp.connectSources),
   "object-src 'none'",
   "base-uri 'self'",
   "form-action 'self'",
+  ...(analyticsCsp.frameSources.length > 0
+    ? [`frame-src ${analyticsCsp.frameSources.join(" ")}`]
+    : []),
 ].join("; ");
 
 const securityHeaders = [
