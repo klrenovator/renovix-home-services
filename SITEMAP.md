@@ -40,8 +40,8 @@ redirect-only URLs (the bare `/` root redirects to `/en/` and is never
 listed), `noindex` pages, query-string or tracking variants, non-canonical
 trailing-slash variants, and draft (unpublished) projects. Every entry is
 `https://`, on the production domain, in the exact trailing-slash shape the
-site serves — verified: all 408 URLs return 200 and each page's canonical tag
-matches its sitemap `<loc>`.
+site serves — verified: all sitemap URLs return 200 and each page's canonical
+tag matches its sitemap `<loc>`.
 
 ## `lastModified` policy
 
@@ -79,7 +79,7 @@ That's all. After that:
 
 ## Scalability
 
-One sitemap file comfortably covers the whole site (408 URLs today; Google's
+One sitemap file comfortably covers the whole site (633 URLs today; Google's
 limit is 50,000 URLs / 50 MB uncompressed per file). If the site ever
 approaches that limit, split into child sitemaps + a sitemap index — see the
 note in `app/sitemap.ts` for the Next.js 16-specific constraints (the split

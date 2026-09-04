@@ -36,7 +36,10 @@ Renovix Home Services – Home Renovation & Improvement Services in Kuala Lumpur
 | `npm run audit:og-fonts` | Verifies every character the OG cards render is covered by the committed font subsets |
 | `npm run audit:project-assets` | Verifies every published project image exists, matches its declared dimensions and nothing unreferenced is published |
 | `npm run audit:pricing` | Pricing audit — prices single-sourced in `data/pricing/pricing.ts`, coherent ranges, full MS/ZH row coverage, nothing presented as a final price, every service-page price claim backed by a row, no prices outside the catalogue |
+| `npm run audit:locations` | Location audit — area hierarchy, quality gates, the search-intent matrix (pricing derived from `pricingId`, never duplicated) and multilingual coverage |
 | `npm run audit:authority` | Search + AI authority audit — no fabricated claims, urgency language only where genuine, all cross-references resolve, index pages iterate the registries, one question per page, unique metadata per language, AI feeds in sync, alt text everywhere |
+| `npm run audit:subservices` | Sub-service audit — lists the 51 priced sub-services, verifies authored pages are unique, belong to a real service, reference a real `pricingId` and carry all three language blocks |
+| `npm run audit:blog` | Blog audit — every related slug and pricing id resolves, no hard-coded prices, EN/MS/ZH complete, unique metadata per language, no orphan articles |
 
 ## Pricing data
 

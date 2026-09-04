@@ -8,20 +8,22 @@
 - **Stack:** Next.js 16.3.3, React 19.2.8, TypeScript 6.0.3, Tailwind CSS 4.3.3
 - **Languages:** English (`/en/`), Bahasa Melayu (`/ms/`), Simplified Chinese (`/zh/`) — see Phase 6
 
-### Current site inventory (verified in Phase 18, `npm run build` + `sitemap.xml`)
+### Current site inventory (verified in Phase 21, `npm run build` + `sitemap.xml`)
 
 | Item | Count |
 |---|---|
 | Service pillar pages | 10 per language |
-| Problem guides | 46 per language |
+| Sub-service pages | 51 per language |
+| Problem guides | 57 per language (10 categories) |
 | Area guides | **46** (+ 2 region hubs + areas index) per language |
 | Projects | 21 per language |
-| **Canonical pages per language** | **136** |
-| **Canonical URLs total (3 languages)** | **408** |
+| Knowledge Hub (`/blog/`) | hub + **12** guides per language |
+| **Canonical pages per language** | **211** |
+| **Canonical URLs total (3 languages)** | **633** |
 | Pricing rows (`data/pricing/pricing.ts`) | **51** |
 | Search-intent matrix entries | 16 (all pricing derived from `pricingId`) |
 | Pricing entries corrected in Phase 18 | **10 price mismatches + 1 unit mismatch + 12 sub-service slug mismatches** (Phase 17 audit) |
-| Audit scripts | 6, all PASS |
+| Audit scripts | 9, all PASS |
 
 ---
 
@@ -2504,6 +2506,86 @@ Search Console analysis, owner data — all remain Phase 19+ work.
 
 ---
 
+## PHASE 19 — Service + Sub-Service + Problem Page Completion
+
+Phase 19 introduced the typed sub-service registry and routed every
+standalone sub-service as its own page, then authored the first batch. The
+remaining priced sub-services and the new problem categories were carried
+into Phase 20 (which completed both — see below).
+
+### 1. Typed sub-service registry (`data/sub-services/`)
+
+- A fully typed registry models every standalone sub-service with a stable
+  `slug`, a parent `serviceSlug`, an optional `pricingId` pointing at the
+  central pricing registry, a `standaloneSearchIntent` flag (guards against
+  doorway/thin pages), `relatedProblems`, and **separately authored `en`,
+  `ms`, `zh` copy blocks** (`name`, `h1`, `metaDescription`, `title`, `lead`,
+  `suitableFor`, `includes`, `excludes`, optional `costFactors`, `materials`,
+  `process`, `faqs`).
+- Because `en`, `ms` and `zh` are required fields, a sub-service can never be
+  published to a language it has not been genuinely translated into — a
+  missing block is a **type error**, not a runtime English fallback.
+- Files: `data/sub-services/types.ts`, `index.ts`, and
+  `content/{handyman,plumbing,tiling,welding,electrical,waterproofing}.ts`.
+
+### 2. Routing + rendering
+
+- New dynamic route `app/[lang]/services/[category]/[subService]/page.tsx`
+  with `generateStaticParams` emitting one route per language per authored
+  sub-service.
+- `components/service/SubServicePage.tsx` — localized sections (breadcrumb,
+  H1, lead, "when it is the right choice", includes/excludes, price guidance
+  box, cost factors, materials, process, FAQs, related problems, related
+  projects, sibling sub-services, back-to-service link, areas, CTA/WhatsApp).
+- `components/service/SubServiceJsonLd.tsx` — WebPage + BreadcrumbList +
+  **Service node with an Offer carrying a `PriceSpecification` whose numbers
+  come from the pricing registry** (never re-authored) + FAQPage.
+
+### 3. Service → Sub-service → Project internal linking
+
+- `ServiceSubLinksSection` renders on every service page: Service → Project
+  contextual links (published projects genuinely mapping to that service) and
+  Service → Sub-service quick links.
+- Sub-service pages reverse-link to their parent service, sibling
+  sub-services, related problem guides, related projects, locations and the
+  quote flow.
+
+### 4. Sitemap + hreflang + canonical + dictionary
+
+- `app/sitemap.ts` enumerates each sub-service route per language with the
+  correct `priority`; `isPublished` recognises the two-level
+  `/services/{category}/{sub}/` path so hreflang alternates and the language
+  switcher stay correct.
+- A `subServicePage` dictionary block was added to
+  `i18n/{types,en,ms,zh}.ts` (all four stay in sync by typing).
+- `scripts/audit-subservices.mjs` (`npm run audit:subservices`) lists the 51
+  priced sub-services from `pricing.ts`, reports which already have a page,
+  and checks authored slugs are unique, belong to one of the 10 services,
+  reference a real `pricingId`, and carry all three language blocks.
+
+### 5. What shipped in Phase 19 vs what Phase 20 finished
+
+- **Phase 19 authored 10 sub-services** (30 language routes): hourly-service,
+  door-repair, mounting-installation, grout-silicone, minor-repairs (Handyman),
+  pipe-leak-repair (Plumbing), floor-tile-installation (Tiling), window-grille
+  (Welding), socket-installation (Electrical), bathroom-waterproofing
+  (Waterproofing).
+- **Phase 20 completed the remaining 41**, so every priced sub-service in
+  `pricing.ts` now has an authored, 3-language page (51 total, 153 routes).
+- The new Welding, Flooring and General Renovation problem categories were
+  also carried from Phase 19 into Phase 20, which shipped them in full
+  EN/MS/ZH (problem catalogue 46 → 57).
+
+### 6. Testing (Phase 19)
+
+- [x] `npm run type-check` — **PASS**
+- [x] `npm run lint` — **PASS**
+- [x] `npm run build` — **PASS** (30 new sub-service routes prerender)
+- [x] `npm run audit:subservices` — **PASS** (10 authored; 51 priced targets reported)
+- [x] `audit:pricing`, `audit:business`, `audit:locations` — **PASS** (no regressions)
+
+---
+
 ## Phase 20 — Knowledge Hub (`/blog`)
 
 ### 1. What shipped
@@ -2574,10 +2656,95 @@ reachable from both the hub index and the sitemap (**zero orphans**).
 ### Remaining content gaps
 
 - No guides yet for flooring subfloor prep, plumbing water-pressure diagnosis,
-  or ceiling/partition material choice.
+  or ceiling/partition material choice. → **Closed in Phase 21.**
 - Guides carry no images; the hub and article heroes are typographic. Real
   photos can be added via the optional `image` field when the owner supplies
   them.
 - Guides 5 (condo approvals) and 6 (waterproofing systems) deliberately publish
   no fees, statutory deadlines or lifespan figures — those need verified
   sources, not estimates.
+
+---
+
+## Phase 21 — Knowledge Hub Completion (remaining Phase 20 gaps)
+
+Phase 21 closes every Phase 20 gap that can be closed without inventing data.
+What needed an owner decision or a verified source is recorded as such below,
+rather than papered over.
+
+### 1. Three missing guides — authored in full EN/MS/ZH
+
+The CONTENT_MAP §5 depth gaps are now closed. Each guide ships in all three
+languages, quotes only `data/pricing/pricing.ts` rows (no authored RM
+figures), and is wired into the hub, sitemap, hreflang sets and the
+`GuideLinksSection` on its pillar, sub-service, problem and area pages.
+
+| Guide | Slug | Category | Supports |
+| --- | --- | --- | --- |
+| Flooring subfloor preparation | `flooring-subfloor-preparation` | planning | Flooring + Tiling pillars, all five flooring sub-services, all four flooring problems |
+| Plumbing water-pressure diagnosis | `plumbing-water-pressure-diagnosis` | troubleshooting | Plumbing pillar, call-out/leak sub-services, low-water-pressure and leak problems |
+| Ceiling & partition material choice | `ceiling-partition-material-choice` | materials | Ceiling & Partition pillar, all four ceiling sub-services, ceiling problems |
+
+- The flooring guide is a genuine preparation decision-tree (level, moisture,
+  soundness) that complements — and links — the `low-water-pressure`/flooring
+  problem guides rather than repeating them.
+- The water-pressure guide is a diagnosis path (one outlet vs whole house,
+  time-of-day, leak signs) that sits upstream of the existing
+  `low-water-pressure` problem guide and hands off to it.
+- The ceiling guide compares gypsum, plaster, PVC, timber and metal framing
+  room by room, with durability kept qualitative (no invented year figures).
+- All three pass `audit:authority` §5 (no question or answer pasted across
+  pages) and `audit:blog` (references resolve, EN/MS/ZH complete, no orphan).
+
+### 2. Open Graph font subsets regenerated
+
+The Phase 20 problem-catalogue additions (welding, flooring,
+general-renovation in Simplified Chinese) introduced CJK glyphs that were not
+yet in the committed Noto Sans SC subsets, so `npm run audit:og-fonts` failed.
+`scripts/make-og-fonts.py` was re-run against the live sources; both Noto
+subsets now cover every character the `/zh/` OG card can render. The audit
+now passes. The Plus Jakarta Sans TTF files were regenerated byte-identically
+and show no diff.
+
+### 3. Documentation gaps closed
+
+- `PROJECT_PROGRESS.md`: the missing **PHASE 19** section (sub-service
+  registry + routing + first batch) and this **Phase 21** section are now
+  written, and the Overview inventory is updated to the Phase 21 build
+  (57 problems, 51 sub-services, 12 guides, 211 canonical pages per language,
+  633 sitemap URLs, 9 audit scripts).
+- `CONTENT_MAP.md`: §1 topic-cluster and §2 problem-map counts updated to 57
+  guides across 10 categories; §5 gap 3 and §6 backlog updated for the 12
+  shipped guides.
+- `SITEMAP.md`: the stale "408 URLs" figures updated to 633.
+
+### 4. Gaps that stay open — and why (honesty, not omission)
+
+- **Guide images.** The `image` field stays unset. CONTENT_GOVERNANCE §8
+  forbids stock or AI imagery passed off as work, and the guides' `image`
+  field is documented as "only set when a real, owned photograph exists".
+  Heroes remain typographic until the owner supplies real photos.
+- **Guide 5 (condo approvals) fees and statutory deadlines.** Building rules,
+  deposits, permitted hours and authority requirements differ by management
+  corporation and local authority. Inventing specific figures would be
+  fabricated data; the guide correctly teaches the reader what to ask.
+- **Guide 6 (waterproofing systems) lifespan figures.** Substrate, detailing
+  and exposure decide lifespan, not the product alone. The guide states this
+  honestly and declines to publish a number.
+
+### 5. Testing (Phase 21)
+
+- [x] `npm run type-check` — **PASS**
+- [x] `npm run lint` — **PASS** (0 problems)
+- [x] `npm run build` — **PASS** (644 static pages; was 635)
+- [x] `npm run audit:business` — **PASS**
+- [x] `npm run audit:og-fonts` — **PASS** (regenerated subsets)
+- [x] `npm run audit:project-assets` — **PASS**
+- [x] `npm run audit:pricing` — **PASS** (51 rows)
+- [x] `npm run audit:locations` — **PASS**
+- [x] `npm run audit:authority` — **PASS**
+- [x] `npm run audit:subservices` — **PASS**
+- [x] `npm run audit:blog` — **PASS** (12 articles)
+- [x] Sitemap emits 633 `<loc>` URLs; the 9 new guide URLs carry complete
+      hreflang sets and self-canonicals
+- [x] Static verification only — no real-browser testing is claimed

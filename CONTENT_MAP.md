@@ -11,7 +11,7 @@ Conventions: `{lang}` = `en` (canonical), `ms`, `zh`. All URLs end with `/`.
 
 Each of the 10 services is a pillar page at `/{lang}/services/{slug}/`.
 Supporting content links to its pillar, and the pillar links back. Figures are
-current as of Phase 16.
+current as of Phase 21.
 
 | Pillar (service) | Problem guides linked | Pricing rows | Project proof | Status |
 | --- | --- | --- | --- | --- |
@@ -19,11 +19,11 @@ current as of Phase 16.
 | Electrical | 8 (tripping, socket, switch, flickering, short circuit, old wiring, power points, fan wiring) | 6 | Electrical projects | Complete |
 | Painting | 6 (peeling, cracked, mouldy, faded, uneven, surface damage) | 4 | — (no painting-only project yet) | Complete; project proof wanted |
 | Ceiling & Partition | 5 (cracked, sagging, water-damaged, stains, old plaster) | 4 | Ceiling projects | Complete |
-| General Renovation | 6 (cross-trade) | 5 | Renovation projects | Complete |
+| General Renovation | 6 (cross-trade) + 3 dedicated (permit approval, scope creep, delays) | 5 | Renovation projects | Complete |
 | Plumbing | 6 (leakage, tap, pipe, drain, toilet, pressure) | 7 | Plumbing projects | Complete |
 | Waterproofing | 6 (roof, bathroom, balcony, wall seepage, damp, stains) | 5 | — (no waterproofing-only project yet) | Complete; project proof wanted |
-| Flooring | 0 dedicated (inbound links from tiling problem guides) | 5 | Flooring projects | Accepted gap (see §5) |
-| Welding & Metal Works | 0 dedicated | 5 | 4 welding projects | Accepted gap (see §5) |
+| Flooring | 4 (swollen, lifting, hollow, squeaky) | 5 | Flooring projects | Complete (Phase 20) |
+| Welding & Metal Works | 4 (rusted gate, railing, gate alignment, broken weld) | 5 | 4 welding projects | Complete (Phase 20) |
 | Handyman | 6 (door, lock, curtain, TV mount, shelf, minor repairs) | 5 | — (handyman rarely photographed) | Complete |
 
 Pillar page anatomy (every service): answer-first Q&A → overview → pricing
@@ -31,7 +31,7 @@ table (centralized) → materials → cost factors → duration → includes/exc
 → sub-services → problems → property types → process → areas → FAQs → related
 services → quote + WhatsApp CTAs. Every section exists in all 3 languages.
 
-## 2. Problem-first map (46 guides at `/{lang}/problems/{slug}/`)
+## 2. Problem-first map (57 guides at `/{lang}/problems/{slug}/`)
 
 Each guide: what it means → causes → warning signs → solutions → when to call
 a professional → linked service(s) → process → property types → areas → FAQs
@@ -46,6 +46,9 @@ a professional → linked service(s) → process → property types → areas �
 | Plumbing (6) | Plumbing | Waterproofing, tiling (reinstatement) |
 | Waterproofing (6) | Waterproofing | Plumbing, tiling, painting |
 | Handyman (6) | Handyman | Electrical, plumbing (specialist referral) |
+| Welding (4) | Welding & Metal Works | General renovation |
+| Flooring (4) | Flooring | Tiling, plumbing (moisture sources) |
+| General Renovation (3) | General Renovation | All pillars (cross-trade coordination) |
 
 Real customer questions answered first ("Why is my ceiling leaking?" →
 ceiling stains / water-damaged ceiling; "Why is my tap leaking?" → leaking
@@ -87,27 +90,29 @@ and pasted answers).
 
 ## 5. Known gaps (accepted, with rationale)
 
-1. **Flooring and welding have no dedicated problem guides.** Flooring
-   problems are answered on the flooring pillar (FAQs, answer-first) and the
-   tiling problem guides link to the flooring service where surfaces overlap.
-   Welding faults are answered on the welding pillar; 4 real welding projects
-   carry the proof. Dedicated guides will only be added if genuine,
-   distinct search demand appears — not speculatively.
+1. ~~Flooring and welding have no dedicated problem guides.~~ **Closed in
+   Phase 20.** Flooring and welding each now have 4 dedicated problem guides
+   (swollen, lifting, hollow, squeaky floors; rusted gate, railing, gate
+   alignment, broken weld joints), authored in full EN/MS/ZH and wired into
+   the pillar, sub-service and related-problem graphs.
 2. **No painting-only or waterproofing-only project yet.** Publish one only
    when the owner supplies real photos and approves the details. Never stage
    or stock them.
-3. ~~No blog/guides section yet.~~ **Closed in Phase 20.** The Knowledge Hub
-   ships at `/blog/` with 9 guides in EN+MS+ZH. The remaining gap is depth,
-   not existence: no guides yet for flooring subfloor preparation, plumbing
-   water-pressure diagnosis, or ceiling/partition material choice. Those are
-   only worth writing once there is something specific to say.
+3. ~~No blog/guides section yet.~~ **Closed in Phase 20, depth closed in
+   Phase 21.** The Knowledge Hub ships at `/blog/` with 12 guides in EN+MS+ZH.
+   Phase 21 added the three depth guides named in the original gap — flooring
+   subfloor preparation, plumbing water-pressure diagnosis and
+   ceiling/partition material choice — each with something specific to say.
+   Guide images and the condo-fee/waterproofing-lifespan figures remain owner-
+   and source-gated (see CONTENT_GOVERNANCE §1 and §8).
 
-## 6. Guide backlog — DELIVERED in Phase 20
+## 6. Guide backlog — DELIVERED (Phase 20 + Phase 21)
 
-All 7 approved guides shipped, plus 2 coverage guides for services that had no
-educational content (electrical, welding). Each ships in EN+MS+ZH, quotes only
-`data/pricing/pricing.ts` rows, and is linked from its pillar service, its
-sub-service, its problems, its areas and the hub index.
+All 7 approved guides shipped in Phase 20, plus 2 coverage guides for services
+that had no educational content (electrical, welding) and, in Phase 21, the 3
+depth guides that closed the §5 flooring/plumbing/ceiling gaps. Each ships in
+EN+MS+ZH, quotes only `data/pricing/pricing.ts` rows, and is linked from its
+pillar service, its sub-service, its problems, its areas and the hub index.
 
 | # | Guide | Slug | Category |
 | --- | --- | --- | --- |
@@ -120,6 +125,9 @@ sub-service, its problems, its areas and the hub index.
 | 7 | Regrout and silicone maintenance | `regrout-silicone-maintenance` | maintenance |
 | 8 | Old-house wiring warning signs | `old-house-wiring-warning-signs` | troubleshooting |
 | 9 | Metal grille and gate buying guide | `metal-grille-gate-buying-guide` | materials |
+| 10 | Flooring subfloor preparation | `flooring-subfloor-preparation` | planning |
+| 11 | Plumbing water-pressure diagnosis | `plumbing-water-pressure-diagnosis` | troubleshooting |
+| 12 | Ceiling & partition material choice | `ceiling-partition-material-choice` | materials |
 
 Original backlog definitions, for the record:
 
