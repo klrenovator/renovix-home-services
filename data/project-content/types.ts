@@ -91,6 +91,17 @@ export type Project = {
    * work is visible/confirmed — never inferred.
    */
   relatedCategories?: ProjectCategoryId[];
+  /**
+   * Phase 19 sub-service slugs (from `data/sub-services`) whose scope this
+   * project's photographed work genuinely covers — e.g. a photographed
+   * distribution board maps to `db-box`, a cove-ceiling photograph maps to
+   * `l-box-ceiling`. Only set when the work shown actually matches the
+   * sub-service; a relationship is never inferred from two scopes merely
+   * being adjacent. Each slug must belong to the project's primary category
+   * or one of its `relatedCategories` — enforced at build time by
+   * `i18n/verify.ts` and reported by `scripts/audit-projects.mjs`.
+   */
+  subServices?: string[];
   status: ProjectStatus;
   /** Completion year, only when supplied. */
   year?: number;

@@ -889,6 +889,15 @@ export const en: Dictionary = {
     servicesTitle: "Renovix services involved in this work",
     servicesBody:
       "Every project links to the service pages that describe the work in detail, including the sub-services we carry out and the process we follow.",
+    subServicesEyebrow: "Sub-Services",
+    subServicesTitle: "The specific services behind this work",
+    subServicesBody:
+      "Each sub-service page describes the exact scope of the work shown in these photographs. Only the sub-services this job genuinely covers are linked — nothing is inferred.",
+    subServicesUnder: "Part of {service}",
+    relatedGuidesEyebrow: "Related Guides",
+    relatedGuidesTitle: "Guides for this kind of work",
+    relatedGuidesBody:
+      "Practical problem guides connected to the services shown in this project — what can go wrong, what causes it and when to call us.",
     locationEyebrow: "Location",
     locationTitle: "Where we carry out this work",
     locationUnverifiedBody:

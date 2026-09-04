@@ -694,6 +694,14 @@ export type Dictionary = {
     servicesEyebrow: string;
     servicesTitle: string;
     servicesBody: string;
+    subServicesEyebrow: string;
+    subServicesTitle: string;
+    subServicesBody: string;
+    /** "Part of {service}" — parent-service label under a sub-service link. */
+    subServicesUnder: string;
+    relatedGuidesEyebrow: string;
+    relatedGuidesTitle: string;
+    relatedGuidesBody: string;
     locationEyebrow: string;
     locationTitle: string;
     /** Shown when no verified location has been supplied for the project. */

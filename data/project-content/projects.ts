@@ -12,9 +12,15 @@ import type { Project, ProjectContent } from "./types";
  *    names, no site addresses, no completion dates, no prices, no materials
  *    lists, no testimonials and no outcome claims anywhere in this file,
  *    because none of that information was provided with the photographs.
- * 3. `status` gates publication. A `draft` entry stays in the repository but
+ * 3. `subServices` links a project to Phase 19 sub-service pages, and is only
+ *    set when the photographed work genuinely matches that sub-service's
+ *    scope (a distribution board photo → `db-box`, a cove ceiling photo →
+ *    `l-box-ceiling`). It is never inferred from two scopes merely being
+ *    adjacent, and `i18n/verify.ts` fails the build if a slug is unknown or
+ *    belongs to a service the project does not carry out.
+ * 4. `status` gates publication. A `draft` entry stays in the repository but
  *    is never generated, linked, sitemapped or indexed.
- * 4. `beforeAfter` is a pair on purpose — a comparison is only ever rendered
+ * 5. `beforeAfter` is a pair on purpose — a comparison is only ever rendered
  *    when both frames of the same job exist.
  *
  * Adding a project: append an entry here, add the matching English copy to
@@ -27,6 +33,7 @@ export const projects: Project[] = [
   {
     slug: "marble-look-floor-tiling",
     category: "tiling",
+    subServices: ["floor-tile-installation"],
     status: "published",
     image: {
       src: "/images/projects/marble-look-floor-tiling-kl-selangor.webp",
@@ -42,6 +49,7 @@ export const projects: Project[] = [
   {
     slug: "floor-tile-removal-hacking",
     category: "tiling",
+    subServices: ["tile-hacking"],
     status: "published",
     image: {
       src: "/images/projects/floor-tile-removal-hacking-kl-selangor.webp",
@@ -57,6 +65,7 @@ export const projects: Project[] = [
   {
     slug: "plaster-ceiling-cove-lighting",
     category: "ceiling",
+    subServices: ["l-box-ceiling"],
     status: "published",
     image: {
       src: "/images/projects/plaster-ceiling-cove-lighting-kl-selangor.webp",
@@ -72,6 +81,7 @@ export const projects: Project[] = [
   {
     slug: "plaster-ceiling-design-downlights",
     category: "ceiling",
+    subServices: ["l-box-ceiling"],
     status: "published",
     image: {
       src: "/images/projects/plaster-ceiling-design-downlights-kl-selangor.webp",
@@ -87,6 +97,7 @@ export const projects: Project[] = [
   {
     slug: "plaster-ceiling-pendant-lighting",
     category: "ceiling",
+    subServices: ["l-box-ceiling"],
     status: "published",
     image: {
       src: "/images/projects/plaster-ceiling-pendant-lighting-kl-selangor.webp",
@@ -102,6 +113,7 @@ export const projects: Project[] = [
   {
     slug: "timber-look-ceiling-beams",
     category: "ceiling",
+    subServices: ["l-box-ceiling"],
     status: "published",
     image: {
       src: "/images/projects/timber-look-ceiling-beams-condo-kl-selangor.webp",
@@ -132,6 +144,7 @@ export const projects: Project[] = [
   {
     slug: "ceiling-fan-and-light-installation",
     category: "electrical",
+    subServices: ["fan-installation", "lighting-point"],
     status: "published",
     image: {
       src: "/images/projects/ceiling-fan-and-light-installation-kl-selangor.webp",
@@ -147,6 +160,7 @@ export const projects: Project[] = [
   {
     slug: "chandelier-and-ceiling-fan-installation",
     category: "electrical",
+    subServices: ["fan-installation", "lighting-point"],
     status: "published",
     image: {
       src: "/images/projects/chandelier-and-ceiling-fan-installation-kl-selangor.webp",
@@ -162,6 +176,7 @@ export const projects: Project[] = [
   {
     slug: "high-ceiling-light-installation",
     category: "electrical",
+    subServices: ["lighting-point"],
     status: "published",
     image: {
       src: "/images/projects/high-ceiling-light-installation-kl-selangor.webp",
@@ -177,6 +192,7 @@ export const projects: Project[] = [
   {
     slug: "electrical-distribution-board-wiring",
     category: "electrical",
+    subServices: ["db-box"],
     status: "published",
     image: {
       src: "/images/projects/electrical-distribution-board-wiring-kl-selangor.webp",
@@ -192,6 +208,7 @@ export const projects: Project[] = [
   {
     slug: "electrical-db-panel-installation",
     category: "electrical",
+    subServices: ["db-box"],
     status: "published",
     image: {
       src: "/images/projects/electrical-db-panel-installation-kl-selangor.webp",
@@ -237,6 +254,7 @@ export const projects: Project[] = [
   {
     slug: "outdoor-switch-socket-wiring",
     category: "electrical",
+    subServices: ["socket-installation"],
     status: "published",
     image: {
       src: "/images/projects/outdoor-switch-socket-wiring-kl-selangor.webp",
@@ -312,6 +330,7 @@ export const projects: Project[] = [
   {
     slug: "metal-awning-frame-installation",
     category: "welding",
+    subServices: ["awning-structure"],
     status: "published",
     image: {
       src: "/images/projects/metal-awning-frame-installation-kl-selangor.webp",
@@ -328,6 +347,7 @@ export const projects: Project[] = [
     slug: "office-renovation-ceiling-and-tiling",
     category: "renovation",
     relatedCategories: ["ceiling", "tiling"],
+    subServices: ["floor-tile-installation"],
     status: "published",
     image: {
       src: "/images/projects/office-renovation-ceiling-and-tiling-kl-selangor.webp",

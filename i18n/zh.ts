@@ -835,6 +835,15 @@ export const zh: Dictionary = {
     servicesTitle: "本工程涉及的 Renovix 服务",
     servicesBody:
       "每个工程都会链接到详细说明该项服务的页面，包括我们提供的子服务与施工流程。",
+    subServicesEyebrow: "细项服务",
+    subServicesTitle: "这项工程背后的具体服务",
+    subServicesBody:
+      "每个细项服务页面都说明照片中所展示工作的确切范围。仅链接本工程真正涉及的服务，绝不凭空推断。",
+    subServicesUnder: "隶属于{service}",
+    relatedGuidesEyebrow: "相关指南",
+    relatedGuidesTitle: "此类工程的实用指南",
+    relatedGuidesBody:
+      "与本工程所示服务相关的实用问题指南——可能出现的问题、成因，以及何时应联系我们。",
     locationEyebrow: "地区",
     locationTitle: "我们承接此类工程的地区",
     locationUnverifiedBody:

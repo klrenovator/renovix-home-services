@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { Button, WhatsAppButton } from "@/components/ui/Button";
 import { Breadcrumbs } from "@/components/service/Breadcrumbs";
@@ -11,8 +12,7 @@ import { getPricingDisclaimer } from "@/data/pricing";
 import { getProblemsBySlugs } from "@/data/problem-content";
 import type { ProblemDetail } from "@/data/problem-content/types";
 import { getSubServicesByService, formatSubServicePrice, type ResolvedSubService } from "@/data/sub-services";
-import { getPublishedProjects, getProjectContent } from "@/data/project-content";
-import { projectCategories } from "@/data/projects";
+import { getProjectContent, getProjectsForSubService } from "@/data/project-content";
 import { GuideLinksSection } from "@/components/blog/GuideLinksSection";
 import { getArticlesForSubService } from "@/data/blog";
 
@@ -23,13 +23,6 @@ type SubServicePageProps = {
 
 function relatedProblemsFor(detail: ResolvedSubService, lang: string): ProblemDetail[] {
   return getProblemsBySlugs(detail.relatedProblems, lang);
-}
-
-/** Project category ids that map to a service slug, e.g. tiling -> tiling. */
-function serviceProjectCategoryIds(serviceSlug: string): string[] {
-  return projectCategories
-    .filter((category) => category.servicePath === `/services/${serviceSlug}`)
-    .map((category) => category.id);
 }
 
 export function SubServicePage({ detail, lang }: SubServicePageProps) {
@@ -45,10 +38,13 @@ export function SubServicePage({ detail, lang }: SubServicePageProps) {
   const relatedProblems = relatedProblemsFor(detail, lang);
   const priceLabel = formatSubServicePrice(detail.definition, lang);
 
-  const projectCategoryIds = new Set(serviceProjectCategoryIds(serviceSlug));
-  const serviceProjects = getPublishedProjects().filter((project) =>
-    projectCategoryIds.has(project.category),
-  );
+  /**
+   * Phase 21 — genuine Sub-service → Project links. Only projects whose
+   * registry entry maps them to *this* sub-service are shown as proof of
+   * this work; a sub-service with no genuinely matching project simply omits
+   * the section rather than borrowing projects from the parent service.
+   */
+  const subProjects = getProjectsForSubService(detail.slug);
 
   const serviceHref = localizedHref(`/services/${serviceSlug}`, lang);
   const heroIntro = text.lead;
@@ -277,20 +273,45 @@ export function SubServicePage({ detail, lang }: SubServicePageProps) {
         </section>
       )}
 
-      {/* Projects */}
-      {serviceProjects.length > 0 && (
+      {/* Projects — Phase 21: only projects genuinely mapped to this sub-service. */}
+      {subProjects.length > 0 && (
         <section className="section bg-white">
           <div className="container-app">
-            <SectionHeading eyebrow={t.subServicePage.projectEyebrow} title={format(t.subServicePage.projectTitle, { service: service?.name ?? name })} description={format(t.subServicePage.projectDescription, { service: service?.name ?? name })} />
+            <SectionHeading
+              eyebrow={t.subServicePage.projectEyebrow}
+              title={format(t.subServicePage.projectTitle, { service: name })}
+              description={format(t.subServicePage.projectDescription, { service: name })}
+            />
             <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {serviceProjects.map((project) => {
+              {subProjects.map((project) => {
                 const href = contentHref("project", project.slug, lang);
+                const content = getProjectContent(project.slug, lang);
                 return (
-                  <Link key={project.slug} href={href ?? "#"} className="card card-hover group flex h-full flex-col p-6" aria-disabled={!href}>
-                    <h3 className="text-base font-semibold tracking-tight text-navy">{getProjectContent(project.slug, lang).title}</h3>
-                    <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-brand">
-                      {t.projects.viewProject}
-                      <IconArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                  <Link
+                    key={project.slug}
+                    href={href ?? "#"}
+                    className="card card-hover group flex h-full flex-col overflow-hidden p-0"
+                    aria-disabled={!href}
+                  >
+                    <span className="relative block aspect-[4/3] overflow-hidden bg-slate-100">
+                      <Image
+                        src={project.image.src}
+                        alt={content.alt}
+                        width={project.image.width}
+                        height={project.image.height}
+                        loading="lazy"
+                        sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                        className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+                      />
+                    </span>
+                    <span className="flex flex-1 flex-col p-5">
+                      <span className="text-base font-semibold tracking-tight text-navy">
+                        {content.title}
+                      </span>
+                      <span className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-brand">
+                        {t.projects.viewProject}
+                        <IconArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                      </span>
                     </span>
                   </Link>
                 );
