@@ -278,6 +278,43 @@ for (const match of matrix.matchAll(/locationSlug:\s*"([^"]+)"/g)) {
   if (!locationSlugs.has(match[1])) fail(`intent-matrix links unknown location "${match[1]}".`);
 }
 
+// Phase 18: intent-matrix pricing references must resolve to real catalogue
+// rows, and its sub-service references must be real catalogue sub-services.
+const pricingCatalogueSource = readFileSync(join(ROOT, "data", "pricing", "pricing.ts"), "utf8");
+const pricingRowIds = new Set(
+  [...pricingCatalogueSource.matchAll(/^\s{4}id:\s*"([^"]+)"/gm)].map((m) => m[1]),
+);
+const pricingSubServiceSlugs = new Set(
+  [...pricingCatalogueSource.matchAll(/^\s{4}subServiceSlug:\s*"([^"]+)"/gm)].map((m) => m[1]),
+);
+
+if (pricingRowIds.size === 0) {
+  fail("Could not parse any pricing row ids — the intent-matrix reference check ran on nothing.");
+}
+
+for (const block of matrix.split(/\n  \{\n/).slice(1)) {
+  const intentId = block.match(/\bid:\s*"([^"]+)"/)?.[1] ?? "(unknown)";
+  const pricingId = block.match(/pricingId:\s*"([^"]+)"/)?.[1];
+  const subServiceSlug = block.match(/subServiceSlug:\s*"([^"]+)"/)?.[1];
+
+  if (pricingId && !pricingRowIds.has(pricingId)) {
+    fail(`intent-matrix entry "${intentId}" references unknown pricingId "${pricingId}".`);
+  }
+  if (subServiceSlug && !pricingSubServiceSlugs.has(subServiceSlug)) {
+    fail(
+      `intent-matrix entry "${intentId}" references sub-service "${subServiceSlug}", ` +
+        `which is not a catalogue sub-service slug in data/pricing/pricing.ts.`,
+    );
+  }
+  if (subServiceSlug && !pricingId) {
+    fail(`intent-matrix entry "${intentId}" declares a sub-service but no pricingId to derive pricing from.`);
+  }
+}
+
+note(
+  `Intent-matrix pricing and sub-service references validated against ${pricingRowIds.size} catalogue rows.`,
+);
+
 note("All related-service, related-problem, nearby-area and intent-matrix references resolve.");
 
 /* ------------------------------------------------------------------------ */

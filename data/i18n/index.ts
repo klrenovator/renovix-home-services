@@ -5,8 +5,12 @@ import {
 import { siteFaqs, type SiteFaq } from "@/data/site-faqs";
 import { getDictionary } from "@/i18n";
 import { services, type ServiceCategory } from "@/data/services";
-import { problems as problemPreviews, type ProblemCategory } from "@/data/problems";
-import { problemCategories } from "@/data/problem-content";
+import {
+  problemCategoryIcons,
+  problemPreviewSlugs,
+  type ProblemCategory,
+} from "@/data/problems";
+import { getProblemDetail, problemCategories } from "@/data/problem-content";
 import type {
   ProblemCategory as ProblemContentCategory,
   ProblemDetail,
@@ -19,7 +23,6 @@ import {
   areasIndexFaqList,
   problemCategoryList,
   problemList,
-  problemPreviewLabels,
   projectCategoryLabels,
   regionList,
   serviceList,
@@ -65,21 +68,28 @@ export function getServiceName(
   return fallback ?? services.find((service) => service.slug === slug)?.name ?? slug;
 }
 
+/**
+ * Homepage problem previews, derived from the authoritative problem-content
+ * registry. The only local data is the curated order and the category icon —
+ * labels and slugs are never duplicated.
+ */
 export function getProblemPreviews(
   lang: LanguageCode | string,
 ): ProblemCategory[] {
   const code = getLanguageCode(lang);
 
-  if (code === "en") {
-    return problemPreviews;
-  }
+  return problemPreviewSlugs
+    .map((slug) => {
+      const detail = getProblemDetail(slug, code);
+      if (!detail) return undefined;
 
-  const localized = problemPreviewLabels[code];
-
-  return problemPreviews.map((problem) => ({
-    ...problem,
-    label: localized[problem.id] ?? problem.label,
-  }));
+      return {
+        id: detail.slug,
+        label: detail.name,
+        icon: problemCategoryIcons[detail.category],
+      } satisfies ProblemCategory;
+    })
+    .filter((problem): problem is ProblemCategory => Boolean(problem));
 }
 
 export function getProblemCategories(

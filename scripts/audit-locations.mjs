@@ -98,24 +98,135 @@ for (const entry of matrixEntries) {
 note(`OK  Emergency and intent modifier rules strictly enforced.`);
 
 /* ------------------------------------------------------------------------ */
-/* 4. Validate Pricing Single-Source Reference                              */
+/* 4. Validate Pricing Single-Source Reference (Phase 18 value comparison)   */
 /* ------------------------------------------------------------------------ */
 
 const pricingSource = readFileSync(join(PRICING_DIR, "pricing.ts"), "utf8");
-const validPricingIds = new Set(
-  (pricingSource.match(/id:\s*"([^"]+)"/g) || []).map((m) => m.replace(/id:\s*"/, "").replace('"', "")),
+
+/** Parse the pricing catalogue into id -> { price, unit, subServiceSlug, ... }. */
+const catalogue = new Map();
+for (const chunk of pricingSource.split(/\n  \{\n/).slice(1)) {
+  const id = chunk.match(/\bid:\s*"([^"]+)"/)?.[1];
+  if (!id) continue;
+  catalogue.set(id, {
+    id,
+    serviceSlug: chunk.match(/\bserviceSlug:\s*"([^"]+)"/)?.[1],
+    subService: chunk.match(/\bsubService:\s*"([^"]+)"/)?.[1],
+    subServiceSlug: chunk.match(/\bsubServiceSlug:\s*"([^"]+)"/)?.[1],
+    unit: chunk.match(/\bunit:\s*"([^"]+)"/)?.[1],
+    startingPrice: Number(chunk.match(/\bstartingPrice:\s*([0-9.]+)/)?.[1]),
+    pricingType: chunk.match(/\bpricingType:\s*"([^"]+)"/)?.[1],
+  });
+}
+
+if (catalogue.size === 0) {
+  fail("Could not parse any pricing rows from data/pricing/pricing.ts — the value comparison ran on nothing.");
+} else {
+  note(`OK  ${catalogue.size} pricing catalogue rows parsed for intent-matrix value comparison.`);
+}
+
+const validSubServiceSlugs = new Set(
+  [...catalogue.values()].map((row) => row.subServiceSlug).filter(Boolean),
 );
 
-const pricingIdRefs = (intentMatrixSource.match(/pricingId:\s*"([^"]+)"/g) || []).map((m) =>
-  m.replace(/pricingId:\s*"/, "").replace('"', ""),
+// The matrix must never carry its own mutable price/unit literals: they are
+// derived from `pricingId` through `resolveIntentPricing()`.
+const matrixArraySource = intentMatrixSource.slice(
+  intentMatrixSource.indexOf("export const locationServiceMatrix"),
 );
-
-for (const ref of pricingIdRefs) {
-  if (!validPricingIds.has(ref)) {
-    fail(`Search Intent Matrix references invalid pricingId '${ref}' not found in pricing.ts`);
+for (const forbidden of ["startingPrice", "unit"]) {
+  const hits = [...matrixArraySource.matchAll(new RegExp(`^\\s{4}${forbidden}:\\s*[^\\n]+$`, "gm"))];
+  if (hits.length > 0) {
+    fail(
+      `intent-matrix.ts declares ${hits.length} independent \`${forbidden}\` literal(s). ` +
+        `Search-intent pricing must derive from pricingId -> data/pricing/pricing.ts, never a duplicate source.`,
+    );
   }
 }
-note(`OK  All intent matrix pricing references match single-source pricing.ts.`);
+
+if (!/resolveIntentPricing/.test(intentMatrixSource)) {
+  fail("intent-matrix.ts no longer exposes resolveIntentPricing() — derived pricing resolution is missing.");
+}
+
+let comparedIntents = 0;
+
+for (const entry of matrixEntries) {
+  const intentId = entry.match(/^([^"]+)"/)?.[1] ?? "(unknown)";
+  const pricingId = entry.match(/pricingId:\s*"([^"]+)"/)?.[1];
+  const serviceSlug = entry.match(/serviceSlug:\s*"([^"]+)"/)?.[1];
+  const subServiceSlug = entry.match(/subServiceSlug:\s*"([^"]+)"/)?.[1];
+  const subServiceName = entry.match(/subServiceName:\s*"([^"]+)"/)?.[1];
+
+  if (!pricingId) {
+    if (subServiceSlug) {
+      fail(`intent "${intentId}" declares subServiceSlug "${subServiceSlug}" but has no pricingId to resolve it against.`);
+    }
+    continue;
+  }
+
+  const row = catalogue.get(pricingId);
+  if (!row) {
+    fail(`intent "${intentId}" references stale/unknown pricingId "${pricingId}" (not present in data/pricing/pricing.ts).`);
+    continue;
+  }
+
+  comparedIntents += 1;
+
+  // 4a. Effective starting price must be the catalogue's starting price.
+  if (!Number.isFinite(row.startingPrice)) {
+    fail(`intent "${intentId}" -> pricingId "${pricingId}": catalogue row has no parsable startingPrice.`);
+  }
+
+  // 4b. Unit must be the catalogue unit.
+  if (!row.unit) {
+    fail(`intent "${intentId}" -> pricingId "${pricingId}": catalogue row has no unit.`);
+  }
+
+  // 4c. "Starting from" semantics must be preserved.
+  if (row.pricingType !== "starting_from") {
+    fail(
+      `intent "${intentId}" -> pricingId "${pricingId}": pricingType is "${row.pricingType}", ` +
+        `but the intent matrix presents starting-from pricing only.`,
+    );
+  }
+
+  // 4d. Sub-service slug must be a real catalogue sub-service AND belong to
+  //     the referenced row (no unrelated sub-service pointed at an intent).
+  if (subServiceSlug) {
+    if (!validSubServiceSlugs.has(subServiceSlug)) {
+      fail(
+        `intent "${intentId}": subServiceSlug "${subServiceSlug}" does not exist in the pricing catalogue ` +
+          `(expected one of the ${validSubServiceSlugs.size} catalogue sub-service slugs).`,
+      );
+    } else if (subServiceSlug !== row.subServiceSlug) {
+      fail(
+        `intent "${intentId}" sub-service mismatch: pricingId "${pricingId}" resolves to sub-service ` +
+          `"${row.subServiceSlug}" (unit ${row.unit}), but the intent declares "${subServiceSlug}".`,
+      );
+    }
+  }
+
+  // 4e. Sub-service display name must match the catalogue label (no drift).
+  if (subServiceName && row.subService && subServiceName !== row.subService) {
+    fail(
+      `intent "${intentId}" sub-service name drift: expected "${row.subService}" ` +
+        `(from pricingId "${pricingId}"), found "${subServiceName}".`,
+    );
+  }
+
+  // 4f. Semantic guard: the intent's service must be the catalogue row's service.
+  if (serviceSlug && row.serviceSlug && serviceSlug !== row.serviceSlug) {
+    fail(
+      `intent "${intentId}" semantic mismatch: intent service "${serviceSlug}" is priced from ` +
+        `pricingId "${pricingId}", which belongs to service "${row.serviceSlug}".`,
+    );
+  }
+}
+
+note(
+  `OK  ${comparedIntents} intent entries compared against pricing.ts (price, unit, starting-from semantics, sub-service slug/name, service).`,
+);
+note("OK  Intent matrix stores no independent price/unit source; all values derive from pricingId.");
 
 /* ------------------------------------------------------------------------ */
 /* 5. Validate Multilingual Translations Coverage                           */
