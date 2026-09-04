@@ -24,6 +24,8 @@ export type PricingEntry = {
   priceRange?: { min: number; max: number };
   currency: "MYR";
   pricingType: PricingType;
+  /** One row per service supplies the answer-first headline price. */
+  isHeadline?: boolean;
   scope: string;
   includes?: string[];
   excludes?: string[];
@@ -51,6 +53,7 @@ export type ServicePricingSummary = {
 };
 
 export type PricingTranslation = {
+  subService?: string;
   scope?: string;
   includes?: string[];
   excludes?: string[];

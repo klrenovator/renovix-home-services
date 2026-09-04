@@ -327,12 +327,6 @@ export const tiling: ServiceDetail = {
     },
   ],
 
-  pricing: {
-    intro: "Tiling cost in KL & Selangor depends on tile size, material (ceramic vs porcelain vs large-format), pattern, area and surface preparation. Standard ceramic starts from RM8 per sqft supply & lay.",
-    startingFromNote: "Starting from RM8 per sqft for ceramic floor tiling",
-    disclaimer: "Prices start from the stated amount. Final quotation depends on actual site condition, scope, materials, accessibility and installation requirements.",
-    tableIntro: "Common tiling jobs with indicative starting prices for Klang Valley homes.",
-  },
   materialsIntro: "We work with standard tiling materials suited to Malaysian homes, from cost-effective ceramic to large-format porcelain.",
   materials: [
     {

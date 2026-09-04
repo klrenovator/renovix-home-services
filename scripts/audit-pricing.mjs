@@ -7,9 +7,10 @@
  * with their scope, unit, review date and disclaimer. This audit enforces that
  * mechanically, with no dependencies:
  *
- *  1. `data/pricing/pricing.ts` is the only place a price literal lives.
- *     Translations may reword scope and duration but must never contain a
- *     number-bearing price field.
+ *  1. `data/pricing/pricing.ts` is the only authoritative structured price
+ *     source. Service-page editorial copy may repeat a price only as
+ *     row-backed context; rule 8 checks those repetitions. Pricing
+ *     translations may reword scope and duration but never own a price field.
  *  2. Every pricing entry has an id, service, unit, starting price, scope,
  *     factors, disclaimer and `lastReviewed`, and every id is unique.
  *  3. Every price range is consistent (`min <= max`) and its `startingPrice`
@@ -17,8 +18,8 @@
  *     the range it is shown beside.
  *  4. Each entry's `serviceSlug` is a real published service.
  *  5. Every service that renders a pricing table has Malay and Chinese copy
- *     for each of its rows — otherwise an English scope would leak onto a
- *     `/ms/` or `/zh/` page.
+ *     and a localized row label for each of its rows — otherwise English
+ *     pricing text could leak onto a `/ms/` or `/zh/` page.
  *  6. No price is presented as final: nothing claims "fixed price",
  *     "guaranteed price", "final price" or "no extra charge".
  *
@@ -106,6 +107,7 @@ const entries = splitEntries(pricingSource).map((chunk) => {
     serviceSlug: stringField(chunk, "serviceSlug"),
     unit: stringField(chunk, "unit"),
     pricingType: stringField(chunk, "pricingType"),
+    isHeadline: /\bisHeadline:\s*true\b/.test(chunk),
     scope: stringField(chunk, "scope"),
     // `disclaimer` and `lastReviewed` are shared constants in the source, so
     // accept either the literal or the constant reference.
@@ -139,7 +141,7 @@ for (const file of readdirSync(join(PRICING_DIR, "translations"))) {
     fail(`data/pricing/translations/${file} contains a price field — prices belong only in pricing.ts.`);
   }
 }
-note("Translations carry wording only; every price literal lives in pricing.ts.");
+note("Translations carry wording only; authoritative price fields live in pricing.ts.");
 
 /* ------------------------------------------------------------------------ */
 /* 2–3. Required fields, unique ids, coherent ranges                         */
@@ -218,12 +220,23 @@ for (const lang of ["ms", "zh"]) {
   if (missing.length > 0) {
     fail(`${lang}.ts is missing pricing copy for: ${missing.join(", ")}`);
   } else {
-    note(`${lang.toUpperCase()} pricing copy covers all ${entries.length} rows.`);
+    note(`${lang.toUpperCase()} pricing copy and row labels cover all ${entries.length} rows.`);
   }
 
   const unknown = [...translated].filter((id) => !seen.has(id));
   if (unknown.length > 0) {
     fail(`${lang}.ts translates pricing ids that no longer exist: ${unknown.join(", ")}`);
+  }
+
+  const missingLabels = entries
+    .filter(
+      (entry) =>
+        entry.id &&
+        !new RegExp(`"${entry.id}":\\s*\\{[\\s\\S]*?\\bsubService:\\s*"`).test(source),
+    )
+    .map((entry) => entry.id);
+  if (missingLabels.length > 0) {
+    fail(`${lang}.ts is missing localized sub-service labels for: ${missingLabels.join(", ")}`);
   }
 }
 
@@ -261,15 +274,14 @@ note("No entry claims a fixed, guaranteed, cheapest or final price.");
 
 
 /* ------------------------------------------------------------------------ */
-/* 7. Each service's headline price matches a real row                       */
+/* 7. Each service has one explicit, row-backed headline                     */
 /* ------------------------------------------------------------------------ */
 
 /*
- * The answer-first line on a service page quotes one headline figure. It must
- * be a price a reader could actually be quoted — i.e. it must appear in that
- * service's own pricing table. A service that mixes units (tiling sells both
- * per-sqft laying and per-sqft hacking, plus per-job repairs) must not
- * advertise its cheapest ancillary row as the headline for the whole service.
+ * The answer-first headline is selected in the central catalogue, not from
+ * editorial service copy. An explicit row marker is required because a
+ * service may mix units: tiling's RM2 hacking row must not become the
+ * headline for a ceramic installation service that starts from RM8.
  */
 const byService = new Map();
 for (const entry of entries) {
@@ -279,41 +291,16 @@ for (const entry of entries) {
 }
 
 for (const [slug, rows] of byService) {
-  const source = readFileSync(join(SERVICE_DIR, `${slug}.ts`), "utf8");
-  const note = source.match(/startingFromNote: "((?:[^"\\]|\\.)*)"/);
+  const headlines = rows.filter((row) => row.isHeadline);
 
-  if (!note) {
-    fail(`${slug}.ts has a pricing table but no startingFromNote headline.`);
-    continue;
-  }
-
-  const quoted = [...note[1].matchAll(/RM([0-9][0-9,]*(?:\.[0-9]+)?)/g)].map((m) =>
-    Number(m[1].replace(/,/g, "")),
-  );
-
-  if (quoted.length === 0) {
-    fail(`${slug}.ts startingFromNote quotes no price.`);
-    continue;
-  }
-
-  const available = new Set();
-  for (const row of rows) {
-    available.add(row.startingPrice);
-    if (row.priceRange) {
-      available.add(row.priceRange.min);
-      available.add(row.priceRange.max);
-    }
-  }
-
-  const unmatched = quoted.filter((price) => !available.has(price));
-  if (unmatched.length > 0) {
+  if (headlines.length !== 1) {
     fail(
-      `${slug}.ts headline quotes RM${unmatched.join(", RM")}, which appears in no ${slug} pricing row.`,
+      `${slug} must have exactly one isHeadline pricing row; found ${headlines.length}.`,
     );
   }
 }
 
-note("Every service headline price appears in that service's own pricing table.");
+note("Every service has exactly one explicit headline row in pricing.ts.");
 
 /* ------------------------------------------------------------------------ */
 /* 8. Service-page copy quotes only prices the catalogue backs (Phase 16)    */

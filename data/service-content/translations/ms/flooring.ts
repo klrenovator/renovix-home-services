@@ -83,14 +83,6 @@ export const translation: ServiceTranslation = {
     { question: "Berapa lama pemasangan lantai mengambil masa?", answer: "Satu bilik lazimnya boleh disiapkan dalam sehari. Rumah penuh mengambil beberapa hari, terutamanya jika lantai lama perlu dibuang dan permukaan perlu di-level dahulu." },
   ],
 
-  pricing: {
-    intro:
-      "Kos lantai bergantung pada bahan (SPC, vinyl, laminate), ketebalan, luas kawasan, keadaan lantai asas dan corak pemasangan. SPC bermula dari RM5.50 sekaki persegi bekal dan pasang.",
-    startingFromNote: "Bermula dari RM4.70 sekaki persegi untuk vinyl dan RM5.50 untuk SPC bekal dan pasang",
-    disclaimer:
-      "Harga bermula dari jumlah yang dinyatakan. Sebut harga akhir bergantung pada keadaan tapak sebenar, skop kerja, bahan, akses dan keperluan pemasangan.",
-    tableIntro: "Kerja lantai biasa berserta harga permulaan anggaran untuk Lembah Klang.",
-  },
   materialsIntro:
     "Kami membekal dan memasang bahan lantai standard dengan sistem click-lock atau glue-down yang sesuai untuk rumah di Malaysia.",
   materials: [

@@ -1,5 +1,6 @@
 import { getLanguage } from "@/data/languages";
-import { getServiceBySlug } from "@/data/services";
+import { getServiceName } from "@/data/i18n";
+import { getDictionary } from "@/i18n";
 import {
   isPreferredContactMethod,
   isQuoteLocale,
@@ -42,6 +43,14 @@ export type QuoteValidationResult =
   | { ok: true; data: QuotePayload }
   | { ok: false; reason: "validation"; fields: Partial<Record<QuoteFieldName, true>> }
   | { ok: false; reason: "spam" };
+
+function getServiceLabel(service: string, locale: QuoteLocale): string {
+  if (service === "not-sure-or-multiple-services") {
+    return getDictionary(locale).quote.notSureOption;
+  }
+
+  return getServiceName(service, locale, service);
+}
 
 function asRecord(value: unknown): Record<string, unknown> | null {
   if (value === null || typeof value !== "object" || Array.isArray(value)) {
@@ -191,9 +200,6 @@ export function parseQuotePayload(input: unknown): QuoteValidationResult {
     fields.service = true;
   }
 
-  const serviceLabelRaw = readString(record.serviceLabel ?? "", QUOTE_LIMITS.serviceLabel.max);
-  const serviceLabel = serviceLabelRaw === null ? "" : collapseWhitespace(serviceLabelRaw);
-
   const subServiceRaw = readString(record.subService ?? "", QUOTE_LIMITS.subService.max);
   const subService = subServiceRaw === null ? null : collapseWhitespace(subServiceRaw);
 
@@ -257,11 +263,7 @@ export function parseQuotePayload(input: unknown): QuoteValidationResult {
     return { ok: false, reason: "validation", fields };
   }
 
-  const resolvedServiceLabel =
-    serviceLabel ||
-    (service === "not-sure-or-multiple-services"
-      ? "Not sure / multiple services"
-      : (getServiceBySlug(service ?? "")?.name ?? service ?? ""));
+  const resolvedServiceLabel = getServiceLabel(service as string, locale);
 
   return {
     ok: true,

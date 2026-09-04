@@ -82,14 +82,6 @@ export const translation: ServiceTranslation = {
     { question: "铺设地板要多久？", answer: "单个房间通常一天可完成；整屋则需要数天，尤其在需要拆除旧地板与做找平的情况下。" },
   ],
 
-  pricing: {
-    intro:
-      "地板费用取决于材料（SPC、乙烯基、强化复合）、厚度、面积、地面基层状况与铺贴花样。SPC 供应连安装从每平方英尺 RM5.50 起。",
-    startingFromNote: "乙烯基地板每平方英尺 RM4.70 起，SPC 供应连安装 RM5.50 起",
-    disclaimer:
-      "价格为起始价。最终报价取决于实际现场情况、工程范围、材料、可达性及安装要求。",
-    tableIntro: "巴生谷常见地板工程的参考起始价。",
-  },
   materialsIntro:
     "我们供应并安装适合马来西亚住宅的标准地板材料，采用锁扣或胶粘系统。",
   materials: [

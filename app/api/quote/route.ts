@@ -1,6 +1,7 @@
 import { getClientIp, rateLimit } from "@/lib/quote/rate-limit";
 import { isAllowedOrigin } from "@/lib/quote/origin";
 import { getEmailConfig, sendQuoteNotification } from "@/lib/quote/email";
+import { QUOTE_MAX_BODY_BYTES } from "@/lib/quote/constants";
 import { parseQuotePayload } from "@/lib/quote/validation";
 
 export const runtime = "nodejs";
@@ -29,8 +30,20 @@ export async function POST(request: Request) {
 
     let body: unknown;
 
+    // The validated fields are small, so reject oversized encoded JSON before
+    // parsing it. This keeps the public endpoint from spending work on an
+    // arbitrarily large request body.
+    const contentLength = request.headers.get("content-length");
+    if (contentLength && Number(contentLength) > QUOTE_MAX_BODY_BYTES) {
+      return json({ ok: false, error: "invalid_payload" }, 413);
+    }
+
     try {
-      body = await request.json();
+      const raw = await request.arrayBuffer();
+      if (raw.byteLength > QUOTE_MAX_BODY_BYTES) {
+        return json({ ok: false, error: "invalid_payload" }, 413);
+      }
+      body = JSON.parse(new TextDecoder().decode(raw)) as unknown;
     } catch {
       return json({ ok: false, error: "invalid_payload" }, 400);
     }

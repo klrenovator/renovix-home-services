@@ -3,6 +3,7 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { IconArrowRight, IconAlertTriangle } from "@/components/icons";
 import { format, getDictionary } from "@/i18n";
 import { contentHref } from "@/i18n/hrefs";
+import { formatPricingAmount, getPricingUnitsLabel } from "@/data/pricing";
 import { getStartingRatesForLocation } from "@/data/locations";
 import type { AreaDetail } from "@/data/area-content/types";
 
@@ -13,31 +14,10 @@ type AreaPricingSectionProps = {
 
 export function AreaPricingSection({ area, lang }: AreaPricingSectionProps) {
   const t = getDictionary(lang);
-  const rates = getStartingRatesForLocation(area.slug);
+  const rates = getStartingRatesForLocation(area.slug, lang);
 
   if (rates.length === 0) {
     return null;
-  }
-
-  // Unit translation helper
-  function formatUnit(unit: string): string {
-    switch (unit) {
-      case "per_sqft":
-        return lang === "ms" ? "setiap kps" : lang === "zh" ? "每平方尺" : "per sqft";
-      case "per_pfr":
-      case "per_foot_run":
-        return lang === "ms" ? "setiap kaki panjang" : lang === "zh" ? "每直尺" : "per foot run";
-      case "per_job":
-        return lang === "ms" ? "setiap kerja" : lang === "zh" ? "单项工程" : "per job";
-      case "per_point":
-        return lang === "ms" ? "setiap mata suis/lampu" : lang === "zh" ? "每个点位" : "per point";
-      case "per_unit":
-        return lang === "ms" ? "setiap unit" : lang === "zh" ? "每台" : "per unit";
-      case "per_hour":
-        return lang === "ms" ? "sejam" : lang === "zh" ? "每小时" : "per hour";
-      default:
-        return unit.replace("_", " ");
-    }
   }
 
   return (
@@ -76,10 +56,10 @@ export function AreaPricingSection({ area, lang }: AreaPricingSectionProps) {
                     {lang === "ms" ? "Bermula" : lang === "zh" ? "起步价" : "Starting from"}
                   </span>
                   <span className="text-2xl font-extrabold text-navy">
-                    RM {rate.startingPrice.toFixed(rate.startingPrice % 1 === 0 ? 0 : 2)}
+                    RM {formatPricingAmount(rate.startingPrice)}
                   </span>
                   <span className="text-xs text-secondary">
-                    / {formatUnit(rate.unit)}
+                    / {getPricingUnitsLabel(rate.unit, lang)}
                   </span>
                 </div>
 
@@ -113,17 +93,7 @@ export function AreaPricingSection({ area, lang }: AreaPricingSectionProps) {
           <p className="mt-3 text-sm leading-6 text-secondary">
             {t.areaPage.pricingFactorsBody}
           </p>
-          <div className="mt-4 flex flex-wrap gap-2 text-xs font-medium text-secondary">
-            <span className="rounded-md bg-slate-100 px-2.5 py-1">
-              ✓ {lang === "ms" ? "Tiada caj tersembunyi" : lang === "zh" ? "无隐藏收费" : "No hidden charges"}
-            </span>
-            <span className="rounded-md bg-slate-100 px-2.5 py-1">
-              ✓ {lang === "ms" ? "Sebut harga bertulis sebelum mula" : lang === "zh" ? "开工前出具书面报价" : "Written quote before work starts"}
-            </span>
-            <span className="rounded-md bg-slate-100 px-2.5 py-1">
-              ✓ {lang === "ms" ? "Pematuhan syarat pengurusan strata" : lang === "zh" ? "严格遵守公寓管理条例" : "Full strata compliance"}
-            </span>
-          </div>
+
         </div>
       </div>
     </section>

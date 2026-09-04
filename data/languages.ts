@@ -42,7 +42,7 @@ export const languages: Language[] = [
   {
     code: "zh",
     nativeLabel: "中文",
-    label: "Chinese",
+    label: "Simplified Chinese",
     htmlLang: "zh-MY",
     hreflang: "zh-MY",
     ogLocale: "zh_MY",

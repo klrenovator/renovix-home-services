@@ -101,14 +101,6 @@ export const translation: ServiceTranslation = {
     { question: "Berapa lama masa untuk fabrikasi dan memasang pagar khas?", answer: "Selepas ukuran dan reka bentuk dipersetujui, fabrikasi mengambil beberapa hari bergantung pada saiz dan kemasan, diikuti satu hari pemasangan. Jangka masa sebenar diberikan bersama sebut harga." },
   ],
 
-  pricing: {
-    intro:
-      "Harga kerja kimpalan dan besi bergantung pada bahan (mild steel, wrought iron, keluli tahan karat), kerumitan reka bentuk, saiz dan kemasan seperti powder coating.",
-    startingFromNote: "Bermula dari RM12 sekaki persegi untuk grill tingkap mild steel",
-    disclaimer:
-      "Harga bermula dari jumlah yang dinyatakan. Sebut harga akhir bergantung pada keadaan tapak sebenar, skop kerja, bahan, akses dan keperluan pemasangan.",
-    tableIntro: "Kerja kimpalan dan besi biasa berserta harga permulaan anggaran untuk Lembah Klang.",
-  },
   materialsIntro:
     "Kami membuat fabrikasi menggunakan bahan besi standard dengan pilihan kemasan untuk ketahanan dan rupa.",
   materials: [

@@ -987,16 +987,107 @@ export const ms: Dictionary = {
     eyebrow: "Undang-undang",
     privacyTitle: "Dasar Privasi",
     privacyDescription:
-      "Dasar Privasi yang lengkap akan ditambah dalam fasa seterusnya. Untuk sebarang soalan privasi, hubungi Renovix Home Services di +601159259521 atau renovixhomeservices@gmail.com.",
+      "Cara Renovix Home Services mengendalikan maklumat yang anda pilih untuk hantar melalui laman web dan saluran permintaan sebut harga.",
     privacyMetaDescription:
-      "Dasar Privasi untuk laman web dan perkhidmatan Renovix Home Services.",
+      "Dasar Privasi untuk laman web, borang sebut harga dan saluran hubungan Renovix Home Services.",
     termsTitle: "Terma & Syarat",
     termsDescription:
-      "Terma & Syarat yang lengkap akan ditambah dalam fasa seterusnya. Untuk sebarang pertanyaan, hubungi Renovix Home Services di +601159259521 atau renovixhomeservices@gmail.com.",
+      "Terma asas untuk menggunakan laman web Renovix Home Services, meminta sebut harga dan menghubungi perniagaan.",
     termsMetaDescription:
-      "Terma & Syarat untuk penggunaan laman web dan perkhidmatan Renovix Home Services.",
-    placeholderNote:
-      "Halaman ini sedang disediakan untuk fasa projek seterusnya. Kandungan penuh akan ditambah apabila ia dibekalkan.",
+      "Terma dan syarat penggunaan laman web Renovix Home Services serta permintaan perkhidmatan.",
+    privacySections: [
+      {
+        title: "Skop dasar ini",
+        paragraphs: [
+          "Dasar ini menerangkan cara Renovix Home Services mengendalikan maklumat yang anda pilih untuk hantar melalui laman web ini, borang sebut harga, e-mel atau WhatsApp.",
+        ],
+      },
+      {
+        title: "Maklumat yang mungkin anda berikan",
+        paragraphs: [
+          "Borang sebut harga mungkin meminta maklumat yang diperlukan untuk memahami dan menjawab pertanyaan anda. Sila berikan maklumat yang berkaitan dengan kerja sahaja.",
+        ],
+        items: [
+          "Nama dan nombor telefon anda, serta alamat e-mel jika anda memilih untuk memberikannya.",
+          "Jenis hartanah, perkhidmatan diminta, sub-perkhidmatan pilihan, lokasi, penerangan kerja, cara hubungan pilihan dan tarikh pilihan.",
+          "Bilangan fail imej yang dipilih dalam borang. Borang semasa tidak memuat naik fail tersebut ke laman web ini; jika perlu, ia meminta anda menghantar gambar secara berasingan melalui WhatsApp.",
+        ],
+      },
+      {
+        title: "Cara maklumat digunakan",
+        paragraphs: [
+          "Renovix menggunakan maklumat pertanyaan untuk membalas, memahami kerja yang diminta, mengatur perbincangan atau penilaian tapak, menyediakan sebut harga dan menyimpan rekod pertanyaan yang sesuai. Maklumat juga digunakan untuk melindungi borang awam daripada spam dan penyalahgunaan.",
+        ],
+      },
+      {
+        title: "Pembekal perkhidmatan dan perkongsian",
+        paragraphs: [
+          "Apabila penghantaran e-mel dikonfigurasi, permintaan sebut harga dihantar melalui Resend ke peti masuk perniagaan. E-mel dan WhatsApp ialah perkhidmatan komunikasi berasingan dengan dasar masing-masing. Renovix tidak menjual maklumat pertanyaan. Maklumat mungkin dikongsi dengan pihak yang perlu mengendalikan pertanyaan atau melaksanakan perkhidmatan yang dipersetujui, atau apabila dikehendaki oleh undang-undang.",
+        ],
+      },
+      {
+        title: "Penyimpanan dan keselamatan",
+        paragraphs: [
+          "Maklumat pertanyaan disimpan hanya selama yang munasabah diperlukan untuk membalas, mengurus perkhidmatan, memenuhi kewajipan undang-undang atau perakaunan, atau menyelesaikan pertikaian. Tempoh tetap tidak dinyatakan kerana ia bergantung pada pertanyaan. Renovix menggunakan perlindungan praktikal pada laman web dan saluran komunikasi, tetapi tiada penghantaran internet boleh dijamin selamat sepenuhnya.",
+        ],
+      },
+      {
+        title: "Soalan dan permintaan",
+        paragraphs: [
+          "Untuk soalan privasi atau permintaan mengakses, membetulkan atau memadam maklumat yang anda hantar, hubungi Renovix Home Services di +601159259521 atau renovixhomeservices@gmail.com. Renovix mungkin perlu mengesahkan permintaan sebelum bertindak dan akan mengendalikannya tertakluk kepada keperluan yang terpakai.",
+        ],
+      },
+      {
+        title: "Kemas kini",
+        paragraphs: [
+          "Dasar ini mungkin dikemas kini apabila laman web, proses sebut harga atau keperluan yang terpakai berubah. Versi semasa ialah versi yang diterbitkan di halaman ini.",
+        ],
+      },
+    ],
+    termsSections: [
+      {
+        title: "Penggunaan laman web",
+        paragraphs: [
+          "Anda boleh menggunakan laman web ini untuk mengetahui tentang Renovix Home Services, menyemak maklumat perkhidmatan yang diterbitkan, meminta penilaian dan menghubungi perniagaan. Jangan salah guna laman web, cuba mengganggunya atau menghantar maklumat yang menyalahi undang-undang, berbahaya atau tidak berkaitan dengan pertanyaan.",
+        ],
+      },
+      {
+        title: "Sebut harga dan maklumat perkhidmatan",
+        paragraphs: [
+          "Harga yang diterbitkan ialah harga permulaan anggaran, bukan sebut harga akhir. Ketersediaan, skop, bahan, akses, keadaan tapak dan kelulusan yang diperlukan disahkan secara berasingan. Sebut harga bertulis atau perjanjian bertulis lain untuk projek tertentu mengawal skop, harga, masa dan pengecualian projek itu.",
+        ],
+      },
+      {
+        title: "Maklumat yang anda hantar",
+        paragraphs: [
+          "Anda bertanggungjawab memberikan maklumat hubungan dan projek yang cukup tepat untuk Renovix membalas. Jangan hantar kata laluan, butiran kad pembayaran, dokumen pengenalan atau maklumat sensitif lain melalui borang sebut harga kecuali diminta melalui saluran yang sesuai.",
+        ],
+      },
+      {
+        title: "Saluran komunikasi pihak ketiga",
+        paragraphs: [
+          "Laman web ini mungkin memaut ke WhatsApp, e-mel dan perkhidmatan lain yang dikendalikan pihak ketiga. Ketersediaan dan pengendalian maklumat mereka tertakluk kepada terma dan dasar mereka sendiri. Renovix tidak bertanggungjawab atas perkhidmatan pihak ketiga di luar kawalannya.",
+        ],
+      },
+      {
+        title: "Keselamatan dan ketersediaan",
+        paragraphs: [
+          "Liputan perkhidmatan tertumpu pada Kuala Lumpur, Selangor dan Lembah Klang yang lebih luas, tetapi sesuatu kerja masih tertakluk kepada penilaian dan penjadualan. Laman web ini bukan pengganti perkhidmatan kecemasan atau nasihat keselamatan profesional apabila terdapat bahaya segera.",
+        ],
+      },
+      {
+        title: "Kandungan laman web",
+        paragraphs: [
+          "Teks, penjenamaan, susun atur dan gambar projek yang diterbitkan di laman web ini disediakan untuk tujuan maklumat dan perniagaan laman ini. Jangan menyalin, menerbitkan semula atau menggunakannya secara komersial tanpa kebenaran. Renovix mungkin membetulkan, mengemas kini atau membuang kandungan tanpa menjamin setiap halaman sentiasa tersedia.",
+        ],
+      },
+      {
+        title: "Hubungi kami",
+        paragraphs: [
+          "Soalan tentang terma ini boleh dihantar kepada Renovix Home Services di +601159259521 atau renovixhomeservices@gmail.com. Terma laman web ini tidak menggantikan sebut harga atau perjanjian bertulis khusus projek.",
+        ],
+      },
+    ],
   },
   notFound: {
     eyebrow: "404",

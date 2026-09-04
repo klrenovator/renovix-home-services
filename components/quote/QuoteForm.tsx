@@ -222,8 +222,6 @@ export function QuoteForm({
 
     const data = new FormData(form);
     const serviceValue = String(data.get("serviceRequired") ?? "");
-    const serviceLabel =
-      serviceOptions.find((option) => option.value === serviceValue)?.label ?? serviceValue;
 
     const payload = {
       name: String(data.get("name") ?? "").trim(),
@@ -231,7 +229,6 @@ export function QuoteForm({
       email: String(data.get("email") ?? "").trim(),
       propertyType: String(data.get("propertyType") ?? "").trim(),
       service: serviceValue,
-      serviceLabel,
       subService: String(data.get("subService") ?? "").trim(),
       location: String(data.get("location") ?? "").trim(),
       description: String(data.get("description") ?? "").trim(),
@@ -292,8 +289,12 @@ export function QuoteForm({
 
       setStatus("error");
     } catch {
-      inFlight.current = false;
       setStatus("error");
+    } finally {
+      // A failed request must remain retryable. The success state is locked,
+      // but every validation, rate-limit, provider and network failure clears
+      // the in-flight guard here.
+      inFlight.current = false;
     }
   }
 

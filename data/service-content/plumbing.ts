@@ -294,14 +294,6 @@ export const plumbing: ServiceDetail = {
     "toilet-problems",
     "low-water-pressure",
   ],
-  pricing: {
-    intro:
-      "Plumbing costs in KL & Selangor depend on whether the leak is visible or concealed, pipe material, accessibility and whether hacking or reinstatement is needed. Prices start from RM80 for inspection and from RM150 for visible repairs.",
-    startingFromNote: "Starting from RM150 for visible pipe leak repair",
-    disclaimer:
-      "Prices start from the stated amount. Final quotation depends on actual site condition, scope, materials, accessibility and installation requirements.",
-    tableIntro: "Common plumbing jobs with indicative starting prices for Klang Valley homes.",
-  },
   materialsIntro:
     "We use standard plumbing materials suited to Malaysian residential and commercial properties.",
   materials: [

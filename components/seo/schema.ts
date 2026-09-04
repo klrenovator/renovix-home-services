@@ -28,9 +28,16 @@ import { absoluteUrl } from "@/i18n/seo";
  * `dayOfWeek` because the business has not stated which days it opens.
  */
 
-/** Site-level entity ids, stable across every language version. */
+/**
+ * The business is one entity across locales; each localized website version is
+ * a distinct WebSite node so its `@id`, `url` and `inLanguage` never conflict.
+ */
 export const ORGANIZATION_ID = `${siteConfig.url}/#organization`;
-export const WEBSITE_ID = `${siteConfig.url}/#website`;
+export const WEBSITE_ID = `${siteConfig.url}/en/#website`;
+
+export function getWebsiteId(lang: string): string {
+  return `${absoluteUrl(lang, "/")}#website`;
+}
 
 /** The service footprint the business publicly states. */
 export const SERVICE_PLACES = [
@@ -119,7 +126,7 @@ export function organizationNode(lang: string) {
 export function websiteNode(lang: string) {
   return {
     "@type": "WebSite",
-    "@id": WEBSITE_ID,
+    "@id": getWebsiteId(lang),
     name: siteConfig.name,
     url: absoluteUrl(lang, "/"),
     description: getDictionary(lang).meta.defaultDescription,
@@ -182,7 +189,7 @@ export function webPageNode({
     url: canonical,
     description,
     inLanguage: getHtmlLang(lang),
-    isPartOf: { "@id": WEBSITE_ID },
+    isPartOf: { "@id": getWebsiteId(lang) },
     about: about ?? { "@id": ORGANIZATION_ID },
     ...(hasBreadcrumb ? { breadcrumb: { "@id": `${canonical}#breadcrumb` } } : {}),
   };

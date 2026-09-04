@@ -317,12 +317,6 @@ export const weldingMetalWorks: ServiceDetail = {
     },
   ],
 
-  pricing: {
-    intro: "Welding and metal works pricing depends on material (mild steel, wrought iron, stainless steel), design complexity, size and finishing like powder coating.",
-    startingFromNote: "Starting from RM12 per sqft for mild steel window grille",
-    disclaimer: "Prices start from the stated amount. Final quotation depends on actual site condition, scope, materials, accessibility and installation requirements.",
-    tableIntro: "Common welding and metal works with indicative starting prices for Klang Valley.",
-  },
   materialsIntro: "We fabricate with standard metal materials, with finish options for durability and appearance.",
   materials: [
     {

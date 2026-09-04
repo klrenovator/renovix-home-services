@@ -44,14 +44,6 @@ export type ServiceDuration = {
   note?: string;
 };
 
-export type ServicePricingInfo = {
-  intro: string;
-  startingFromNote: string;
-  disclaimer: string;
-  tableIntro?: string;
-  priceListIntro?: string;
-};
-
 export type ServiceAnswer = {
   question: string;
   answer: string;
@@ -90,7 +82,6 @@ export type ServiceDetail = {
   relatedServices: string[];
   relatedProblems?: string[];
   // Phase 14 enhancements
-  pricing?: ServicePricingInfo;
   materialsIntro?: string;
   materials?: ServiceMaterial[];
   costFactorsIntro?: string;

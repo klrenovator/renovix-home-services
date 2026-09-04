@@ -4,8 +4,7 @@ import { problemDetails } from "@/data/problem-content";
 import { areaRegions } from "@/data/area-content";
 import { getProjectContent, getPublishedProjects } from "@/data/project-content";
 import {
-  getPricingForService,
-  getPricingUnitsLabel,
+  getServicePricingHeadline,
   LAST_REVIEWED as PRICING_LAST_REVIEWED,
   PRICING_DISCLAIMER_EN,
 } from "@/data/pricing";
@@ -68,35 +67,19 @@ export function getAiKnowledge() {
       })),
       areasIndex: absoluteUrl("en", "/areas/"),
     },
-    services: serviceDetails.map((service) => {
-      // The headline MUST name the job the price belongs to. Taking the
-      // minimum across rows mixes units (tiling's cheapest row is tile
-      // *hacking* at RM2 per sqft, not a tiling job) — the same defect
-      // Phase 14 fixed on the service pages. Each service's own
-      // `startingFromNote` states the headline with its job, and the
-      // pricing audit verifies that figure appears in the service's table.
-      const rows = getPricingForService(service.slug);
-      const cheapest =
-        rows.length === 0
-          ? undefined
-          : rows.reduce((low, entry) =>
-              entry.startingPrice < low.startingPrice ? entry : low,
-            );
-
-      return {
-        name: service.name,
-        slug: service.slug,
-        url: absoluteUrl("en", `/services/${service.slug}/`),
-        summary: service.overviewIntro,
-        priceNote:
-          service.pricing?.startingFromNote ??
-          (cheapest === undefined
-            ? "Quoted per job after assessment."
-            : `Starting from RM${cheapest.startingPrice} ${getPricingUnitsLabel(cheapest.unit, "en")}`),
-        pricingDisclaimer: PRICING_DISCLAIMER_EN,
-        pricingLastReviewed: PRICING_LAST_REVIEWED,
-      };
-    }),
+    services: serviceDetails.map((service) => ({
+      name: service.name,
+      slug: service.slug,
+      url: absoluteUrl("en", `/services/${service.slug}/`),
+      summary: service.overviewIntro,
+      // This is generated from the marked headline row in the central
+      // catalogue, never from page copy or a cross-unit minimum.
+      priceNote:
+        getServicePricingHeadline(service.slug, "en") ??
+        "Quoted per job after assessment.",
+      pricingDisclaimer: PRICING_DISCLAIMER_EN,
+      pricingLastReviewed: PRICING_LAST_REVIEWED,
+    })),
     problems: {
       index: absoluteUrl("en", "/problems/"),
       guides: problemDetails.map((problem) => ({

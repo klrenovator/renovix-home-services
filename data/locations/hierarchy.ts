@@ -10,7 +10,8 @@
 
 import { locationsRegistry, districtGroups, stateCoverage } from "./registry";
 import { getMatrixEntriesForLocation, getMatrixEntriesForService } from "./intent-matrix";
-import { pricingEntries } from "@/data/pricing/pricing";
+import { getHeadlinePricingEntry } from "@/data/pricing";
+import { getServiceName } from "@/data/i18n";
 import type {
   LocationEntity,
   DistrictGroup,
@@ -106,7 +107,10 @@ export function getLocationBreadcrumbTrail(
  * Returns indicative starting rates for a location's primary services,
  * directly referencing Phase 14 pricing records.
  */
-export function getStartingRatesForLocation(locationSlug: string): {
+export function getStartingRatesForLocation(
+  locationSlug: string,
+  lang: string = "en",
+): {
   serviceSlug: string;
   serviceName: string;
   subService: string;
@@ -129,23 +133,22 @@ export function getStartingRatesForLocation(locationSlug: string): {
   }[] = [];
 
   for (const serviceSlug of location.serviceRelevance.primaryServices) {
-    // Find representative pricing entry
-    const entries = pricingEntries.filter((p) => p.serviceSlug === serviceSlug);
-    if (entries.length > 0) {
-      // Use the lowest starting price entry for this service
-      const best = entries.reduce((min, cur) =>
-        cur.startingPrice < min.startingPrice ? cur : min,
-      );
-      results.push({
-        serviceSlug: best.serviceSlug,
-        serviceName: best.serviceName,
-        subService: best.subService ?? best.serviceName,
-        startingPrice: best.startingPrice,
-        unit: best.unit,
-        disclaimer: best.disclaimer,
-        lastReviewed: best.lastReviewed,
-      });
-    }
+    // Use the explicitly approved catalogue headline for each service. A
+    // lowest-price scan could mix units (for example, per-job and per-sqft)
+    // and would not answer the location page's starting-price question.
+    const best = getHeadlinePricingEntry(serviceSlug, lang);
+    if (!best) continue;
+
+    const serviceName = getServiceName(serviceSlug, lang, best.serviceName);
+    results.push({
+      serviceSlug: best.serviceSlug,
+      serviceName,
+      subService: best.subService ?? serviceName,
+      startingPrice: best.startingPrice,
+      unit: best.unit,
+      disclaimer: best.disclaimer,
+      lastReviewed: best.lastReviewed,
+    });
   }
 
   return results;

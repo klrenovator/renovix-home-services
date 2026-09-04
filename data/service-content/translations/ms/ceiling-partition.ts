@@ -119,14 +119,6 @@ export const translation: ServiceTranslation = {
     { question: "Sejauh mana partisyen boleh menahan bunyi?", answer: "Partisyen biasa mengurangkan sedikit bunyi. Untuk privasi yang lebih baik, bahan penebat boleh dimasukkan ke dalam rangka dan papan berlapis digunakan — ia mengurangkan bunyi dengan ketara walaupun tidak menghapuskannya sepenuhnya." },
   ],
 
-  pricing: {
-    intro:
-      "Harga siling dan partition bergantung pada kerumitan reka bentuk, luas kawasan, ketinggian dan jenis pemasangan. Siling plaster rata bermula dari RM3.50 sekaki persegi, partition drywall dari RM7.50.",
-    startingFromNote: "Bermula dari RM3.50 sekaki persegi untuk siling plaster rata",
-    disclaimer:
-      "Harga bermula dari jumlah yang dinyatakan. Sebut harga akhir bergantung pada keadaan tapak sebenar, skop kerja, bahan, akses dan keperluan pemasangan.",
-    tableIntro: "Kerja siling dan partition biasa berserta harga permulaan anggaran untuk Lembah Klang.",
-  },
   materialsIntro:
     "Kami menggunakan papan gipsum 9mm untuk siling dan 12mm dua belah untuk partition dengan rangka besi, berserta pilihan kalis lembap dan kedap bunyi.",
   materials: [

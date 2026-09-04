@@ -104,14 +104,6 @@ export const translation: ServiceTranslation = {
     { question: "喷漆好还是滚筒好？", answer: "喷漆在大面积、铁门与铁花上更均匀快速，但需要更多遮蔽保护。滚筒则更适合一般室内施工，在有家具的空间也更好控制。" },
   ],
 
-  pricing: {
-    intro:
-      "吉隆坡与雪兰莪的油漆费用取决于墙面状况、油漆品牌（Nippon、Jotun、Dulux）、颜色数量、高度，以及是室内、外墙还是全屋。",
-    startingFromNote: "室内墙面油漆每平方英尺 RM1.20 起",
-    disclaimer:
-      "价格为起始价。最终报价取决于实际现场情况、工程范围、材料、可达性及安装要求。",
-    tableIntro: "巴生谷住宅常见油漆工程的参考起始价。",
-  },
   materialsIntro:
     "我们使用从中档到高端、适合马来西亚湿热气候的标准油漆材料。",
   materials: [

@@ -362,12 +362,6 @@ export const electrical: ServiceDetail = {
     },
   ],
 
-  pricing: {
-    intro: "Electrical pricing is per point for sockets and lights, per unit for fans and DB boxes, and per project for full house wiring. Concealed wiring costs 30–50% more than exposed casing.",
-    startingFromNote: "Starting from RM60 per point for lighting and socket",
-    disclaimer: "Prices start from the stated amount. Final quotation depends on actual site condition, scope, materials, accessibility and installation requirements.",
-    tableIntro: "Common electrical jobs with indicative starting prices for Klang Valley.",
-  },
   materialsIntro: "We use standard electrical materials compliant with Malaysian requirements, with brand options for sockets and DB components.",
   materials: [
     {

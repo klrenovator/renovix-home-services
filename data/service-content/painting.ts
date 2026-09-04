@@ -367,12 +367,6 @@ export const painting: ServiceDetail = {
     },
   ],
 
-  pricing: {
-    intro: "Painting cost in KL & Selangor depends on wall condition, paint brand (Nippon, Jotun, Dulux), number of colours, height and whether interior, exterior or full house.",
-    startingFromNote: "Starting from RM1.20 per sqft for interior wall painting",
-    disclaimer: "Prices start from the stated amount. Final quotation depends on actual site condition, scope, materials, accessibility and installation requirements.",
-    tableIntro: "Common painting jobs with indicative starting prices for Klang Valley homes.",
-  },
   materialsIntro: "We use standard painting materials from mid-range to premium brands suited to Malaysian humidity and weather.",
   materials: [
     {

@@ -143,14 +143,6 @@ export const translation: ServiceTranslation = {
     },
   ],
 
-  pricing: {
-    intro:
-      "Kos kerja jubin di KL & Selangor bergantung pada saiz jubin, bahan (seramik, porselin atau format besar), corak, luas kawasan dan penyediaan permukaan. Seramik standard bermula dari RM8 sekaki persegi bekal dan pasang.",
-    startingFromNote: "Bermula dari RM8 sekaki persegi untuk jubin lantai seramik",
-    disclaimer:
-      "Harga bermula dari jumlah yang dinyatakan. Sebut harga akhir bergantung pada keadaan tapak sebenar, skop kerja, bahan, akses dan keperluan pemasangan.",
-    tableIntro: "Kerja jubin biasa berserta harga permulaan anggaran untuk rumah di Lembah Klang.",
-  },
   materialsIntro:
     "Kami bekerja dengan bahan jubin standard yang sesuai untuk rumah di Malaysia, daripada seramik yang menjimatkan sehingga porselin format besar.",
   materials: [

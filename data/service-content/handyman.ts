@@ -267,12 +267,6 @@ export const handyman: ServiceDetail = {
     },
   ],
 
-  pricing: {
-    intro: "Handyman pricing is hourly for general tasks or fixed per job for specific repairs. Typical rate in KL is RM60–RM100 per hour, minimum 1 hour.",
-    startingFromNote: "Starting from RM60 per hour, fixed jobs from RM60",
-    disclaimer: "Prices start from the stated amount. Final quotation depends on actual site condition, scope, materials, accessibility and installation requirements.",
-    tableIntro: "Common handyman jobs with indicative starting prices for Klang Valley.",
-  },
   materialsIntro: "Handyman uses basic hardware and fittings for small repairs and installations.",
   materials: [
     {

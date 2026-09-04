@@ -13,6 +13,12 @@ export type TextItem = {
   description: string;
 };
 
+export type LegalSection = {
+  title: string;
+  paragraphs: string[];
+  items?: string[];
+};
+
 export type Dictionary = {
   meta: {
     siteName: string;
@@ -665,7 +671,8 @@ export type Dictionary = {
     termsTitle: string;
     termsDescription: string;
     termsMetaDescription: string;
-    placeholderNote: string;
+    privacySections: LegalSection[];
+    termsSections: LegalSection[];
   };
   notFound: {
     eyebrow: string;

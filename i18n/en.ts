@@ -972,16 +972,107 @@ export const en: Dictionary = {
     eyebrow: "Legal",
     privacyTitle: "Privacy Policy",
     privacyDescription:
-      "The complete Privacy Policy will be added in a later phase. For any privacy question, contact Renovix Home Services on +601159259521 or renovixhomeservices@gmail.com.",
+      "How Renovix Home Services handles information you choose to send through this website and its quote channels.",
     privacyMetaDescription:
-      "Privacy Policy for the Renovix Home Services website and services.",
+      "Privacy Policy for the Renovix Home Services website, quote form and contact channels.",
     termsTitle: "Terms & Conditions",
     termsDescription:
-      "The complete Terms & Conditions will be added in a later phase. For any question, contact Renovix Home Services on +601159259521 or renovixhomeservices@gmail.com.",
+      "The basic terms for using the Renovix Home Services website, requesting a quote and contacting the business.",
     termsMetaDescription:
-      "Terms & Conditions for using the Renovix Home Services website and services.",
-    placeholderNote:
-      "This page is being prepared for a later project phase. The full content will be added when it is supplied.",
+      "Terms and conditions for using the Renovix Home Services website and requesting services.",
+    privacySections: [
+      {
+        title: "What this policy covers",
+        paragraphs: [
+          "This policy explains how Renovix Home Services handles information that you choose to send through this website, the quote form, email or WhatsApp.",
+        ],
+      },
+      {
+        title: "Information you may provide",
+        paragraphs: [
+          "The quote form may ask for information needed to understand and respond to an enquiry. Please provide only information relevant to the work.",
+        ],
+        items: [
+          "Your name and phone number, with an email address when you choose to provide one.",
+          "Property type, requested service, optional sub-service, location, project description, preferred contact method and preferred date.",
+          "The number of image files selected in the form. The current form does not upload those files to this website; it asks you to send photos separately through WhatsApp when needed.",
+        ],
+      },
+      {
+        title: "How information is used",
+        paragraphs: [
+          "Renovix uses enquiry information to reply, understand the requested work, arrange a discussion or site assessment, prepare a quotation and keep an appropriate record of the enquiry. It is also used to protect the public form from spam and abuse.",
+        ],
+      },
+      {
+        title: "Service providers and sharing",
+        paragraphs: [
+          "When email delivery is configured, quote submissions are sent through Resend to the business inbox. Email and WhatsApp are separate communication services with their own policies. Renovix does not sell enquiry information. Information may be shared with people or providers who need it to handle the enquiry or deliver an agreed service, or where disclosure is required by law.",
+        ],
+      },
+      {
+        title: "Retention and security",
+        paragraphs: [
+          "Enquiry information is kept only for as long as reasonably needed to respond, administer a service, meet legal or accounting duties, or resolve a dispute. A fixed retention period is not stated because it depends on the enquiry. Renovix applies practical safeguards to the website and its communication channels, but no internet transmission can be made completely secure.",
+        ],
+      },
+      {
+        title: "Questions and requests",
+        paragraphs: [
+          "For a privacy question or a request to access, correct or delete information you sent, contact Renovix Home Services at +601159259521 or renovixhomeservices@gmail.com. Renovix may need to verify a request before acting and will handle it subject to applicable requirements.",
+        ],
+      },
+      {
+        title: "Updates",
+        paragraphs: [
+          "This policy may be updated when the website, quote process or applicable requirements change. The current version is the one published on this page.",
+        ],
+      },
+    ],
+    termsSections: [
+      {
+        title: "Using this website",
+        paragraphs: [
+          "You may use this website to learn about Renovix Home Services, review its published service information, request an assessment and contact the business. Do not misuse the website, attempt to disrupt it or submit information that is unlawful, harmful or unrelated to an enquiry.",
+        ],
+      },
+      {
+        title: "Quotes and service information",
+        paragraphs: [
+          "Published prices are indicative starting prices, not final quotations. Availability, scope, materials, access, site condition and any required approvals are confirmed separately. A written quotation or other written agreement issued for a particular project controls that project's scope, price, timing and exclusions.",
+        ],
+      },
+      {
+        title: "Information you submit",
+        paragraphs: [
+          "You are responsible for providing contact and project information that is accurate enough for Renovix to respond. Do not send passwords, payment-card details, identity documents or other sensitive information through the quote form unless it is specifically requested through an appropriate channel.",
+        ],
+      },
+      {
+        title: "Third-party communication channels",
+        paragraphs: [
+          "The website may link to WhatsApp, email and other services operated by third parties. Their availability and handling of information are governed by their own terms and policies. Renovix is not responsible for a third-party service that is outside its control.",
+        ],
+      },
+      {
+        title: "Safety and availability",
+        paragraphs: [
+          "Service coverage is focused on Kuala Lumpur, Selangor and the wider Klang Valley, but a particular job remains subject to assessment and scheduling. The website is not a substitute for emergency assistance or professional safety advice where there is immediate danger.",
+        ],
+      },
+      {
+        title: "Website content",
+        paragraphs: [
+          "The website's text, branding, layout and published project images are provided for this site's informational and business purposes. Do not copy, republish or commercially reuse them without permission. Renovix may correct, update or remove website content without promising that every page is continuously available.",
+        ],
+      },
+      {
+        title: "Contact",
+        paragraphs: [
+          "Questions about these terms can be sent to Renovix Home Services at +601159259521 or renovixhomeservices@gmail.com. These website terms do not replace a project-specific written quotation or agreement.",
+        ],
+      },
+    ],
   },
   notFound: {
     eyebrow: "404",

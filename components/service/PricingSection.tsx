@@ -4,8 +4,11 @@ import { IconArrowRight } from "@/components/icons";
 import { getDictionary, format } from "@/i18n";
 import { localizedHref } from "@/i18n/hrefs";
 import {
+  formatPricingAmount,
+  getPricingDisclaimer,
   getPricingForService,
   getPricingUnitsLabel,
+  getServicePricingHeadline,
   LAST_REVIEWED as PRICING_LAST_REVIEWED,
 } from "@/data/pricing";
 import type { ServiceDetail } from "@/data/service-content/types";
@@ -23,37 +26,15 @@ export function PricingSection({ detail, lang }: PricingSectionProps) {
     return null;
   }
 
-  const pricingIntro = detail.pricing?.intro ?? t.servicePage.pricingDescription;
-  const disclaimer = detail.pricing?.disclaimer ?? t.servicePage.pricingDisclaimer;
+  // The catalogue owns every number shown in this section. Editorial service
+  // copy can explain the work, but cannot override the row-backed headline or
+  // disclaimer and drift away from the table.
+  const pricingIntro = t.servicePage.pricingDescription;
+  const disclaimer = getPricingDisclaimer(lang);
   const lastReviewed = PRICING_LAST_REVIEWED;
-
-  /**
-   * The answer-first line must quote a price a reader can actually act on.
-   *
-   * Taking `Math.min` across every row was wrong whenever a service mixes
-   * units: tiling's cheapest row is tile *hacking* at RM2 per sqft, so the
-   * summary read "Starting from RM2 per sqft" above a table whose cheapest
-   * actual tiling job is RM8 — a figure nobody could be quoted. Each service's
-   * own `startingFromNote` states the headline price with the job it belongs
-   * to, and it is localized, so it is used when present. The lowest row is
-   * only a fallback, and then only among rows sharing the most common unit.
-   */
-  const headlineEntries = (() => {
-    const unitCounts = new Map<string, number>();
-    for (const entry of entries) {
-      unitCounts.set(entry.unit, (unitCounts.get(entry.unit) ?? 0) + 1);
-    }
-    const [commonUnit] = [...unitCounts.entries()].sort((a, b) => b[1] - a[1])[0];
-    return entries.filter((entry) => entry.unit === commonUnit);
-  })();
-
-  const cheapest = headlineEntries.reduce((low, entry) =>
-    entry.startingPrice < low.startingPrice ? entry : low,
-  );
-
   const headline =
-    detail.pricing?.startingFromNote ??
-    `${t.servicePage.startingFrom} RM${cheapest.startingPrice} ${getPricingUnitsLabel(cheapest.unit, lang)}`;
+    getServicePricingHeadline(detail.slug, lang) ??
+    `${t.servicePage.startingFrom} ${getPricingUnitsLabel("per_job", lang)}`;
 
   return (
     <section className="section bg-white">
@@ -101,17 +82,17 @@ export function PricingSection({ detail, lang }: PricingSectionProps) {
                   <td className="px-4 py-4 whitespace-nowrap font-semibold text-navy">
                     {entry.pricingType === "starting_from" ? (
                       <>
-                        {t.servicePage.startingFrom} RM{entry.startingPrice}
+                        {t.servicePage.startingFrom} RM{formatPricingAmount(entry.startingPrice)}
                         {entry.priceRange ? (
                           <span className="ml-1 font-normal text-secondary">
-                            (RM{entry.priceRange.min}–RM{entry.priceRange.max})
+                            (RM{formatPricingAmount(entry.priceRange.min)}–RM{formatPricingAmount(entry.priceRange.max)})
                           </span>
                         ) : null}
                       </>
                     ) : entry.priceRange ? (
-                      <>RM{entry.priceRange.min}–RM{entry.priceRange.max}</>
+                      <>RM{formatPricingAmount(entry.priceRange.min)}–RM{formatPricingAmount(entry.priceRange.max)}</>
                     ) : (
-                      <>RM{entry.startingPrice}</>
+                      <>RM{formatPricingAmount(entry.startingPrice)}</>
                     )}
                   </td>
                   <td className="px-4 py-4 whitespace-nowrap text-secondary">

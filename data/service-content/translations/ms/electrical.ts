@@ -110,14 +110,6 @@ export const translation: ServiceTranslation = {
     { question: "Pendawaian tersembunyi atau pendawaian permukaan lebih baik?", answer: "Pendawaian tersembunyi lebih kemas dan sesuai semasa renovasi kerana dinding memang akan dihack. Pendawaian permukaan menggunakan trunking lebih cepat, lebih murah dan lebih mudah diselenggara untuk kerja tambahan." },
   ],
 
-  pricing: {
-    intro:
-      "Harga kerja elektrik dikira setiap titik untuk soket dan lampu, setiap unit untuk kipas dan kotak DB, dan setiap projek untuk pendawaian rumah penuh. Pendawaian tersembunyi 30–50% lebih mahal berbanding casing luaran.",
-    startingFromNote: "Bermula dari RM60 setiap titik untuk lampu dan soket",
-    disclaimer:
-      "Harga bermula dari jumlah yang dinyatakan. Sebut harga akhir bergantung pada keadaan tapak sebenar, skop kerja, bahan, akses dan keperluan pemasangan.",
-    tableIntro: "Kerja elektrik biasa berserta harga permulaan anggaran untuk Lembah Klang.",
-  },
   materialsIntro:
     "Kami menggunakan bahan elektrik standard yang mematuhi keperluan di Malaysia, dengan pilihan jenama untuk soket dan komponen DB.",
   materials: [
