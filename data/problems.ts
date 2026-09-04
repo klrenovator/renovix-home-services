@@ -26,6 +26,9 @@ export const problemCategoryIcons: Record<ProblemCategoryId, ServiceIcon> = {
   plumbing: "plumbing",
   waterproofing: "waterproofing",
   handyman: "handyman",
+  welding: "welding",
+  flooring: "flooring",
+  "general-renovation": "renovation",
 };
 
 /** Curated homepage preview order — every slug must exist in problem-content. */

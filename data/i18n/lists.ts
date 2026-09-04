@@ -236,6 +236,21 @@ export const problemCategoryList: Record<
       intro:
         "Masalah pintu dan mangga, pemasangan langsir, pemasangan TV, pemasangan rak dan pembaikan rumah kecil.",
     },
+    welding: {
+      label: "Masalah Kimpalan & Kerja Logam",
+      intro:
+        "Pagar dan gril berkarat, susur tangan longgar, pagar yang tidak lagi menutup atau sejajar, dan kimpalan retak pada rangka logam.",
+    },
+    flooring: {
+      label: "Masalah Lantai",
+      intro:
+        "Papan bengkak dan rosak air, papan terangkat dan terpisah, kawasan berbunyi kosong dan lantai berdecit.",
+    },
+    "general-renovation": {
+      label: "Masalah Perancangan Renovasi",
+      intro:
+        "Kelulusan dan permit renovasi, kos melebihi bajet dan skop membesar, serta punca kelewatan renovasi.",
+    },
   },
   zh: {
     tiling: {
@@ -266,6 +281,18 @@ export const problemCategoryList: Record<
     handyman: {
       label: "居家维修问题",
       intro: "门与锁的问题、窗帘安装、电视挂架、层架安装与小型房屋维修。",
+    },
+    welding: {
+      label: "焊接与金属工程问题",
+      intro: "生锈的铁门与防盗网、松动的栏杆、关不上或错位的铁门，以及金属框架上开裂的焊缝。",
+    },
+    flooring: {
+      label: "地板问题",
+      intro: "膨胀与水损的板材、翘起与离缝的板材、空心声区域，以及有异响的地板。",
+    },
+    "general-renovation": {
+      label: "装修规划问题",
+      intro: "装修批准与准证、超支与范围扩张，以及装修延误的成因。",
     },
   },
 };
@@ -593,6 +620,61 @@ export const problemList: Record<
       subtitle:
         "Kerja-kerja kecil yang menimbun di rumah — kelengkapan longgar, cangkuk, kaulk dan pembaikan kecil — diuruskan dengan cepat oleh satu tukang yang dipercayai.",
     },
+    "rusted-gate-repair": {
+      name: "Pagar & Gril Berkarat",
+      subtitle:
+        "Karat pada pagar mild steel biasa dalam iklim Malaysia. Renovix menentukan sama ada ia karat permukaan yang boleh dirawat atau karat yang sudah makan tembus.",
+    },
+    "railing-repair": {
+      name: "Susur Tangan Longgar atau Rosak",
+      subtitle:
+        "Susur tangan yang bergerak apabila disandar ialah isu keselamatan. Renovix mengangkur semula, mengimpal semula atau menggantikan bahagian mengikut punca sebenar.",
+    },
+    "gate-alignment-problems": {
+      name: "Pagar Tidak Menutup atau Tersasar",
+      subtitle:
+        "Pagar yang menyeret atau tidak berselak bermakna engsel, tiang, roda atau landasan telah bergerak. Renovix mencari puncanya sebelum melaras apa-apa.",
+    },
+    "broken-weld-joint": {
+      name: "Kimpalan Retak atau Patah",
+      subtitle:
+        "Kimpalan yang gagal ialah sambungan yang berhenti menanggung beban. Renovix mengimpal semula di tapak dan mengukuhkan jika reka bentuk asal terlalu kecil.",
+    },
+    "swollen-flooring": {
+      name: "Lantai Bengkak atau Rosak Air",
+      subtitle:
+        "Lantai bengkak hampir selalu masalah air. Renovix mencari punca lembapan dahulu, kemudian mengeringkan dan menggantikan papan yang rosak.",
+    },
+    "lifting-floor-planks": {
+      name: "Papan Lantai Terangkat atau Terpisah",
+      subtitle:
+        "Papan yang terangkat atau bercelah biasanya menunjuk kepada ruang pengembangan atau lantai bawah, bukan produk lantai. Renovix mendiagnosis sebelum memasang semula.",
+    },
+    "hollow-flooring": {
+      name: "Lantai Berbunyi Kosong",
+      subtitle:
+        "Bunyi kosong bermakna lantai tidak disokong sepenuhnya. Renovix memberitahu dengan jujur bila ia normal dan bila lantai bawah perlu diratakan.",
+    },
+    "squeaky-flooring": {
+      name: "Lantai Berdecit atau Berkeriut",
+      subtitle:
+        "Decitan ialah geseran, dan ia biasanya mesej daripada lantai bawah. Renovix mencari titik tepatnya dan membetulkan puncanya.",
+    },
+    "renovation-permit-approval": {
+      name: "Kelulusan & Permit Renovasi",
+      subtitle:
+        "Kebanyakan pertikaian renovasi bermula apabila kerja mendahului kelulusan. Renovix merancang kerja mengikut peraturan bangunan dan pihak berkuasa tempatan anda.",
+    },
+    "renovation-scope-creep": {
+      name: "Kos Renovasi Melebihi Bajet & Skop Membesar",
+      subtitle:
+        "Renovasi melebihi bajet melalui tambahan kecil yang tidak diberi harga. Renovix memberi sebut harga terperinci dan memberi harga setiap perubahan lebih awal.",
+    },
+    "renovation-delays": {
+      name: "Kelewatan Renovasi",
+      subtitle:
+        "Kelewatan datang daripada kelulusan lewat, bahan lewat dan masa pengeringan yang tidak dijadualkan. Renovix menyatakan tempoh menunggu secara terbuka.",
+    },
   },
   zh: {
     "broken-tile-repair": {
@@ -824,6 +906,61 @@ export const problemList: Record<
       name: "家居小修",
       subtitle:
         "家里累积的小活儿 —— 松动的五金、挂钩、填缝与小修补 —— 由一位值得信赖的师傅一次处理好。",
+    },
+    "rusted-gate-repair": {
+      name: "生锈的铁门与防盗网",
+      subtitle:
+        "低碳钢铁门在马来西亚气候中生锈很正常。Renovix 判断它是可处理的表面锈，还是已经蚀穿的锈。",
+    },
+    "railing-repair": {
+      name: "松动或损坏的栏杆",
+      subtitle:
+        "靠上去会晃的栏杆是安全问题。Renovix 依实际成因重新锚固、重焊或更换局部。",
+    },
+    "gate-alignment-problems": {
+      name: "铁门关不上或错位",
+      subtitle:
+        "铁门拖地或无法上闩，代表铰链、立柱、滑轮或轨道移位了。Renovix 先找出成因再进行调整。",
+    },
+    "broken-weld-joint": {
+      name: "焊缝开裂或断裂",
+      subtitle:
+        "失效的焊缝就是不再承载的接头。Renovix 现场重焊，并在原设计偏弱时加以加固。",
+    },
+    "swollen-flooring": {
+      name: "地板膨胀或水损",
+      subtitle:
+        "地板膨胀几乎总是水的问题。Renovix 先找出湿气来源，再干燥并更换受损板材。",
+    },
+    "lifting-floor-planks": {
+      name: "地板翘起或离缝",
+      subtitle:
+        "翘起或离缝通常指向伸缩缝或底层地面，而非地板产品本身。Renovix 先诊断再重铺。",
+    },
+    "hollow-flooring": {
+      name: "地板空心声",
+      subtitle:
+        "空心声代表地板下方支撑不完整。Renovix 会如实告诉您何时属正常、何时需要整平底层。",
+    },
+    "squeaky-flooring": {
+      name: "地板异响或嘎吱声",
+      subtitle:
+        "异响就是摩擦，通常是底层地面传来的讯息。Renovix 精确定位并修正成因。",
+    },
+    "renovation-permit-approval": {
+      name: "装修批准与准证",
+      subtitle:
+        "多数装修纠纷始于工程走在批准前面。Renovix 依您大楼与地方政府的规则来规划工程。",
+    },
+    "renovation-scope-creep": {
+      name: "装修超支与范围扩张",
+      subtitle:
+        "装修是通过未报价的小增项慢慢超支的。Renovix 提供逐项报价，并为每项变更事先报价。",
+    },
+    "renovation-delays": {
+      name: "装修延误",
+      subtitle:
+        "延误来自迟来的批准、迟订的材料与未排入的干燥时间。Renovix 公开说明等待期。",
     },
   },
 };

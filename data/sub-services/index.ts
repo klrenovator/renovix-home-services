@@ -12,6 +12,10 @@ import { tilingSubServices } from "./content/tiling";
 import { weldingSubServices } from "./content/welding";
 import { electricalSubServices } from "./content/electrical";
 import { waterproofingSubServices } from "./content/waterproofing";
+import { paintingSubServices } from "./content/painting";
+import { flooringSubServices } from "./content/flooring";
+import { ceilingPartitionSubServices } from "./content/ceiling-partition";
+import { generalRenovationSubServices } from "./content/general-renovation";
 
 /**
  * Phase 19 registry. A sub-service is only available (and thus only routed,
@@ -25,6 +29,10 @@ export const subServices: SubServiceDefinition[] = [
   ...weldingSubServices,
   ...electricalSubServices,
   ...waterproofingSubServices,
+  ...paintingSubServices,
+  ...flooringSubServices,
+  ...ceilingPartitionSubServices,
+  ...generalRenovationSubServices,
 ];
 
 export function getAllSubServices(): SubServiceDefinition[] {

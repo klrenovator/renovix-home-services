@@ -5,7 +5,10 @@ export type ProblemCategoryId =
   | "ceiling"
   | "plumbing"
   | "waterproofing"
-  | "handyman";
+  | "handyman"
+  | "welding"
+  | "flooring"
+  | "general-renovation";
 
 export type ProblemCategory = {
   id: ProblemCategoryId;
