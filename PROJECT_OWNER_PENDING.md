@@ -1,9 +1,34 @@
-# PROJECT OWNER-PENDING DATA — Phases 22 & 24
+# PROJECT OWNER-PENDING DATA — Phases 22, 24 & 25
 
-Status: **OWNER-PENDING**. Nothing on this list blocks the site; every item is
-optional metadata the business can supply to strengthen project proof. Nothing
-here may be invented, estimated or placeholder-filled in the meantime — the
-project pages already render correctly with only the data that exists.
+Status: **OWNER-PENDING**. Nothing on this list is a code defect. Each item
+can only be completed by the business or in the hosting/Search Console
+dashboards. Do not invent values.
+
+## Phase 25 — remaining owner actions (do not repeat completed work)
+
+Already done in code and, where noted, live-checked. **Do not redo these:**
+the site, HTTPS, `/sitemap.xml`, `/robots.txt`, WhatsApp `wa.me/601159259521`,
+`tel:+601159259521`, `mailto:renovixhomeservices@gmail.com`, the three language
+routes, the 10 services, quote form UI, and Search Console *verification*
+(HTML file + meta tag `CIc-da9G9QfriX7tAeKqS3w5YF2tt4GKnjV8IMSGP8o`).
+
+Only the following still need the owner:
+
+| # | Action | Why it cannot be done in code | Status until done |
+| --- | --- | --- | --- |
+| 1 | Vercel → Domains: make **`renovixhomeservices.my` (apex) the primary** so `www` redirects *to* apex, not the other way around | Edge domain redirect is a Vercel setting. Canonicals/sitemap already use apex; reversing it in Next.js would loop | YELLOW — live fetchers currently land on www |
+| 2 | Create a Resend API key, verify `renovixhomeservices.my` (or the sending domain) in Resend, set `RESEND_API_KEY` + `QUOTE_FROM_EMAIL` (+ optional `QUOTE_NOTIFICATION_EMAIL`) in Vercel, redeploy, then send **one real quote** and confirm the inbox | Secrets and mailbox access | GREY — API honestly returns 503 today |
+| 3 | Submit **`https://renovixhomeservices.my/sitemap.xml`** once in Google Search Console (domain or URL-prefix property on the apex). Do not resubmit per-language sitemaps | GSC dashboard | GREY — verification token is already live; indexing data does not exist yet |
+| 4 | Supply a real GA4 Measurement ID (`G-…`) *or* a GTM container ID if measurement is wanted. Optionally Ads conversion ID+labels and Clarity ID | Inventing IDs would send data to someone else. With none set, **no script loads** | GREY |
+| 5 | Real-device pass on a phone (menu, quote form, WhatsApp, `tel:`) and confirm Search Console / GA4 realtime after IDs are on | No owner device in this environment | YELLOW |
+| 6 | Project metadata still missing per job (location, year, materials, extra photos) — same table as below | Must not be invented | GREY |
+| 7 | Approve production after (1)–(5) | Business decision | GREY |
+
+Insufficient real-world data for Search Console performance conclusions.
+
+The project-proof items below remain optional metadata. Nothing here may be
+invented, estimated or placeholder-filled — the project pages already render
+correctly with only the data that exists.
 
 ## Phase 24 — analytics & measurement activation (all measurement is OFF until IDs are supplied)
 
