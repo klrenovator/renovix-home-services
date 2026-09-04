@@ -1,6 +1,8 @@
 import type { LanguageCode } from "@/data/languages";
 import { getLanguageCode } from "@/data/languages";
 import { projectCategories, type ProjectCategory, type ProjectCategoryId } from "@/data/projects";
+import { getSubService } from "@/data/sub-services";
+import type { SubServiceDefinition } from "@/data/sub-services/types";
 import { projectContent, projects } from "./projects";
 import { getProjectTranslation, translatedProjectSlugs } from "./translations";
 import type { Project, ProjectContent, ResolvedProject } from "./types";
@@ -107,6 +109,31 @@ export function getProjectCategoriesWithProjects(): ProjectCategoryId[] {
 export function getProjectServiceCategories(project: Project): ProjectCategoryId[] {
   const ids = [project.category, ...(project.relatedCategories ?? [])];
   return ids.filter((id, index) => ids.indexOf(id) === index);
+}
+
+/**
+ * Phase 21 — the Phase 19 sub-service pages this project's photographed work
+ * genuinely documents. Resolved against the sub-service registry; an unknown
+ * slug (which `i18n/verify.ts` turns into a build failure anyway) is simply
+ * dropped here rather than ever rendered.
+ */
+export function getProjectSubServices(
+  project: Project,
+): SubServiceDefinition[] {
+  return (project.subServices ?? [])
+    .map((slug) => getSubService(slug))
+    .filter((sub): sub is SubServiceDefinition => Boolean(sub));
+}
+
+/**
+ * Published projects whose registry entry genuinely documents a given
+ * sub-service. This is the Sub-service → Project direction: a sub-service
+ * page shows only these, never every project of the parent service.
+ */
+export function getProjectsForSubService(slug: string): Project[] {
+  return getPublishedProjects().filter((project) =>
+    project.subServices?.includes(slug),
+  );
 }
 
 export function getProjectCategory(

@@ -3,6 +3,8 @@ import { ProjectOverviewSection } from "./ProjectOverviewSection";
 import { ProjectDetailsSection } from "./ProjectDetailsSection";
 import { ProjectGallerySection } from "./ProjectGallerySection";
 import { ProjectServicesSection } from "./ProjectServicesSection";
+import { ProjectSubServicesSection } from "./ProjectSubServicesSection";
+import { ProjectProblemsSection } from "./ProjectProblemsSection";
 import { ProjectLocationSection } from "./ProjectLocationSection";
 import { ProjectRelatedSection } from "./ProjectRelatedSection";
 import { ProjectCtaSection } from "./ProjectCtaSection";
@@ -29,6 +31,8 @@ export function ProjectPage({ project, lang }: ProjectPageProps) {
       <ProjectDetailsSection project={project} lang={lang} />
       <ProjectGallerySection project={project} lang={lang} />
       <ProjectServicesSection project={project} lang={lang} />
+      <ProjectSubServicesSection project={project} lang={lang} />
+      <ProjectProblemsSection project={project} lang={lang} />
       <ProjectLocationSection project={project} lang={lang} />
       <ProjectRelatedSection project={project} lang={lang} />
       <ProjectCtaSection lang={lang} />

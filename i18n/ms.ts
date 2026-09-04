@@ -900,6 +900,15 @@ export const ms: Dictionary = {
     servicesTitle: "Perkhidmatan Renovix yang terlibat dalam kerja ini",
     servicesBody:
       "Setiap projek memaut ke halaman perkhidmatan yang menerangkan kerja secara terperinci, termasuk sub-perkhidmatan yang kami laksanakan dan proses yang kami ikuti.",
+    subServicesEyebrow: "Sub-Perkhidmatan",
+    subServicesTitle: "Servis khusus di sebalik kerja ini",
+    subServicesBody:
+      "Setiap halaman sub-perkhidmatan menerangkan skop sebenar kerja yang ditunjukkan dalam gambar ini. Hanya sub-perkhidmatan yang benar-benar terlibat dalam kerja ini dipautkan — tiada yang diandaikan.",
+    subServicesUnder: "Sebahagian daripada {service}",
+    relatedGuidesEyebrow: "Panduan Berkaitan",
+    relatedGuidesTitle: "Panduan untuk kerja seperti ini",
+    relatedGuidesBody:
+      "Panduan masalah praktikal yang berkaitan dengan servis dalam projek ini — apa yang boleh rosak, puncanya dan bila perlu menghubungi kami.",
     locationEyebrow: "Lokasi",
     locationTitle: "Di mana kami menjalankan kerja ini",
     locationUnverifiedBody:

@@ -18,6 +18,8 @@ import {
   projects,
   translatedProjectSlugs,
 } from "@/data/project-content";
+import { projectCategories } from "@/data/projects";
+import { getSubService } from "@/data/sub-services";
 import { siteFaqs } from "@/data/site-faqs";
 import { problemList } from "@/data/i18n/lists";
 import { languages } from "@/data/languages";
@@ -95,6 +97,7 @@ export function assertCoverageInSync() {
   assertFaqTranslationsInSync();
   assertProblemLabelsInSync();
   assertProjectDataIsSound();
+  assertProjectSubServiceLinksAreSound();
   assertTranslationRegistriesInSync();
 }
 
@@ -123,6 +126,56 @@ function assertProjectDataIsSound() {
       throw new Error(
         `[i18n/verify] published project has no main image: ${project.slug}`,
       );
+    }
+  }
+}
+
+/**
+ * Phase 21 — project ↔ sub-service link integrity.
+ *
+ * A project may only cite a Phase 19 sub-service when that sub-service is
+ * real (registered in `data/sub-services`) and belongs to a service the
+ * project actually carried out (its primary category or a related category).
+ * Anything else would either be a dead link or a fabricated relationship, so
+ * both are build failures, not warnings.
+ */
+function assertProjectSubServiceLinksAreSound() {
+  for (const project of projects) {
+    if (project.status !== "published") {
+      continue;
+    }
+
+    const projectServiceSlugs = new Set(
+      [project.category, ...(project.relatedCategories ?? [])]
+        .map(
+          (id) =>
+            projectCategories.find((category) => category.id === id)
+              ?.servicePath.replace("/services/", ""),
+        )
+        .filter((slug): slug is string => Boolean(slug)),
+    );
+    const seen = new Set<string>();
+
+    for (const slug of project.subServices ?? []) {
+      if (seen.has(slug)) {
+        throw new Error(
+          `[i18n/verify] project ${project.slug} lists sub-service ${slug} more than once`,
+        );
+      }
+      seen.add(slug);
+
+      const sub = getSubService(slug);
+      if (!sub) {
+        throw new Error(
+          `[i18n/verify] project ${project.slug} references an unknown sub-service: ${slug}`,
+        );
+      }
+
+      if (!projectServiceSlugs.has(sub.serviceSlug)) {
+        throw new Error(
+          `[i18n/verify] project ${project.slug} cites sub-service ${slug} (service: ${sub.serviceSlug}), but the project is not recorded under that service — a project may only link to sub-services of services it actually carried out`,
+        );
+      }
     }
   }
 }

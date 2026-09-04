@@ -23,7 +23,7 @@
 | Pricing rows (`data/pricing/pricing.ts`) | **51** |
 | Search-intent matrix entries | 16 (all pricing derived from `pricingId`) |
 | Pricing entries corrected in Phase 18 | **10 price mismatches + 1 unit mismatch + 12 sub-service slug mismatches** (Phase 17 audit) |
-| Audit scripts | 9, all PASS |
+| Audit scripts | 10, all PASS |
 
 ---
 
@@ -2747,4 +2747,122 @@ and show no diff.
 - [x] `npm run audit:blog` — **PASS** (12 articles)
 - [x] Sitemap emits 633 `<loc>` URLs; the 9 new guide URLs carry complete
       hreflang sets and self-canonicals
+- [x] Static verification only — no real-browser testing is claimed
+
+---
+
+## PHASE 21 (PORTFOLIO TRACK) — Portfolio, Project Proof & Service-to-Project Internal Linking — [x] COMPLETE
+
+> A second Phase 21 track, following the Knowledge Hub completion section
+> above. Scope: strengthen the project/portfolio architecture, connect
+> Services → Sub-services → Projects contextually in all three directions,
+> improve project proof for SEO/GEO/AEO/LLMO/CRO/E-E-A-T, and prepare the
+> architecture for owner-supplied project metadata — without inventing a
+> single fact.
+
+### 1. Project registry audit (Phase 21 §1)
+
+`scripts/audit-projects.mjs` (`npm run audit:projects`, the 10th audit
+script) now validates the whole registry. Current verified distribution:
+21 published projects — tiling 2, ceiling 5, electrical 8, plumbing 1,
+welding 4, general renovation 1. No drafts. Every project has real
+photographs only, EN/MS/ZH copy, alt text and scope bullets. Nothing was
+fabricated; no fake case studies were added for Painting, Waterproofing,
+Flooring or Handyman (0 projects each — those pages correctly omit the
+project-proof section).
+
+### 2. Service → Project (Phase 21 §2)
+
+`ServiceSubLinksSection` (Phase 19) already links every service page to its
+genuine projects by category. Verified intact: a service with no real
+project shows no proof section and no invented content.
+
+### 3. Sub-service → Project (Phase 21 §3)
+
+- New `Project.subServices?: string[]` field — sub-service slugs (Phase 19
+  registry) whose scope the photographed work genuinely covers. Only set
+  where the work actually matches (distribution board photo → `db-box`,
+  cove ceiling photo → `l-box-ceiling`, floor-tile photo →
+  `floor-tile-installation`, tile hacking photo → `tile-hacking`, awning
+  frame photo → `awning-structure`, fan/chandelier/light photos →
+  `fan-installation` / `lighting-point`, outdoor socket photo →
+  `socket-installation`).
+- `SubServicePage` now shows **only genuinely mapped projects** (with real
+  thumbnails and alt text) instead of every project of the parent service —
+  16 sub-service ↔ project links across 8 sub-services. Sub-services
+  without a genuine match (43 of 51) omit the section entirely. No
+  relationship is inferred from two scopes merely being adjacent.
+- Build-time guard: `i18n/verify.ts` `assertProjectSubServiceLinksAreSound()`
+  fails the build if a project cites an unknown sub-service, a duplicate, or
+  a sub-service from a service the project did not carry out.
+
+### 4. Project → Service / Sub-service (Phase 21 §4–5)
+
+- `ProjectServicesSection` (primary + related service cards) unchanged and
+  verified for all 21 projects.
+- New `ProjectSubServicesSection`: each project lists its genuinely mapped
+  sub-services, each labelled "Part of {parent service}" and linking to both
+  the sub-service page and its parent service page. Rendered only when the
+  registry has a genuine mapping.
+- New `ProjectProblemsSection`: related problem guides derived strictly
+  through the genuine sub-service mappings (each sub-service declares its
+  own `relatedProblems`), so a floor-tiling project surfaces the
+  uneven-tiles / cracked-tile guides and nothing guessed. Max 6 guides;
+  omitted when no mapping or translation exists.
+- New dictionary keys (EN/MS/ZH, typed): `projectPage.subServices*`,
+  `projectPage.subServicesUnder`, `projectPage.relatedGuides*`.
+
+### 5. Structured data (Phase 21 §8)
+
+`ProjectJsonLd` now emits, per project page:
+- `WebPage` with `about` → the project's own `CreativeWork` node;
+- `CreativeWork` (name, factual description, canonical URL, `inLanguage`)
+  with `image` references and `about` → the primary `Service` plus every
+  genuinely mapped sub-service `Service` (each carrying the same `#service`
+  entity id as its own page, keeping the entity graph consistent site-wide),
+  `provider` → the organization;
+- `ImageObject` per real photograph (hero, gallery, before/after) with
+  dimensions and localized captions;
+- `BreadcrumbList` matching the visible breadcrumb.
+Still deliberately absent: Review, aggregateRating, Product, Offer, prices,
+dates, location claims. Validated: all 126 JSON-LD blocks across 63 project
+pages parse and every `@id` reference resolves within the graph.
+
+### 6. Multilingual & CRO (Phase 21 §9–10)
+
+- All 21 projects remain EN/MS/ZH complete (coverage lists + translation
+  registries verified by the audit and the existing build-time guards);
+  each page carries self-canonical + `en-MY`/`ms-MY`/`zh-MY`/`x-default`
+  hreflang (verified in rendered HTML and sitemap).
+- Sub-service labels on project pages are genuinely localized per language
+  (e.g. MS "Pemasangan Jubin Lantai").
+- CTAs reuse the existing Phase 12 quote flow and site WhatsApp number —
+  no second quote system was created.
+
+### 7. Owner-pending data (Phase 21 §13)
+
+`PROJECT_OWNER_PENDING.md` documents, per project and globally, exactly
+which owner-supplied facts are missing (exact location, year, property type,
+materials, extra photos, before/after pairs, publication permission) and
+which files/fields each goes into. Nothing on the list blocks the build.
+
+### 8. Testing (Phase 21 §12)
+
+- [x] `npm run type-check` — **PASS**
+- [x] `npm run lint` — **PASS** (0 problems)
+- [x] `npm run build` — **PASS** (644 static pages)
+- [x] `npm run audit:business` — **PASS**
+- [x] `npm run audit:og-fonts` — **PASS**
+- [x] `npm run audit:project-assets` — **PASS**
+- [x] `npm run audit:pricing` — **PASS**
+- [x] `npm run audit:locations` — **PASS**
+- [x] `npm run audit:authority` — **PASS**
+- [x] `npm run audit:subservices` — **PASS**
+- [x] `npm run audit:blog` — **PASS**
+- [x] `npm run audit:projects` — **PASS** (new: registry, all three link
+      directions, multilingual routes, structured-data honesty, orphan check)
+- [x] Sitemap: 633 `<loc>` URLs, every project URL with a complete hreflang
+      set; all rendered pages return 200
+- [x] Rendered HTML verified for EN/MS/ZH project pages and sub-service
+      pages (genuine-only project sections)
 - [x] Static verification only — no real-browser testing is claimed
