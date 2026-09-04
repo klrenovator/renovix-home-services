@@ -40,6 +40,7 @@ export const ms: Dictionary = {
     problems: "Masalah",
     areas: "Kawasan",
     projects: "Projek",
+    blog: "Panduan",
     faq: "FAQ",
     about: "Tentang",
     contact: "Hubungi",
@@ -761,6 +762,58 @@ export const ms: Dictionary = {
     notSureOption: "Tidak pasti / pelbagai perkhidmatan",
     notSureSubService: "Tidak pasti — sila nasihatkan",
     multipleServicesSubService: "Pelbagai perkhidmatan / skop renovasi",
+  },
+  blogIndex: {
+    metaTitle: "Renovix Home Services | Panduan Renovasi Rumah untuk KL & Selangor",
+    metaDescription:
+      "Panduan praktikal tentang kos renovasi, bahan, pembaikan dan penyelenggaraan untuk rumah di Kuala Lumpur dan Selangor — berdasarkan senarai harga kami sendiri.",
+    ogDescription:
+      "Panduan kos, perbandingan bahan dan diagnosis pembaikan untuk rumah di Lembah Klang.",
+    breadcrumb: "Panduan",
+    title: "Panduan Renovasi & Pembaikan Rumah untuk Kuala Lumpur & Selangor",
+    lead: "Jawapan terus kepada soalan yang orang tanya sebelum mengupah sesiapa: berapa kos sesuatu kerja, bahan mana sesuai untuk bilik mana, cara membezakan pembaikan daripada bina semula, dan bila sesuatu masalah memerlukan profesional. Setiap harga yang disebut datang daripada kadar rasmi kami.",
+    eyebrow: "Pusat Pengetahuan",
+    gridTitle: "Terokai panduan kami",
+    gridDescription:
+      "Setiap panduan menjawab satu soalan dengan tuntas dan dipautkan kepada halaman perkhidmatan, masalah dan kawasan yang berkaitan.",
+    categoryEyebrow: "Kategori",
+    readGuide: "Baca panduan",
+    ctaEyebrow: "Mula Di Sini",
+    ctaTitle: "Masih tidak pasti skop mana yang anda perlukan?",
+    ctaDescription:
+      "Terangkan kerja tersebut dan hantarkan beberapa gambar. Kami akan beritahu apa yang ditunjukkan oleh bukti sebelum memberi sebut harga.",
+  },
+  blogPage: {
+    breadcrumbBlog: "Panduan",
+    answerEyebrow: "Jawapan ringkas",
+    keyPointsTitle: "Perkara penting",
+    publishedLabel: "Diterbitkan",
+    updatedLabel: "Dikemas kini",
+    writtenByLabel: "Ditulis oleh",
+    pricingNote:
+      "Kadar di bawah datang daripada senarai harga rasmi kami dan merupakan harga permulaan — sebut harga akhir bergantung pada keadaan tapak sebenar dan skop kerja.",
+    faqsEyebrow: "Soalan Lazim",
+    faqsTitle: "Soalan yang orang tanya tentang perkara ini",
+    relatedServicesTitle: "Perkhidmatan berkaitan panduan ini",
+    relatedSubServicesTitle: "Kerja khusus yang dibincangkan di sini",
+    relatedProblemsTitle: "Panduan masalah berkaitan",
+    relatedProjectsTitle: "Kerja projek berkaitan",
+    relatedAreasTitle: "Kawasan tempat kami menjalankan kerja ini",
+    relatedArticlesTitle: "Panduan berkaitan",
+    relatedAreasDescription:
+      "Panduan tempatan untuk kawasan yang paling kerap menghadapi kerja seperti ini.",
+    ctaHeading: "Perlukan kerja ini di Kuala Lumpur atau Selangor?",
+    ctaDescription:
+      "Beritahu kami tentang hartanah anda dan apa yang anda lihat. Kami akan nasihatkan langkah seterusnya sebelum sebut harga disediakan.",
+  },
+  guideLinks: {
+    eyebrow: "Pusat Pengetahuan",
+    serviceTitle: "Panduan tentang {name}",
+    subServiceTitle: "Panduan tentang {name}",
+    problemTitle: "Panduan yang menerangkan lebih lanjut",
+    areaTitle: "Panduan untuk rumah di {name}",
+    description:
+      "Bacaan latar tentang kos, bahan dan apa yang terlibat dalam kerja ini.",
   },
   projects: {
     metaTitle: "Gambar Projek di Kuala Lumpur & Selangor | Renovix Home Services",

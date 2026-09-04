@@ -3,6 +3,7 @@ import { serviceDetails } from "@/data/service-content";
 import { problemDetails } from "@/data/problem-content";
 import { areaRegions } from "@/data/area-content";
 import { getProjectContent, getPublishedProjects } from "@/data/project-content";
+import { getArticleText, getArticles } from "@/data/blog";
 import {
   getServicePricingHeadline,
   LAST_REVIEWED as PRICING_LAST_REVIEWED,
@@ -94,6 +95,16 @@ export function getAiKnowledge() {
         url: absoluteUrl("en", `/projects/${project.slug}/`),
       })),
     },
+    knowledgeHub: {
+      index: absoluteUrl("en", "/blog/"),
+      description:
+        "Educational guides on cost, materials, troubleshooting, planning and maintenance for Malaysian homes. Published in English, Malay and Chinese.",
+      articles: getArticles().map((article) => ({
+        title: getArticleText(article, "en").h1,
+        category: article.category,
+        url: absoluteUrl("en", `/blog/${article.slug}/`),
+      })),
+    },
     pricing: {
       feed: `${siteConfig.url}/ai/pricing.json`,
       lastReviewed: PRICING_LAST_REVIEWED,
@@ -118,6 +129,7 @@ export function getAiKnowledge() {
       problems: absoluteUrl("en", "/problems/"),
       areas: absoluteUrl("en", "/areas/"),
       projects: absoluteUrl("en", "/projects/"),
+      knowledgeHub: absoluteUrl("en", "/blog/"),
       faq: absoluteUrl("en", "/faq/"),
       about: absoluteUrl("en", "/about/"),
       contact: absoluteUrl("en", "/contact/"),

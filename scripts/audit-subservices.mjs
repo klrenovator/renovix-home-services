@@ -26,6 +26,7 @@ import { fileURLToPath } from "node:url";
 const ROOT = join(fileURLToPath(new URL(".", import.meta.url)), "..");
 const PRICING_FILE = join(ROOT, "data", "pricing", "pricing.ts");
 const CONTENT_DIR = join(ROOT, "data", "sub-services", "content");
+const PROBLEM_DIR = join(ROOT, "data", "problem-content");
 
 const failures = [];
 const fail = (message) => failures.push(message);
@@ -73,6 +74,23 @@ if (entries.length === 0) {
 }
 
 const pricedSubSet = new Map(pricedSubs.map((p) => [p.sub, p]));
+
+/* ------------------------------------------------------------------------ */
+/* Parse the authoritative problem catalogue (data/problem-content/*.ts).    */
+/* These are the only slugs a sub-service may cite in `relatedProblems`.     */
+/* ------------------------------------------------------------------------ */
+const PROBLEM_SKIP = new Set(["index.ts", "types.ts"]);
+const problemSlugs = new Set();
+for (const file of readdirSync(PROBLEM_DIR)) {
+  if (!file.endsWith(".ts") || PROBLEM_SKIP.has(file)) continue;
+  const source = readFileSync(join(PROBLEM_DIR, file), "utf8");
+  for (const m of source.matchAll(/^\s*slug:\s*"([a-z0-9-]+)"/gm)) {
+    problemSlugs.add(m[1]);
+  }
+}
+if (problemSlugs.size === 0) {
+  fail("Could not parse any problem slugs from data/problem-content/.");
+}
 
 /* ------------------------------------------------------------------------ */
 /* Parse authored sub-services from the content directory.                   */
@@ -134,7 +152,11 @@ function parseAuthored() {
       const langs = ["en", "ms", "zh"].filter((l) =>
         new RegExp(`^\\s*${l}:\\s*\\{`, "m").test(obj),
       );
-      authored.push({ slug, service, pricingId, langs, file });
+      const relatedMatch = obj.match(/relatedProblems:\s*\[([^\]]*)\]/);
+      const relatedProblems = relatedMatch
+        ? [...relatedMatch[1].matchAll(/"([^"]+)"/g)].map((m) => m[1])
+        : [];
+      authored.push({ slug, service, pricingId, langs, relatedProblems, file });
     }
   }
   return authored;
@@ -158,6 +180,16 @@ for (const a of authored) {
   }
   if (a.pricingId && !allIds.has(a.pricingId)) {
     fail(`Sub-service "${a.slug}" references an unknown pricingId "${a.pricingId}".`);
+  }
+  for (const problem of a.relatedProblems) {
+    if (!problemSlugs.has(problem)) {
+      fail(
+        `Sub-service "${a.slug}" links to an unknown problem "${problem}" — it must exist in data/problem-content/.`,
+      );
+    }
+  }
+  if (new Set(a.relatedProblems).size !== a.relatedProblems.length) {
+    fail(`Sub-service "${a.slug}" repeats a slug in relatedProblems.`);
   }
   const missingLangs = ["en", "ms", "zh"].filter((l) => !a.langs.includes(l));
   if (missingLangs.length > 0) {
@@ -188,6 +220,10 @@ console.log(`Priced sub-services in catalogue: ${pricedSubs.length}`);
 console.log(`Authored standalone sub-service pages: ${authored.length}`);
 console.log(`  of which published in all 3 languages (en/ms/zh): ${
   authored.filter((a) => a.langs.length === 3).length
+}`);
+console.log(`Problem slugs in catalogue: ${problemSlugs.size}`);
+console.log(`Sub-service → problem links validated: ${
+  authored.reduce((n, a) => n + a.relatedProblems.length, 0)
 }`);
 console.log(`Authored but not priced: ${
   authored.filter((a) => !pricedSubSet.has(a.slug)).length

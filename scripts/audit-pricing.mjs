@@ -438,6 +438,7 @@ const PRICE_FREE_DIRS = [
   join(ROOT, "data", "project-content"),
   join(ROOT, "data", "locations"),
   join(ROOT, "data", "i18n"),
+  join(ROOT, "data", "blog"),
 ];
 
 const PRICE_FREE_FILES = [

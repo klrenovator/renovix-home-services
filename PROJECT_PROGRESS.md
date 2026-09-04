@@ -2501,3 +2501,83 @@ mismatches resolved; 16/16 intents now derive their pricing.**
 
 Sub-service pages, blog pages, new location pages, projects/photos, GA4/GTM,
 Search Console analysis, owner data — all remain Phase 19+ work.
+
+---
+
+## Phase 20 — Knowledge Hub (`/blog`)
+
+### 1. What shipped
+
+- **9 guides**, each authored in full in English, Malay and Chinese: the 7
+  approved in CONTENT_MAP §6 plus 2 coverage guides (electrical wiring warning
+  signs, metal grille/gate buying guide) for services that had no educational
+  content at all.
+- **30 new pages**: `/en|ms|zh/blog/` hub + 9 articles × 3 languages.
+  Static page count went 449 → 479; sitemap 438 → 468 `<loc>` URLs.
+- **135 new FAQs** (9 articles × 3 languages × 5), all unique against every
+  existing page — enforced by `audit:authority` rule 5.
+
+### 2. Architecture
+
+- `data/blog/types.ts` — typed article definition: slug, category, intents,
+  publish/update dates, image, related services / sub-services / problems /
+  locations / projects, pricing row ids, and EN/MS/ZH copy.
+- `data/blog/content/*.ts` — one file per guide; `data/blog/index.ts` is the
+  registry plus the relationship queries the rest of the site reads.
+- Body blocks are a discriminated union (paragraph, list, steps, table,
+  callout, pricing). The `pricing` block resolves rows out of
+  `data/pricing/pricing.ts` at render time, so **no article contains a ringgit
+  figure** — `audit:blog` fails on any hard-coded `RM<digit>`.
+- Routes `app/[lang]/blog/page.tsx` and `app/[lang]/blog/[slug]/page.tsx`;
+  components under `components/blog/`.
+- Schema: WebPage + BreadcrumbList + Article + FAQPage per guide, ItemList on
+  the hub. Author and publisher are both the business — no invented personas,
+  no ratings, no fake dates. `dateModified` is emitted only when an article has
+  really been revised.
+
+### 3. Internal linking
+
+- **Outbound** (article → site): every guide links its services, sub-services,
+  problems, projects, areas and sibling guides. Links are rendered only when
+  the target publishes in the current language, so a `/ms/` guide never links
+  an English-only page.
+- **Inbound** (site → article): `GuideLinksSection` was added to service,
+  sub-service, problem and area pages. It matches on declared relationships,
+  never keywords, and renders nothing when there is no relevant guide.
+- Hub is in the header, footer and mobile nav; listed in `/llms.txt` and
+  `/ai/business.json`.
+
+### 4. New audit
+
+`npm run audit:blog` — checks every related-* slug and pricing id resolves
+against the real registries, no hard-coded prices, EN/MS/ZH complete, unique
+metaDescription/H1/FAQ per language, every article imported by the registry and
+reachable from both the hub index and the sitemap (**zero orphans**).
+
+### 5. Testing
+
+- [x] `npm run type-check` — **PASS**
+- [x] `npm run lint` — **PASS** (0 problems)
+- [x] `npm run build` — **PASS** (479 static pages)
+- [x] `npm run audit:business` — **PASS**
+- [x] `npm run audit:og-fonts` — **PASS**
+- [x] `npm run audit:project-assets` — **PASS**
+- [x] `npm run audit:pricing` — **PASS** (`data/blog` added to price-free dirs)
+- [x] `npm run audit:locations` — **PASS**
+- [x] `npm run audit:authority` — **PASS** (`data/blog` added to CONTENT_DIRS)
+- [x] `npm run audit:subservices` — **PASS**
+- [x] `npm run audit:blog` — **PASS** (new)
+- [x] Sitemap emits all 30 blog URLs with complete hreflang sets and
+      self-canonicals; ZH/MS articles verified free of English body copy
+- [x] Static verification only — no real-browser testing is claimed
+
+### Remaining content gaps
+
+- No guides yet for flooring subfloor prep, plumbing water-pressure diagnosis,
+  or ceiling/partition material choice.
+- Guides carry no images; the hub and article heroes are typographic. Real
+  photos can be added via the optional `image` field when the owner supplies
+  them.
+- Guides 5 (condo approvals) and 6 (waterproofing systems) deliberately publish
+  no fees, statutory deadlines or lifespan figures — those need verified
+  sources, not estimates.

@@ -13,6 +13,8 @@ import type { ProblemDetail } from "@/data/problem-content/types";
 import { getSubServicesByService, formatSubServicePrice, type ResolvedSubService } from "@/data/sub-services";
 import { getPublishedProjects, getProjectContent } from "@/data/project-content";
 import { projectCategories } from "@/data/projects";
+import { GuideLinksSection } from "@/components/blog/GuideLinksSection";
+import { getArticlesForSubService } from "@/data/blog";
 
 type SubServicePageProps = {
   detail: ResolvedSubService;
@@ -328,6 +330,13 @@ export function SubServicePage({ detail, lang }: SubServicePageProps) {
           ) : null}
         </div>
       </section>
+
+      <GuideLinksSection
+        articles={getArticlesForSubService(detail.slug)}
+        scope="subService"
+        name={name}
+        lang={lang}
+      />
 
       <AreasSection areasNote={service?.areasNote ?? text.lead} lang={lang} />
 

@@ -9,6 +9,9 @@ import { ceilingProblems } from "./ceiling";
 import { plumbingProblems } from "./plumbing";
 import { waterproofingProblems } from "./waterproofing";
 import { handymanProblems } from "./handyman";
+import { weldingProblems } from "./welding";
+import { flooringProblems } from "./flooring";
+import { generalRenovationProblems } from "./general-renovation";
 import { getServiceDetail } from "@/data/service-content";
 import { problemTranslations } from "./translations";
 
@@ -62,6 +65,27 @@ export const problemCategories: ProblemCategory[] = [
     intro:
       "Door and lock problems, curtain installation, TV mounting, shelf installation and minor home repairs.",
   },
+  {
+    id: "welding",
+    label: "Welding & Metal Works Problems",
+    serviceSlug: "welding-metal-works",
+    intro:
+      "Rusted gates and grilles, loose railings, gates that no longer close or align, and cracked welds on metal frames.",
+  },
+  {
+    id: "flooring",
+    label: "Flooring Problems",
+    serviceSlug: "flooring",
+    intro:
+      "Swollen and water-damaged boards, lifting and separating planks, hollow-sounding areas and squeaky floors.",
+  },
+  {
+    id: "general-renovation",
+    label: "Renovation Planning Problems",
+    serviceSlug: "general-renovation",
+    intro:
+      "Renovation approvals and permits, cost overruns and scope creep, and the causes of renovation delays.",
+  },
 ];
 
 /** English problem guides — the source of truth for structure and meaning. */
@@ -73,6 +97,9 @@ export const problemDetails: ProblemDetail[] = [
   ...plumbingProblems,
   ...waterproofingProblems,
   ...handymanProblems,
+  ...weldingProblems,
+  ...flooringProblems,
+  ...generalRenovationProblems,
 ];
 
 /** Merges a translation over the English guide, keeping every link identical. */

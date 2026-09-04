@@ -96,11 +96,32 @@ and pasted answers).
 2. **No painting-only or waterproofing-only project yet.** Publish one only
    when the owner supplies real photos and approves the details. Never stage
    or stock them.
-3. **No blog/guides section yet.** The backlog below is approved in
-   principle; each piece needs real research and all 3 languages before it
-   ships. A thin English-only article helps nothing.
+3. ~~No blog/guides section yet.~~ **Closed in Phase 20.** The Knowledge Hub
+   ships at `/blog/` with 9 guides in EN+MS+ZH. The remaining gap is depth,
+   not existence: no guides yet for flooring subfloor preparation, plumbing
+   water-pressure diagnosis, or ceiling/partition material choice. Those are
+   only worth writing once there is something specific to say.
 
-## 6. Guide backlog (intent-mapped, build only with real research)
+## 6. Guide backlog — DELIVERED in Phase 20
+
+All 7 approved guides shipped, plus 2 coverage guides for services that had no
+educational content (electrical, welding). Each ships in EN+MS+ZH, quotes only
+`data/pricing/pricing.ts` rows, and is linked from its pillar service, its
+sub-service, its problems, its areas and the hub index.
+
+| # | Guide | Slug | Category |
+| --- | --- | --- | --- |
+| 1 | Bathroom rebuild cost | `bathroom-rebuild-cost-guide` | cost-guides |
+| 2 | House painting cost by property type | `house-painting-cost-by-property-type` | cost-guides |
+| 3 | Ceiling stain vs active leak | `ceiling-stain-vs-active-leak` | troubleshooting |
+| 4 | SPC vs vinyl vs laminate vs tile | `spc-vinyl-laminate-tile-comparison` | materials |
+| 5 | Condo renovation approval checklist | `condo-renovation-approval-checklist` | planning |
+| 6 | Cementitious vs PU vs torch-on | `waterproofing-systems-compared` | materials |
+| 7 | Regrout and silicone maintenance | `regrout-silicone-maintenance` | maintenance |
+| 8 | Old-house wiring warning signs | `old-house-wiring-warning-signs` | troubleshooting |
+| 9 | Metal grille and gate buying guide | `metal-grille-gate-buying-guide` | materials |
+
+Original backlog definitions, for the record:
 
 1. Cost guide: full bathroom rebuild (bathroom waterproofing + tiling rows) —
    commercial intent → waterproofing + tiling pillars.
