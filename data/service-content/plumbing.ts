@@ -247,7 +247,7 @@ export const plumbing: ServiceDetail = {
     {
       question: "How much does plumbing repair cost in Malaysia?",
       answer:
-        "Plumbing repair prices start from RM150 for visible pipe leaks and from RM100–RM120 for basic call-out and inspection in KL central (waived if you proceed). Tap replacement starts from RM160, toilet mechanism repair from RM120, drain unblocking from RM100, and concealed in-wall leak repair from RM450 depending on accessibility, pipe material and whether hacking or waterproofing is needed. Final quotation depends on actual site condition and scope.",
+        "Plumbing is charged in two steps: an inspection visit (from RM100, credited back when you go ahead with the work), then the repair itself. Jobs whose scope is visible on site — a dripping tap, a fill valve, a blocked drain — have simple starting prices. Concealed leaks are different: finding the leak, opening the wall and making good are three separate cost items, which is why they are quoted only after the inspection — never from a phone description.",
     },
     {
       question: "How do I find a hidden water leak?",

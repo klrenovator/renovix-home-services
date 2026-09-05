@@ -232,7 +232,7 @@ export const handyman: ServiceDetail = {
   faqs: [
     {
       question: "How much does handyman service cost in Malaysia?",
-      answer: "Typically RM60–200 per hour, common RM60–100/hour in KL & Selangor, min 1 hour. Door hinge RM80–180, lock RM120–280, picture hanging from RM60, TV mount RM150–300, wardrobe assembly RM120–250, regrout RM250–550, silicone RM80–180. Call-out RM80 central waived if proceed. Final depends on task, materials and access.",
+      answer: "Common handyman jobs — a lock change, a TV mount, wardrobe assembly, regrouting — have fixed prices agreed before the visit, because the work is standard enough to price sight unseen. Open-ended or awkward tasks go hourly (typically RM60–RM100 in the Klang Valley, up to RM200 where the job is fiddly), with a one-hour minimum. That minimum is exactly why bundling pays: several small jobs in one visit beats arranging several call-outs. And if a task turns out to need a licensed trade — wiring, plumbing, proper paint systems — it routes to the right team instead of being patched by the wrong one.",
     },
 
     {

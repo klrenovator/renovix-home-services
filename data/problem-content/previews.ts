@@ -1,16 +1,18 @@
 import type { ServiceIcon } from "@/components/icons";
-import type { ProblemCategoryId } from "@/data/problem-content/types";
+import type { ProblemCategoryId } from "./types";
 
 /**
- * Homepage problem preview SELECTION ONLY.
+ * Homepage problem-preview data — part of the authoritative problem-content
+ * registry (moved out of the retired legacy `data/problems.ts` in the
+ * 2026-09-05 audit, I-08).
  *
- * Phase 18 tech-debt fix: this module no longer duplicates problem labels or
- * hrefs. It holds the curated order of the homepage preview tiles plus the
- * icon each category renders with. Every user-visible label and URL is derived
- * from the authoritative problem-content registry (`data/problem-content`) via
- * `getProblemPreviews()` in `data/i18n`.
+ * Like the whole Phase-18 slimming of the legacy file, this module holds the
+ * curated order of the homepage preview tiles plus the icon each category
+ * renders with — and nothing else. Every user-visible label, slug and URL is
+ * derived from `data/problem-content` itself via `getProblemPreviews()` in
+ * `data/i18n`, so there is exactly one problem taxonomy in the codebase.
  */
-export type ProblemCategory = {
+export type ProblemPreview = {
   id: string;
   label: string;
   icon: ServiceIcon;

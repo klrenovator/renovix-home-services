@@ -332,7 +332,7 @@ export const painting: ServiceDetail = {
   faqs: [
     {
       question: "How much does house painting cost in Malaysia?",
-      answer: "Interior painting starts from RM1.20–RM2.50 psf basic, RM2.50–RM4.00 psf full service with paint (2026). Exterior from RM1.50 psf basic, RM3.00–RM4.50 premium. Small apartment from RM1500, terrace RM1500–2500, semi-D RM3000–5000, full house 20x70 RM3500–7000. Final quotation depends on wall condition, paint brand, colours and access.",
+      answer: "Painting is priced by what the surface needs before any paint goes on. Walls that are sound and only need cleaning and sanding sit at the bottom of the per-sqft range; walls that need scraping, crack filling or skim coating carry real preparation work first. Grade is the second dial — standard emulsion, washable, anti-mould or premium lines like Jotun and Dulux each cost more per coat. Full service with paint starts from RM2.50 psf interior, and a quick site assessment decides which prep and grade combination applies before a figure is quoted.",
     },
 
     {

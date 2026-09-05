@@ -91,8 +91,6 @@ function parseRegistry(source) {
       commonProblems: list("commonProblems"),
       searchIntents: list("searchIntents"),
       targetModifiers: list("targetModifiers"),
-      metaDescription: chunk.match(/metaDescription: "([^"]+)"/)?.[1],
-      h1: chunk.match(/h1: "([^"]+)"/)?.[1],
       raw: chunk,
     });
   }

@@ -201,7 +201,7 @@ export const waterproofing: ServiceDetail = {
     {
       question: "How much does waterproofing cost in Malaysia?",
       answer:
-        "Waterproofing costs start from RM8 per sqft for cementitious coating and RM8–RM15 per sqft for torch-on membrane. A full bathroom re-waterproofing with tile hack, membrane, flood test, screed and retiling typically costs from RM1,500 to RM5,000 for 50–80 sqft in KL & Selangor. PU injection for ceiling leaks starts from RM350–RM650 per bathroom ceiling, flat roof waterproofing from RM8 per sqft, balcony from RM800, and external wall coating from RM6 per sqft. Final quotation depends on area size, existing damage, system and access.",
+        "What sits under the surface drives the cost more than the area size. A coating over sound screed follows a per-sqft rate — from RM8 for cementitious systems — while a full bathroom stripped and rebuilt is quoted as a package because hacking, membrane, flood test, screed and retiling all have to be right for each other. The flood test is the line worth insisting on in any quote: when two quotations for the same bathroom differ, it is usually because they assume different substrates or different tests — not because the sqft rate changed.",
     },
     {
       question: "Why is waterproofing needed before bathroom tiling?",
