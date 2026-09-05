@@ -3435,3 +3435,56 @@ page. Nothing below was invented in this phase:
 
 Phase 25 stops here. Ongoing SEO/content/analytics work after this is
 normal post-launch maintenance, not a new build phase.
+
+---
+
+## Phase 26 — Deep audit + debt clearance (2026-09-05)
+
+External deep audit of the whole site (report: `PHASE_26_DEEP_AUDIT_2026-09-05.md`;
+living tracker: `PHASE_26_IMPLEMENTATION_PLAN.md`). All findings were
+independently re-verified in a network-enabled sandbox before touching code:
+`npm ci`, `type-check` 0 errors, `eslint` 0 warnings, `next build`
+665 static pages, all 17 audits PASS, `npm audit` → **0 vulnerabilities**,
+`audit:live` vs `next start` → **PASS 199 / WARN 0 / FAIL 0**.
+
+Fixes landed in code:
+
+1. **I-11 robots.txt** — removed the non-standard `host:` directive; served
+   output verified (UA/Allow/Sitemap only, RFC 9309-conformant).
+2. **I-08 legacy taxonomy retired** — `data/problems.ts` deleted; the homepage
+   preview selection + icon map now live in `data/problem-content/previews.ts`
+   and are re-exported from the problem-content registry index. One problem
+   taxonomy remains in the codebase; `data/i18n` rewired accordingly.
+3. **I-07 location models de-duplicated (data level)** — the registry's 53×
+   dead `seo.title/metaDescription/h1` copies (never rendered — pages read the
+   `data/area-content` guides) were removed (−159 lines). `types.ts` documents
+   the intentional split: registry = structure + search intent, guides = copy.
+   `audit:locations` already reconciles ids/districts/publicPath
+   bidirectionally, so the two layers cannot drift apart silently; a full
+   physical file-merge was explicitly rejected as churn without user benefit.
+4. **I-06 answer-first ↔ FAQ duplication** — measured site-wide: **all 10**
+   service pages carried a cost FAQ that was a compressed copy of the
+   answer-first pricing answer (76–100% word containment). Each English
+   `faqs[0]` was rewritten to a complementary angle (how the quote is built,
+   what moves the number, how to compare quotes) while keeping every retained
+   figure consistent with the single-source pricing catalogue (`audit:pricing`
+   PASS). MS/ZH already omitted these FAQ entries — no translation drift was
+   introduced.
+5. **Regression guard** — `audit:authority` §5b now fails the build whenever a
+   service page's answer-first block and FAQ section restate each other
+   (≥0.55 word containment, or ≥0.45 with ≥4 shared RM figures). Negative-
+   tested: restoring the old painting copy FAILS the audit; with the fix it
+   PASSES.
+6. **Verification closures** — I-12 (dependency CVEs) and I-13 (build claims)
+   are no longer "unverifiable": independently run green this session.
+
+Not done (tracked in `PHASE_26_IMPLEMENTATION_PLAN.md`): www/apex Vercel
+primary, Resend keys, GSC sitemap submission, project photos, analytics IDs,
+real-device pass (all OWNER); I-09 quote-field expansion (gated on owner
+approving the field list); I-03 CSP nonce (**deferred by decision** — a real
+nonce forces per-request dynamic rendering and would forfeit the fully-static
+665-page architecture; revisit trigger recorded); I-10 distributed rate
+limiting (needs owner-provisioned KV before high-traffic launch).
+
+Status vocabulary: Code verified / Build verified / Live verified (HTTP) /
+Owner pending / Deferred with reason.

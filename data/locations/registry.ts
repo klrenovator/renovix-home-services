@@ -233,9 +233,6 @@ export const locationsRegistry: LocationEntity[] = [
     published: true,
     publicPath: "/areas/kuala-lumpur/cheras",
     seo: {
-      title: "Renovix Home Services | Home Renovation & Repair Services in Cheras, KL",
-      metaDescription: "Professional home renovation and repair in Cheras, KL. Specialising in bathroom waterproofing, plumbing repairs, rewiring, and tiling. Free quotation.",
-      h1: "Home Renovation & Repair Services in Cheras, Kuala Lumpur",
       searchIntents: ["cheras home renovation", "plumber in cheras near me", "cheras waterproofing specialist", "electrician in cheras"],
       targetModifiers: ["near_me", "repair", "best_reliable", "affordable_cost", "emergency_triage", "contractor_specialist"],
     },
@@ -269,9 +266,6 @@ export const locationsRegistry: LocationEntity[] = [
     published: true,
     publicPath: "/areas/kuala-lumpur/setapak",
     seo: {
-      title: "Renovix Home Services | Home Renovation & Repair Services in Setapak, KL",
-      metaDescription: "Reliable renovation, plumbing and electrical services in Setapak, KL. Condo repairs, landlord turnarounds, and terrace upgrades. Get a transparent quote.",
-      h1: "Home Renovation & Repair Services in Setapak, Kuala Lumpur",
       searchIntents: ["setapak electrician", "plumber setapak near me", "condo painting setapak", "setapak handyman"],
       targetModifiers: ["near_me", "repair", "affordable_cost", "residential", "contractor_specialist"],
     },
@@ -305,9 +299,6 @@ export const locationsRegistry: LocationEntity[] = [
     published: true,
     publicPath: "/areas/kuala-lumpur/wangsa-maju",
     seo: {
-      title: "Renovix Home Services | Home Renovation & Repair in Wangsa Maju, KL",
-      metaDescription: "Renovation and home repair specialist in Wangsa Maju & Sri Rampai. Plaster ceiling, roof leak repair, plumbing, repainting. Free on-site assessment.",
-      h1: "Home Renovation & Repair Services in Wangsa Maju, Kuala Lumpur",
       searchIntents: ["wangsa maju plumber", "renovation contractor wangsa maju", "ceiling repair wangsa maju"],
       targetModifiers: ["near_me", "repair", "best_reliable", "affordable_cost", "contractor_specialist"],
     },
@@ -341,9 +332,6 @@ export const locationsRegistry: LocationEntity[] = [
     published: true,
     publicPath: "/areas/kuala-lumpur/ampang",
     seo: {
-      title: "Renovix Home Services | Home Renovation & Repair in Ampang, KL",
-      metaDescription: "High-spec renovation, waterproofing, and repair services in Ampang Hilir and KL Embassy Row. Trusted multi-trade contractors. Free quote.",
-      h1: "Home Renovation & Repair Services in Ampang, Kuala Lumpur",
       searchIntents: ["ampang kl renovation contractor", "plumbing repair ampang", "waterproofing specialist ampang"],
       targetModifiers: ["best_reliable", "repair", "contractor_specialist", "residential"],
     },
@@ -377,9 +365,6 @@ export const locationsRegistry: LocationEntity[] = [
     published: true,
     publicPath: "/areas/kuala-lumpur/kepong",
     seo: {
-      title: "Renovix Home Services | Home Renovation & Repair Services in Kepong, KL",
-      metaDescription: "Reliable renovation, plumbing, tiling, and metal grilles in Kepong and Jinjang. From older terrace refurbs to MRT high-rise repairs. Free quote.",
-      h1: "Home Renovation & Repair Services in Kepong, Kuala Lumpur",
       searchIntents: ["kepong plumber near me", "renovation contractor kepong", "tiling repair kepong", "jinjang handyman"],
       targetModifiers: ["near_me", "repair", "affordable_cost", "contractor_specialist", "residential"],
     },
@@ -413,9 +398,6 @@ export const locationsRegistry: LocationEntity[] = [
     published: true,
     publicPath: "/areas/kuala-lumpur/segambut",
     seo: {
-      title: "Renovix Home Services | Home Renovation & Repair in Segambut, KL",
-      metaDescription: "Comprehensive renovation, metal fabrication, electrical, and plumbing services in Segambut & North Kiara. Experienced local contractors.",
-      h1: "Home Renovation & Repair Services in Segambut, Kuala Lumpur",
       searchIntents: ["segambut renovation contractor", "electrician segambut", "welding services segambut"],
       targetModifiers: ["near_me", "repair", "contractor_specialist", "commercial", "residential"],
     },
@@ -449,9 +431,6 @@ export const locationsRegistry: LocationEntity[] = [
     published: true,
     publicPath: "/areas/kuala-lumpur/sentul",
     seo: {
-      title: "Renovix Home Services | Home Renovation & Repair in Sentul, KL",
-      metaDescription: "Professional condo renovations, plumbing, electrical, and painting in Sentul East & West. Transparent rates, careful workmanship.",
-      h1: "Home Renovation & Repair Services in Sentul, Kuala Lumpur",
       searchIntents: ["sentul plumber", "condo renovation sentul", "electrician sentul kl"],
       targetModifiers: ["near_me", "repair", "affordable_cost", "residential"],
     },
@@ -485,9 +464,6 @@ export const locationsRegistry: LocationEntity[] = [
     published: true,
     publicPath: "/areas/kuala-lumpur/mont-kiara",
     seo: {
-      title: "Renovix Home Services | Home Renovation & Repair in Mont Kiara, KL",
-      metaDescription: "Premium condominium renovation and home repair in Mont Kiara & Dutamas. SPC flooring, bathroom waterproofing, rewiring, fit-outs. Strict strata compliance.",
-      h1: "Home Renovation & Repair Services in Mont Kiara, Kuala Lumpur",
       searchIntents: ["mont kiara condo renovation", "plumber mont kiara near me", "electrician mont kiara", "waterproofing mont kiara"],
       targetModifiers: ["near_me", "best_reliable", "repair", "installation", "contractor_specialist", "residential"],
     },
@@ -521,9 +497,6 @@ export const locationsRegistry: LocationEntity[] = [
     published: true,
     publicPath: "/areas/kuala-lumpur/bangsar",
     seo: {
-      title: "Renovix Home Services | Home Renovation & Repair in Bangsar, KL",
-      metaDescription: "Expert renovation and repairs for Bangsar terraces, bungalows and Telawi shoplots. Whole-house rewiring, plumbing renewal, waterproofing. Free quote.",
-      h1: "Home Renovation & Repair Services in Bangsar, Kuala Lumpur",
       searchIntents: ["bangsar renovation contractor", "plumber bangsar near me", "electrician bangsar", "bangsar house rewire"],
       targetModifiers: ["best_reliable", "repair", "replacement", "contractor_specialist", "residential"],
     },
@@ -557,9 +530,6 @@ export const locationsRegistry: LocationEntity[] = [
     published: true,
     publicPath: "/areas/kuala-lumpur/bukit-jalil",
     seo: {
-      title: "Renovix Home Services | Home Renovation & Repair in Bukit Jalil, KL",
-      metaDescription: "High-quality condo renovations, SPC flooring, plaster ceilings and electrical works in Bukit Jalil. Fast response, compliant with condo MC rules.",
-      h1: "Home Renovation & Repair Services in Bukit Jalil, Kuala Lumpur",
       searchIntents: ["bukit jalil condo renovation", "plumber bukit jalil", "electrician bukit jalil near me"],
       targetModifiers: ["near_me", "repair", "installation", "affordable_cost", "residential"],
     },
@@ -593,9 +563,6 @@ export const locationsRegistry: LocationEntity[] = [
     published: true,
     publicPath: "/areas/kuala-lumpur/sri-petaling",
     seo: {
-      title: "Renovix Home Services | Home Renovation & Repair in Sri Petaling, KL",
-      metaDescription: "Reliable renovation, plumbing, kitchen extension, and tiling services in Sri Petaling. Serving landed houses and commercial shoplots.",
-      h1: "Home Renovation & Repair Services in Sri Petaling, Kuala Lumpur",
       searchIntents: ["sri petaling renovation contractor", "plumber sri petaling near me", "tiling contractor sri petaling"],
       targetModifiers: ["near_me", "repair", "best_reliable", "residential", "commercial"],
     },
@@ -629,9 +596,6 @@ export const locationsRegistry: LocationEntity[] = [
     published: true,
     publicPath: "/areas/kuala-lumpur/old-klang-road",
     seo: {
-      title: "Renovix Home Services | Home Renovation on Old Klang Road, KL",
-      metaDescription: "Comprehensive home repair and renovation along Old Klang Road, Taman Desa, and Kuchai Lama. Re-piping, rewiring, waterproofing. Free quote.",
-      h1: "Home Renovation & Repair Services in Old Klang Road, Kuala Lumpur",
       searchIntents: ["old klang road plumber", "renovation contractor taman desa", "electrician kuchai lama"],
       targetModifiers: ["near_me", "repair", "replacement", "contractor_specialist"],
     },
@@ -665,9 +629,6 @@ export const locationsRegistry: LocationEntity[] = [
     published: true,
     publicPath: "/areas/kuala-lumpur/taman-melawati",
     seo: {
-      title: "Renovix Home Services | Home Renovation in Taman Melawati, KL",
-      metaDescription: "Roof leak repair, waterproofing, painting, and landed renovations in Taman Melawati & Kemensah. Specialized solutions for hillside homes.",
-      h1: "Home Renovation & Repair Services in Taman Melawati, Kuala Lumpur",
       searchIntents: ["melawati roof leak repair", "waterproofing specialist melawati", "taman melawati renovation contractor"],
       targetModifiers: ["repair", "best_reliable", "residential", "contractor_specialist"],
     },
@@ -701,9 +662,6 @@ export const locationsRegistry: LocationEntity[] = [
     published: true,
     publicPath: "/areas/kuala-lumpur/desa-parkcity",
     seo: {
-      title: "Renovix Home Services | Home Renovation in Desa ParkCity, KL",
-      metaDescription: "High-end renovation and maintenance in Desa ParkCity. Fully compliant with township guidelines. SPC flooring, painting, electrical, fit-outs.",
-      h1: "Home Renovation & Repair Services in Desa ParkCity, Kuala Lumpur",
       searchIntents: ["desa parkcity renovation contractor", "plumber desa parkcity", "dpc handyman services"],
       targetModifiers: ["best_reliable", "installation", "repair", "residential", "contractor_specialist"],
     },
@@ -737,9 +695,6 @@ export const locationsRegistry: LocationEntity[] = [
     published: true,
     publicPath: "/areas/kuala-lumpur/taman-tun-dr-ismail",
     seo: {
-      title: "Renovix Home Services | Home Renovation & Repair in TTDI, KL",
-      metaDescription: "Comprehensive renovation and modernisation for TTDI terrace homes and shoplots. Rewiring, re-piping, roof restoration, extensions. Free quote.",
-      h1: "Home Renovation & Repair Services in Taman Tun Dr Ismail (TTDI)",
       searchIntents: ["ttdi renovation contractor", "plumber ttdi near me", "electrician taman tun", "ttdi house rewire"],
       targetModifiers: ["best_reliable", "repair", "replacement", "contractor_specialist", "residential"],
     },
@@ -773,9 +728,6 @@ export const locationsRegistry: LocationEntity[] = [
     published: true,
     publicPath: "/areas/kuala-lumpur/damansara-heights",
     seo: {
-      title: "Renovix Home Services | Home Renovation in Damansara Heights, KL",
-      metaDescription: "Bespoke renovation, waterproofing and full house rebuilds in Damansara Heights (Bukit Damansara). Experienced project management and skilled trades.",
-      h1: "Home Renovation & Repair Services in Damansara Heights, Kuala Lumpur",
       searchIntents: ["damansara heights renovation contractor", "bungalow repair damansara heights", "waterproofing bukit damansara"],
       targetModifiers: ["best_reliable", "contractor_specialist", "repair", "residential"],
     },
@@ -809,9 +761,6 @@ export const locationsRegistry: LocationEntity[] = [
     published: true,
     publicPath: "/areas/kuala-lumpur/sri-hartamas",
     seo: {
-      title: "Renovix Home Services | Home Renovation in Sri Hartamas, KL",
-      metaDescription: "Trusted renovation, plumbing, rewiring, and flooring services in Sri Hartamas & Desa Sri Hartamas. Serving homes and commercial premises.",
-      h1: "Home Renovation & Repair Services in Sri Hartamas, Kuala Lumpur",
       searchIntents: ["sri hartamas plumber", "renovation contractor hartamas", "electrician desa sri hartamas"],
       targetModifiers: ["near_me", "repair", "best_reliable", "contractor_specialist"],
     },
@@ -845,9 +794,6 @@ export const locationsRegistry: LocationEntity[] = [
     published: true,
     publicPath: "/areas/kuala-lumpur/brickfields-mid-valley",
     seo: {
-      title: "Renovix Home Services | Home Renovation in Brickfields & Mid Valley",
-      metaDescription: "Professional condo repairs, office fit-outs, and plumbing/electrical in Brickfields, KL Sentral and Mid Valley. Fast response, transparent quotes.",
-      h1: "Home Renovation & Repair Services in Brickfields & Mid Valley",
       searchIntents: ["brickfields plumber", "electrician kl sentral", "mid valley office renovation contractor"],
       targetModifiers: ["near_me", "repair", "commercial", "residential", "affordable_cost"],
     },
@@ -883,9 +829,6 @@ export const locationsRegistry: LocationEntity[] = [
     published: true,
     publicPath: "/areas/kuala-lumpur/kl-city-centre",
     seo: {
-      title: "Renovix Home Services | Home Renovation & Repair Services in KL City Centre (KLCC & Bukit Bintang)",
-      metaDescription: "Renovation and repair services in KL City Centre — KLCC, Bukit Bintang, Imbi and Jalan Sultan Ismail condos and serviced apartments. Fit-outs, waterproofing, rewiring. Free quotation.",
-      h1: "Home Renovation & Repair Services in KL City Centre (KLCC & Bukit Bintang)",
       searchIntents: ["klcc condo renovation contractor", "bukit bintang apartment renovation", "plumber kl city centre near me", "condo waterproofing klcc"],
       targetModifiers: ["near_me", "contractor_specialist", "installation", "repair", "residential"],
     },
@@ -919,9 +862,6 @@ export const locationsRegistry: LocationEntity[] = [
     published: true,
     publicPath: "/areas/kuala-lumpur/taman-desa",
     seo: {
-      title: "Renovix Home Services | Home Renovation & Repair Services in Taman Desa, KL",
-      metaDescription: "Renovation and repair services in Taman Desa, Kuala Lumpur — 1980s walk-up apartments, terraces and newer condos in Seputeh. Rewiring, bathrooms, waterproofing. Free quotation.",
-      h1: "Home Renovation & Repair Services in Taman Desa, Kuala Lumpur",
       searchIntents: ["taman desa apartment leak repair", "plumber taman desa near me", "taman desa rewiring contractor", "ceiling repair taman desa"],
       targetModifiers: ["near_me", "repair", "affordable_cost", "residential", "contractor_specialist"],
     },
@@ -955,9 +895,6 @@ export const locationsRegistry: LocationEntity[] = [
     published: true,
     publicPath: "/areas/kuala-lumpur/kampung-baru",
     seo: {
-      title: "Renovix Home Services | Home Renovation & Repair Services in Kampung Baru, KL",
-      metaDescription: "Renovation and repair services in Kampung Baru, Kuala Lumpur — traditional timber houses, older brick homes and shoplots beside the city centre. Roofing, rewiring, repairs. Free quotation.",
-      h1: "Home Renovation & Repair Services in Kampung Baru, Kuala Lumpur",
       searchIntents: ["kampung baru roof repair", "rewiring old house kampung baru", "kampung baru renovation contractor", "handyman kampung baru near me"],
       targetModifiers: ["near_me", "repair", "contractor_specialist", "residential", "affordable_cost"],
     },
@@ -995,9 +932,6 @@ export const locationsRegistry: LocationEntity[] = [
     published: true,
     publicPath: "/areas/selangor/petaling-jaya",
     seo: {
-      title: "Renovix Home Services | Home Renovation & Repair Services in Petaling Jaya",
-      metaDescription: "Complete home renovation and repairs across Petaling Jaya (SS areas, Sections, Damansara). Rewiring, re-piping, waterproofing, extensions. Free quote.",
-      h1: "Home Renovation & Repair Services in Petaling Jaya, Selangor",
       searchIntents: ["petaling jaya renovation contractor", "plumber pj near me", "electrician petaling jaya", "pj house rewiring"],
       targetModifiers: ["near_me", "repair", "best_reliable", "replacement", "contractor_specialist"],
     },
@@ -1031,9 +965,6 @@ export const locationsRegistry: LocationEntity[] = [
     published: true,
     publicPath: "/areas/selangor/subang-jaya",
     seo: {
-      title: "Renovix Home Services | Home Renovation & Repair in Subang Jaya",
-      metaDescription: "Expert renovation and repair in Subang Jaya (SS12–SS19). Re-piping, electrical upgrades, bathroom waterproofing, painting. Free assessment.",
-      h1: "Home Renovation & Repair Services in Subang Jaya, Selangor",
       searchIntents: ["subang jaya plumber", "renovation contractor subang jaya", "electrician subang jaya ss15"],
       targetModifiers: ["near_me", "repair", "best_reliable", "affordable_cost", "contractor_specialist"],
     },
@@ -1067,9 +998,6 @@ export const locationsRegistry: LocationEntity[] = [
     published: true,
     publicPath: "/areas/selangor/shah-alam",
     seo: {
-      title: "Renovix Home Services | Home Renovation & Repair in Shah Alam",
-      metaDescription: "Professional renovation, roof leak repair, plumbing, and welding in Shah Alam, Setia Alam, and Kota Kemuning. Trusted multi-trade contractor.",
-      h1: "Home Renovation & Repair Services in Shah Alam, Selangor",
       searchIntents: ["shah alam plumber near me", "shah alam renovation contractor", "roof leak repair shah alam", "waterproofing shah alam"],
       targetModifiers: ["near_me", "repair", "best_reliable", "contractor_specialist", "emergency_triage"],
     },
@@ -1103,9 +1031,6 @@ export const locationsRegistry: LocationEntity[] = [
     published: true,
     publicPath: "/areas/selangor/puchong",
     seo: {
-      title: "Renovix Home Services | Home Renovation & Repair in Puchong",
-      metaDescription: "Reliable renovation, plumbing, waterproofing, and electrical repairs in Puchong, Bandar Puteri, and Bandar Kinrara. Free quote.",
-      h1: "Home Renovation & Repair Services in Puchong, Selangor",
       searchIntents: ["puchong plumber near me", "renovation contractor puchong", "electrician bandar puteri puchong"],
       targetModifiers: ["near_me", "repair", "affordable_cost", "contractor_specialist"],
     },
@@ -1139,9 +1064,6 @@ export const locationsRegistry: LocationEntity[] = [
     published: true,
     publicPath: "/areas/selangor/klang",
     seo: {
-      title: "Renovix Home Services | Home Renovation & Repair in Klang",
-      metaDescription: "Experienced renovation, roof waterproofing, plumbing and metal grilles in Klang, Bukit Tinggi, and Bandar Botanic. Free assessment.",
-      h1: "Home Renovation & Repair Services in Klang, Selangor",
       searchIntents: ["klang plumber near me", "renovation contractor klang", "roof waterproofing klang", "bukit tinggi klang handyman"],
       targetModifiers: ["near_me", "repair", "best_reliable", "contractor_specialist"],
     },
@@ -1175,9 +1097,6 @@ export const locationsRegistry: LocationEntity[] = [
     published: true,
     publicPath: "/areas/selangor/selayang",
     seo: {
-      title: "Renovix Home Services | Home Renovation & Repair in Selayang",
-      metaDescription: "Reliable renovation, plumbing, electrical, and painting services across Selayang and Bandar Baru Selayang. Fast service, honest pricing.",
-      h1: "Home Renovation & Repair Services in Selayang, Selangor",
       searchIntents: ["selayang plumber", "electrician selayang near me", "renovation contractor selayang"],
       targetModifiers: ["near_me", "repair", "affordable_cost", "residential"],
     },
@@ -1211,9 +1130,6 @@ export const locationsRegistry: LocationEntity[] = [
     published: true,
     publicPath: "/areas/selangor/gombak",
     seo: {
-      title: "Renovix Home Services | Home Renovation & Repair in Gombak",
-      metaDescription: "Roof repair, plumbing, electrical, and landed house renovation in Sri Gombak and Batu Caves. Quality workmanship, free quotes.",
-      h1: "Home Renovation & Repair Services in Gombak, Selangor",
       searchIntents: ["gombak plumber", "sri gombak renovation contractor", "roof leak repair gombak"],
       targetModifiers: ["near_me", "repair", "contractor_specialist", "affordable_cost"],
     },
@@ -1247,9 +1163,6 @@ export const locationsRegistry: LocationEntity[] = [
     published: true,
     publicPath: "/areas/selangor/ampang-jaya",
     seo: {
-      title: "Renovix Home Services | Home Renovation in Ampang Jaya & Pandan",
-      metaDescription: "Plumbing, rewiring, waterproofing, and renovation in Pandan Indah, Pandan Mewah, and Ampang Jaya. Transparent pricing, fast response.",
-      h1: "Home Renovation & Repair Services in Ampang Jaya, Selangor",
       searchIntents: ["pandan indah plumber", "renovation contractor ampang jaya", "electrician pandan indah"],
       targetModifiers: ["near_me", "repair", "affordable_cost", "contractor_specialist"],
     },
@@ -1283,9 +1196,6 @@ export const locationsRegistry: LocationEntity[] = [
     published: true,
     publicPath: "/areas/selangor/kajang",
     seo: {
-      title: "Renovix Home Services | Home Renovation & Repair in Kajang",
-      metaDescription: "Landed house renovation, roof leak repair, plumbing, and extensions in Kajang, Saujana Impian, and Country Heights. Free on-site quotation.",
-      h1: "Home Renovation & Repair Services in Kajang, Selangor",
       searchIntents: ["kajang renovation contractor", "plumber kajang near me", "roof leak repair kajang", "kajang house extension"],
       targetModifiers: ["near_me", "repair", "best_reliable", "contractor_specialist", "residential"],
     },
@@ -1319,9 +1229,6 @@ export const locationsRegistry: LocationEntity[] = [
     published: true,
     publicPath: "/areas/selangor/seri-kembangan",
     seo: {
-      title: "Renovix Home Services | Home Renovation in Seri Kembangan",
-      metaDescription: "Professional renovation, SPC flooring, tiling, and repairs in Seri Kembangan, Equine Park, and Puncak Jalil. Fast and transparent quotes.",
-      h1: "Home Renovation & Repair Services in Seri Kembangan, Selangor",
       searchIntents: ["seri kembangan plumber", "renovation contractor equine park", "electrician seri kembangan"],
       targetModifiers: ["near_me", "repair", "affordable_cost", "contractor_specialist"],
     },
@@ -1355,9 +1262,6 @@ export const locationsRegistry: LocationEntity[] = [
     published: true,
     publicPath: "/areas/selangor/cyberjaya",
     seo: {
-      title: "Renovix Home Services | Home Renovation & Repair in Cyberjaya",
-      metaDescription: "Modern condo fit-outs, SPC flooring, smart electrical wiring, and painting in Cyberjaya. Compliant with high-rise building management. Free quote.",
-      h1: "Home Renovation & Repair Services in Cyberjaya, Selangor",
       searchIntents: ["cyberjaya condo renovation", "plumber cyberjaya near me", "electrician cyberjaya", "handyman cyberjaya"],
       targetModifiers: ["near_me", "installation", "repair", "best_reliable", "residential"],
     },
@@ -1391,9 +1295,6 @@ export const locationsRegistry: LocationEntity[] = [
     published: true,
     publicPath: "/areas/selangor/putrajaya",
     seo: {
-      title: "Renovix Home Services | Home Renovation & Repair in Putrajaya",
-      metaDescription: "Professional home improvement, plumbing, electrical, and painting in Putrajaya (Precincts 8, 9, 11, 15). Reliable and compliant with local guidelines.",
-      h1: "Home Renovation & Repair Services in Putrajaya",
       searchIntents: ["putrajaya plumber", "electrician putrajaya near me", "renovation contractor presint 15 putrajaya"],
       targetModifiers: ["near_me", "repair", "best_reliable", "residential"],
     },
@@ -1427,9 +1328,6 @@ export const locationsRegistry: LocationEntity[] = [
     published: true,
     publicPath: "/areas/selangor/kota-damansara",
     seo: {
-      title: "Renovix Home Services | Home Renovation in Kota Damansara",
-      metaDescription: "Trusted renovation, bathroom waterproofing, SPC flooring, and electrical in Kota Damansara & Tropicana Indah. Free on-site consultation.",
-      h1: "Home Renovation & Repair Services in Kota Damansara, Selangor",
       searchIntents: ["kota damansara renovation contractor", "plumber kota damansara near me", "waterproofing kota damansara"],
       targetModifiers: ["near_me", "repair", "best_reliable", "contractor_specialist"],
     },
@@ -1463,9 +1361,6 @@ export const locationsRegistry: LocationEntity[] = [
     published: true,
     publicPath: "/areas/selangor/sungai-buloh",
     seo: {
-      title: "Renovix Home Services | Home Renovation in Sungai Buloh",
-      metaDescription: "High-spec renovation, roof waterproofing, and repairs in Sungai Buloh, Sierramas, Valencia, and Bukit Rahman Putra. Free quote.",
-      h1: "Home Renovation & Repair Services in Sungai Buloh, Selangor",
       searchIntents: ["sungai buloh renovation contractor", "roof leak repair sungai buloh", "plumber sungai buloh"],
       targetModifiers: ["best_reliable", "repair", "contractor_specialist", "residential"],
     },
@@ -1499,9 +1394,6 @@ export const locationsRegistry: LocationEntity[] = [
     published: true,
     publicPath: "/areas/selangor/rawang",
     seo: {
-      title: "Renovix Home Services | Home Renovation & Repair in Rawang",
-      metaDescription: "Landed house renovation, roof waterproofing, metal awnings, and plumbing in Rawang, Kota Emerald, and Bandar Country Homes. Free quote.",
-      h1: "Home Renovation & Repair Services in Rawang, Selangor",
       searchIntents: ["rawang renovation contractor", "roof leak repair rawang", "plumber rawang near me"],
       targetModifiers: ["near_me", "repair", "affordable_cost", "contractor_specialist"],
     },
@@ -1535,9 +1427,6 @@ export const locationsRegistry: LocationEntity[] = [
     published: true,
     publicPath: "/areas/selangor/semenyih",
     seo: {
-      title: "Renovix Home Services | Home Renovation in Semenyih & EcoHill",
-      metaDescription: "New home renovations, plaster ceiling, electrical wiring, SPC flooring, and metal grilles in Semenyih, Setia EcoHill, and Eco Majestic. Free quote.",
-      h1: "Home Renovation & Repair Services in Semenyih, Selangor",
       searchIntents: ["semenyih renovation contractor", "setia ecohill electrician", "eco majestic plaster ceiling"],
       targetModifiers: ["installation", "affordable_cost", "contractor_specialist", "residential"],
     },
@@ -1571,9 +1460,6 @@ export const locationsRegistry: LocationEntity[] = [
     published: true,
     publicPath: "/areas/selangor/usj",
     seo: {
-      title: "Renovix Home Services | Home Renovation & Repair in USJ, Subang Jaya",
-      metaDescription: "Full home renovation, kitchen extension, re-piping, and rewiring in USJ 1–27 and Taipan. Local contractors focused on detailed finishing.",
-      h1: "Home Renovation & Repair Services in USJ, Subang Jaya",
       searchIntents: ["usj renovation contractor", "plumber usj taipan near me", "electrician usj subang"],
       targetModifiers: ["near_me", "repair", "best_reliable", "contractor_specialist"],
     },
@@ -1607,9 +1493,6 @@ export const locationsRegistry: LocationEntity[] = [
     published: true,
     publicPath: "/areas/selangor/bandar-sunway",
     seo: {
-      title: "Renovix Home Services | Home Renovation in Bandar Sunway",
-      metaDescription: "Reliable condominium fit-outs, student rental repairs, plumbing, and electrical in Bandar Sunway and South Quay. Fast response, free quote.",
-      h1: "Home Renovation & Repair Services in Bandar Sunway, Selangor",
       searchIntents: ["bandar sunway plumber", "electrician sunway near me", "sunway condo renovation contractor"],
       targetModifiers: ["near_me", "repair", "affordable_cost", "residential"],
     },
@@ -1643,9 +1526,6 @@ export const locationsRegistry: LocationEntity[] = [
     published: true,
     publicPath: "/areas/selangor/bandar-utama",
     seo: {
-      title: "Renovix Home Services | Home Renovation in Bandar Utama, PJ",
-      metaDescription: "Complete terrace and condo renovations in Bandar Utama (BU 1–12). Bathroom waterproofing, rewiring, SPC flooring, extensions. Free quote.",
-      h1: "Home Renovation & Repair Services in Bandar Utama, Petaling Jaya",
       searchIntents: ["bandar utama renovation contractor", "plumber bandar utama near me", "electrician bu11 bandar utama"],
       targetModifiers: ["best_reliable", "repair", "replacement", "contractor_specialist"],
     },
@@ -1679,9 +1559,6 @@ export const locationsRegistry: LocationEntity[] = [
     published: true,
     publicPath: "/areas/selangor/mutiara-damansara",
     seo: {
-      title: "Renovix Home Services | Home Renovation in Mutiara Damansara",
-      metaDescription: "Premium renovation, painting, SPC flooring, and electrical works in Mutiara Damansara & Mutiara Homes. Experienced and reliable craftsmen.",
-      h1: "Home Renovation & Repair Services in Mutiara Damansara, PJ",
       searchIntents: ["mutiara damansara renovation contractor", "plumber mutiara damansara", "electrician the curve area"],
       targetModifiers: ["best_reliable", "installation", "repair", "residential"],
     },
@@ -1715,9 +1592,6 @@ export const locationsRegistry: LocationEntity[] = [
     published: true,
     publicPath: "/areas/selangor/damansara-perdana",
     seo: {
-      title: "Renovix Home Services | Home Renovation in Damansara Perdana",
-      metaDescription: "Condo renovation, bathroom waterproofing, SPC flooring, and electrical repair in Damansara Perdana & Empire City. Free on-site consultation.",
-      h1: "Home Renovation & Repair Services in Damansara Perdana, PJ",
       searchIntents: ["damansara perdana condo renovation", "plumber damansara perdana near me", "waterproofing armanee terrace"],
       targetModifiers: ["near_me", "repair", "installation", "residential"],
     },
@@ -1751,9 +1625,6 @@ export const locationsRegistry: LocationEntity[] = [
     published: true,
     publicPath: "/areas/selangor/ara-damansara",
     seo: {
-      title: "Renovix Home Services | Home Renovation in Ara Damansara",
-      metaDescription: "Professional landed and condo renovations in Ara Damansara and Oasis Square. Waterproofing, flooring, rewiring, painting. Free quote.",
-      h1: "Home Renovation & Repair Services in Ara Damansara, Selangor",
       searchIntents: ["ara damansara renovation contractor", "plumber ara damansara near me", "electrician oasis damansara"],
       targetModifiers: ["best_reliable", "repair", "contractor_specialist", "residential"],
     },
@@ -1787,9 +1658,6 @@ export const locationsRegistry: LocationEntity[] = [
     published: true,
     publicPath: "/areas/selangor/bandar-sri-damansara",
     seo: {
-      title: "Renovix Home Services | Home Renovation in Bandar Sri Damansara",
-      metaDescription: "Roof repair, plumbing, rewiring, and whole-house renovations in Bandar Sri Damansara (SD 1–13). Reliable local craftsmen. Free quote.",
-      h1: "Home Renovation & Repair Services in Bandar Sri Damansara, PJ",
       searchIntents: ["bandar sri damansara renovation contractor", "plumber bsd near me", "roof leak repair sri damansara"],
       targetModifiers: ["near_me", "repair", "best_reliable", "contractor_specialist"],
     },
@@ -1823,9 +1691,6 @@ export const locationsRegistry: LocationEntity[] = [
     published: true,
     publicPath: "/areas/selangor/bangi",
     seo: {
-      title: "Renovix Home Services | Home Renovation in Bandar Baru Bangi",
-      metaDescription: "Expert home renovation, plumbing, kitchen extensions, and metal grilles in Bandar Baru Bangi (Sections 1–16). Free on-site assessment.",
-      h1: "Home Renovation & Repair Services in Bandar Baru Bangi, Selangor",
       searchIntents: ["bangi renovation contractor", "plumber bandar baru bangi near me", "electrician bangi"],
       targetModifiers: ["near_me", "repair", "affordable_cost", "contractor_specialist", "residential"],
     },
@@ -1859,9 +1724,6 @@ export const locationsRegistry: LocationEntity[] = [
     published: true,
     publicPath: "/areas/selangor/serdang",
     seo: {
-      title: "Renovix Home Services | Home Renovation & Repair in Serdang",
-      metaDescription: "Reliable rewiring, plumbing, tiling, and general repairs in Serdang and Seri Kembangan. Fast response, transparent starting rates.",
-      h1: "Home Renovation & Repair Services in Serdang, Selangor",
       searchIntents: ["serdang plumber", "electrician serdang near me", "renovation contractor serdang"],
       targetModifiers: ["near_me", "repair", "affordable_cost", "residential"],
     },
@@ -1895,9 +1757,6 @@ export const locationsRegistry: LocationEntity[] = [
     published: true,
     publicPath: "/areas/selangor/balakong",
     seo: {
-      title: "Renovix Home Services | Home Renovation in Balakong & Cheras South",
-      metaDescription: "Roof repair, waterproofing, plumbing, and renovations in Balakong, Bandar Mahkota Cheras, and Sungai Long. Free quote.",
-      h1: "Home Renovation & Repair Services in Balakong (Cheras South)",
       searchIntents: ["balakong plumber near me", "mahkota cheras renovation contractor", "sungai long roof leak repair"],
       targetModifiers: ["near_me", "repair", "best_reliable", "contractor_specialist"],
     },
@@ -1931,9 +1790,6 @@ export const locationsRegistry: LocationEntity[] = [
     published: true,
     publicPath: "/areas/selangor/bandar-baru-klang",
     seo: {
-      title: "Renovix Home Services | Home Renovation in Bandar Baru Klang",
-      metaDescription: "Plumbing, waterproofing, electrical, and commercial refits in Bandar Baru Klang & Bukit Raja. Fast response, transparent pricing.",
-      h1: "Home Renovation & Repair Services in Bandar Baru Klang, Selangor",
       searchIntents: ["bandar baru klang plumber", "renovation contractor bbk klang", "electrician bukit raja"],
       targetModifiers: ["near_me", "repair", "commercial", "residential", "affordable_cost"],
     },
@@ -1967,9 +1823,6 @@ export const locationsRegistry: LocationEntity[] = [
     published: true,
     publicPath: "/areas/selangor/sepang",
     seo: {
-      title: "Renovix Home Services | Home Renovation in Sepang & Kota Warisan",
-      metaDescription: "New house renovations, plaster ceilings, electrical wiring, and SPC flooring in Sepang, Salak Tinggi, and Kota Warisan. Free quotation.",
-      h1: "Home Renovation & Repair Services in Sepang & Salak Tinggi",
       searchIntents: ["sepang renovation contractor", "electrician kota warisan", "salak tinggi plumber near me"],
       targetModifiers: ["installation", "affordable_cost", "contractor_specialist", "residential"],
     },
@@ -2005,9 +1858,6 @@ export const locationsRegistry: LocationEntity[] = [
     published: true,
     publicPath: "/areas/selangor/setia-alam",
     seo: {
-      title: "Renovix Home Services | Home Renovation & Repair Services in Setia Alam, Selangor",
-      metaDescription: "Renovation and repair services in Setia Alam, Selangor — 2000s–2010s terrace homes, semidees and newer condos. Extensions, waterproofing, rewiring, tiling. Free quotation.",
-      h1: "Home Renovation & Repair Services in Setia Alam, Selangor",
       searchIntents: ["setia alam renovation contractor", "kitchen extension setia alam", "waterproofing setia alam", "grille and awning setia alam"],
       targetModifiers: ["contractor_specialist", "installation", "affordable_cost", "residential", "near_me"],
     },
@@ -2041,9 +1891,6 @@ export const locationsRegistry: LocationEntity[] = [
     published: true,
     publicPath: "/areas/selangor/bandar-kinrara",
     seo: {
-      title: "Renovix Home Services | Home Renovation & Repair Services in Bandar Kinrara, Puchong",
-      metaDescription: "Renovation and repair services in Bandar Kinrara, Puchong — 1990s–2000s terraces, semidees and condos. Rewiring, bathroom rebuilds, waterproofing, tiling. Free quotation.",
-      h1: "Home Renovation & Repair Services in Bandar Kinrara, Puchong",
       searchIntents: ["bandar kinrara plumber near me", "bandar kinrara renovation contractor", "re-piping bandar kinrara", "bathroom waterproofing bandar kinrara"],
       targetModifiers: ["near_me", "repair", "replacement", "affordable_cost", "contractor_specialist"],
     },
@@ -2077,9 +1924,6 @@ export const locationsRegistry: LocationEntity[] = [
     published: true,
     publicPath: "/areas/selangor/batu-caves",
     seo: {
-      title: "Renovix Home Services | Home Renovation & Repair Services in Batu Caves, Selangor",
-      metaDescription: "Renovation and repair services in Batu Caves, Selangor — older estate housing, terraces and newer transit-corridor homes in the Gombak district. Roofing, rewiring, repairs. Free quotation.",
-      h1: "Home Renovation & Repair Services in Batu Caves, Selangor",
       searchIntents: ["roof leak repair batu caves", "batu caves plumber near me", "damp wall treatment batu caves", "rewiring old house batu caves"],
       targetModifiers: ["near_me", "repair", "affordable_cost", "residential", "contractor_specialist"],
     },
@@ -2113,9 +1957,6 @@ export const locationsRegistry: LocationEntity[] = [
     published: true,
     publicPath: "/areas/selangor/bandar-mahkota-cheras",
     seo: {
-      title: "Renovix Home Services | Home Renovation & Repair Services in Bandar Mahkota Cheras, Selangor",
-      metaDescription: "Renovation and repair services in Bandar Mahkota Cheras, Selangor — 2000s terraces, semidees and condos in the Hulu Langat district. Waterproofing, rewiring, tiling. Free quotation.",
-      h1: "Home Renovation & Repair Services in Bandar Mahkota Cheras, Selangor",
       searchIntents: ["bandar mahkota cheras renovation contractor", "bathroom waterproofing bandar mahkota cheras", "wet kitchen extension mahkota cheras", "tiler bandar mahkota cheras near me"],
       targetModifiers: ["near_me", "contractor_specialist", "installation", "repair", "residential"],
     },

@@ -1,10 +1,40 @@
-# PROJECT OWNER-PENDING DATA — Phases 22, 24 & 25
+# PROJECT OWNER-PENDING DATA — Phases 22, 24, 25 & 26
 
 Status: **OWNER-PENDING**. Nothing on this list is a code defect. Each item
 can only be completed by the business or in the hosting/Search Console
 dashboards. Do not invent values.
 
-## Phase 25 — remaining owner actions (do not repeat completed work)
+## Phase 26 (2026-09-05) — current owner checklist
+
+The Phase 26 deep audit was completed and every code-side fix it recommended
+landed the same day (robots `host:` removed, legacy problem taxonomy retired,
+location-registry duplicate copy fields removed, answer-first/FAQ duplication
+fixed on all 10 services + regression guard, build/lint/npm-audit/live-QA all
+independently verified green — see `PHASE_26_DEEP_AUDIT_2026-09-05.md` and
+`PHASE_26_IMPLEMENTATION_PLAN.md`). **Everything below is an owner/dashboard
+or real-data action; none of it can or should be faked in code.**
+
+| # | Action | Where | Notes |
+| --- | --- | --- | --- |
+| 1 | ~~Make apex `renovixhomeservices.my` the **primary domain** so `www` redirects to apex~~ **DONE 2026-09-05** — owner set it; AI-verified live: www → `renovixhomeservices.my/en/` redirect works, apex serves directly, no loop, all links/canonicals on apex | Vercel → Project → Settings → Domains | ✅ CLOSED — I-01 resolved; GSC submission (task 3) now unblocked |
+| 2 | ~~Configure Resend: API key + verified sending domain; env vars in Vercel; redeploy; one real test quote~~ **DONE 2026-09-06** — domain verified (AI checked SPF/DKIM DNS live), env set, redeployed, test quote delivered to inbox | Resend + Vercel dashboards | ✅ CLOSED — email funnel live |
+| 3 | Submit `https://renovixhomeservices.my/sitemap.xml` once (apex property) in Google Search Console | GSC | Do after (1). Per-language sitemaps no longer exist — don't resubmit them |
+| 4 | Supply analytics IDs: GA4 `NEXT_PUBLIC_GA4_MEASUREMENT_ID` **or** `NEXT_PUBLIC_GTM_CONTAINER_ID` (never both); optionally Clarity / Ads labels | Vercel env | Zero analytics is live today by design (`PHASE_24_ANALYTICS.md` has exact steps). Never placeholder IDs |
+| 5 | Real consented project photos for Painting / Waterproofing / Flooring / Handyman (2–3 per service, honest captions) | Owner → `public/projects/` + `data/project-content/projects.ts` | Add dimensions + descriptions as per the existing 21 entries; `audit:project-assets` + `audit:projects` will check them. Never stock/AI images |
+| 6 | Real-device QA pass: mobile menu, quote form, WhatsApp deep link, `tel:` | Phone | Flagged since Phase 22; no browser/device exists in code environments |
+| 7 | Approve quote-form field list expansion (optional budget band + preferred time-of-day; decision on photo upload needing a storage policy) | Owner reply to AI | `audit` item I-09 / plan T-09. AI implements once approved |
+| 8 | Before high-traffic launch: provision Vercel KV or Upstash Redis and let AI wire distributed rate limiting (T-11) | Vercel/Upstash | Current limiter is per-instance by design |
+| 9 | Enable GitHub Dependabot alerts + security updates on the repo (npm audit came back 0 on 2026-09-05; keep it monitored) | GitHub → Settings → Code security | One click |
+| 10 | Claim Google Business Profile; supply confirmed opening days if schema should ever show hours | GBP | Schema intentionally omits dayOfWeek/geo until real (governance §6) |
+| 11 | Optional E-E-A-T: short About/founder note (real names/bio only) | Owner | No credentials invented — write "what's true" |
+
+**CSP decision (owner + AI):** `'unsafe-inline'` stays for now — removing it
+properly requires abandoning fully-static rendering (nonce ⇒ per-request
+dynamic pages). The full trade-off and the revisit trigger are documented in
+the plan (T-10). Accept it consciously; don't ask AI to "just add a nonce"
+without the rendering-model change.
+
+## Phase 25 — remaining owner actions (historical; superseded by Phase 26 list where they overlap)
 
 Already done in code and, where noted, live-checked. **Do not redo these:**
 the site, HTTPS, `/sitemap.xml`, `/robots.txt`, WhatsApp `wa.me/601159259521`,
@@ -18,7 +48,7 @@ Only the following still need the owner:
 | --- | --- | --- | --- |
 | 1 | Vercel → Domains: make **`renovixhomeservices.my` (apex) the primary** so `www` redirects *to* apex, not the other way around | Edge domain redirect is a Vercel setting. Canonicals/sitemap already use apex; reversing it in Next.js would loop | YELLOW — live fetchers currently land on www |
 | 2 | Create a Resend API key, verify `renovixhomeservices.my` (or the sending domain) in Resend, set `RESEND_API_KEY` + `QUOTE_FROM_EMAIL` (+ optional `QUOTE_NOTIFICATION_EMAIL`) in Vercel, redeploy, then send **one real quote** and confirm the inbox | Secrets and mailbox access | GREY — API honestly returns 503 today |
-| 3 | Submit **`https://renovixhomeservices.my/sitemap.xml`** once in Google Search Console (domain or URL-prefix property on the apex). Do not resubmit per-language sitemaps | GSC dashboard | GREY — verification token is already live; indexing data does not exist yet |
+| 3 | ~~Submit the single sitemap once in Google Search Console~~ **DONE 2026-09-06** — apex property verified (HTML tag), sitemap.xml submitted once | GSC dashboard | ✅ CLOSED — Google-side indexing/reporting fills in over the next 1–2 weeks |
 | 4 | Supply a real GA4 Measurement ID (`G-…`) *or* a GTM container ID if measurement is wanted. Optionally Ads conversion ID+labels and Clarity ID | Inventing IDs would send data to someone else. With none set, **no script loads** | GREY |
 | 5 | Real-device pass on a phone (menu, quote form, WhatsApp, `tel:`) and confirm Search Console / GA4 realtime after IDs are on | No owner device in this environment | YELLOW |
 | 6 | Project metadata still missing per job (location, year, materials, extra photos) — same table as below | Must not be invented | GREY |

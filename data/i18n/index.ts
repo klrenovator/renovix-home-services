@@ -8,8 +8,8 @@ import { services, type ServiceCategory } from "@/data/services";
 import {
   problemCategoryIcons,
   problemPreviewSlugs,
-  type ProblemCategory,
-} from "@/data/problems";
+  type ProblemPreview,
+} from "@/data/problem-content";
 import { getProblemDetail, problemCategories } from "@/data/problem-content";
 import type {
   ProblemCategory as ProblemContentCategory,
@@ -76,7 +76,7 @@ export function getServiceName(
  */
 export function getProblemPreviews(
   lang: LanguageCode | string,
-): ProblemCategory[] {
+): ProblemPreview[] {
   const code = getLanguageCode(lang);
 
   return problemPreviewSlugs
@@ -88,9 +88,9 @@ export function getProblemPreviews(
         id: detail.slug,
         label: detail.name,
         icon: problemCategoryIcons[detail.category],
-      } satisfies ProblemCategory;
+      } satisfies ProblemPreview;
     })
-    .filter((problem): problem is ProblemCategory => Boolean(problem));
+    .filter((problem): problem is ProblemPreview => Boolean(problem));
 }
 
 export function getProblemCategories(
