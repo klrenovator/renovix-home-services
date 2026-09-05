@@ -264,7 +264,7 @@ Search → landing ✅ → service understanding ✅ (answer-first) → trust �
 | ID | Category | Severity | Page/File | Problem | Status after 2026-09-05 session |
 | --- | --- | --- | --- | --- | --- |
 | I-01 | Technical SEO | 🔴 CRITICAL | Vercel domains | www/apex canonical mismatch | ✅ CLOSED 2026-09-05 — owner set apex primary in Vercel; AI-verified live: www→apex redirect works, apex serves, no loop |
-| I-02 | CRO/Business | 🔴 CRITICAL | .env / Resend | Quote form cannot deliver email | ☐ **OWNER** — set `RESEND_API_KEY` + `QUOTE_FROM_EMAIL`, test once |
+| I-02 | CRO/Business | 🔴 CRITICAL | .env / Resend | Quote form cannot deliver email | ✅ CLOSED 2026-09-06 — owner configured Resend; AI verified DNS + clean redeploy; real test quote delivered to inbox |
 | I-03 | Security | 🟠 HIGH | next.config.ts | CSP `'unsafe-inline'` | ⏸ DEFERRED (documented): nonce ⇒ dynamic rendering breaks SSG; revisit at architecture change |
 | I-04 | E-E-A-T | 🟠 HIGH | projects | 4/10 services no photos | ☐ **OWNER** — real consented photos |
 | I-05 | Analytics | 🟠 HIGH | .env | No GA4/GTM IDs | ☐ **OWNER** — supply ID (never both GA4+GTM) |

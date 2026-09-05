@@ -6,7 +6,7 @@ click steps; the owner says "done"; the AI verifies (live checks + this file),
 ticks it, and only then gives the next task. Detailed click instructions for
 the current task live in the chat; this file keeps the position + result.
 
-**Current position:** Task 2 of 9 (Resend — email delivery) — in progress.
+**Current position:** Task 3 of 9 (GSC sitemap submission) — in progress.
 
 ## Checklist
 
@@ -16,7 +16,7 @@ the current task live in the chat; this file keeps the position + result.
       Vercel, www CNAME → vercel-dns); nothing at Namecheap needs to change.
       Done when: `https://www.renovixhomeservices.my/en/` 308→
       `https://renovixhomeservices.my/en/` and apex returns 200.
-- [ ] **2. Resend** — API key + verified sending domain; set
+- [x] **2. Resend** ✅ DONE 2026-09-06 — API key + verified sending domain; set
       `RESEND_API_KEY` + `QUOTE_FROM_EMAIL` (+ optional
       `QUOTE_NOTIFICATION_EMAIL`) in Vercel env; redeploy; one real test quote
       → inbox. Done when: test submission lands in the mailbox.
@@ -41,3 +41,10 @@ the current task live in the chat; this file keeps the position + result.
   now resolves to final URL `https://renovixhomeservices.my/en/` (was: stayed on www),
   and the apex itself serves the site directly with no loop; all rendered links/canonicals
   are on the apex host. www/apex mismatch (audit finding I-01, plan T-01) CLOSED.
+
+- **2026-09-06 — Task 2 verified:** owner verified `renovixhomeservices.my` in Resend
+  (AI-side check: `send` SPF+CNAME/MX chain and `resend._domainkey` DKIM both resolve live),
+  set `RESEND_API_KEY` + `QUOTE_FROM_EMAIL` in Vercel Production env, redeployed (build log
+  clean, 665 pages), and a real test quote now delivers to the business inbox. I-02 / plan
+  T-02 CLOSED — quote funnel live. Note: this redeploy was of `main` (pre-Phase-26); the
+  PR #41 changes (incl. `host:`-line removal from robots.ts) go live at final merge — harmless.
