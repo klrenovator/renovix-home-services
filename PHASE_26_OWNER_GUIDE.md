@@ -6,7 +6,7 @@ click steps; the owner says "done"; the AI verifies (live checks + this file),
 ticks it, and only then gives the next task. Detailed click instructions for
 the current task live in the chat; this file keeps the position + result.
 
-**Current position:** Task 3 of 9 (GSC sitemap submission) — in progress.
+**Current position:** Task 4 of 9 (analytics activation — GA4) — in progress.
 
 ## Checklist
 
@@ -20,7 +20,7 @@ the current task live in the chat; this file keeps the position + result.
       `RESEND_API_KEY` + `QUOTE_FROM_EMAIL` (+ optional
       `QUOTE_NOTIFICATION_EMAIL`) in Vercel env; redeploy; one real test quote
       → inbox. Done when: test submission lands in the mailbox.
-- [ ] **3. GSC sitemap submit** — after task 1 only: submit
+- [x] **3. GSC sitemap submit** ✅ DONE 2026-09-06 — after task 1 only: submit
       `https://renovixhomeservices.my/sitemap.xml` once on the apex property.
 - [ ] **4. Analytics** — GA4 `G-…` ID *or* GTM `GTM-…` (never both) into the
       matching Vercel env var; verify data in GA4 Realtime.
@@ -48,3 +48,8 @@ the current task live in the chat; this file keeps the position + result.
   clean, 665 pages), and a real test quote now delivers to the business inbox. I-02 / plan
   T-02 CLOSED — quote funnel live. Note: this redeploy was of `main` (pre-Phase-26); the
   PR #41 changes (incl. `host:`-line removal from robots.ts) go live at final merge — harmless.
+
+- **2026-09-06 — Task 3 verified:** owner confirmed GSC property `https://renovixhomeservices.my/`
+  verified and `sitemap.xml` submitted once. Sitemap content itself was validated by AI earlier
+  (apex-only locs, 4-way hreflang, content lastmod) and by `audit:sitemap` (654 URLs). Expected:
+  "Success" within 1–2 days; indexing 1–2 weeks; no resubmission needed.

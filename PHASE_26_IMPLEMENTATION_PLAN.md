@@ -25,7 +25,7 @@ Next: submit the sitemap in GSC on the apex property (T-03) now unblocked |
 | Task | Track | Status | Evidence / note |
 | --- | --- | --- | --- |
 | T-04 · Remove non-standard `host:` from robots.txt | 🤖 code | ✅ 2026-09-05 | `app/robots.ts` edited; local prod server `/robots.txt` returns UA/Allow/Sitemap only (RFC 9309-conformant) |
-| T-03 · Submit `https://renovixhomeservices.my/sitemap.xml` once in GSC (apex property), after T-01 | 🧍 owner | ☐ | Verification meta tag already live. Don't resubmit per-language sitemaps (redirected to the single file) |
+| T-03 · Submit `https://renovixhomeservices.my/sitemap.xml` once in GSC (apex property), after T-01 | 🧍 owner | ✅ 2026-09-06 | DONE: owner verified the apex property in GSC (HTML-tag method) and submitted the single sitemap once. Success + coverage fill in over 1–2 days; indexing 1–2 weeks. Do not resubmit |
 
 ---
 
@@ -130,6 +130,7 @@ Next: submit the sitemap in GSC on the apex property (T-03) now unblocked |
 
 ## Progress log
 
+- **2026-09-06 (owner task 3):** T-03 GSC property verified + sitemap submitted once (owner-confirmed; sitemap pre-validated by audit:sitemap + AI). Now waiting on Google indexing (1–2 weeks normal).
 - **2026-09-06 (owner task 2):** T-02 Resend LIVE — domain verified (DNS checked by AI), env vars set in Vercel Production, clean redeploy, real test quote delivered to inbox. Phase 1 closed.
 - **2026-09-05 (owner task 1):** T-01 www/apex primary FIXED in Vercel by owner, AI-verified live (www → apex 308, no loop, apex serves 200).
 - **2026-09-05 (session 1):** Deep audit saved (`PHASE_26_DEEP_AUDIT_2026-09-05.md`). Ticked T-04, T-05 (data level), T-06, T-07, T-12, T-13, T-14. All verification gates re-run green (type-check/lint/build/17 audits/npm audit/live QA 199-0-0). New `audit:authority` §5b dedup guard added + negative-tested. Owner list set above.

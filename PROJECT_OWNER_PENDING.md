@@ -48,7 +48,7 @@ Only the following still need the owner:
 | --- | --- | --- | --- |
 | 1 | Vercel → Domains: make **`renovixhomeservices.my` (apex) the primary** so `www` redirects *to* apex, not the other way around | Edge domain redirect is a Vercel setting. Canonicals/sitemap already use apex; reversing it in Next.js would loop | YELLOW — live fetchers currently land on www |
 | 2 | Create a Resend API key, verify `renovixhomeservices.my` (or the sending domain) in Resend, set `RESEND_API_KEY` + `QUOTE_FROM_EMAIL` (+ optional `QUOTE_NOTIFICATION_EMAIL`) in Vercel, redeploy, then send **one real quote** and confirm the inbox | Secrets and mailbox access | GREY — API honestly returns 503 today |
-| 3 | Submit **`https://renovixhomeservices.my/sitemap.xml`** once in Google Search Console (domain or URL-prefix property on the apex). Do not resubmit per-language sitemaps | GSC dashboard | GREY — verification token is already live; indexing data does not exist yet |
+| 3 | ~~Submit the single sitemap once in Google Search Console~~ **DONE 2026-09-06** — apex property verified (HTML tag), sitemap.xml submitted once | GSC dashboard | ✅ CLOSED — Google-side indexing/reporting fills in over the next 1–2 weeks |
 | 4 | Supply a real GA4 Measurement ID (`G-…`) *or* a GTM container ID if measurement is wanted. Optionally Ads conversion ID+labels and Clarity ID | Inventing IDs would send data to someone else. With none set, **no script loads** | GREY |
 | 5 | Real-device pass on a phone (menu, quote form, WhatsApp, `tel:`) and confirm Search Console / GA4 realtime after IDs are on | No owner device in this environment | YELLOW |
 | 6 | Project metadata still missing per job (location, year, materials, extra photos) — same table as below | Must not be invented | GREY |
