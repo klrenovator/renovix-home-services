@@ -16,7 +16,7 @@ or real-data action; none of it can or should be faked in code.**
 
 | # | Action | Where | Notes |
 | --- | --- | --- | --- |
-| 1 | Make apex `renovixhomeservices.my` the **primary domain** so `www` redirects to apex | Vercel → Project → Settings → Domains | Highest-priority SEO fix (split-signal between hostnames). QA after: `curl -I https://www.renovixhomeservices.my/` → 308 to apex. No code change needed |
+| 1 | ~~Make apex `renovixhomeservices.my` the **primary domain** so `www` redirects to apex~~ **DONE 2026-09-05** — owner set it; AI-verified live: www → `renovixhomeservices.my/en/` redirect works, apex serves directly, no loop, all links/canonicals on apex | Vercel → Project → Settings → Domains | ✅ CLOSED — I-01 resolved; GSC submission (task 3) now unblocked |
 | 2 | Configure Resend: API key + verified sending domain; set `RESEND_API_KEY`, `QUOTE_FROM_EMAIL` (+ optional `QUOTE_NOTIFICATION_EMAIL`) in Vercel env; redeploy; send **one real test quote** and confirm inbox | Resend + Vercel dashboards | Until then the quote API honestly 503s and the form routes to WhatsApp. This is the #1 conversion blocker |
 | 3 | Submit `https://renovixhomeservices.my/sitemap.xml` once (apex property) in Google Search Console | GSC | Do after (1). Per-language sitemaps no longer exist — don't resubmit them |
 | 4 | Supply analytics IDs: GA4 `NEXT_PUBLIC_GA4_MEASUREMENT_ID` **or** `NEXT_PUBLIC_GTM_CONTAINER_ID` (never both); optionally Clarity / Ads labels | Vercel env | Zero analytics is live today by design (`PHASE_24_ANALYTICS.md` has exact steps). Never placeholder IDs |

@@ -11,10 +11,12 @@ Legend: ✅ complete · 🔄 in progress · ☐ open · ⏸ deferred with reason
 
 | Task | Track | Status | Evidence / note |
 | --- | --- | --- | --- |
-| T-01 · Vercel → Domains → make `renovixhomeservices.my` (apex) primary so `www` redirects to it | 🧍 owner | ☐ | Dashboard-only. QA when done: `curl -I https://www.renovixhomeservices.my/` must 308→`https://renovixhomeservices.my/`. Canonicals/sitemap already apex — no code change needed or wanted (in-app redirect risks a loop; see next.config.ts comments) |
+| T-01 · Vercel → Domains → make `renovixhomeservices.my` (apex) primary so `www` redirects to it | 🧍 owner | ✅ 2026-09-05 | Dashboard-only. VERIFIED 2026-09-05 by AI: fetch of www now lands on
+`https://renovixhomeservices.my/en/`; apex serves directly (no loop); all page links on apex.
+Next: submit the sitemap in GSC on the apex property (T-03) now unblocked |
 | T-02 · Resend: create key, verify sending domain, set `RESEND_API_KEY` + `QUOTE_FROM_EMAIL` (+ optional `QUOTE_NOTIFICATION_EMAIL`) in Vercel, redeploy, send one real test quote | 🧍 owner | ☐ | API honestly returns 503 until then; form shows WhatsApp fallback (by design). `qa/` + `audit:quote` cover the rest. Never fake the success state |
 
-**Phase 1 gate:** both ☐ → site is code-complete but cannot take leads by email. This is the single biggest funnel gap.
+**Phase 1 status:** T-01 ✅ done + AI-verified 2026-09-05. T-02 ☐ owner (task 2 of the owner guide) but cannot take leads by email. This is the single biggest funnel gap.
 
 ---
 
@@ -128,4 +130,5 @@ Legend: ✅ complete · 🔄 in progress · ☐ open · ⏸ deferred with reason
 
 ## Progress log
 
+- **2026-09-05 (owner task 1):** T-01 www/apex primary FIXED in Vercel by owner, AI-verified live (www → apex 308, no loop, apex serves 200).
 - **2026-09-05 (session 1):** Deep audit saved (`PHASE_26_DEEP_AUDIT_2026-09-05.md`). Ticked T-04, T-05 (data level), T-06, T-07, T-12, T-13, T-14. All verification gates re-run green (type-check/lint/build/17 audits/npm audit/live QA 199-0-0). New `audit:authority` §5b dedup guard added + negative-tested. Owner list set above.

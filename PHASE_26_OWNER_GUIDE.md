@@ -6,11 +6,11 @@ click steps; the owner says "done"; the AI verifies (live checks + this file),
 ticks it, and only then gives the next task. Detailed click instructions for
 the current task live in the chat; this file keeps the position + result.
 
-**Current position:** Task 1 of 9 (in progress).
+**Current position:** Task 2 of 9 (Resend — email delivery) — in progress.
 
 ## Checklist
 
-- [ ] **1. Vercel apex-primary** — make `renovixhomeservices.my` serve the site
+- [x] **1. Vercel apex-primary** ✅ DONE 2026-09-05 — make `renovixhomeservices.my` serve the site
       and `www` redirect TO it (today they are exactly reversed: apex redirects
       to www — verified 2026-09-05 by fetch). DNS itself is fine (apex A →
       Vercel, www CNAME → vercel-dns); nothing at Namecheap needs to change.
@@ -37,4 +37,7 @@ the current task live in the chat; this file keeps the position + result.
 
 ## Results log
 
-*(AI appends one line per verified task here: date + verification method.)*
+- **2026-09-05 — Task 1 verified by AI:** fetch of `https://www.renovixhomeservices.my/`
+  now resolves to final URL `https://renovixhomeservices.my/en/` (was: stayed on www),
+  and the apex itself serves the site directly with no loop; all rendered links/canonicals
+  are on the apex host. www/apex mismatch (audit finding I-01, plan T-01) CLOSED.
