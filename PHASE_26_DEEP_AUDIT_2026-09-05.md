@@ -267,7 +267,7 @@ Search → landing ✅ → service understanding ✅ (answer-first) → trust �
 | I-02 | CRO/Business | 🔴 CRITICAL | .env / Resend | Quote form cannot deliver email | ✅ CLOSED 2026-09-06 — owner configured Resend; AI verified DNS + clean redeploy; real test quote delivered to inbox |
 | I-03 | Security | 🟠 HIGH | next.config.ts | CSP `'unsafe-inline'` | ⏸ DEFERRED (documented): nonce ⇒ dynamic rendering breaks SSG; revisit at architecture change |
 | I-04 | E-E-A-T | 🟠 HIGH | projects | 4/10 services no photos | ☐ **OWNER** — real consented photos |
-| I-05 | Analytics | 🟠 HIGH | .env | No GA4/GTM IDs | ☐ **OWNER** — supply ID (never both GA4+GTM) |
+| I-05 | Analytics | 🟠 HIGH | .env | No GA4/GTM IDs | ◐ Analytics half ✅ CLOSED 2026-09-06 (GA4 live, Realtime verified; GTM unused by design) — photos half = owner guide task 5 |
 | I-06 | Content Quality | 🟡 MEDIUM | all 10 service pages | Quick-Answers ↔ FAQ duplication | ✅ FIXED — 10 EN rewrites + `audit:authority` §5b regression guard |
 | I-07 | Code Quality | 🟡 MEDIUM | locations | Two parallel location models | ✅ FIXED (data level) — dead duplicate `seo` copy removed from registry (−159 lines); intentional structure↔copy split now documented; drift guarded by `audit:locations` |
 | I-08 | Code Quality | 🟡 MEDIUM | data/problems.ts | Legacy taxonomy import | ✅ FIXED — file deleted; curation in `data/problem-content/previews.ts` |

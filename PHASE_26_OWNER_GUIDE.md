@@ -6,7 +6,7 @@ click steps; the owner says "done"; the AI verifies (live checks + this file),
 ticks it, and only then gives the next task. Detailed click instructions for
 the current task live in the chat; this file keeps the position + result.
 
-**Current position:** Task 4 of 9 (analytics activation — GA4) — in progress.
+**Current position:** Task 5 of 9 (project photos) — in progress (collection).
 
 ## Checklist
 
@@ -22,7 +22,7 @@ the current task live in the chat; this file keeps the position + result.
       → inbox. Done when: test submission lands in the mailbox.
 - [x] **3. GSC sitemap submit** ✅ DONE 2026-09-06 — after task 1 only: submit
       `https://renovixhomeservices.my/sitemap.xml` once on the apex property.
-- [ ] **4. Analytics** — GA4 `G-…` ID *or* GTM `GTM-…` (never both) into the
+- [x] **4. Analytics** ✅ DONE 2026-09-06 — GA4 `G-…` ID *or* GTM `GTM-…` (never both) into the
       matching Vercel env var; verify data in GA4 Realtime.
 - [ ] **5. Project photos** — 2–3 real consented photos for Painting /
       Waterproofing / Flooring / Handyman (AI adds them to the registry next
@@ -53,3 +53,8 @@ the current task live in the chat; this file keeps the position + result.
   verified and `sitemap.xml` submitted once. Sitemap content itself was validated by AI earlier
   (apex-only locs, 4-way hreflang, content lastmod) and by `audit:sitemap` (654 URLs). Expected:
   "Success" within 1–2 days; indexing 1–2 weeks; no resubmission needed.
+
+- **2026-09-06 — Task 4 verified (owner-side):** GA4 property created by owner (Kuala Lumpur TZ,
+  MYR), stream `G-…` Measurement ID set in Vercel Production as `NEXT_PUBLIC_GA4_MEASUREMENT_ID`,
+  redeployed, and GA4 Realtime showed live sessions — owner-confirmed on site test. GTM path
+  intentionally unused (consent design: never both). Clarity left optional/deferred.

@@ -118,7 +118,7 @@ Next: submit the sitemap in GSC on the apex property (T-03) now unblocked |
 1. **Vercel → Domains:** apex `renovixhomeservices.my` primary (www → apex redirect). *(biggest single SEO fix)*
 2. **Resend:** API key + `QUOTE_FROM_EMAIL` (+optional notification address) in Vercel env; send 1 real test quote; confirm inbox.
 3. **GSC:** after (1), submit the single sitemap on the apex property.
-4. **Analytics:** GA4 ID *or* GTM (not both); optionally Clarity.
+4. **Analytics:** ✅ DONE 2026-09-06 — GA4 property live (owner created, KUL TZ + MYR, Measurement ID in Vercel, Realtime verified). GTM alt unused by design; Clarity stays optional/deferred.
 5. **Photos:** real consented project photos for Painting/Waterproofing/Flooring/Handyman.
 6. **Device pass:** phone test of menu/form/WhatsApp/tel:.
 7. **Approve T-09 field list** (budget + time-of-day optional selects; photo-upload decision) → AI implements next session.
@@ -130,6 +130,7 @@ Next: submit the sitemap in GSC on the apex property (T-03) now unblocked |
 
 ## Progress log
 
+- **2026-09-06 (owner task 4):** GA4 analytics LIVE — property + stream created by owner, Measurement ID set in Vercel Production, redeployed, Realtime sessions confirmed. Consent-safe loader in code activates automatically; quote/WhatsApp/phone events now counted. Clarity deferred (optional).
 - **2026-09-06 (owner task 3):** T-03 GSC property verified + sitemap submitted once (owner-confirmed; sitemap pre-validated by audit:sitemap + AI). Now waiting on Google indexing (1–2 weeks normal).
 - **2026-09-06 (owner task 2):** T-02 Resend LIVE — domain verified (DNS checked by AI), env vars set in Vercel Production, clean redeploy, real test quote delivered to inbox. Phase 1 closed.
 - **2026-09-05 (owner task 1):** T-01 www/apex primary FIXED in Vercel by owner, AI-verified live (www → apex 308, no loop, apex serves 200).
