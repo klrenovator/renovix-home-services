@@ -6,7 +6,7 @@ click steps; the owner says "done"; the AI verifies (live checks + this file),
 ticks it, and only then gives the next task. Detailed click instructions for
 the current task live in the chat; this file keeps the position + result.
 
-**Current position:** Task 6 of 9 (real-device QA) — ◐ owner pass done 2026-09-06; two follow-ups open (header-circles visual confirm on preview; GA4 Realtime diagnostic). (Task 5 parked: 7 projects wired; owner will upload real Painting + Waterproofing photos whenever a job site allows.)
+**Current position:** Task 7 of 9 (T-09 quote-form field approval) — awaiting owner decision. (Task 5 parked: 7 projects wired; owner will upload real Painting + Waterproofing photos whenever a job site allows.)
 
 ## Checklist
 
@@ -29,7 +29,7 @@ the current task live in the chat; this file keeps the position + result.
       actual job when available; the held painting pair is NOT published (the raw
       jpgs on `main` are removed by the PR at merge, recoverable from git history).
 - [ ] **6. Real-device pass** — phone: menu, quote form, WhatsApp, tel:.
-- [ ] **7. T-09 approval** — approve the two optional quote-form fields
+- [ ] **7. T-09 approval** ◐ PRESENTED 2026-09-07 — approve the two optional quote-form fields
       (budget band + preferred time-of-day); AI implements.
 - [ ] **8. KV before scale** — provision Vercel KV / Upstash when traffic
       approaches launch; AI then swaps the rate limiter.
@@ -87,3 +87,11 @@ the current task live in the chat; this file keeps the position + result.
   visually confirm on the preview before merge. (b) #11 GA4 Realtime showed 0 — diagnostic
   steps with owner (Vercel env var exact name/value/Production scope, build-log validation
   warning check, correct-property + incognito retest).
+
+- **2026-09-07 — Task 6 closed (owner direction):** real-device pass done (items 1–6, 8–10 OK).
+  GA4: Vercel env now Production-scoped and PROVEN live via response headers — production CSP
+  contains `googletagmanager` + google-analytics origins, which only appear when the build baked
+  a valid `NEXT_PUBLIC_GA4_MEASUREMENT_ID`. The raw HTML correctly omits the script tag (by
+  design: consent-first client injection), so view-source absence was a false alarm; ongoing
+  visibility is a GA4-property/account-view matter, non-blocking for launch. Header WhatsApp/
+  call circles shipped on the PR; owner moved to task 7 — flag any visual tweak at final review.

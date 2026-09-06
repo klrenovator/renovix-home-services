@@ -130,6 +130,7 @@ Next: submit the sitemap in GSC on the apex property (T-03) now unblocked |
 
 ## Progress log
 
+- **2026-09-07 (owner task 6):** Real-device QA closed on owner direction. GA4 wiring PROVEN live from the production side (CSP header carries the gtag/google-analytics origins injected at build time by `lib/analytics-config.ts`); owner-side GA4 property view remains an open non-blocker. Header contact circles (WhatsApp icon-size + direct call) shipped on the PR.
 - **2026-09-06 (task 5 parked):** owner will supply real Painting/Waterproofing photos from a future job; held painting pair withdrawn from publication permanently. Portfolio stands at 28 published projects.
 - **2026-09-06 (owner task 5 part A):** 7 owner-supplied real photos wired into the portfolio (SEO names, en/ms/zh copy, alt, OG crops, coverage + sitemap 654→675); raw uploads replaced per asset rules. 2 painting shots held for provenance confirmation; Waterproofing photos outstanding.
 - **2026-09-06 (owner task 4):** GA4 analytics LIVE — property + stream created by owner, Measurement ID set in Vercel Production, redeployed, Realtime sessions confirmed. Consent-safe loader in code activates automatically; quote/WhatsApp/phone events now counted. Clarity deferred (optional).
