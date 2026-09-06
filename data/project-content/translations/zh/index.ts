@@ -229,4 +229,74 @@ export const zhProjectTranslations: ProjectTranslations = {
     seoDescription: "商用室内装修进行中：上方吊顶骨架，地砖以调平卡子逐块铺设。Renovix Home Services 承接办公室装修工程，免费获取报价。",
     details: [{ key: "propertyType", value: "办公室" }],
   },
+  "porcelain-floor-tile-installation": {
+    title: "大规格瓷砖铺贴",
+    shortDescription: "大规格瓷砖以调平卡扣系统平整铺贴，并围绕地漏与排污口切割开孔。",
+    alt: "Renovix Home Services 在吉隆坡围绕地漏铺贴带红色调平卡扣的大规格地砖。",
+    scopeOfWork: [
+      "放线并铺贴大规格瓷砖",
+      "以调平卡扣保持砖面齐平",
+      "围绕地漏与排污口切割开孔"
+    ],
+  },
+  "instant-shower-heater-installation": {
+    title: "速热式热水器与花洒立柱安装",
+    shortDescription: "黑色花洒立柱与速热热水器安装在完工的瓷砖墙面上，并接驳给水与电源。",
+    alt: "Renovix Home Services 在吉隆坡瓷砖卫浴墙面上安装的黑色花洒立柱与速热热水器。",
+    scopeOfWork: [
+      "安装花洒立柱与手持花洒",
+      "安装并接驳速热式热水器",
+      "交付前测试水流与加热"
+    ],
+  },
+  "pendant-lamp-installation": {
+    title: "起居空间吊灯安装",
+    shortDescription: "设计师吊灯由吊顶接驳点垂挂，正对已完工、带纹理背景墙的客厅区域。",
+    alt: "Renovix Home Services 在巴生谷水泥纹理背景墙客厅中安装的黑色细杆吊灯。",
+    scopeOfWork: [
+      "确定吊线长度与天花固定位置",
+      "悬挂并接驳吊灯线路",
+      "按家具布局对准灯位"
+    ],
+  },
+  "black-ceiling-fan-installation": {
+    title: "黑色五叶吊扇安装",
+    shortDescription: "哑光黑五叶吊扇装于平整天花，叶片扫掠范围避开周边筒灯。",
+    alt: "Renovix Home Services 在吉隆坡带定制柜体的卧室天花上安装的哑光黑五叶吊扇。",
+    scopeOfWork: [
+      "将吊扇支架固定于天花",
+      "吊扇接驳天花电源点",
+      "检查叶片与筒灯的间距"
+    ],
+  },
+  "awning-lighting-installation": {
+    title: "店屋雨棚灯安装",
+    shortDescription: "灯板嵌入店屋雨棚条板天花并固定，接入现有供电线路。",
+    alt: "Renovix Home Services 工人在吉隆坡街边店屋雨棚天花上安装灯板。",
+    scopeOfWork: [
+      "在棚底开孔并固定灯板",
+      "敷设并接驳供电线路",
+      "通电测试雨棚整排照明"
+    ],
+  },
+  "wall-mounted-fan-installation": {
+    title: "挂壁扇安装",
+    shortDescription: "黑色挂壁扇经支架固定于完工墙面，接入现有电源点，拉绳自然垂下。",
+    alt: "Renovix Home Services 在吉隆坡白色墙面上安装的黑色拉绳挂壁扇。",
+    scopeOfWork: [
+      "将支架牢固锚定于墙面",
+      "挂上并锁紧风扇机组",
+      "接入现有电源点并测试双拉绳"
+    ],
+  },
+  "timber-switch-socket-installation": {
+    title: "木饰面墙上的开关与插座",
+    shortDescription: "木纹开关面板与两只配套插座平齐安装在木饰面板上，排成一线并对正水平。",
+    alt: "Renovix Home Services 在吉隆坡木饰面墙上成排安装的三只木纹开关与插座面板。",
+    scopeOfWork: [
+      "接线并固定开关单元",
+      "安装两只配套电源插座",
+      "将三块面板调平对齐"
+    ],
+  },
 };

@@ -169,6 +169,13 @@ export const translatedContent: Record<
       "on-site-metal-frame-welding",
       "metal-awning-frame-installation",
       "office-renovation-ceiling-and-tiling",
+      "porcelain-floor-tile-installation",
+      "instant-shower-heater-installation",
+      "pendant-lamp-installation",
+      "black-ceiling-fan-installation",
+      "awning-lighting-installation",
+      "wall-mounted-fan-installation",
+      "timber-switch-socket-installation",
     ],
   },
   zh: {
@@ -321,6 +328,13 @@ export const translatedContent: Record<
       "on-site-metal-frame-welding",
       "metal-awning-frame-installation",
       "office-renovation-ceiling-and-tiling",
+      "porcelain-floor-tile-installation",
+      "instant-shower-heater-installation",
+      "pendant-lamp-installation",
+      "black-ceiling-fan-installation",
+      "awning-lighting-installation",
+      "wall-mounted-fan-installation",
+      "timber-switch-socket-installation",
     ],
   },
 };
@@ -446,6 +460,13 @@ export const ALL_PROJECTS = [
   "on-site-metal-frame-welding",
   "metal-awning-frame-installation",
   "office-renovation-ceiling-and-tiling",
+  "porcelain-floor-tile-installation",
+  "instant-shower-heater-installation",
+  "pendant-lamp-installation",
+  "black-ceiling-fan-installation",
+  "awning-lighting-installation",
+  "wall-mounted-fan-installation",
+  "timber-switch-socket-installation",
 ] as const;
 
 export const ALL_PROBLEMS = [

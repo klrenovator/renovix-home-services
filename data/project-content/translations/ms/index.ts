@@ -250,4 +250,88 @@ export const msProjectTranslations: ProjectTranslations = {
     ],
     details: [{ key: "propertyType", value: "Pejabat" }],
   },
+  "porcelain-floor-tile-installation": {
+    title: "Pemasangan jubin lantai porselin format besar",
+    shortDescription:
+      "Jubin lantai porselin bersaiz besar dipasang rata dengan sistem klip perata, dipotong mengikut longkang lantai dan lubang pembuangan.",
+    alt:
+      "Jubin lantai porselin besar dengan klip perata merah dipasang mengelilingi longkang lantai oleh Renovix Home Services di Kuala Lumpur.",
+    scopeOfWork: [
+      "Menanda dan memasang jubin lantai porselin format besar",
+      "Memasang klip perata supaya tepi jubin sebaya",
+      "Memotong jubin mengikut longkang dan lubang pembuangan"
+    ],
+  },
+  "instant-shower-heater-installation": {
+    title: "Pemasangan pemanas air segera dan kolom hujan",
+    shortDescription:
+      "Kolom hujan hitam dan pemanas air segera dipasang pada dinding berjubin yang telah siap serta disambungkan ke bekalan air dan elektrik.",
+    alt:
+      "Kolom hujan hitam dan pemanas air segera dipasang pada dinding bilik air berjubin oleh Renovix Home Services di Kuala Lumpur.",
+    scopeOfWork: [
+      "Memasang kolom hujan dan pancuran tangan",
+      "Memasang serta menyambungkan pemanas air segera",
+      "Menguji aliran dan pemanasan sebelum penyerahan"
+    ],
+  },
+  "pendant-lamp-installation": {
+    title: "Pemasangan lampu gantung di ruang tamu",
+    shortDescription:
+      "Lampu gantung reka bentuk digantung dari titik siling, diletakkan mengikut susun atur ruang tamu yang telah siap dengan dinding bertekstur.",
+    alt:
+      "Lampu gantung hitam langsing digantung di ruang tamu dengan dinding berteksimen simen oleh Renovix Home Services di Lembah Klang.",
+    scopeOfWork: [
+      "Menetapkan panjang gantungan dan posisi kanopi siling",
+      "Menggantung dan menyambungkan lampu gantung",
+      "Menyelaraskan lampu dengan susun atur perabot"
+    ],
+  },
+  "black-ceiling-fan-installation": {
+    title: "Pemasangan kipas siling hitam lima bilah",
+    shortDescription:
+      "Kipas siling lima bilah hitam matte dipasang pada siling rata, dengan laluan bilah dibiarkan bebas daripada barisan lampu sorot.",
+    alt:
+      "Kipas siling lima bilah hitam matte dipasang pada siling bilik tidur berkelabinet oleh Renovix Home Services di Kuala Lumpur.",
+    scopeOfWork: [
+      "Memasang bracket kipas pada siling",
+      "Menyambungkan kipas ke titik siling",
+      "Memeriksa jarak bilah daripada lampu sorot"
+    ],
+  },
+  "awning-lighting-installation": {
+    title: "Pemasangan lampu di bawah anjung kedai",
+    shortDescription:
+      "Panel lampu dipasang pada soffit berpanel anjung kedai dan disambungkan kepada bekalan elektrik sedia ada.",
+    alt:
+      "Pekerja memasang panel lampu pada soffit anjung kedai di jalan Kuala Lumpur oleh Renovix Home Services.",
+    scopeOfWork: [
+      "Mencut dan memasang panel lampu pada soffit",
+      "Menarik dan menyambungkan wayar bekalan",
+      "Menguji keseluruhan barisan lampu anjung"
+    ],
+  },
+  "wall-mounted-fan-installation": {
+    title: "Pemasangan kipas dinding",
+    shortDescription:
+      "Kipas dinding hitam dipasang pada bracket di dinding siap, disambungkan ke titik kuasa sedia ada dengan tali tarikan tergantung bebas.",
+    alt:
+      "Kipas dinding hitam dengan tali tarikan dipasang pada dinding putih oleh Renovix Home Services di Kuala Lumpur.",
+    scopeOfWork: [
+      "Memasang bracket dengan kukuh pada dinding",
+      "Menggantung dan mengamankan unit kipas",
+      "Menyambungkan ke titik sedia ada dan menguji kedua-dua tali"
+    ],
+  },
+  "timber-switch-socket-installation": {
+    title: "Suis dan soket pada dinding berpanel kayu",
+    shortDescription:
+      "Plat suis serabut kayu dan dua soket kuasa sepadan dipasang rata pada panel kayu, disejajarkan sebaya dalam satu baris.",
+    alt:
+      "Tiga plat suis dan soket serabut kayu dipasang sebaris pada panel dinding kayu oleh Renovix Home Services di Kuala Lumpur.",
+    scopeOfWork: [
+      "Menwayarkan dan memasang unit suis",
+      "Memasang dua soket kuasa sepadan",
+      "Menyelaras dan memastikan ketiga-tiga plat aras"
+    ],
+  },
 };

@@ -360,8 +360,117 @@ export const projects: Project[] = [
       height: 630,
     },
   },
+  {
+    slug: "porcelain-floor-tile-installation",
+    category: "tiling",
+    subServices: ["porcelain-tile-installation"],
+    status: "published",
+    image: {
+      src: "/images/projects/porcelain-floor-tile-installation-kl-selangor.webp",
+      width: 1080,
+      height: 607,
+    },
+    ogImage: {
+      src: "/images/projects/og/porcelain-floor-tile-installation-og.jpg",
+      width: 1200,
+      height: 630,
+    },
+  },
+  {
+    slug: "instant-shower-heater-installation",
+    category: "plumbing",
+    subServices: ["water-heater-installation"],
+    status: "published",
+    image: {
+      src: "/images/projects/instant-shower-heater-installation-kl-selangor.webp",
+      width: 960,
+      height: 1280,
+    },
+    ogImage: {
+      src: "/images/projects/og/instant-shower-heater-installation-og.jpg",
+      width: 1200,
+      height: 630,
+    },
+  },
+  {
+    slug: "pendant-lamp-installation",
+    category: "electrical",
+    status: "published",
+    image: {
+      src: "/images/projects/pendant-lamp-installation-kl-selangor.webp",
+      width: 540,
+      height: 910,
+    },
+    ogImage: {
+      src: "/images/projects/og/pendant-lamp-installation-og.jpg",
+      width: 1200,
+      height: 630,
+    },
+  },
+  {
+    slug: "black-ceiling-fan-installation",
+    category: "electrical",
+    subServices: ["fan-installation"],
+    status: "published",
+    image: {
+      src: "/images/projects/black-ceiling-fan-installation-kl-selangor.webp",
+      width: 540,
+      height: 1194,
+    },
+    ogImage: {
+      src: "/images/projects/og/black-ceiling-fan-installation-og.jpg",
+      width: 1200,
+      height: 630,
+    },
+  },
+  {
+    slug: "awning-lighting-installation",
+    category: "electrical",
+    status: "published",
+    image: {
+      src: "/images/projects/awning-lighting-installation-kl-selangor.webp",
+      width: 780,
+      height: 1040,
+    },
+    ogImage: {
+      src: "/images/projects/og/awning-lighting-installation-og.jpg",
+      width: 1200,
+      height: 630,
+    },
+  },
+  {
+    slug: "wall-mounted-fan-installation",
+    category: "handyman",
+    subServices: ["mounting-installation"],
+    status: "published",
+    image: {
+      src: "/images/projects/wall-mounted-fan-installation-kl-selangor.webp",
+      width: 723,
+      height: 1280,
+    },
+    ogImage: {
+      src: "/images/projects/og/wall-mounted-fan-installation-og.jpg",
+      width: 1200,
+      height: 630,
+    },
+  },
+  {
+    slug: "timber-switch-socket-installation",
+    category: "electrical",
+    subServices: ["socket-installation"],
+    status: "published",
+    image: {
+      src: "/images/projects/timber-switch-socket-installation-kl-selangor.webp",
+      width: 721,
+      height: 1280,
+    },
+    ogImage: {
+      src: "/images/projects/og/timber-switch-socket-installation-og.jpg",
+      width: 1200,
+      height: 630,
+    },
+  },
 ];
-
 /** English copy — the canonical source language. */
 export const projectContent: Record<string, ProjectContent> = {
   "marble-look-floor-tiling": {
@@ -612,5 +721,89 @@ export const projectContent: Record<string, ProjectContent> = {
       "Tiling the floor as part of the office renovation"
     ],
     details: [{ key: "propertyType", value: "Office" }],
+  },
+  "porcelain-floor-tile-installation": {
+    title: "Large-format porcelain floor tiling",
+    shortDescription:
+      "Large porcelain floor tiles laid flat with a clip levelling system, cut around the floor drain and waste openings.",
+    alt:
+      "Large porcelain floor tiles with red levelling clips laid around a floor drain by Renovix Home Services in Kuala Lumpur.",
+    scopeOfWork: [
+      "Marking out and laying large-format porcelain tiles",
+      "Fitting levelling clips so tile edges sit flush",
+      "Cutting the tiles around drain and waste openings"
+    ],
+  },
+  "instant-shower-heater-installation": {
+    title: "Instant shower heater and rain-shower column",
+    shortDescription:
+      "A black rain-shower column and instant shower heater mounted on a finished tiled wall and connected to water and power.",
+    alt:
+      "Black rain-shower column and instant shower heater installed on a tiled bathroom wall by Renovix Home Services in Kuala Lumpur.",
+    scopeOfWork: [
+      "Mounting the shower column and hand shower",
+      "Installing and connecting the instant heater",
+      "Testing flow and heating before handover"
+    ],
+  },
+  "pendant-lamp-installation": {
+    title: "Pendant lamp installation over a living area",
+    shortDescription:
+      "A designer pendant lamp hung from a ceiling point, positioned over a finished living space with a textured feature wall.",
+    alt:
+      "Slim black pendant lamp hung over a living space with a cement-textured feature wall by Renovix Home Services in the Klang Valley.",
+    scopeOfWork: [
+      "Setting the drop length and canopy position",
+      "Hanging and terminating the pendant",
+      "Aligning the lamp with the furniture layout"
+    ],
+  },
+  "black-ceiling-fan-installation": {
+    title: "Black five-blade ceiling fan installation",
+    shortDescription:
+      "A matte-black five-blade ceiling fan mounted on a plain ceiling, with the blade path kept clear of the surrounding downlight line.",
+    alt:
+      "Matte black five-blade ceiling fan installed on a bedroom ceiling with fitted joinery by Renovix Home Services in Kuala Lumpur.",
+    scopeOfWork: [
+      "Fixing the fan bracket to the ceiling",
+      "Connecting the fan to the ceiling point",
+      "Checking blade clearance around the downlights"
+    ],
+  },
+  "awning-lighting-installation": {
+    title: "Lighting installed under a shop awning",
+    shortDescription:
+      "A light panel fixed into the paneled soffit of a shop-lot awning and wired to the existing supply.",
+    alt:
+      "Worker installing a light panel into the soffit of a shop awning on a Kuala Lumpur street by Renovix Home Services.",
+    scopeOfWork: [
+      "Cutting and fixing the light panel into the soffit",
+      "Running and terminating the supply wiring",
+      "Switching and testing the awning lighting line"
+    ],
+  },
+  "wall-mounted-fan-installation": {
+    title: "Wall-mounted fan installation",
+    shortDescription:
+      "A black wall fan secured to a finished wall on its bracket, connected to the existing power point with the pull cords hanging clear.",
+    alt:
+      "Black wall-mounted fan with pull cords fixed on a white wall by Renovix Home Services in Kuala Lumpur.",
+    scopeOfWork: [
+      "Anchoring the bracket to the wall",
+      "Hanging and securing the fan unit",
+      "Connecting to the existing point and testing both cords"
+    ],
+  },
+  "timber-switch-socket-installation": {
+    title: "Switch and sockets on a timber-clad wall",
+    shortDescription:
+      "A wood-grain switch plate and two matching power sockets fitted flush on a timber panel, set out level in a row.",
+    alt:
+      "Three wood-grain switch and socket plates installed in a row on a timber wall panel by Renovix Home Services in Kuala Lumpur.",
+    scopeOfWork: [
+      "Wiring and fixing the switch unit",
+      "Installing the two matching power sockets",
+      "Levelling and aligning all three plates"
+    ],
   },
 };
