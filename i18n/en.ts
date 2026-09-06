@@ -101,7 +101,8 @@ export const en: Dictionary = {
         "KL & Selangor coverage",
         "Easy quotation process",
       ],
-      imageAlt: "Modern home renovation work in a Malaysian home",
+      imageAlt:
+        "Completed plaster ceiling with cove lighting, downlights and a ceiling fan in a Malaysian home",
       imageTitle: "Professional workmanship",
       imageCaption:
         "Practical solutions for home renovation, repairs and improvements.",

@@ -6,6 +6,7 @@ import { faqNode } from "@/components/seo/schema";
 import { Breadcrumbs } from "@/components/service/Breadcrumbs";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button, WhatsAppButton } from "@/components/ui/Button";
+import { HeroBackdrop } from "@/components/ui/HeroBackdrop";
 import { IconArrowRight, IconMapPin, IconCompass, IconBuilding, IconCheck } from "@/components/icons";
 import { AreaFaqSection } from "@/components/area/AreaFaqSection";
 import { AreaCtaSection } from "@/components/area/AreaCtaSection";
@@ -78,16 +79,9 @@ export default async function AreasPage({ params }: AreasPageProps) {
       />
 
       <section className="relative overflow-hidden bg-navy text-white">
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-brand/20"
-        />
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute -bottom-32 -left-20 h-80 w-80 rounded-full bg-accent/10"
-        />
+        <HeroBackdrop />
 
-        <div className="container-app relative py-12 sm:py-16 lg:py-20">
+        <div className="container-app relative z-10 py-12 sm:py-16 lg:py-20">
           <Breadcrumbs
             inverse
             lang={code}

@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { Button, WhatsAppButton } from "@/components/ui/Button";
+import { HeroBackdrop } from "@/components/ui/HeroBackdrop";
 import { IconMapPin, IconArrowRight } from "@/components/icons";
 import { getLanguageCode } from "@/data/languages";
 import { getWhatsAppHref } from "@/data/site";
@@ -17,13 +18,10 @@ export function Hero({ lang }: HeroProps) {
 
   return (
     <section className="relative overflow-hidden bg-white">
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-surface"
-      />
-      <div className="container-app relative grid items-center gap-10 py-14 sm:py-16 lg:grid-cols-[1.05fr_0.95fr] lg:gap-14 lg:py-24">
+      <HeroBackdrop variant="light" />
+      <div className="container-app relative z-10 grid items-center gap-10 py-14 sm:py-16 lg:grid-cols-[1.05fr_0.95fr] lg:gap-14 lg:py-24">
         <div>
-          <p className="mb-4 inline-flex items-center gap-2 rounded-full border border-slate-200 bg-surface px-3 py-1.5 text-xs font-semibold text-navy">
+          <p className="mb-4 inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/80 px-3 py-1.5 text-xs font-semibold text-navy shadow-soft backdrop-blur-sm">
             <IconMapPin className="h-3.5 w-3.5 text-brand" />
             {hero.badge}
           </p>
@@ -49,7 +47,7 @@ export function Hero({ lang }: HeroProps) {
 
           <ul className="mt-8 flex flex-wrap gap-2">
             {hero.highlights.map((highlight) => (
-              <li key={highlight} className="chip">
+              <li key={highlight} className="chip bg-white/80 backdrop-blur-sm">
                 <span className="mr-1.5 h-1.5 w-1.5 rounded-full bg-accent" />
                 {highlight}
               </li>

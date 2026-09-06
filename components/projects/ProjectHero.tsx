@@ -3,6 +3,7 @@ import Link from "next/link";
 import { IconArrowRight } from "@/components/icons";
 import { Breadcrumbs } from "@/components/service/Breadcrumbs";
 import { Button, WhatsAppButton } from "@/components/ui/Button";
+import { HeroBackdrop } from "@/components/ui/HeroBackdrop";
 import { getLanguageCode } from "@/data/languages";
 import { getProjectCategory } from "@/data/project-content";
 import { getProjectCategories } from "@/data/i18n";
@@ -42,11 +43,8 @@ export function ProjectHero({ project, lang }: ProjectHeroProps) {
 
   return (
     <section className="relative overflow-hidden bg-navy text-white">
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-brand/20"
-      />
-      <div className="container-app relative py-12 sm:py-16">
+      <HeroBackdrop />
+      <div className="container-app relative z-10 py-12 sm:py-16">
         <Breadcrumbs
           inverse
           items={[
@@ -105,7 +103,7 @@ export function ProjectHero({ project, lang }: ProjectHeroProps) {
 
       {/* The description is deliberately not repeated here — it is the
           overview section's job, so the summary appears once on the page. */}
-      <div className="container-app pb-12 sm:pb-16">
+      <div className="container-app relative z-10 pb-12 sm:pb-16">
         <div
           className={`mx-auto ${
             project.image.height > project.image.width ? "max-w-md" : "max-w-3xl"

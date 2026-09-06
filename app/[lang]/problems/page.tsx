@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Button, WhatsAppButton } from "@/components/ui/Button";
+import { HeroBackdrop } from "@/components/ui/HeroBackdrop";
 import { Breadcrumbs } from "@/components/service/Breadcrumbs";
 import { IconArrowRight, IconAlertTriangle } from "@/components/icons";
 import { PageSchema } from "@/components/seo/PageSchema";
@@ -86,11 +87,8 @@ export default async function ProblemsPage({ params }: ProblemsPageProps) {
         extra={[itemListNode(canonical, t.problemsIndex.title, problemItems)]}
       />
       <section className="relative overflow-hidden bg-navy text-white">
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-brand/20"
-        />
-        <div className="container-app relative py-12 sm:py-16 lg:py-20">
+        <HeroBackdrop />
+        <div className="container-app relative z-10 py-12 sm:py-16 lg:py-20">
           <Breadcrumbs
             inverse
             items={[

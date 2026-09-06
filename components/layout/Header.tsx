@@ -5,10 +5,9 @@ import { IconPhone, IconWhatsApp } from "@/components/icons";
 import { HeaderLanguageMenu } from "@/components/layout/HeaderLanguageMenu";
 import { MobileMenu } from "@/components/layout/MobileMenu";
 import { getLanguageCode, type LanguageCode } from "@/data/languages";
-import { getServiceCategories } from "@/data/i18n";
 import { getPhoneHref, getWhatsAppHref } from "@/data/site";
 import { getDictionary } from "@/i18n";
-import { contentHref, localizedHref } from "@/i18n/hrefs";
+import { localizedHref } from "@/i18n/hrefs";
 
 type HeaderProps = {
   lang: string;
@@ -26,6 +25,15 @@ export function Header({ lang }: HeaderProps) {
     { label: t.nav.projects, href: "/projects" },
     { label: t.nav.blog, href: "/blog" },
     { label: t.nav.faq, href: "/faq" },
+    { label: t.nav.about, href: "/about" },
+    { label: t.nav.contact, href: "/contact" },
+  ].map((item) => ({ ...item, href: localizedHref(item.href, code) }));
+
+  /** Hamburger keeps the primary pages only; secondary pages stay in the footer. */
+  const mobileNavigation = [
+    { label: t.nav.home, href: "/" },
+    { label: t.nav.services, href: "/services" },
+    { label: t.nav.projects, href: "/projects" },
     { label: t.nav.about, href: "/about" },
     { label: t.nav.contact, href: "/contact" },
   ].map((item) => ({ ...item, href: localizedHref(item.href, code) }));
@@ -128,16 +136,11 @@ export function Header({ lang }: HeaderProps) {
           </div>
           <MobileMenu
             lang={code}
-            navigation={navigation}
-            services={getServiceCategories(code).map((service) => ({
-              label: service.name,
-              href: contentHref("service", service.slug, code),
-            }))}
+            navigation={mobileNavigation}
             labels={{
               openMenu: t.a11y.openMenu,
               closeMenu: t.a11y.closeMenu,
               navigation: t.a11y.mobileNavigation,
-              services: t.footer.services,
               whatsapp: t.cta.whatsappUs,
               whatsappHref: getWhatsAppHref(),
               language: t.a11y.languageNavigation,
