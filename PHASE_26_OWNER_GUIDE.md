@@ -6,7 +6,7 @@ click steps; the owner says "done"; the AI verifies (live checks + this file),
 ticks it, and only then gives the next task. Detailed click instructions for
 the current task live in the chat; this file keeps the position + result.
 
-**Current position:** Task 5 of 9 (project photos) — ◐ 7 projects wired 2026-09-06; painting pair held for owner provenance check; Waterproofing photos still outstanding. Then Task 6.
+**Current position:** Task 6 of 9 (real-device QA) — in progress. (Task 5 parked: 7 projects wired; owner will upload real Painting + Waterproofing photos whenever a job site allows.)
 
 ## Checklist
 
@@ -24,9 +24,10 @@ the current task live in the chat; this file keeps the position + result.
       `https://renovixhomeservices.my/sitemap.xml` once on the apex property.
 - [x] **4. Analytics** ✅ DONE 2026-09-06 — GA4 `G-…` ID *or* GTM `GTM-…` (never both) into the
       matching Vercel env var; verify data in GA4 Realtime.
-- [~] **5. Project photos** ◐ PART DONE 2026-09-06 — 7 owner photos wired (see Results
-      log). Open: 2 painting shots held pending owner confirmation of provenance;
-      Waterproofing still needs real photos.
+- [~] **5. Project photos** ◐ 7 wired 2026-09-06 — ⏸ PARKED with owner's decision
+      (2026-09-06): real Painting + Waterproofing photos will be uploaded from an
+      actual job when available; the held painting pair is NOT published (the raw
+      jpgs on `main` are removed by the PR at merge, recoverable from git history).
 - [ ] **6. Real-device pass** — phone: menu, quote form, WhatsApp, tel:.
 - [ ] **7. T-09 approval** — approve the two optional quote-form fields
       (budget band + preferred time-of-day); AI implements.
@@ -71,3 +72,8 @@ the current task live in the chat; this file keeps the position + result.
   owner line: confirm they are a genuine site job. Waterproofing: no photos supplied yet.
   Gates: type-check, lint, audit:project-assets, audit:projects, audit:multilingual,
   audit:sitemap, full build — all green.
+
+- **2026-09-06 — Task 5 parked (owner decision):** owner confirmed they will upload real
+  Painting and Waterproofing photos when actual job photos exist; the 2 US-fittings painting
+  shots stay unpublished. Re-wire trigger: owner sends photos → run the same pipeline
+  (SEO name → webp hero → OG via script → en/ms/zh copy → coverage → audits → build).
