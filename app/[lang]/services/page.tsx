@@ -4,6 +4,7 @@ import { ServiceGrid } from "@/components/home/ServiceGrid";
 import { PageSchema } from "@/components/seo/PageSchema";
 import { itemListNode } from "@/components/seo/schema";
 import { Button, WhatsAppButton } from "@/components/ui/Button";
+import { HeroBackdrop } from "@/components/ui/HeroBackdrop";
 import { Breadcrumbs } from "@/components/service/Breadcrumbs";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { IconArrowRight } from "@/components/icons";
@@ -83,11 +84,8 @@ export default async function ServicesPage({ params }: ServicesPageProps) {
         extra={[itemListNode(canonical, t.servicesIndex.title, serviceItems)]}
       />
       <section className="relative overflow-hidden bg-navy text-white">
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-brand/20"
-        />
-        <div className="container-app relative py-12 sm:py-16 lg:py-20">
+        <HeroBackdrop />
+        <div className="container-app relative z-10 py-12 sm:py-16 lg:py-20">
           <Breadcrumbs
             inverse
             items={[

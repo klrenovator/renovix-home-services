@@ -13,17 +13,10 @@ export type MobileMenuLink = {
   href: string;
 };
 
-export type MobileMenuService = {
-  label: string;
-  /** `null` when the service page has no translation in the current language. */
-  href: string | null;
-};
-
 export type MobileMenuLabels = {
   openMenu: string;
   closeMenu: string;
   navigation: string;
-  services: string;
   whatsapp: string;
   whatsappHref: string;
   language: string;
@@ -42,11 +35,10 @@ function normalizePath(path: string): string {
 type MobileMenuProps = {
   lang: LanguageCode;
   navigation: MobileMenuLink[];
-  services: MobileMenuService[];
   labels: MobileMenuLabels;
 };
 
-export function MobileMenu({ lang, navigation, services, labels }: MobileMenuProps) {
+export function MobileMenu({ lang, navigation, labels }: MobileMenuProps) {
   const [isOpen, setIsOpen] = useState(false);
   const triggerRef = useRef<HTMLButtonElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
@@ -184,29 +176,6 @@ export function MobileMenu({ lang, navigation, services, labels }: MobileMenuPro
                 })}
               </ul>
             </nav>
-
-            <div>
-              <p className="eyebrow">{labels.services}</p>
-              <ul className="mt-3 grid grid-cols-1 gap-1.5 sm:grid-cols-2">
-                {services.map((service) => {
-                  const classes =
-                    "flex items-center justify-between rounded-md border border-slate-200 bg-surface px-3 py-2.5 text-sm font-medium text-secondary transition-colors hover:border-brand/30 hover:text-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent";
-
-                  return (
-                    <li key={service.label}>
-                      {service.href ? (
-                        <Link href={service.href} onClick={closeMenu} className={classes}>
-                          {service.label}
-                          <IconArrowRight className="h-3.5 w-3.5 text-brand" />
-                        </Link>
-                      ) : (
-                        <span className={classes}>{service.label}</span>
-                      )}
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
 
             <div className="border-t border-slate-200 pt-5">
               <div className="flex items-center justify-between">
