@@ -6,7 +6,7 @@ click steps; the owner says "done"; the AI verifies (live checks + this file),
 ticks it, and only then gives the next task. Detailed click instructions for
 the current task live in the chat; this file keeps the position + result.
 
-**Current position:** Task 6 of 9 (real-device QA) — in progress. (Task 5 parked: 7 projects wired; owner will upload real Painting + Waterproofing photos whenever a job site allows.)
+**Current position:** Task 6 of 9 (real-device QA) — ◐ owner pass done 2026-09-06; two follow-ups open (header-circles visual confirm on preview; GA4 Realtime diagnostic). (Task 5 parked: 7 projects wired; owner will upload real Painting + Waterproofing photos whenever a job site allows.)
 
 ## Checklist
 
@@ -77,3 +77,13 @@ the current task live in the chat; this file keeps the position + result.
   Painting and Waterproofing photos when actual job photos exist; the 2 US-fittings painting
   shots stay unpublished. Re-wire trigger: owner sends photos → run the same pipeline
   (SEO name → webp hero → OG via script → en/ms/zh copy → coverage → audits → build).
+
+- **2026-09-06 — Task 6 owner pass recorded:** items 1–6 and 8–10 all OK on the owner's
+  real phone browser (mobile Chrome; Safari was only an example). Quote form end-to-end
+  (submit → success → Gmail delivery + Reply-To) and double-submit rate limit both pass on
+  device. Two follow-ups: (a) #7 owner requested header change — WhatsApp reduced to the
+  familiar icon circle in brand green + a direct-call `tel:` circle added, mobile and
+  desktop; implemented on this branch (build 686/686, security audit PASS) — owner to
+  visually confirm on the preview before merge. (b) #11 GA4 Realtime showed 0 — diagnostic
+  steps with owner (Vercel env var exact name/value/Production scope, build-log validation
+  warning check, correct-property + incognito retest).
