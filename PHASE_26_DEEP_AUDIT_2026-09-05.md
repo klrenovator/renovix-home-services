@@ -271,7 +271,7 @@ Search → landing ✅ → service understanding ✅ (answer-first) → trust �
 | I-06 | Content Quality | 🟡 MEDIUM | all 10 service pages | Quick-Answers ↔ FAQ duplication | ✅ FIXED — 10 EN rewrites + `audit:authority` §5b regression guard |
 | I-07 | Code Quality | 🟡 MEDIUM | locations | Two parallel location models | ✅ FIXED (data level) — dead duplicate `seo` copy removed from registry (−159 lines); intentional structure↔copy split now documented; drift guarded by `audit:locations` |
 | I-08 | Code Quality | 🟡 MEDIUM | data/problems.ts | Legacy taxonomy import | ✅ FIXED — file deleted; curation in `data/problem-content/previews.ts` |
-| I-09 | CRO | 🟡 MEDIUM | QuoteForm | No photo/budget/time fields | ☐ OWNER — approve field list (photo upload also needs storage decision); coding is ~1 day once approved |
+| I-09 | CRO | 🟡 MEDIUM | QuoteForm | No photo/budget/time fields | ✅ CLOSED 2026-09-07 — owner decision recorded: DECLINED (form stays as-is); re-openable any time |
 | I-10 | Security/Scale | 🟡 MEDIUM | rate-limit.ts | In-memory limiter | ☐ OWNER — provision Vercel KV/Upstash before high traffic |
 | I-11 | Technical SEO | 🟢 LOW | robots.ts | Non-standard `host:` | ✅ FIXED — removed; live robots.txt verified conformant |
 | I-12 | Dependencies | ⚪ UNVERIFIABLE→✅ | lockfile | CVE status | ✅ VERIFIED — `npm audit`: 0 vulnerabilities (2026-09-05); enable Dependabot (owner, GitHub settings) |

@@ -78,7 +78,7 @@ Next: submit the sitemap in GSC on the apex property (T-03) now unblocked |
 
 | Task | Track | Status | Evidence / note |
 | --- | --- | --- | --- |
-| T-09 · Quote form: add optional **budget band** + **preferred time-of-day** (and decide on photo upload) | 🤖 code, gated | ☐ | Audit gates this on owner approving the field list. Proposed: budget select (`under-3k / 3k–10k / 10k–30k / 30k-plus / not-sure`), time-of-day (`morning / afternoon / evening / flexible`), both optional; photo upload stays "send on WhatsApp" unless owner wants server-side handling (needs storage decision). Implementation surface when approved: `QuoteForm.tsx` + `lib/quote/{constants,validation,email}.ts` + 3 dictionaries; `audit:quote` unaffected (behavior-based) |
+| T-09 · Quote form: add optional **budget band** + **preferred time-of-day** (and decide on photo upload) | — | 🚫 2026-09-07 | Audit gates this on owner approving the field list. Proposed: budget select (`under-3k / 3k–10k / 10k–30k / 30k-plus / not-sure`), time-of-day (`morning / afternoon / evening / flexible`), both optional; photo upload stays "send on WhatsApp" unless owner wants server-side handling (needs storage decision). Implementation surface when approved: `QuoteForm.tsx` + `lib/quote/{constants,validation,email}.ts` + 3 dictionaries; `audit:quote` unaffected (behavior-based) |
 | Real-device pass (menu, form, WhatsApp, tel:) | 🧍 owner | ☐ | All prior phases flagged this |
 
 ---
@@ -107,7 +107,7 @@ Next: submit the sitemap in GSC on the apex property (T-03) now unblocked |
 
 ## How to resume this plan next session (AI instructions)
 
-1. Read this file; do the topmost ☐ 🤖 items (currently: T-09 once owner approves fields; Phase 6 optional).
+1. Read this file; do the topmost ☐ 🤖 items (currently: T-09 CLOSED declined 2026-09-07; Phase 6 optional).
 2. Do NOT re-do ✅ items — evidence and rationale are recorded; re-verification of ✅ claims is exactly "re-run the gates" in Phase 10, nothing more.
 3. Do NOT invent data the owner hasn't supplied (governance §1). If blocked, say so in this file with a ☐ and a reason line.
 4. After any code change: run the Phase 10 gate, tick the item here with date + one-line evidence, append a dated entry to `PROJECT_PROGRESS.md`, commit to the working branch.
@@ -130,6 +130,7 @@ Next: submit the sitemap in GSC on the apex property (T-03) now unblocked |
 
 ## Progress log
 
+- **2026-09-07 (owner task 7):** T-09 resolved — owner chose C: no new quote-form fields, no photo upload. Form stays as-is permanently until a future owner re-approval.
 - **2026-09-07 (owner task 6):** Real-device QA closed on owner direction. GA4 wiring PROVEN live from the production side (CSP header carries the gtag/google-analytics origins injected at build time by `lib/analytics-config.ts`); owner-side GA4 property view remains an open non-blocker. Header contact circles (WhatsApp icon-size + direct call) shipped on the PR.
 - **2026-09-06 (task 5 parked):** owner will supply real Painting/Waterproofing photos from a future job; held painting pair withdrawn from publication permanently. Portfolio stands at 28 published projects.
 - **2026-09-06 (owner task 5 part A):** 7 owner-supplied real photos wired into the portfolio (SEO names, en/ms/zh copy, alt, OG crops, coverage + sitemap 654→675); raw uploads replaced per asset rules. 2 painting shots held for provenance confirmation; Waterproofing photos outstanding.

@@ -6,7 +6,7 @@ click steps; the owner says "done"; the AI verifies (live checks + this file),
 ticks it, and only then gives the next task. Detailed click instructions for
 the current task live in the chat; this file keeps the position + result.
 
-**Current position:** Task 7 of 9 (T-09 quote-form field approval) — awaiting owner decision. (Task 5 parked: 7 projects wired; owner will upload real Painting + Waterproofing photos whenever a job site allows.)
+**Current position:** Task 9 of 9 (Dependabot ON) — in progress. (Task 7 closed: owner declined 2026-09-07. Task 8 — KV — is deliberately parked until traffic approaches launch.) (Task 5 parked: 7 projects wired; owner will upload real Painting + Waterproofing photos whenever a job site allows.)
 
 ## Checklist
 
@@ -28,9 +28,10 @@ the current task live in the chat; this file keeps the position + result.
       (2026-09-06): real Painting + Waterproofing photos will be uploaded from an
       actual job when available; the held painting pair is NOT published (the raw
       jpgs on `main` are removed by the PR at merge, recoverable from git history).
-- [ ] **6. Real-device pass** — phone: menu, quote form, WhatsApp, tel:.
-- [ ] **7. T-09 approval** ◐ PRESENTED 2026-09-07 — approve the two optional quote-form fields
-      (budget band + preferred time-of-day); AI implements.
+- [x] **6. Real-device pass** ✅ DONE 2026-09-07 — phone: menu, quote form, WhatsApp, tel: (see Results log).
+- [x] **7. T-09 approval** ✅ CLOSED 2026-09-07 as **DECLINED by owner** (option C) —
+      no budget band, no time-of-day, no photo upload; form stays as-is until any future
+      owner re-approval.
 - [ ] **8. KV before scale** — provision Vercel KV / Upstash when traffic
       approaches launch; AI then swaps the rate limiter.
 - [ ] **9. Dependabot** — GitHub repo → Settings → Code security: enable
@@ -95,3 +96,7 @@ the current task live in the chat; this file keeps the position + result.
   design: consent-first client injection), so view-source absence was a false alarm; ongoing
   visibility is a GA4-property/account-view matter, non-blocking for launch. Header WhatsApp/
   call circles shipped on the PR; owner moved to task 7 — flag any visual tweak at final review.
+
+- **2026-09-07 — Task 7 closed (owner option C):** quote form stays exactly as-is — no budget
+  band, no time-of-day, no photo upload. Audit gate satisfied: the owner decision exists and is
+  recorded; future re-approval can reopen T-09 any time.
