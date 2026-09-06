@@ -104,3 +104,12 @@ the current task live in the chat; this file keeps the position + result.
 - **2026-09-07 — Task 9 verified:** Dependabot alerts + security updates enabled on
   `klrenovator/renovix-home-services` (owner report: buttons flipped to red "Disable" — the
   UI's ON state). Owner checklist 9/9 done; task 8 (KV) intentionally deferred to scale-time.
+
+- **2026-09-07 — 🚀 PR #41 MERGED (main @ b455760) and LIVE-verified by AI:**
+  Vercel production deploy completed. Verified on the live apex: new project pages render
+  with photos + SEO title/meta + alt + sub-service links (e.g. /en/projects/porcelain-floor-tile-installation/
+  → "Large-format porcelain floor tiling — Tiling | Renovix Home Services"); robots.txt now
+  emits no `Host:` line (fixed by this PR) and points to the single sitemap; homepage and
+  all CTAs (Quote / WhatsApp / tel: Call) render normally; 686 pages built. Owner checklist
+  final state: 8 completed, 1 declined-by-owner (T-09), 1 parked-by-design (KV). This guide's
+  follow-up notes live on the branch; main keeps the state as of merge.
