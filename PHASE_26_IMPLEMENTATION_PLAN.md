@@ -130,6 +130,7 @@ Next: submit the sitemap in GSC on the apex property (T-03) now unblocked |
 
 ## Progress log
 
+- **2026-09-07 (owner task 9):** Dependabot alerts + security updates ENABLED on the repo — owner checklist complete (8/KV parked by design). Next: owner final review → merge PR #41 → production verification.
 - **2026-09-07 (owner task 7):** T-09 resolved — owner chose C: no new quote-form fields, no photo upload. Form stays as-is permanently until a future owner re-approval.
 - **2026-09-07 (owner task 6):** Real-device QA closed on owner direction. GA4 wiring PROVEN live from the production side (CSP header carries the gtag/google-analytics origins injected at build time by `lib/analytics-config.ts`); owner-side GA4 property view remains an open non-blocker. Header contact circles (WhatsApp icon-size + direct call) shipped on the PR.
 - **2026-09-06 (task 5 parked):** owner will supply real Painting/Waterproofing photos from a future job; held painting pair withdrawn from publication permanently. Portfolio stands at 28 published projects.
