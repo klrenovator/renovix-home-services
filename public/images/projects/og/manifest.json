@@ -103,5 +103,40 @@
     "slug": "office-renovation-ceiling-and-tiling",
     "hero": "/images/projects/office-renovation-ceiling-and-tiling-kl-selangor.webp",
     "og": "/images/projects/og/office-renovation-ceiling-and-tiling-og.jpg"
+  },
+  {
+    "slug": "porcelain-floor-tile-installation",
+    "hero": "/images/projects/porcelain-floor-tile-installation-kl-selangor.webp",
+    "og": "/images/projects/og/porcelain-floor-tile-installation-og.jpg"
+  },
+  {
+    "slug": "instant-shower-heater-installation",
+    "hero": "/images/projects/instant-shower-heater-installation-kl-selangor.webp",
+    "og": "/images/projects/og/instant-shower-heater-installation-og.jpg"
+  },
+  {
+    "slug": "pendant-lamp-installation",
+    "hero": "/images/projects/pendant-lamp-installation-kl-selangor.webp",
+    "og": "/images/projects/og/pendant-lamp-installation-og.jpg"
+  },
+  {
+    "slug": "black-ceiling-fan-installation",
+    "hero": "/images/projects/black-ceiling-fan-installation-kl-selangor.webp",
+    "og": "/images/projects/og/black-ceiling-fan-installation-og.jpg"
+  },
+  {
+    "slug": "awning-lighting-installation",
+    "hero": "/images/projects/awning-lighting-installation-kl-selangor.webp",
+    "og": "/images/projects/og/awning-lighting-installation-og.jpg"
+  },
+  {
+    "slug": "wall-mounted-fan-installation",
+    "hero": "/images/projects/wall-mounted-fan-installation-kl-selangor.webp",
+    "og": "/images/projects/og/wall-mounted-fan-installation-og.jpg"
+  },
+  {
+    "slug": "timber-switch-socket-installation",
+    "hero": "/images/projects/timber-switch-socket-installation-kl-selangor.webp",
+    "og": "/images/projects/og/timber-switch-socket-installation-og.jpg"
   }
 ]

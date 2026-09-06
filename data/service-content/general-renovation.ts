@@ -277,7 +277,7 @@ export const generalRenovation: ServiceDetail = {
   faqs: [
     {
       question: "How much does house renovation cost in Malaysia?",
-      answer: "Light refresh RM20–60 psf, mid-range RM70–150, major RM160–300+ psf. 800 sqft apartment mid-range RM56k–120k, 1000–1200 sqft 3-bed RM70k–180k, 2-storey terrace full interior RM60k–250k. Kitchen RM8k–35k, bathroom full RM8k–25k per bathroom. Final depends on scope, property type, materials and hacking.",
+      answer: "The per-sqft bands above are a budgeting tool, not a quotation — your scope picks the band, not your floor area alone. Three things move a number the most: layout changes, because hacking and new partitions add structural work; wet areas, where plumbing, waterproofing and tiling trades stack on top of each other; and built-in joinery, which prices by the foot run rather than by appearance. The discipline that keeps a renovation predictable is agreed before day one — a defined scope, a phase order, and a clear written line between what is and is not included.",
     },
 
     {

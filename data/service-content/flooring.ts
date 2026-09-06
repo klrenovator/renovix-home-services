@@ -222,7 +222,7 @@ export const flooring: ServiceDetail = {
   faqs: [
     {
       question: "How much does SPC flooring cost in Malaysia?",
-      answer: "Material RM4.70–9 psf, install RM2–4 psf, supply & install from RM5.50 entry to RM7.50 for 7.5mm IXPE. Vinyl from RM4.70. Laminate RM6–12, ceramic RM8–15, porcelain RM14–28. For 1000 sqft, SPC over vinyl extra RM500–1500. Final depends on thickness, area, subfloor and pattern.",
+      answer: "A flooring quote has three layers — material, installation and the subfloor — and the third is where estimates become final numbers. The entry rate of RM5.50 psf supply & install assumes a base that is already level and dry; where the slab needs leveling, screeding or moisture correction first, that preparation is priced before any plank goes down. Across a whole home, SPC over vinyl runs RM500–RM1,500 more but carries a much longer life; in one small room, cutting and wastage do the pricing, so per-sqft comparisons flatter large jobs and understate tiny ones.",
     },
 
     {

@@ -15,6 +15,8 @@ import { generalRenovationProblems } from "./general-renovation";
 import { getServiceDetail } from "@/data/service-content";
 import { problemTranslations } from "./translations";
 
+export * from "./previews";
+
 export const problemCategories: ProblemCategory[] = [
   {
     id: "tiling",

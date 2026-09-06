@@ -282,7 +282,7 @@ export const weldingMetalWorks: ServiceDetail = {
   faqs: [
     {
       question: "How much does window grille cost in Malaysia?",
-      answer: "Mild steel window grille from RM12–18 psf, wrought iron RM13–20, stainless steel from RM30 psf quoted per design. Main gate mild steel RM18–30, stainless RM40–65. Full-house grille packages quoted per site measurement. Welding repair from RM150. Prices 2026 Klang Valley, depends on material, design, size and finishing.",
+      answer: "Grilles and gates price by material tier first — mild steel is the entry rate and lives or dies by its paint system, stainless costs more up front and stays put — then by design: straight-bar work follows the standard per-sqft rate, while curved or bespoke patterns are quoted from a drawing or site measurement because fabrication time, not metal weight, drives them. Repairs to existing gates and grilles — sagging leaves, rusted hinges, cracked welds — are per-job, not per-sqft at all. Two quotes only compare once they cover the same material, the same design and the same finishing work.",
     },
 
     {

@@ -333,7 +333,7 @@ export const ceilingPartition: ServiceDetail = {
   faqs: [
     {
       question: "How much does plaster ceiling cost in KL?",
-      answer: "Flat plaster ceiling RM3.50–6.00 psf, L-box RM15–25 per foot run, cornice RM6–10 pfr, floating/island RM18+ psf. Drywall partition RM7.50–10 psf standard, RM12–15 moisture, RM15–20 soundproof. Ceiling repair minimum RM700. Prices for 2026 Klang Valley, depends on area, height, design and lighting.",
+      answer: "Ceiling work mixes two pricing units, which is the trick to reading any quote: flat planes run per square foot, but L-boxes, coves and cornices are linear work priced per foot run — so a design with lots of edge detail costs more than its area suggests. Board spec sets the rest: moisture-resistant for wet rooms, rockwool packing where quiet matters. Repairs ignore the per-sqft logic altogether — a sagging or water-damaged section starts at a per-trip minimum, because diagnosis, making good and matching the existing design all happen regardless of how small the patch looks.",
     },
 
     {

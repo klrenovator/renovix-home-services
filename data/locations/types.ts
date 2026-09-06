@@ -90,9 +90,14 @@ export type LocationEntity = {
   published: boolean;
   publicPath?: string;
   seo: {
-    title: string;
-    metaDescription: string;
-    h1: string;
+    /**
+     * Structural search data only. The location page's actual title,
+     * metaDescription and h1 live once, in the area-content guide that the
+     * route renders from (2026-09-05 audit, I-07: the registry used to
+     * duplicate them, creating a drift risk the audits could not catch).
+     * `audit:locations` reconciles registry ↔ guides by id, district and
+     * publicPath; the copy itself is single-sourced in `data/area-content/`.
+     */
     searchIntents: string[];
     targetModifiers: IntentModifier[];
   };

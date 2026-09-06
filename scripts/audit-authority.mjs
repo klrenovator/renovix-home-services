@@ -24,6 +24,8 @@
  *      in the architecture) and the sitemap coverage guard stays wired.
  *   5. One question per page: no duplicate FAQ question on the same page,
  *      and no identical question+answer pasted across pages.
+ *   5b. Service pages only: the answer-first block and the FAQ section must
+ *      not restate the same answer (near-duplicate detection, 2026-09-05 audit).
  *   6. Unique meta descriptions and H1s per language (no duplication, no
  *      cannibalizing twins).
  *   7. AI-readable layer in sync: the business/pricing feeds and llms.txt
@@ -400,6 +402,80 @@ for (const [key, places] of seenQuestions) {
 }
 
 note("Every page asks each question once; no answer is pasted across pages.");
+
+/* ------------------------------------------------------------------------ */
+/* 5b. Service pages: the answer-first block must not be restated in the     */
+/*     FAQ section (2026-09-05 deep audit, finding I-06).                     */
+/*                                                                            */
+/* Every service page opens with an answer-first "Quick Answers" block and    */
+/* closes with a FAQ list. The cost figure a searcher wants therefore         */
+/* appears twice on the same page — until now nothing checked that the two    */
+/* sections carry different framings. A FAQ answer that re-lists the          */
+/* answer-first block's numbers in near-identical wording reads as            */
+/* repetition to a human and as duplicated content to a crawler. §5 above     */
+/* only catches exact question+answer copies, so this adds a per-page         */
+/* containment check between the two blocks: shared word ratio ≥ 0.55, or    */
+/* ≥ 0.45 together with 4+ shared RM figures (a paraphrased re-list is still */
+/* a re-list). The 2026-09-05 fix rewrote the ten duplicated cost FAQs into  */
+/* complementary "how to read the number" answers — this guard keeps them     */
+/* complementary.                                                             */
+/* ------------------------------------------------------------------------ */
+
+function serviceQaBlocks(source, section) {
+  const block = source.match(new RegExp(`${section}:\\s*\\[([\\s\\S]*?)\\n  \\],`));
+  if (!block) return [];
+  const items = [];
+  const pair = /question:\s*"((?:[^"\\]|\\.)*)"\s*,\s*answer:\s*(?:\n\s*)?"((?:[^"\\]|\\.)*)"/g;
+  let m;
+  while ((m = pair.exec(block[1]))) items.push({ question: m[1], answer: m[2] });
+  return items;
+}
+
+const contentWordSet = (text) =>
+  new Set(
+    text
+      .toLowerCase()
+      .replace(/[^a-z0-9\u4e00-\u9fff\u00c0-\u024f ]/g, " ")
+      .split(/\s+/)
+      .filter((word) => word.length > 3),
+  );
+
+const contentRmFigures = (text) =>
+  new Set([...text.matchAll(/RM\s?([\d][\d,.]*)\s?k?/gi)].map((m) => m[1].replace(/,/g, "")));
+
+for (const file of collectTsFiles(join(ROOT, "data", "service-content")).filter(
+  (f) => !/[/\\](index|types)\.ts$/.test(f),
+)) {
+  const source = readFileSync(file, "utf8");
+  const answerFirst = serviceQaBlocks(source, "answerFirst");
+  const faqs = serviceQaBlocks(source, "faqs");
+  for (const quick of answerFirst) {
+    for (const faq of faqs) {
+      const quickWords = contentWordSet(quick.answer);
+      const faqWords = contentWordSet(faq.answer);
+      const smaller = quickWords.size <= faqWords.size ? quickWords : faqWords;
+      const larger = smaller === quickWords ? faqWords : quickWords;
+      if (smaller.size < 12) continue; // short answers legitimately reuse phrasing
+      let shared = 0;
+      for (const word of smaller) if (larger.has(word)) shared += 1;
+      const containment = shared / smaller.size;
+      const sharedFigures = [...contentRmFigures(quick.answer)].filter((f) =>
+        contentRmFigures(faq.answer).has(f),
+      ).length;
+      const duplicated =
+        containment >= 0.55 || (containment >= 0.45 && sharedFigures >= 4);
+      if (duplicated) {
+        fail(
+          `${short(file)}: the FAQ "${faq.question.slice(0, 60)}" restates the answer-first block ` +
+            `"${quick.question.slice(0, 60)}" (${(containment * 100).toFixed(0)}% word overlap, ` +
+            `${sharedFigures} shared RM figures) — rewrite one of the two with a complementary angle.`,
+        );
+      }
+    }
+  }
+}
+
+note("Answer-first blocks and FAQ sections stay complementary on every service page (all languages).");
 
 /* ------------------------------------------------------------------------ */
 /* 6. Unique metadata per language (duplication / cannibalization audit)     */

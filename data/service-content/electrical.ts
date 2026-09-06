@@ -327,7 +327,7 @@ export const electrical: ServiceDetail = {
   faqs: [
     {
       question: "How much does electrical wiring cost in Malaysia?",
-      answer: "Socket addition from RM80 per point, lighting point from RM60, fan install from RM80, DB box single-phase RM400 and 3-phase RM800, full house wiring from RM5k for 1-storey terrace and RM8k for 2-storey. Concealed wiring 30–50% more. Emergency hourly RM150–300. Final quotation depends on points, distance, wall type and phase.",
+      answer: "Electrical additions are priced per point — sockets, switches, lights and fans each carry their own starting rate — so a single extra socket is a small, transparent number rather than an open-ended labour bill. Whole-house rewiring and DB box work price the other way: per property and per board, where run lengths and routing dominate, and concealed chasing costs 30–50% more than exposed trunking for that reason. Anything touching the supply itself, such as a board upgrade with a TNB application, is scoped and priced separately from the wiring inside the home.",
     },
 
     {

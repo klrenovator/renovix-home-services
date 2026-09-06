@@ -2,7 +2,7 @@
 /**
  * Sitemap / robots audit against the content registries (no running server).
  * Expected public URL count = 3 languages × (12 chrome pages + 10 services +
- * 51 sub-services + 12 articles + 57 problems + 2 regions + 53 areas + 21 projects).
+ * 51 sub-services + 12 articles + 57 problems + 2 regions + 53 areas + 28 projects).
  */
 import fs from "node:fs";
 import path from "node:path";
@@ -59,12 +59,12 @@ if (articles.length !== 12) fail("expected 12 blog articles");
 if (problems.length !== 57) fail("expected 57 problems");
 if (regions.length !== 2) fail("expected 2 area regions");
 if (areas.length !== 53) fail("expected 53 areas");
-if (projects.length !== 21) fail("expected 21 projects");
+if (projects.length !== 28) fail("expected 28 projects");
 if (new Set(subSlugs).size !== subSlugs.length) fail("duplicate sub-service slugs");
 
-if (perLang !== 218) fail(`per-language page count ${perLang} expected 218`);
+if (perLang !== 225) fail(`per-language page count ${perLang} expected 225`);
 else pass(`per-language canonical pages ${perLang}`);
-if (total !== 654) fail(`sitemap expectation ${total} expected 654`);
+if (total !== 675) fail(`sitemap expectation ${total} expected 675`);
 else pass(`expected sitemap <loc> count ${total}`);
 
 const sitemapSrc = read("app/sitemap.ts");
@@ -91,4 +91,4 @@ if (failures.length) {
   console.log(`\nFAIL — ${failures.length} issue(s)`);
   process.exit(1);
 }
-console.log("\nPASS — sitemap/robots source of truth matches the registries (654 URLs).");
+console.log("\nPASS — sitemap/robots source of truth matches the registries (675 URLs).");
