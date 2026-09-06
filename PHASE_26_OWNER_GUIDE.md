@@ -6,7 +6,7 @@ click steps; the owner says "done"; the AI verifies (live checks + this file),
 ticks it, and only then gives the next task. Detailed click instructions for
 the current task live in the chat; this file keeps the position + result.
 
-**Current position:** Task 5 of 9 (project photos) — in progress (collection).
+**Current position:** Task 5 of 9 (project photos) — ◐ 7 projects wired 2026-09-06; painting pair held for owner provenance check; Waterproofing photos still outstanding. Then Task 6.
 
 ## Checklist
 
@@ -24,9 +24,9 @@ the current task live in the chat; this file keeps the position + result.
       `https://renovixhomeservices.my/sitemap.xml` once on the apex property.
 - [x] **4. Analytics** ✅ DONE 2026-09-06 — GA4 `G-…` ID *or* GTM `GTM-…` (never both) into the
       matching Vercel env var; verify data in GA4 Realtime.
-- [ ] **5. Project photos** — 2–3 real consented photos for Painting /
-      Waterproofing / Flooring / Handyman (AI adds them to the registry next
-      session once files are supplied).
+- [~] **5. Project photos** ◐ PART DONE 2026-09-06 — 7 owner photos wired (see Results
+      log). Open: 2 painting shots held pending owner confirmation of provenance;
+      Waterproofing still needs real photos.
 - [ ] **6. Real-device pass** — phone: menu, quote form, WhatsApp, tel:.
 - [ ] **7. T-09 approval** — approve the two optional quote-form fields
       (budget band + preferred time-of-day); AI implements.
@@ -58,3 +58,16 @@ the current task live in the chat; this file keeps the position + result.
   MYR), stream `G-…` Measurement ID set in Vercel Production as `NEXT_PUBLIC_GA4_MEASUREMENT_ID`,
   redeployed, and GA4 Realtime showed live sessions — owner-confirmed on site test. GTM path
   intentionally unused (consent design: never both). Clarity left optional/deferred.
+
+- **2026-09-06 — Task 5 part A verified:** owner uploaded 9 raw photos to `main`
+  (`Add files via upload`). AI processed them: 7 published as new projects with SEO
+  file names (`*-kl-selangor.webp`), full en/ms/zh copy incl. alt text + scopeOfWork,
+  1200×630 OG crops via the sanctioned script, coverage lists + sitemap counts bumped
+  (654→675 URLs, 665→686 pages). The chandelier phone-screenshot was cropped to remove
+  gallery chrome; EXIF/GPS stripped on re-encode. Raw jpgs removed from the tree per
+  audit rule #4 (recoverable from git history). 2 painting shots HELD: they show US-style
+  sockets/switches + a Werner ladder + hardwood floor — inconsistent with a KL/Selangor
+  job; publishing them would contradict the site's real-local-work promise. Awaiting one
+  owner line: confirm they are a genuine site job. Waterproofing: no photos supplied yet.
+  Gates: type-check, lint, audit:project-assets, audit:projects, audit:multilingual,
+  audit:sitemap, full build — all green.

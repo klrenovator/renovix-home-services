@@ -130,6 +130,7 @@ Next: submit the sitemap in GSC on the apex property (T-03) now unblocked |
 
 ## Progress log
 
+- **2026-09-06 (owner task 5 part A):** 7 owner-supplied real photos wired into the portfolio (SEO names, en/ms/zh copy, alt, OG crops, coverage + sitemap 654→675); raw uploads replaced per asset rules. 2 painting shots held for provenance confirmation; Waterproofing photos outstanding.
 - **2026-09-06 (owner task 4):** GA4 analytics LIVE — property + stream created by owner, Measurement ID set in Vercel Production, redeployed, Realtime sessions confirmed. Consent-safe loader in code activates automatically; quote/WhatsApp/phone events now counted. Clarity deferred (optional).
 - **2026-09-06 (owner task 3):** T-03 GSC property verified + sitemap submitted once (owner-confirmed; sitemap pre-validated by audit:sitemap + AI). Now waiting on Google indexing (1–2 weeks normal).
 - **2026-09-06 (owner task 2):** T-02 Resend LIVE — domain verified (DNS checked by AI), env vars set in Vercel Production, clean redeploy, real test quote delivered to inbox. Phase 1 closed.
