@@ -1162,6 +1162,7 @@ export const zh: Dictionary = {
   },
   search: {
     inputLabel: "搜索 Renovix Home Services",
+    footerLink: "搜索 Renovix",
     placeholder: "用您自己的话描述需求 — 例如：水管漏水、瓷砖破裂……",
     helperText:
       "用日常语言搜索服务、问题、地区和指南。可以试试\"水管漏水\"、\"瓷砖破裂\"，或输入地名如孟沙、满家乐。",

@@ -5,6 +5,7 @@ import { Button, WhatsAppButton } from "@/components/ui/Button";
 import { HeroBackdrop } from "@/components/ui/HeroBackdrop";
 import { Breadcrumbs } from "@/components/service/Breadcrumbs";
 import { IconArrowRight, IconAlertTriangle } from "@/components/icons";
+import { InlineSearch } from "@/components/search/InlineSearch";
 import { PageSchema } from "@/components/seo/PageSchema";
 import { itemListNode } from "@/components/seo/schema";
 import { getLanguage, languages } from "@/data/languages";
@@ -119,6 +120,12 @@ export default async function ProblemsPage({ params }: ProblemsPageProps) {
           </div>
         </div>
       </section>
+
+      <div className="border-b border-slate-100 bg-white py-6 sm:py-8">
+        <div className="container-app">
+          <InlineSearch lang={code} variant="banner" />
+        </div>
+      </div>
 
       <section className="section section-surface">
         <div className="container-app">

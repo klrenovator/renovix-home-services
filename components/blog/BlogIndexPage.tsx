@@ -4,6 +4,7 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button, WhatsAppButton } from "@/components/ui/Button";
 import { HeroBackdrop } from "@/components/ui/HeroBackdrop";
 import { IconArrowRight, IconPhone } from "@/components/icons";
+import { InlineSearch } from "@/components/search/InlineSearch";
 import { getPhoneHref, getWhatsAppHref } from "@/data/site";
 import { getDictionary } from "@/i18n";
 import { localizedHref } from "@/i18n/hrefs";
@@ -56,6 +57,12 @@ export function BlogIndexPage({ lang }: { lang: string }) {
           </p>
         </div>
       </section>
+
+      <div className="border-b border-slate-100 bg-white py-6 sm:py-8">
+        <div className="container-app">
+          <InlineSearch lang={code} variant="banner" />
+        </div>
+      </div>
 
       <section className="section bg-white">
         <div className="container-app">

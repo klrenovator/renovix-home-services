@@ -8,6 +8,7 @@ import { PageSchema } from "@/components/seo/PageSchema";
 import { itemListNode } from "@/components/seo/schema";
 import { PageHero } from "@/components/support/PageHero";
 import { Button } from "@/components/ui/Button";
+import { InlineSearch } from "@/components/search/InlineSearch";
 import { getLanguage, languages } from "@/data/languages";
 import { getProjectCategories } from "@/data/i18n";
 import { projectCategories } from "@/data/projects";
@@ -105,6 +106,12 @@ export default async function ProjectsPage({ params }: ProjectsPageProps) {
         currentLabel={t.projects.breadcrumb}
         lang={code}
       />
+
+      <div className="border-b border-slate-100 bg-white py-6 sm:py-8">
+        <div className="container-app">
+          <InlineSearch lang={code} variant="banner" />
+        </div>
+      </div>
 
       <section className="section section-surface">
         <div className="container-app">
