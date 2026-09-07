@@ -1,4 +1,6 @@
 import { ServiceHero } from "@/components/service/ServiceHero";
+import { ServiceWorkShowcase } from "@/components/service/ServiceWorkShowcase";
+import { StartingPricesSection } from "@/components/service/StartingPricesSection";
 import { OverviewSection } from "@/components/service/OverviewSection";
 import { AnswerFirstSection } from "@/components/service/AnswerFirstSection";
 import { SubServicesSection } from "@/components/service/SubServicesSection";
@@ -14,7 +16,6 @@ import { WhySection } from "@/components/service/WhySection";
 import { AreasSection } from "@/components/service/AreasSection";
 import { FaqSection } from "@/components/service/FaqSection";
 import { RelatedServicesSection } from "@/components/service/RelatedServicesSection";
-import { ServiceSubLinksSection } from "@/components/service/ServiceProjectsSection";
 import { CtaSection } from "@/components/service/CtaSection";
 import { GuideLinksSection } from "@/components/blog/GuideLinksSection";
 import { InlineSearch } from "@/components/search/InlineSearch";
@@ -38,10 +39,13 @@ export function ServicePage({ detail, related, relatedProblems, lang }: ServiceP
           <InlineSearch lang={lang} variant="banner" />
         </div>
       </div>
+      {/* Answer-first visual & price proof: real project photos first, then
+          starting prices for this service and related services. */}
+      <ServiceWorkShowcase detail={detail} lang={lang} />
+      <StartingPricesSection detail={detail} related={related} lang={lang} />
       <AnswerFirstSection detail={detail} lang={lang} />
       <OverviewSection detail={detail} lang={lang} />
       <SubServicesSection detail={detail} lang={lang} />
-      <ServiceSubLinksSection serviceSlug={detail.slug} serviceName={detail.name} lang={lang} />
       <ProblemsSection detail={detail} relatedProblemPages={relatedProblems} lang={lang} />
       <PricingSection detail={detail} lang={lang} />
       <CostFactorsSection detail={detail} lang={lang} />

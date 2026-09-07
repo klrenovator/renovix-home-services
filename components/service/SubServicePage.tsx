@@ -107,6 +107,138 @@ export function SubServicePage({ detail, lang }: SubServicePageProps) {
         </div>
       </div>
 
+      {/* Real project photos for this exact sub-service (proof of work first) */}
+      {subProjects.length > 0 && (
+        <section className="section section-surface">
+          <div className="container-app">
+            <SectionHeading
+              eyebrow={t.subServicePage.projectEyebrow}
+              title={format(t.subServicePage.projectTitle, { service: name })}
+              description={format(t.subServicePage.projectDescription, { service: name })}
+            />
+            <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {subProjects.slice(0, 3).map((project) => {
+                const href = contentHref("project", project.slug, lang);
+                const content = getProjectContent(project.slug, lang);
+                return (
+                  <Link
+                    key={project.slug}
+                    href={href ?? "#"}
+                    className="card card-hover group flex h-full flex-col overflow-hidden p-0"
+                    aria-disabled={!href}
+                  >
+                    <span className="relative block aspect-[4/3] overflow-hidden bg-slate-100">
+                      <Image
+                        src={project.image.src}
+                        alt={content.alt}
+                        width={project.image.width}
+                        height={project.image.height}
+                        loading="lazy"
+                        sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                        className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+                      />
+                    </span>
+                    <span className="flex flex-1 flex-col p-5">
+                      <span className="text-base font-semibold tracking-tight text-navy">
+                        {content.title}
+                      </span>
+                      <span className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-brand">
+                        {t.projects.viewProject}
+                        <IconArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                      </span>
+                    </span>
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Starting prices: this sub-service bold answer + sibling sub-services */}
+      <section className="section bg-white">
+        <div className="container-app">
+          <SectionHeading
+            eyebrow={t.servicePage.startingPricesEyebrow}
+            title={format(t.servicePage.startingPricesTitle, { name })}
+            description={t.servicePage.startingPricesDescription}
+          />
+
+          <div className="mt-8 overflow-hidden rounded-2xl border border-slate-200 bg-surface">
+            <div className="flex flex-col gap-4 p-6 sm:flex-row sm:items-center sm:justify-between sm:p-8">
+              <div>
+                <p className="text-sm font-medium text-secondary">
+                  {format(t.servicePage.startingPricesThisService, { name })}
+                </p>
+                {detail.pricing ? (
+                  <p className="mt-2 text-3xl font-extrabold tracking-tight text-navy sm:text-4xl">
+                    {priceLabel}
+                  </p>
+                ) : (
+                  <p className="mt-2 text-2xl font-bold tracking-tight text-navy">
+                    {t.servicePage.startingPricesOnQuotation}
+                  </p>
+                )}
+              </div>
+              <Button
+                href={localizedHref("/quote", lang)}
+                variant="primary"
+                icon={<IconArrowRight className="h-4 w-4" />}
+                analyticsEvent="subservice_cta_click"
+                analyticsService={serviceSlug}
+                analyticsSubService={detail.slug}
+                className="shrink-0"
+              >
+                {t.cta.getFreeQuote}
+              </Button>
+            </div>
+            <p className="border-t border-slate-200 bg-white px-6 py-4 text-xs leading-5 text-secondary sm:px-8">
+              {getPricingDisclaimer(lang)}
+            </p>
+          </div>
+
+          {siblingSubs.length > 0 && (
+            <div className="mt-10">
+              <h3 className="text-base font-semibold text-navy">
+                {format(t.subServicePage.relatedSubPricesTitle, {
+                  service: service?.name ?? name,
+                })}
+              </h3>
+              <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                {siblingSubs.map((sub) => {
+                  const code = lang === "ms" || lang === "zh" ? lang : "en";
+                  const subText = sub[code];
+                  const href = localizedHref(`/services/${serviceSlug}/${sub.slug}`, lang);
+                  const subPrice = formatSubServicePrice(sub, lang);
+                  return (
+                    <Link
+                      key={sub.slug}
+                      href={href}
+                      className="card card-hover group flex h-full flex-col p-5"
+                    >
+                      <h4 className="text-sm font-semibold leading-6 text-navy">
+                        {subText.name ?? sub.slug}
+                      </h4>
+                      {subPrice ? (
+                        <p className="mt-3 text-base font-extrabold text-brand">{subPrice}</p>
+                      ) : (
+                        <p className="mt-3 text-sm font-semibold text-secondary">
+                          {t.servicePage.startingPricesOnQuotation}
+                        </p>
+                      )}
+                      <span className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-brand">
+                        {t.cta.viewService}
+                        <IconArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                      </span>
+                    </Link>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+        </div>
+      </section>
+
       {/* When it is suitable */}
       <section className="section section-surface">
         <div className="container-app">
@@ -160,9 +292,9 @@ export function SubServicePage({ detail, lang }: SubServicePageProps) {
         </section>
       )}
 
-      {/* Pricing */}
+      {/* Pricing detail */}
       {detail.pricing ? (
-        <section className="section section-surface">
+        <section id="pricing" className="section section-surface scroll-mt-24">
           <div className="container-app">
             <SectionHeading eyebrow={t.servicePage.pricingEyebrow} title={format(t.servicePage.pricingTitle, { name })} description={t.servicePage.pricingDescription} />
             <div className="mt-8 rounded-2xl border border-slate-200 bg-white p-6 sm:p-8">
@@ -287,84 +419,20 @@ export function SubServicePage({ detail, lang }: SubServicePageProps) {
         </section>
       )}
 
-      {/* Projects — Phase 21: only projects genuinely mapped to this sub-service. */}
-      {subProjects.length > 0 && (
-        <section className="section bg-white">
+      {/* Back to parent service (sibling sub-service prices are shown in the
+          top starting-prices section, so they are not repeated here) */}
+      {serviceHref ? (
+        <section className="section section-surface">
           <div className="container-app">
-            <SectionHeading
-              eyebrow={t.subServicePage.projectEyebrow}
-              title={format(t.subServicePage.projectTitle, { service: name })}
-              description={format(t.subServicePage.projectDescription, { service: name })}
-            />
-            <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {subProjects.map((project) => {
-                const href = contentHref("project", project.slug, lang);
-                const content = getProjectContent(project.slug, lang);
-                return (
-                  <Link
-                    key={project.slug}
-                    href={href ?? "#"}
-                    className="card card-hover group flex h-full flex-col overflow-hidden p-0"
-                    aria-disabled={!href}
-                  >
-                    <span className="relative block aspect-[4/3] overflow-hidden bg-slate-100">
-                      <Image
-                        src={project.image.src}
-                        alt={content.alt}
-                        width={project.image.width}
-                        height={project.image.height}
-                        loading="lazy"
-                        sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                        className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
-                      />
-                    </span>
-                    <span className="flex flex-1 flex-col p-5">
-                      <span className="text-base font-semibold tracking-tight text-navy">
-                        {content.title}
-                      </span>
-                      <span className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-brand">
-                        {t.projects.viewProject}
-                        <IconArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-                      </span>
-                    </span>
-                  </Link>
-                );
-              })}
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* Sibling sub-services + back to service */}
-      <section className="section section-surface">
-        <div className="container-app">
-          <SectionHeading eyebrow={t.servicePage.subServicesEyebrow} title={format(t.subServicePage.relatedSubTitle, { service: service?.name ?? name })} description="" />
-          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {siblingSubs.map((sub) => {
-              const code = lang === "ms" || lang === "zh" ? lang : "en";
-              const subText = sub[code];
-              const href = localizedHref(`/services/${serviceSlug}/${sub.slug}`, lang);
-              return (
-                <Link key={sub.slug} href={href} className="card card-hover group flex h-full flex-col p-6">
-                  <h3 className="text-base font-semibold tracking-tight text-navy">{subText.name ?? sub.slug}</h3>
-                  <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-brand">
-                    {t.cta.viewService}
-                    <IconArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-                  </span>
-                </Link>
-              );
-            })}
-          </div>
-          {serviceHref ? (
-            <p className="mt-8">
+            <p>
               <Link href={serviceHref} className="inline-flex items-center gap-1.5 text-sm font-semibold text-brand">
                 <IconArrowRight className="h-4 w-4" />
                 {format(t.subServicePage.backToService, { service: service?.name ?? name })}
               </Link>
             </p>
-          ) : null}
-        </div>
-      </section>
+          </div>
+        </section>
+      ) : null}
 
       <GuideLinksSection
         articles={getArticlesForSubService(detail.slug)}
