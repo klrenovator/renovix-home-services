@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Brand } from "@/components/Brand";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
+import { SocialLinks } from "@/components/layout/SocialLinks";
 import { getLanguageCode, type LanguageCode } from "@/data/languages";
 import { getServiceCategories, getRegionName, getRegionSummary } from "@/data/i18n";
 import { areaRegions } from "@/data/area-content";
