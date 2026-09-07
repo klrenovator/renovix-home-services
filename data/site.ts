@@ -33,6 +33,8 @@ export type SiteConfig = {
   email: string;
   address: SiteAddress;
   businessHours: SiteBusinessHours;
+  facebookUrl: string;
+  instagramUrl: string;
 };
 
 /**
@@ -68,6 +70,8 @@ export const siteConfig: SiteConfig = {
     opens: "09:00",
     closes: "18:00",
   },
+  facebookUrl: "https://www.facebook.com/share/1dr51n9qii/",
+  instagramUrl: "https://www.instagram.com/renovixhomeservices/",
 };
 
 /**

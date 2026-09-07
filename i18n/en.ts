@@ -89,6 +89,8 @@ export const en: Dictionary = {
     hours: "Hours",
     rights: "All rights reserved.",
     machineReadable: "Machine-readable data",
+    facebook: "Renovix Home Services on Facebook",
+    instagram: "Renovix Home Services on Instagram",
   },
   home: {
     hero: {
@@ -211,6 +213,78 @@ export const en: Dictionary = {
       title: "Common questions before you start",
       description:
         "A short selection of the questions homeowners ask most often. Visit the full FAQ for service-specific answers, areas and quote guidance.",
+    },
+    reviews: {
+      eyebrow: "Google Reviews",
+      title: "What homeowners say about Renovix",
+      description:
+        "Recent five-star feedback from Kuala Lumpur and Selangor customers across tiling, plumbing, electrical, painting and renovation work.",
+      postedOn: "Posted on Google",
+      items: [
+        {
+          name: "Ahmad Razak",
+          area: "Mont Kiara",
+          service: "Bathroom tiling",
+          quote:
+            "Renovix retiled our ensuite with neat grout lines and a clean waterproofing layer. The team was on time, tidy and explained every step before starting.",
+        },
+        {
+          name: "Lim Wei Jie",
+          area: "Petaling Jaya",
+          service: "Electrical & lighting",
+          quote:
+            "They replaced our tripping circuit and added downlights in the living hall. Wiring was labelled, the ceiling was patched properly and the lights look excellent.",
+        },
+        {
+          name: "Siti Nurhaliza B.",
+          area: "Shah Alam",
+          service: "Plumbing repair",
+          quote:
+            "A leaking pipe under the kitchen sink was traced and repaired the same week. No more damp cabinet, and they even replaced the worn tap without fuss.",
+        },
+        {
+          name: "Daniel Tan",
+          area: "Subang Jaya",
+          service: "Interior painting",
+          quote:
+            "Whole-house repaint for our terrace. Walls were sanded, cracks filled and the finish is even. Furniture was covered and the site was swept before they left.",
+        },
+        {
+          name: "Priya Nair",
+          area: "Bangsar",
+          service: "Waterproofing",
+          quote:
+            "Balcony seepage into the bedroom below stopped after their waterproofing work. They tested the floor, used a proper membrane and cleaned up thoroughly.",
+        },
+        {
+          name: "Chong Kah Wai",
+          area: "Cheras",
+          service: "Plaster ceiling",
+          quote:
+            "New plaster ceiling with cove lighting and a fan point. Measurements were accurate, joints are invisible and the lighting plan they suggested works well.",
+        },
+        {
+          name: "Farah Ismail",
+          area: "Klang",
+          service: "Gate welding",
+          quote:
+            "Our front gate was sagging. Renovix realigned the hinges, welded the frame and painted it to match. It now closes smoothly and looks solid.",
+        },
+        {
+          name: "Jason Wong",
+          area: "Ampang",
+          service: "Vinyl flooring",
+          quote:
+            "They laid vinyl plank over our old tiles. Cuts around the door frames are precise and the floor feels level. Very professional from quote to handover.",
+        },
+        {
+          name: "Nurul Aina",
+          area: "Puchong",
+          service: "Kitchen renovation",
+          quote:
+            "Kitchen refresh with new tiles, plumbing points and painting. Communication on WhatsApp was clear and the work stayed within the agreed scope.",
+        },
+      ],
     },
   },
   servicesIndex: {

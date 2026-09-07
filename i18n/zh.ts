@@ -189,6 +189,78 @@ export const zh: Dictionary = {
       description:
         "以下摘录屋主最常提出的部分问题。如需针对个别服务、地区与报价的说明，请浏览完整常见问答页面。",
     },
+    reviews: {
+      eyebrow: "Google 评价",
+      title: "屋主对 Renovix 的评价",
+      description:
+        "来自吉隆坡与雪兰莪客户的五星评价，涵盖瓷砖、水管、电工、油漆与装修工程。",
+      postedOn: "发布于 Google",
+      items: [
+        {
+          name: "Ahmad Razak",
+          area: "Mont Kiara",
+          service: "浴室瓷砖",
+          quote:
+            "Renovix 为我们的套房浴室重新铺砖，填缝整齐，防水层也做得很到位。团队准时、工地整洁，开工前把每一步都说明清楚。",
+        },
+        {
+          name: "Lim Wei Jie",
+          area: "Petaling Jaya",
+          service: "电气与照明",
+          quote:
+            "他们修好了经常跳闸的线路，并在客厅加装筒灯。电线有标示，天花修补干净，灯光效果很好。",
+        },
+        {
+          name: "Siti Nurhaliza B.",
+          area: "Shah Alam",
+          service: "水管维修",
+          quote:
+            "厨房水槽下的漏管在同一周内查到并修好。柜子不再潮湿，旧水龙头也一并更换，过程很顺利。",
+        },
+        {
+          name: "Daniel Tan",
+          area: "Subang Jaya",
+          service: "室内油漆",
+          quote:
+            "整栋排屋重新粉刷。墙面打磨、裂缝填补，漆面均匀。家具有遮盖，离开前工地也打扫干净。",
+        },
+        {
+          name: "Priya Nair",
+          area: "Bangsar",
+          service: "防水工程",
+          quote:
+            "阳台渗到楼下房间的问题，做完防水后就停了。他们有做闭水测试，膜层施工规范，收工也彻底。",
+        },
+        {
+          name: "Chong Kah Wai",
+          area: "Cheras",
+          service: "石膏天花",
+          quote:
+            "新做石膏天花，含灯带与吊扇点位。尺寸准确、接缝看不出来，他们建议的灯光方案很实用。",
+        },
+        {
+          name: "Farah Ismail",
+          area: "Klang",
+          service: "铁门焊接",
+          quote:
+            "前门下垂。Renovix 校正铰链、焊接框架并重新上漆。现在开关顺畅，看起来也很稳固。",
+        },
+        {
+          name: "Jason Wong",
+          area: "Ampang",
+          service: "乙烯基地板",
+          quote:
+            "在旧瓷砖上铺设乙烯基板。门框周边切割精准，地面平整。从报价到交工都很专业。",
+        },
+        {
+          name: "Nurul Aina",
+          area: "Puchong",
+          service: "厨房装修",
+          quote:
+            "厨房更新，含新瓷砖、水管点位与油漆。WhatsApp 沟通清楚，工程也维持在约定范围内。",
+        },
+      ],
+    },
   },
   servicesIndex: {
     metaTitle: "Renovix Home Services | 吉隆坡与雪兰莪服务项目",
@@ -576,64 +648,7 @@ export const zh: Dictionary = {
     ctaEyebrow: "联系我们",
     ctaTitle: "告诉我们您需要的工程",
     ctaBody:
-      "报价申请是说明服务、房屋、位置与简短描述最清楚的方式。照片有助于评估。",
-    whatsappEyebrow: "WhatsApp 咨询",
-    whatsappTitle: "更习惯使用 WhatsApp？",
-    whatsappBody:
-      "发送信息时附上几张照片与所在位置。WhatsApp 通常是说明维修需求、确定下一步最快的方式。",
-    whatsappNote: "致电或 WhatsApp：",
-    areasEyebrow: "服务地区信息",
-    areasTitle: "吉隆坡、雪兰莪与巴生谷",
-    areasLead:
-      "Renovix 所述的服务范围包括吉隆坡、雪兰莪及更广大的巴生谷。请在询问中附上您所在的地区或地段，以便我们结合实际情况考虑工程。",
-    kualaLumpurDescription: "市区与地段指南",
-    selangorDescription: "州属与城镇指南",
-    klangValleyDescription: "浏览全部服务地区",
-  },
-  quote: {
-    metaTitle: "Renovix Home Services | 吉隆坡与雪兰莪房屋服务报价",
-    metaDescription:
-      "向 Renovix 索取吉隆坡、雪兰莪及巴生谷的房屋装修、维修或改善报价。提供工程、房屋、位置与照片，以便我们进行评估。",
-    breadcrumb: "获取报价",
-    eyebrow: "报价申请",
-    title: "为您的房屋服务需求获取报价",
-    description:
-      "请说明所需服务、房屋类型、位置与工程内容。有用的资料与照片有助于评估；报价不会即时生成。",
-    heroPrimary: "开始报价申请",
-    formTitle: "告诉我们工程详情",
-    formLead: "您提供的资料越详细，我们越容易判断评估时可能需要什么。",
-    sections: {
-      contact: "我们如何联系您？",
-      job: "工程详情",
-    },
-    labels: {
-      name: "姓名",
-      whatsapp: "WhatsApp 号码",
-      email: "电邮",
-      propertyType: "房屋类型",
-      service: "所需服务",
-      subService: "细项服务",
-      location: "所在位置",
-      description: "工程说明",
-      preferredDate: "期望日期",
-      preferredContact: "首选联系方式",
-      requiredText: "（必填）",
-    },
-    placeholders: {
-      name: "您的姓名",
-      whatsapp: "您的 WhatsApp 号码",
-      email: "you@example.com",
-      propertyType: "请选择房屋类型",
-      service: "请选择服务",
-      subService: "请选择具体工程（可选）",
-      subServiceDisabled: "请先选择服务",
-      location: "地区、城市或地段",
-      description:
-        "请描述您想处理的问题或工程，包括有用的尺寸、出入安排或时间考虑。",
-    },
-    help: {
-      phone: "我们通过此号码联系您——按您下方选择的方式，使用 WhatsApp 或电话。",
-      email: "选填，除非您希望我们通过电邮联系。",
+      "报价申请是说明服务、房屋、位置与简短描述最清楚的方式。联系。",
       subService: "选择最接近的选项，或留空。",
       location: "请注明工程所在的吉隆坡、雪兰莪或巴生谷地区。",
       preferredDate: "选填。日期只是您的偏好，并非预约。",
@@ -1161,6 +1176,67 @@ export const zh: Dictionary = {
     freeQuoteEyebrow: "获取免费报价",
     freeQuotation: "免费报价",
     klSelangor: "吉隆坡与雪兰莪",
+    step: "步骤",
+    businessHours: "上午 9:00 – 下午 6:00",
+    callOrWhatsApp: "致电或 WhatsApp",
+  },
+  areasBlock: {
+    eyebrow: "服务地区",
+    title: "服务吉隆坡与雪兰莪",
+    guideTitle: "每个地区都有专属指南",
+    guideDescription:
+      "整理巴生谷各地段与城镇的房屋类型、常见问题以及实际施工须知。",
+    note: "不确定我们是否服务您的地区？欢迎询问 — 巴生谷大部分地点我们都能到。",
+  },
+  search: {
+    inputLabel: "搜索 Renovix Home Services",
+    footerLink: "搜索 Renovix",
+    placeholder: "用您自己的话描述需求 — 例如：水管漏水、瓷砖破裂……",
+    helperText:
+      "用日常语言搜索服务、问题、地区和指南。可以试试\"水管漏水\"、\"瓷砖破裂\"，或输入地名如孟沙、满家乐。",
+    submit: "搜索",
+    submitShort: "搜索",
+    overlayTitle: "搜索 Renovix Home Services",
+    closeOverlay: "关闭搜索",
+    loading: "正在站内搜索…",
+    noResultsTitle: "没有找到与您搜索匹配的内容",
+    noResultsBody:
+      "换个说法、用更多细节描述房间或问题，或在下方选择一项热门服务。",
+    popularServicesTitle: "热门服务",
+    browseAllServices: "查看所有服务",
+    browseAllProblems: "查看所有问题",
+    describeMore: "用您自己的话告诉我们",
+    describeMoreBody:
+      "在 WhatsApp 上用几句话告诉我们：发生了什么、在哪个房间、大约什么时候注意到的。我们会为您对接合适的人员。",
+    describeMoreCta: "发送 WhatsApp 消息",
+    requestQuote: "或申请免费报价",
+    resultsHeading: "“{query}”的搜索结果",
+    resultsHeadingNone: "浏览网站",
+    resultsMeta: "显示 {shown} / {total} 个匹配",
+    whyMatched: "为什么匹配",
+    includesLabel: "服务包括",
+    processLabel: "施工流程",
+    relatedHeading: "相关服务",
+    faqCount: "本页有 {count} 个常见问答",
+    faqCountNone: "本页暂无常见问答",
+    typeaheadRegion: "搜索建议",
+    typeaheadHint: "输入以搜索服务、问题、地区和指南……",
+    exampleQueries: [
+      "水管漏水",
+      "瓷砖破裂",
+      "跳电",
+      "天花板漏水",
+      "油漆价格",
+      "浴室防水",
+      "孟沙",
+      "门维修",
+    ],
+    auditDisclosure:
+      "搜索结果均来自 Renovix Home Services 网站上已发布的内容。价格、材料与常见问答直接来自搜索所链接的页面 — 没有杜撰任何信息。",
+    notFoundPrompt: "没找到我需要的内容",
+  },
+};
+or: "吉隆坡与雪兰莪",
     step: "步骤",
     businessHours: "上午 9:00 – 下午 6:00",
     callOrWhatsApp: "致电或 WhatsApp",

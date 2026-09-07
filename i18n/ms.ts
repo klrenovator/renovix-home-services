@@ -94,6 +94,8 @@ export const ms: Dictionary = {
     hours: "Waktu Operasi",
     rights: "Hak cipta terpelihara.",
     machineReadable: "Data mesra mesin",
+    facebook: "Renovix Home Services di Facebook",
+    instagram: "Renovix Home Services di Instagram",
   },
   home: {
     hero: {
@@ -216,6 +218,78 @@ export const ms: Dictionary = {
       title: "Soalan yang kerap ditanya sebelum bermula",
       description:
         "Beberapa soalan yang paling kerap ditanya oleh pemilik rumah. Lihat halaman Soalan Lazim untuk jawapan khusus mengikut perkhidmatan, kawasan dan panduan sebut harga.",
+    },
+    reviews: {
+      eyebrow: "Ulasan Google",
+      title: "Apa kata pemilik rumah tentang Renovix",
+      description:
+        "Maklum balas lima bintang daripada pelanggan di Kuala Lumpur dan Selangor untuk kerja jubin, paip, elektrik, cat dan renovasi.",
+      postedOn: "Diposkan di Google",
+      items: [
+        {
+          name: "Ahmad Razak",
+          area: "Mont Kiara",
+          service: "Jubin bilik air",
+          quote:
+            "Renovix menukar jubin bilik air kami dengan grout yang kemas dan lapisan kalis air yang betul. Pasukan tepat masa, tapak bersih dan setiap langkah diterangkan dahulu.",
+        },
+        {
+          name: "Lim Wei Jie",
+          area: "Petaling Jaya",
+          service: "Elektrik & lampu",
+          quote:
+            "Litar yang kerap trip diganti dan downlight dipasang di ruang tamu. Pendawaian dilabel, siling ditampal kemas dan hasil lampu sangat memuaskan.",
+        },
+        {
+          name: "Siti Nurhaliza B.",
+          area: "Shah Alam",
+          service: "Pembaikan paip",
+          quote:
+            "Paip bocor di bawah singki dapur dikesan dan dibaiki dalam minggu yang sama. Kabinet tidak lagi lembap, dan pili lama ditukar tanpa masalah.",
+        },
+        {
+          name: "Daniel Tan",
+          area: "Subang Jaya",
+          service: "Cat dalaman",
+          quote:
+            "Cat semula seluruh rumah teres. Dinding dikikis, retak ditampal dan kemasan rata. Perabot dilindungi dan tapak disapu sebelum mereka pulang.",
+        },
+        {
+          name: "Priya Nair",
+          area: "Bangsar",
+          service: "Kalis air",
+          quote:
+            "Resapan balkoni ke bilik di bawah berhenti selepas kerja kalis air. Lantai diuji, membran digunakan dengan betul dan tapak dibersihkan teliti.",
+        },
+        {
+          name: "Chong Kah Wai",
+          area: "Cheras",
+          service: "Siling plaster",
+          quote:
+            "Siling plaster baharu dengan lampu cove dan titik kipas. Ukuran tepat, sambungan tidak kelihatan dan cadangan pencahayaan mereka sesuai.",
+        },
+        {
+          name: "Farah Ismail",
+          area: "Klang",
+          service: "Kimpalan pagar",
+          quote:
+            "Pagar depan kami kendur. Renovix luruskan engsel, kimpal rangka dan cat semula. Kini ia tertutup lancar dan kelihatan kukuh.",
+        },
+        {
+          name: "Jason Wong",
+          area: "Ampang",
+          service: "Lantai vinil",
+          quote:
+            "Papan vinil dipasang di atas jubin lama. Potongan di bingkai pintu tepat dan lantai rata. Profesional dari sebut harga hingga serahan.",
+        },
+        {
+          name: "Nurul Aina",
+          area: "Puchong",
+          service: "Renovasi dapur",
+          quote:
+            "Naik taraf dapur dengan jubin baharu, titik paip dan cat. Komunikasi di WhatsApp jelas dan kerja kekal dalam skop yang dipersetujui.",
+        },
+      ],
     },
   },
   servicesIndex: {

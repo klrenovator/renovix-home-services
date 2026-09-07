@@ -110,6 +110,8 @@ export type Dictionary = {
     hours: string;
     rights: string;
     machineReadable: string;
+    facebook: string;
+    instagram: string;
   };
   home: {
     hero: {
@@ -150,6 +152,13 @@ export type Dictionary = {
       note: string;
     };
     faq: { eyebrow: string; title: string; description: string };
+    reviews: {
+      eyebrow: string;
+      title: string;
+      description: string;
+      postedOn: string;
+      items: { name: string; area: string; service: string; quote: string }[];
+    };
   };
   servicesIndex: {
     metaTitle: string;
