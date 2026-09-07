@@ -8,6 +8,7 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button, WhatsAppButton } from "@/components/ui/Button";
 import { HeroBackdrop } from "@/components/ui/HeroBackdrop";
 import { IconArrowRight, IconMapPin, IconCompass, IconBuilding, IconCheck } from "@/components/icons";
+import { InlineSearch } from "@/components/search/InlineSearch";
 import { AreaFaqSection } from "@/components/area/AreaFaqSection";
 import { AreaCtaSection } from "@/components/area/AreaCtaSection";
 import { getLanguage, languages } from "@/data/languages";
@@ -130,6 +131,12 @@ export default async function AreasPage({ params }: AreasPageProps) {
           </ul>
         </div>
       </section>
+
+      <div className="border-b border-slate-100 bg-white py-6 sm:py-8">
+        <div className="container-app">
+          <InlineSearch lang={code} variant="banner" />
+        </div>
+      </div>
 
       {/* Region & Area Guides Directory */}
       <section className="section bg-white">

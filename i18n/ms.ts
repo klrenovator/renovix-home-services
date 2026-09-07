@@ -1239,6 +1239,7 @@ export const ms: Dictionary = {
   },
   search: {
     inputLabel: "Cari di Renovix Home Services",
+    footerLink: "Cari Renovix",
     placeholder: "Terangkan keperluan anda — contohnya paip bocor, jubin pecah…",
     helperText:
       "Cari perkhidmatan, masalah, kawasan dan panduan dalam bahasa biasa. Cuba \"paip bocor\", \"jubin pecah\", atau nama kawasan seperti Mont Kiara.",

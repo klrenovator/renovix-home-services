@@ -814,6 +814,8 @@ export type Dictionary = {
   search: {
     /** Accessible name for the search input. */
     inputLabel: string;
+    /** Short label for the footer "Search Renovix" link. */
+    footerLink: string;
     /** Placeholder inside the search input (no autocomplete shortcut). */
     placeholder: string;
     /** Aria-described helper text (the example queries). */

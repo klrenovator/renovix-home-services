@@ -24,12 +24,16 @@ import { getArticles } from "@/data/blog";
 import { getPublishedProjects } from "@/data/project-content";
 import { getPricingById } from "@/data/pricing";
 import { buildSearchIndex } from "@/data/search/build-index";
-import { getSynonyms } from "@/data/search/synonyms";
+import { getSynonyms, expandQuerySynonyms } from "@/data/search/synonyms";
+import { SEARCH_QUERY_FIXTURES } from "@/data/search/fixtures";
+import { matchAll } from "@/lib/search/match";
+import { rankResults } from "@/lib/search/rank";
+import { tokenize } from "@/lib/search/tokenize";
 import type { LanguageCode } from "@/data/languages";
 import type { SearchDocument } from "@/data/search/types";
 
 export type SearchAuditIssue = {
-  kind: "missing-entity" | "missing-pricing" | "stale-related" | "stale-synonym" | "freehand-text";
+  kind: "missing-entity" | "missing-pricing" | "stale-related" | "stale-synonym" | "freehand-text" | "fixture-mismatch";
   docId: string;
   detail: string;
 };
@@ -197,6 +201,57 @@ export function auditSynonyms(lang: LanguageCode): SearchAuditIssue[] {
     }
   }
   return issues;
+}
+
+/**
+ * Replay every query fixture (Master Plan §12) through the real pipeline
+ * — tokenize → synonym expansion → match → rank — and require the
+ * expected entity to appear among the first 3 result cards. Fixtures
+ * without an expected href must return zero results.
+ */
+export function auditQueryFixtures(lang: LanguageCode): SearchAuditIssue[] {
+  const issues: SearchAuditIssue[] = [];
+  const fixtures = SEARCH_QUERY_FIXTURES.filter((f) => f.lang === lang);
+  const index = buildSearchIndex(lang);
+
+  for (const fixture of fixtures) {
+    const tokenized = tokenize(fixture.query, lang);
+    const synonyms = expandQuerySynonyms(tokenized);
+    const matches = matchAll(index.documents, tokenized, { synonyms });
+    const ranked = rankResults(matches);
+    const topHrefs = ranked.results.slice(0, 3).map((r) => r.document.href);
+    const docId = `fixture:${lang}:${fixture.query}`;
+
+    if (!fixture.expectedTopHref) {
+      if (topHrefs.length > 0) {
+        issues.push({
+          kind: "fixture-mismatch",
+          docId,
+          detail: `expected zero results, but the matcher returned ${topHrefs.join(", ")}`,
+        });
+      }
+      continue;
+    }
+
+    if (!topHrefs.includes(fixture.expectedTopHref)) {
+      issues.push({
+        kind: "fixture-mismatch",
+        docId,
+        detail: `expected "${fixture.expectedTopHref}" among the top 3 results, got ${topHrefs.join(", ") || "no results"}`,
+      });
+    }
+  }
+
+  return issues;
+}
+
+/**
+ * Run the complete search audit for one language: index integrity,
+ * synonym resolution and query fixtures. Returns the combined issue
+ * list; throws on the first hard error from `auditSearchIndex`.
+ */
+export function runSearchAudits(lang: LanguageCode): SearchAuditIssue[] {
+  return [...auditSearchIndex(lang), ...auditSynonyms(lang), ...auditQueryFixtures(lang)];
 }
 
 function entityExists(

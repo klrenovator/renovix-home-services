@@ -24,6 +24,7 @@ export function Footer({ lang }: FooterProps) {
 
   const navigation = [
     { label: t.nav.home, href: "/" },
+    { label: t.search.footerLink, href: "/search" },
     { label: t.nav.services, href: "/services" },
     { label: t.nav.problems, href: "/problems" },
     { label: t.nav.areas, href: "/areas" },

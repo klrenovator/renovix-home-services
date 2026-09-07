@@ -7,6 +7,7 @@ import { PageSchema } from "@/components/seo/PageSchema";
 import { faqNode } from "@/components/seo/schema";
 import { PageHero } from "@/components/support/PageHero";
 import { Button } from "@/components/ui/Button";
+import { InlineSearch } from "@/components/search/InlineSearch";
 import { getLanguage, languages } from "@/data/languages";
 import { getSiteFaqs } from "@/data/i18n";
 import { getDictionary } from "@/i18n";
@@ -74,6 +75,12 @@ export default async function FaqPage({ params }: FaqPageProps) {
         currentLabel={t.faq.breadcrumb}
         lang={code}
       />
+
+      <div className="border-b border-slate-100 bg-white py-6 sm:py-8">
+        <div className="container-app">
+          <InlineSearch lang={code} variant="banner" />
+        </div>
+      </div>
 
       <section className="section section-surface">
         <div className="container-app grid gap-10 lg:grid-cols-[0.78fr_1.22fr] lg:gap-16">

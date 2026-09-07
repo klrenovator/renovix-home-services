@@ -21,6 +21,7 @@
  * A document is included when its total score ≥ 1.0.
  */
 
+import type { SynonymEntry } from "@/data/search/synonyms";
 import type {
   SearchDocument,
   SearchResult,
@@ -38,8 +39,14 @@ const W_ALIAS = 0.7;
 const INCLUSION_THRESHOLD = 1.0;
 
 export type MatchOptions = {
-  /** Optional set of expanded tokens (e.g. from the synonym table). */
-  synonyms?: Set<string>;
+  /**
+   * Optional synonym entries that matched the raw query (per language).
+   * A document is credited when its kind + slug equal the entry's — a
+   * direct registry mapping, so a ZH synonym like 跳电 boosts the
+   * power-tripping document even though the English slug never appears
+   * in the localized copy.
+   */
+  synonyms?: SynonymEntry[];
 };
 
 function isHit(haystack: string | undefined, token: string): boolean {
@@ -85,7 +92,7 @@ export function scoreDocument(
   for (const t of query.latin) tokens.push(t);
   for (const t of query.cjk) tokens.push(t);
 
-  if (tokens.length === 0 && (!options.synonyms || options.synonyms.size === 0)) {
+  if (tokens.length === 0 && (!options.synonyms || options.synonyms.length === 0)) {
     return null;
   }
 
@@ -110,20 +117,17 @@ export function scoreDocument(
       score += addHit("alias", token, W_ALIAS, signals, seen);
   }
 
-  // Synonym-only hits: only the first synonym that hits a field is added —
-  // the natural tokens above already covered the rest.
+  // Synonym hits: the entry maps a customer phrasing straight to the
+  // entity it describes (kind + slug are audit-verified to resolve), so
+  // this works in every language — including ZH, where the English slug
+  // never appears inside the localized copy. Only the first matching
+  // synonym is credited to keep the score sane; the "why matched" line
+  // shows the customer's own phrasing.
   if (options.synonyms) {
-    for (const syn of options.synonyms) {
-      if (seen.has(`synonym:${syn}`)) continue;
-      if (
-        isHit(titleLower, syn) ||
-        isHit(summaryLower, syn) ||
-        inAny(searchTermsLower, syn) ||
-        (categoryLower && isHit(categoryLower, syn)) ||
-        inAny(aliasesLower, syn)
-      ) {
-        score += addHit("synonym", syn, W_SYNONYM, signals, seen);
-        // Only credit the first matching synonym to keep the score sane.
+    for (const entry of options.synonyms) {
+      if (seen.has(`synonym:${entry.slug}`)) continue;
+      if (document.kind === entry.kind && document.slug === entry.slug) {
+        score += addHit("synonym", entry.phrase, W_SYNONYM, signals, seen);
         break;
       }
     }

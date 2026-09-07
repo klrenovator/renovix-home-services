@@ -1224,6 +1224,7 @@ export const en: Dictionary = {
   },
   search: {
     inputLabel: "Search Renovix Home Services",
+    footerLink: "Search Renovix",
     placeholder: "Describe your requirement — e.g. leaking pipe, broken tile…",
     helperText:
       "Search services, problems, areas and guides in plain language. Try \"leaking pipe\", \"broken tile\", or a town like Mont Kiara.",

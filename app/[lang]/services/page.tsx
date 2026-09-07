@@ -8,6 +8,7 @@ import { HeroBackdrop } from "@/components/ui/HeroBackdrop";
 import { Breadcrumbs } from "@/components/service/Breadcrumbs";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { IconArrowRight } from "@/components/icons";
+import { InlineSearch } from "@/components/search/InlineSearch";
 import { getLanguage, languages } from "@/data/languages";
 import { getServiceCategories } from "@/data/i18n";
 import { getWhatsAppHref } from "@/data/site";
@@ -116,6 +117,12 @@ export default async function ServicesPage({ params }: ServicesPageProps) {
           </div>
         </div>
       </section>
+
+      <div className="border-b border-slate-100 bg-white py-6 sm:py-8">
+        <div className="container-app">
+          <InlineSearch lang={code} variant="banner" />
+        </div>
+      </div>
 
       <section className="section section-surface">
         <div className="container-app">

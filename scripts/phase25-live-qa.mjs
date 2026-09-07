@@ -354,8 +354,12 @@ async function checkSitemapLive() {
     return [];
   }
   const locs = [...text.matchAll(/<loc>(.*?)<\/loc>/g)].map((m) => m[1]);
-  if (locs.length !== 654) fail(`sitemap count ${locs.length} expected 654`);
-  else pass("sitemap 654 <loc> URLs");
+  // Synced 2026-09-07 with the generated sitemap (Phase 26 + Smart Service
+  // Finder search routes): 678 static URLs, 226 per language.
+  const EXPECTED_TOTAL = 678;
+  const EXPECTED_PER_LANG = 226;
+  if (locs.length !== EXPECTED_TOTAL) fail(`sitemap count ${locs.length} expected ${EXPECTED_TOTAL}`);
+  else pass(`sitemap ${EXPECTED_TOTAL} <loc> URLs`);
   if (new Set(locs).size !== locs.length) fail("duplicate sitemap URLs");
   else pass("sitemap URLs unique");
   if (locs.some((u) => !u.startsWith(CANONICAL_HOST))) fail("sitemap URL not on canonical host");
@@ -367,7 +371,7 @@ async function checkSitemapLive() {
   const en = locs.filter((u) => u.includes("/en/")).length;
   const ms = locs.filter((u) => u.includes("/ms/")).length;
   const zh = locs.filter((u) => u.includes("/zh/")).length;
-  if (en === 218 && ms === 218 && zh === 218) pass("218 URLs per language");
+  if (en === EXPECTED_PER_LANG && ms === EXPECTED_PER_LANG && zh === EXPECTED_PER_LANG) pass(`${EXPECTED_PER_LANG} URLs per language`);
   else fail(`language split en=${en} ms=${ms} zh=${zh}`);
 
   const robots = await fetchText("/robots.txt");

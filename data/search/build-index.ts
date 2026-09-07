@@ -461,6 +461,22 @@ function blockText(block: ArticleBlock): string {
 }
 
 /** Build a `SearchDocument` for a published project. */
+/**
+ * Project categories (`ceiling`, `welding`, …) are not service slugs —
+ * the registry's `servicePath` is the single source that maps a category
+ * to its service (`/services/ceiling-partition`, …). Related-service
+ * links on the result card must use real service slugs or they 404.
+ */
+function projectCategoryServiceSlugs(categoryIds: string[]): string[] {
+  const out: string[] = [];
+  for (const id of categoryIds) {
+    const category = projectCategories.find((c) => c.id === id);
+    const serviceSlug = category?.servicePath.replace("/services/", "");
+    if (serviceSlug && !out.includes(serviceSlug)) out.push(serviceSlug);
+  }
+  return out;
+}
+
 function buildProjectDocument(
   projectSlug: string,
   lang: LanguageCode,
@@ -468,6 +484,10 @@ function buildProjectDocument(
   const resolved = getResolvedProject(projectSlug, lang);
   if (!resolved) return undefined;
   const category = projectCategories.find((c) => c.id === resolved.category)?.label;
+  const serviceSlugs = projectCategoryServiceSlugs([
+    resolved.category,
+    ...(resolved.relatedCategories ?? []),
+  ]);
 
   return {
     id: docId("project", projectSlug),
@@ -486,8 +506,8 @@ function buildProjectDocument(
       resolved.content.alt,
     ),
     related: {
-      service: resolved.category,
-      services: resolved.relatedCategories,
+      service: serviceSlugs[0],
+      services: serviceSlugs.slice(1),
       subServices: resolved.subServices,
     },
     faqCount: 0,

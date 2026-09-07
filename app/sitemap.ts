@@ -11,6 +11,7 @@ import {
 import { absoluteUrl } from "@/i18n/seo";
 import { CONTENT_LAST_MODIFIED } from "@/lib/sitemap";
 import { assertCoverageInSync } from "@/i18n/verify";
+import { runSearchAudits } from "@/data/search/audit-data";
 import { getAllSubServices, subServiceLanguages } from "@/data/sub-services";
 import { articleLanguages, getArticles } from "@/data/blog";
 
@@ -25,6 +26,17 @@ function isSubServicePublished(serviceSlug: string, slug: string, lang: Language
 // this fails the build the moment the coverage lists drift from the content
 // registries.
 assertCoverageInSync();
+
+// Same build-time guard for the Smart Service Finder (Master Plan §7): index
+// integrity, synonym resolution and the §12 query fixtures. A stale registry
+// reference or a ranking regression fails `next build` here.
+for (const lang of languages) {
+  const searchIssues = runSearchAudits(lang.code);
+  if (searchIssues.length > 0) {
+    const lines = searchIssues.map((issue) => `  - [${issue.kind}] ${issue.docId}: ${issue.detail}`);
+    throw new Error(`[audit:search] ${lang.code} failed at build time:\n${lines.join("\n")}`);
+  }
+}
 
 /**
  * Serves `https://renovixhomeservices.my/sitemap.xml` — the site's single,
