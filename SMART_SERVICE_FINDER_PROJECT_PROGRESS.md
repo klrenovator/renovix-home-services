@@ -419,3 +419,8 @@ owner-requested scope.
   wired into `next build` via `app/sitemap.ts`; Phase 25 live-QA sitemap
   constants synced (678 / 226). All 17 audits, 199 live QA checks,
   type-check, lint and build pass. Commit `5b135fa`.
+- **2026-09-07 PR #45 opened, reviewed and merged** (merge commit
+  `be05ccd`, 02:06 UTC) from `arena/01a07987-renovix-home-services` into
+  `main`. Vercel production checks passed before merge; tracker and master
+  plan frozen (commit `a413cb9`). The Smart Service Finder project is
+  complete — no pending tasks remain.
