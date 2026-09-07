@@ -4,6 +4,7 @@ import { ProblemSection } from "@/components/home/ProblemSection";
 import { WhySection } from "@/components/home/WhySection";
 import { ProcessSection } from "@/components/home/ProcessSection";
 import { AreasSection } from "@/components/home/AreasSection";
+import { ReviewsSection } from "@/components/home/ReviewsSection";
 import { CTASection } from "@/components/home/CTASection";
 import { FAQPreview } from "@/components/home/FAQPreview";
 
@@ -20,6 +21,7 @@ export function HomePage({ lang }: HomePageProps) {
       <WhySection lang={lang} />
       <ProcessSection lang={lang} />
       <AreasSection lang={lang} />
+      <ReviewsSection lang={lang} />
       <CTASection lang={lang} />
       <FAQPreview lang={lang} />
     </>

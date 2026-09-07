@@ -61,6 +61,11 @@ export function Footer({ lang }: FooterProps) {
             <Brand href={localizedHref("/", code)} inverse label={t.a11y.brandHome} />
             <p className="max-w-sm text-sm leading-6">{t.footer.blurbPrimary}</p>
             <p className="max-w-sm text-sm leading-6">{t.footer.blurbSecondary}</p>
+            <SocialLinks
+              className="pt-1"
+              facebookLabel={t.footer.facebook}
+              instagramLabel={t.footer.instagram}
+            />
             <div className="pt-2">
               <p className="text-xs font-semibold uppercase tracking-wider text-white/50">
                 {t.footer.language}

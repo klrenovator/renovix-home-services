@@ -214,6 +214,33 @@
   animation: menu-in 0.2s ease-out;
 }
 
+@keyframes reviews-scroll {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.reviews-marquee {
+  overflow: hidden;
+  mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
+}
+
+.reviews-track {
+  display: flex;
+  width: max-content;
+  gap: 1rem;
+  padding-inline: 1rem;
+  animation: reviews-scroll 55s linear infinite;
+}
+
+.reviews-marquee:hover .reviews-track {
+  animation-play-state: paused;
+}
+
 /* Safari still renders the default disclosure triangle on <summary> unless the
    webkit pseudo-element is hidden explicitly; `list-none` alone is not enough. */
 summary::-webkit-details-marker {
