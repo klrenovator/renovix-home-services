@@ -25,6 +25,7 @@
     "audit:schema": "node scripts/audit-schema.mjs",
     "audit:multilingual": "node scripts/audit-multilingual.mjs",
     "audit:routes": "node scripts/audit-routes.mjs",
+    "audit:search": "node scripts/audit-search.mjs",
     "audit:live": "node scripts/phase25-live-qa.mjs"
   },
   "dependencies": {

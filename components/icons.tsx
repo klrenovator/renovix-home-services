@@ -363,3 +363,13 @@ export const serviceIcons = {
 } as const;
 
 export type ServiceIcon = keyof typeof serviceIcons;
+
+/** Search / magnifier icon — used by the Smart Service Finder. */
+export function IconSearch(props: IconProps) {
+  return (
+    <IconBase {...props}>
+      <circle cx="11" cy="11" r="7" />
+      <path d="M21 21l-4.3-4.3" />
+    </IconBase>
+  );
+}

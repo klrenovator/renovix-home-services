@@ -12,6 +12,8 @@ import {
 } from "@/data/pricing";
 import { languages } from "@/data/languages";
 import { absoluteUrl } from "@/i18n/seo";
+import { getSynonyms, type SynonymEntry } from "@/data/search/synonyms";
+import { services as allServices } from "@/data/services";
 
 /**
  * Centralized AI-readable business knowledge for Renovix Home Services.
@@ -157,7 +159,29 @@ export function getAiKnowledge() {
       about: absoluteUrl("en", "/about/"),
       contact: absoluteUrl("en", "/contact/"),
       quote: absoluteUrl("en", "/quote/"),
+      search: absoluteUrl("en", "/search/"),
       sitemap: `${siteConfig.url}/sitemap.xml`,
+    },
+    searchIntents: {
+      description:
+        "The Smart Service Finder accepts free-text customer queries in English, Bahasa Melayu and Simplified Chinese. Results are drawn from the published service, problem, area, blog and project pages — nothing is invented. The query-string variant /[lang]/search/?q=… is `noindex, follow` to avoid the doorway trap.",
+      template: `${siteConfig.url}/en/search/?q={search_term_string}`,
+      supportedLanguages: languages.map((language) => language.code),
+      // A compact, machine-readable list of (phrase, kind, slug) tuples the
+      // assistant can use to recognize common phrasings in any of the
+      // three languages. The full set lives in
+      // `data/search/synonyms.ts`; we publish the English subset here so the
+      // AI feed stays small. The MS / ZH tables are reachable from the same
+      // module.
+      englishPhrasings: getSynonyms("en").map((entry: SynonymEntry) => ({
+        phrase: entry.phrase,
+        kind: entry.kind,
+        slug: entry.slug,
+      })),
+      serviceToSlug: Object.fromEntries(
+        allServices.map((service) => [service.slug, service.name]),
+      ),
+      disclaimer: PRICING_DISCLAIMER_EN,
     },
   };
 }

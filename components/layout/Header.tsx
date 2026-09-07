@@ -4,6 +4,8 @@ import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { IconPhone, IconWhatsApp } from "@/components/icons";
 import { HeaderLanguageMenu } from "@/components/layout/HeaderLanguageMenu";
 import { MobileMenu } from "@/components/layout/MobileMenu";
+import { HeaderSearchBar } from "@/components/search/HeaderSearchBar";
+import { HeaderSearchTrigger } from "@/components/search/HeaderSearchTrigger";
 import { getLanguageCode, type LanguageCode } from "@/data/languages";
 import { getPhoneHref, getWhatsAppHref } from "@/data/site";
 import { getDictionary } from "@/i18n";
@@ -67,6 +69,7 @@ export function Header({ lang }: HeaderProps) {
             alone are the WCAG 2.5.3 name); "Get a Quote" CTAs remain in page
             bodies and on the quote page. */}
         <div className="hidden items-center gap-3 xl:flex">
+          <HeaderSearchBar lang={code} />
           <LanguageSwitcher lang={code} label={t.a11y.languageNavigation} />
           <div className="flex items-center gap-2">
             <a
@@ -117,6 +120,19 @@ export function Header({ lang }: HeaderProps) {
               still carries the full-width WhatsApp CTA. `aria-label` gives
               assistive tech the full wording (WCAG 2.5.3). */}
           <div className="hidden items-center gap-2 min-[360px]:flex">
+            <HeaderSearchTrigger
+              lang={code}
+              labels={{
+                inputLabel: t.search.inputLabel,
+                placeholder: t.search.placeholder,
+                submit: t.search.submit,
+                overlayTitle: t.search.overlayTitle,
+                closeOverlay: t.search.closeOverlay,
+                typeaheadHint: t.search.typeaheadHint,
+              }}
+              exampleQueries={t.search.exampleQueries}
+              action={localizedHref("/search/", code)}
+            />
             <a
               href={getWhatsAppHref()}
               target="_blank"

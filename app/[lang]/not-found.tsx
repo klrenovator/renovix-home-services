@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { lang as rootLang } from "next/root-params";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { InlineSearch } from "@/components/search/InlineSearch";
 import { getLanguageCode } from "@/data/languages";
 import { getDictionary } from "@/i18n";
 import { localizedHref } from "@/i18n/hrefs";
@@ -24,6 +25,9 @@ export default async function LocaleNotFound() {
           align="center"
           headingLevel={1}
         />
+        <div className="mx-auto mt-8 max-w-xl">
+          <InlineSearch lang={code} variant="panel" />
+        </div>
         <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
           <Link href={localizedHref("/", code)} className="btn btn-primary">
             {t.cta.backToHome}
