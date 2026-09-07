@@ -67,6 +67,10 @@ function pathsForLanguage(lang: LanguageCode): SitemapEntry[] {
     { path: "/projects/", priority: 0.6, changeFrequency: "monthly" },
     { path: "/blog/", priority: 0.8, changeFrequency: "monthly" },
     { path: "/faq/", priority: 0.6, changeFrequency: "monthly" },
+    // Smart Service Finder — discoverable base URL. The query-string
+    // variant (?q=…) is `noindex, follow` and is intentionally not
+    // emitted in the sitemap (avoiding the doorway trap).
+    { path: "/search/", priority: 0.5, changeFrequency: "monthly" },
     { path: "/privacy/", priority: 0.2, changeFrequency: "yearly" },
     { path: "/terms/", priority: 0.2, changeFrequency: "yearly" },
   ];
@@ -160,6 +164,7 @@ const ALWAYS_PUBLISHED = new Set([
   "/projects/",
   "/blog/",
   "/faq/",
+  "/search/",
   "/privacy/",
   "/terms/",
 ]);

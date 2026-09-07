@@ -132,6 +132,19 @@ export function websiteNode(lang: string) {
     description: getDictionary(lang).meta.defaultDescription,
     inLanguage: getHtmlLang(lang),
     publisher: { "@id": ORGANIZATION_ID },
+    // Smart Service Finder — declares the search action that crawlers and
+    // answer engines should use. The action is `ReadAction` (the site can
+    // "read" — i.e. surface — the term), not a hosted search engine. The
+    // template uses Google's documented
+    // {search_term_string} placeholder.
+    potentialAction: {
+      "@type": "ReadAction",
+      target: {
+        "@type": "EntryPoint",
+        urlTemplate: `${absoluteUrl(lang, "/search/")}?q={search_term_string}`,
+      },
+      "query-input": "required name=search_term_string",
+    },
   };
 }
 

@@ -802,4 +802,73 @@ export type Dictionary = {
     guideDescription: string;
     note: string;
   };
+  /**
+   * Smart Service Finder — multilingual search bar / results page.
+   *
+   * Every user-visible string on the Smart Service Finder (search bar
+   * placeholder, hero heading, results heading, empty-state copy,
+   * result-card labels, typeahead instructions, audit disclosure) lives
+   * here so the three published languages can render a complete,
+   * single-language experience.
+   */
+  search: {
+    /** Accessible name for the search input. */
+    inputLabel: string;
+    /** Placeholder inside the search input (no autocomplete shortcut). */
+    placeholder: string;
+    /** Aria-described helper text (the example queries). */
+    helperText: string;
+    /** Submit button label (long form, used on the homepage hero). */
+    submit: string;
+    /** Submit button label (short form, used in the header bar). */
+    submitShort: string;
+    /** Accessible name for the search overlay (mobile). */
+    overlayTitle: string;
+    /** The close-button label for the search overlay. */
+    closeOverlay: string;
+    /** Loading-state message (server results page). */
+    loading: string;
+    /** "No results" heading. */
+    noResultsTitle: string;
+    /** "No results" body. */
+    noResultsBody: string;
+    /** "Popular services" heading on the empty-state panel. */
+    popularServicesTitle: string;
+    /** "Browse all services" / "Browse all problems" labels. */
+    browseAllServices: string;
+    browseAllProblems: string;
+    /** "Describe in more detail" — pre-filled WhatsApp quick path. */
+    describeMore: string;
+    describeMoreBody: string;
+    describeMoreCta: string;
+    /** "Get a free quote" on the empty-state. */
+    requestQuote: string;
+    /** Results heading — "{N} results for {query}". */
+    resultsHeading: string;
+    resultsHeadingNone: string;
+    /** "Showing top {N} of {M} matches" sub-line. */
+    resultsMeta: string;
+    /** "Why this matches" label on the result card. */
+    whyMatched: string;
+    /** "What's included" label on the result card. */
+    includesLabel: string;
+    /** "How the work is done" label on the result card. */
+    processLabel: string;
+    /** "Related services" label on the result card. */
+    relatedHeading: string;
+    /** "{N} FAQs on this page". */
+    faqCount: string;
+    /** FAQ count when zero. */
+    faqCountNone: string;
+    /** Typeahead region accessible name. */
+    typeaheadRegion: string;
+    /** "Type to search services, problems, areas…" */
+    typeaheadHint: string;
+    /** Example queries used to seed the placeholder / helper text. */
+    exampleQueries: string[];
+    /** Disclosure line: "Results come from information already on the site." */
+    auditDisclosure: string;
+    /** Locale-aware copy that lets the user say "I didn't find what I need." */
+    notFoundPrompt: string;
+  };
 };

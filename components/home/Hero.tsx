@@ -2,6 +2,7 @@ import Image from "next/image";
 import { Button, WhatsAppButton } from "@/components/ui/Button";
 import { HeroBackdrop } from "@/components/ui/HeroBackdrop";
 import { IconMapPin, IconArrowRight } from "@/components/icons";
+import { SmartSearchBar } from "@/components/search/SmartSearchBar";
 import { getLanguageCode } from "@/data/languages";
 import { getWhatsAppHref } from "@/data/site";
 import { getDictionary } from "@/i18n";
@@ -53,6 +54,10 @@ export function Hero({ lang }: HeroProps) {
               </li>
             ))}
           </ul>
+
+          <div className="mt-8 max-w-xl">
+            <SmartSearchBar lang={code} variant="hero" />
+          </div>
         </div>
 
         <div className="relative aspect-[4/3] overflow-hidden rounded-3xl bg-navy shadow-card sm:aspect-[5/4]">
