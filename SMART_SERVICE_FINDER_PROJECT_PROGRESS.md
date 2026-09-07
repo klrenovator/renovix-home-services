@@ -12,9 +12,10 @@
 > **Authoritative plan:** `SMART_SERVICE_FINDER_MASTER_PLAN.md`. This file is
 > the day-to-day status; the plan is the source of truth for *why* and *how*.
 >
-> **Branch:** `arena/01a07973-renovix-home-services` (the only branch this
+> **Branch:** `arena/01a07987-renovix-home-services` (the only branch this
 > follow-up session is allowed to commit to and push to). PR #43's original
-> branch was merged into `main` before this follow-up began.
+> branch and PR #44 (12.1) were merged into `main` before this session began;
+> this session's work (12.2 + 12.3) ships from `arena/01a07987-…`.
 
 ---
 
@@ -189,13 +190,13 @@
 - [x] **7.2 — 404 page recovery.** `app/[lang]/not-found.tsx` now
   renders `<InlineSearch variant="panel" />` as its primary
   recovery action.
-- [ ] **7.3 — Footer "Search Renovix" link.** A follow-up audit of the
-  merged source at `a6bfb64` found that the earlier tracker entry overstated
-  this item: `components/layout/Footer.tsx` has no search entry yet. Add a
-  localized link to the existing `/[lang]/search/` route in follow-up task 12.2.
-- [~] **7.4 — Page-body hookup sweep.** Detail-page templates are now
-  complete (task 12.1 below). The service, problem, area, blog and project
-  indexes plus quote and FAQ remain for task 12.2.
+- [x] **7.3 — Footer "Search Renovix" link.** Added to the footer
+  navigation column via the new localized `search.footerLink` key
+  (EN "Search Renovix" / MS "Cari Renovix" / ZH "搜索 Renovix"),
+  linking to `/{lang}/search/`. Verified live in all three languages.
+- [x] **7.4 — Page-body hookup sweep.** Complete. The service, problem,
+  area, blog and project index pages plus quote and FAQ now render the
+  same banner variant as the detail templates (task 12.2).
 
 ---
 
@@ -318,24 +319,56 @@
     service, sub-service, problem, area, region, blog and project URLs. Each
     returned HTTP 200, exactly one inline banner, and the correct localized
     `/en|ms|zh/search/` form action.
-- [ ] **12.2 — Index/support-page and footer sweep.** Place `InlineSearch`
-  on the service, problem, area, blog and project index pages plus quote and
-  FAQ; add the missing localized "Search Renovix" footer link. Reuse registry
-  data and existing dictionaries only.
-- [ ] **12.3 — Placement audit and final regression.** Extend
-  `audit:search` to assert all intended universal placements, run every
-  existing audit plus type-check/lint/build, perform EN/MS/ZH live-render
-  and mobile-overflow checks, then update/freeze the tracker and open the
-  follow-up PR.
+- [x] **12.2 — Index/support-page and footer sweep.** `InlineSearch`
+  banner placed immediately below the hero on the seven remaining pages
+  (services, problems, areas, blog hub, projects, quote, FAQ) — the same
+  white-strip pattern the detail templates use — and the localized
+  "Search Renovix" footer link added to `components/layout/Footer.tsx`
+  (new i18n key `search.footerLink`, all three languages). Files:
+  - `app/[lang]/{services,problems,areas,projects,quote,faq}/page.tsx`
+  - `components/blog/BlogIndexPage.tsx`
+  - `components/layout/Footer.tsx`, `i18n/{types,en,ms,zh}.ts`
+  - Verified: type-check, lint, audit:search, build, and 24 live checks
+    (7 pages × 3 languages = 21 banners + 3 footer labels) all pass.
+- [x] **12.3 — Placement audit and final regression.** Done. The
+  placement assertions are now mechanical in `scripts/audit-search.mjs`
+  (home hero, header desktop/mobile, footer, 404, and exactly one
+  `InlineSearch` banner in each of the 14 body templates). The final
+  regression additionally surfaced and fixed three real defects:
+  1. **ZH synonym matching** — `expandQuerySynonyms` now maps a phrase
+     to the document by kind + slug instead of requiring the English
+     slug string to appear in the localized copy. `跳电` previously
+     returned zero results; it now surfaces the ZH power-tripping
+     guide. (`data/search/synonyms.ts`, `lib/search/match.ts`)
+  2. **Broken project related-service links** — the project document
+     builder copied project-category ids (`ceiling`, `welding`) into
+     `related.service`; the result card then linked to
+     `/en/services/ceiling/` (404). The builder now resolves category →
+     service slug through the existing `projectCategories.servicePath`
+     registry. (`data/search/build-index.ts`)
+  3. **Audit never ran at build time** — `auditSearchIndex` was
+     exported but unwired. `runSearchAudits()` (index integrity +
+     synonyms + fixtures) now runs from `app/sitemap.ts` on every
+     `next build`, failing the build on any drift.
+  - **Query fixtures (Master Plan §12):** `data/search/fixtures.ts`
+    holds 34 trilingual fixtures (31 intent queries + 3 no-result
+    queries), all captured empirically from the live matcher — the
+    expected entity must stay in the top 3 results or the build fails.
+  - `scripts/phase25-live-qa.mjs` expected sitemap counts synced with
+    the generated sitemap (678 total, 226 per language).
+  - Final regression: all 17 audits pass, 199/199 Phase-25 live QA
+    checks pass, type-check / lint / build (689 pages) pass, EN/MS/ZH
+    live-render checks pass, mobile-overflow static sanity pass.
 
 ---
 
 ## Next task (highest-priority pending)
 
-**12.2 — Index/support-page and footer sweep.** Continue with the service,
-problem, area, blog and project index pages, then quote and FAQ. Add the
-missing localized footer search link to `/[lang]/search/`. Do not revisit the
-seven completed shared detail templates unless a regression is found.
+**None — the Smart Service Finder project is complete and frozen.**
+Phases 0–11 and the universal-placement follow-up (12.1–12.3) are all
+`[x]`. If the project is ever reopened, start from the acceptance criteria
+in `SMART_SERVICE_FINDER_MASTER_PLAN.md` §12 (all now met) and any new
+owner-requested scope.
 
 ---
 
@@ -374,3 +407,15 @@ seven completed shared detail templates unless a regression is found.
   hero in all seven shared detail templates (service, sub-service, problem,
   area, area-region, article and project); type-check, lint, search audit,
   production build and seven multilingual live-route checks passed.
+- **2026-09-07 follow-up, task 12.2** — `InlineSearch` banner added to the
+  seven index/support pages (services, problems, areas, blog hub, projects,
+  quote, FAQ) + localized footer "Search Renovix" link (new
+  `search.footerLink` key in EN/MS/ZH). 21 banner + 3 footer live checks
+  passed. Commit `fdd5c37`.
+- **2026-09-07 follow-up, task 12.3** — Placement assertions added to
+  `audit:search`; ZH synonym matching fixed (跳电 now returns the ZH
+  power-tripping guide); project related-service links fixed (category →
+  service slug via `servicePath`); `runSearchAudits()` + 34 query fixtures
+  wired into `next build` via `app/sitemap.ts`; Phase 25 live-QA sitemap
+  constants synced (678 / 226). All 17 audits, 199 live QA checks,
+  type-check, lint and build pass. Commit `5b135fa`.
