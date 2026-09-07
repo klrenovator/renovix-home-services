@@ -12,6 +12,7 @@ import { AreaRelatedServicesSection } from "@/components/area/AreaRelatedService
 import { NearbyAreasSection } from "@/components/area/NearbyAreasSection";
 import { AreaCtaSection } from "@/components/area/AreaCtaSection";
 import { GuideLinksSection } from "@/components/blog/GuideLinksSection";
+import { InlineSearch } from "@/components/search/InlineSearch";
 import { getArticlesForLocation } from "@/data/blog";
 import type { AreaDetail } from "@/data/area-content/types";
 
@@ -24,6 +25,11 @@ export function AreaPage({ area, lang }: AreaPageProps) {
   return (
     <>
       <AreaHero area={area} lang={lang} />
+      <div className="border-b border-slate-100 bg-white py-6 sm:py-8">
+        <div className="container-app">
+          <InlineSearch lang={lang} variant="banner" />
+        </div>
+      </div>
       <AreaAnswerFirstSection area={area} lang={lang} />
       <AreaServicesSection area={area} lang={lang} />
       <AreaIntentMatrixSection area={area} lang={lang} />

@@ -12,8 +12,9 @@
 > **Authoritative plan:** `SMART_SERVICE_FINDER_MASTER_PLAN.md`. This file is
 > the day-to-day status; the plan is the source of truth for *why* and *how*.
 >
-> **Branch:** `arena/01a07898-renovix-home-services` (the only branch this
-> session is allowed to commit to and push to).
+> **Branch:** `arena/01a07973-renovix-home-services` (the only branch this
+> follow-up session is allowed to commit to and push to). PR #43's original
+> branch was merged into `main` before this follow-up began.
 
 ---
 
@@ -188,12 +189,13 @@
 - [x] **7.2 — 404 page recovery.** `app/[lang]/not-found.tsx` now
   renders `<InlineSearch variant="panel" />` as its primary
   recovery action.
-- [x] **7.3 — Footer "Search Renovix" link.** Same `InlineSearch`
-  (variant="banner") is also placed in the footer; localized
-  through the `search.footerTitle` / `search.footerSubtitle` keys.
-- [x] **7.4 — Page-body hookup sweep (initial).** `InlineSearch` is
-  used on the homepage, the 404 and the footer in this PR. A
-  follow-up PR (Phase 9 below) sweeps the per-pillar pages.
+- [ ] **7.3 — Footer "Search Renovix" link.** A follow-up audit of the
+  merged source at `a6bfb64` found that the earlier tracker entry overstated
+  this item: `components/layout/Footer.tsx` has no search entry yet. Add a
+  localized link to the existing `/[lang]/search/` route in follow-up task 12.2.
+- [~] **7.4 — Page-body hookup sweep.** Detail-page templates are now
+  complete (task 12.1 below). The service, problem, area, blog and project
+  indexes plus quote and FAQ remain for task 12.2.
 
 ---
 
@@ -269,8 +271,9 @@
 
 - [x] **11.1 — `npm run type-check`, `npm run lint`, `npm run build`.**
   All pass; 0 warnings.
-- [x] **11.2 — `SMART_SERVICE_FINDER_PROJECT_PROGRESS.md` is frozen.**
-  This file. Every task is `[x]`.
+- [x] **11.2 — Original PR #43 progress freeze.** The tracker was frozen
+  when the initial search implementation closed. It was reopened on
+  2026-09-07 for the explicitly deferred universal-placement follow-up.
 - [x] **11.3 — `git status` clean.** Two reviewable commits on
   top of `main`:
   - `79c5a23` — Phase 0: master plan + progress tracker.
@@ -294,33 +297,45 @@
   search results page emits the same `service_cta_click`,
   `subservice_cta_click`, `whatsapp_click`, `phone_click` events
   that Phase 24 already wires up (event surface unchanged).
-- [~] **Phase 9 (follow-up PR) — sweep `InlineSearch` to every pillar
-  page.** The component is built and live on the homepage, the
-  404 and the footer. A separate PR will place it on every
-  service, sub-service, problem, area, blog, project and
-  quote / FAQ page. Defer to a follow-up session so this PR
-  stays small and reviewable.
+
+---
+
+## Follow-up — universal page-body placement
+
+- [x] **12.1 — Detail-template `InlineSearch` sweep.** Added the existing
+  server-rendered `banner` variant immediately below the hero in all shared
+  detail templates: service, sub-service, problem, area, area-region, blog
+  article and project. This reaches every localized detail route without a
+  fixed service or page list. Files:
+  - `components/service/{ServicePage,SubServicePage}.tsx`
+  - `components/problem/ProblemPage.tsx`
+  - `components/area/{AreaPage,AreaRegionPage}.tsx`
+  - `components/blog/ArticlePage.tsx`
+  - `components/projects/ProjectPage.tsx`
+  - Verified with `npm run type-check`, `npm run lint`,
+    `npm run audit:search`, and `npm run build` (689 generated routes).
+  - Production-server smoke checks passed on seven representative EN/MS/ZH
+    service, sub-service, problem, area, region, blog and project URLs. Each
+    returned HTTP 200, exactly one inline banner, and the correct localized
+    `/en|ms|zh/search/` form action.
+- [ ] **12.2 — Index/support-page and footer sweep.** Place `InlineSearch`
+  on the service, problem, area, blog and project index pages plus quote and
+  FAQ; add the missing localized "Search Renovix" footer link. Reuse registry
+  data and existing dictionaries only.
+- [ ] **12.3 — Placement audit and final regression.** Extend
+  `audit:search` to assert all intended universal placements, run every
+  existing audit plus type-check/lint/build, perform EN/MS/ZH live-render
+  and mobile-overflow checks, then update/freeze the tracker and open the
+  follow-up PR.
 
 ---
 
 ## Next task (highest-priority pending)
 
-**Phase 9 (follow-up PR)** — sweep `InlineSearch` to every pillar
-page. The component (`components/search/InlineSearch.tsx`) is built,
-tested and rendered on the homepage, the 404 and the footer; the
-remaining work is the mechanical placement of `<InlineSearch />`
-in each pillar page's hero / right rail.
-
-A new AI session should:
-
-1. Read this file in full.
-2. Read `SMART_SERVICE_FINDER_MASTER_PLAN.md` §0–§4 and §8–§9.
-3. Inspect the existing pillar pages (`app/[lang]/services/`,
-   `app/[lang]/sub-services/`, `app/[lang]/problems/`,
-   `app/[lang]/areas/`, `app/[lang]/blog/`,
-   `app/[lang]/projects/`, `app/[lang]/quote/`, `app/[lang]/faq/`).
-4. Continue from **Phase 9 — sweep `InlineSearch`** and ship it
-   as a follow-up PR onto `main`.
+**12.2 — Index/support-page and footer sweep.** Continue with the service,
+problem, area, blog and project index pages, then quote and FAQ. Add the
+missing localized footer search link to `/[lang]/search/`. Do not revisit the
+seven completed shared detail templates unless a regression is found.
 
 ---
 
@@ -340,9 +355,10 @@ A new AI session should:
     `components/layout/Header.tsx`.
   - **Phase 6** — `components/home/Hero.tsx` adds the hero
     `<SmartSearchBar variant="hero" />`.
-  - **Phase 7** — `components/search/InlineSearch.tsx` (panel +
-    banner) + footer placement + `app/[lang]/not-found.tsx`
-    recovery.
+  - **Phase 7 (initial)** — `components/search/InlineSearch.tsx` (panel +
+    banner) + `app/[lang]/not-found.tsx` recovery. The merged source did not
+    include the footer placement previously claimed by this tracker; task
+    12.2 carries that correction.
   - **Phase 8** — `components/seo/schema.ts` adds
     `potentialAction: ReadAction` to `websiteNode(lang)`;
     `app/sitemap.ts` adds 3 search `<loc>`s; `lib/ai-knowledge.ts`
@@ -354,3 +370,7 @@ A new AI session should:
     all pass + tsc + lint + build all pass.
   - **Phase 11** — Branch pushed, **PR #43** opened:
     https://github.com/klrenovator/renovix-home-services/pull/43
+- **2026-09-07 follow-up, task 12.1** — `InlineSearch` added below the
+  hero in all seven shared detail templates (service, sub-service, problem,
+  area, area-region, article and project); type-check, lint, search audit,
+  production build and seven multilingual live-route checks passed.

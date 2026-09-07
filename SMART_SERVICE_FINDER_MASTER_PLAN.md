@@ -390,17 +390,17 @@ visible value.
 | Phase | Name | What it adds | Status |
 |---|---|---|---|
 | **0** | Audit + planning | Master Plan + Progress files (this file) | [x] |
-| **1** | Typed search index & registry walker | `data/search/`, `lib/search/build-index.ts`, build-time index for all 3 languages, no UI yet | [ ] |
-| **2** | Matcher, ranker and results composer (server) | `lib/search/match.ts`, `lib/search/rank.ts`, results JSON for the 3 languages | [ ] |
-| **3** | `/[lang]/search/` results page (server component) | Renders the results page with rich result cards, empty state, popular-services fallback | [ ] |
-| **4** | Multilingual tokenization & synonym table (typed, data-derived) | CJK tokenizer, per-language synonym table from existing content, mixed-language query handling | [ ] |
-| **5** | Header search bar (desktop + mobile) + search overlay | Small client component, accessible form, typeahead from JSON mirror, no horizontal overflow | [ ] |
-| **6** | Homepage hero search bar (always visible) | The brief's "highly prominent" search bar | [ ] |
-| **7** | Search bar on service / sub-service / problem / area / project / blog / 404 / footer | Universal placement, no JS duplication | [ ] |
-| **8** | SEO/AEO integration — `SearchAction` schema, `noindex` on `?q=…`, llms.txt + ai/business.json search_intents, breadcrumb + WebPage schema on the search page | [ ] |
-| **9** | `npm run audit:search` — full search-audit script, wired into `package.json` and `lib/verify.ts` | [ ] |
-| **10** | Testing — multilingual queries, short / long / typo / multi-service / no-result queries, mobile, accessibility, performance budget, all 17 existing audits still pass | [ ] |
-| **11** | Final QA, progress freeze, git commit, and PR | [ ] |
+| **1** | Typed search index & registry walker | `data/search/`, `lib/search/build-index.ts`, build-time index for all 3 languages, no UI yet | [x] |
+| **2** | Matcher, ranker and results composer (server) | `lib/search/match.ts`, `lib/search/rank.ts`, results JSON for the 3 languages | [x] |
+| **3** | `/[lang]/search/` results page (server component) | Renders the results page with rich result cards, empty state, popular-services fallback | [x] |
+| **4** | Multilingual tokenization & synonym table (typed, data-derived) | CJK tokenizer, per-language synonym table from existing content, mixed-language query handling | [x] |
+| **5** | Header search bar (desktop + mobile) + search overlay | Small client component, accessible form, typeahead from JSON mirror, no horizontal overflow | [x] |
+| **6** | Homepage hero search bar (always visible) | The brief's "highly prominent" search bar | [x] |
+| **7** | Search bar on service / sub-service / problem / area / project / blog / 404 / footer | Universal placement, no JS duplication. Detail templates and 404 are complete; index/support pages and footer entry remain. | [~] |
+| **8** | SEO/AEO integration — `SearchAction` schema, `noindex` on `?q=…`, llms.txt + ai/business.json search_intents, breadcrumb + WebPage schema on the search page | [x] |
+| **9** | `npm run audit:search` — full search-audit script, wired into `package.json` and `lib/verify.ts` | [x] |
+| **10** | Testing — multilingual queries, short / long / typo / multi-service / no-result queries, mobile, accessibility, performance budget, all 17 existing audits still pass | [x] |
+| **11** | Final QA, progress freeze, git commit, and PR | [x] |
 
 The phases can be partially combined into a single PR when they are
 small and individually testable. The progress file records every

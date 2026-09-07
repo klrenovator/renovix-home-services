@@ -10,6 +10,7 @@ import { FaqSection } from "@/components/problem/FaqSection";
 import { RelatedProblemsSection } from "@/components/problem/RelatedProblemsSection";
 import { CtaSection } from "@/components/problem/CtaSection";
 import { GuideLinksSection } from "@/components/blog/GuideLinksSection";
+import { InlineSearch } from "@/components/search/InlineSearch";
 import { getArticlesForProblem } from "@/data/blog";
 import { IconAlertTriangle, IconCheck, IconShieldCheck } from "@/components/icons";
 import { getRelatedProblemDetails } from "@/data/problem-content";
@@ -28,6 +29,11 @@ export function ProblemPage({ problem, lang }: ProblemPageProps) {
   return (
     <>
       <ProblemHero problem={problem} lang={lang} />
+      <div className="border-b border-slate-100 bg-white py-6 sm:py-8">
+        <div className="container-app">
+          <InlineSearch lang={lang} variant="banner" />
+        </div>
+      </div>
       <WhatItMeansSection problem={problem} lang={lang} />
       <ProblemListSection
         eyebrow={t.problemPage.causesEyebrow}
