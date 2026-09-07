@@ -121,7 +121,6 @@ export function Header({ lang }: HeaderProps) {
               assistive tech the full wording (WCAG 2.5.3). */}
           <div className="hidden items-center gap-2 min-[360px]:flex">
             <HeaderSearchTrigger
-              lang={code}
               labels={{
                 inputLabel: t.search.inputLabel,
                 placeholder: t.search.placeholder,

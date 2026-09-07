@@ -16,7 +16,6 @@ import { IconSearch } from "@/components/icons";
 import { SearchOverlay } from "./SearchOverlay";
 
 type HeaderSearchTriggerProps = {
-  lang: string;
   labels: {
     inputLabel: string;
     placeholder: string;
@@ -30,7 +29,6 @@ type HeaderSearchTriggerProps = {
 };
 
 export function HeaderSearchTrigger({
-  lang,
   labels,
   exampleQueries,
   action,
@@ -53,7 +51,6 @@ export function HeaderSearchTrigger({
         ? typeof document !== "undefined"
           ? createPortal(
               <SearchOverlay
-                lang={lang}
                 labels={labels}
                 exampleQueries={exampleQueries}
                 action={action}

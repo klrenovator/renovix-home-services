@@ -16,7 +16,6 @@ import { useRouter } from "next/navigation";
 import { IconArrowRight, IconClose, IconSearch } from "@/components/icons";
 
 type SearchOverlayProps = {
-  lang: string;
   labels: {
     overlayTitle: string;
     inputLabel: string;
@@ -34,7 +33,6 @@ type SearchOverlayProps = {
 };
 
 export function SearchOverlay({
-  lang,
   labels,
   exampleQueries,
   onClose,
