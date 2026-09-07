@@ -154,6 +154,7 @@ if (synonymFailures === 0) {
 // ---------------------------------------------------------------------------
 // 3. The i18n dictionary has a `search` block in every language.
 // ---------------------------------------------------------------------------
+const REQUIRED_SEARCH_KEYS = ["inputLabel", "footerLink", "placeholder", "submit"];
 for (const lang of ["en", "ms", "zh"]) {
   const file = join(I18N, `${lang}.ts`);
   if (!existsSync(file)) {
@@ -163,8 +164,18 @@ for (const lang of ["en", "ms", "zh"]) {
   const text = read(file);
   if (!/search:\s*\{/.test(text)) {
     fail(`i18n/${lang}.ts is missing the search dictionary block`);
-  } else {
-    pass(`i18n/${lang}.ts carries a search dictionary block`);
+    continue;
+  }
+  const block = text.match(/search:\s*\{([\s\S]*?)\n  \},/)?.[1] ?? "";
+  let keyFailures = 0;
+  for (const key of REQUIRED_SEARCH_KEYS) {
+    if (!new RegExp(`\\b${key}:`).test(block)) {
+      fail(`i18n/${lang}.ts search block is missing the "${key}" key`);
+      keyFailures += 1;
+    }
+  }
+  if (keyFailures === 0) {
+    pass(`i18n/${lang}.ts carries a complete search dictionary block`);
   }
 }
 
@@ -228,6 +239,114 @@ if (!existsSync(buildPath)) {
   }
   if (buildFailures === 0) {
     pass("data/search/build-index.ts walks every expected registry and pricing getter");
+  }
+}
+
+// ---------------------------------------------------------------------------
+// 6. Universal placement — the master plan §5 promises the search entry
+//    points listed below. Each file must render exactly one InlineSearch
+//    (import lines don't count) and the chrome files must reference the
+//    expected components / localized label.
+// ---------------------------------------------------------------------------
+const placementChecks = [
+  // [file, what to look for, human-readable placement]
+  ["components/home/Hero.tsx", "<SmartSearchBar", "homepage hero search bar"],
+  ["components/layout/Header.tsx", "HeaderSearchBar", "header desktop search bar"],
+  ["components/layout/Header.tsx", "HeaderSearchTrigger", "header mobile search trigger"],
+  ["components/layout/Footer.tsx", "footerLink", "footer 'Search Renovix' link"],
+  ["app/[lang]/not-found.tsx", "<InlineSearch", "404 recovery search bar"],
+];
+
+for (const [file, needle, label] of placementChecks) {
+  const p = join(ROOT, ...file.split("/"));
+  if (!existsSync(p)) {
+    fail(`placement ${label}: ${file} does not exist`);
+    continue;
+  }
+  if (!read(p).includes(needle)) {
+    fail(`placement ${label}: ${file} does not reference ${needle}`);
+  } else {
+    pass(`placement ${label}: ${file} is wired`);
+  }
+}
+
+// Every page-body template (detail + index/support) renders exactly one
+// InlineSearch banner below its hero. Two occurrences would mean a
+// duplicate banner was introduced by mistake.
+const bodyTemplates = [
+  "components/service/ServicePage.tsx",
+  "components/service/SubServicePage.tsx",
+  "components/problem/ProblemPage.tsx",
+  "components/area/AreaPage.tsx",
+  "components/area/AreaRegionPage.tsx",
+  "components/blog/ArticlePage.tsx",
+  "components/projects/ProjectPage.tsx",
+  "app/[lang]/services/page.tsx",
+  "app/[lang]/problems/page.tsx",
+  "app/[lang]/areas/page.tsx",
+  "components/blog/BlogIndexPage.tsx",
+  "app/[lang]/projects/page.tsx",
+  "app/[lang]/quote/page.tsx",
+  "app/[lang]/faq/page.tsx",
+];
+
+let bodyPlacementFailures = 0;
+for (const file of bodyTemplates) {
+  const p = join(ROOT, ...file.split("/"));
+  if (!existsSync(p)) {
+    fail(`placement page-body: ${file} does not exist`);
+    bodyPlacementFailures += 1;
+    continue;
+  }
+  const text = read(p);
+  const usageCount = (text.match(/<InlineSearch\b/g) ?? []).length;
+  if (usageCount !== 1) {
+    fail(
+      `placement page-body: ${file} renders ${usageCount} InlineSearch banner(s); expected exactly 1`,
+    );
+    bodyPlacementFailures += 1;
+  }
+}
+if (bodyPlacementFailures === 0) {
+  pass(
+    `placement page-body: all ${bodyTemplates.length} detail/index/support templates render exactly one InlineSearch banner`,
+  );
+}
+
+// ---------------------------------------------------------------------------
+// 7. Query fixtures (Master Plan §12) — the static table in
+//    `data/search/fixtures.ts` is the fixture authority for this script;
+//    the matching results themselves are replayed at build time by
+//    `data/search/audit-data.ts::auditQueryFixtures`.
+// ---------------------------------------------------------------------------
+const fixturesPath = join(SRC, "fixtures.ts");
+if (!existsSync(fixturesPath)) {
+  fail("data/search/fixtures.ts is missing");
+} else {
+  const fixturesSource = read(fixturesPath);
+  const fixtureEntries = Array.from(
+    fixturesSource.matchAll(/\{\s*lang:\s*"(en|ms|zh)"\s*,\s*query:\s*"([^"]+)"(?:\s*,\s*expectedTopHref:\s*"([^"]+)")?\s*\}/g),
+  );
+  if (fixtureEntries.length < 25) {
+    fail(`query fixture table has ${fixtureEntries.length} entries; the master plan requires at least 25`);
+  } else {
+    pass(`query fixture table has ${fixtureEntries.length} entries (≥ 25)`);
+  }
+  const byLang = { en: 0, ms: 0, zh: 0 };
+  let fixtureHrefFailures = 0;
+  for (const [, lang, , expectedHref] of fixtureEntries) {
+    byLang[lang] += 1;
+    if (expectedHref && !new RegExp(`^/${lang}/(services|problems|areas|blog|projects)/`).test(expectedHref)) {
+      fail(`fixture "${expectedHref}" is not a valid ${lang} content href`);
+      fixtureHrefFailures += 1;
+    }
+  }
+  if (fixtureHrefFailures === 0) pass("all fixture hrefs are well-formed localized content URLs");
+  const langCountsOk = Object.values(byLang).every((count) => count >= 8);
+  if (!langCountsOk) {
+    fail(`fixture language coverage uneven: ${JSON.stringify(byLang)}`);
+  } else {
+    pass(`fixture language coverage: ${JSON.stringify(byLang)}`);
   }
 }
 

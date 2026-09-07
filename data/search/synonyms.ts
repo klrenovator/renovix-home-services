@@ -208,14 +208,14 @@ export function getSynonyms(lang: LanguageCode): SynonymEntry[] {
  */
 export function expandQuerySynonyms(
   query: { raw: string; latin: string[]; cjk: string[]; lang: LanguageCode },
-): Set<string> {
-  const out = new Set<string>();
+): SynonymEntry[] {
+  const out: SynonymEntry[] = [];
   const synonyms = BY_LANG[query.lang];
   const raw = query.raw.toLowerCase();
 
   for (const entry of synonyms) {
     if (raw.includes(entry.phrase.toLowerCase())) {
-      out.add(entry.slug);
+      out.push(entry);
     }
   }
   return out;
