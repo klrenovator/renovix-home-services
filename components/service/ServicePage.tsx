@@ -17,6 +17,7 @@ import { RelatedServicesSection } from "@/components/service/RelatedServicesSect
 import { ServiceSubLinksSection } from "@/components/service/ServiceProjectsSection";
 import { CtaSection } from "@/components/service/CtaSection";
 import { GuideLinksSection } from "@/components/blog/GuideLinksSection";
+import { InlineSearch } from "@/components/search/InlineSearch";
 import { getArticlesForService } from "@/data/blog";
 import type { ServiceDetail } from "@/data/service-content/types";
 import type { ProblemDetail } from "@/data/problem-content/types";
@@ -32,6 +33,11 @@ export function ServicePage({ detail, related, relatedProblems, lang }: ServiceP
   return (
     <>
       <ServiceHero detail={detail} lang={lang} />
+      <div className="border-b border-slate-100 bg-white py-6 sm:py-8">
+        <div className="container-app">
+          <InlineSearch lang={lang} variant="banner" />
+        </div>
+      </div>
       <AnswerFirstSection detail={detail} lang={lang} />
       <OverviewSection detail={detail} lang={lang} />
       <SubServicesSection detail={detail} lang={lang} />

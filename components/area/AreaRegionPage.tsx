@@ -4,6 +4,7 @@ import { InlineLinks } from "@/components/service/InlineLinks";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button, WhatsAppButton } from "@/components/ui/Button";
 import { HeroBackdrop } from "@/components/ui/HeroBackdrop";
+import { InlineSearch } from "@/components/search/InlineSearch";
 import {
   IconArrowRight,
   IconMapPin,
@@ -97,6 +98,12 @@ export function AreaRegionPage({ region, lang }: AreaRegionPageProps) {
           </ul>
         </div>
       </section>
+
+      <div className="border-b border-slate-100 bg-white py-6 sm:py-8">
+        <div className="container-app">
+          <InlineSearch lang={lang} variant="banner" />
+        </div>
+      </div>
 
       <section id="areas" className="section bg-white scroll-mt-24">
         <div className="container-app">

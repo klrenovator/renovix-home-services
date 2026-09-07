@@ -8,6 +8,7 @@ import { ProjectProblemsSection } from "./ProjectProblemsSection";
 import { ProjectLocationSection } from "./ProjectLocationSection";
 import { ProjectRelatedSection } from "./ProjectRelatedSection";
 import { ProjectCtaSection } from "./ProjectCtaSection";
+import { InlineSearch } from "@/components/search/InlineSearch";
 import type { ResolvedProject } from "@/data/project-content/types";
 
 type ProjectPageProps = {
@@ -27,6 +28,11 @@ export function ProjectPage({ project, lang }: ProjectPageProps) {
   return (
     <>
       <ProjectHero project={project} lang={lang} />
+      <div className="border-b border-slate-100 bg-white py-6 sm:py-8">
+        <div className="container-app">
+          <InlineSearch lang={lang} variant="banner" />
+        </div>
+      </div>
       <ProjectOverviewSection project={project} lang={lang} />
       <ProjectDetailsSection project={project} lang={lang} />
       <ProjectGallerySection project={project} lang={lang} />

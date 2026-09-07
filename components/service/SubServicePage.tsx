@@ -15,6 +15,7 @@ import type { ProblemDetail } from "@/data/problem-content/types";
 import { getSubServicesByService, formatSubServicePrice, type ResolvedSubService } from "@/data/sub-services";
 import { getProjectContent, getProjectsForSubService } from "@/data/project-content";
 import { GuideLinksSection } from "@/components/blog/GuideLinksSection";
+import { InlineSearch } from "@/components/search/InlineSearch";
 import { getArticlesForSubService } from "@/data/blog";
 
 type SubServicePageProps = {
@@ -99,6 +100,12 @@ export function SubServicePage({ detail, lang }: SubServicePageProps) {
           </div>
         </div>
       </section>
+
+      <div className="border-b border-slate-100 bg-white py-6 sm:py-8">
+        <div className="container-app">
+          <InlineSearch lang={lang} variant="banner" />
+        </div>
+      </div>
 
       {/* When it is suitable */}
       <section className="section section-surface">
