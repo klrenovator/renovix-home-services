@@ -302,6 +302,19 @@ export const en: Dictionary = {
     lastReviewedLabel: "Last reviewed",
     viewPricing: "View pricing guidance",
     pricingFactorsTitle: "What affects pricing",
+    workShowcaseEyebrow: "Our Work",
+    workShowcaseTitle: "Recent {name} projects in KL & Selangor",
+    workShowcaseDescription:
+      "Real photographs of {name} work Renovix has completed — not stock images.",
+    workShowcaseViewAll: "View all projects",
+    startingPricesEyebrow: "Starting Prices",
+    startingPricesTitle: "{name} prices at a glance",
+    startingPricesDescription:
+      "Indicative starting prices from our 2026 market research. Final quotation depends on site condition, scope and materials.",
+    startingPricesThisService: "{name} starts from",
+    startingPricesRelatedTitle: "Related services — starting prices",
+    startingPricesOnQuotation: "On quotation",
+    startingPricesViewDetails: "View pricing details",
   },
   subServicePage: {
     suitableEyebrow: "Is this the right service?",
@@ -311,6 +324,7 @@ export const en: Dictionary = {
     projectDescription:
       "Real {service} projects Renovix has completed in Kuala Lumpur & Selangor.",
     relatedSubTitle: "Other {service} services",
+    relatedSubPricesTitle: "Other {service} services — starting prices",
     backToService: "Back to {service}",
     includedEyebrow: "What's included",
     includedTitle: "Typically included in {name}",

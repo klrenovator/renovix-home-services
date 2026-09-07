@@ -307,6 +307,19 @@ export const ms: Dictionary = {
     lastReviewedLabel: "Semakan terakhir",
     viewPricing: "Lihat panduan harga",
     pricingFactorsTitle: "Apa yang mempengaruhi harga",
+    workShowcaseEyebrow: "Kerja Kami",
+    workShowcaseTitle: "Projek {name} terkini di KL & Selangor",
+    workShowcaseDescription:
+      "Gambar sebenar kerja {name} yang disiapkan oleh Renovix — bukan gambar stok.",
+    workShowcaseViewAll: "Lihat semua projek",
+    startingPricesEyebrow: "Harga Bermula",
+    startingPricesTitle: "Harga {name} sepintas lalu",
+    startingPricesDescription:
+      "Harga permulaan indikatif berdasarkan kajian pasaran 2026 kami. Sebut harga akhir bergantung pada keadaan tapak, skop dan bahan.",
+    startingPricesThisService: "{name} bermula dari",
+    startingPricesRelatedTitle: "Perkhidmatan berkaitan — harga bermula",
+    startingPricesOnQuotation: "Atas sebut harga",
+    startingPricesViewDetails: "Lihat butiran harga",
   },
   subServicePage: {
     suitableEyebrow: "Adakah ini servis yang betul?",
@@ -316,6 +329,7 @@ export const ms: Dictionary = {
     projectDescription:
       "Projek {service} sebenar yang Renovix siapkan di Kuala Lumpur & Selangor.",
     relatedSubTitle: "Servis {service} yang lain",
+    relatedSubPricesTitle: "Servis {service} lain — harga bermula",
     backToService: "Kembali ke {service}",
     includedEyebrow: "Apa yang termasuk",
     includedTitle: "Biasanya termasuk dalam {name}",

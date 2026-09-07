@@ -226,6 +226,17 @@ export type Dictionary = {
     lastReviewedLabel: string;
     viewPricing: string;
     pricingFactorsTitle: string;
+    workShowcaseEyebrow: string;
+    workShowcaseTitle: string;
+    workShowcaseDescription: string;
+    workShowcaseViewAll: string;
+    startingPricesEyebrow: string;
+    startingPricesTitle: string;
+    startingPricesDescription: string;
+    startingPricesThisService: string;
+    startingPricesRelatedTitle: string;
+    startingPricesOnQuotation: string;
+    startingPricesViewDetails: string;
   };
   subServicePage: {
     suitableEyebrow: string;
@@ -234,6 +245,7 @@ export type Dictionary = {
     projectTitle: string;
     projectDescription: string;
     relatedSubTitle: string;
+    relatedSubPricesTitle: string;
     backToService: string;
     includedEyebrow: string;
     includedTitle: string;

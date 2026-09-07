@@ -37,7 +37,7 @@ export function PricingSection({ detail, lang }: PricingSectionProps) {
     `${t.servicePage.startingFrom} ${getPricingUnitsLabel("per_job", lang)}`;
 
   return (
-    <section className="section bg-white">
+    <section id="pricing" className="section bg-white scroll-mt-24">
       <div className="container-app">
         <SectionHeading
           eyebrow={t.servicePage.pricingEyebrow}
