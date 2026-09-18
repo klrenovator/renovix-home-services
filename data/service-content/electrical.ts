@@ -5,10 +5,10 @@ export const electrical: ServiceDetail = {
   name: "Electrical",
   title: "Renovix Home Services | Electrical Services in KL & Selangor",
   metaDescription:
-    "Electrical wiring, rewiring, lighting installation, power points, DB box upgrades and fault repairs in Kuala Lumpur & Selangor. Safe, tidy electrical work for homes and offices. Free quote.",
+    "Need an electrician in Kuala Lumpur & Selangor? Electrical wiring, rewiring, lighting, power points, DB box upgrades and fault repairs for homes and offices. Free quote.",
   h1: "Electrical Services in Kuala Lumpur & Selangor",
   intro: [
-    "Electrical problems are more than an inconvenience — a tripping circuit, a dead socket or an overloaded distribution board can point to issues that get worse over time. For homeowners in Kuala Lumpur and Selangor, electrical work needs to be done properly: correct wiring, the right breaker sizes, neat concealed or surface runs, and thorough testing. Renovix provides electrical services for landed homes, condos, offices and shops across the Klang Valley, from new wiring and rewiring to lighting installation and fault diagnosis.",
+    "Electrical problems are more than an inconvenience — a tripping circuit, a dead socket or an overloaded distribution board can point to issues that get worse over time. For homeowners in Kuala Lumpur and Selangor, electrical work needs to be done properly: correct wiring, the right breaker sizes, neat concealed or surface runs, and thorough testing. Renovix provides electrical services for landed homes, condos, offices and shops across the Klang Valley, from new wiring and rewiring to lighting installation and fault diagnosis. Homeowners in the Klang Valley typically call in an electrician for one of three things: a new or additional point, a rewire where the existing wiring has aged, or a fault traced back to its source.",
     "We cover the practical range of electrical jobs around a home or business: power points, switches, lighting, ceiling fans, water heaters, aircond supply points, DB box upgrades and troubleshooting. We also coordinate closely with [ceiling work](/services/ceiling-partition), [renovation](/services/general-renovation) and [painting](/services/painting), so lighting points and wiring runs are planned before finishes go on. Electrical installation work in Malaysia is subject to regulatory requirements — we can advise on what applies to your specific installation.",
   ],
   overviewTitle: "Wiring, Lighting & Electrical Repair Services",

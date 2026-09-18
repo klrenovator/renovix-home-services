@@ -7,7 +7,7 @@ export const translation: ServiceTranslation = {
     "Kerja elektrik rumah di Kuala Lumpur & Selangor — pendawaian, pendawaian semula, lampu, soket tambahan, naik taraf DB box dan mencari punca kerosakan. Sebut harga percuma.",
   h1: "Kerja Elektrik di Kuala Lumpur & Selangor",
   intro: [
-    "Masalah elektrik jarang berlaku pada waktu yang sesuai. Kadangkala ia hanya soket yang mati; kadangkala breaker trip setiap malam dan tiada siapa tahu puncanya. Renovix mengendalikan kerja pendawaian, lampu, soket, DB box dan mencari punca kerosakan untuk rumah dan premis kecil di Kuala Lumpur, Selangor dan Lembah Klang.",
+    "Masalah elektrik jarang berlaku pada waktu yang sesuai. Kadangkala ia hanya soket yang mati; kadangkala breaker trip setiap malam dan tiada siapa tahu puncanya. Renovix mengendalikan kerja pendawaian, lampu, soket, DB box dan mencari punca kerosakan untuk rumah dan premis kecil di Kuala Lumpur, Selangor dan Lembah Klang. Sebahagian besar pelanggan yang mencari tukang elektrik di Kuala Lumpur, Selangor atau Lembah Klang datang untuk salah satu daripada tiga perkara: titik kuasa atau titik lampu baharu, pendawaian semula, atau kerosakan yang perlu dijejak ke puncanya.",
     "Kami bekerja secara berperingkat: memahami gejala, menguji litar berkaitan, kemudian menerangkan apa yang perlu dibaiki sebelum kerja dimulakan. Kerja elektrik juga diselaraskan dengan [kerja siling & partisyen](/services/ceiling-partition) dan [renovasi am](/services/general-renovation) supaya titik lampu dan soket berada di tempat yang betul sebelum kemasan dibuat.",
   ],
   overviewTitle: "Kerja Elektrik untuk Rumah & Premis Kecil",

@@ -8,7 +8,7 @@ export const translation: ServiceTranslation = {
   h1: "Kerja Paip & Plumbing di Kuala Lumpur & Selangor",
   intro: [
     "Masalah paip jarang kekal kecil. Pili yang menitis menaikkan bil air, paip bocor di sebalik dinding merosakkan plaster dan cat, dan saliran tersumbat boleh melumpuhkan bilik air atau dapur dalam sehari.",
-    "Renovix mengendalikan kerja paip untuk rumah dan premis kecil di Kuala Lumpur, Selangor dan Lembah Klang — daripada pembaikan kebocoran dan penggantian kelengkapan sehinggalah kerja paip penuh semasa [renovasi](/services/general-renovation). Jika kebocoran telah merosakkan permukaan, kami menyelaraskan kerja [kalis air](/services/waterproofing) dan [jubin](/services/tiling) sekali.",
+    "Renovix mengendalikan kerja paip untuk rumah dan premis kecil di Kuala Lumpur, Selangor dan Lembah Klang — daripada pembaikan kebocoran dan penggantian kelengkapan sehinggalah kerja paip penuh semasa [renovasi](/services/general-renovation). Sebahagian besar pelanggan yang mencari tukang paip datang untuk salah satu daripada tiga perkara: paip bocor yang perlu dibetulkan, kelengkapan seperti pili atau tandas yang perlu diganti, atau saliran yang tersumbat. Jika kebocoran telah merosakkan permukaan, kami menyelaraskan kerja [kalis air](/services/waterproofing) dan [jubin](/services/tiling) sekali.",
   ],
   overviewTitle: "Pembaikan, Pemasangan & Kerja Paip Renovasi",
   overviewIntro:
