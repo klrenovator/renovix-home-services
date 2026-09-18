@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * Sitemap / robots audit against the content registries (no running server).
- * Expected public URL count = 3 languages × (12 chrome pages + 10 services +
+ * Expected public URL count = 3 languages × (13 chrome pages + 10 services +
  * 51 sub-services + 12 articles + 57 problems + 2 regions + 53 areas + 28 projects).
  */
 import fs from "node:fs";
@@ -42,7 +42,7 @@ for (const f of subFiles) {
 }
 const articles = fs.readdirSync(path.join(root, "data/blog/content")).filter((f) => f.endsWith(".ts")).map((f) => f.replace(/\.ts$/, ""));
 
-const chrome = 12; // home, services, problems, areas, quote, contact, about, projects, blog, faq, privacy, terms
+const chrome = 13; // home, services, problems, areas, quote, contact, about, projects, blog, faq, privacy, terms, search
 const perLang = chrome + services.length + subSlugs.length + articles.length + problems.length + regions.length + areas.length + projects.length;
 const total = perLang * 3;
 
@@ -62,9 +62,9 @@ if (areas.length !== 53) fail("expected 53 areas");
 if (projects.length !== 28) fail("expected 28 projects");
 if (new Set(subSlugs).size !== subSlugs.length) fail("duplicate sub-service slugs");
 
-if (perLang !== 225) fail(`per-language page count ${perLang} expected 225`);
+if (perLang !== 226) fail(`per-language page count ${perLang} expected 226`);
 else pass(`per-language canonical pages ${perLang}`);
-if (total !== 675) fail(`sitemap expectation ${total} expected 675`);
+if (total !== 678) fail(`sitemap expectation ${total} expected 678`);
 else pass(`expected sitemap <loc> count ${total}`);
 
 const sitemapSrc = read("app/sitemap.ts");
@@ -91,4 +91,4 @@ if (failures.length) {
   console.log(`\nFAIL — ${failures.length} issue(s)`);
   process.exit(1);
 }
-console.log("\nPASS — sitemap/robots source of truth matches the registries (675 URLs).");
+console.log("\nPASS — sitemap/robots source of truth matches the registries (678 URLs).");

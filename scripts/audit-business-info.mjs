@@ -123,7 +123,14 @@ if (sourceFiles.length === 0) {
 
 const sourceText = new Map();
 for (const file of sourceFiles) {
-  sourceText.set(file, readFileSync(file, "utf8"));
+  let text = readFileSync(file, "utf8");
+  // SVG path data is pure geometry — arc/line commands such as
+  // `12 12 0 0 0 12 24` are digit runs that the phone scan would otherwise
+  // misread as a phone number (the existing "." filter catches coordinate
+  // decimals but not integer arc segments). Path data can never contain a
+  // phone number, email or address, so strip `d` attributes before scanning.
+  text = text.replace(/\bd=(?:"[^"]*"|'[^']*')/g, 'd=""');
+  sourceText.set(file, text);
 }
 const siteSource = sourceText.get(join(ROOT, SITE_FILE)) ?? "";
 const schemaSource = sourceText.get(join(ROOT, SCHEMA_FILE)) ?? "";
