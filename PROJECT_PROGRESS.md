@@ -3602,3 +3602,109 @@ founder/About E-E-A-T note. None fabricated.
       single H1, correct canonical, OG present
 
 Status: **Code verified + Build verified + Live verified (HTTP)**.
+
+---
+
+## Phase 28 — Sub-service hub links + internal link-graph QA (2026-09-18)
+
+Trigger: the standing Master SEO + GEO + AEO + AI-search prompt's
+"strengthen internal linking between services, sub-services, problems, areas
+and relevant locations" directive, worked under the same PRESERVE → AUDIT →
+VERIFY → IMPROVE rule as Phase 27: nothing was rebuilt, no URL, price, service,
+claim or piece of branding changed.
+
+### 1. What the audit actually found
+
+Verifying the *rendered* graph (all 675 built pages parsed for internal
+`href`s) rather than assuming it showed one structural gap:
+
+- The 51 standalone sub-service pages were linked **only** from their own
+  siblings, from the guides that cite them and from the projects that show
+  them. Their parent service page — the strongest hub for that topic — never
+  linked down to them, so 153 URLs (51 × 3 languages) had no inbound link from
+  their own pillar. Average inbound links per sub-service page: **8.1**.
+- The 57 problem guides linked to services, related problems, areas and
+  guides, but never to the specific sub-service scopes that resolve them —
+  even though every sub-service already declares its `relatedProblems` (189
+  registry edges) and that direction was audited.
+
+Everything else in the graph was already correct: 0 orphan pages, every page
+type linked from its index, footer/header coverage intact, project → service /
+sub-service / problem links present, blog → service / sub-service / area /
+problem links present. Project → area links correctly stay absent because no
+project has a confirmed location (never invented).
+
+### 2. What was added (no redesign, registry-derived only)
+
+1. **`components/service/SubServiceLinksSection.tsx` (new)** — one component,
+   both directions: `SubServiceLinksBlock` (rendered inside the service page's
+   existing sub-service section, extending it with a linked detail list) and
+   `SubServiceLinksSection` (a section wrapper for the problem guides). Names
+   come from the localized sub-service registry, the parent service label from
+   the localized service list, and every link is filtered through
+   `subServiceLanguages()` so no language ever links a page that does not
+   exist. Empty list ⇒ nothing renders.
+2. **Service pillars → their sub-service pages**: `ServicePage` passes
+   `getSubServicesByService(detail.slug)` into the existing `SubServicesSection`
+   (which keeps its overview cards exactly as they were) — 153 new hub links.
+3. **Problem guides → the scopes that fix them**: new registry helper
+   `getSubServicesForProblem(slug)` inverts each sub-service's own
+   `relatedProblems` (no second hand-maintained list, so the two directions
+   cannot drift) and `ProblemPage` renders it between the related-service and
+   process sections — 189 edges per language, hidden on the four problem guides
+   no sub-service declares.
+4. **Copy** in EN/MS/ZH (`subServiceLinks` in `i18n/en.ts` / `ms.ts` / `zh.ts`
+   + the `Dictionary` type): genuinely localized headings, no English leakage,
+   using the site's existing Malay/Chinese sub-service terminology
+   (Sub-Perkhidmatan / 细项服务).
+
+### 3. Regression guards (so the gap cannot come back)
+
+- `audit:subservices` §5 — wiring guard: the registry must keep
+  `getSubServicesForProblem` derived from `relatedProblems`, the component must
+  keep filtering through `subServiceLanguages`, the pillar must keep passing
+  `getSubServicesByService(detail.slug)`, the problem template must keep
+  rendering the section, and all three dictionaries must keep the block.
+  Negative-tested: removing the pillar wiring fails the audit.
+- `audit:live` — the existing full-sitemap sweep now keeps each page's internal
+  links and asserts the rendered graph: **no orphan pages**, every one of the
+  153 sub-service pages linked from its own service pillar *and* linking back,
+  ≥53/57 problem guides linking to related scopes, and **no internal link
+  pointing at a URL the site does not serve** (allowlisting `/llms.txt`,
+  `/robots.txt`, `/sitemap.xml`, `/ai/*.json`, `/icon.svg`).
+
+### 4. Measured result (before → after)
+
+| Metric | Before | After |
+|---|---|---|
+| Sub-service pages with an inbound link from their own pillar | 0 / 153 | **153 / 153** |
+| Internal links into sub-service pages (service → sub-service) | 0 | **153** |
+| Internal links into sub-service pages (problem → sub-service) | 0 | **567** |
+| Average inbound links per sub-service page | 8.1 | **12.8** |
+| Orphan pages (no internal inbound link) | 0 | **0** |
+| Internal links to unserved URLs | 0 | **0** |
+| Sitemap URLs / pages | 678 / 685 | **678 / 685 (unchanged)** |
+
+### 5. Preserved untouched (verified correct — 🟢)
+
+- Every price (51 pricing rows, single-sourced; no `RM` literal added anywhere
+  outside the catalogue), every URL, canonical, hreflang set and redirect.
+- Design, branding, layout, navigation, footer and all existing page sections
+  (the sub-service overview cards are unchanged; the new list is additive).
+- Existing SEO work: metadata, schema, sitemap, robots, AI feeds, locations,
+  multilingual coverage.
+- No new page, no `{service}-in-{area}` doorway, no invented service, claim,
+  location or project data.
+
+### 6. Test results (this phase)
+
+- [x] `npm run type-check` — PASS
+- [x] `npm run lint` — PASS
+- [x] `npm run build` — PASS (685 static pages, sitemap still 678 URLs)
+- [x] All 17 static audits — PASS (incl. the new `audit:subservices` §5 guard)
+- [x] `audit:live` vs `next start` — **PASS 204 / WARN 0 / FAIL 0**, including
+      the five new link-graph assertions
+- [x] Rendered HTML spot-checked in EN/MS/ZH: pillar block, problem block,
+      card labels and hrefs all correct and localized
+
+Status: **Code verified + Build verified + Live verified (HTTP)**.

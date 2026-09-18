@@ -937,6 +937,18 @@ export const ms: Dictionary = {
     description:
       "Bacaan latar tentang kos, bahan dan apa yang terlibat dalam kerja ini.",
   },
+  subServiceLinks: {
+    serviceEyebrow: "Sub-Perkhidmatan",
+    serviceTitle: "Sub-perkhidmatan {name} secara terperinci",
+    serviceDescription:
+      "Setiap skop di bawah ada halaman sendiri yang menerangkan kerja yang termasuk, apa yang tidak termasuk, faktor kos dan soalan lazim.",
+    problemEyebrow: "Sub-Perkhidmatan",
+    problemTitle: "Kerja yang menyelesaikan {name}",
+    problemDescription:
+      "Ini skop kerja yang kami jalankan untuk masalah ini. Setiap satu ada halaman sendiri yang menerangkan kerja, apa yang termasuk dan apa yang mengubah kos.",
+    underService: "Di bawah {service}",
+    viewDetails: "Lihat butiran",
+  },
   projects: {
     metaTitle: "Gambar Projek di Kuala Lumpur & Selangor | Renovix Home Services",
     metaDescription:

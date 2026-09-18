@@ -15,6 +15,11 @@
  *     static params + `app/sitemap.ts` + the i18n coverage guard — this script
  *     re-checks the invariant that every authored slug is in all three
  *     languages (i.e. it will appear in each language's route set).
+ *  5. Phase 28 — the hub → spoke link wiring: the service pillar renders the
+ *     registry-derived links to its own sub-service pages and the problem
+ *     guides render the inverse of each sub-service's `relatedProblems`, both
+ *     filtered through `subServiceLanguages`. (`npm run audit:live` proves the
+ *     rendered graph: no orphans, every sub-service page linked from its hub.)
  *
  * Run with: npm run audit:subservices
  */
@@ -212,6 +217,80 @@ for (const a of authored) {
       `Sub-service "${a.slug}" is priced in the catalogue but its page does not set pricingId.`,
     );
   }
+}
+
+/* ------------------------------------------------------------------------ */
+/* Phase 28 — hub → spoke link graph wiring                                  */
+/*                                                                           */
+/* Each published sub-service page must be reachable from its own parent      */
+/* service page (the strongest hub for that topic) and from the problem       */
+/* guides it declares, not only from its siblings, guides and projects. The   */
+/* links are registry-derived, so this guard checks the wiring that keeps     */
+/* them derived rather than the link list itself.                             */
+/* ------------------------------------------------------------------------ */
+const REGISTRY_INDEX = join(ROOT, "data", "sub-services", "index.ts");
+const SUB_LINKS_COMPONENT = join(ROOT, "components", "service", "SubServiceLinksSection.tsx");
+const SERVICE_PAGE = join(ROOT, "components", "service", "ServicePage.tsx");
+const PROBLEM_PAGE = join(ROOT, "components", "problem", "ProblemPage.tsx");
+
+function readIfExists(file) {
+  try {
+    return readFileSync(file, "utf8");
+  } catch {
+    fail(`Phase 28 link guard: expected file missing — ${file.replace(`${ROOT}/`, "")}`);
+    return "";
+  }
+}
+
+const registryIndex = readIfExists(REGISTRY_INDEX);
+const subLinksComponent = readIfExists(SUB_LINKS_COMPONENT);
+const servicePageSource = readIfExists(SERVICE_PAGE);
+const problemPageSource = readIfExists(PROBLEM_PAGE);
+
+if (!/export function getSubServicesForProblem\(/.test(registryIndex)) {
+  fail(
+    "Phase 28 link guard: data/sub-services/index.ts must expose getSubServicesForProblem() (the registry-derived inverse of each sub-service's relatedProblems).",
+  );
+}
+if (!/relatedProblems\.includes\(problemSlug\)/.test(registryIndex)) {
+  fail(
+    "Phase 28 link guard: getSubServicesForProblem must derive its result from the registry's own relatedProblems — a hand-maintained second list would drift.",
+  );
+}
+if (!/import \{ subServiceLanguages \}/.test(subLinksComponent) || !/subServiceLanguages\(sub\.slug\)\.includes\(code\)/.test(subLinksComponent)) {
+  fail(
+    "Phase 28 link guard: components/service/SubServiceLinksSection.tsx must filter every link through subServiceLanguages(), so no language ever links a sub-service page that does not exist.",
+  );
+}
+if (!/localizedHref\(`\/services\/\$\{sub\.serviceSlug\}\/\$\{sub\.slug\}`/.test(subLinksComponent)) {
+  fail(
+    "Phase 28 link guard: SubServiceLinksSection must build its hrefs from the canonical /services/{serviceSlug}/{slug} route shape.",
+  );
+}
+const subServicesSectionSource = readIfExists(join(ROOT, "components", "service", "SubServicesSection.tsx"));
+if (
+  !/linkedSubServices=\{getSubServicesByService\(detail\.slug\)\}/.test(servicePageSource) ||
+  !/<SubServiceLinksBlock/.test(subServicesSectionSource)
+) {
+  fail(
+    "Phase 28 link guard: the service pillar must pass getSubServicesByService(detail.slug) into SubServicesSection and that section must render SubServiceLinksBlock — otherwise published sub-service pages have no inbound link from their own hub.",
+  );
+}
+if (!/<SubServiceLinksSection/.test(problemPageSource) || !/getSubServicesForProblem\(problem\.slug\)/.test(problemPageSource)) {
+  fail(
+    "Phase 28 link guard: the problem guide must render SubServiceLinksSection for getSubServicesForProblem(problem.slug).",
+  );
+}
+for (const lang of ["en", "ms", "zh"]) {
+  const dict = readIfExists(join(ROOT, "i18n", `${lang}.ts`));
+  if (!/subServiceLinks: \{[\s\S]*?underService:/.test(dict) || !/viewDetails:/.test(dict)) {
+    fail(`Phase 28 link guard: i18n/${lang}.ts is missing the subServiceLinks dictionary block.`);
+  }
+}
+if (failures.length === 0) {
+  console.log(
+    "  ✔ Phase 28 hub → spoke link wiring: service pillar → every published sub-service page, problem guide → the scopes that declare it",
+  );
 }
 
 /* ---- report ---- */

@@ -28,8 +28,17 @@ current as of Phase 21.
 
 Pillar page anatomy (every service): answer-first Q&A → overview → pricing
 table (centralized) → materials → cost factors → duration → includes/excludes
-→ sub-services → problems → property types → process → areas → FAQs → related
-services → quote + WhatsApp CTAs. Every section exists in all 3 languages.
+→ sub-services (overview cards **plus, since Phase 28, registry-derived links
+to every published sub-service page for that service**) → problems → property
+types → process → areas → FAQs → related services → quote + WhatsApp CTAs.
+Every section exists in all 3 languages.
+
+Sub-service ↔ problem graph (Phase 28): each sub-service page declares its
+`relatedProblems`, and the problem guide renders the inverse of that list
+(`getSubServicesForProblem`) — one authored direction, both links derived from
+it. Rendered graph is enforced by `npm run audit:subservices` §5 (wiring) and
+`npm run audit:live` (no orphans, every sub-service page linked from its own
+pillar and back, no internal link to an unserved URL).
 
 ## 2. Problem-first map (57 guides at `/{lang}/problems/{slug}/`)
 

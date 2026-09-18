@@ -926,6 +926,18 @@ export const en: Dictionary = {
     description:
       "Background reading on cost, materials and what the work involves.",
   },
+  subServiceLinks: {
+    serviceEyebrow: "Sub-Services",
+    serviceTitle: "{name} sub-services in detail",
+    serviceDescription:
+      "Each of these scopes has its own page covering what the work includes, what is not included, cost factors and FAQs.",
+    problemEyebrow: "Sub-Services",
+    problemTitle: "The work that fixes {name}",
+    problemDescription:
+      "These are the scopes we carry out for this problem. Each one has its own page explaining the work, what is included and what changes the cost.",
+    underService: "Under {service}",
+    viewDetails: "View details",
+  },
   projects: {
     metaTitle: "Project Photos in Kuala Lumpur & Selangor | Renovix Home Services",
     metaDescription:

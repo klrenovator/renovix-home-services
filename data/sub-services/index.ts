@@ -57,6 +57,19 @@ export function getSubServicesByService(serviceSlug: string): SubServiceDefiniti
   return subServices.filter((item) => item.serviceSlug === serviceSlug);
 }
 
+/**
+ * Phase 28 — the inverse of each sub-service's own `relatedProblems` list.
+ *
+ * A sub-service declares the problem guides it genuinely addresses, so the
+ * problem guide can offer the exact scopes that resolve it. Derived from the
+ * registry rather than authored twice, so the two directions can never
+ * disagree; a problem with no genuinely related sub-service simply gets an
+ * empty list and its page renders no block.
+ */
+export function getSubServicesForProblem(problemSlug: string): SubServiceDefinition[] {
+  return subServices.filter((item) => item.relatedProblems.includes(problemSlug));
+}
+
 /** True once a slug belongs to a real sub-service (even if not yet localized). */
 export function isRegisteredSubService(slug: string): boolean {
   return subServices.some((item) => item.slug === slug);

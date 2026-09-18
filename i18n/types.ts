@@ -674,6 +674,21 @@ export type Dictionary = {
     areaTitle: string;
     description: string;
   };
+  /**
+   * Phase 28 — headings for the registry-derived sub-service link block on
+   * service pillar pages and problem guides. The link labels themselves come
+   * from the localized sub-service registry, not from here.
+   */
+  subServiceLinks: {
+    serviceEyebrow: string;
+    serviceTitle: string;
+    serviceDescription: string;
+    problemEyebrow: string;
+    problemTitle: string;
+    problemDescription: string;
+    underService: string;
+    viewDetails: string;
+  };
   projects: {
     metaTitle: string;
     metaDescription: string;

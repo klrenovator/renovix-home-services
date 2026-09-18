@@ -38,16 +38,16 @@ Renovix Home Services – Home Renovation & Improvement Services in Kuala Lumpur
 | `npm run audit:pricing` | Pricing audit — prices single-sourced in `data/pricing/pricing.ts`, coherent ranges, full MS/ZH row coverage, nothing presented as a final price, every service-page price claim backed by a row, no prices outside the catalogue |
 | `npm run audit:locations` | Location audit — area hierarchy, quality gates, the search-intent matrix (pricing derived from `pricingId`, never duplicated) and multilingual coverage |
 | `npm run audit:authority` | Search + AI authority audit — no fabricated claims, urgency language only where genuine, all cross-references resolve, index pages iterate the registries, one question per page, unique metadata per language, AI feeds in sync, alt text everywhere |
-| `npm run audit:subservices` | Sub-service audit — lists the 51 priced sub-services, verifies authored pages are unique, belong to a real service, reference a real `pricingId` and carry all three language blocks |
+| `npm run audit:subservices` | Sub-service audit — lists the 51 priced sub-services, verifies authored pages are unique, belong to a real service, reference a real `pricingId` and carry all three language blocks, and (Phase 28) that the service pillar → sub-service page and problem → sub-service link wiring stays registry-derived and language-filtered |
 | `npm run audit:blog` | Blog audit — every related slug and pricing id resolves, no hard-coded prices, EN/MS/ZH complete, unique metadata per language, no orphan articles |
 | `npm run audit:quote` | Quote-flow audit — API security invariants, registry integrity, truthful photo handling, i18n completeness, conversion-event hooks, quote-page SEO |
 | `npm run audit:analytics` | Analytics audit — provider exclusivity (GA4 xor GTM, single `page_view`), no fabricated IDs, all conversion events wired, PII cannot reach events, Web Vitals reporting, consent defaults, conditional CSP, privacy disclosure in EN/MS/ZH |
 | `npm run audit:security` | Security audit — CSP/clickjacking headers, quote-endpoint guards, no secrets in source, env gitignore |
-| `npm run audit:sitemap` | Sitemap/robots source-of-truth audit — 654 URLs from the registries, apex host, no invented lastmod |
+| `npm run audit:sitemap` | Sitemap/robots source-of-truth audit — 678 URLs from the registries, apex host, no invented lastmod |
 | `npm run audit:schema` | Structured-data honesty — required entity types present, no reviews/ratings/awards/opening days |
 | `npm run audit:multilingual` | EN/MS/ZH coverage complete; stale 18/28 location counts cannot return |
 | `npm run audit:routes` | App Router tree matches the intended public architecture; no Carpentry category |
-| `npm run audit:live` | Live QA against a running `next start` (654 sitemap URLs, SEO/schema spot checks, quote API) |
+| `npm run audit:live` | Live QA against a running `next start` (all 678 sitemap URLs fetched, SEO/schema spot checks, quote API, security headers, and — Phase 28 — the rendered internal link graph: no orphan pages, every sub-service page linked from its own service pillar and back, no internal link to an unserved URL) |
 
 ## Pricing data
 
