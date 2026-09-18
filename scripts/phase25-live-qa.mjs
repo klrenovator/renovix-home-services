@@ -446,13 +446,21 @@ async function sampleStatuses(locs) {
   let ok = 0;
   let bad = 0;
   const batchSize = 25;
+  // Phase 28 — the sweep also reads each page once and keeps its internal
+  // links, so the same crawl feeds the internal-link-graph check below.
+  const graph = new Map();
   for (let i = 0; i < locs.length; i += batchSize) {
     const batch = locs.slice(i, i + batchSize);
     const results = await Promise.all(
       batch.map(async (loc) => {
         const path = loc.replace(CANONICAL_HOST, "");
         const res = await fetchRes(path);
-        return { loc, status: res.status };
+        let hrefs = null;
+        if (res.status === 200) {
+          const html = await res.text();
+          hrefs = extractInternalHrefs(html);
+        }
+        return { loc, path, status: res.status, hrefs };
       }),
     );
     for (const r of results) {
@@ -461,10 +469,139 @@ async function sampleStatuses(locs) {
         bad += 1;
         fail(`sitemap URL ${r.loc} → ${r.status}`);
       }
+      if (r.hrefs) graph.set(r.path, r.hrefs);
     }
   }
   if (bad === 0) pass(`all ${ok} sitemap URLs return 200`);
   else fail(`sitemap sweep ${ok} ok / ${bad} failed`);
+  return graph;
+}
+
+/* ------------------------------------------------------------------------ */
+/* Phase 28 — internal link graph                                            */
+/*                                                                           */
+/* The site is fully static, so the rendered link graph is the crawl path:    */
+/* a page that nothing links to is only reachable through the sitemap. This   */
+/* turns the full-sitemap sweep above into a graph check — no orphan pages,   */
+/* every published sub-service page linked from its own service hub and back, */
+/* problem guides linking down to the scopes that declare them, and no        */
+/* internal link pointing at a URL the site does not serve.                   */
+/* ------------------------------------------------------------------------ */
+
+/** Static/utility targets that are deliberately outside the sitemap. */
+const NON_PAGE_HREFS = new Set([
+  "/robots.txt",
+  "/sitemap.xml",
+  "/llms.txt",
+  "/icon.svg",
+  "/ai/business.json",
+  "/ai/pricing.json",
+  "/favicon.ico",
+]);
+
+function normalizeHref(href) {
+  const path = href.split("#")[0].split("?")[0];
+  if (!path.startsWith("/") || path.startsWith("/_next/")) return null;
+  // Served-but-not-pages targets (feeds, icons, robots) are not part of the
+  // page graph and are validated by their own checks.
+  if (NON_PAGE_HREFS.has(path)) return null;
+  return path.length > 1 && !path.endsWith("/") ? `${path}/` : path;
+}
+
+function extractInternalHrefs(html) {
+  const out = new Set();
+  for (const m of html.matchAll(/href="(\/[^"]*)"/g)) {
+    const path = normalizeHref(m[1]);
+    if (path) out.add(path);
+  }
+  return out;
+}
+
+function checkInternalLinkGraph(locs, graph) {
+  console.log("\n== Internal link graph ==");
+  const sitemap = new Set(locs.map((loc) => loc.replace(CANONICAL_HOST, "")));
+
+  // 1. No orphan pages: every sitemap URL is linked from at least one other.
+  const inbound = new Map();
+  for (const [from, hrefs] of graph) {
+    for (const to of hrefs) {
+      if (!inbound.has(to)) inbound.set(to, new Set());
+      inbound.get(to).add(from);
+    }
+  }
+  const orphans = [...sitemap].filter((path) => !inbound.has(path));
+  if (orphans.length === 0) {
+    pass(`link graph: no orphan pages (all ${sitemap.size} sitemap URLs have an internal inbound link)`);
+  } else {
+    orphans.slice(0, 10).forEach((o) => fail(`orphan page (no internal inbound link): ${o}`));
+    if (orphans.length > 10) fail(`…and ${orphans.length - 10} more orphans`);
+  }
+
+  // 2. Hub → spoke: every published sub-service page is linked from its own
+  //    service pillar, and links back to it.
+  const subServicePaths = [...sitemap].filter((p) =>
+    /^\/(en|ms|zh)\/services\/[^/]+\/[^/]+\/$/.test(p),
+  );
+  let missingFromHub = 0;
+  let missingBack = 0;
+  for (const path of subServicePaths) {
+    const segments = path.split("/").filter(Boolean); // [lang, services, service, sub]
+    const hub = `/${segments.slice(0, 3).join("/")}/`;
+    if (!graph.get(hub)?.has(path)) missingFromHub += 1;
+    if (!graph.get(path)?.has(hub)) missingBack += 1;
+  }
+  if (missingFromHub === 0) {
+    pass(`link graph: all ${subServicePaths.length} sub-service pages are linked from their own service pillar`);
+  } else {
+    fail(`${missingFromHub} sub-service pages are not linked from their parent service page`);
+  }
+  if (missingBack === 0) {
+    pass(`link graph: all ${subServicePaths.length} sub-service pages link back to their service pillar`);
+  } else {
+    fail(`${missingBack} sub-service pages do not link back to their parent service page`);
+  }
+
+  // 3. Problem guides → the sub-services that declare them.
+  const problemPaths = [...sitemap].filter((p) => /^\/(en|ms|zh)\/problems\/[^/]+\/$/.test(p));
+  let problemsWithScopes = 0;
+  let problemEdges = 0;
+  for (const path of problemPaths) {
+    const edges = [...(graph.get(path) ?? [])].filter((h) =>
+      /^\/(en|ms|zh)\/services\/[^/]+\/[^/]+\/$/.test(h),
+    );
+    if (edges.length > 0) problemsWithScopes += 1;
+    problemEdges += edges.length;
+  }
+  // 53 of the 57 problem guides have at least one genuinely related
+  // sub-service in the registry (four have none and correctly render no
+  // block), so the guard sits just below that real coverage.
+  if (problemsWithScopes >= 53 && problemEdges >= 180) {
+    pass(
+      `link graph: ${problemsWithScopes}/${problemPaths.length} problem guides link to related sub-service scopes (${problemEdges} links)`,
+    );
+  } else {
+    fail(
+      `problem → sub-service link coverage dropped: ${problemsWithScopes}/${problemPaths.length} guides, ${problemEdges} links`,
+    );
+  }
+
+  // 4. No internal link may point at a URL the site does not serve.
+  const deadLinks = new Map();
+  for (const [from, hrefs] of graph) {
+    for (const to of hrefs) {
+      if (sitemap.has(to) || NON_PAGE_HREFS.has(to)) continue;
+      if (!deadLinks.has(to)) deadLinks.set(to, new Set());
+      deadLinks.get(to).add(from);
+    }
+  }
+  if (deadLinks.size === 0) {
+    pass("link graph: every internal link points at a served page");
+  } else {
+    for (const [target, sources] of [...deadLinks].slice(0, 10)) {
+      fail(`internal link to unserved URL ${target} (from ${[...sources].slice(0, 3).join(", ")})`);
+    }
+    if (deadLinks.size > 10) fail(`…and ${deadLinks.size - 10} more unserved internal targets`);
+  }
 }
 
 async function checkInternalLinks() {
@@ -550,7 +687,8 @@ async function main() {
   console.log(`Phase 25 live QA against ${BASE}\n`);
   await checkHeaders();
   const locs = await checkSitemapLive();
-  await sampleStatuses(locs);
+  const graph = await sampleStatuses(locs);
+  checkInternalLinkGraph(locs, graph);
   await multilingualSpot();
   await checkQuoteApi();
   await checkInternalLinks();

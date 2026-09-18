@@ -20,6 +20,7 @@ import { CtaSection } from "@/components/service/CtaSection";
 import { GuideLinksSection } from "@/components/blog/GuideLinksSection";
 import { InlineSearch } from "@/components/search/InlineSearch";
 import { getArticlesForService } from "@/data/blog";
+import { getSubServicesByService } from "@/data/sub-services";
 import type { ServiceDetail } from "@/data/service-content/types";
 import type { ProblemDetail } from "@/data/problem-content/types";
 
@@ -45,7 +46,13 @@ export function ServicePage({ detail, related, relatedProblems, lang }: ServiceP
       <StartingPricesSection detail={detail} related={related} lang={lang} />
       <AnswerFirstSection detail={detail} lang={lang} />
       <OverviewSection detail={detail} lang={lang} />
-      <SubServicesSection detail={detail} lang={lang} />
+      {/* Phase 28 — the same section now also links down to every published
+          sub-service page for this service (hub → spoke). */}
+      <SubServicesSection
+        detail={detail}
+        lang={lang}
+        linkedSubServices={getSubServicesByService(detail.slug)}
+      />
       <ProblemsSection detail={detail} relatedProblemPages={relatedProblems} lang={lang} />
       <PricingSection detail={detail} lang={lang} />
       <CostFactorsSection detail={detail} lang={lang} />

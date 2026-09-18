@@ -1,10 +1,18 @@
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { SubServiceLinksBlock } from "@/components/service/SubServiceLinksSection";
 import { format, getDictionary } from "@/i18n";
 import type { ServiceDetail, SubService } from "@/data/service-content/types";
+import type { SubServiceDefinition } from "@/data/sub-services/types";
 
 type SubServicesSectionProps = {
   detail: ServiceDetail;
   lang: string;
+  /**
+   * Phase 28 — published sub-service pages for this service. The scopes below
+   * are the overview the service page has always carried; this list is the
+   * linked detail layer for the scopes that have a page of their own.
+   */
+  linkedSubServices?: SubServiceDefinition[];
 };
 
 function SubServiceItem({ subService }: { subService: SubService }) {
@@ -26,7 +34,11 @@ function SubServiceItem({ subService }: { subService: SubService }) {
   );
 }
 
-export function SubServicesSection({ detail, lang }: SubServicesSectionProps) {
+export function SubServicesSection({
+  detail,
+  lang,
+  linkedSubServices = [],
+}: SubServicesSectionProps) {
   const t = getDictionary(lang);
   const hasGroups = Boolean(detail.subServiceGroups?.length);
 
@@ -62,6 +74,13 @@ export function SubServicesSection({ detail, lang }: SubServicesSectionProps) {
             ))}
           </ul>
         )}
+
+        <SubServiceLinksBlock
+          subServices={linkedSubServices}
+          scope="service"
+          name={detail.name}
+          lang={lang}
+        />
       </div>
     </section>
   );

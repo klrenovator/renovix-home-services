@@ -23,7 +23,7 @@ export function getAllLocations(): LocationEntity[] {
   return locationsRegistry;
 }
 
-/** Returns all published location guides (46 active locations). */
+/** Returns all published location guides (53 active locations). */
 export function getPublishedLocations(): LocationEntity[] {
   return locationsRegistry.filter((loc) => loc.published);
 }

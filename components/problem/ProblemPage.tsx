@@ -10,8 +10,10 @@ import { FaqSection } from "@/components/problem/FaqSection";
 import { RelatedProblemsSection } from "@/components/problem/RelatedProblemsSection";
 import { CtaSection } from "@/components/problem/CtaSection";
 import { GuideLinksSection } from "@/components/blog/GuideLinksSection";
+import { SubServiceLinksSection } from "@/components/service/SubServiceLinksSection";
 import { InlineSearch } from "@/components/search/InlineSearch";
 import { getArticlesForProblem } from "@/data/blog";
+import { getSubServicesForProblem } from "@/data/sub-services";
 import { IconAlertTriangle, IconCheck, IconShieldCheck } from "@/components/icons";
 import { getRelatedProblemDetails } from "@/data/problem-content";
 import { format, getDictionary } from "@/i18n";
@@ -61,6 +63,14 @@ export function ProblemPage({ problem, lang }: ProblemPageProps) {
         tone="surface"
       />
       <RelatedServiceSection problem={problem} lang={lang} />
+      {/* Phase 28 — the exact scopes that resolve this problem, taken from each
+          sub-service's own `relatedProblems` (never a keyword guess). */}
+      <SubServiceLinksSection
+        subServices={getSubServicesForProblem(problem.slug)}
+        scope="problem"
+        name={problem.name}
+        lang={lang}
+      />
       <ProblemProcessSection problem={problem} lang={lang} />
       <PropertyTypesSection problem={problem} lang={lang} />
       <AreasSection areasNote={problem.areasNote} lang={lang} />

@@ -870,6 +870,18 @@ export const zh: Dictionary = {
     areaTitle: "适用于{name}住宅的指南",
     description: "关于费用、材料与施工内容的背景阅读。",
   },
+  subServiceLinks: {
+    serviceEyebrow: "细项服务",
+    serviceTitle: "{name}细项服务详解",
+    serviceDescription:
+      "以下每个施工范围都有独立页面，说明包含的工作、不包含的内容、费用因素和常见问题。",
+    problemEyebrow: "细项服务",
+    problemTitle: "解决{name}的具体工程",
+    problemDescription:
+      "以下是处理这个问题所涉及的施工范围。每个范围都有独立页面，说明施工内容、包含项目以及影响费用的因素。",
+    underService: "属于{service}",
+    viewDetails: "查看详情",
+  },
   projects: {
     metaTitle: "吉隆坡与雪兰莪工程照片 | Renovix Home Services",
     metaDescription:
