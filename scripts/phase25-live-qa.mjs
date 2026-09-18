@@ -448,7 +448,10 @@ async function sampleStatuses(locs) {
   const batchSize = 25;
   // Phase 28 — the sweep also reads each page once and keeps its internal
   // links, so the same crawl feeds the internal-link-graph check below.
+  // Phase 29 — the same pass keeps each anchor's visible text, so localized
+  // anchor text is checked without a second crawl.
   const graph = new Map();
+  const anchors = new Map();
   for (let i = 0; i < locs.length; i += batchSize) {
     const batch = locs.slice(i, i + batchSize);
     const results = await Promise.all(
@@ -456,11 +459,13 @@ async function sampleStatuses(locs) {
         const path = loc.replace(CANONICAL_HOST, "");
         const res = await fetchRes(path);
         let hrefs = null;
+        let pageAnchors = null;
         if (res.status === 200) {
           const html = await res.text();
           hrefs = extractInternalHrefs(html);
+          pageAnchors = extractAnchors(html);
         }
-        return { loc, path, status: res.status, hrefs };
+        return { loc, path, status: res.status, hrefs, pageAnchors };
       }),
     );
     for (const r of results) {
@@ -470,11 +475,12 @@ async function sampleStatuses(locs) {
         fail(`sitemap URL ${r.loc} → ${r.status}`);
       }
       if (r.hrefs) graph.set(r.path, r.hrefs);
+      if (r.pageAnchors) anchors.set(r.path, r.pageAnchors);
     }
   }
   if (bad === 0) pass(`all ${ok} sitemap URLs return 200`);
   else fail(`sitemap sweep ${ok} ok / ${bad} failed`);
-  return graph;
+  return { graph, anchors };
 }
 
 /* ------------------------------------------------------------------------ */
@@ -515,6 +521,29 @@ function extractInternalHrefs(html) {
     if (path) out.add(path);
   }
   return out;
+}
+
+/**
+ * Phase 29 — the visible text of every plain-text internal anchor, kept so the
+ * sweep can check that no localized page renders a slug as its own label
+ * (`/ms/problems/bathroom-leakage/` must never read "Bathroom Leakage").
+ */
+function extractAnchors(html) {
+  const out = [];
+  for (const m of html.matchAll(/<a\b[^>]*href="(\/[^"]*)"[^>]*>([^<]*)<\/a>/g)) {
+    const path = normalizeHref(m[1]);
+    const text = m[2].trim();
+    if (path && text) out.push({ path, text });
+  }
+  return out;
+}
+
+/** "bathroom-leakage" → "Bathroom Leakage" — the humanized-slug fingerprint. */
+function humanizeSlug(slug) {
+  return slug
+    .split("-")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
 }
 
 function checkInternalLinkGraph(locs, graph) {
@@ -585,6 +614,29 @@ function checkInternalLinkGraph(locs, graph) {
     );
   }
 
+  // 3b. Phase 29 — every area guide links down to the specific scopes of work
+  //     carried out there (the location → sub-service edge derived from the
+  //     intent matrix and the area's own local problems).
+  const areaPaths = [...sitemap].filter((p) => /^\/(en|ms|zh)\/areas\/[^/]+\/[^/]+\/$/.test(p));
+  let areasWithScopes = 0;
+  let areaEdges = 0;
+  for (const path of areaPaths) {
+    const edges = [...(graph.get(path) ?? [])].filter((h) =>
+      /^\/(en|ms|zh)\/services\/[^/]+\/[^/]+\/$/.test(h),
+    );
+    if (edges.length > 0) areasWithScopes += 1;
+    areaEdges += edges.length;
+  }
+  if (areasWithScopes === areaPaths.length && areaEdges >= areaPaths.length) {
+    pass(
+      `link graph: all ${areaPaths.length} area guides link to the sub-service scopes carried out there (${areaEdges} links)`,
+    );
+  } else {
+    fail(
+      `area → sub-service link coverage incomplete: ${areasWithScopes}/${areaPaths.length} area guides, ${areaEdges} links`,
+    );
+  }
+
   // 4. No internal link may point at a URL the site does not serve.
   const deadLinks = new Map();
   for (const [from, hrefs] of graph) {
@@ -601,6 +653,40 @@ function checkInternalLinkGraph(locs, graph) {
       fail(`internal link to unserved URL ${target} (from ${[...sources].slice(0, 3).join(", ")})`);
     }
     if (deadLinks.size > 10) fail(`…and ${deadLinks.size - 10} more unserved internal targets`);
+  }
+}
+
+/**
+ * Phase 29 — localized anchor text. An anchor whose visible label is just the
+ * humanized slug ("Old House Wiring" pointing at
+ * `/ms/problems/old-house-wiring/`) is English text on a Malay or Chinese
+ * page, and it was the exact defect the area intent-matrix section carried.
+ * Place-name links (`/areas/…`) are excluded: "Cheras" is the correct label in
+ * every language. Single-word slugs are excluded too, because words such as
+ * "About" genuinely exist in both languages' chrome.
+ */
+async function checkLocalizedAnchors(anchors) {
+  console.log("\n== Localized anchor text ==");
+  const offenders = [];
+  for (const [from, list] of anchors) {
+    if (!/^\/(ms|zh)\//.test(from)) continue;
+    for (const { path, text } of list) {
+      const segments = path.split("/").filter(Boolean);
+      if (segments.length < 2 || segments[1] === "areas") continue;
+      const slug = segments[segments.length - 1];
+      if (!slug.includes("-")) continue;
+      if (text === humanizeSlug(slug)) {
+        offenders.push(`${from} → ${path} labeled "${text}"`);
+      }
+    }
+  }
+  if (offenders.length === 0) {
+    pass("no /ms/ or /zh/ page labels a link with the humanized slug (English anchor text)");
+  } else {
+    for (const offender of offenders.slice(0, 10)) {
+      fail(`English slug label on a localized page: ${offender}`);
+    }
+    if (offenders.length > 10) fail(`…and ${offenders.length - 10} more`);
   }
 }
 
@@ -687,8 +773,9 @@ async function main() {
   console.log(`Phase 25 live QA against ${BASE}\n`);
   await checkHeaders();
   const locs = await checkSitemapLive();
-  const graph = await sampleStatuses(locs);
+  const { graph, anchors } = await sampleStatuses(locs);
   checkInternalLinkGraph(locs, graph);
+  await checkLocalizedAnchors(anchors);
   await multilingualSpot();
   await checkQuoteApi();
   await checkInternalLinks();

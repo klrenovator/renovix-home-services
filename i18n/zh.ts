@@ -879,6 +879,10 @@ export const zh: Dictionary = {
     problemTitle: "解决{name}的具体工程",
     problemDescription:
       "以下是处理这个问题所涉及的施工范围。每个范围都有独立页面，说明施工内容、包含项目以及影响费用的因素。",
+    areaEyebrow: "细项服务",
+    areaTitle: "我们在{name}提供的细项服务",
+    areaDescription:
+      "以下是我们在{name}各项服务背后的具体施工范围。每项都有独立页面，说明包含的工作、不包含的内容、费用因素和常见问题。",
     underService: "属于{service}",
     viewDetails: "查看详情",
   },

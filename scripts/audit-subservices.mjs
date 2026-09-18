@@ -293,6 +293,65 @@ if (failures.length === 0) {
   );
 }
 
+/* ------------------------------------------------------------------------ */
+/* Phase 29 — location → scope link graph wiring                              */
+/*                                                                            */
+/* Area guides were the one page type that never linked to a sub-service page. */
+/* `getSubServicesForLocation()` closes that edge from two authored sources —  */
+/* the location × service × sub-service × problem intent matrix and the area's  */
+/* own locally noted problems — and the area services section renders it. This  */
+/* guard checks that derivation instead of the rendered list, so the two can    */
+/* never drift apart.                                                           */
+/* ------------------------------------------------------------------------ */
+const AREA_SUB_COMPONENT = join(ROOT, "components", "area", "AreaSubServicesSection.tsx");
+const AREA_SERVICES_SECTION = join(ROOT, "components", "area", "AreaServicesSection.tsx");
+const areaSubComponent = readIfExists(AREA_SUB_COMPONENT);
+const areaServicesSection = readIfExists(AREA_SERVICES_SECTION);
+
+if (!/export function getSubServicesForLocation\(/.test(registryIndex)) {
+  fail(
+    "Phase 29 link guard: data/sub-services/index.ts must expose getSubServicesForLocation() (the registry-derived scopes relevant to one location).",
+  );
+}
+if (!/getMatrixEntriesForLocation\(locationSlug\)/.test(registryIndex)) {
+  fail(
+    "Phase 29 link guard: getSubServicesForLocation must lead with the authored location × service × sub-service × problem matrix entries.",
+  );
+}
+if (!/getSubServicesForProblem\(problemSlug\)/.test(registryIndex)) {
+  fail(
+    "Phase 29 link guard: getSubServicesForLocation must fall back to the inverse of each sub-service's own relatedProblems — a second hand-maintained list would drift.",
+  );
+}
+if (!/getSubServicesForLocation\(area\.slug, area\.relatedProblems\)/.test(areaSubComponent)) {
+  fail(
+    "Phase 29 link guard: components/area/AreaSubServicesSection.tsx must derive its list from getSubServicesForLocation(area.slug, area.relatedProblems).",
+  );
+}
+if (!/<SubServiceLinksBlock/.test(areaSubComponent)) {
+  fail(
+    "Phase 29 link guard: the area block must render through the shared SubServiceLinksBlock, which filters every link with subServiceLanguages().",
+  );
+}
+if (!/<AreaSubServicesBlock\s+area=\{area\}\s+lang=\{lang\}/.test(areaServicesSection)) {
+  fail(
+    "Phase 29 link guard: AreaServicesSection must render <AreaSubServicesBlock area={area} lang={lang} /> — otherwise area guides lose their only link to the sub-service pages.",
+  );
+}
+for (const lang of ["en", "ms", "zh"]) {
+  const dict = readIfExists(join(ROOT, "i18n", `${lang}.ts`));
+  if (!/areaEyebrow:/.test(dict) || !/areaTitle:/.test(dict) || !/areaDescription:/.test(dict)) {
+    fail(
+      `Phase 29 link guard: i18n/${lang}.ts is missing the area scope copy (areaEyebrow / areaTitle / areaDescription) in the subServiceLinks block.`,
+    );
+  }
+}
+if (failures.length === 0) {
+  console.log(
+    "  ✔ Phase 29 location → scope link wiring: area guide → the scopes derived from the intent matrix and the area's own local problems",
+  );
+}
+
 /* ---- report ---- */
 console.log("\n=== PHASE 19 SUB-SERVICE AUDIT ===\n");
 console.log(`Priced sub-services in catalogue: ${pricedSubs.length}`);

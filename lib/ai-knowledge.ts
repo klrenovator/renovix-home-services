@@ -1,5 +1,6 @@
 import { siteConfig, getWhatsAppHref, getPhoneHref } from "@/data/site";
 import { serviceDetails } from "@/data/service-content";
+import { getAllSubServices, formatSubServicePrice } from "@/data/sub-services";
 import { problemDetails } from "@/data/problem-content";
 import { areaRegions } from "@/data/area-content";
 import { getActiveStateCoverage, getLocationBySlug } from "@/data/locations";
@@ -106,6 +107,24 @@ export function getAiKnowledge() {
       pricingDisclaimer: PRICING_DISCLAIMER_EN,
       pricingLastReviewed: PRICING_LAST_REVIEWED,
     })),
+    // The sub-service layer is the most specific commercial surface the site
+    // publishes (one page per bookable scope), so an answer engine asked
+    // "how much does X cost" or "do they do X" can cite the exact page
+    // instead of the whole trade. Derived from the same registry the pages
+    // render, and the price note comes from `formatSubServicePrice`, which
+    // reads the catalogue row — never a figure typed into this file.
+    subServices: {
+      index: absoluteUrl("en", "/services/"),
+      description:
+        "Specific scopes of work under the ten services. Each has its own page with what the work includes, what is not included, cost factors and FAQs.",
+      scopes: getAllSubServices().map((sub) => ({
+        name: sub.en.name,
+        slug: sub.slug,
+        service: sub.serviceSlug,
+        url: absoluteUrl("en", `/services/${sub.serviceSlug}/${sub.slug}/`),
+        priceNote: formatSubServicePrice(sub, "en") ?? null,
+      })),
+    },
     problems: {
       index: absoluteUrl("en", "/problems/"),
       guides: problemDetails.map((problem) => ({
