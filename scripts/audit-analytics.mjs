@@ -258,10 +258,16 @@ for (const [source, event, where] of fireChecks) {
   }
 }
 
-if (subServicePage.match(/analyticsEvent="subservice_cta_click"/g)?.length === 2) {
-  pass("both sub-service quote CTAs (hero + bottom CTA) carry subservice_cta_click");
+/* Three quote CTAs exist in the current page: hero, pricing card and bottom
+ * CTA. Every one of them must be instrumented — the count mirrors the
+ * component, not a wish; if a CTA is added, it must carry the event and this
+ * count must be raised (never lowered) so an untracked CTA cannot ship. */
+const subServiceQuoteCtaCount = subServicePage.match(/href=\{localizedHref\("\/quote"/g)?.length ?? 0;
+const subServiceTrackedCtaCount = subServicePage.match(/analyticsEvent="subservice_cta_click"/g)?.length ?? 0;
+if (subServiceQuoteCtaCount >= 3 && subServiceTrackedCtaCount === subServiceQuoteCtaCount) {
+  pass(`all ${subServiceQuoteCtaCount} sub-service quote CTAs (hero + pricing card + bottom CTA) carry subservice_cta_click`);
 } else {
-  fail("SubServicePage: expected 2 subservice_cta_click buttons");
+  fail(`SubServicePage: ${subServiceQuoteCtaCount} quote CTAs but only ${subServiceTrackedCtaCount} carry subservice_cta_click — every quote CTA must be tracked`);
 }
 
 const button = read("components/ui/Button.tsx");
