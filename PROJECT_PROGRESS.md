@@ -8,7 +8,7 @@
 - **Stack:** Next.js 16.3.3, React 19.2.8, TypeScript 6.0.3, Tailwind CSS 4.3.3
 - **Languages:** English (`/en/`), Bahasa Melayu (`/ms/`), Simplified Chinese (`/zh/`) — see Phase 6
 
-### Current site inventory (verified in Phase 25, `npm run build` + served `/sitemap.xml`)
+### Current site inventory (re-verified in Phase 27, `npm run build` + served `/sitemap.xml`)
 
 | Item | Count |
 |---|---|
@@ -16,14 +16,15 @@
 | Sub-service pages | 51 per language |
 | Problem guides | 57 per language (10 categories) |
 | Area guides | **53** (21 Kuala Lumpur + 32 Selangor) + 2 region hubs + areas index per language |
-| Projects | 21 per language |
+| Projects | 28 per language (Phase 23 added 7; 2 painting shots withdrawn by owner decision) |
 | Knowledge Hub (`/blog/`) | hub + **12** guides per language |
-| **Canonical pages per language** | **218** |
-| **Canonical URLs total (3 languages)** | **654** |
-| Static pages built | **665** |
+| Smart Service Finder | `/search/` landing per language (base route indexable; `?q=` variants noindex) |
+| **Canonical pages per language** | **226** |
+| **Canonical URLs total (3 languages)** | **678** |
+| Static pages built | **685** (678 canonical + pre-rendered 404 fixtures for excluded slugs) |
 | Pricing rows (`data/pricing/pricing.ts`) | **51** |
 | Search-intent matrix entries | **24** (all pricing derived from `pricingId`) |
-| Audit scripts | 16 static + 1 live server QA |
+| Audit scripts | 17 static + 1 live server QA |
 
 ---
 
@@ -3488,3 +3489,116 @@ limiting (needs owner-provisioned KV before high-traffic launch).
 
 Status vocabulary: Code verified / Build verified / Live verified (HTTP) /
 Owner pending / Deferred with reason.
+
+---
+
+## Phase 27 — Independent SEO/GEO/AEO re-audit + audit-regression fixes + trade-term coverage (2026-09-18)
+
+Trigger: the standing Master SEO + GEO + AEO + AI-search + programmatic-SEO
+prompt. Per its Golden Rule the work is PRESERVE → AUDIT → VERIFY → IMPROVE —
+not rebuild. The site is a mature, production, fully-static 3-language site
+with a 17-script audit harness and a content-governance regime
+(`CONTENT_GOVERNANCE.md`, `CONTENT_MAP.md`, `SITEMAP.md`) that already
+implements most of the prompt's framework (page-eligibility, cannibalisation
+control, single-sourced pricing, no-doorway locations, generated AI layer).
+This phase therefore **did not add pages**; it re-verified the existing work,
+fixed three stale audit assertions that were failing on *correct* behaviour,
+and closed four genuine trade-term keyword gaps found via SERP research.
+
+### 1. Full verification gate re-run (baseline before any change)
+
+- [x] `npm ci` + `npm audit` — 0 vulnerabilities (dependency surface still
+      exactly `next`/`react`/`react-dom`)
+- [x] `npm run type-check` — 0 errors
+- [x] `npm run lint` — 0 warnings
+- [x] `npm run build` — PASS, 685 static pages
+- [x] All 17 static audits + `audit:live` (678/678 sitemap URLs HTTP 200,
+      quote API honest 405/400/403/413/503, internal-link sample resolves)
+
+During the baseline run **two static audits were failing**, neither because
+the site was wrong but because the assertions had drifted from the code:
+
+### 2. Audit regressions found and fixed (correct behaviour, stale assertion)
+
+1. **`audit:analytics` — FAIL "SubServicePage: expected 2 subservice_cta_click
+   buttons".** `SubServicePage.tsx` legitimately carries **three** quote CTAs
+   (hero, the Phase-14 pricing card, and the bottom CTA) and all three already
+   fire `subservice_cta_click`. The assertion was frozen at the pre-pricing-card
+   count of 2, so a *correct* page failed its own gate. Fix: the audit now
+   counts quote CTAs (`localizedHref("/quote"`) and requires the tracked count
+   to equal the CTA count and be ≥3 — so an **untracked** CTA still fails the
+   build, and the guard is now strictly stronger, not weaker.
+2. **`audit:business` — 6 false "phone number" FAILs.** The phone scan's
+   digit-run regex misread integer SVG arc/line segments in
+   `components/icons.tsx` (e.g. `12 12 0 0 0 12 24` in the WhatsApp glyph) as
+   9–15-digit phone numbers. The existing `.` filter caught coordinate
+   decimals but not pure-integer arc commands. Fix: strip SVG `d="…"`
+   attributes before scanning (path geometry can never contain a phone/email/
+   address). No source file's *content* was touched.
+3. **`audit:sitemap` — count drift (would have failed on re-count).** The
+   assertion hardcoded `chrome = 12` / 675 URLs, but the Smart Service Finder
+   added a 13th chrome page (`/search/` landing, indexable; `?q=` variants are
+   `noindex`), making the true served sitemap **678** URLs (226/language).
+   Fix: assertion raised to `chrome = 13`, 226/language, 678 total — matching
+   the served `/sitemap.xml` exactly.
+
+All three fixes were **negative-verified** by re-running the suites: all 17
+static audits now PASS and the served count (678) reconciles with the
+assertion.
+
+### 3. Trade-term keyword coverage (SERP-informed, additive, no new pages)
+
+SERP research for the Malaysian market (EN / BM / 中文) showed that for several
+trades the *dominant* local search phrasing is a "trade person" term that the
+corresponding pillar page never used in rendered copy (the term existed only in
+non-rendered `searchIntents`/`entityKeywords`, or not at all). One natural,
+factual sentence per affected page was added to the existing intro — no new
+pages, no new URLs, no pricing, no claims, no redesign:
+
+| Page | Term added (0 occurrences before) | Evidence |
+| --- | --- | --- |
+| `/en/services/electrical/` | **electrician** (intro + meta) | "electrician near me" / "emergency electrician" already in the page's own `searchIntents`; the word never rendered |
+| `/ms/services/electrical/` | **tukang elektrik** | dominant BM electrician phrasing; zero BM occurrences site-wide |
+| `/zh/services/electrical/` | **电工** | dominant ZH electrician phrasing; zero occurrences on the page |
+| `/ms/services/plumbing/` | **tukang paip** | page already used it once in an FAQ; added to intro so the pillar (not just the FAQ) carries the primary BM phrasing |
+
+Each sentence is factual and scope-consistent with the existing copy (the
+"one of three things" pattern mirrors the page's own sub-service groupings).
+No superlatives, no invented credentials, no price changes.
+
+### 4. Preserved untouched (verified correct — 🟢)
+
+- URL architecture, trailing slashes, 308 root→`/en/`, 4 redirect rules.
+- Single apex canonical + 4-way hreflang on all 678 URLs (live-verified).
+- Single `/sitemap.xml` (678), RFC-9309 robots.txt, content-based lastmod.
+- Structured data (Organization/LocalBusiness/WebSite/WebPage/BreadcrumbList/
+  Service/FAQPage/Article/ImageObject) — still no Review/AggregateRating/geo/
+  priceRange (governance §6, `audit:schema` enforces).
+- Single-sourced pricing (51 rows), `audit:pricing` PASS — **no price changed**.
+- 53 location guides + intent matrix; no `/{service}-in-{area}/` doorway pages.
+- 57 problem guides, 51 sub-services, 12 blog guides, 28 projects.
+- Generated AI layer `/llms.txt`, `/ai/business.json`, `/ai/pricing.json`.
+- Multilingual coverage (EN/MS/ZH) — `audit:multilingual` PASS.
+- Design, branding, layout, navigation, footer, components — **untouched**.
+
+### 5. Still owner-pending (cannot be done in code; unchanged this phase)
+
+Per `PROJECT_OWNER_PENDING.md` / `PHASE_26_IMPLEMENTATION_PLAN.md`: real
+Painting/Waterproofing project photos (owner-parked), GBP claim + confirmed
+opening days, Vercel KV/Upstash for distributed rate limiting, optional
+founder/About E-E-A-T note. None fabricated.
+
+### 6. Test results (this phase)
+
+- [x] `npm run type-check` — PASS
+- [x] `npm run lint` — PASS
+- [x] `npm run build` — PASS (685 static pages)
+- [x] All 17 static audits — PASS (business, og-fonts, project-assets,
+      pricing, projects, locations, authority, subservices, blog, quote,
+      analytics, security, sitemap, schema, multilingual, routes, search)
+- [x] `audit:live` vs `next start` — PASS 199 / WARN 0 / FAIL 0
+- [x] Served `/sitemap.xml` — 678 apex URLs, all 4-way hreflang + lastmod
+- [x] Sampled service / area / sub-service / problem / chrome pages — 200,
+      single H1, correct canonical, OG present
+
+Status: **Code verified + Build verified + Live verified (HTTP)**.
