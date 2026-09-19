@@ -670,13 +670,17 @@ export type Dictionary = {
     ctaHeading: string;
     ctaDescription: string;
   };
-  /** "Guides" cross-links rendered on service, sub-service and problem pages. */
+  /**
+   * "Guides" cross-links rendered on service, sub-service, problem, area and
+   * project pages.
+   */
   guideLinks: {
     eyebrow: string;
     serviceTitle: string;
     subServiceTitle: string;
     problemTitle: string;
     areaTitle: string;
+    projectTitle: string;
     description: string;
   };
   /**

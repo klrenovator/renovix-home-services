@@ -187,12 +187,25 @@ export function getAiKnowledge() {
       template: `${siteConfig.url}/en/search/?q={search_term_string}`,
       supportedLanguages: languages.map((language) => language.code),
       // A compact, machine-readable list of (phrase, kind, slug) tuples the
-      // assistant can use to recognize common phrasings in any of the
-      // three languages. The full set lives in
-      // `data/search/synonyms.ts`; we publish the English subset here so the
-      // AI feed stays small. The MS / ZH tables are reachable from the same
-      // module.
+      // assistant can use to recognize common phrasings in any of the three
+      // languages. The tables live in `data/search/synonyms.ts` — the same
+      // audited tables the Smart Service Finder itself matches against
+      // (`app/[lang]/search/page.tsx`) — and all three are published, one
+      // array per language, because a Malay or Chinese customer phrases the
+      // query in their own language and an assistant reading this feed has to
+      // be able to map it to the page that answers it. `audit:search` proves
+      // every entry resolves to a real entity in its own language.
       englishPhrasings: getSynonyms("en").map((entry: SynonymEntry) => ({
+        phrase: entry.phrase,
+        kind: entry.kind,
+        slug: entry.slug,
+      })),
+      msPhrasings: getSynonyms("ms").map((entry: SynonymEntry) => ({
+        phrase: entry.phrase,
+        kind: entry.kind,
+        slug: entry.slug,
+      })),
+      zhPhrasings: getSynonyms("zh").map((entry: SynonymEntry) => ({
         phrase: entry.phrase,
         kind: entry.kind,
         slug: entry.slug,

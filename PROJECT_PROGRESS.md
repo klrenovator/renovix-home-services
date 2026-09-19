@@ -4044,3 +4044,413 @@ restoring it passes again.
 - [x] Negative test of the new guards — both fail when coverage is broken
 
 Status: **Code verified + Build verified + Live verified (HTTP)**.
+
+---
+
+## Phase 32 — Project → Knowledge Hub guide links (closing the last asymmetric edge in the content graph) (2026-09-19)
+
+Trigger: the standing Master SEO + GEO + AEO + AI-search prompt's
+"strengthen internal linking between services, sub-services, problems, areas
+and relevant locations" directive — worked under the same PRESERVE → AUDIT →
+VERIFY → IMPROVE rule as Phases 27–31. The full verification gate was re-run
+first (baseline, nothing assumed green), then the *rendered* HTML of all 678
+URLs was crawled again to rebuild the edge-type matrix from scratch before
+anything was touched. No URL, price, service, claim, page or piece of
+branding changed.
+
+### 1. Baseline verification gate (all green before any change)
+
+- [x] `npm ci` + `npm run type-check` + `npm run lint` — PASS (0 errors,
+      0 warnings)
+- [x] `npm run build` — PASS (689 generated routes)
+- [x] All 17 static audits — PASS
+- [x] `audit:live` vs `next start` — PASS 210 / WARN 0 / FAIL 0
+
+Everything Phases 27–31 reported is still true and was left untouched (🟢):
+678-URL sitemap, single canonical + 4-way hreflang, single-sourced pricing
+(51 rows), hub↔spoke, problem↔scope, area↔scope, problem↔project,
+service/sub-service↔area graphs, localized anchor text, AI feeds.
+
+### 2. What the rendered-graph crawl actually found
+
+A fresh full crawl of all 678 URLs reclassified every internal link by
+source and target page type. The matrix confirmed all Phase 28–31 edges and
+found exactly **one** remaining asymmetry in the whole content graph:
+
+- Blog guides link to the projects they reference (45 rendered links —
+  15 per language), but **project pages never linked back to a single
+  guide** (0 `project → blog` edges), while the equivalent blog↔service,
+  blog↔sub-service, blog↔problem and blog↔area directions are all
+  symmetric and rendered.
+
+Root cause: the relationship is fully authored (`Article.relatedProjects`
+in the blog registry — 15 (article, project) pairs across 13 of the 28
+published projects) and the data layer already exposes the inverse lookup
+`getArticlesForProject()` — but the getter had **zero callers anywhere in
+the repository**: dead code, so the edge never rendered. This also corrects
+the record from Phase 30, which left the direction alone on the stated
+belief that "the `project → blog` direction has no authored relationship to
+derive from"; the crawl disproved that — the relationship existed and was
+simply never surfaced.
+
+Two other thin spots were examined and again deliberately left alone:
+
+- **`project ↔ area` edges (0 in both directions).** `ProjectLocation`
+  exists in the data model, and project pages already render a location
+  section when it is set — but the field is unset for *every* project
+  because no site address was supplied with the photographs
+  (PROJECT_OWNER_PENDING.md §6, GREY / owner-pending). Deriving an area
+  from a project's category or title would be fabrication
+  (CONTENT_GOVERNANCE §1). The wiring is in place; the edge appears the
+  moment the owner confirms locations — a pure data change.
+- **Region hubs** stay directory pages by design (Phase 30 decision,
+  re-verified).
+
+### 3. What was added (registry-derived, additive only)
+
+1. **`GuideLinksSection` gained a fifth scope, `"project"`** — the exact
+   same component the service, sub-service, problem and area pages already
+   render, same card markup, same "Knowledge Hub" eyebrow, same
+   render-nothing-when-empty behaviour. No new component, no redesign.
+2. **`ProjectPage` renders it** between the location slot and the
+   related-projects section (mirroring ProblemPage's guides → related →
+   CTA order), fed by `getArticlesForProject(project.slug)` — the exact
+   inverse of ArticlePage's own related-project links, so the two
+   directions read the same authored field and cannot drift. 13 of the 28
+   projects resolve to guides; the other 15 correctly render nothing
+   rather than borrowing loosely-related reading.
+3. **Copy** in EN/MS/ZH (`guideLinks.projectTitle` + the `Dictionary`
+   type): "Guides related to this project" / "Panduan berkaitan projek
+   ini" / "与此工程相关的指南" — genuinely localized, factual wording only,
+   no `{name}` placeholder (project titles are long; follows the
+   problem-scope pattern).
+
+### 4. Regression guards (so the edge cannot silently disappear)
+
+- `audit:projects` §11 — wiring guards pin that `getArticlesForProject`
+  stays derived from each article's own `relatedProjects`, that
+  `GuideScope` includes `project` and renders `projectTitle`, that
+  `ProjectPage` renders the section, that it renders nothing when empty,
+  and that all three dictionaries carry the key; plus a coverage report
+  recomputed from the authored registries (15 pairs / 13 projects).
+  **Negative-tested:** removing the `ProjectPage` wiring fails the audit
+  (exit 1) with the exact guard message.
+- `audit:live` 3e — two new rendered assertions in the full-sitemap
+  link-graph sweep: ≥37/84 project pages link to the guides that reference
+  them with ≥42 links (actual: **39/84, 45 links**), and **every** rendered
+  `blog → project` edge is answered by the project's own `project → blog`
+  edge back (pairwise, 45/45). **Negative-tested:** rebuilding with the
+  wiring removed fails both assertions with `0/84 pages, 0 links` and
+  `45 … edge drift`; restoring it passes again.
+
+### 5. Measured result (before → after)
+
+| Metric | Before | After |
+|---|---|---|
+| `project → blog` edges in the rendered graph | **0** | **45** (15 per language) |
+| Project pages rendering the Knowledge Hub block | **0 / 84** | **39 / 84** (13 × 3) |
+| `blog → project` edges answered by a link back | 0 / 45 | **45 / 45** |
+| Average inbound links per blog article | 27.0 | **28.25** |
+| Orphan pages / internal links to unserved URLs | 0 / 0 | 0 / 0 |
+| Sitemap URLs / generated routes | 678 / 689 | **678 / 689 (unchanged)** |
+
+The internal link graph is now symmetric across **every** authored
+relationship family: service↔sub-service, service/sub-service↔area,
+problem↔sub-service, problem↔project, blog↔service, blog↔sub-service,
+blog↔problem, blog↔area and blog↔project.
+
+### 6. Preserved untouched (verified correct — 🟢)
+
+- Every price (51 pricing rows, single-sourced; `audit:pricing` PASS),
+  every URL, canonical, hreflang set, redirect and the 678-URL sitemap.
+- Design, branding, layout, navigation, footer and every existing section —
+  the new block reuses the site's existing guide-card component and keeps
+  the page's surface/white background rhythm.
+- Structured data (no new or altered schema nodes), robots.txt, AI feeds,
+  security headers, quote flow, analytics posture, search finder.
+- Content governance: no invented service, price, claim, location, project
+  or credential; no new page and no new URL of any kind.
+
+### 7. Test results (this phase)
+
+- [x] `npm run type-check` — PASS
+- [x] `npm run lint` — PASS (0 errors, 0 warnings)
+- [x] `npm run build` — PASS (689 generated routes, unchanged)
+- [x] All 17 static audits — PASS (incl. the new `audit:projects` §11)
+- [x] `audit:live` vs `next start` — **PASS 212 / WARN 0 / FAIL 0**,
+      including the two new rendered assertions
+- [x] Served spot-checks — EN/MS/ZH `marble-look-floor-tiling` renders the
+      localized heading/eyebrow and the correct `/{lang}/blog/…` href;
+      EN/MS/ZH `plaster-ceiling-design-downlights` (no authored guides)
+      renders zero headings and zero article links
+- [x] Negative tests — both new guards fail when the wiring is removed and
+      pass again when restored
+
+Status: **Code verified + Build verified + Live verified (HTTP)**.
+
+---
+
+## Phase 33 — `/llms.txt` now enumerates the project portfolio (AI-feed coverage parity) (2026-09-19)
+
+Trigger: the standing Master SEO + GEO + AEO + AI-search prompt's directive to
+keep the machine-readable layer complete, worked under the same
+PRESERVE → AUDIT → VERIFY → IMPROVE rule as Phases 27–32. The full gate was
+re-run first (baseline, nothing assumed green: type-check, lint, build,
+17 static audits, `audit:live` 212/0/0), then the served AI feeds were read
+back and compared against the served sitemap before anything was touched.
+No URL, price, service, claim, page or piece of branding changed.
+
+### 1. Baseline verification gate (all green before any change)
+
+- [x] `npm run type-check` + `npm run lint` — PASS
+- [x] `npm run build` — PASS (689 generated routes)
+- [x] All 17 static audits — PASS
+- [x] `audit:live` vs `next start` — PASS 212 / WARN 0 / FAIL 0
+
+### 2. What the feed audit actually found
+
+`/llms.txt` is the one document written for answer engines and crawlers, and
+it is the place an assistant goes to find *which page* answers a question. Read
+back from the running server, it enumerated every cite-worthy family except
+one:
+
+| Family | Served (EN) | Listed in `/llms.txt` before |
+|---|---|---|
+| Services (with starting prices) | 10 | 10 |
+| Sub-services (Phase 29) | 51 | 51 |
+| Region overviews | 2 | 2 |
+| Area guides | 53 | 53 |
+| Knowledge Hub guides | 12 | 12 |
+| Problem guides | 57 | 12 sampled + index link (by design) |
+| **Project pages** | **28** | **0 — index link only** |
+
+The URL existed in the feed exactly once, as
+`- [Real project portfolio](…/projects/)` in the "More" chrome list. So an
+assistant asked "have they completed this kind of work?" could see *that* a
+portfolio exists but could not cite a single job without crawling the index
+and every card. The data was already built and already trusted: the shared
+builder computes `knowledge.projects.published` (title + url from the project
+registry) and `/ai/business.json` has carried all 28 since Phase 16 — only
+`/llms.txt` never rendered the list. Phase 29 closed the identical gap for
+sub-services; this closes it for the evidence-of-work surface.
+
+The other families were verified complete in both directions (nothing missing,
+nothing stale) and left untouched, including the deliberate problem-guide
+sample: 12 of 57 entries behind an "All problem guides" index link.
+
+### 3. What was added (registry-derived, additive only)
+
+1. **`## Projects` section in `app/llms.txt/route.ts`** — placed after
+   `## Service areas` and before `## Guides`, so the file still reads
+   commercial → local → evidence → educational → chrome. The heading count
+   (`## Projects (28 published jobs)`) is interpolated from
+   `knowledge.projects.published.length`; the "All projects" index line comes
+   first, mirroring the problem-guide section's own index-first shape; then one
+   `- [title](url)` line per published project. No count, title or URL is
+   typed into the file — remove a project from the registry and the feed
+   follows at the next build.
+2. **Wording kept strictly factual** — "Real completed work, documented with
+   its own photographs." Every published project carries a required image
+   (`Project.image`, enforced by the registry type) and each page renders only
+   owner-supplied details, so the line claims nothing the pages do not publish:
+   no location, date, material, outcome or credential claim, and no price.
+
+Result: `/llms.txt` grew 176 → 211 lines (+35) and now lists **all 156
+English content pages** (10 services, 51 sub-services, 2 regions, 53 areas,
+12 guides, 28 projects) plus the problem sample.
+
+### 4. Regression guards (so the family can neither drop out nor go stale)
+
+- `audit:authority` §7 — new source assertion that
+  `app/llms.txt/route.ts` renders `knowledge.projects.published` (the same
+  `aiChecks` pattern that pins the builder wiring). **Negative-tested:**
+  deleting the enumeration block fails the audit (exit 1) with
+  `app/llms.txt/route.ts no longer contains "knowledge.projects.published" —
+  llms.txt enumerates every published project page (Phase 33)`.
+- `audit:live` — new `checkAiFeedCoverage(locs)`, 7 assertions. It fetches the
+  served `/llms.txt`, extracts every canonical URL, and compares it against
+  the served sitemap **in both directions** for each family (services,
+  sub-services, region overviews, area guides, guides, projects), then checks
+  the problem-guide sample is still ≥12 entries behind its index link.
+  **Negative-tested in both directions:** with the section removed the live
+  run exits 1 with `llms.txt omits 28/28 project pages (e.g. …)`; with one
+  invented project URL injected it exits 1 with `llms.txt lists 1 project page
+  URLs the site does not serve (e.g. /en/projects/does-not-exist/)`. Both
+  restore green. Note the broken states pass `type-check`, `lint` and
+  `next build` — the coverage regression is invisible to CI without these
+  guards, which is why the live comparison exists.
+
+### 5. Measured result (before → after)
+
+| Metric | Before | After |
+|---|---|---|
+| Project pages listed in `/llms.txt` | **0 / 28** | **28 / 28** |
+| Families fully enumerated in `/llms.txt` | 5 of 6 | **6 of 6** (problems sampled by design) |
+| `/llms.txt` lines | 176 | **211** |
+| Feed ↔ sitemap parity assertions in live QA | 0 | **7** (both directions, 6 families) |
+| Sitemap URLs / generated routes | 678 / 689 | **678 / 689 (unchanged)** |
+| New pages / new URLs / prices touched | — | **0 / 0 / 0** |
+
+### 6. Preserved untouched (verified correct — 🟢)
+
+- Every price and the pricing catalogue (`audit:pricing` PASS); the feed still
+  hardcodes no figure (`audit:authority` §7 no-hardcoded-price rule).
+- All 678 URLs, canonicals, hreflang sets, redirects and the sitemap; the
+  project pages themselves, their titles, H1s, images and OG assets (spot
+  checked: all 28 feed titles equal their page H1 exactly).
+- `/ai/business.json` (28 projects, unchanged), `/ai/pricing.json`,
+  `robots.txt` (broad `Allow: /` verified to admit AI crawlers) and the
+  existing "More" section of `/llms.txt` — the index link stays as it was.
+- Content governance: no invented service, price, claim, location, project or
+  credential; the sample/summary structure of the feed preserved.
+- `CONTENT_MAP.md` §7 updated to record the new feed contents and the guard
+  (documentation of the change, no rule changed).
+
+### 7. Test results (this phase)
+
+- [x] `npm run type-check` — PASS
+- [x] `npm run lint` — PASS (0 errors, 0 warnings)
+- [x] `npm run build` — PASS (689 generated routes, unchanged)
+- [x] All 17 static audits — PASS (incl. the new `audit:authority` §7 token)
+- [x] `audit:live` vs `next start` — **PASS 219 / WARN 0 / FAIL 0** (was 212),
+      including the 7 new feed-coverage assertions
+- [x] Served spot-checks — 28 project entries parse from the live feed with
+      zero title/H1 mismatches; section renders between Service areas and
+      Guides; business.json still carries 28
+- [x] Negative tests — missing-coverage and stale-entry directions both fail
+      as designed and pass again after restore
+
+Status: **Code verified + Build verified + Live verified (HTTP)**.
+
+---
+
+## Phase 34 — AI feed publishes the phrasing tables for all three languages (2026-09-19)
+
+Trigger: the standing Master SEO + GEO + AEO + AI-search prompt's directive to
+keep the machine-readable layer complete and honest, worked under the same
+PRESERVE → AUDIT → VERIFY → IMPROVE rule as Phases 27–33. The full gate was
+re-run first (baseline, nothing assumed green: type-check, lint, build,
+17 static audits, `audit:live` 219/0/0), then the remaining un-audited feed
+surfaces were read back from the running server before anything was touched.
+No URL, price, service, claim, page or piece of branding changed.
+
+### 1. Baseline verification gate (all green before any change)
+
+- [x] `npm run type-check` + `npm run lint` — PASS
+- [x] `npm run build` — PASS (689 generated routes)
+- [x] All 17 static audits — PASS
+- [x] `audit:live` vs `next start` — PASS 219 / WARN 0 / FAIL 0
+
+### 2. What the feed audit actually found
+
+`/ai/business.json` carries a `searchIntents` block so an assistant can map a
+customer's own words to the page that answers them. Read back from the running
+server, the block published **one** language of that mapping:
+
+| | Served / supported | Published in the feed before |
+|---|---|---|
+| Language codes (`supportedLanguages`) | en, ms, zh | en, ms, zh |
+| English phrasing table | 52 entries | **52** |
+| Malay phrasing table | 44 entries | **0** |
+| Chinese phrasing table | 35 entries | **0** |
+
+The tables themselves were not missing — `data/search/synonyms.ts` has held
+all three (131 entries) since the Smart Service Finder shipped, and
+`app/[lang]/search/page.tsx` matches live queries against them in the page's
+own language (`expandQuerySynonyms` + `getSearchIndex(code)`), audited by
+`npm run audit:search` rule 4 (every entry resolves to a real entity in its
+language). Only the AI feed published the English subset — leaving the site's
+two other published languages unmappable for the assistants the feed exists
+for, and contradicting the block's own description, which promises phrasings
+"in any of the three languages". This is the same defect class as Phase 29
+(sub-services absent from the feeds) and Phase 33 (projects absent from
+`/llms.txt`): the machine-readable layer lagging what the site actually serves.
+
+Verified before changing anything: the visible search does answer those
+languages — `/ms/search/?q=paip+bocor` returns
+`/ms/problems/leaking-pipe/`, and `/zh/search/?q=水管漏水` returns
+`/zh/problems/leaking-pipe/` — so publishing the tables describes real,
+already-shipped behaviour rather than new claims.
+
+### 3. What was added (registry-derived, additive only)
+
+1. **`msPhrasings` and `zhPhrasings` in `lib/ai-knowledge.ts`**, derived
+   through the same `getSynonyms(lang)` getter as `englishPhrasings`, same
+   `(phrase, kind, slug)` shape. The existing English key is untouched, so
+   nothing that already reads the feed breaks; no phrase, slug or mapping is
+   typed into the builder.
+2. **The block's stale comment corrected** — it previously said the MS/ZH
+   tables were "reachable from the same module" while claiming three-language
+   coverage the feed did not have. It now states what is actually published and
+   why (a Malay or Chinese customer phrases the query in their own language).
+3. Nothing else changed: no new endpoint, no new page, no price, and the
+   `description` line the block already carried is now true rather than
+   aspirational.
+
+Measured: the feed carries 52 + 44 + 35 = **131 phrasings** across three
+languages (was 52 in one), and `/ai/business.json` grew 47,533 → **52,724
+bytes** (+10.9%) — the whole cost of the change.
+
+### 4. Regression guards (so a language cannot silently drop out or drift)
+
+- `audit:authority` §7 — two new source assertions that the builder derives
+  the Malay and Chinese tables (`getSynonyms("ms")` / `getSynonyms("zh")`).
+  **Negative-tested:** reducing the ZH table to an empty array fails the audit
+  (exit 1) with `lib/ai-knowledge.ts no longer contains "getSynonyms("zh")" —
+  knowledge builder publishes the Chinese phrasing table (Phase 34)`.
+- `audit:live` — new `checkAiPhrasingCoverage(locs)`, 4 assertions. It reads
+  the **served** `/ai/business.json`, requires a published table for **every**
+  code in the feed's own `supportedLanguages` (so adding a fourth language
+  fails the guard until its table ships — registry-derived, not hardcoded),
+  and resolves **every** `(kind, slug)` entry against the served sitemap in
+  that language's own tree (`service` → `/{lang}/services/{slug}/`,
+  `sub-service` → `/{lang}/services/*/{slug}/`, `problem` →
+  `/{lang}/problems/{slug}/`, `area` → `/{lang}/areas/*/{slug}/`).
+  **Negative-tested twice:** (a) ZH table emptied → live exits 1 with
+  `zhPhrasings missing or empty for supported language "zh"`; (b) a single
+  bogus entry injected into the MS table → the static guard still passes while
+  live exits 1 with `msPhrasings: 1/45 phrasings point at pages the site does
+  not serve (e.g. problem:does-not-exist)`, proving the resolution check is
+  sensitive independently of the presence check. Both restore green. The
+  broken states pass `type-check`, `lint` and `next build`.
+
+### 5. Measured result (before → after)
+
+| Metric | Before | After |
+|---|---|---|
+| Languages with a published phrasing table | **1 of 3** | **3 of 3** |
+| Phrasings in `/ai/business.json` | 52 | **131** (52 en / 44 ms / 35 zh) |
+| `/ai/business.json` size | 47,533 B | **52,724 B** (+10.9%) |
+| Live assertions | 219 | **222** |
+| Sitemap URLs / generated routes | 678 / 689 | **678 / 689 (unchanged)** |
+| New pages / new URLs / prices touched | — | **0 / 0 / 0** |
+
+### 6. Preserved untouched (verified correct — 🟢)
+
+- `englishPhrasings` keeps its name, shape, order and all 52 entries — the
+  change is a pure addition to the feed.
+- `data/search/synonyms.ts` (the source of truth) and the Smart Service Finder
+  itself: no phrase added, removed or reworded; `audit:search` unchanged and
+  passing, including its per-language entity-resolution rule.
+- `/llms.txt` (Phase 29/33 contents), `/ai/pricing.json`, all 678 URLs,
+  canonicals, hreflang sets, structured data, robots.txt and the sitemap.
+- Content governance: every published phrasing already existed in the site's
+  own audited registry — nothing invented, no new claim about the business.
+- `CONTENT_MAP.md` §7 updated to record the published tables and their guards
+  (documentation only, no rule changed).
+
+### 7. Test results (this phase)
+
+- [x] `npm run type-check` — PASS
+- [x] `npm run lint` — PASS (0 errors, 0 warnings)
+- [x] `npm run build` — PASS (689 generated routes, unchanged)
+- [x] All 17 static audits — PASS (incl. both new `audit:authority` tokens)
+- [x] `audit:live` vs `next start` — **PASS 222 / WARN 0 / FAIL 0** (was 219),
+      including the 4 new phrasing assertions
+- [x] Served spot-checks — all 52 en / 44 ms / 35 zh phrasings resolve to
+      served pages in their own language tree; live MS and ZH queries return
+      the same target pages the feed maps them to
+- [x] Negative tests — missing-table and unresolvable-slug directions both
+      fail as designed and pass again after restore
+
+Status: **Code verified + Build verified + Live verified (HTTP)**.

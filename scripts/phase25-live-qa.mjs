@@ -725,6 +725,48 @@ function checkInternalLinkGraph(locs, graph) {
     );
   }
 
+  // 3e. Phase 32 — project pages → the Knowledge Hub guides that reference
+  //     them. The inverse of the article-side relatedProjects edge: a blog
+  //     guide renders links to the projects it declares, and a project page
+  //     renders every guide that declares it, so every rendered blog →
+  //     project edge must be answered by a project → blog edge back.
+  //     15 authored (article, project) pairs cover 13 of the 28 projects;
+  //     the other 15 correctly render no guide block.
+  const blogArticlePaths = new Set(
+    [...sitemap].filter((p) => /^\/(en|ms|zh)\/blog\/[^/]+\/$/.test(p)),
+  );
+  let projectsWithGuides = 0;
+  let projectGuideEdges = 0;
+  let unreturnedBlogProjectEdges = 0;
+  for (const path of blogArticlePaths) {
+    for (const target of graph.get(path) ?? []) {
+      if (projectPaths.has(target) && !graph.get(target)?.has(path)) {
+        unreturnedBlogProjectEdges += 1;
+      }
+    }
+  }
+  for (const path of projectPaths) {
+    const edges = [...(graph.get(path) ?? [])].filter((h) =>
+      blogArticlePaths.has(h),
+    );
+    if (edges.length > 0) projectsWithGuides += 1;
+    projectGuideEdges += edges.length;
+  }
+  if (projectsWithGuides >= 37 && projectGuideEdges >= 42) {
+    pass(
+      `link graph: ${projectsWithGuides}/${projectPaths.size} project pages link to the guides that reference them (${projectGuideEdges} links)`,
+    );
+  } else {
+    fail(
+      `project → blog guide coverage dropped: ${projectsWithGuides}/${projectPaths.size} pages, ${projectGuideEdges} links`,
+    );
+  }
+  if (unreturnedBlogProjectEdges === 0) {
+    pass("link graph: every blog → project link is answered by the project's own guide links back");
+  } else {
+    fail(`${unreturnedBlogProjectEdges} blog → project links point at projects that do not link back (edge drift)`);
+  }
+
   // 4. No internal link may point at a URL the site does not serve.
   const deadLinks = new Map();
   for (const [from, hrefs] of graph) {
@@ -741,6 +783,173 @@ function checkInternalLinkGraph(locs, graph) {
       fail(`internal link to unserved URL ${target} (from ${[...sources].slice(0, 3).join(", ")})`);
     }
     if (deadLinks.size > 10) fail(`…and ${deadLinks.size - 10} more unserved internal targets`);
+  }
+}
+
+/**
+ * Phase 33 — the AI-readable summary must enumerate the pages the site
+ * actually serves. `/llms.txt` lists every service, sub-service, region
+ * overview, area guide, guide and published project in full (the 57 problem
+ * guides are a deliberate sample behind their index link).
+ *
+ * The live sitemap is the crawl-true record of what is served, so the two are
+ * compared in both directions per family: a family that silently drops out of
+ * the feed (the Phase 33 defect — 28 published project pages were reachable
+ * only through the portfolio index) and a URL the feed advertises that the
+ * site no longer serves (stale entry after a page is unpublished).
+ */
+async function checkAiFeedCoverage(locs) {
+  console.log("\n== AI feed coverage (/llms.txt) ==");
+  const { status, text } = await fetchText("/llms.txt");
+  if (status !== 200) {
+    fail(`/llms.txt status ${status}`);
+    return;
+  }
+
+  const served = new Set(locs.map((loc) => loc.replace(CANONICAL_HOST, "")));
+  const listed = new Set(
+    [...text.matchAll(/\((https:\/\/renovixhomeservices\.my\/[^)\s]+)\)/g)].map(
+      (m) => m[1].replace(CANONICAL_HOST, ""),
+    ),
+  );
+
+  // English URLs only: the summary is written once, in the canonical
+  // language, and every entry is a self-canonical English page.
+  const families = [
+    ["service page", /^\/en\/services\/[^/]+\/$/],
+    ["sub-service page", /^\/en\/services\/[^/]+\/[^/]+\/$/],
+    ["region overview", /^\/en\/areas\/[^/]+\/$/],
+    ["area guide", /^\/en\/areas\/[^/]+\/[^/]+\/$/],
+    ["guide", /^\/en\/blog\/[^/]+\/$/],
+    ["project page", /^\/en\/projects\/[^/]+\/$/],
+  ];
+
+  for (const [label, pattern] of families) {
+    const expected = [...served].filter((p) => pattern.test(p));
+    const missing = expected.filter((p) => !listed.has(p));
+    const stale = [...listed].filter(
+      (p) => pattern.test(p) && !served.has(p),
+    );
+    if (missing.length === 0 && stale.length === 0) {
+      pass(`/llms.txt lists all ${expected.length} ${label}s, none unserved`);
+    } else {
+      if (missing.length) {
+        fail(
+          `/llms.txt omits ${missing.length}/${expected.length} ${label}s (e.g. ${missing.slice(0, 3).join(", ")})`,
+        );
+      }
+      if (stale.length) {
+        fail(
+          `/llms.txt lists ${stale.length} ${label} URLs the site does not serve (e.g. ${stale.slice(0, 3).join(", ")})`,
+        );
+      }
+    }
+  }
+
+  // Problem guides are the one sampled family: the index link plus a sample.
+  const problemPages = [...served].filter((p) => /^\/en\/problems\/[^/]+\/$/.test(p));
+  const listedProblems = [...listed].filter((p) => /^\/en\/problems\/[^/]+\/$/.test(p));
+  if (listed.has("/en/problems/") && listedProblems.length >= 12) {
+    pass(
+      `/llms.txt keeps the problem-guide sample (${listedProblems.length} of ${problemPages.length}) behind its index link`,
+    );
+  } else {
+    fail(
+      `/llms.txt problem-guide representation dropped: ${listedProblems.length} listed, index ${listed.has("/en/problems/") ? "present" : "missing"}`,
+    );
+  }
+}
+
+/**
+ * Phase 34 — the AI feed must carry the phrasing tables for every language
+ * the site serves. `/ai/business.json` publishes (phrase → kind + slug)
+ * tuples so an assistant can map a customer's own words to the page that
+ * answers them; a Malay or Chinese customer phrases the query in their own
+ * language, so shipping only the English table left the site's two other
+ * published languages unmappable even though the Smart Service Finder itself
+ * matches them (`app/[lang]/search/page.tsx`).
+ *
+ * Both halves are checked against the live sitemap, because a phrasing table
+ * is only useful if every entry resolves to a page the site actually serves
+ * in that language: one table per code in `supportedLanguages`, each
+ * non-empty, and every (kind, slug) resolving to a real `/{lang}/…` page.
+ */
+async function checkAiPhrasingCoverage(locs) {
+  console.log("\n== AI feed phrasing tables (/ai/business.json) ==");
+  const res = await fetchRes("/ai/business.json");
+  if (res.status !== 200) {
+    fail(`/ai/business.json status ${res.status}`);
+    return;
+  }
+  let feed;
+  try {
+    feed = await res.json();
+  } catch {
+    fail("/ai/business.json is not valid JSON");
+    return;
+  }
+
+  // Index the served URLs by language and section so each phrasing can be
+  // resolved by slug alone (a sub-service slug is unique across services, and
+  // the guard only asserts the page exists for that language, not the parent).
+  const served = new Map();
+  const bucket = (lang, section) => {
+    if (!served.has(lang)) served.set(lang, new Map());
+    const bySection = served.get(lang);
+    if (!bySection.has(section)) bySection.set(section, new Set());
+    return bySection.get(section);
+  };
+  for (const loc of locs) {
+    const [, lang, section, a, b] = loc.replace(CANONICAL_HOST, "").split("/");
+    if (!lang || !section) continue;
+    if (a && !b) bucket(lang, section).add(a);
+    else if (a && b) bucket(lang, `${section}/nested`).add(b);
+  }
+
+  const kinds = [
+    ["service", "services"],
+    ["problem", "problems"],
+    ["area", "areas/nested"],
+    ["sub-service", "services/nested"],
+  ];
+  const codes = feed?.searchIntents?.supportedLanguages;
+  if (!Array.isArray(codes) || codes.length < 3) {
+    fail(
+      `/ai/business.json supportedLanguages ${Array.isArray(codes) ? codes.length : "missing"} — expected the site's published languages`,
+    );
+    return;
+  }
+
+  for (const code of codes) {
+    const key = code === "en" ? "englishPhrasings" : `${code}Phrasings`;
+    const entries = feed?.searchIntents?.[key];
+    if (!Array.isArray(entries) || entries.length === 0) {
+      fail(`/ai/business.json ${key} missing or empty for supported language "${code}"`);
+      continue;
+    }
+    const unresolved = [];
+    const unknownKinds = new Set();
+    for (const entry of entries) {
+      const section = kinds.find(([kind]) => kind === entry.kind)?.[1];
+      if (!section) {
+        unknownKinds.add(entry.kind);
+        continue;
+      }
+      if (!bucket(code, section).has(entry.slug)) {
+        unresolved.push(`${entry.kind}:${entry.slug}`);
+      }
+    }
+    if (unknownKinds.size) {
+      fail(`/ai/business.json ${key} uses unknown kinds: ${[...unknownKinds].join(", ")}`);
+    } else if (unresolved.length === 0) {
+      pass(
+        `/ai/business.json ${key}: all ${entries.length} phrasings resolve to served ${code} pages`,
+      );
+    } else {
+      fail(
+        `/ai/business.json ${key}: ${unresolved.length}/${entries.length} phrasings point at pages the site does not serve (e.g. ${unresolved.slice(0, 3).join(", ")})`,
+      );
+    }
   }
 }
 
@@ -863,6 +1072,8 @@ async function main() {
   const locs = await checkSitemapLive();
   const { graph, anchors } = await sampleStatuses(locs);
   checkInternalLinkGraph(locs, graph);
+  await checkAiFeedCoverage(locs);
+  await checkAiPhrasingCoverage(locs);
   await checkLocalizedAnchors(anchors);
   await multilingualSpot();
   await checkQuoteApi();

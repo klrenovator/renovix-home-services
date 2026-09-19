@@ -8,7 +8,9 @@ import { ProjectProblemsSection } from "./ProjectProblemsSection";
 import { ProjectLocationSection } from "./ProjectLocationSection";
 import { ProjectRelatedSection } from "./ProjectRelatedSection";
 import { ProjectCtaSection } from "./ProjectCtaSection";
+import { GuideLinksSection } from "@/components/blog/GuideLinksSection";
 import { InlineSearch } from "@/components/search/InlineSearch";
+import { getArticlesForProject } from "@/data/blog";
 import type { ResolvedProject } from "@/data/project-content/types";
 
 type ProjectPageProps = {
@@ -40,6 +42,13 @@ export function ProjectPage({ project, lang }: ProjectPageProps) {
       <ProjectSubServicesSection project={project} lang={lang} />
       <ProjectProblemsSection project={project} lang={lang} />
       <ProjectLocationSection project={project} lang={lang} />
+      <GuideLinksSection
+        surface
+        articles={getArticlesForProject(project.slug)}
+        scope="project"
+        name={project.content.title}
+        lang={lang}
+      />
       <ProjectRelatedSection project={project} lang={lang} />
       <ProjectCtaSection lang={lang} />
     </>

@@ -105,6 +105,27 @@ export function GET() {
     lines.push(``);
   }
 
+  // Real project portfolio: the evidence-of-work surface. Listed in full —
+  // one page per published project — straight from the registry the pages
+  // render, the same list `/ai/business.json` carries, so an assistant asked
+  // "have they done this kind of work before?" can cite the actual job rather
+  // than an index page. A project page exists only for work with a real
+  // photograph, and each page shows only the details the business supplied,
+  // so nothing here can claim a location, date or material the site does not.
+  lines.push(
+    ``,
+    `## Projects (${knowledge.projects.published.length} published jobs)`,
+    ``,
+    `Real completed work, documented with its own photographs.`,
+    ``,
+    `- [All projects](${knowledge.projects.index})`,
+    ``,
+  );
+
+  for (const project of knowledge.projects.published) {
+    lines.push(`- [${project.title}](${project.url})`);
+  }
+
   // Knowledge Hub: the educational layer, listed so assistants can cite the
   // guide that actually answers a question rather than a commercial page.
   lines.push(``, `## Guides`, ``, knowledge.knowledgeHub.description, ``);

@@ -871,6 +871,7 @@ export const zh: Dictionary = {
     subServiceTitle: "关于{name}的指南",
     problemTitle: "进一步说明的指南",
     areaTitle: "适用于{name}住宅的指南",
+    projectTitle: "与此工程相关的指南",
     description: "关于费用、材料与施工内容的背景阅读。",
   },
   subServiceLinks: {
