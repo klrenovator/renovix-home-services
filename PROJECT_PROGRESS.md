@@ -4321,3 +4321,136 @@ English content pages** (10 services, 51 sub-services, 2 regions, 53 areas,
       as designed and pass again after restore
 
 Status: **Code verified + Build verified + Live verified (HTTP)**.
+
+---
+
+## Phase 34 — AI feed publishes the phrasing tables for all three languages (2026-09-19)
+
+Trigger: the standing Master SEO + GEO + AEO + AI-search prompt's directive to
+keep the machine-readable layer complete and honest, worked under the same
+PRESERVE → AUDIT → VERIFY → IMPROVE rule as Phases 27–33. The full gate was
+re-run first (baseline, nothing assumed green: type-check, lint, build,
+17 static audits, `audit:live` 219/0/0), then the remaining un-audited feed
+surfaces were read back from the running server before anything was touched.
+No URL, price, service, claim, page or piece of branding changed.
+
+### 1. Baseline verification gate (all green before any change)
+
+- [x] `npm run type-check` + `npm run lint` — PASS
+- [x] `npm run build` — PASS (689 generated routes)
+- [x] All 17 static audits — PASS
+- [x] `audit:live` vs `next start` — PASS 219 / WARN 0 / FAIL 0
+
+### 2. What the feed audit actually found
+
+`/ai/business.json` carries a `searchIntents` block so an assistant can map a
+customer's own words to the page that answers them. Read back from the running
+server, the block published **one** language of that mapping:
+
+| | Served / supported | Published in the feed before |
+|---|---|---|
+| Language codes (`supportedLanguages`) | en, ms, zh | en, ms, zh |
+| English phrasing table | 52 entries | **52** |
+| Malay phrasing table | 44 entries | **0** |
+| Chinese phrasing table | 35 entries | **0** |
+
+The tables themselves were not missing — `data/search/synonyms.ts` has held
+all three (131 entries) since the Smart Service Finder shipped, and
+`app/[lang]/search/page.tsx` matches live queries against them in the page's
+own language (`expandQuerySynonyms` + `getSearchIndex(code)`), audited by
+`npm run audit:search` rule 4 (every entry resolves to a real entity in its
+language). Only the AI feed published the English subset — leaving the site's
+two other published languages unmappable for the assistants the feed exists
+for, and contradicting the block's own description, which promises phrasings
+"in any of the three languages". This is the same defect class as Phase 29
+(sub-services absent from the feeds) and Phase 33 (projects absent from
+`/llms.txt`): the machine-readable layer lagging what the site actually serves.
+
+Verified before changing anything: the visible search does answer those
+languages — `/ms/search/?q=paip+bocor` returns
+`/ms/problems/leaking-pipe/`, and `/zh/search/?q=水管漏水` returns
+`/zh/problems/leaking-pipe/` — so publishing the tables describes real,
+already-shipped behaviour rather than new claims.
+
+### 3. What was added (registry-derived, additive only)
+
+1. **`msPhrasings` and `zhPhrasings` in `lib/ai-knowledge.ts`**, derived
+   through the same `getSynonyms(lang)` getter as `englishPhrasings`, same
+   `(phrase, kind, slug)` shape. The existing English key is untouched, so
+   nothing that already reads the feed breaks; no phrase, slug or mapping is
+   typed into the builder.
+2. **The block's stale comment corrected** — it previously said the MS/ZH
+   tables were "reachable from the same module" while claiming three-language
+   coverage the feed did not have. It now states what is actually published and
+   why (a Malay or Chinese customer phrases the query in their own language).
+3. Nothing else changed: no new endpoint, no new page, no price, and the
+   `description` line the block already carried is now true rather than
+   aspirational.
+
+Measured: the feed carries 52 + 44 + 35 = **131 phrasings** across three
+languages (was 52 in one), and `/ai/business.json` grew 47,533 → **52,724
+bytes** (+10.9%) — the whole cost of the change.
+
+### 4. Regression guards (so a language cannot silently drop out or drift)
+
+- `audit:authority` §7 — two new source assertions that the builder derives
+  the Malay and Chinese tables (`getSynonyms("ms")` / `getSynonyms("zh")`).
+  **Negative-tested:** reducing the ZH table to an empty array fails the audit
+  (exit 1) with `lib/ai-knowledge.ts no longer contains "getSynonyms("zh")" —
+  knowledge builder publishes the Chinese phrasing table (Phase 34)`.
+- `audit:live` — new `checkAiPhrasingCoverage(locs)`, 4 assertions. It reads
+  the **served** `/ai/business.json`, requires a published table for **every**
+  code in the feed's own `supportedLanguages` (so adding a fourth language
+  fails the guard until its table ships — registry-derived, not hardcoded),
+  and resolves **every** `(kind, slug)` entry against the served sitemap in
+  that language's own tree (`service` → `/{lang}/services/{slug}/`,
+  `sub-service` → `/{lang}/services/*/{slug}/`, `problem` →
+  `/{lang}/problems/{slug}/`, `area` → `/{lang}/areas/*/{slug}/`).
+  **Negative-tested twice:** (a) ZH table emptied → live exits 1 with
+  `zhPhrasings missing or empty for supported language "zh"`; (b) a single
+  bogus entry injected into the MS table → the static guard still passes while
+  live exits 1 with `msPhrasings: 1/45 phrasings point at pages the site does
+  not serve (e.g. problem:does-not-exist)`, proving the resolution check is
+  sensitive independently of the presence check. Both restore green. The
+  broken states pass `type-check`, `lint` and `next build`.
+
+### 5. Measured result (before → after)
+
+| Metric | Before | After |
+|---|---|---|
+| Languages with a published phrasing table | **1 of 3** | **3 of 3** |
+| Phrasings in `/ai/business.json` | 52 | **131** (52 en / 44 ms / 35 zh) |
+| `/ai/business.json` size | 47,533 B | **52,724 B** (+10.9%) |
+| Live assertions | 219 | **222** |
+| Sitemap URLs / generated routes | 678 / 689 | **678 / 689 (unchanged)** |
+| New pages / new URLs / prices touched | — | **0 / 0 / 0** |
+
+### 6. Preserved untouched (verified correct — 🟢)
+
+- `englishPhrasings` keeps its name, shape, order and all 52 entries — the
+  change is a pure addition to the feed.
+- `data/search/synonyms.ts` (the source of truth) and the Smart Service Finder
+  itself: no phrase added, removed or reworded; `audit:search` unchanged and
+  passing, including its per-language entity-resolution rule.
+- `/llms.txt` (Phase 29/33 contents), `/ai/pricing.json`, all 678 URLs,
+  canonicals, hreflang sets, structured data, robots.txt and the sitemap.
+- Content governance: every published phrasing already existed in the site's
+  own audited registry — nothing invented, no new claim about the business.
+- `CONTENT_MAP.md` §7 updated to record the published tables and their guards
+  (documentation only, no rule changed).
+
+### 7. Test results (this phase)
+
+- [x] `npm run type-check` — PASS
+- [x] `npm run lint` — PASS (0 errors, 0 warnings)
+- [x] `npm run build` — PASS (689 generated routes, unchanged)
+- [x] All 17 static audits — PASS (incl. both new `audit:authority` tokens)
+- [x] `audit:live` vs `next start` — **PASS 222 / WARN 0 / FAIL 0** (was 219),
+      including the 4 new phrasing assertions
+- [x] Served spot-checks — all 52 en / 44 ms / 35 zh phrasings resolve to
+      served pages in their own language tree; live MS and ZH queries return
+      the same target pages the feed maps them to
+- [x] Negative tests — missing-table and unresolvable-slug directions both
+      fail as designed and pass again after restore
+
+Status: **Code verified + Build verified + Live verified (HTTP)**.

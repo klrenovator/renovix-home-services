@@ -861,6 +861,99 @@ async function checkAiFeedCoverage(locs) {
 }
 
 /**
+ * Phase 34 — the AI feed must carry the phrasing tables for every language
+ * the site serves. `/ai/business.json` publishes (phrase → kind + slug)
+ * tuples so an assistant can map a customer's own words to the page that
+ * answers them; a Malay or Chinese customer phrases the query in their own
+ * language, so shipping only the English table left the site's two other
+ * published languages unmappable even though the Smart Service Finder itself
+ * matches them (`app/[lang]/search/page.tsx`).
+ *
+ * Both halves are checked against the live sitemap, because a phrasing table
+ * is only useful if every entry resolves to a page the site actually serves
+ * in that language: one table per code in `supportedLanguages`, each
+ * non-empty, and every (kind, slug) resolving to a real `/{lang}/…` page.
+ */
+async function checkAiPhrasingCoverage(locs) {
+  console.log("\n== AI feed phrasing tables (/ai/business.json) ==");
+  const res = await fetchRes("/ai/business.json");
+  if (res.status !== 200) {
+    fail(`/ai/business.json status ${res.status}`);
+    return;
+  }
+  let feed;
+  try {
+    feed = await res.json();
+  } catch {
+    fail("/ai/business.json is not valid JSON");
+    return;
+  }
+
+  // Index the served URLs by language and section so each phrasing can be
+  // resolved by slug alone (a sub-service slug is unique across services, and
+  // the guard only asserts the page exists for that language, not the parent).
+  const served = new Map();
+  const bucket = (lang, section) => {
+    if (!served.has(lang)) served.set(lang, new Map());
+    const bySection = served.get(lang);
+    if (!bySection.has(section)) bySection.set(section, new Set());
+    return bySection.get(section);
+  };
+  for (const loc of locs) {
+    const [, lang, section, a, b] = loc.replace(CANONICAL_HOST, "").split("/");
+    if (!lang || !section) continue;
+    if (a && !b) bucket(lang, section).add(a);
+    else if (a && b) bucket(lang, `${section}/nested`).add(b);
+  }
+
+  const kinds = [
+    ["service", "services"],
+    ["problem", "problems"],
+    ["area", "areas/nested"],
+    ["sub-service", "services/nested"],
+  ];
+  const codes = feed?.searchIntents?.supportedLanguages;
+  if (!Array.isArray(codes) || codes.length < 3) {
+    fail(
+      `/ai/business.json supportedLanguages ${Array.isArray(codes) ? codes.length : "missing"} — expected the site's published languages`,
+    );
+    return;
+  }
+
+  for (const code of codes) {
+    const key = code === "en" ? "englishPhrasings" : `${code}Phrasings`;
+    const entries = feed?.searchIntents?.[key];
+    if (!Array.isArray(entries) || entries.length === 0) {
+      fail(`/ai/business.json ${key} missing or empty for supported language "${code}"`);
+      continue;
+    }
+    const unresolved = [];
+    const unknownKinds = new Set();
+    for (const entry of entries) {
+      const section = kinds.find(([kind]) => kind === entry.kind)?.[1];
+      if (!section) {
+        unknownKinds.add(entry.kind);
+        continue;
+      }
+      if (!bucket(code, section).has(entry.slug)) {
+        unresolved.push(`${entry.kind}:${entry.slug}`);
+      }
+    }
+    if (unknownKinds.size) {
+      fail(`/ai/business.json ${key} uses unknown kinds: ${[...unknownKinds].join(", ")}`);
+    } else if (unresolved.length === 0) {
+      pass(
+        `/ai/business.json ${key}: all ${entries.length} phrasings resolve to served ${code} pages`,
+      );
+    } else {
+      fail(
+        `/ai/business.json ${key}: ${unresolved.length}/${entries.length} phrasings point at pages the site does not serve (e.g. ${unresolved.slice(0, 3).join(", ")})`,
+      );
+    }
+  }
+}
+
+/**
  * Phase 29 — localized anchor text. An anchor whose visible label is just the
  * humanized slug ("Old House Wiring" pointing at
  * `/ms/problems/old-house-wiring/`) is English text on a Malay or Chinese
@@ -980,6 +1073,7 @@ async function main() {
   const { graph, anchors } = await sampleStatuses(locs);
   checkInternalLinkGraph(locs, graph);
   await checkAiFeedCoverage(locs);
+  await checkAiPhrasingCoverage(locs);
   await checkLocalizedAnchors(anchors);
   await multilingualSpot();
   await checkQuoteApi();

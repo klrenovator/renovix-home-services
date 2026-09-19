@@ -195,6 +195,18 @@ family, so a family can neither drop out of the feed nor leave a stale URL
 behind. Every other list in the file is complete; the 57 problem guides are
 the one deliberate sample, kept behind their index link.
 
+Since Phase 34 `/ai/business.json` publishes the Smart Service Finder's
+phrasing tables for **all three languages** (`searchIntents.englishPhrasings`,
+`msPhrasings`, `zhPhrasings` — 52 / 44 / 35 entries), not just English. The
+tables are the audited `data/search/synonyms.ts` registries the finder itself
+matches against (`app/[lang]/search/page.tsx`), so an assistant can map a
+customer's own words — "paip bocor", "水管漏水" — to the page that answers
+them, exactly as the site's own search does. `audit:search` proves every entry
+resolves to a real entity in its own language; the live QA additionally proves
+every phrasing resolves to a page the site **serves** in that language
+(`/{lang}/services|problems|areas/…`), so a phrasing can never point at a
+missing or wrong-language page.
+
 ## 8. Monitoring readiness (Search Console / analytics)
 
 Architecture is ready to measure: one canonical URL per page per language,

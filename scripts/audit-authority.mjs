@@ -552,6 +552,16 @@ const aiChecks = [
     "knowledge.projects.published",
     "llms.txt enumerates every published project page (Phase 33)",
   ],
+  [
+    "lib/ai-knowledge.ts",
+    "getSynonyms(\"ms\")",
+    "knowledge builder publishes the Malay phrasing table (Phase 34)",
+  ],
+  [
+    "lib/ai-knowledge.ts",
+    "getSynonyms(\"zh\")",
+    "knowledge builder publishes the Chinese phrasing table (Phase 34)",
+  ],
   ["lib/ai-knowledge.ts", "getServicePricingHeadline", "knowledge builder derives prices from the catalogue"],
 ];
 
