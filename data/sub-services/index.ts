@@ -5,6 +5,11 @@ import { pricingEntries } from "@/data/pricing/pricing";
 import type { PricingEntry } from "@/data/pricing/types";
 import { getServiceDetail } from "@/data/service-content";
 import type { ServiceDetail } from "@/data/service-content/types";
+// Imported from the leaf module, not the `@/data/locations` barrel: the barrel
+// pulls in `hierarchy.ts`, which imports `@/data/i18n`, which imports this
+// registry — a cycle that buys nothing here (the intent matrix only depends on
+// the pricing catalogue and its own types).
+import { getMatrixEntriesForLocation } from "@/data/locations/intent-matrix";
 import type { SubServiceDefinition, SubServiceText } from "./types";
 import { handymanSubServices } from "./content/handyman";
 import { plumbingSubServices } from "./content/plumbing";
@@ -68,6 +73,57 @@ export function getSubServicesByService(serviceSlug: string): SubServiceDefiniti
  */
 export function getSubServicesForProblem(problemSlug: string): SubServiceDefinition[] {
   return subServices.filter((item) => item.relatedProblems.includes(problemSlug));
+}
+
+/**
+ * Phase 29 — the scopes of work genuinely relevant to one location.
+ *
+ * The last missing edge in the internal link graph was area → sub-service: an
+ * area guide linked to its services, problems, nearby areas and guides but
+ * never to a single sub-service page. This helper derives that list from two
+ * authored sources only — nothing is guessed from keywords:
+ *
+ * 1. `data/locations/intent-matrix.ts` — the location × service × sub-service
+ *    × problem entries the site already publishes as its search-intent model.
+ *    Where an entry exists it leads the list, because it is the most specific
+ *    statement the business makes about a location.
+ * 2. The inverse of each sub-service's own `relatedProblems`, walked in the
+ *    order of the problems the area guide itself lists as locally common
+ *    (`AreaDetail.relatedProblems`) — the same registry edge Phase 28 uses to
+ *    put scopes on the problem guides, so the two directions cannot drift.
+ *
+ * Deduplicated in that order, so a matrix-backed scope never appears twice.
+ * Language availability is checked by the caller (`subServiceLanguages`), so a
+ * link is only rendered for a language that actually publishes the page.
+ */
+export function getSubServicesForLocation(
+  locationSlug: string,
+  localProblemSlugs: string[] = [],
+): SubServiceDefinition[] {
+  const ordered: SubServiceDefinition[] = [];
+  const seen = new Set<string>();
+
+  const push = (sub: SubServiceDefinition | undefined) => {
+    if (!sub || seen.has(sub.slug)) {
+      return;
+    }
+    seen.add(sub.slug);
+    ordered.push(sub);
+  };
+
+  for (const entry of getMatrixEntriesForLocation(locationSlug)) {
+    if (entry.published && entry.subServiceSlug) {
+      push(getSubService(entry.subServiceSlug));
+    }
+  }
+
+  for (const problemSlug of localProblemSlugs) {
+    for (const sub of getSubServicesForProblem(problemSlug)) {
+      push(sub);
+    }
+  }
+
+  return ordered;
 }
 
 /** True once a slug belongs to a real sub-service (even if not yet localized). */

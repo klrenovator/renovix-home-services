@@ -686,6 +686,9 @@ export type Dictionary = {
     problemEyebrow: string;
     problemTitle: string;
     problemDescription: string;
+    areaEyebrow: string;
+    areaTitle: string;
+    areaDescription: string;
     underService: string;
     viewDetails: string;
   };

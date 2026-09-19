@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { AreaSubServicesBlock } from "@/components/area/AreaSubServicesSection";
 import { IconArrowRight, IconWrench, serviceIcons } from "@/components/icons";
 import { format, getDictionary } from "@/i18n";
 import { contentHref } from "@/i18n/hrefs";
@@ -70,6 +71,10 @@ export function AreaServicesSection({ area, lang }: AreaServicesSectionProps) {
             );
           })}
         </div>
+
+        {/* Phase 29 — the specific scopes carried out in this location, derived
+            from the search-intent matrix and the area's own local problems. */}
+        <AreaSubServicesBlock area={area} lang={lang} />
       </div>
     </section>
   );

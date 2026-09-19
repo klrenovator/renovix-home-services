@@ -935,6 +935,10 @@ export const en: Dictionary = {
     problemTitle: "The work that fixes {name}",
     problemDescription:
       "These are the scopes we carry out for this problem. Each one has its own page explaining the work, what is included and what changes the cost.",
+    areaEyebrow: "Sub-Services",
+    areaTitle: "Sub-services we carry out in {name}",
+    areaDescription:
+      "The specific scopes behind the services we work in across {name}. Each one has its own page covering what the work includes, what is not included, cost factors and FAQs.",
     underService: "Under {service}",
     viewDetails: "View details",
   },

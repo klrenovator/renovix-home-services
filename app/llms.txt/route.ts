@@ -41,6 +41,23 @@ export function GET() {
     lines.push(`- [${service.name}](${service.url}): ${service.priceNote}.`);
   }
 
+  // Sub-services: one page per bookable scope of work. Listed in full (51)
+  // because they are the most specific commercial surface on the site and the
+  // pages an assistant should cite for a narrow "do they do X / what does X
+  // cost" question. Names, urls and price notes all come from the registry.
+  lines.push(
+    ``,
+    `## Sub-services (${knowledge.subServices.scopes.length} specific scopes, indicative starting prices)`,
+    ``,
+    knowledge.subServices.description,
+    ``,
+  );
+
+  for (const scope of knowledge.subServices.scopes) {
+    const price = scope.priceNote ? `: ${scope.priceNote}` : "";
+    lines.push(`- [${scope.name}](${scope.url}) — under ${scope.service}${price}`);
+  }
+
   lines.push(
     ``,
     `## Problem guides (symptoms, causes, solutions)`,

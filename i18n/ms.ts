@@ -946,6 +946,10 @@ export const ms: Dictionary = {
     problemTitle: "Kerja yang menyelesaikan {name}",
     problemDescription:
       "Ini skop kerja yang kami jalankan untuk masalah ini. Setiap satu ada halaman sendiri yang menerangkan kerja, apa yang termasuk dan apa yang mengubah kos.",
+    areaEyebrow: "Sub-Perkhidmatan",
+    areaTitle: "Sub-perkhidmatan yang kami jalankan di {name}",
+    areaDescription:
+      "Skop khusus di sebalik perkhidmatan yang kami jalankan di {name}. Setiap satu ada halaman sendiri yang merangkumi kerja yang termasuk, apa yang tidak termasuk, faktor kos dan soalan lazim.",
     underService: "Di bawah {service}",
     viewDetails: "Lihat butiran",
   },

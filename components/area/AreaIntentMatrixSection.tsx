@@ -8,6 +8,8 @@ import {
 } from "@/components/icons";
 import { format, getDictionary } from "@/i18n";
 import { contentHref } from "@/i18n/hrefs";
+import { getServiceCategories } from "@/data/i18n";
+import { getProblemsBySlugs } from "@/data/problem-content";
 import type { AreaDetail } from "@/data/area-content/types";
 
 type AreaIntentMatrixSectionProps = {
@@ -23,7 +25,20 @@ export function AreaIntentMatrixSection({
 
   // Group services into high-intent clusters
   const primaryServices = area.servicesAvailable.slice(0, 6);
-  const relatedProblems = area.relatedProblems.slice(0, 4);
+
+  /**
+   * Localization fix (Phase 29): these two link lists used to render labels
+   * derived from the slug (`"bathroom-leakage"` → "Bathroom Leakage"), which
+   * put English anchor text on every `/ms/` and `/zh/` area page. Names now
+   * come from the same localized registries the rest of the page uses — the
+   * problem guides are resolved by slug in the area's own order, and the
+   * service names from the localized service list. A label that cannot be
+   * resolved in this language is skipped rather than falling back to English.
+   */
+  const serviceNames = new Map(
+    getServiceCategories(lang).map((service) => [service.slug, service.name]),
+  );
+  const relatedProblems = getProblemsBySlugs(area.relatedProblems.slice(0, 4), lang);
 
   return (
     <section className="section bg-white">
@@ -54,15 +69,12 @@ export function AreaIntentMatrixSection({
             </p>
 
             <ul className="mt-4 flex-1 space-y-2 border-t border-slate-200/60 pt-4">
-              {relatedProblems.map((problemSlug) => {
-                const problemHref = contentHref("problem", problemSlug, lang);
-                const problemLabel = problemSlug
-                  .split("-")
-                  .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
-                  .join(" ");
+              {relatedProblems.map((problem) => {
+                const problemHref = contentHref("problem", problem.slug, lang);
+                const problemLabel = problem.name;
 
                 return (
-                  <li key={problemSlug} className="flex items-center gap-2">
+                  <li key={problem.slug} className="flex items-center gap-2">
                     <IconCheck className="h-3.5 w-3.5 shrink-0 text-brand" />
                     {problemHref ? (
                       <Link
@@ -101,10 +113,11 @@ export function AreaIntentMatrixSection({
             <ul className="mt-4 flex-1 space-y-2 border-t border-slate-200/60 pt-4">
               {primaryServices.slice(0, 4).map((item) => {
                 const serviceHref = contentHref("service", item.serviceSlug, lang);
-                const serviceLabel = item.serviceSlug
-                  .split("-")
-                  .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
-                  .join(" ");
+                const serviceLabel = serviceNames.get(item.serviceSlug);
+
+                if (!serviceLabel) {
+                  return null;
+                }
 
                 return (
                   <li key={item.serviceSlug} className="flex items-center gap-2">

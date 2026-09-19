@@ -66,6 +66,48 @@ for (const tag of ["en-MY", "ms-MY", "zh-MY"]) {
   else fail(`missing ${tag}`);
 }
 
+/* ------------------------------------------------------------------------ */
+/* Phase 29 — no slug-derived labels in rendered components                   */
+/*                                                                           */
+/* A label built by humanizing a slug (`"bathroom-leakage"` → "Bathroom       */
+/* Leakage") is English on every page, including `/ms/` and `/zh/`. It is the  */
+/* exact defect class fixed on the area intent-matrix section, so the pattern  */
+/* is now banned in `components/` and the area section is pinned to the        */
+/* localized registries it must keep using.                                    */
+/* ------------------------------------------------------------------------ */
+
+function walk(dir, out = []) {
+  for (const entry of fs.readdirSync(path.join(root, dir), { withFileTypes: true })) {
+    const rel = `${dir}/${entry.name}`;
+    if (entry.isDirectory()) walk(rel, out);
+    else if (/\.tsx?$/.test(entry.name)) out.push(rel);
+  }
+  return out;
+}
+
+const componentFiles = walk("components");
+const humanizers = componentFiles.filter((rel) => {
+  const src = read(rel);
+  // `.split("-")` + re-capitalizing the fragment is the humanizer fingerprint.
+  return /\.split\(["']-["']\)/.test(src) && /toUpperCase\(\)/.test(src);
+});
+if (humanizers.length) {
+  fail(
+    `components rebuild a label from a slug (English on MS/ZH pages): ${humanizers.join(", ")}`,
+  );
+} else {
+  pass("no component derives display text by humanizing a slug");
+}
+
+const matrixSection = read("components/area/AreaIntentMatrixSection.tsx");
+for (const [token, label] of [
+  ["getServiceCategories", "service names must come from the localized service list"],
+  ["getProblemsBySlugs", "problem names must come from the localized problem registry"],
+]) {
+  if (matrixSection.includes(token)) pass(`area intent matrix uses ${token} — ${label}`);
+  else fail(`components/area/AreaIntentMatrixSection.tsx no longer uses ${token}: ${label}`);
+}
+
 if (failures.length) {
   console.log(`\nFAIL — ${failures.length} issue(s)`);
   process.exit(1);

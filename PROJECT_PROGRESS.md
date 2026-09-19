@@ -3708,3 +3708,124 @@ project has a confirmed location (never invented).
       card labels and hrefs all correct and localized
 
 Status: **Code verified + Build verified + Live verified (HTTP)**.
+
+---
+
+## Phase 29 — Location → scope links, localized area anchors & sub-service AI coverage (2026-09-18)
+
+Trigger: the standing Master SEO + GEO + AEO + AI-search prompt's
+"strengthen internal linking between services, sub-services, problems, areas
+and relevant locations" directive — worked under the same PRESERVE → AUDIT →
+VERIFY → IMPROVE rule as Phases 27 and 28. The rendered link graph of all 678
+pages was crawled before anything was touched (not assumed), and everything
+below is a measured result. No URL, price, service, claim, page or piece of
+branding changed.
+
+### 1. What the crawl actually found
+
+| Measurement (rendered HTML, all 678 URLs) | Before | After |
+|---|---|---|
+| Links from area guides to sub-service pages | **0** | **2,235** (745 per language) |
+| Area guides with at least one sub-service link | **0 / 159** | **159 / 159** |
+| Average inbound links per sub-service page | 12.8 | **27.5** (min 10 → 11) |
+| English slug-labelled anchors on `/ms/` + `/zh/` pages | up to 8 per area guide | **0** |
+| Sub-services listed in `/llms.txt` + `/ai/business.json` | **0** | **51** |
+| Orphan pages | 0 | 0 |
+| Internal links to unserved URLs | 0 | 0 |
+| Sitemap URLs / generated routes | 678 / 689 | 678 / 689 (unchanged) |
+
+Two genuine defects/gaps were confirmed by crawling the served HTML:
+
+1. **Area → sub-service was the last missing edge.** Area guides linked to
+   services, problems, nearby areas and guides, but not to a single one of the
+   153 published sub-service pages.
+2. **English anchor text on MS/ZH area pages.** `AreaIntentMatrixSection`
+   built its labels by humanizing the slug (`"bathroom-leakage"` → "Bathroom
+   Leakage", `"electrical"` → "Electrical"), so every `/ms/` and `/zh/` area
+   guide carried up to eight English labels — while the rest of the same page
+   used the localized registries (`浴室渗漏`, `水管工程`). It also contradicted
+   CONTENT_GOVERNANCE §5 ("never English copy under a `/ms/` or `/zh/` URL").
+
+### 2. What was added (registry-derived, additive only)
+
+1. **`getSubServicesForLocation(locationSlug, localProblemSlugs)`**
+   (`data/sub-services/index.ts`) — the location half of the sub-service
+   graph, derived from two authored sources and nothing else:
+   the published entries of the location × service × sub-service × problem
+   search-intent matrix for that area first (the site's own published intent
+   model, which until now was rendered nowhere), then the inverse of each
+   sub-service's own `relatedProblems` walked in the order of the problems the
+   area guide lists as locally common. Deduplicated in that order. It imports
+   the intent-matrix leaf module rather than the `@/data/locations` barrel, so
+   no new module cycle is introduced.
+2. **`components/area/AreaSubServicesSection.tsx` (new)** — renders that list
+   inside the existing "Services Available in {area}" section (additive block,
+   no new section, no background change, no redesign) through the shared
+   Phase 28 `SubServiceLinksBlock`, so card markup, localized names and the
+   per-language availability filter (`subServiceLanguages`) stay single-sourced.
+3. **Localization fix** — `AreaIntentMatrixSection` now resolves service names
+   from `getServiceCategories(lang)` and problem names through
+   `getProblemsBySlugs(area.relatedProblems, lang)`; a label that cannot be
+   resolved in the current language is skipped rather than falling back to
+   English. Markup, classes, ordering and list membership are unchanged.
+4. **AI / GEO layer** — the 51 sub-service pages (the most specific commercial
+   surface on the site) were absent from the machine-readable feeds while
+   services, problems, areas, projects and guides were all listed. `/llms.txt`
+   now carries a "Sub-services" section and `/ai/business.json` a `subServices`
+   block (name, slug, parent service, url and a price note derived from the
+   catalogue through `formatSubServicePrice` — no figure is typed into the
+   feed; `audit:authority` §7 still enforces this).
+5. **Copy** in EN/MS/ZH (`subServiceLinks.areaEyebrow` / `areaTitle` /
+   `areaDescription` + the `Dictionary` type) — genuinely localized headings,
+   no English leakage, reusing the site's existing Sub-Perkhidmatan / 细项服务
+   terminology.
+
+### 3. Regression guards (so neither gap can return)
+
+- `audit:subservices` §6 — the Phase 29 wiring guard: the registry must expose
+  `getSubServicesForLocation` and keep deriving it from
+  `getMatrixEntriesForLocation` + `getSubServicesForProblem`, the area block
+  must pass `(area.slug, area.relatedProblems)`, must render through
+  `SubServiceLinksBlock`, must stay rendered by `AreaServicesSection`, and all
+  three dictionaries must carry the area copy. **Negative-tested:** removing
+  the `<AreaSubServicesBlock … />` wiring fails the guard.
+- `audit:multilingual` — a source-level ban on humanizing a slug into display
+  text anywhere in `components/` (the defect class above), plus pins that keep
+  the area intent matrix on `getServiceCategories` / `getProblemsBySlugs`.
+  **Negative-tested:** dropping the `getProblemsBySlugs` resolution fails it.
+- `audit:live` — two new rendered assertions: **every** area guide links to the
+  sub-service scopes carried out there (with the edge count), and **no** `/ms/`
+  or `/zh/` page labels a link with the humanized slug. Place-name links
+  (`/areas/…`) are excluded because "Cheras" is correct in every language.
+  **Negative-tested:** rebuilding with the old humanized labels makes the
+  assertion fail again on the `/ms/` and `/zh/` area guides; with the fix it
+  passes on all 678 pages.
+
+### 4. Preserved untouched (verified correct — 🟢)
+
+- Every price (51 pricing rows, single-sourced), every URL, canonical, hreflang
+  set, redirect and the 678-URL sitemap.
+- Design, branding, layout, navigation, footer and every existing section —
+  the new block is additive inside an existing section.
+- Structured data (no new or altered schema nodes), robots.txt, security
+  headers, quote flow, analytics posture, search finder.
+- Content governance: no invented service, price, claim, location, project or
+  credential; no `{service}-in-{area}` doorway page and no new URL.
+
+### 5. Test results (this phase)
+
+- [x] `npm run type-check` — PASS
+- [x] `npm run lint` — PASS
+- [x] `npm run build` — PASS (689 generated routes, exactly as before this
+      phase; the 678-URL sitemap is unchanged because no route was added or
+      removed)
+- [x] All 17 static audits — PASS (incl. the new Phase 29 wiring + label guards)
+- [x] `audit:live` vs `next start` — **PASS 206 / WARN 0 / FAIL 0**, including
+      the two new rendered assertions
+- [x] Served spot-checks — EN/MS/ZH Mont Kiara, Klang, Kampung Baru:
+      localized block heading, localized card labels and parent-service lines,
+      correct sub-service hrefs, no literal `{name}` placeholders
+- [x] Whole-site scan — 0 humanized-slug anchors on `/ms/` and `/zh/`,
+      0 English problem/sub-service names left on localized pages
+
+Status: **Code verified + Build verified + Live verified (HTTP)**.

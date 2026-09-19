@@ -33,12 +33,19 @@ to every published sub-service page for that service**) → problems → propert
 types → process → areas → FAQs → related services → quote + WhatsApp CTAs.
 Every section exists in all 3 languages.
 
-Sub-service ↔ problem graph (Phase 28): each sub-service page declares its
-`relatedProblems`, and the problem guide renders the inverse of that list
-(`getSubServicesForProblem`) — one authored direction, both links derived from
-it. Rendered graph is enforced by `npm run audit:subservices` §5 (wiring) and
+Sub-service link graph — one authored direction, every link derived from it:
+
+| Edge | Source of truth | Rendered on |
+| --- | --- | --- |
+| service → its sub-services | `getSubServicesByService` | service pillar (Phase 28) |
+| problem → the scopes that fix it | inverse of each sub-service's `relatedProblems` (`getSubServicesForProblem`) | problem guide (Phase 28) |
+| area → the scopes carried out there | published intent-matrix entries for the location, then `getSubServicesForProblem` over the area's own locally common problems (`getSubServicesForLocation`) | area guide's services section (Phase 29) |
+
+Rendered graph is enforced by `npm run audit:subservices` §5–§6 (wiring),
+`npm run audit:multilingual` (no label is built by humanizing a slug) and
 `npm run audit:live` (no orphans, every sub-service page linked from its own
-pillar and back, no internal link to an unserved URL).
+pillar and back, every area guide linked to its scopes, no English slug label
+on a `/ms/` or `/zh/` page, no internal link to an unserved URL).
 
 ## 2. Problem-first map (57 guides at `/{lang}/problems/{slug}/`)
 
@@ -163,7 +170,7 @@ pass both audits, and ship in EN+MS+ZH together.
 
 | Document | Source | Purpose |
 | --- | --- | --- |
-| `/llms.txt` | `lib/ai-knowledge.ts` | Crawler summary: services, prices, guides, areas, process, limits |
+| `/llms.txt` | `lib/ai-knowledge.ts` | Crawler summary: services, prices, sub-services (Phase 29), guides, areas, process, limits |
 | `/ai/business.json` | `lib/ai-knowledge.ts` | Full business knowledge for assistants |
 | `/ai/pricing.json` | `data/pricing/pricing.ts` | Price catalogue with scope, disclaimer, review date |
 | `/sitemap.xml` | content registries | Crawl discovery (see SITEMAP.md) |
@@ -171,6 +178,12 @@ pass both audits, and ship in EN+MS+ZH together.
 All four derive from the registries at build time. Nothing is hand-maintained,
 so nothing can drift. `npm run audit:authority` fails if any AI file hardcodes
 a price or stops reading the shared builder.
+
+Since Phase 29 the business feed and `/llms.txt` also list the 51 published
+**sub-services** (name, parent service, url, and a price note derived from the
+catalogue through `formatSubServicePrice`) — they are the most specific
+commercial surface on the site, so an assistant asked "do they do X" or "what
+does X cost" can cite the exact page rather than the whole trade.
 
 ## 8. Monitoring readiness (Search Console / analytics)
 
