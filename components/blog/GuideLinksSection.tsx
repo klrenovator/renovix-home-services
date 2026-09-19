@@ -7,16 +7,16 @@ import { getLanguageCode } from "@/data/languages";
 import { getArticleCategoryLabel, getArticleText } from "@/data/blog";
 import type { ArticleDefinition } from "@/data/blog/types";
 
-type GuideScope = "service" | "subService" | "problem" | "area";
+type GuideScope = "service" | "subService" | "problem" | "area" | "project";
 
 /**
  * The inbound half of the Knowledge Hub link graph.
  *
- * Service, sub-service, problem and area pages render this when the registry
- * has guides that genuinely cover the entity in question — the articles are
- * matched by their declared relationships, never by keyword. When nothing
- * relevant exists the section renders nothing rather than padding the page
- * with loosely-related reading.
+ * Service, sub-service, problem, area and project pages render this when the
+ * registry has guides that genuinely cover the entity in question — the
+ * articles are matched by their declared relationships, never by keyword.
+ * When nothing relevant exists the section renders nothing rather than
+ * padding the page with loosely-related reading.
  */
 export function GuideLinksSection({
   articles,
@@ -42,6 +42,7 @@ export function GuideLinksSection({
     subService: t.guideLinks.subServiceTitle,
     problem: t.guideLinks.problemTitle,
     area: t.guideLinks.areaTitle,
+    project: t.guideLinks.projectTitle,
   } as const;
 
   return (

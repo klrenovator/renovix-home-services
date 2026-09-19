@@ -4044,3 +4044,146 @@ restoring it passes again.
 - [x] Negative test of the new guards — both fail when coverage is broken
 
 Status: **Code verified + Build verified + Live verified (HTTP)**.
+
+---
+
+## Phase 32 — Project → Knowledge Hub guide links (closing the last asymmetric edge in the content graph) (2026-09-19)
+
+Trigger: the standing Master SEO + GEO + AEO + AI-search prompt's
+"strengthen internal linking between services, sub-services, problems, areas
+and relevant locations" directive — worked under the same PRESERVE → AUDIT →
+VERIFY → IMPROVE rule as Phases 27–31. The full verification gate was re-run
+first (baseline, nothing assumed green), then the *rendered* HTML of all 678
+URLs was crawled again to rebuild the edge-type matrix from scratch before
+anything was touched. No URL, price, service, claim, page or piece of
+branding changed.
+
+### 1. Baseline verification gate (all green before any change)
+
+- [x] `npm ci` + `npm run type-check` + `npm run lint` — PASS (0 errors,
+      0 warnings)
+- [x] `npm run build` — PASS (689 generated routes)
+- [x] All 17 static audits — PASS
+- [x] `audit:live` vs `next start` — PASS 210 / WARN 0 / FAIL 0
+
+Everything Phases 27–31 reported is still true and was left untouched (🟢):
+678-URL sitemap, single canonical + 4-way hreflang, single-sourced pricing
+(51 rows), hub↔spoke, problem↔scope, area↔scope, problem↔project,
+service/sub-service↔area graphs, localized anchor text, AI feeds.
+
+### 2. What the rendered-graph crawl actually found
+
+A fresh full crawl of all 678 URLs reclassified every internal link by
+source and target page type. The matrix confirmed all Phase 28–31 edges and
+found exactly **one** remaining asymmetry in the whole content graph:
+
+- Blog guides link to the projects they reference (45 rendered links —
+  15 per language), but **project pages never linked back to a single
+  guide** (0 `project → blog` edges), while the equivalent blog↔service,
+  blog↔sub-service, blog↔problem and blog↔area directions are all
+  symmetric and rendered.
+
+Root cause: the relationship is fully authored (`Article.relatedProjects`
+in the blog registry — 15 (article, project) pairs across 13 of the 28
+published projects) and the data layer already exposes the inverse lookup
+`getArticlesForProject()` — but the getter had **zero callers anywhere in
+the repository**: dead code, so the edge never rendered. This also corrects
+the record from Phase 30, which left the direction alone on the stated
+belief that "the `project → blog` direction has no authored relationship to
+derive from"; the crawl disproved that — the relationship existed and was
+simply never surfaced.
+
+Two other thin spots were examined and again deliberately left alone:
+
+- **`project ↔ area` edges (0 in both directions).** `ProjectLocation`
+  exists in the data model, and project pages already render a location
+  section when it is set — but the field is unset for *every* project
+  because no site address was supplied with the photographs
+  (PROJECT_OWNER_PENDING.md §6, GREY / owner-pending). Deriving an area
+  from a project's category or title would be fabrication
+  (CONTENT_GOVERNANCE §1). The wiring is in place; the edge appears the
+  moment the owner confirms locations — a pure data change.
+- **Region hubs** stay directory pages by design (Phase 30 decision,
+  re-verified).
+
+### 3. What was added (registry-derived, additive only)
+
+1. **`GuideLinksSection` gained a fifth scope, `"project"`** — the exact
+   same component the service, sub-service, problem and area pages already
+   render, same card markup, same "Knowledge Hub" eyebrow, same
+   render-nothing-when-empty behaviour. No new component, no redesign.
+2. **`ProjectPage` renders it** between the location slot and the
+   related-projects section (mirroring ProblemPage's guides → related →
+   CTA order), fed by `getArticlesForProject(project.slug)` — the exact
+   inverse of ArticlePage's own related-project links, so the two
+   directions read the same authored field and cannot drift. 13 of the 28
+   projects resolve to guides; the other 15 correctly render nothing
+   rather than borrowing loosely-related reading.
+3. **Copy** in EN/MS/ZH (`guideLinks.projectTitle` + the `Dictionary`
+   type): "Guides related to this project" / "Panduan berkaitan projek
+   ini" / "与此工程相关的指南" — genuinely localized, factual wording only,
+   no `{name}` placeholder (project titles are long; follows the
+   problem-scope pattern).
+
+### 4. Regression guards (so the edge cannot silently disappear)
+
+- `audit:projects` §11 — wiring guards pin that `getArticlesForProject`
+  stays derived from each article's own `relatedProjects`, that
+  `GuideScope` includes `project` and renders `projectTitle`, that
+  `ProjectPage` renders the section, that it renders nothing when empty,
+  and that all three dictionaries carry the key; plus a coverage report
+  recomputed from the authored registries (15 pairs / 13 projects).
+  **Negative-tested:** removing the `ProjectPage` wiring fails the audit
+  (exit 1) with the exact guard message.
+- `audit:live` 3e — two new rendered assertions in the full-sitemap
+  link-graph sweep: ≥37/84 project pages link to the guides that reference
+  them with ≥42 links (actual: **39/84, 45 links**), and **every** rendered
+  `blog → project` edge is answered by the project's own `project → blog`
+  edge back (pairwise, 45/45). **Negative-tested:** rebuilding with the
+  wiring removed fails both assertions with `0/84 pages, 0 links` and
+  `45 … edge drift`; restoring it passes again.
+
+### 5. Measured result (before → after)
+
+| Metric | Before | After |
+|---|---|---|
+| `project → blog` edges in the rendered graph | **0** | **45** (15 per language) |
+| Project pages rendering the Knowledge Hub block | **0 / 84** | **39 / 84** (13 × 3) |
+| `blog → project` edges answered by a link back | 0 / 45 | **45 / 45** |
+| Average inbound links per blog article | 27.0 | **28.25** |
+| Orphan pages / internal links to unserved URLs | 0 / 0 | 0 / 0 |
+| Sitemap URLs / generated routes | 678 / 689 | **678 / 689 (unchanged)** |
+
+The internal link graph is now symmetric across **every** authored
+relationship family: service↔sub-service, service/sub-service↔area,
+problem↔sub-service, problem↔project, blog↔service, blog↔sub-service,
+blog↔problem, blog↔area and blog↔project.
+
+### 6. Preserved untouched (verified correct — 🟢)
+
+- Every price (51 pricing rows, single-sourced; `audit:pricing` PASS),
+  every URL, canonical, hreflang set, redirect and the 678-URL sitemap.
+- Design, branding, layout, navigation, footer and every existing section —
+  the new block reuses the site's existing guide-card component and keeps
+  the page's surface/white background rhythm.
+- Structured data (no new or altered schema nodes), robots.txt, AI feeds,
+  security headers, quote flow, analytics posture, search finder.
+- Content governance: no invented service, price, claim, location, project
+  or credential; no new page and no new URL of any kind.
+
+### 7. Test results (this phase)
+
+- [x] `npm run type-check` — PASS
+- [x] `npm run lint` — PASS (0 errors, 0 warnings)
+- [x] `npm run build` — PASS (689 generated routes, unchanged)
+- [x] All 17 static audits — PASS (incl. the new `audit:projects` §11)
+- [x] `audit:live` vs `next start` — **PASS 212 / WARN 0 / FAIL 0**,
+      including the two new rendered assertions
+- [x] Served spot-checks — EN/MS/ZH `marble-look-floor-tiling` renders the
+      localized heading/eyebrow and the correct `/{lang}/blog/…` href;
+      EN/MS/ZH `plaster-ceiling-design-downlights` (no authored guides)
+      renders zero headings and zero article links
+- [x] Negative tests — both new guards fail when the wiring is removed and
+      pass again when restored
+
+Status: **Code verified + Build verified + Live verified (HTTP)**.

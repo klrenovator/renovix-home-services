@@ -725,6 +725,48 @@ function checkInternalLinkGraph(locs, graph) {
     );
   }
 
+  // 3e. Phase 32 — project pages → the Knowledge Hub guides that reference
+  //     them. The inverse of the article-side relatedProjects edge: a blog
+  //     guide renders links to the projects it declares, and a project page
+  //     renders every guide that declares it, so every rendered blog →
+  //     project edge must be answered by a project → blog edge back.
+  //     15 authored (article, project) pairs cover 13 of the 28 projects;
+  //     the other 15 correctly render no guide block.
+  const blogArticlePaths = new Set(
+    [...sitemap].filter((p) => /^\/(en|ms|zh)\/blog\/[^/]+\/$/.test(p)),
+  );
+  let projectsWithGuides = 0;
+  let projectGuideEdges = 0;
+  let unreturnedBlogProjectEdges = 0;
+  for (const path of blogArticlePaths) {
+    for (const target of graph.get(path) ?? []) {
+      if (projectPaths.has(target) && !graph.get(target)?.has(path)) {
+        unreturnedBlogProjectEdges += 1;
+      }
+    }
+  }
+  for (const path of projectPaths) {
+    const edges = [...(graph.get(path) ?? [])].filter((h) =>
+      blogArticlePaths.has(h),
+    );
+    if (edges.length > 0) projectsWithGuides += 1;
+    projectGuideEdges += edges.length;
+  }
+  if (projectsWithGuides >= 37 && projectGuideEdges >= 42) {
+    pass(
+      `link graph: ${projectsWithGuides}/${projectPaths.size} project pages link to the guides that reference them (${projectGuideEdges} links)`,
+    );
+  } else {
+    fail(
+      `project → blog guide coverage dropped: ${projectsWithGuides}/${projectPaths.size} pages, ${projectGuideEdges} links`,
+    );
+  }
+  if (unreturnedBlogProjectEdges === 0) {
+    pass("link graph: every blog → project link is answered by the project's own guide links back");
+  } else {
+    fail(`${unreturnedBlogProjectEdges} blog → project links point at projects that do not link back (edge drift)`);
+  }
+
   // 4. No internal link may point at a URL the site does not serve.
   const deadLinks = new Map();
   for (const [from, hrefs] of graph) {

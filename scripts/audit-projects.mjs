@@ -30,6 +30,10 @@
  *  9. Orphans — every published project is reachable from the portfolio index
  *     and from its service page (category-based links), and appears in the
  *     sitemap inventory (`ALL_PROJECTS`).
+ * 10. Problem → Project (Phase 30) — wiring guard for the registry-derived
+ *     reverse proof edge on problem guides.
+ * 11. Project → Knowledge Hub guides (Phase 32) — wiring guard + coverage for
+ *     the inverse of each article's authored `relatedProjects` edge.
  *
  * Run with: npm run audit:projects
  */
@@ -430,6 +434,71 @@ for (const dict of ["en", "ms", "zh"]) {
 }
 
 /* ------------------------------------------------------------------------ */
+/* 10b. Phase 32 — Project → Knowledge Hub guides.                           */
+/*                                                                           */
+/* The registry-derived inverse of the article-side `relatedProjects` edge:  */
+/* an article renders links to the projects it declares (ArticlePage), and   */
+/* the project page renders the articles that declare it — both directions   */
+/* read the same authored field, so they cannot drift.                       */
+/* ------------------------------------------------------------------------ */
+
+const blogIndexSource = read("data/blog/index.ts");
+const guideLinksSectionSource = read("components/blog/GuideLinksSection.tsx");
+const projectPageSource = read("components/projects/ProjectPage.tsx");
+
+if (
+  !/export function getArticlesForProject\([\s\S]*?relatedProjects\.includes\(projectSlug\)/.test(
+    blogIndexSource,
+  )
+) {
+  fail(
+    "Phase 32 link guard: data/blog/index.ts must expose getArticlesForProject() derived from each article's own relatedProjects — the exact inverse of ArticlePage's related-project links.",
+  );
+}
+if (!/type GuideScope = [^;]*"project"/.test(guideLinksSectionSource)) {
+  fail(
+    'Phase 32 link guard: GuideLinksSection must support the "project" scope.',
+  );
+}
+if (!/project: t\.guideLinks\.projectTitle/.test(guideLinksSectionSource)) {
+  fail(
+    "Phase 32 link guard: GuideLinksSection must render guideLinks.projectTitle for the project scope.",
+  );
+}
+if (!/articles\.length === 0[\s\S]*?return null/.test(guideLinksSectionSource)) {
+  fail(
+    "Phase 32 link guard: GuideLinksSection must render nothing when no guide declares the entity (never pad with loosely-related reading).",
+  );
+}
+if (
+  !/getArticlesForProject\(project\.slug\)/.test(projectPageSource) ||
+  !/scope="project"/.test(projectPageSource)
+) {
+  fail(
+    'Phase 32 link guard: components/projects/ProjectPage.tsx must render <GuideLinksSection … scope="project" /> fed by getArticlesForProject(project.slug).',
+  );
+}
+for (const dict of ["en", "ms", "zh"]) {
+  const source = read(`i18n/${dict}.ts`);
+  if (!/projectTitle:\s*"[^"]+"/.test(source)) {
+    fail(`Phase 32 link guard: i18n/${dict}.ts is missing guideLinks.projectTitle.`);
+  }
+}
+
+/* Coverage of the inverse edge, computed from the authored registries. */
+const publishedProjectSlugs = new Set(publishedProjects.map((p) => p.slug));
+const guidePairs = [];
+for (const file of readdirSync(join(ROOT, "data", "blog", "content")).filter(
+  (f) => f.endsWith(".ts"),
+)) {
+  const src = read(`data/blog/content/${file}`);
+  const articleSlug = parseStringField(src, "slug");
+  for (const ref of parseNamedStringArray(src, "relatedProjects") ?? []) {
+    if (publishedProjectSlugs.has(ref)) guidePairs.push(`${articleSlug} → ${ref}`);
+  }
+}
+
+/* ------------------------------------------------------------------------ */
 /* Report.                                                                   */
 /* ------------------------------------------------------------------------ */
 
@@ -480,6 +549,14 @@ console.log(
 );
 for (const [slug, list] of [...projectsByProblem.entries()].sort()) {
   console.log(`  ✔ ${slug}: ${list.join(", ")}`);
+}
+
+const projectsWithGuides = new Set(guidePairs.map((pair) => pair.split(" → ")[1]));
+console.log(
+  `\nProject → Knowledge Hub guides (Phase 32): ${guidePairs.length} (article, project) pairs across ${projectsWithGuides.size} published projects`,
+);
+for (const pair of guidePairs.sort()) {
+  console.log(`  ✔ ${pair}`);
 }
 
 console.log("\nMultilingual coverage: en/ms/zh copy + route lists verified for all published projects.");

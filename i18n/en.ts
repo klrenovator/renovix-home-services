@@ -927,6 +927,7 @@ export const en: Dictionary = {
     subServiceTitle: "Guides about {name}",
     problemTitle: "Guides that explain this further",
     areaTitle: "Guides for homes in {name}",
+    projectTitle: "Guides related to this project",
     description:
       "Background reading on cost, materials and what the work involves.",
   },

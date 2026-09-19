@@ -938,6 +938,7 @@ export const ms: Dictionary = {
     subServiceTitle: "Panduan tentang {name}",
     problemTitle: "Panduan yang menerangkan lebih lanjut",
     areaTitle: "Panduan untuk rumah di {name}",
+    projectTitle: "Panduan berkaitan projek ini",
     description:
       "Bacaan latar tentang kos, bahan dan apa yang terlibat dalam kerja ini.",
   },
