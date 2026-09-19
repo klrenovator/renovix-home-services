@@ -3829,3 +3829,218 @@ Two genuine defects/gaps were confirmed by crawling the served HTML:
       0 English problem/sub-service names left on localized pages
 
 Status: **Code verified + Build verified + Live verified (HTTP)**.
+
+---
+
+## Phase 30 — Problem → project proof links (the last missing edge in the project graph) (2026-09-19)
+
+Trigger: the standing Master SEO + GEO + AEO + AI-search prompt's
+"strengthen internal linking between services, sub-services, problems, areas
+and relevant locations" directive — worked under the same PRESERVE → AUDIT →
+VERIFY → IMPROVE rule as Phases 27–29. The full verification gate was re-run
+first (baseline, nothing assumed), then the *rendered* HTML of all 678 URLs
+was crawled to build an edge-type matrix of the internal link graph before
+anything was touched. No URL, price, service, claim, page or piece of
+branding changed.
+
+### 1. Baseline verification gate (all green before any change)
+
+- [x] `npm ci` + `npm run type-check` + `npm run lint` — PASS (0 errors,
+      0 warnings)
+- [x] `npm run build` — PASS (689 generated routes)
+- [x] All 17 static audits — PASS
+- [x] `audit:live` vs `next start` — PASS 206 / WARN 0 / FAIL 0
+
+Everything Phases 27–29 reported is still true and was left untouched (🟢):
+678-URL sitemap, single canonical + 4-way hreflang, single-sourced pricing
+(51 rows), service→sub-service hub links, problem→sub-service scope links,
+area→sub-service location links, localized anchor text, sub-services in the
+AI feeds.
+
+### 2. What the rendered-graph crawl actually found
+
+A full crawl of all 678 URLs classified every internal link by source and
+target page type (home / service / sub-service / problem / area /
+area-region / blog / project / index / chrome). The matrix confirmed all
+Phase 28/29 edges and found exactly **one** remaining asymmetry:
+
+- Project pages link to problem guides (Phase 21 `ProjectProblemsSection`,
+  210 rendered links), sub-service pages and service pages link to projects
+  — but **problem guides never linked back to a single project page**
+  (0 `problem → project` edges in the rendered graph), even though the
+  relationship is fully authored in the registry.
+
+Two other thin spots were examined and deliberately left alone (🟢): the six
+region hubs (`/areas/kuala-lumpur/`, `/areas/selangor/`) are directory pages
+by design — their 53 area guides already carry the problem/scope edges — and
+the `project → blog` direction has no authored relationship to derive from,
+so adding it would mean guessing (forbidden by CONTENT_GOVERNANCE).
+
+### 3. What was added (registry-derived, additive only)
+
+1. **`getProjectsForProblem(problemSlug)`** (`data/project-content/index.ts`)
+   — the Problem → Project direction, derived as the exact inverse of the
+   project pages' own related-guides logic: a project qualifies only when a
+   sub-service mapped to it (`Project.subServices`, Phase 21) declares the
+   problem in its own `relatedProblems` (Phase 19 registry). Same authored
+   chain as `ProjectProblemsSection`, so the two directions cannot drift; no
+   second hand-maintained list, no keyword inference.
+2. **`components/problem/ProblemProjectsSection.tsx` (new)** — renders up to
+   three of those projects on the problem guide as the same photograph cards
+   the sub-service pages already use (real image, real localized title and
+   alt text, "View project"). Placed directly after the Phase 28 scope block
+   ("the scopes that fix this" → "proof we fixed it"). Returns `null` when
+   no mapped project exists — 32 of the 57 problem guides resolve to scopes
+   with no photographed work yet (painting, waterproofing, flooring,
+   handyman and unmapped jobs), and their pages correctly show nothing
+   rather than borrowing projects from a parent service.
+3. **Copy** in EN/MS/ZH (`problemPage.projectsEyebrow` / `projectsTitle` /
+   `projectsDescription` + the `Dictionary` type) — genuinely localized
+   ("Kerja projek yang berkaitan dengan {name}" / "与{name}相关的工程实绩"),
+   factual wording only ("project work connected to…", never a claim the
+   registry cannot back).
+
+### 4. Regression guards (so the edge cannot silently disappear)
+
+- `audit:projects` §10 — recomputes the whole Problem → Project edge set from
+  the authored sources (project `subServices` × sub-service
+  `relatedProblems`) and reports it; wiring guard pins that
+  `getProjectsForProblem` stays derived from the mapped sub-services' own
+  `relatedProblems` (the exact inverse of `ProjectProblemsSection`), that
+  `ProblemPage` renders the section, that the section renders nothing when
+  empty, and that all three dictionaries carry the copy.
+  **Negative-tested:** breaking the `ProblemPage` wiring fails the audit.
+- `audit:live` — two new rendered assertions in the full-sitemap link-graph
+  sweep: 75/171 problem guides (all that have genuinely mapped projects)
+  link to project pages (156 links), and **every** problem → project link is
+  answered by the project's own related-guides link back (safe pairwise
+  check because no project's problem union exceeds the guides section cap of
+  six — verified, max is exactly 6). **Negative-tested:** rebuilding without
+  the section fails the assertion with `0/171 guides, 0 links`.
+
+### 5. Measured result (before → after)
+
+| Metric | Before | After |
+|---|---|---|
+| `problem → project` edges in the rendered graph | **0** | **156** (52 per language) |
+| Problem guides linking to genuinely mapped projects | **0 / 171** | **75 / 171** (25 × 3) |
+| Project guides that correctly show no section (no mapped work) | 171 | 96 / 171 |
+| Average inbound links per project page | 16.4 | **18.2** |
+| Orphan pages / internal links to unserved URLs | 0 / 0 | 0 / 0 |
+| Sitemap URLs / generated routes | 678 / 689 | **678 / 689 (unchanged)** |
+
+### 6. Preserved untouched (verified correct — 🟢)
+
+- Every price (51 pricing rows, single-sourced; `audit:pricing` PASS), every
+  URL, canonical, hreflang set, redirect and the 678-URL sitemap.
+- Design, branding, layout, navigation, footer and every existing section —
+  the new block is an additive section between two existing ones, reusing the
+  site's existing photograph-card markup.
+- Structured data (no new or altered schema nodes), robots.txt, AI feeds,
+  security headers, quote flow, analytics posture, search finder.
+- Content governance: no invented service, price, claim, location, project or
+  credential; no new page and no new URL of any kind.
+
+### 7. Test results (this phase)
+
+- [x] `npm run type-check` — PASS
+- [x] `npm run lint` — PASS (0 errors, 0 warnings)
+- [x] `npm run build` — PASS (689 generated routes, unchanged)
+- [x] All 17 static audits — PASS (incl. the new `audit:projects` §10)
+- [x] `audit:live` vs `next start` — **PASS 208 / WARN 0 / FAIL 0**,
+      including the two new rendered assertions
+- [x] Served spot-checks — EN/MS/ZH `sagging-ceiling` renders the section
+      with localized heading, 3 real project cards and correct hrefs;
+      EN/MS/ZH `peeling-paint` (no mapped work) renders 0 project links and
+      no section heading
+- [x] Negative tests — both new guards fail when the wiring is removed
+
+Status: **Code verified + Build verified + Live verified (HTTP)**.
+
+---
+
+## Phase 31 — Owner coverage checklist: full verification of the service / sub-service / area / kampung / problem architecture + completeness guards (2026-09-19)
+
+Trigger: the owner's checklist — service pages, sub-service pages, area
+coverage for every service and sub-service, sub-area and kampung pages,
+problem pages per service, strong internal linking, and **everything in all
+three languages (EN/MS/ZH)** — with the instruction to check completely what
+is missing and add whatever remains. Worked under the standing PRESERVE →
+AUDIT → VERIFY → IMPROVE rule: the rendered HTML of the whole site was
+crawled and measured before any conclusion, and no page, URL, price, service
+or claim was added or removed.
+
+### 1. What the crawl actually verified (the full checklist, measured)
+
+| Owner checklist item | Measured result (rendered HTML + sitemap) | Status |
+|---|---|---|
+| Service pages, all 3 languages | **10 services × EN/MS/ZH = 30 pages**, each with localized H1/meta/sections | ✅ complete |
+| Sub-service pages, all 3 languages | **51 sub-services × 3 = 153 pages** (all priced catalogue rows have a page) | ✅ complete |
+| Every service links every area | **30/30 service pillars link to all 53 area guides** of their language (1,590 links, localized names) | ✅ complete |
+| Every sub-service links every area | **153/153 sub-service pages link to all 53 area guides** (8,109 links) | ✅ complete |
+| Area pages per service & sub-service (the other direction) | **159/159 area guides** each render ≥6 locally-noted services + linked sub-service scopes (Phase 29) + ≥4 local problems | ✅ complete |
+| Sub-area & kampung tier pages | hierarchy model supports …→ kampung → sub-area; both authored tiers are published guides: **Kampung Baru (`kampung`) and KL City Centre (`sub_area`)**, each full 13-section × EN/MS/ZH | ✅ complete |
+| Problem pages per service | **57 problems × 3 = 171 guides**; all **10 services** receive problem-guide links in all 3 languages; every problem links ≥1 service + all 53 areas | ✅ complete |
+| Three-language parity | all **513** service / sub-service / area / problem pages carry full `en-MY`/`ms-MY`/`zh-MY`/`x-default` hreflang + self-canonical; 0 English anchors on `/ms/` or `/zh/` (Phase 29 guard) | ✅ complete |
+| Internal linking strength | 0 orphan pages, 0 internal links to unserved URLs, full hub↔spoke, problem↔scope, area↔scope, problem↔project (Phase 30) and service/sub-service↔area graphs | ✅ complete |
+
+### 2. What was deliberately NOT added (governance, not omission)
+
+- **No `/{service}-in-{area}/` pages.** CONTENT_GOVERNANCE §3 bans per-service
+  area doorways; the site's answer to "service X in area Y" is the area guide
+  itself — each of the 53 guides carries six locally-noted services, local
+  problems, FAQs and intent-matrix answers for every service genuinely
+  carried out there, and every service/sub-service page links back to all 53.
+  Creating ~2,850 service×area / sub-service×area URLs would duplicate that
+  content, cannibalize the guides and trip the site's own no-doorway audit.
+  The owner-checklist intent (service + area coverage, both directions, all
+  languages) is fully met by the hub-and-spoke graph — now machine-enforced.
+- **No mass kampung pages.** The registry's kampung tier is used exactly
+  where Phase 23's quality gate justified it (Kampung Baru's timber-house
+  stock). A kampung page needs verified coverage + unique local context +
+  unique FAQs to pass `audit:locations`; adding more by place-name alone
+  would violate "never fabricate" / "when in doubt, publish less". The data
+  model makes any future owner-approved addition a pure data change.
+- **No new language, page-type or URL.** Sitemap stays 678 URLs; 689
+  generated routes unchanged.
+
+### 3. The one genuine gap found — and closed (regression enforcement)
+
+The crawl proved the service/sub-service ↔ area completeness exists — but
+**no audit enforced it**: the Phase 28–30 guards cover hub→spoke,
+problem→scope, area→scope and problem→project edges, yet a future edit
+breaking the "where we work" block (or an area guide's service list) would
+have shipped silently. `audit:live` now pins the owner-checklist edges in the
+rendered graph:
+
+1. **Every one of the 183 service + sub-service pages links to all 53 area
+   guides of its own language** (9,699 links — anything short fails).
+2. **All 159 area guides link back to ≥6 service pillars** (the
+   locally-noted services section).
+
+Both are deterministic (exact inventory × exact coverage) and were
+**negative-tested**: rebuilding with the `AreasSection` area chips removed
+fails assertion 1 with `9169 service/sub-service → area links missing`;
+restoring it passes again.
+
+### 4. Preserved untouched (verified correct — 🟢)
+
+- Every page, URL, canonical, hreflang set, redirect and the 678-URL sitemap.
+- Every price (single-sourced catalogue), all schema nodes, robots.txt, AI
+  feeds, quote flow, analytics posture, search finder.
+- Design, branding, layout, navigation, footer and every existing section.
+- All Phase 27–30 work re-verified green at this phase's baseline and left
+  unchanged.
+
+### 5. Test results (this phase)
+
+- [x] `npm run type-check` — PASS
+- [x] `npm run lint` — PASS (0 errors, 0 warnings)
+- [x] `npm run build` — PASS (689 generated routes, unchanged)
+- [x] All 17 static audits — PASS
+- [x] `audit:live` vs `next start` — **PASS 210 / WARN 0 / FAIL 0**,
+      including the two new owner-checklist assertions
+- [x] Owner-checklist crawl: 10/10 verification items PASS (table in §1)
+- [x] Negative test of the new guards — both fail when coverage is broken
+
+Status: **Code verified + Build verified + Live verified (HTTP)**.
