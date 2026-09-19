@@ -136,6 +136,24 @@ export function getProjectsForSubService(slug: string): Project[] {
   );
 }
 
+/**
+ * Phase 30 — published projects whose genuinely mapped scope documents a fix
+ * for a given problem guide. This is the Problem → Project direction, derived
+ * as the exact inverse of the project pages' own related-guides logic: a
+ * project qualifies only when a sub-service mapped to it declares the problem
+ * in its own `relatedProblems` (Phase 19 registry) — the same chain
+ * `ProjectProblemsSection` walks in the other direction, so the two
+ * directions can never drift apart. A problem with no such project renders no
+ * section at all; nothing is ever inferred from category names.
+ */
+export function getProjectsForProblem(problemSlug: string): Project[] {
+  return getPublishedProjects().filter((project) =>
+    getProjectSubServices(project).some((sub) =>
+      sub.relatedProblems.includes(problemSlug),
+    ),
+  );
+}
+
 export function getProjectCategory(
   id: ProjectCategoryId,
 ): ProjectCategory | undefined {

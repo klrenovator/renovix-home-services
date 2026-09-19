@@ -637,6 +637,94 @@ function checkInternalLinkGraph(locs, graph) {
     );
   }
 
+  // 3c. Phase 30 — problem guides → photographed project proof. The inverse of
+  //     the Phase 21 project → problem edge: a problem guide links to a
+  //     project only when a sub-service mapped to that project declares the
+  //     problem, and every project's related-guides section renders its whole
+  //     problem union (never clipped by its cap of six), so every rendered
+  //     reverse edge must be answered by a forward link on the project page.
+  const projectPaths = new Set(
+    [...sitemap].filter((p) => /^\/(en|ms|zh)\/projects\/[^/]+\/$/.test(p)),
+  );
+  let problemsWithProjects = 0;
+  let problemProjectEdges = 0;
+  let unreturnedProjectEdges = 0;
+  for (const path of problemPaths) {
+    const edges = [...(graph.get(path) ?? [])].filter((h) => projectPaths.has(h));
+    if (edges.length > 0) problemsWithProjects += 1;
+    problemProjectEdges += edges.length;
+    for (const target of edges) {
+      if (!graph.get(target)?.has(path)) unreturnedProjectEdges += 1;
+    }
+  }
+  // 25 of the 57 problem guides have at least one genuinely mapped project
+  // (the other 32 correctly render no section), giving 75 pages and 156
+  // rendered edges; the guard sits just below that real coverage.
+  if (problemsWithProjects >= 73 && problemProjectEdges >= 150) {
+    pass(
+      `link graph: ${problemsWithProjects}/${problemPaths.length} problem guides link to genuinely mapped projects (${problemProjectEdges} links)`,
+    );
+  } else {
+    fail(
+      `problem → project link coverage dropped: ${problemsWithProjects}/${problemPaths.length} guides, ${problemProjectEdges} links`,
+    );
+  }
+  if (unreturnedProjectEdges === 0) {
+    pass("link graph: every problem → project link is answered by the project's own related-guides link back");
+  } else {
+    fail(`${unreturnedProjectEdges} problem → project links point at projects that do not link back (edge drift)`);
+  }
+
+  // 3d. Phase 31 — owner-checklist completeness: service ↔ area and
+  //     sub-service ↔ area. Every service pillar and every sub-service page
+  //     must link to ALL published area guides of its own language (the
+  //     "where we work" block), and every area guide must link back to its
+  //     locally-noted services. Deterministic counts — anything short of
+  //     full coverage is a regression.
+  const servicePaths = [...sitemap].filter((p) =>
+    /^\/(en|ms|zh)\/services\/[^/]+\/$/.test(p),
+  );
+  const areasByLang = { en: new Set(), ms: new Set(), zh: new Set() };
+  for (const a of areaPaths) areasByLang[a.split("/")[1]].add(a);
+
+  let areaLinksMissing = 0;
+  for (const path of [...servicePaths, ...subServicePaths]) {
+    const hrefs = graph.get(path) ?? new Set();
+    for (const area of areasByLang[path.split("/")[1]]) {
+      if (!hrefs.has(area)) areaLinksMissing += 1;
+    }
+  }
+  const expectedAreaLinks =
+    (servicePaths.length + subServicePaths.length) * areasByLang.en.size;
+  if (areaLinksMissing === 0) {
+    pass(
+      `link graph: every one of ${servicePaths.length + subServicePaths.length} service + sub-service pages links to all ${areasByLang.en.size} area guides of its language (${expectedAreaLinks} links)`,
+    );
+  } else {
+    fail(
+      `${areaLinksMissing} service/sub-service → area links missing (expected ${expectedAreaLinks}, every page must reach every published area guide)`,
+    );
+  }
+
+  let areasWithServices = 0;
+  for (const path of areaPaths) {
+    const svcEdges = [...(graph.get(path) ?? [])].filter((h) =>
+      /^\/(en|ms|zh)\/services\/[^/]+\/$/.test(h),
+    ).length;
+    // Every guide carries six locally-noted services; fewer means the
+    // services section lost coverage.
+    if (svcEdges >= 6) areasWithServices += 1;
+  }
+  if (areasWithServices === areaPaths.length) {
+    pass(
+      `link graph: all ${areaPaths.length} area guides link back to at least 6 service pillars`,
+    );
+  } else {
+    fail(
+      `area → service link coverage incomplete: only ${areasWithServices}/${areaPaths.length} area guides link to ≥6 services`,
+    );
+  }
+
   // 4. No internal link may point at a URL the site does not serve.
   const deadLinks = new Map();
   for (const [from, hrefs] of graph) {

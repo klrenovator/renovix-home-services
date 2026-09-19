@@ -8,6 +8,7 @@ import { PropertyTypesSection } from "@/components/problem/PropertyTypesSection"
 import { AreasSection } from "@/components/service/AreasSection";
 import { FaqSection } from "@/components/problem/FaqSection";
 import { RelatedProblemsSection } from "@/components/problem/RelatedProblemsSection";
+import { ProblemProjectsSection } from "@/components/problem/ProblemProjectsSection";
 import { CtaSection } from "@/components/problem/CtaSection";
 import { GuideLinksSection } from "@/components/blog/GuideLinksSection";
 import { SubServiceLinksSection } from "@/components/service/SubServiceLinksSection";
@@ -71,6 +72,9 @@ export function ProblemPage({ problem, lang }: ProblemPageProps) {
         name={problem.name}
         lang={lang}
       />
+      {/* Phase 30 — photographed proof: projects whose mapped scope declares
+          this problem. Omitted entirely when no such project exists. */}
+      <ProblemProjectsSection problem={problem} lang={lang} />
       <ProblemProcessSection problem={problem} lang={lang} />
       <PropertyTypesSection problem={problem} lang={lang} />
       <AreasSection areasNote={problem.areasNote} lang={lang} />
