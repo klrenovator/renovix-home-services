@@ -4187,3 +4187,137 @@ blog↔problem, blog↔area and blog↔project.
       pass again when restored
 
 Status: **Code verified + Build verified + Live verified (HTTP)**.
+
+---
+
+## Phase 33 — `/llms.txt` now enumerates the project portfolio (AI-feed coverage parity) (2026-09-19)
+
+Trigger: the standing Master SEO + GEO + AEO + AI-search prompt's directive to
+keep the machine-readable layer complete, worked under the same
+PRESERVE → AUDIT → VERIFY → IMPROVE rule as Phases 27–32. The full gate was
+re-run first (baseline, nothing assumed green: type-check, lint, build,
+17 static audits, `audit:live` 212/0/0), then the served AI feeds were read
+back and compared against the served sitemap before anything was touched.
+No URL, price, service, claim, page or piece of branding changed.
+
+### 1. Baseline verification gate (all green before any change)
+
+- [x] `npm run type-check` + `npm run lint` — PASS
+- [x] `npm run build` — PASS (689 generated routes)
+- [x] All 17 static audits — PASS
+- [x] `audit:live` vs `next start` — PASS 212 / WARN 0 / FAIL 0
+
+### 2. What the feed audit actually found
+
+`/llms.txt` is the one document written for answer engines and crawlers, and
+it is the place an assistant goes to find *which page* answers a question. Read
+back from the running server, it enumerated every cite-worthy family except
+one:
+
+| Family | Served (EN) | Listed in `/llms.txt` before |
+|---|---|---|
+| Services (with starting prices) | 10 | 10 |
+| Sub-services (Phase 29) | 51 | 51 |
+| Region overviews | 2 | 2 |
+| Area guides | 53 | 53 |
+| Knowledge Hub guides | 12 | 12 |
+| Problem guides | 57 | 12 sampled + index link (by design) |
+| **Project pages** | **28** | **0 — index link only** |
+
+The URL existed in the feed exactly once, as
+`- [Real project portfolio](…/projects/)` in the "More" chrome list. So an
+assistant asked "have they completed this kind of work?" could see *that* a
+portfolio exists but could not cite a single job without crawling the index
+and every card. The data was already built and already trusted: the shared
+builder computes `knowledge.projects.published` (title + url from the project
+registry) and `/ai/business.json` has carried all 28 since Phase 16 — only
+`/llms.txt` never rendered the list. Phase 29 closed the identical gap for
+sub-services; this closes it for the evidence-of-work surface.
+
+The other families were verified complete in both directions (nothing missing,
+nothing stale) and left untouched, including the deliberate problem-guide
+sample: 12 of 57 entries behind an "All problem guides" index link.
+
+### 3. What was added (registry-derived, additive only)
+
+1. **`## Projects` section in `app/llms.txt/route.ts`** — placed after
+   `## Service areas` and before `## Guides`, so the file still reads
+   commercial → local → evidence → educational → chrome. The heading count
+   (`## Projects (28 published jobs)`) is interpolated from
+   `knowledge.projects.published.length`; the "All projects" index line comes
+   first, mirroring the problem-guide section's own index-first shape; then one
+   `- [title](url)` line per published project. No count, title or URL is
+   typed into the file — remove a project from the registry and the feed
+   follows at the next build.
+2. **Wording kept strictly factual** — "Real completed work, documented with
+   its own photographs." Every published project carries a required image
+   (`Project.image`, enforced by the registry type) and each page renders only
+   owner-supplied details, so the line claims nothing the pages do not publish:
+   no location, date, material, outcome or credential claim, and no price.
+
+Result: `/llms.txt` grew 176 → 211 lines (+35) and now lists **all 156
+English content pages** (10 services, 51 sub-services, 2 regions, 53 areas,
+12 guides, 28 projects) plus the problem sample.
+
+### 4. Regression guards (so the family can neither drop out nor go stale)
+
+- `audit:authority` §7 — new source assertion that
+  `app/llms.txt/route.ts` renders `knowledge.projects.published` (the same
+  `aiChecks` pattern that pins the builder wiring). **Negative-tested:**
+  deleting the enumeration block fails the audit (exit 1) with
+  `app/llms.txt/route.ts no longer contains "knowledge.projects.published" —
+  llms.txt enumerates every published project page (Phase 33)`.
+- `audit:live` — new `checkAiFeedCoverage(locs)`, 7 assertions. It fetches the
+  served `/llms.txt`, extracts every canonical URL, and compares it against
+  the served sitemap **in both directions** for each family (services,
+  sub-services, region overviews, area guides, guides, projects), then checks
+  the problem-guide sample is still ≥12 entries behind its index link.
+  **Negative-tested in both directions:** with the section removed the live
+  run exits 1 with `llms.txt omits 28/28 project pages (e.g. …)`; with one
+  invented project URL injected it exits 1 with `llms.txt lists 1 project page
+  URLs the site does not serve (e.g. /en/projects/does-not-exist/)`. Both
+  restore green. Note the broken states pass `type-check`, `lint` and
+  `next build` — the coverage regression is invisible to CI without these
+  guards, which is why the live comparison exists.
+
+### 5. Measured result (before → after)
+
+| Metric | Before | After |
+|---|---|---|
+| Project pages listed in `/llms.txt` | **0 / 28** | **28 / 28** |
+| Families fully enumerated in `/llms.txt` | 5 of 6 | **6 of 6** (problems sampled by design) |
+| `/llms.txt` lines | 176 | **211** |
+| Feed ↔ sitemap parity assertions in live QA | 0 | **7** (both directions, 6 families) |
+| Sitemap URLs / generated routes | 678 / 689 | **678 / 689 (unchanged)** |
+| New pages / new URLs / prices touched | — | **0 / 0 / 0** |
+
+### 6. Preserved untouched (verified correct — 🟢)
+
+- Every price and the pricing catalogue (`audit:pricing` PASS); the feed still
+  hardcodes no figure (`audit:authority` §7 no-hardcoded-price rule).
+- All 678 URLs, canonicals, hreflang sets, redirects and the sitemap; the
+  project pages themselves, their titles, H1s, images and OG assets (spot
+  checked: all 28 feed titles equal their page H1 exactly).
+- `/ai/business.json` (28 projects, unchanged), `/ai/pricing.json`,
+  `robots.txt` (broad `Allow: /` verified to admit AI crawlers) and the
+  existing "More" section of `/llms.txt` — the index link stays as it was.
+- Content governance: no invented service, price, claim, location, project or
+  credential; the sample/summary structure of the feed preserved.
+- `CONTENT_MAP.md` §7 updated to record the new feed contents and the guard
+  (documentation of the change, no rule changed).
+
+### 7. Test results (this phase)
+
+- [x] `npm run type-check` — PASS
+- [x] `npm run lint` — PASS (0 errors, 0 warnings)
+- [x] `npm run build` — PASS (689 generated routes, unchanged)
+- [x] All 17 static audits — PASS (incl. the new `audit:authority` §7 token)
+- [x] `audit:live` vs `next start` — **PASS 219 / WARN 0 / FAIL 0** (was 212),
+      including the 7 new feed-coverage assertions
+- [x] Served spot-checks — 28 project entries parse from the live feed with
+      zero title/H1 mismatches; section renders between Service areas and
+      Guides; business.json still carries 28
+- [x] Negative tests — missing-coverage and stale-entry directions both fail
+      as designed and pass again after restore
+
+Status: **Code verified + Build verified + Live verified (HTTP)**.

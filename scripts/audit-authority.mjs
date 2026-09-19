@@ -547,6 +547,11 @@ const aiChecks = [
   ["lib/ai-knowledge.ts", "problemDetails", "knowledge builder derives problems from the registry"],
   ["lib/ai-knowledge.ts", "areaRegions", "knowledge builder derives areas from the registry"],
   ["lib/ai-knowledge.ts", "getPublishedProjects", "knowledge builder derives projects from the registry"],
+  [
+    "app/llms.txt/route.ts",
+    "knowledge.projects.published",
+    "llms.txt enumerates every published project page (Phase 33)",
+  ],
   ["lib/ai-knowledge.ts", "getServicePricingHeadline", "knowledge builder derives prices from the catalogue"],
 ];
 

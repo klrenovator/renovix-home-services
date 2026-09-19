@@ -787,6 +787,80 @@ function checkInternalLinkGraph(locs, graph) {
 }
 
 /**
+ * Phase 33 — the AI-readable summary must enumerate the pages the site
+ * actually serves. `/llms.txt` lists every service, sub-service, region
+ * overview, area guide, guide and published project in full (the 57 problem
+ * guides are a deliberate sample behind their index link).
+ *
+ * The live sitemap is the crawl-true record of what is served, so the two are
+ * compared in both directions per family: a family that silently drops out of
+ * the feed (the Phase 33 defect — 28 published project pages were reachable
+ * only through the portfolio index) and a URL the feed advertises that the
+ * site no longer serves (stale entry after a page is unpublished).
+ */
+async function checkAiFeedCoverage(locs) {
+  console.log("\n== AI feed coverage (/llms.txt) ==");
+  const { status, text } = await fetchText("/llms.txt");
+  if (status !== 200) {
+    fail(`/llms.txt status ${status}`);
+    return;
+  }
+
+  const served = new Set(locs.map((loc) => loc.replace(CANONICAL_HOST, "")));
+  const listed = new Set(
+    [...text.matchAll(/\((https:\/\/renovixhomeservices\.my\/[^)\s]+)\)/g)].map(
+      (m) => m[1].replace(CANONICAL_HOST, ""),
+    ),
+  );
+
+  // English URLs only: the summary is written once, in the canonical
+  // language, and every entry is a self-canonical English page.
+  const families = [
+    ["service page", /^\/en\/services\/[^/]+\/$/],
+    ["sub-service page", /^\/en\/services\/[^/]+\/[^/]+\/$/],
+    ["region overview", /^\/en\/areas\/[^/]+\/$/],
+    ["area guide", /^\/en\/areas\/[^/]+\/[^/]+\/$/],
+    ["guide", /^\/en\/blog\/[^/]+\/$/],
+    ["project page", /^\/en\/projects\/[^/]+\/$/],
+  ];
+
+  for (const [label, pattern] of families) {
+    const expected = [...served].filter((p) => pattern.test(p));
+    const missing = expected.filter((p) => !listed.has(p));
+    const stale = [...listed].filter(
+      (p) => pattern.test(p) && !served.has(p),
+    );
+    if (missing.length === 0 && stale.length === 0) {
+      pass(`/llms.txt lists all ${expected.length} ${label}s, none unserved`);
+    } else {
+      if (missing.length) {
+        fail(
+          `/llms.txt omits ${missing.length}/${expected.length} ${label}s (e.g. ${missing.slice(0, 3).join(", ")})`,
+        );
+      }
+      if (stale.length) {
+        fail(
+          `/llms.txt lists ${stale.length} ${label} URLs the site does not serve (e.g. ${stale.slice(0, 3).join(", ")})`,
+        );
+      }
+    }
+  }
+
+  // Problem guides are the one sampled family: the index link plus a sample.
+  const problemPages = [...served].filter((p) => /^\/en\/problems\/[^/]+\/$/.test(p));
+  const listedProblems = [...listed].filter((p) => /^\/en\/problems\/[^/]+\/$/.test(p));
+  if (listed.has("/en/problems/") && listedProblems.length >= 12) {
+    pass(
+      `/llms.txt keeps the problem-guide sample (${listedProblems.length} of ${problemPages.length}) behind its index link`,
+    );
+  } else {
+    fail(
+      `/llms.txt problem-guide representation dropped: ${listedProblems.length} listed, index ${listed.has("/en/problems/") ? "present" : "missing"}`,
+    );
+  }
+}
+
+/**
  * Phase 29 — localized anchor text. An anchor whose visible label is just the
  * humanized slug ("Old House Wiring" pointing at
  * `/ms/problems/old-house-wiring/`) is English text on a Malay or Chinese
@@ -905,6 +979,7 @@ async function main() {
   const locs = await checkSitemapLive();
   const { graph, anchors } = await sampleStatuses(locs);
   checkInternalLinkGraph(locs, graph);
+  await checkAiFeedCoverage(locs);
   await checkLocalizedAnchors(anchors);
   await multilingualSpot();
   await checkQuoteApi();

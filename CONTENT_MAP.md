@@ -170,7 +170,7 @@ pass both audits, and ship in EN+MS+ZH together.
 
 | Document | Source | Purpose |
 | --- | --- | --- |
-| `/llms.txt` | `lib/ai-knowledge.ts` | Crawler summary: services, prices, sub-services (Phase 29), guides, areas, process, limits |
+| `/llms.txt` | `lib/ai-knowledge.ts` | Crawler summary: services, prices, sub-services (Phase 29), problem guides, areas, projects (Phase 33), guides, process, limits |
 | `/ai/business.json` | `lib/ai-knowledge.ts` | Full business knowledge for assistants |
 | `/ai/pricing.json` | `data/pricing/pricing.ts` | Price catalogue with scope, disclaimer, review date |
 | `/sitemap.xml` | content registries | Crawl discovery (see SITEMAP.md) |
@@ -184,6 +184,16 @@ Since Phase 29 the business feed and `/llms.txt` also list the 51 published
 catalogue through `formatSubServicePrice`) — they are the most specific
 commercial surface on the site, so an assistant asked "do they do X" or "what
 does X cost" can cite the exact page rather than the whole trade.
+
+Since Phase 33 `/llms.txt` also enumerates all 28 published **project pages**
+(title + url from the same registry, the exact list `/ai/business.json`
+carries), because the portfolio is the site's evidence-of-work surface: an
+assistant asked "have they completed this kind of work?" can cite the actual
+job rather than the index. `audit:authority` §7 pins the wiring and the live
+QA compares the served feed against the served sitemap in both directions per
+family, so a family can neither drop out of the feed nor leave a stale URL
+behind. Every other list in the file is complete; the 57 problem guides are
+the one deliberate sample, kept behind their index link.
 
 ## 8. Monitoring readiness (Search Console / analytics)
 
