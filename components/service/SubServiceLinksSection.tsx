@@ -28,6 +28,10 @@ import type { SubServiceDefinition } from "@/data/sub-services/types";
  *   sources — the search-intent matrix and the area's own locally noted
  *   problems (`getSubServicesForLocation`) — and every entry shows the parent
  *   service it belongs to, so a location page never becomes a bare link list.
+ * - `scope="region"` (Phase 35) lists the scopes a region hub's own area
+ *   guides collectively cover (`getSubServicesForRegion`), the union of every
+ *   child guide's list — so the hub can never claim a scope its own guides do
+ *   not carry.
  *
  * Nothing here is authored twice: names come from the localized sub-service
  * registry and the parent service name from the localized service list, and a
@@ -36,7 +40,7 @@ import type { SubServiceDefinition } from "@/data/sub-services/types";
  * language is omitted rather than linking to a 404.
  */
 
-export type SubServiceLinksScope = "service" | "problem" | "area";
+export type SubServiceLinksScope = "service" | "problem" | "area" | "region";
 
 type SubServiceLinksProps = {
   subServices: SubServiceDefinition[];
@@ -99,17 +103,27 @@ export function SubServiceLinksBlock({
       ? format(t.serviceTitle, { name })
       : scope === "area"
         ? format(t.areaTitle, { name })
-        : format(t.problemTitle, { name });
+        : scope === "region"
+          ? format(t.regionTitle, { name })
+          : format(t.problemTitle, { name });
   const description = format(
     scope === "service"
       ? t.serviceDescription
       : scope === "area"
         ? t.areaDescription
-        : t.problemDescription,
+        : scope === "region"
+          ? t.regionDescription
+          : t.problemDescription,
     { name },
   );
   const eyebrow =
-    scope === "service" ? t.serviceEyebrow : scope === "area" ? t.areaEyebrow : t.problemEyebrow;
+    scope === "service"
+      ? t.serviceEyebrow
+      : scope === "area"
+        ? t.areaEyebrow
+        : scope === "region"
+          ? t.regionEyebrow
+          : t.problemEyebrow;
 
   return (
     <div className={inline ? "mt-12 border-t border-slate-200/80 pt-8" : ""}>
@@ -134,7 +148,7 @@ export function SubServiceLinksBlock({
               >
                 {entry.name}
               </Link>
-              {scope === "problem" || scope === "area" ? (
+              {scope !== "service" ? (
                 <p className="mt-1 text-xs text-secondary">
                   {format(t.underService, { service: entry.serviceName })}
                 </p>

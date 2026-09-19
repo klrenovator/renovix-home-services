@@ -1,5 +1,7 @@
 import type { LanguageCode } from "@/data/languages";
 import { getLanguageCode } from "@/data/languages";
+import { getSubServicesForLocation } from "@/data/sub-services";
+import type { SubServiceDefinition } from "@/data/sub-services/types";
 import type { AreaRegion, AreaRegionId, AreaDetail } from "./types";
 import { kualaLumpur } from "./kuala-lumpur";
 import { selangor } from "./selangor";
@@ -112,6 +114,83 @@ export function getAllAreas(lang: string = "en"): AreaDetail[] {
 
 export function getAreaHref(area: Pick<AreaDetail, "region" | "slug">): string {
   return `/areas/${area.region}/${area.slug}`;
+}
+
+/**
+ * Phase 35 — the scopes of work a region's own area guides collectively cover.
+ *
+ * The two region hubs were the last page type carrying a service layer but no
+ * scope layer: each listed the ten services most requested across the region
+ * while all 53 of its own area guides listed the specific scopes carried out
+ * there (Phase 29), so the most specific page family on the site — the 51
+ * sub-service pages — had no inbound link from either hub.
+ *
+ * The list is a pure union: for every area guide in the region it calls
+ * `getSubServicesForLocation()` — the exact derivation that guide already
+ * renders — so a hub can never claim a scope its own guides do not carry.
+ * Entries are ranked by how many of the region's guides cover them (widest
+ * first) and ties keep guide order, so the result is stable. Nothing is
+ * inferred from a service name or a keyword.
+ */
+export function getSubServicesForRegion(
+  region: AreaRegion,
+  limit?: number,
+): SubServiceDefinition[] {
+  const found = new Map<string, SubServiceDefinition>();
+  const counts = new Map<string, number>();
+  const order: string[] = [];
+
+  for (const area of region.areas) {
+    for (const sub of getSubServicesForLocation(area.slug, area.relatedProblems)) {
+      if (!found.has(sub.slug)) {
+        found.set(sub.slug, sub);
+        order.push(sub.slug);
+      }
+      counts.set(sub.slug, (counts.get(sub.slug) ?? 0) + 1);
+    }
+  }
+
+  const ranked = rankByCoverage(order, counts);
+  const slugs = limit && limit > 0 ? ranked.slice(0, limit) : ranked;
+
+  return slugs
+    .map((slug) => found.get(slug))
+    .filter((sub): sub is SubServiceDefinition => Boolean(sub));
+}
+
+/**
+ * Phase 35 — the problem guides a region's own area guides point at, most
+ * widely noted first.
+ *
+ * Same rule as the scope union: the slugs come from `AreaDetail.relatedProblems`
+ * on the region's own guides, ranked by how many of them note the problem, so a
+ * hub can never advertise a problem its own guides do not cover.
+ */
+export function getRegionProblemSlugs(region: AreaRegion, limit?: number): string[] {
+  const counts = new Map<string, number>();
+  const order: string[] = [];
+
+  for (const area of region.areas) {
+    for (const slug of area.relatedProblems) {
+      if (!counts.has(slug)) {
+        order.push(slug);
+      }
+      counts.set(slug, (counts.get(slug) ?? 0) + 1);
+    }
+  }
+
+  const ranked = rankByCoverage(order, counts);
+  return limit && limit > 0 ? ranked.slice(0, limit) : ranked;
+}
+
+/** Widest coverage first; ties keep the order the guides declared them. */
+function rankByCoverage(order: string[], counts: Map<string, number>): string[] {
+  const firstSeen = new Map(order.map((slug, index) => [slug, index]));
+
+  return [...order].sort((a, b) => {
+    const byCount = (counts.get(b) ?? 0) - (counts.get(a) ?? 0);
+    return byCount !== 0 ? byCount : (firstSeen.get(a) ?? 0) - (firstSeen.get(b) ?? 0);
+  });
 }
 
 export function getOtherRegion(

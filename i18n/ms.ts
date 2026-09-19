@@ -539,6 +539,13 @@ export const ms: Dictionary = {
     districtsTitle: "Daerah & Kelompok Perbandaran di {name}",
     districtsDescription:
       "Disusun mengikut daerah pentadbiran dan perbandaran tempatan di {name}.",
+    problemsEyebrow: "Masalah Biasa",
+    problemsTitle: "Masalah Ubah Suai & Pembaikan di Seluruh {name}",
+    problemsDescription:
+      "Masalah yang paling kerap dicatat oleh panduan kawasan {name} kami dalam stok perumahan setempat — daripada kebocoran dan kelembapan hingga pendawaian usang dan kemasan yang sudah uzur.",
+    problemsLinkTitle: "Panduan masalah untuk wilayah ini",
+    problemsNote:
+      "Setiap panduan menerangkan tanda amaran, punca yang mungkin dan kerja yang menyelesaikannya. Panduan kawasan yang dipaut di atas menyatakan masalah mana yang paling biasa di lokasi anda.",
   },
   areaPage: {
     breadcrumbAreas: "Kawasan Perkhidmatan",
@@ -955,6 +962,10 @@ export const ms: Dictionary = {
     areaTitle: "Sub-perkhidmatan yang kami jalankan di {name}",
     areaDescription:
       "Skop khusus di sebalik perkhidmatan yang kami jalankan di {name}. Setiap satu ada halaman sendiri yang merangkumi kerja yang termasuk, apa yang tidak termasuk, faktor kos dan soalan lazim.",
+    regionEyebrow: "Sub-Perkhidmatan",
+    regionTitle: "Sub-perkhidmatan yang diliputi panduan kawasan {name} kami",
+    regionDescription:
+      "Skop khusus di sebalik perkhidmatan yang dijalankan dalam panduan kawasan {name} kami. Setiap satu ada halaman sendiri yang merangkumi kerja yang termasuk, apa yang tidak termasuk, faktor kos dan soalan lazim.",
     underService: "Di bawah {service}",
     viewDetails: "Lihat butiran",
   },

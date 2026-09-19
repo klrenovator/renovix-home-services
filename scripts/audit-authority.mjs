@@ -562,6 +562,21 @@ const aiChecks = [
     "getSynonyms(\"zh\")",
     "knowledge builder publishes the Chinese phrasing table (Phase 34)",
   ],
+  [
+    "lib/ai-knowledge.ts",
+    "function localizedUrls(path: string)",
+    "knowledge builder derives the per-language URL map from the language registry (Phase 36)",
+  ],
+  [
+    "lib/ai-knowledge.ts",
+    "languages.map((language) => [language.code, absoluteUrl(language.code, path)])",
+    "the per-language URL map must be built from the language registry, never typed per entity (Phase 36)",
+  ],
+  [
+    "lib/ai-knowledge.ts",
+    "keyPagesByLanguage",
+    "knowledge builder publishes the twelve entry points in every language (Phase 36)",
+  ],
   ["lib/ai-knowledge.ts", "getServicePricingHeadline", "knowledge builder derives prices from the catalogue"],
 ];
 

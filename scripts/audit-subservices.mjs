@@ -352,6 +352,104 @@ if (failures.length === 0) {
   );
 }
 
+/* ------------------------------------------------------------------------ */
+/* Phase 35 — region hub → scope + region hub → problem link graph wiring     */
+/*                                                                           */
+/* The two region hubs carried a service layer but neither the scope layer    */
+/* nor the problem layer: all 53 of their own area guides linked to the        */
+/* sub-service pages and problem guides relevant to that location, while the   */
+/* hub above them linked to neither. `getSubServicesForRegion()` and           */
+/* `getRegionProblemSlugs()` close both edges as pure unions of what the       */
+/* region's own guides already render, so a hub can never claim a scope or a   */
+/* problem its child guides do not carry. This guard checks that derivation    */
+/* rather than the rendered list, so the two can never drift apart.            */
+/* ------------------------------------------------------------------------ */
+const AREA_CONTENT_INDEX = join(ROOT, "data", "area-content", "index.ts");
+const REGION_SCOPE_COMPONENT = join(
+  ROOT,
+  "components",
+  "area",
+  "AreaRegionSubServicesSection.tsx",
+);
+const REGION_PROBLEM_COMPONENT = join(
+  ROOT,
+  "components",
+  "area",
+  "AreaRegionProblemsSection.tsx",
+);
+const REGION_PAGE = join(ROOT, "components", "area", "AreaRegionPage.tsx");
+const areaContentIndex = readIfExists(AREA_CONTENT_INDEX);
+const regionScopeComponent = readIfExists(REGION_SCOPE_COMPONENT);
+const regionProblemComponent = readIfExists(REGION_PROBLEM_COMPONENT);
+const regionPageSource = readIfExists(REGION_PAGE);
+
+if (!/export function getSubServicesForRegion\(/.test(areaContentIndex)) {
+  fail(
+    "Phase 35 link guard: data/area-content/index.ts must expose getSubServicesForRegion() (the union of the scopes the region's own area guides carry).",
+  );
+}
+if (!/getSubServicesForLocation\(area\.slug, area\.relatedProblems\)/.test(areaContentIndex)) {
+  fail(
+    "Phase 35 link guard: getSubServicesForRegion must derive its list from getSubServicesForLocation(area.slug, area.relatedProblems) for every area guide in the region — a hand-maintained second list would drift.",
+  );
+}
+if (!/export function getRegionProblemSlugs\(/.test(areaContentIndex)) {
+  fail(
+    "Phase 35 link guard: data/area-content/index.ts must expose getRegionProblemSlugs() (the union of the problems the region's own area guides note).",
+  );
+}
+if (!/for \(const slug of area\.relatedProblems\)/.test(areaContentIndex)) {
+  fail(
+    "Phase 35 link guard: getRegionProblemSlugs must read the problem slugs from each area guide's own relatedProblems field.",
+  );
+}
+if (!/getSubServicesForRegion\(region, REGION_SCOPE_LIMIT\)/.test(regionScopeComponent)) {
+  fail(
+    "Phase 35 link guard: components/area/AreaRegionSubServicesSection.tsx must derive its list from getSubServicesForRegion().",
+  );
+}
+if (!/<SubServiceLinksBlock/.test(regionScopeComponent) || !/scope="region"/.test(regionScopeComponent)) {
+  fail(
+    "Phase 35 link guard: the region scope block must render through the shared SubServiceLinksBlock with scope=\"region\", which filters every link with subServiceLanguages().",
+  );
+}
+if (!/getRegionProblemSlugs\(region, REGION_PROBLEM_LIMIT\)/.test(regionProblemComponent)) {
+  fail(
+    "Phase 35 link guard: components/area/AreaRegionProblemsSection.tsx must derive its list from getRegionProblemSlugs().",
+  );
+}
+if (
+  !/<AreaRegionSubServicesBlock\s+region=\{region\}\s+lang=\{lang\}/.test(regionPageSource) ||
+  !/<AreaRegionProblemsSection\s+region=\{region\}\s+lang=\{lang\}/.test(regionPageSource)
+) {
+  fail(
+    "Phase 35 link guard: AreaRegionPage must render both <AreaRegionSubServicesBlock region={region} lang={lang} /> and <AreaRegionProblemsSection region={region} lang={lang} /> — otherwise the hubs lose their links to the sub-service and problem pages.",
+  );
+}
+for (const lang of ["en", "ms", "zh"]) {
+  const dict = readIfExists(join(ROOT, "i18n", `${lang}.ts`));
+  if (!/regionEyebrow:/.test(dict) || !/regionTitle:/.test(dict) || !/regionDescription:/.test(dict)) {
+    fail(
+      `Phase 35 link guard: i18n/${lang}.ts is missing the region scope copy (regionEyebrow / regionTitle / regionDescription) in the subServiceLinks block.`,
+    );
+  }
+  if (
+    !/problemsEyebrow:/.test(dict) ||
+    !/problemsTitle:/.test(dict) ||
+    !/problemsDescription:/.test(dict) ||
+    !/problemsNote:/.test(dict)
+  ) {
+    fail(
+      `Phase 35 link guard: i18n/${lang}.ts is missing the region-hub problem copy (problemsEyebrow / problemsTitle / problemsDescription / problemsNote) in the areaRegion block.`,
+    );
+  }
+}
+if (failures.length === 0) {
+  console.log(
+    "  ✔ Phase 35 region → scope + problem link wiring: region hub → the scopes and problems its own area guides carry",
+  );
+}
+
 /* ---- report ---- */
 console.log("\n=== PHASE 19 SUB-SERVICE AUDIT ===\n");
 console.log(`Priced sub-services in catalogue: ${pricedSubs.length}`);

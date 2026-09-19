@@ -88,6 +88,15 @@ matrix (`data/locations/intent-matrix.ts`), NOT by service×location doorway
 pages. No `/{service}-in-{area}/` URLs exist and none are planned: 10 × 53 =
 530 near-duplicate pages would destroy more authority than they create.
 
+Since Phase 35 the two **region hubs** also carry the scope and problem layers
+their own 53 guides render: each hub links the 12 sub-service scopes and the 12
+problem guides its child guides cover most widely, derived by
+`getSubServicesForRegion()` / `getRegionProblemSlugs()` in
+`data/area-content/index.ts` as pure unions of what those guides already
+publish — so a hub can never claim a scope or a problem its own guides do not
+carry, and the 51 sub-service pages and 57 problem guides gain two more entry
+points each. Capped at 12 per hub; the child guides carry the full detail.
+
 ## 4. Intent → page mapping (where each intent ranks/answers)
 
 | Intent | Authoritative page | Supporting |
@@ -206,6 +215,23 @@ resolves to a real entity in its own language; the live QA additionally proves
 every phrasing resolves to a page the site **serves** in that language
 (`/{lang}/services|problems|areas/…`), so a phrasing can never point at a
 missing or wrong-language page.
+
+Since Phase 36 every entity the feed catalogues also carries **its URL in each
+published language** (`urls: { en, ms, zh }` on services, sub-services, problem
+guides, projects, guides, area guides, region hubs and district locations, plus
+a `keyPagesByLanguage` block for the twelve top-level entry points). The site
+serves all of them under one language prefix and the feed already declared
+three languages and published three homepages and three phrasing tables — but
+until now every entity URL it listed was the English one, so an assistant
+answering a Malay or Chinese query had the localized page and no address for
+it. The maps come from `localizedUrls()` in `lib/ai-knowledge.ts`, built from
+the language registry, so a fourth language joins every entity when it is
+registered and no URL can be typed by hand; the existing English `url` key is
+untouched, so nothing that already reads the feed changes. `audit:authority` §7
+pins the derivation; the live QA resolves all 798 published URL entries against
+the served sitemap in their own language tree, in both directions. Measured
+cost: `/ai/business.json` grows 52.7 KB → 115.3 KB raw, 9.0 KB → 12.8 KB
+gzipped.
 
 ## 8. Monitoring readiness (Search Console / analytics)
 

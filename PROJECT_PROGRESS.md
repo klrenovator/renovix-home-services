@@ -4454,3 +4454,315 @@ bytes** (+10.9%) — the whole cost of the change.
       fail as designed and pass again after restore
 
 Status: **Code verified + Build verified + Live verified (HTTP)**.
+
+---
+
+## Phase 35 — Region hubs gain the scope + problem layers their 53 area guides already carry (2026-09-19)
+
+Trigger: the standing Master SEO + GEO + AEO + AI-search prompt's "strengthen
+internal linking between services, sub-services, problems, areas and relevant
+locations" directive — worked under the same PRESERVE → AUDIT → VERIFY →
+IMPROVE rule as Phases 27–34. The full verification gate was re-run first
+(baseline, nothing assumed green), then the *rendered* HTML of all 678 URLs was
+crawled again and every internal link classified by source and target page type
+before anything was touched. No URL, price, service, claim, page or piece of
+branding changed.
+
+### 1. Baseline verification gate (all green before any change)
+
+- [x] `npm ci` + `npm run type-check` + `npm run lint` — PASS (0 errors,
+      0 warnings)
+- [x] `npm run build` — PASS (689 generated routes)
+- [x] All 17 static audits — PASS
+- [x] `audit:live` vs `next start` — PASS 222 / WARN 0 / FAIL 0
+
+Everything Phases 27–34 reported is still true and was left untouched (🟢):
+678-URL sitemap, single canonical + 4-way hreflang, single-sourced pricing
+(51 rows), hub↔spoke, problem↔scope, area↔scope, problem↔project,
+project↔blog, service/sub-service↔area graphs, three-language AI feeds.
+
+### 2. What the rendered-graph crawl actually found
+
+A fresh full crawl of all 678 URLs rebuilt the edge-type matrix from scratch.
+It confirmed every Phase 28–34 edge and found **one** whole page family still
+sitting outside two layers of the graph:
+
+| Edge (all 3 languages) | Before |
+|---|---|
+| `area-region → sub-service` | **0** |
+| `area-region → problem` | **0** |
+| `area-region → service` | 60 (10 per hub per language) |
+| `area-region → area` | 159 (every child guide) |
+| `area → sub-service` | 2,235 |
+| `area → problem` | 636 |
+
+The two region hubs (`/areas/kuala-lumpur/`, `/areas/selangor/` — 6 pages across
+EN/MS/ZH) rendered a *service* layer (the ten services most requested across the
+region) but neither the *scope* layer nor the *problem* layer, even though all
+53 of their own child guides carried both. The hub was therefore the only page
+in the areas tree with no route into the 51 sub-service pages or the 57 problem
+guides it sits directly above.
+
+Phase 30 and Phase 32 had previously examined the hubs and left them alone on
+the stated basis that they are "directory pages by design" — but the crawl
+disproves the premise: a hub that renders ten service cards, a district
+breakdown and a housing-landscape essay is not a bare directory, and it is the
+one hub in the tree whose children all carry both missing layers.
+
+Two other thin spots were re-examined and again deliberately left alone (🟢):
+
+- **`project ↔ area` (0 in both directions).** `ProjectLocation` exists in the
+  data model and the project page renders the section when it is set, but the
+  field is unset for every project because no site address was supplied with
+  the photographs (PROJECT_OWNER_PENDING.md §6, owner-pending). Deriving an
+  area from a project's category or title would be fabrication
+  (CONTENT_GOVERNANCE §1).
+- **`service/sub-service → project` cap.** 12 of the 28 projects receive no
+  inbound link from a service pillar because `ServiceWorkShowcase` slices to
+  three cards. Raising that cap is a visual-composition change to an existing
+  section, not a missing edge, so it was left for the owner to weigh.
+
+### 3. What was added (registry-derived, additive only)
+
+1. **`getSubServicesForRegion(region, limit)`** (`data/area-content/index.ts`)
+   — the Region → Sub-service direction, as a pure union: for every area guide
+   in the region it calls `getSubServicesForLocation(area.slug,
+   area.relatedProblems)` — the exact derivation that guide already renders
+   (Phase 29) — so the hub can never claim a scope its own guides do not carry.
+   Ranked by how many of the region's guides cover a scope (widest first),
+   ties keeping guide order; deterministic, nothing inferred from a name.
+2. **`getRegionProblemSlugs(region, limit)`** — the Region → Problem direction
+   under the same rule: the union of `AreaDetail.relatedProblems` across the
+   region's own guides, most widely noted first.
+3. **`SubServiceLinksScope` gained a fourth value, `"region"`** — the exact
+   same shared block the service, problem and area pages already render, with
+   its own localized copy, same card markup, same
+   `subServiceLanguages()` filter, same render-nothing-when-empty behaviour.
+   No new component, no redesign.
+4. **`components/area/AreaRegionSubServicesSection.tsx` (new)** — renders up to
+   twelve scopes *inside* the existing "Services Most Requested in {region}"
+   section, the way the area guide's block sits inside its own services
+   section: an additive block behind a rule, no new section, no new background.
+5. **`components/area/AreaRegionProblemsSection.tsx` (new)** — a bordered
+   white section (mirroring the districts block directly above it, so the page
+   keeps its existing surface/white rhythm) with the chip markup the area
+   guides already use inside their own problems section. Twelve problems per
+   hub; the child guides carry the full detail.
+6. **Copy** in EN/MS/ZH — `subServiceLinks.regionEyebrow / regionTitle /
+   regionDescription` and `areaRegion.problemsEyebrow / problemsTitle /
+   problemsDescription / problemsLinkTitle / problemsNote`, plus the
+   `Dictionary` type. Genuinely localized ("Sub-services our Kuala Lumpur area
+   guides cover" / "Sub-perkhidmatan yang diliputi panduan kawasan Kuala Lumpur
+   kami" / "我们吉隆坡地区指南涵盖的细项服务"), factual wording only — the
+   headings say the guides *cover* these scopes and *note* these problems,
+   which is exactly what the registry proves, never a claim about work carried
+   out everywhere in the region.
+
+### 4. Regression guards (so the edges cannot silently disappear)
+
+- `audit:subservices` §Phase 35 — pins that both getters exist, that
+  `getSubServicesForRegion` stays derived from
+  `getSubServicesForLocation(area.slug, area.relatedProblems)` for every area
+  guide in the region, that `getRegionProblemSlugs` reads each guide's own
+  `relatedProblems`, that the blocks render through the shared
+  `SubServiceLinksBlock` (which filters by `subServiceLanguages()`), that
+  `AreaRegionPage` renders both, and that all three dictionaries carry both
+  copy blocks. **Negative-tested three ways:** removing the scope block,
+  removing the problems section and emptying the derivation each fail the
+  audit with the exact guard message; all three restore green.
+- `audit:live` — two new rendered assertions in the full-sitemap link-graph
+  sweep: all 6 region hubs link to the sub-service scopes their area guides
+  carry (72 links) and to the problem guides their area guides note (72 links).
+  **Negative-tested:** rebuilding with both blocks removed fails with
+  `0/6 hubs, 0 links` twice; restoring them passes again (the broken build also
+  passes `type-check`, `lint` and `next build` — the coverage loss is invisible
+  to CI without these guards).
+
+### 5. Measured result (before → after)
+
+| Metric | Before | After |
+|---|---|---|
+| `area-region → sub-service` edges (rendered) | **0** | **72** (24 per language) |
+| `area-region → problem` edges (rendered) | **0** | **72** (24 per language) |
+| Average inbound links per sub-service page | 27.5 | **27.9** |
+| Average inbound links per problem guide | 18.1 | **18.5** |
+| Live assertions | 222 | **224** |
+| Orphan pages / internal links to unserved URLs | 0 / 0 | 0 / 0 |
+| Sitemap URLs / generated routes | 678 / 689 | **678 / 689 (unchanged)** |
+| New pages / new URLs / prices touched | — | **0 / 0 / 0** |
+
+Every core family the owner checklist names — service, sub-service, problem,
+area, region — now links to every other in both directions where an authored
+relationship exists.
+
+### 6. Preserved untouched (verified correct — 🟢)
+
+- Every price (51 pricing rows, single-sourced; `audit:pricing` PASS), every
+  URL, canonical, hreflang set, redirect and the 678-URL sitemap.
+- Design, branding, layout, navigation, footer and every existing section: the
+  scope block is additive inside an existing section and reuses the site's own
+  card markup; the problems section reuses the districts block's
+  bordered-white-on-white treatment and the area guides' chip markup.
+- Structured data (no new or altered schema nodes — the region hubs still emit
+  `ItemList` + `FAQPage`), robots.txt, AI feeds, security headers, quote flow,
+  analytics posture, search finder.
+- Content governance: no invented service, price, claim, location, project or
+  credential; no new page and no new URL of any kind. Nothing was derived from
+  a service name, a category name or a keyword.
+
+### 7. Test results (this phase)
+
+- [x] `npm run type-check` — PASS
+- [x] `npm run lint` — PASS (0 errors, 0 warnings)
+- [x] `npm run build` — PASS (689 generated routes, unchanged)
+- [x] All 17 static audits — PASS (incl. the new `audit:subservices` §Phase 35)
+- [x] `audit:live` vs `next start` — **PASS 224 / WARN 0 / FAIL 0**, including
+      the two new rendered assertions
+- [x] Served spot-checks — all 6 hubs (EN/MS/ZH × KL/Selangor) render 12
+      localized scope links and 12 problem links pointing at their own
+      language tree; section order and background rhythm verified against the
+      area guide's own pattern
+- [x] Negative tests — all three static directions and the live direction fail
+      as designed and pass again after restore
+
+Status: **Code verified + Build verified + Live verified (HTTP)**.
+
+---
+
+## Phase 36 — `/ai/business.json` publishes every entity's URL in all three languages (2026-09-19)
+
+Trigger: the standing Master SEO + GEO + AEO + AI-search prompt's directive to
+keep the machine-readable layer complete and honest, worked under the same
+PRESERVE → AUDIT → VERIFY → IMPROVE rule as Phases 27–35. The full gate was
+re-run first (baseline, nothing assumed green), then the served feed was read
+back and every URL in it classified by language before anything was touched.
+No URL, price, service, claim, page or piece of branding changed.
+
+### 1. Baseline verification gate (all green before any change)
+
+- [x] `npm run type-check` + `npm run lint` — PASS
+- [x] `npm run build` — PASS (689 generated routes)
+- [x] All 17 static audits — PASS
+- [x] `audit:live` vs `next start` — PASS 224 / WARN 0 / FAIL 0
+
+### 2. What the feed audit actually found
+
+`/ai/business.json` declares three supported languages, publishes three
+localized homepages (`languages[].homepage`) and — since Phase 34 — three
+phrasing tables that map Malay and Chinese customer wording to `/ms/…` and
+`/zh/…` pages. Read back from the running server, though, its entity catalogue
+was monolingual:
+
+| | Declared / served | Published in the feed before |
+|---|---|---|
+| `supportedLanguages` | en, ms, zh | en, ms, zh |
+| Localized homepages | 3 | **3** |
+| Entity URLs in `/en/` | — | **284** |
+| Entity URLs in `/ms/` or `/zh/` | — | **0** |
+
+So an assistant helping a Bahasa Malaysia or 简体中文 speaker — the exact case
+the Phase 34 phrasing tables exist for — could resolve "paip bocor" to
+`problem:leaking-pipe` but was then handed the address of the English page,
+with no way to cite the page the site publishes in the customer's own language
+and advertises through hreflang. This is the same defect class as Phase 29
+(sub-services absent from the feeds), Phase 33 (projects absent from
+`/llms.txt`) and Phase 34 (MS/ZH phrasings absent): the machine-readable layer
+lagging what the site actually serves.
+
+Verified before changing anything: the site does serve every one of those pages
+in all three languages (678-URL sitemap, 4-way hreflang on all 513
+service/sub-service/area/problem pages), so publishing the maps describes real,
+already-shipped behaviour rather than new claims.
+
+### 3. What was added (registry-derived, additive only)
+
+1. **`localizedUrls(path)` in `lib/ai-knowledge.ts`** — builds
+   `{ en, ms, zh }` from the language registry, so a fourth language joins
+   every entity the moment it is registered and no URL can be typed by hand.
+2. **`urls` added alongside the existing `url` on every catalogued entity** —
+   the 10 services, 51 sub-services, 57 problem guides, 28 projects, 12
+   Knowledge Hub guides, 2 region hubs, 53 district locations and the 53-entry
+   flat area list. The English `url` key keeps its name, shape and value, so
+   nothing that already reads the feed changes.
+3. **`keyPagesByLanguage`** — the twelve top-level entry points (home,
+   services, problems, areas, projects, knowledge hub, FAQ, about, contact,
+   quote, search) in each published language. `sitemap` is not repeated: it has
+   no language.
+4. Nothing else changed: no new endpoint, no new page, no price, and no
+   entity name, title or summary was reworded or duplicated.
+
+Measured: the feed now publishes **798** localized URL entries across
+**266** entities; `/ai/business.json` grows 52,724 → **115,318 bytes** raw and
+9,017 → **12,756 bytes** gzipped (+3.7 KB over the wire).
+
+### 4. Regression guards (so a language cannot silently drop out or drift)
+
+- `audit:authority` §7 — three new source assertions that the builder derives
+  the maps from the language registry (`function localizedUrls(path: string)`,
+  the `languages.map(... absoluteUrl(language.code, path))` expression) and
+  publishes `keyPagesByLanguage`. **Negative-tested twice:** renaming the
+  helper and deleting `keyPagesByLanguage` each fail the audit with the exact
+  guard message; both restore green.
+- `audit:live` — new `checkAiLocalizedUrlCoverage(locs)`, 4 assertions. It
+  reads the **served** feed, requires a URL map on every entity of every
+  family, requires a map covering **every** code in the feed's own
+  `supportedLanguages` (so adding a fourth language fails the guard until its
+  URLs ship — registry-derived, not hardcoded), resolves **every** entry
+  against the served sitemap in that language's own tree, and requires each
+  entry to live under its own `/{code}/` prefix so a map that merely repeats
+  the English URL three times cannot pass. `keyPagesByLanguage` is checked the
+  same way. **Negative-tested twice:** (a) dropping `urls` from the problem
+  family → live exits 1 with `57/266 entities have no urls map (e.g.
+  problem:broken-tile-repair…)`; (b) injecting one bogus `zh` entry → the
+  static guard still passes while live exits 1 with `28 localized entity URLs
+  point at pages the site does not serve (e.g. project:marble-look-floor-tiling
+  → /zh/projects/does-not-exist/)`, proving the resolution check is sensitive
+  independently of the presence check. Both restore green — and both broken
+  states pass `type-check`, `lint` and `next build`.
+
+### 5. Measured result (before → after)
+
+| Metric | Before | After |
+|---|---|---|
+| Languages with a published URL per entity | **1 of 3** | **3 of 3** |
+| Localized URL entries in `/ai/business.json` | 0 | **798** (266 entities × 3) |
+| Entity URL families covered | 0 of 8 | **8 of 8** |
+| `/ai/business.json` size (raw / gzipped) | 52,724 B / 9,017 B | **115,318 B / 12,756 B** |
+| Live assertions | 224 | **228** |
+| Sitemap URLs / generated routes | 678 / 689 | **678 / 689 (unchanged)** |
+| New pages / new URLs / prices touched | — | **0 / 0 / 0** |
+
+### 6. Preserved untouched (verified correct — 🟢)
+
+- Every existing feed key: `url`, `name`, `title`, `slug`, `summary`,
+  `priceNote`, `languages`, `languages[].homepage`, `keyPages`,
+  `searchIntents.englishPhrasings` and all other blocks keep their names,
+  shapes and values — the change is a pure addition to the feed.
+- `data/search/synonyms.ts` (the phrasing source of truth), the Smart Service
+  Finder, `/llms.txt` (6 of 6 families, Phase 33/34 contents),
+  `/ai/pricing.json`, all 678 URLs, canonicals, hreflang sets, structured data,
+  robots.txt and the sitemap.
+- The feed's own honesty rules: it still hardcodes no price
+  (`audit:authority` §7 no-hardcoded-price rule) and still derives every figure
+  from `data/pricing/pricing.ts`.
+- Content governance: every published URL already existed in the site's own
+  audited sitemap — nothing invented, no new claim about the business.
+- `CONTENT_MAP.md` §3 and §7 updated to record the new region-hub layers and
+  the localized URL maps with their guards (documentation only, no rule
+  changed).
+
+### 7. Test results (this phase)
+
+- [x] `npm run type-check` — PASS
+- [x] `npm run lint` — PASS (0 errors, 0 warnings)
+- [x] `npm run build` — PASS (689 generated routes, unchanged)
+- [x] All 17 static audits — PASS (incl. all three new `audit:authority` tokens)
+- [x] `audit:live` vs `next start` — **PASS 228 / WARN 0 / FAIL 0** (was 224),
+      including the 4 new localized-URL assertions
+- [x] Served spot-checks — sampled services, sub-services, problems, projects,
+      guides and areas all publish correct `en`/`ms`/`zh` URLs;
+      `keyPagesByLanguage.ms` resolves to served `/ms/` pages
+- [x] Negative tests — missing-family and stale-URL directions both fail as
+      designed and pass again after restore
+
+Status: **Code verified + Build verified + Live verified (HTTP)**.
