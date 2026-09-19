@@ -458,6 +458,10 @@ export const en: Dictionary = {
     relatedProblemsTitle: "Problems that are often linked",
     relatedProblemsDescription:
       "These issues frequently appear together in Kuala Lumpur and Selangor homes.",
+    projectsEyebrow: "Our Work",
+    projectsTitle: "Project work connected to {name}",
+    projectsDescription:
+      "Real photographed jobs from our portfolio whose scope genuinely covers this kind of problem.",
     ctaHeading: "Need help with {name} in Kuala Lumpur & Selangor?",
     ctaTitle: "Dealing with this problem at home?",
     ctaDescription:

@@ -140,6 +140,7 @@ const serviceSlugs = new Set(
 );
 
 const subServices = new Map(); // slug -> serviceSlug
+const subServiceProblems = new Map(); // slug -> relatedProblems[]
 for (const file of readdirSync(SUB_SERVICES_DIR)) {
   if (!file.endsWith(".ts")) continue;
   const source = read(`data/sub-services/content/${file}`);
@@ -147,6 +148,10 @@ for (const file of readdirSync(SUB_SERVICES_DIR)) {
     const slug = parseStringField(chunk, "slug");
     const serviceSlug = parseStringField(chunk, "serviceSlug");
     if (slug && serviceSlug) subServices.set(slug, serviceSlug);
+    const relatedProblems = parseStringArrayField(chunk, "relatedProblems");
+    if (slug && relatedProblems?.length) {
+      subServiceProblems.set(slug, relatedProblems);
+    }
   }
 }
 
@@ -363,6 +368,68 @@ for (const project of publishedProjects) {
 }
 
 /* ------------------------------------------------------------------------ */
+/* 10. Problem → Project (Phase 30 — the inverse of the Phase 21 edge).      */
+/* ------------------------------------------------------------------------ */
+
+/* Derived exactly as the site derives it: a project belongs on a problem
+   guide only when a sub-service mapped to that project declares the problem
+   in its own `relatedProblems`. Recomputed here from the same authored
+   sources so the two directions can be compared for drift. */
+const projectsByProblem = new Map();
+for (const project of publishedProjects) {
+  const problems = new Set(
+    project.subServices.flatMap((slug) => subServiceProblems.get(slug) ?? []),
+  );
+  for (const problem of problems) {
+    if (!projectsByProblem.has(problem)) projectsByProblem.set(problem, []);
+    projectsByProblem.get(problem).push(project.slug);
+  }
+}
+
+/* Wiring guard: the reverse edge must stay registry-derived and rendered. */
+const projectContentIndex = read("data/project-content/index.ts");
+const problemPageSource = read("components/problem/ProblemPage.tsx");
+const problemProjectsSection = read("components/problem/ProblemProjectsSection.tsx");
+
+if (!/export function getProjectsForProblem\(/.test(projectContentIndex)) {
+  fail(
+    "Phase 30 link guard: data/project-content/index.ts must expose getProjectsForProblem() (the registry-derived Problem → Project edge).",
+  );
+}
+if (
+  !/getProjectsForProblem[\s\S]*?getProjectSubServices[\s\S]*?relatedProblems/.test(
+    projectContentIndex,
+  )
+) {
+  fail(
+    "Phase 30 link guard: getProjectsForProblem must be derived from each project's mapped sub-services' own relatedProblems — the exact inverse of ProjectProblemsSection, so the two directions cannot drift.",
+  );
+}
+if (!/<ProblemProjectsSection problem=\{problem\} lang=\{lang\} \/>/.test(problemPageSource)) {
+  fail(
+    "Phase 30 link guard: components/problem/ProblemPage.tsx must render <ProblemProjectsSection problem={problem} lang={lang} />.",
+  );
+}
+if (!/getProjectsForProblem\(problem\.slug\)/.test(problemProjectsSection)) {
+  fail(
+    "Phase 30 link guard: ProblemProjectsSection must derive its projects from getProjectsForProblem(problem.slug).",
+  );
+}
+if (!/projects\.length === 0[\s\S]*?return null/.test(problemProjectsSection)) {
+  fail(
+    "Phase 30 link guard: ProblemProjectsSection must render nothing when no mapped project exists (never borrow projects).",
+  );
+}
+for (const dict of ["en", "ms", "zh"]) {
+  const source = read(`i18n/${dict}.ts`);
+  for (const key of ["projectsEyebrow", "projectsTitle", "projectsDescription"]) {
+    if (!source.includes(key)) {
+      fail(`Phase 30 link guard: i18n/${dict}.ts is missing problemPage.${key}.`);
+    }
+  }
+}
+
+/* ------------------------------------------------------------------------ */
 /* Report.                                                                   */
 /* ------------------------------------------------------------------------ */
 
@@ -402,6 +469,17 @@ if (servicesWithoutProjects.length === 0) {
   for (const slug of servicesWithoutProjects.sort()) {
     console.log(`  – ${slug}`);
   }
+}
+
+const problemEdgeCount = [...projectsByProblem.values()].reduce(
+  (n, list) => n + list.length,
+  0,
+);
+console.log(
+  `\nProblem → project proof (Phase 30): ${projectsByProblem.size} problem guides link to ${problemEdgeCount} project edges`,
+);
+for (const [slug, list] of [...projectsByProblem.entries()].sort()) {
+  console.log(`  ✔ ${slug}: ${list.join(", ")}`);
 }
 
 console.log("\nMultilingual coverage: en/ms/zh copy + route lists verified for all published projects.");

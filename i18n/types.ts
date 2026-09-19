@@ -308,6 +308,11 @@ export type Dictionary = {
     relatedProblemsEyebrow: string;
     relatedProblemsTitle: string;
     relatedProblemsDescription: string;
+    /** Phase 30 — project proof section (registry-derived, omitted when empty). */
+    projectsEyebrow: string;
+    /** "Project work connected to {name}" */
+    projectsTitle: string;
+    projectsDescription: string;
     /** "Need help with {name} in Kuala Lumpur & Selangor?" */
     ctaHeading: string;
     ctaTitle: string;

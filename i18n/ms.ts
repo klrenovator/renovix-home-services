@@ -464,6 +464,10 @@ export const ms: Dictionary = {
     relatedProblemsTitle: "Masalah yang sering berkait",
     relatedProblemsDescription:
       "Masalah-masalah ini kerap berlaku bersama di rumah-rumah sekitar Kuala Lumpur dan Selangor.",
+    projectsEyebrow: "Kerja Kami",
+    projectsTitle: "Kerja projek yang berkaitan dengan {name}",
+    projectsDescription:
+      "Projek sebenar bergambar daripada portfolio kami yang skop kerjanya benar-benar merangkumi jenis masalah ini.",
     ctaHeading: "Perlukan bantuan untuk {name} di Kuala Lumpur & Selangor?",
     ctaTitle: "Menghadapi masalah ini di rumah?",
     ctaDescription:
