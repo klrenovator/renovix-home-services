@@ -17,6 +17,29 @@ import { getSynonyms, type SynonymEntry } from "@/data/search/synonyms";
 import { services as allServices } from "@/data/services";
 
 /**
+ * Phase 36 — the same page in every language the site publishes.
+ *
+ * The site serves every service, sub-service, problem guide, area guide,
+ * project and article in English, Malay and Simplified Chinese under one
+ * language prefix, and this feed has always said so (`languages`,
+ * `searchIntents.supportedLanguages`) and published all three homepages and all
+ * three phrasing tables. But every entity URL it listed was the English one, so
+ * an assistant answering a Malay or Chinese query — the phrasing tables exist
+ * precisely for that — was handed the address of the English page and had no
+ * way to cite the page in the customer's own language.
+ *
+ * Derived from the language registry, so a fourth language joins every entity
+ * the moment it is registered and no URL can be typed by hand. The English
+ * `url` key is left exactly as it was, so nothing that already reads the feed
+ * changes.
+ */
+function localizedUrls(path: string): Record<string, string> {
+  return Object.fromEntries(
+    languages.map((language) => [language.code, absoluteUrl(language.code, path)]),
+  );
+}
+
+/**
  * Centralized AI-readable business knowledge for Renovix Home Services.
  *
  * Phase 16 (search + AI authority): answer engines and LLM assistants
@@ -74,6 +97,7 @@ export function getAiKnowledge() {
         name: state.name,
         publishedGuides: state.totalPublishedGuides,
         url: absoluteUrl("en", `/areas/${state.id}/`),
+        urls: localizedUrls(`/areas/${state.id}/`),
         districts: state.districts.map((district) => ({
           name: district.name,
           locations: district.locationSlugs
@@ -85,12 +109,14 @@ export function getAiKnowledge() {
               name: location.name,
               level: location.level,
               url: absoluteUrl("en", `/areas/${location.regionId}/${location.slug}/`),
+              urls: localizedUrls(`/areas/${location.regionId}/${location.slug}/`),
             })),
         })),
       })),
       areaGuides: areas.map((area) => ({
         name: area.name,
         url: absoluteUrl("en", `/areas/${area.region}/${area.slug}/`),
+        urls: localizedUrls(`/areas/${area.region}/${area.slug}/`),
       })),
       areasIndex: absoluteUrl("en", "/areas/"),
     },
@@ -98,6 +124,7 @@ export function getAiKnowledge() {
       name: service.name,
       slug: service.slug,
       url: absoluteUrl("en", `/services/${service.slug}/`),
+      urls: localizedUrls(`/services/${service.slug}/`),
       summary: service.overviewIntro,
       // This is generated from the marked headline row in the central
       // catalogue, never from page copy or a cross-unit minimum.
@@ -122,6 +149,7 @@ export function getAiKnowledge() {
         slug: sub.slug,
         service: sub.serviceSlug,
         url: absoluteUrl("en", `/services/${sub.serviceSlug}/${sub.slug}/`),
+        urls: localizedUrls(`/services/${sub.serviceSlug}/${sub.slug}/`),
         priceNote: formatSubServicePrice(sub, "en") ?? null,
       })),
     },
@@ -130,6 +158,7 @@ export function getAiKnowledge() {
       guides: problemDetails.map((problem) => ({
         title: problem.h1,
         url: absoluteUrl("en", `/problems/${problem.slug}/`),
+        urls: localizedUrls(`/problems/${problem.slug}/`),
       })),
     },
     projects: {
@@ -137,6 +166,7 @@ export function getAiKnowledge() {
       published: projects.map((project) => ({
         title: getProjectContent(project.slug, "en").title,
         url: absoluteUrl("en", `/projects/${project.slug}/`),
+        urls: localizedUrls(`/projects/${project.slug}/`),
       })),
     },
     knowledgeHub: {
@@ -147,6 +177,7 @@ export function getAiKnowledge() {
         title: getArticleText(article, "en").h1,
         category: article.category,
         url: absoluteUrl("en", `/blog/${article.slug}/`),
+        urls: localizedUrls(`/blog/${article.slug}/`),
       })),
     },
     pricing: {
@@ -181,6 +212,27 @@ export function getAiKnowledge() {
       search: absoluteUrl("en", "/search/"),
       sitemap: `${siteConfig.url}/sitemap.xml`,
     },
+    // Phase 36 — the same twelve entry points in each published language. The
+    // English `keyPages` map above is untouched; `sitemap` has no language and
+    // is therefore not repeated here.
+    keyPagesByLanguage: Object.fromEntries(
+      languages.map((language) => [
+        language.code,
+        {
+          home: absoluteUrl(language.code, "/"),
+          services: absoluteUrl(language.code, "/services/"),
+          problems: absoluteUrl(language.code, "/problems/"),
+          areas: absoluteUrl(language.code, "/areas/"),
+          projects: absoluteUrl(language.code, "/projects/"),
+          knowledgeHub: absoluteUrl(language.code, "/blog/"),
+          faq: absoluteUrl(language.code, "/faq/"),
+          about: absoluteUrl(language.code, "/about/"),
+          contact: absoluteUrl(language.code, "/contact/"),
+          quote: absoluteUrl(language.code, "/quote/"),
+          search: absoluteUrl(language.code, "/search/"),
+        },
+      ]),
+    ),
     searchIntents: {
       description:
         "The Smart Service Finder accepts free-text customer queries in English, Bahasa Melayu and Simplified Chinese. Results are drawn from the published service, problem, area, blog and project pages — nothing is invented. The query-string variant /[lang]/search/?q=… is `noindex, follow` to avoid the doorway trap.",

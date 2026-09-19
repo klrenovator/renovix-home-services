@@ -18,6 +18,8 @@ import { format, getDictionary } from "@/i18n";
 import { contentHref, localizedHref } from "@/i18n/hrefs";
 import { getServiceCategories } from "@/data/i18n";
 import { getOtherRegion } from "@/data/area-content";
+import { AreaRegionSubServicesBlock } from "@/components/area/AreaRegionSubServicesSection";
+import { AreaRegionProblemsSection } from "@/components/area/AreaRegionProblemsSection";
 import { getDistrictsForRegion } from "@/data/locations";
 import type { AreaRegion } from "@/data/area-content/types";
 
@@ -258,8 +260,16 @@ export function AreaRegionPage({ region, lang }: AreaRegionPageProps) {
               );
             })}
           </div>
+
+          {/* Phase 35 — the specific scopes the region's own area guides cover. */}
+          <AreaRegionSubServicesBlock region={region} lang={lang} />
         </div>
       </section>
+
+      {/* Phase 35 — the problems the region's own area guides note. The
+          bordered white section mirrors the districts block above it, so the
+          page keeps its existing surface/white rhythm. */}
+      <AreaRegionProblemsSection region={region} lang={lang} />
 
       {other ? (
         <section className="section section-surface">

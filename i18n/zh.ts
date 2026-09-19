@@ -493,6 +493,13 @@ export const zh: Dictionary = {
     districtsTitle: "{name}各行政区与市镇群",
     districtsDescription:
       "按{name}本地行政与市政区划分类整理。",
+    problemsEyebrow: "常见问题",
+    problemsTitle: "{name}各地常见的装修与维修问题",
+    problemsDescription:
+      "我们的{name}地区指南在当地住宅中最常记录的问题，包括漏水、潮湿、电线老化与饰面陈旧等。",
+    problemsLinkTitle: "本区域的问题指南",
+    problemsNote:
+      "每份指南都会说明征兆、可能成因以及对应的处理方式。上方链接的地区指南会指出您所在位置最常见的问题。",
   },
   areaPage: {
     breadcrumbAreas: "服务地区",
@@ -887,6 +894,10 @@ export const zh: Dictionary = {
     areaTitle: "我们在{name}提供的细项服务",
     areaDescription:
       "以下是我们在{name}各项服务背后的具体施工范围。每项都有独立页面，说明包含的工作、不包含的内容、费用因素和常见问题。",
+    regionEyebrow: "细项服务",
+    regionTitle: "我们{name}地区指南涵盖的细项服务",
+    regionDescription:
+      "以下是我们{name}地区指南所列服务背后的具体施工范围。每项都有独立页面，说明包含的工作、不包含的内容、费用因素和常见问题。",
     underService: "属于{service}",
     viewDetails: "查看详情",
   },

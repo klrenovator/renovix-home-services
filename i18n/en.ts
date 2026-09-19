@@ -532,6 +532,13 @@ export const en: Dictionary = {
     districtsTitle: "Districts & Township Clusters in {name}",
     districtsDescription:
       "Organised by local administrative and municipal districts across {name}.",
+    problemsEyebrow: "Common Problems",
+    problemsTitle: "Renovation & Repair Problems Across {name}",
+    problemsDescription:
+      "The problems our {name} area guides note most often in local housing stock, from leaks and damp to worn wiring and tired finishes.",
+    problemsLinkTitle: "Problem guides for this region",
+    problemsNote:
+      "Each guide explains the warning signs, the likely causes and the work that fixes it. The area guides linked above say which of these are most common where you are.",
   },
   areaPage: {
     breadcrumbAreas: "Service Areas",
@@ -944,6 +951,10 @@ export const en: Dictionary = {
     areaTitle: "Sub-services we carry out in {name}",
     areaDescription:
       "The specific scopes behind the services we work in across {name}. Each one has its own page covering what the work includes, what is not included, cost factors and FAQs.",
+    regionEyebrow: "Sub-Services",
+    regionTitle: "Sub-services our {name} area guides cover",
+    regionDescription:
+      "The specific scopes behind the services our {name} area guides carry. Each one has its own page covering what the work includes, what is not included, cost factors and FAQs.",
     underService: "Under {service}",
     viewDetails: "View details",
   },

@@ -375,6 +375,14 @@ export type Dictionary = {
     ctaDescription: string;
     districtsTitle: string;
     districtsDescription: string;
+    /** Phase 35 — the region hub's link into the problem library. */
+    problemsEyebrow: string;
+    /** "Renovation & Repair Problems Across {name}" */
+    problemsTitle: string;
+    problemsDescription: string;
+    problemsLinkTitle: string;
+    /** "Noted across {name} — open the guide for causes and the work that fixes it." */
+    problemsNote: string;
   };
   areaPage: {
     breadcrumbAreas: string;
@@ -698,6 +706,10 @@ export type Dictionary = {
     areaEyebrow: string;
     areaTitle: string;
     areaDescription: string;
+    /** Phase 35 — region hub scope copy ("{name}" is the region, not an area). */
+    regionEyebrow: string;
+    regionTitle: string;
+    regionDescription: string;
     underService: string;
     viewDetails: string;
   };

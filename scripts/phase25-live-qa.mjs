@@ -767,6 +767,52 @@ function checkInternalLinkGraph(locs, graph) {
     fail(`${unreturnedBlogProjectEdges} blog → project links point at projects that do not link back (edge drift)`);
   }
 
+  // 3f. Phase 35 — region hubs → the scope and problem layers their own area
+  //     guides carry. The two hubs rendered a service layer but linked to no
+  //     sub-service page and no problem guide, even though all 53 of their own
+  //     guides did. Both lists are pure unions of what those child guides
+  //     render (`getSubServicesForRegion` / `getRegionProblemSlugs`), so every
+  //     rendered hub link must also resolve, and every hub must carry both.
+  const regionHubPaths = [...sitemap].filter((p) =>
+    /^\/(en|ms|zh)\/areas\/[^/]+\/$/.test(p),
+  );
+  let hubsWithScopes = 0;
+  let regionScopeEdges = 0;
+  let hubsWithProblems = 0;
+  let regionProblemEdges = 0;
+  for (const path of regionHubPaths) {
+    const hrefs = graph.get(path) ?? new Set();
+    const scopeEdges = [...hrefs].filter((h) =>
+      /^\/(en|ms|zh)\/services\/[^/]+\/[^/]+\/$/.test(h),
+    );
+    const problemEdges = [...hrefs].filter((h) => /^\/(en|ms|zh)\/problems\/[^/]+\/$/.test(h));
+    if (scopeEdges.length > 0) hubsWithScopes += 1;
+    if (problemEdges.length > 0) hubsWithProblems += 1;
+    regionScopeEdges += scopeEdges.length;
+    regionProblemEdges += problemEdges.length;
+  }
+  // Six hubs (2 regions × 3 languages), each capped at 12 scopes and 12
+  // problems; the guard sits well below that real coverage so a genuine
+  // coverage drop fails while an ordinary cap change does not.
+  if (hubsWithScopes === regionHubPaths.length && regionScopeEdges >= regionHubPaths.length * 8) {
+    pass(
+      `link graph: all ${regionHubPaths.length} region hubs link to the sub-service scopes their area guides carry (${regionScopeEdges} links)`,
+    );
+  } else {
+    fail(
+      `region → sub-service link coverage incomplete: ${hubsWithScopes}/${regionHubPaths.length} hubs, ${regionScopeEdges} links`,
+    );
+  }
+  if (hubsWithProblems === regionHubPaths.length && regionProblemEdges >= regionHubPaths.length * 8) {
+    pass(
+      `link graph: all ${regionHubPaths.length} region hubs link to the problem guides their area guides note (${regionProblemEdges} links)`,
+    );
+  } else {
+    fail(
+      `region → problem link coverage incomplete: ${hubsWithProblems}/${regionHubPaths.length} hubs, ${regionProblemEdges} links`,
+    );
+  }
+
   // 4. No internal link may point at a URL the site does not serve.
   const deadLinks = new Map();
   for (const [from, hrefs] of graph) {
@@ -954,6 +1000,163 @@ async function checkAiPhrasingCoverage(locs) {
 }
 
 /**
+ * Phase 36 — the entity catalogue must publish the localized address of every
+ * page it lists, not only the English one.
+ *
+ * The feed declares three supported languages, publishes three homepages and
+ * three phrasing tables, and those tables resolve Malay and Chinese customer
+ * wording to `/ms/…` and `/zh/…` pages. But every service, sub-service,
+ * problem, project, guide and area entry carried `url` pointing at `/en/`
+ * only — so an assistant answering a Malay or Chinese query was handed the
+ * English page. `urls` (one entry per published language, derived from the
+ * language registry) closes that: the check reads the served feed, requires a
+ * map covering every declared language on every entity of every family, and
+ * resolves each entry against the live sitemap in its own language tree, in
+ * both directions — a language that silently drops out fails, and so does a
+ * URL the site no longer serves.
+ */
+async function checkAiLocalizedUrlCoverage(locs) {
+  console.log("\n== AI feed localized URLs (/ai/business.json) ==");
+  const res = await fetchRes("/ai/business.json");
+  if (res.status !== 200) {
+    fail(`/ai/business.json status ${res.status}`);
+    return;
+  }
+  let feed;
+  try {
+    feed = await res.json();
+  } catch {
+    fail("/ai/business.json is not valid JSON");
+    return;
+  }
+
+  const served = new Set(locs.map((loc) => loc.replace(CANONICAL_HOST, "")));
+  const codes = feed?.searchIntents?.supportedLanguages;
+  if (!Array.isArray(codes) || codes.length < 3) {
+    fail("/ai/business.json supportedLanguages missing — cannot check localized URLs");
+    return;
+  }
+
+  /** Every entity the feed lists, as { label, urls }. */
+  const entities = [
+    ...(feed?.services ?? []).map((e) => ({ label: `service:${e.slug}`, urls: e.urls })),
+    ...(feed?.subServices?.scopes ?? []).map((e) => ({
+      label: `sub-service:${e.slug}`,
+      urls: e.urls,
+    })),
+    ...(feed?.problems?.guides ?? []).map((e) => ({
+      label: `problem:${e.url.split("/").filter(Boolean).pop()}`,
+      urls: e.urls,
+    })),
+    ...(feed?.projects?.published ?? []).map((e) => ({
+      label: `project:${e.url.split("/").filter(Boolean).pop()}`,
+      urls: e.urls,
+    })),
+    ...(feed?.knowledgeHub?.articles ?? []).map((e) => ({
+      label: `guide:${e.url.split("/").filter(Boolean).pop()}`,
+      urls: e.urls,
+    })),
+    ...(feed?.serviceArea?.areaGuides ?? []).map((e) => ({
+      label: `area:${e.url.split("/").filter(Boolean).pop()}`,
+      urls: e.urls,
+    })),
+    ...(feed?.serviceArea?.regions ?? []).flatMap((region) => [
+      { label: `region:${region.id}`, urls: region.urls },
+      ...(region.districts ?? []).flatMap((district) =>
+        (district.locations ?? []).map((location) => ({
+          label: `area:${location.url.split("/").filter(Boolean).pop()}`,
+          urls: location.urls,
+        })),
+      ),
+    ]),
+  ];
+
+  if (entities.length === 0) {
+    fail("/ai/business.json lists no entities to localize");
+    return;
+  }
+
+  const missingMap = [];
+  const missingLang = [];
+  const unserved = [];
+  let checked = 0;
+
+  for (const entity of entities) {
+    if (!entity.urls || typeof entity.urls !== "object") {
+      missingMap.push(entity.label);
+      continue;
+    }
+    for (const code of codes) {
+      const url = entity.urls[code];
+      if (typeof url !== "string" || !url) {
+        missingLang.push(`${entity.label} (${code})`);
+        continue;
+      }
+      checked += 1;
+      const path = url.startsWith(CANONICAL_HOST) ? url.slice(CANONICAL_HOST.length) : url;
+      if (!served.has(path)) unserved.push(`${entity.label} → ${path}`);
+      // A language's entry must live in that language's own tree — a map that
+      // repeats the English URL three times would pass every other check.
+      if (!path.startsWith(`/${code}/`)) {
+        unserved.push(`${entity.label} ${code} entry is outside the /${code}/ tree: ${path}`);
+      }
+    }
+  }
+
+  if (missingMap.length === 0) {
+    pass(`/ai/business.json: all ${entities.length} catalogued entities publish a per-language URL map`);
+  } else {
+    fail(
+      `/ai/business.json: ${missingMap.length}/${entities.length} entities have no urls map (e.g. ${missingMap.slice(0, 3).join(", ")})`,
+    );
+  }
+  if (missingLang.length === 0) {
+    pass(`/ai/business.json: every entity URL map covers all ${codes.length} supported languages (${checked} URLs checked)`);
+  } else {
+    fail(
+      `/ai/business.json: ${missingLang.length} entity/language URLs missing (e.g. ${missingLang.slice(0, 3).join(", ")})`,
+    );
+  }
+  if (unserved.length === 0) {
+    pass(`/ai/business.json: all ${checked} localized entity URLs resolve to served pages`);
+  } else {
+    fail(
+      `/ai/business.json: ${unserved.length} localized entity URLs point at pages the site does not serve (e.g. ${unserved.slice(0, 3).join(", ")})`,
+    );
+  }
+
+  // The twelve top-level entry points, per language.
+  const byLang = feed?.keyPagesByLanguage;
+  if (!byLang || typeof byLang !== "object") {
+    fail("/ai/business.json keyPagesByLanguage missing — assistants cannot reach the localized entry points");
+  } else {
+    const missing = [];
+    const dead = [];
+    for (const code of codes) {
+      const pages = byLang[code];
+      if (!pages || typeof pages !== "object") {
+        missing.push(`${code} (all)`);
+        continue;
+      }
+      for (const [name, url] of Object.entries(pages)) {
+        const path = url.startsWith(CANONICAL_HOST) ? url.slice(CANONICAL_HOST.length) : url;
+        if (!served.has(path)) dead.push(`${code}.${name} → ${path}`);
+      }
+    }
+    if (missing.length === 0 && dead.length === 0) {
+      pass(`/ai/business.json: keyPagesByLanguage resolves in all ${codes.length} languages`);
+    } else {
+      if (missing.length) fail(`/ai/business.json keyPagesByLanguage missing: ${missing.join(", ")}`);
+      if (dead.length) {
+        fail(
+          `/ai/business.json keyPagesByLanguage points at unserved pages: ${dead.slice(0, 3).join(", ")}`,
+        );
+      }
+    }
+  }
+}
+
+/**
  * Phase 29 — localized anchor text. An anchor whose visible label is just the
  * humanized slug ("Old House Wiring" pointing at
  * `/ms/problems/old-house-wiring/`) is English text on a Malay or Chinese
@@ -1074,6 +1277,7 @@ async function main() {
   checkInternalLinkGraph(locs, graph);
   await checkAiFeedCoverage(locs);
   await checkAiPhrasingCoverage(locs);
+  await checkAiLocalizedUrlCoverage(locs);
   await checkLocalizedAnchors(anchors);
   await multilingualSpot();
   await checkQuoteApi();
