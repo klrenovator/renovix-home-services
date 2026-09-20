@@ -621,7 +621,7 @@ export const locationsRegistry: LocationEntity[] = [
       accessConsiderations: ["Hillside terrain near Klang Gates Quartz Ridge", "Slope and moisture exposure"],
     },
     serviceRelevance: {
-      primaryServices: ["waterproofing", "waterproofing", "painting", "general-renovation", "plumbing"],
+      primaryServices: ["waterproofing", "painting", "general-renovation", "plumbing"],
       urgentServicesAvailable: ["waterproofing", "plumbing"],
       commonProblems: ["roof-leakage", "damp-walls", "water-stains", "cracked-walls"],
     },
@@ -1056,7 +1056,7 @@ export const locationsRegistry: LocationEntity[] = [
       accessConsiderations: ["High water table and coastal moisture considerations", "Old shophouse masonry"],
     },
     serviceRelevance: {
-      primaryServices: ["waterproofing", "waterproofing", "plumbing", "welding-metal-works", "general-renovation"],
+      primaryServices: ["waterproofing", "plumbing", "welding-metal-works", "general-renovation"],
       urgentServicesAvailable: ["waterproofing", "plumbing", "electrical"],
       commonProblems: ["roof-leakage", "wall-seepage", "water-leakage", "cracked-walls"],
     },
@@ -1188,7 +1188,7 @@ export const locationsRegistry: LocationEntity[] = [
       accessConsiderations: ["Sprawling township logistics", "Large landed compound requirements"],
     },
     serviceRelevance: {
-      primaryServices: ["general-renovation", "waterproofing", "waterproofing", "plumbing", "welding-metal-works"],
+      primaryServices: ["general-renovation", "waterproofing", "plumbing", "welding-metal-works"],
       urgentServicesAvailable: ["plumbing", "electrical", "waterproofing"],
       commonProblems: ["roof-leakage", "water-leakage", "old-house-wiring", "cracked-walls"],
     },
@@ -1353,7 +1353,7 @@ export const locationsRegistry: LocationEntity[] = [
       accessConsiderations: ["Strict gated community protocols (Sierramas/Valencia)", "Large compound scope"],
     },
     serviceRelevance: {
-      primaryServices: ["general-renovation", "waterproofing", "waterproofing", "welding-metal-works", "painting"],
+      primaryServices: ["general-renovation", "waterproofing", "welding-metal-works", "painting"],
       urgentServicesAvailable: ["waterproofing", "plumbing", "electrical"],
       commonProblems: ["roof-leakage", "balcony-leakage", "damp-walls", "water-leakage"],
     },
@@ -1749,7 +1749,7 @@ export const locationsRegistry: LocationEntity[] = [
       accessConsiderations: ["Expansive township developments", "Hilly terrain in Sungai Long"],
     },
     serviceRelevance: {
-      primaryServices: ["waterproofing", "waterproofing", "plumbing", "electrical", "flooring"],
+      primaryServices: ["waterproofing", "plumbing", "electrical", "flooring"],
       urgentServicesAvailable: ["plumbing", "electrical", "waterproofing"],
       commonProblems: ["roof-leakage", "water-leakage", "power-tripping", "bathroom-leakage"],
     },
