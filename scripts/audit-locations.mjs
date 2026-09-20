@@ -266,6 +266,16 @@ for (const entity of published) {
   if (entity.aliases.length < MIN.aliases) issues.push("no aliases / alternate search names");
   if (entity.nearbyLocationSlugs.length < MIN.nearby) issues.push("fewer than 2 nearby connections");
   if (entity.primaryServices.length < MIN.primaryServices) issues.push("fewer than 3 primary services");
+  if (new Set(entity.primaryServices).size !== entity.primaryServices.length) {
+    const duplicates = [
+      ...new Set(
+        entity.primaryServices.filter(
+          (slug, index) => entity.primaryServices.indexOf(slug) !== index,
+        ),
+      ),
+    ];
+    issues.push(`duplicate primary service(s): ${duplicates.join(", ")}`);
+  }
   if (entity.propertyTypes.length < MIN.propertyTypes) issues.push("fewer than 3 property types");
   if (entity.housingEras.length < MIN.housingEras) issues.push("no housing eras");
   if (entity.accessConsiderations.length < MIN.access) issues.push("no access considerations");

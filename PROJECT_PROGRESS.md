@@ -4877,3 +4877,106 @@ reopened by that local state.
 
 Status: **Code verified + Build verified + Local production HTTP verified;
 website preserved; documentation reconciled.**
+
+---
+
+## Phase 38 — Location registry duplicate-service fix + regression guard (2026-09-20)
+
+**Result: 🟡 one genuine data defect found and fixed** (additive-only; no
+page, URL, price, service, claim, copy or piece of branding changed). This was
+a preservation-first pass: the full verification gate was re-run before any
+change, then every list field in every registry was scanned for duplicates.
+
+### 1. Baseline verification gate (all green before any change)
+
+- [x] `npm ci` — 371 packages, 0 vulnerabilities
+- [x] `npm run type-check` + `npm run lint` — PASS
+- [x] All 17 static audits — PASS (matches the Phase 37 record)
+- [x] `npm run build` — PASS, **689** static generation entries
+
+### 2. What the duplicate scan actually found
+
+A sweep of every string-array field in the content registries surfaced one
+real defect: five locations in `data/locations/registry.ts` listed the same
+service twice in `serviceRelevance.primaryServices` (all `"waterproofing"`):
+
+| Location | PrimaryServices before |
+| --- | --- |
+| `kuala-lumpur/taman-melawati` | waterproofing ×2, painting, general-renovation, plumbing |
+| `selangor/klang` | waterproofing ×2, plumbing, welding-metal-works, general-renovation |
+| `selangor/kajang` | general-renovation, waterproofing ×2, plumbing, welding-metal-works |
+| `selangor/sungai-buloh` | general-renovation, waterproofing ×2, welding-metal-works, painting |
+| `selangor/balakong` | waterproofing ×2, plumbing, electrical, flooring |
+
+`primaryServices` drives `getStartingRatesForLocation()` (data/locations/
+hierarchy.ts), which builds the indicative-rates section rendered by
+`components/area/AreaPricingSection.tsx`. That component keys each card by
+`rate.serviceSlug`, so each duplicate produced a **second, identical
+"Flat Roof Waterproofing" pricing card** and a duplicate-React-key warning on
+those five area pages — in all three languages (15 served pages). The existing
+location quality gate only enforced `length >= 3`, so the duplication passed
+undetected. No other registry list field (pricing ids/slugs, sub-service
+slugs, service slugs, intent-matrix ids, location ids, area guide service
+lists, nearby/related lists) contained a duplicate.
+
+### 3. What was changed (source-of-truth data only, additive guard)
+
+1. `data/locations/registry.ts` — removed the duplicated `"waterproofing"`
+   from each of the five `primaryServices` arrays. No service was added or
+   re-ordered; every remaining entry already existed in that location's list,
+   and every one resolves to a real pricing row and service page.
+2. `scripts/audit-locations.mjs` §4 — a uniqueness check beside the existing
+   `primaryServices` minimum-count check: a repeated service in a location's
+   `primaryServices` now fails the quality gate with the duplicated slug(s)
+   named. This is the same "regression guard, not a rule change" pattern as
+   Phases 27–36.
+
+### 4. Regression guard (negative-tested twice)
+
+- Re-inserted `"waterproofing","waterproofing"` into `selangor/klang` →
+  `audit:locations` exits 1 with
+  `Quality gate failed for "selangor/klang": duplicate primary service(s): waterproofing.`
+- Restored the data → audit returns PASS.
+
+### 5. Measured result (before → after)
+
+| Metric | Before | After |
+| --- | --- | --- |
+| Locations with a duplicated `primaryServices` entry | 5 | **0** |
+| Area pricing cards on the 5 affected pages (per language) | 5 (one duplicated) | **4 distinct** |
+| Served pages visually affected (5 areas × 3 languages) | 15 | **0** |
+| Sitemap URLs / generated routes | 678 / 689 | **678 / 689 (unchanged)** |
+| New pages / new URLs / prices touched | — | **0 / 0 / 0** |
+
+### 6. Preserved untouched (verified correct — 🟢)
+
+- All 678 URLs, canonicals, hreflang sets, structured data, robots.txt and the
+  sitemap (verified unchanged: 689 build entries, `audit:sitemap` PASS).
+- All 51 pricing rows, 24 search-intent entries and their single-source
+  derivation (`audit:pricing` + `audit:locations` §10 PASS — no price,
+  unit or starting-from semantics changed anywhere).
+- The 10 services, 51 sub-services, 57 problem guides, 53 area guides, 2
+  region hubs, 28 projects, 12 Knowledge Hub guides and the Smart Service
+  Finder.
+- The whole internal-link graph (`audit:live` link sample + service↔
+  sub-service, area↔scope, problem↔project wiring all PASS).
+- The AI feeds (`/llms.txt`, `/ai/business.json`, `/ai/pricing.json`) — no
+  generated content touched.
+- No UI, branding, copy, metadata, translation, route, asset, configuration
+  or dependency change. The diff is limited to the five registry lines and
+  the one audit guard (15 insertions / 5 deletions across two files).
+
+### 7. Test results (this phase)
+
+- [x] `npm run type-check` — PASS
+- [x] `npm run lint` — PASS (0 errors, 0 warnings)
+- [x] `npm run build` — PASS (689/689, unchanged)
+- [x] All 17 static audits — PASS (incl. the new duplicate guard)
+- [x] `npm run audit:live` vs `next start` — **PASS 228 / WARN 0 / FAIL 0**
+- [x] Rendered spot-checks — the 5 affected area pages in EN, MS and ZH each
+      render exactly 4 distinct, localized pricing cards (verified the card
+      titles and service chips on all 15 URLs)
+- [x] Negative test — duplicate re-introduction fails the guard; restore passes
+
+Status: **Code verified + Build verified + Live verified (HTTP); one
+data-quality defect removed and permanently guarded.**
