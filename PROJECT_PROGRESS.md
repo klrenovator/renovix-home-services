@@ -8,7 +8,7 @@
 - **Stack:** Next.js 16.3.3, React 19.2.8, TypeScript 6.0.3, Tailwind CSS 4.3.3
 - **Languages:** English (`/en/`), Bahasa Melayu (`/ms/`), Simplified Chinese (`/zh/`) — see Phase 6
 
-### Current site inventory (re-verified in Phase 27, `npm run build` + served `/sitemap.xml`)
+### Current site inventory (re-verified in Phase 37, 2026-09-20, `npm run build` + locally served `/sitemap.xml`)
 
 | Item | Count |
 |---|---|
@@ -21,7 +21,7 @@
 | Smart Service Finder | `/search/` landing per language (base route indexable; `?q=` variants noindex) |
 | **Canonical pages per language** | **226** |
 | **Canonical URLs total (3 languages)** | **678** |
-| Static pages built | **685** (678 canonical + pre-rendered 404 fixtures for excluded slugs) |
+| Static generation entries | **689** (`next build` progress total; distinct from the 678 canonical sitemap URLs) |
 | Pricing rows (`data/pricing/pricing.ts`) | **51** |
 | Search-intent matrix entries | **24** (all pricing derived from `pricingId`) |
 | Audit scripts | 17 static + 1 live server QA |
@@ -4766,3 +4766,114 @@ Measured: the feed now publishes **798** localized URL entries across
       designed and pass again after restore
 
 Status: **Code verified + Build verified + Live verified (HTTP)**.
+
+
+---
+
+## Phase 37 — Preservation-first re-verification and progress reconciliation (2026-09-20)
+
+**Result: 🟢 existing website work verified and left untouched.** This is a
+verification/documentation pass, not a new feature phase. No missing website
+feature or internal-link gap was established that justified changing the
+published content or adding another section/page.
+
+### 1. Inspect first — sources and actual inventory
+
+Read `AGENTS.md`, this progress record through Phase 36,
+`CONTENT_GOVERNANCE.md`, `CONTENT_MAP.md`, `PROJECT_OWNER_PENDING.md`, the
+service/area/location registries, link components, AI feed coverage checks and
+existing QA scripts before deciding whether anything needed work. The prior
+Master Prompt was not separately attached to this session; the current user
+instructions and repository-recorded governance/progress supplied the scope.
+
+Reconfirmed from the registries and build/HTTP checks:
+
+- **10 services:** Tile & Tiling, Welding & Metal Works, Electrical, Painting,
+  Ceiling & Partition, General Renovation, Plumbing, Waterproofing, Flooring,
+  Handyman (`data/services.ts`). No additional service inferred.
+- **51 sub-services**, **57 problem guides**, **53 area guides** (21 Kuala
+  Lumpur + 32 Selangor), **2 region hubs**, **28 projects**, **12 Knowledge Hub
+  guides**, and the existing Smart Service Finder, in EN/MS/ZH.
+- **678 canonical sitemap URLs**, 226 per language; **689 static generation
+  entries** in the production build. Those are different measurements.
+- **51 pricing rows** and **24 search-intent entries**; pricing remains derived
+  from the existing catalogue without any edits.
+- The published location model uses the two region trees and their existing
+  district groups. **Kampung Baru is the only published `level: "kampung"`
+  entity** (`kuala-lumpur/kampung-baru`). Kampung Sungai Penchala and Kampung
+  Lindungan in the registry's introductory comment are not published location
+  entities and are not authority to create pages or claim coverage. Existing
+  aliases are not separate locations. Planned regions stay unpublished.
+
+### 2. 🟢 Verified correct — no website changes
+
+| Surface | Evidence from this pass | Action |
+| --- | --- | --- |
+| Prices, scope and business facts | `audit:pricing`, `audit:business`, `audit:authority` PASS | Leave untouched |
+| EN/MS/ZH routes, canonicals, hreflang, schema, sitemap and robots | Static audits PASS; all 678 sitemap URLs return 200; served metadata/schema spot checks PASS | Leave untouched |
+| Service ↔ sub-service links | All 153 localized sub-service pages link to their own pillar and are linked from it | Leave untouched |
+| Service/sub-service → area links | All 183 localized service + sub-service pages reach all 53 areas in their language; 9,699 links | Leave untouched |
+| Area → scope/service links | All 159 localized area guides carry scope links (2,235 links) and at least six service pillar links | Leave untouched |
+| Region → scope/problem links | All six localized hubs carry the existing scope and problem layers, 72 links per layer | Leave untouched |
+| Problem/project and guide/project links | Existing mapped proof links and reciprocal links pass live QA; no invented project relationships added | Leave untouched |
+| AI feeds | `/llms.txt` family coverage, all three phrasing tables, 798 localized entity URL entries and localized key pages PASS | Leave untouched |
+| UI, branding, conversion and security | Lint/build plus existing quote, analytics and security audits PASS; no UI or runtime edits | Leave untouched |
+
+The existing whole-site link audit reports zero orphan pages and no internal
+link to an unserved page. These results describe the local production build,
+not search rankings or indexing outcomes.
+
+**Additional Kampung/locality spot check (real HTTP, main-content anchors only):**
+for `/en/areas/kuala-lumpur/kampung-baru/`,
+`/ms/areas/kuala-lumpur/kampung-baru/` and
+`/zh/areas/kuala-lumpur/kampung-baru/`, each rendered guide has
+**7 unique service links, 15 sub-service links, 4 problem links and 6 area
+links**. All these links remain in the page's language tree. The Kuala Lumpur
+parent hub and all four authored nearby guides — KL City Centre, Sentul,
+Setapak and Ampang — are present. No need to duplicate that locality linking.
+
+### 3. 🟡 Genuine documentation drift — corrected only where necessary
+
+1. The top inventory still reported **685** static pages and Phase 27 as its
+   verification point, whereas the current build generates **689** entries
+   (also already recorded in later phases). Corrected the overview to the
+   measured count, distinguished build entries from canonical URLs, and
+   recorded this verification date. Historical phase reports are unchanged.
+2. The current owner checklist still presented Search Console sitemap
+   submission as pending, but the same file's Phase 25 table records it as
+   **DONE 2026-09-06**. Reconciled the current row to that recorded completion
+   rather than asking the owner to repeat it. **No new GSC dashboard check or
+   submission was performed**, and this is not a claim about indexing.
+
+### 4. 🔴 Missing work — none established within this pass's scope
+
+No missing service, sub-service, problem, area, Kampung page, or relevant link
+was established from the authoritative published data and rendered checks.
+No speculative content, coverage, pricing, credentials, project details or
+service×location doorway pages were added. Owner-dependent photos, business
+facts, device testing and hosting/dashboard actions cannot be manufactured
+or assumed still pending just because they appeared in an older checklist.
+
+### 5. QA and preservation boundary
+
+- [x] `npm ci` — successful; installation reports **0 vulnerabilities**.
+- [x] `npm run type-check` — PASS.
+- [x] `npm run lint` — PASS, no errors or warnings.
+- [x] `npm run build` — PASS, **689** static generation entries.
+- [x] All **17 static audits** — PASS.
+- [x] `npm run audit:live` against locally served `next start` —
+      **PASS 228 / WARN 0 / FAIL 0**.
+- [x] Additional EN/MS/ZH Kampung Baru main-content link checks — PASS.
+- [x] Final diff limited to `PROJECT_PROGRESS.md` and
+      `PROJECT_OWNER_PENDING.md`; no application, content-data, price,
+      dependency, configuration, asset, route or sitemap timestamp changed.
+
+Limitations: HTTP QA is not visual/mobile-device QA. Production deployment,
+Search Console indexing/performance, analytics dashboards and real email
+inbox delivery were not re-verified. Local credentials are unset, so the
+quote API was tested for its existing honest unavailable response, not live
+email delivery; the prior owner's recorded production completion is not
+reopened by that local state.
+
+Status: **Code verified + Build verified + Local production HTTP verified;
+website preserved; documentation reconciled.**
