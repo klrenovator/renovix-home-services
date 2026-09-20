@@ -8,7 +8,7 @@
 - **Stack:** Next.js 16.3.3, React 19.2.8, TypeScript 6.0.3, Tailwind CSS 4.3.3
 - **Languages:** English (`/en/`), Bahasa Melayu (`/ms/`), Simplified Chinese (`/zh/`) — see Phase 6
 
-### Current site inventory (re-verified in Phase 37, 2026-09-20, `npm run build` + locally served `/sitemap.xml`)
+### Current site inventory (re-verified in Phase 37 and Phase 38, 2026-09-20, `npm run build` + locally served `/sitemap.xml`; Phase 38 added internal links only — no count below changed)
 
 | Item | Count |
 |---|---|
@@ -4877,3 +4877,105 @@ reopened by that local state.
 
 Status: **Code verified + Build verified + Local production HTTP verified;
 website preserved; documentation reconciled.**
+
+## Phase 38 — Service pillar → problem-guide edge restored, plus reciprocity guards (2026-09-20)
+
+**Result: one genuine, evidence-backed internal-link gap found and fixed — 3 of
+the 10 service pillars never linked their own problem guides (11 guides, 33
+localized problem pages) — and the static + rendered guards that stop it
+recurring. No price, service, URL, page-count, sitemap, UI or branding change.**
+
+### 1. Inspect first — 🔴 defect located by an exhaustive link-graph crawl
+
+This pass did not assume anything was pending. It re-measured the published
+site instead of trusting prior summaries:
+
+1. Full crawl of all **678 sitemap URLs** from a locally served production
+   build (`next start`), parsing `<main>` anchors only, then classifying every
+   link target by layer (service, sub-service, problem, area, region, project,
+   guide, hub). Raw graph: **705 distinct internal targets, 0 × 404, 0 ×
+   redirect, 0 cross-language links** in main content.
+2. Per-layer edge matrix (which page type links which), plus zero-count
+   distribution per page — averages hide the tail.
+3. Registry cross-check of the same edge in `data/` (services, sub-services,
+   problems, areas, projects, articles) to separate *data-driven* absences from
+   *missing* links.
+
+That separated genuine gaps from honest ones and produced exactly one defect
+class (below), rather than a list of speculative additions.
+
+### 2. 🔴 The gap — service pillar → its own problem guides (fixed)
+
+| Evidence | Finding |
+| --- | --- |
+| Problem registry | 57 problem guides; every one declares `relatedService` |
+| Service registry | `flooring`, `welding-metal-works`, `general-renovation` had no `relatedProblems` entry for their own 4, 4 and 3 guides |
+| Rendered check | 0 problem links on those three pillar pages in EN, MS and ZH — **33 localized problem pages with no link from their own hub** |
+| Asymmetry | The reverse edge (`problem → service`) rendered on all 171 problem pages, so the graph was one-directional for those 11 guides |
+| Not orphaned | They kept inbound links from sub-service pages, sibling guides, the home page and `/problems/`; only the pillar edge was missing |
+
+Fix: the 11 slugs were added to the three `relatedProblems` arrays
+(`data/service-content/flooring.ts`, `welding-metal-works.ts`,
+`general-renovation.ts`). This adds **no new relationship**: each slug is the
+inverse of an edge the target page already declares, and each is already linked
+from the matching sub-service pages. `ServiceTranslation` deliberately omits
+structural fields, so one authored line per language-set propagates correctly
+to `/en/`, `/ms/` and `/zh/` (all 11 guides are fully translated).
+
+Rendered proof (main-content inbound links, EN sample):
+`rusted-gate-repair` 12 → 13, `swollen-flooring` 9 → 10,
+`lifting-floor-planks` 10 → 11, `renovation-delays` 6 → 7. After the fix
+**171/171 problem pages** are linked from the pillar that owns them in their own
+language (192 rendered pillar→problem edges), and **0/30** service pillars have
+an empty problem layer.
+
+### 3. 🟡 Assessed and deliberately left unchanged (honest, data-driven absences)
+
+| Candidate | Why it is correct as-is |
+| --- | --- |
+| Project → area/region, area → project | `ProjectLocation` is unset for every project (no job location was supplied with the photographs), so `ProjectLocationSection` honestly links the areas index instead. Adding locations would invent facts. |
+| Sub-service → project (120/153 pages) and problem → project (96/171) | Only 11 of 51 scopes are mapped to a published project (`subServices`); everything else correctly renders no proof block. |
+| 4 problem guides with no sub-service block (`balcony-leakage`, `broken-tile-repair`, `kitchen-tile-problems`, `wall-seepage`) | No sub-service declares them; authoring a link would invent a scope relationship the owner has not confirmed. |
+| Painting / waterproofing / flooring have no project proof | The 28 published projects fall in 7 categories only; no painting- or waterproofing-only project exists (already recorded as an accepted gap in `CONTENT_MAP.md` §5). |
+| Region hubs → guides | No article declares a region-level location key, so there is nothing to derive the edge from. |
+| Hub-to-hub links on `/services/`, `/problems/`, `/areas/` | Header and footer already give every hub a site-wide link from every page; service pillars carry 37–130 main-content inbound links each. No under-linking was measurable, so no section was added. |
+
+### 4. Guards added (so the edge cannot silently regress)
+
+- `npm run audit:authority` **§3b** (static): parses the problem registry, then
+  fails if a service page does not link a guide that declares it as its owner.
+  Cross-service problem links stay allowed. Verified by negative test: removing
+  `squeaky-flooring` from the flooring pillar produced the expected FAIL;
+  restoring it returned the audit to PASS.
+- `npm run audit:live` **§3g** (rendered): asserts that every problem guide page
+  is linked from a service pillar page **of its own language**, so a
+  registry-correct edge that fails to render also fails QA.
+- `CONTENT_MAP.md`: the link-graph table now lists the service → problem edge and
+  the enforcement list names both guards.
+
+### 5. QA and preservation boundary
+
+- [x] `npm run type-check` — PASS.
+- [x] `npm run lint` — PASS, no errors or warnings.
+- [x] `npm run build` — PASS, **689** static generation entries (unchanged).
+- [x] All **17 static audits** — PASS (including the new §3b check).
+- [x] `npm run audit:live` against locally served `next start` —
+      **PASS 229 / WARN 0 / FAIL 0** (228 before; +1 for the new link check).
+- [x] Independent crawl of all 678 sitemap URLs — **0 missing or redirecting
+      internal link targets**, no cross-language main-content links, no page
+      type left without its within-scope edges beyond the honesty-blocked ones
+      in §3.
+- [x] Prices, services, sub-services, areas, Kampung entity, projects, guide
+      copy, URLs, canonicals, hreflang, schema, sitemap, robots, AI feeds and
+      every component/UI file — untouched.
+- [x] Final diff: 3 content-registry files (link fields only), 2 audit scripts,
+      `CONTENT_MAP.md`, `PROJECT_PROGRESS.md`.
+
+Limitations: HTTP-level QA is not visual/mobile-device QA. Rendered checks
+describe the local production build, not search rankings, indexing or AI-answer
+outcomes. Owner-gated items (project locations, painting/waterproofing
+photography, business-fact confirmations) remain owner-gated and were not
+invented or assumed.
+
+Status: **Code verified + Build verified + Local production HTTP verified;
+link graph strengthened where a real gap existed; everything else preserved.**

@@ -380,4 +380,10 @@ export const flooring: ServiceDetail = {
     "floor hacking",
   ],
   relatedServices: ["tiling", "general-renovation", "handyman", "waterproofing"],
+  relatedProblems: [
+    "swollen-flooring",
+    "lifting-floor-planks",
+    "hollow-flooring",
+    "squeaky-flooring",
+  ],
 };

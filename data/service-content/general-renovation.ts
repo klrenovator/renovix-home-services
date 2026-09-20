@@ -437,6 +437,9 @@ export const generalRenovation: ServiceDetail = {
   ],
   relatedServices: ["tiling", "electrical", "plumbing", "painting"],
   relatedProblems: [
+    "renovation-permit-approval",
+    "renovation-scope-creep",
+    "renovation-delays",
     "cracked-walls",
     "cracked-ceiling",
     "uneven-tiles",

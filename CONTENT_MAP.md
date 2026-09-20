@@ -38,14 +38,18 @@ Sub-service link graph — one authored direction, every link derived from it:
 | Edge | Source of truth | Rendered on |
 | --- | --- | --- |
 | service → its sub-services | `getSubServicesByService` | service pillar (Phase 28) |
+| service → its own problem guides | the `relatedService` each guide declares, restated in the pillar's `relatedProblems` | service pillar's related-problems block (Phase 38) |
 | problem → the scopes that fix it | inverse of each sub-service's `relatedProblems` (`getSubServicesForProblem`) | problem guide (Phase 28) |
 | area → the scopes carried out there | published intent-matrix entries for the location, then `getSubServicesForProblem` over the area's own locally common problems (`getSubServicesForLocation`) | area guide's services section (Phase 29) |
 
 Rendered graph is enforced by `npm run audit:subservices` §5–§6 (wiring),
+`npm run audit:authority` §3b (the service ↔ problem edge is reciprocal — a
+guide's owning service must link it back, Phase 38),
 `npm run audit:multilingual` (no label is built by humanizing a slug) and
 `npm run audit:live` (no orphans, every sub-service page linked from its own
-pillar and back, every area guide linked to its scopes, no English slug label
-on a `/ms/` or `/zh/` page, no internal link to an unserved URL).
+pillar and back, every problem guide linked from the service pillar that owns
+it, every area guide linked to its scopes, no English slug label on a `/ms/` or
+`/zh/` page, no internal link to an unserved URL).
 
 ## 2. Problem-first map (57 guides at `/{lang}/problems/{slug}/`)
 
