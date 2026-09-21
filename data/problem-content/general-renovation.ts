@@ -13,7 +13,7 @@ export const generalRenovationProblems: ProblemDetail[] = [
     slug: "renovation-permit-approval",
     category: "general-renovation",
     name: "Renovation Approval & Permits",
-    title: "Renovix Home Services | Renovation Approval & Permits in KL & Selangor",
+    title: "Renovix Home Services | Renovation Approval & Permits",
     metaDescription:
       "Renovation approvals in Kuala Lumpur & Selangor — strata management consent, local authority permits and what needs approval. Understand the process before work starts.",
     h1: "Renovation Approval & Permits",

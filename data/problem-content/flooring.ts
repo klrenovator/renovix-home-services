@@ -158,7 +158,7 @@ export const flooringProblems: ProblemDetail[] = [
     slug: "lifting-floor-planks",
     category: "flooring",
     name: "Lifting or Separating Floor Planks",
-    title: "Renovix Home Services | Lifting Floor Plank Repair in KL & Selangor",
+    title: "Renovix Home Services | Lifting Floor Plank Repair",
     metaDescription:
       "SPC, vinyl and laminate planks lifting, gapping or peaking in Kuala Lumpur & Selangor. Understand expansion gaps, subfloor flatness and adhesive failure, and how each is repaired.",
     h1: "Lifting or Separating Floor Planks",

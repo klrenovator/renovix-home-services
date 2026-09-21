@@ -142,7 +142,7 @@ export const plumbingSubServices: SubServiceDefinition[] = [
       h1: "Plumbing Call-Out & Inspection in Kuala Lumpur & Selangor",
       metaDescription:
         "On-site plumbing inspection and diagnosis in Kuala Lumpur & Selangor. Find out what is actually wrong before committing to a repair. Call-out from RM80 per job, waived if you proceed.",
-      title: "Renovix Home Services | Plumbing Call-Out & Inspection in KL & Selangor",
+      title: "Renovix Home Services | Plumbing Call-Out & Inspection",
       lead:
         "When you can see the symptom but not the cause, an inspection buys you a diagnosis — and the call-out fee is waived if you go ahead with the repair.",
       suitableFor: [
@@ -182,7 +182,7 @@ export const plumbingSubServices: SubServiceDefinition[] = [
       h1: "Panggilan & Pemeriksaan Paip di Kuala Lumpur & Selangor",
       metaDescription:
         "Pemeriksaan dan diagnosis paip di tapak dalam Kuala Lumpur & Selangor. Ketahui masalah sebenar sebelum membuat pembaikan. Panggilan dari RM80 sekerja, dikecualikan jika anda teruskan.",
-      title: "Renovix Home Services | Panggilan & Pemeriksaan Paip di KL & Selangor",
+      title: "Renovix Home Services | Panggilan & Pemeriksaan Paip",
       lead:
         "Apabila anda nampak simptom tetapi bukan puncanya, pemeriksaan memberi anda diagnosis — dan yuran panggilan dikecualikan jika anda meneruskan pembaikan.",
       suitableFor: [
@@ -268,7 +268,7 @@ export const plumbingSubServices: SubServiceDefinition[] = [
       name: "Concealed & In-Wall Leak Repair",
       h1: "Concealed & In-Wall Leak Repair in Kuala Lumpur & Selangor",
       metaDescription: "Hidden pipe leaks inside walls and floors traced and repaired in Kuala Lumpur & Selangor, including opening up, repair and basic skim. Concealed leak repair from RM450 per job.",
-      title: "Renovix Home Services | Concealed & In-Wall Leak Repair in KL & Selangor",
+      title: "Renovix Home Services | Concealed & In-Wall Leak Repair",
       lead: "A concealed leak shows itself as a damp patch, a rising water bill or a musty smell long before you ever see water — which is why finding it accurately matters more than the repair itself.",
       suitableFor: [
         "A damp patch on a wall or ceiling with no visible pipe.",
@@ -308,7 +308,7 @@ export const plumbingSubServices: SubServiceDefinition[] = [
       name: "Pembaikan Kebocoran Tersembunyi & Dalam Dinding",
       h1: "Pembaikan Kebocoran Tersembunyi & Dalam Dinding di Kuala Lumpur & Selangor",
       metaDescription: "Kebocoran paip tersembunyi dalam dinding dan lantai dijejaki dan dibaiki di Kuala Lumpur & Selangor, termasuk pembukaan, pembaikan dan skim asas. Dari RM450 sekerja.",
-      title: "Renovix Home Services | Pembaikan Kebocoran Tersembunyi di KL & Selangor",
+      title: "Renovix Home Services | Pembaikan Kebocoran Tersembunyi",
       lead: "Kebocoran tersembunyi menunjukkan diri sebagai tompok lembap, bil air meningkat atau bau hapak jauh sebelum anda nampak air — sebab itulah mencarinya dengan tepat lebih penting daripada pembaikan itu sendiri.",
       suitableFor: [
         "Tompok lembap pada dinding atau siling tanpa paip yang kelihatan.",
@@ -439,7 +439,7 @@ export const plumbingSubServices: SubServiceDefinition[] = [
       name: "Penggantian Paip Air & Pili",
       h1: "Penggantian Paip Air & Pili di Kuala Lumpur & Selangor",
       metaDescription: "Penggantian pili besen, dapur dan mixer di Kuala Lumpur & Selangor — upah dan pemasangan asas, pili lama ditanggalkan dan yang baharu diuji. Dari RM160 seunit.",
-      title: "Renovix Home Services | Penggantian Paip Air & Pili di KL & Selangor",
+      title: "Renovix Home Services | Penggantian Paip Air & Pili",
       lead: "Menggantikan pili adalah mudah apabila sambungan di bawahnya masih kukuh — kebanyakan kesukaran datang daripada penyambung berkarat dan akses sempit di bawah besen, bukan pili itu sendiri.",
       suitableFor: [
         "Pili yang masih menitis walaupun washer sudah ditukar.",
@@ -534,7 +534,7 @@ export const plumbingSubServices: SubServiceDefinition[] = [
       name: "Toilet Flush & Mechanism Repair",
       h1: "Toilet Flush & Mechanism Repair in Kuala Lumpur & Selangor",
       metaDescription: "Toilet flush, fill valve, flapper and base leak repair in Kuala Lumpur & Selangor. A running cistern wastes water continuously. Toilet repair from RM120 per job.",
-      title: "Renovix Home Services | Toilet Flush & Mechanism Repair in KL & Selangor",
+      title: "Renovix Home Services | Toilet Flush & Mechanism Repair",
       lead: "A toilet that runs continuously is one of the few faults that costs you money every hour it is left — the cistern refills silently and the water bill shows it long before you notice the sound.",
       suitableFor: [
         "A cistern that keeps running or refills by itself.",
@@ -574,7 +574,7 @@ export const plumbingSubServices: SubServiceDefinition[] = [
       name: "Pembaikan Sistem Pam Tandas",
       h1: "Pembaikan Sistem Pam Tandas di Kuala Lumpur & Selangor",
       metaDescription: "Pembaikan pam, injap pengisi, flapper dan kebocoran dasar tandas di Kuala Lumpur & Selangor. Tangki yang mengalir berterusan membazir air. Dari RM120 sekerja.",
-      title: "Renovix Home Services | Pembaikan Sistem Pam Tandas di KL & Selangor",
+      title: "Renovix Home Services | Pembaikan Sistem Pam Tandas",
       lead: "Tandas yang mengalir berterusan antara sedikit kerosakan yang merugikan anda setiap jam ia dibiarkan — tangki mengisi semula secara senyap dan bil air menunjukkannya jauh sebelum anda perasan bunyinya.",
       suitableFor: [
         "Tangki yang terus mengalir atau mengisi sendiri.",
@@ -661,7 +661,7 @@ export const plumbingSubServices: SubServiceDefinition[] = [
       name: "Drain & Toilet Unblocking",
       h1: "Drain & Toilet Unblocking in Kuala Lumpur & Selangor",
       metaDescription: "Blocked toilets, sinks and floor traps cleared in Kuala Lumpur & Selangor using manual tools and augers. Drain unblocking from RM100 per job. Free quote.",
-      title: "Renovix Home Services | Drain & Toilet Unblocking in KL & Selangor",
+      title: "Renovix Home Services | Drain & Toilet Unblocking",
       lead: "Most household blockages are within reach of an auger — what matters is clearing it without damaging the pipe, and knowing when a repeat blockage means something structural.",
       suitableFor: [
         "A toilet, sink or floor trap draining slowly or not at all.",
@@ -701,7 +701,7 @@ export const plumbingSubServices: SubServiceDefinition[] = [
       name: "Membuka Longkang & Tandas Tersumbat",
       h1: "Membuka Longkang & Tandas Tersumbat di Kuala Lumpur & Selangor",
       metaDescription: "Tandas, sinki dan perangkap lantai tersumbat dibersihkan di Kuala Lumpur & Selangor menggunakan alat manual dan auger. Dari RM100 sekerja. Sebut harga percuma.",
-      title: "Renovix Home Services | Membuka Longkang Tersumbat di KL & Selangor",
+      title: "Renovix Home Services | Membuka Longkang Tersumbat",
       lead: "Kebanyakan sumbatan rumah berada dalam capaian auger — yang penting ialah membersihkannya tanpa merosakkan paip, dan tahu bila sumbatan berulang bermakna sesuatu yang berstruktur.",
       suitableFor: [
         "Tandas, sinki atau perangkap lantai mengalir perlahan atau langsung tidak.",
@@ -788,7 +788,7 @@ export const plumbingSubServices: SubServiceDefinition[] = [
       name: "Water Heater Installation",
       h1: "Water Heater Installation in Kuala Lumpur & Selangor",
       metaDescription: "Instant and storage water heater installation in Kuala Lumpur & Selangor — plumbing connection plus coordination for the electrical point. Water heater installation from RM150 per unit.",
-      title: "Renovix Home Services | Water Heater Installation in KL & Selangor",
+      title: "Renovix Home Services | Water Heater Installation",
       lead: "A water heater installation is two trades meeting at one point on the wall: the plumbing connection and a properly rated electrical supply, which for a heater must include RCD protection.",
       suitableFor: [
         "Replacing an old or failed instant or storage heater.",

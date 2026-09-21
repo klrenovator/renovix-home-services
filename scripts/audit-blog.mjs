@@ -162,6 +162,63 @@ if (!sitemap.includes("getArticles()") || !sitemap.includes("/blog/")) {
   fail("app/sitemap.ts must emit the hub and every article");
 }
 
+// --- Phase 41 — region hubs derive their guide list from their own children --
+//
+// The 53 area guides have rendered the Knowledge Hub guides that declare them
+// since Phase 20; the two region hubs rendered none, so the guide layer was
+// the one layer Phase 35 (scopes, problems) left out. `getArticlesForRegion()`
+// closes it as a pure union: a hub may only list guides that at least one of
+// its own child area guides already declares, so no hub can claim reading it
+// has not earned. Both halves are checked — the derivation exists and is wired
+// into the hub template, and every region genuinely has guides to derive.
+const articleRegions = new Map();
+for (const f of files) {
+  const src = read(`${blogDir}/${f}`);
+  const slug = src.match(/slug:\s*"([a-z0-9-]+)"/)?.[1];
+  const block = src.match(/relatedLocations:\s*\[([\s\S]*?)\]/)?.[1] ?? "";
+  const regions = new Set(
+    [...block.matchAll(/"([a-z-]+)\/[a-z0-9-]+"/g)].map((m) => m[1]),
+  );
+  if (slug) articleRegions.set(slug, regions);
+  else fail(`${f}: cannot read the article slug for the region-hub derivation`);
+}
+
+const regionIds = new Set([...locationKeys].map((key) => key.split("/")[0]));
+let hubGuidePairs = 0;
+for (const regionId of regionIds) {
+  const children = [...locationKeys].filter((key) => key.startsWith(`${regionId}/`));
+  if (children.length === 0) {
+    fail(`region "${regionId}" publishes no area guides — nothing for a hub to derive from`);
+    continue;
+  }
+  const derived = [...articleRegions]
+    .filter(([, regions]) => regions.has(regionId))
+    .map(([slug]) => slug);
+  if (derived.length === 0) {
+    fail(
+      `region hub "${regionId}" would render no Knowledge Hub guide: no article declares any of its ${children.length} area guides`,
+    );
+  }
+  hubGuidePairs += derived.length;
+}
+
+if (!/export function getArticlesForRegion\(/.test(registry)) {
+  fail(
+    "data/blog/index.ts must export getArticlesForRegion() — the region hubs derive their guide list from their own area guides",
+  );
+}
+const regionPage = read("components/area/AreaRegionPage.tsx");
+if (!/getArticlesForRegion\(region/.test(regionPage)) {
+  fail(
+    "components/area/AreaRegionPage.tsx must render getArticlesForRegion(region, …) — the guide layer the 53 area guides carry was missing from both hubs",
+  );
+}
+if (!/GuideLinksSection/.test(regionPage)) {
+  fail(
+    "components/area/AreaRegionPage.tsx must render the shared GuideLinksSection rather than a bespoke guide list",
+  );
+}
+
 // --- Report ---------------------------------------------------------------
 if (errors.length > 0) {
   console.error(`✗ blog audit failed (${errors.length} issue${errors.length === 1 ? "" : "s"})`);
@@ -169,5 +226,6 @@ if (errors.length > 0) {
   process.exit(1);
 }
 console.log(
-  `✓ blog audit passed — ${files.length} articles, all references resolve, no orphans, EN/MS/ZH complete`,
+  `✓ blog audit passed — ${files.length} articles, all references resolve, no orphans, EN/MS/ZH complete, ` +
+    `${regionIds.size} region hubs derive ${hubGuidePairs} guide links from their own area guides`,
 );

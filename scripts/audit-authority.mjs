@@ -579,6 +579,86 @@ for (const lang of ["ms", "zh"]) {
 note("Meta descriptions and H1s are unique within each language.");
 
 /* ------------------------------------------------------------------------ */
+/* 6b. The title budget and the brand, on the source side                     */
+/*                                                                           */
+/* `npm run audit:live` measures every served <title> — budget, brand and     */
+/* uniqueness — and that is the authoritative check, because project and      */
+/* legal-page titles are composed at render time rather than stored. This     */
+/* section pins the source side so the composition cannot be quietly          */
+/* un-wired between live runs: the budget is exported once, the project       */
+/* composer honours it through a category-free fallback, the legal pages      */
+/* compose their brand-first title, and every bespoke `seoTitle` literal      */
+/* already fits. Before Phase 41 nothing checked titles at all: 210 of 678    */
+/* had drifted past the budget, three pairs of pages shared one title, and    */
+/* the legal pages carried no brand.                                         */
+/* ------------------------------------------------------------------------ */
+
+const TITLE_BUDGET = (() => {
+  const seo = readFileSync(join(ROOT, "i18n", "seo.ts"), "utf8");
+  const m = seo.match(/export const TITLE_MAX_LENGTH\s*=\s*(\d+)/);
+  if (!m) {
+    fail("i18n/seo.ts must export TITLE_MAX_LENGTH — the title budget has no single source.");
+  }
+  if (!/export function brandTitle\(/.test(seo)) {
+    fail("i18n/seo.ts must export brandTitle() so the brand-first separator cannot drift between pages.");
+  }
+  return m ? Number(m[1]) : 65;
+})();
+
+{
+  const composer = readFileSync(join(ROOT, "data", "project-content", "seo.ts"), "utf8");
+  // Importing or mentioning the budget is not enough — it has to be compared
+  // against a composed length, so an edit that drops the comparison but leaves
+  // the import (and the doc comment) still fails here.
+  if (!/\.length\s*<=\s*TITLE_MAX_LENGTH/.test(composer)) {
+    fail("data/project-content/seo.ts no longer compares a composed project title against TITLE_MAX_LENGTH.");
+  }
+  if (!composer.includes("metaTitleShortTemplate")) {
+    fail("data/project-content/seo.ts must fall back to metaTitleShortTemplate when the full form is over budget — the visible project name is never shortened to fit.");
+  }
+  for (const lang of ["en", "ms", "zh"]) {
+    const dict = readFileSync(join(ROOT, "i18n", `${lang}.ts`), "utf8");
+    const m = dict.match(/metaTitleShortTemplate:\s*"([^"]*)"/);
+    if (!m) fail(`i18n/${lang}.ts must define projectPage.metaTitleShortTemplate.`);
+    else if (m[1].includes("{category}")) {
+      fail(`i18n/${lang}.ts metaTitleShortTemplate must be the category-free fallback, not the full form.`);
+    }
+  }
+  for (const page of ["privacy", "terms"]) {
+    const source = readFileSync(join(ROOT, "app", "[lang]", page, "page.tsx"), "utf8");
+    if (!/title:\s*brandTitle\(/.test(source)) {
+      fail(`app/[lang]/${page}/page.tsx must compose its <title> with brandTitle() — the legal pages were the only indexable pages whose title carried no brand.`);
+    }
+  }
+
+  // Bespoke seoTitle literals (EN source + the MS/ZH translation indexes, which
+  // CONTENT_FILES skips because they are named index.ts) must already fit.
+  const projectFiles = [
+    join(ROOT, "data", "project-content", "projects.ts"),
+    join(ROOT, "data", "project-content", "translations", "ms", "index.ts"),
+    join(ROOT, "data", "project-content", "translations", "zh", "index.ts"),
+  ];
+  let bespoke = 0;
+  for (const file of projectFiles) {
+    if (!existsSync(file)) continue;
+    const source = readFileSync(file, "utf8");
+    for (const m of source.matchAll(/^\s*seoTitle:\s*"((?:[^"\\]|\\.)*)"/gm)) {
+      bespoke += 1;
+      const value = m[1].trim();
+      if (value.length > TITLE_BUDGET) {
+        fail(`${short(file)}: seoTitle is ${value.length} characters (budget ${TITLE_BUDGET}) — "${value}"`);
+      }
+      if (!value.includes("Renovix")) {
+        fail(`${short(file)}: seoTitle carries no brand — "${value}"`);
+      }
+    }
+  }
+  note(
+    `Titles compose against one ${TITLE_BUDGET}-character budget (i18n/seo.ts); the ${bespoke} bespoke project seoTitle literals fit it and carry the brand.`,
+  );
+}
+
+/* ------------------------------------------------------------------------ */
 /* 7. AI-readable layer in sync and discoverable                             */
 /* ------------------------------------------------------------------------ */
 

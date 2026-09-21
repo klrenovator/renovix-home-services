@@ -4,6 +4,36 @@ import { siteConfig } from "@/data/site";
 import { getDictionary } from "./index";
 
 /**
+ * The `<title>` budget every indexable page must fit, in characters.
+ *
+ * Search engines truncate a title by pixel width (roughly 580px), which for
+ * this site's Latin-script titles lands at about 60–65 characters. Keeping
+ * every title inside the budget means the informative part of the title — the
+ * service, problem, place or guide name — is what a searcher reads, instead of
+ * a cut-off tail. `npm run audit:authority` §6b fails on any title over it, and
+ * `getProjectSeo()` composes against it, so the number lives here once.
+ *
+ * Known limitation, recorded rather than hidden: Simplified Chinese glyphs are
+ * roughly double-width, so a 40-character Chinese title occupies a similar
+ * pixel width to an 80-character English one. The character budget is the
+ * measured standard for all three languages (it is also the standard Phases 9
+ * and 13 audited against); a pixel-accurate per-script budget would need a
+ * font-metrics table and is not claimed anywhere.
+ */
+export const TITLE_MAX_LENGTH = 65;
+
+/**
+ * The site's brand-first title convention: `Renovix Home Services | <page>`.
+ * Established in Phase 10 (every page carries the full brand) and kept in
+ * Phase 41, which shortened descriptors to fit `TITLE_MAX_LENGTH` rather than
+ * moving or abbreviating the brand. Composed here so the separator cannot
+ * drift between pages.
+ */
+export function brandTitle(siteName: string, page: string): string {
+  return `${siteName} | ${page}`;
+}
+
+/**
  * Builds page metadata with the multilingual SEO requirements applied:
  * unique localized title + description, a self-referencing canonical,
  * `hreflang` alternates for every language that actually publishes the page,

@@ -8,7 +8,7 @@
 - **Stack:** Next.js 16.3.3, React 19.2.8, TypeScript 6.0.3, Tailwind CSS 4.3.3
 - **Languages:** English (`/en/`), Bahasa Melayu (`/ms/`), Simplified Chinese (`/zh/`) — see Phase 6
 
-### Current site inventory (re-verified in Phase 37, 2026-09-20, `npm run build` + locally served `/sitemap.xml`; re-checked 2026-09-21 after Phase 38–40 — Phase 40 added internal links only, so no count below changed)
+### Current site inventory (re-verified in Phase 37, 2026-09-20, `npm run build` + locally served `/sitemap.xml`; re-checked 2026-09-21 after Phase 38–40 — Phase 40 added internal links only, so no count below changed; re-checked 2026-09-22 after Phase 41, which changed `<title>` wording and added one rendered internal-link layer, so no URL, page, price or section count below changed)
 
 | Item | Count |
 |---|---|
@@ -24,8 +24,12 @@
 | Static generation entries | **689** (`next build` progress total; distinct from the 678 canonical sitemap URLs) |
 | Pricing rows (`data/pricing/pricing.ts`) | **51** |
 | Search-intent matrix entries | **24** (all pricing derived from `pricingId`) |
-| Audit scripts | 17 static + 1 live server QA (237 served-site checks after Phase 39) |
+| Audit scripts | 17 static + 1 live server QA (**243** served-site checks after Phase 41) |
 | In-copy contextual links (rendered anchors) | **313 EN / 362 MS / 364 ZH** (Phase 39) |
+| Region hub → Knowledge Hub guide links (rendered) | **72** (6 hubs × 12 guides; Phase 41, was 0) |
+| `<title>` tags ≤65 characters | **678 of 678**, longest exactly 65 (Phase 41; was 468 of 678) |
+| `<title>` tags unique within each language | **678 of 678** (Phase 41; 3 duplicate pairs fixed) |
+| `<title>` tags carrying the brand | **678 of 678** (Phase 41; the 6 legal pages now compose `brandTitle()`) |
 
 ---
 
@@ -5349,3 +5353,325 @@ invented or assumed.
 
 Status: **Code verified + Build verified + Local production HTTP verified;
 link graph strengthened where a real gap existed; everything else preserved.**
+
+---
+
+## Phase 41 — Site-wide `<title>` budget enforcement + the region hubs' missing Knowledge Hub layer (2026-09-22)
+
+Trigger: the standing Master SEO/GEO/AEO prompt — inspect the current website and
+`PROJECT_PROGRESS` first, assume nothing is pending, verify 🟢 work and leave it
+untouched, improve 🟡 only where genuinely necessary, add 🔴 what is missing,
+strengthen internal linking, re-run QA. Worked under the same PRESERVE → AUDIT →
+VERIFY → IMPROVE rule as Phases 27–40: the whole served site was re-measured
+before any conclusion was drawn, and no page, URL, price, service, sub-service,
+area, kampung, project, guide or component behaviour was added or removed.
+
+**Result: two genuine defects found and fixed, one honesty risk escalated to the
+owner, and the guards that stop all three returning.**
+
+1. 🔴 **The site had no `<title>` guard at all.** Descriptions and H1s are
+   audited for uniqueness (`audit:authority` §6) but titles were only ever
+   checked by hand in Phases 9 and 13. Everything published since drifted:
+   **210 of 678 titles ran past the 65-character budget** (the longest, an area
+   guide, reached **106**), **3 pairs of indexable pages shared one identical
+   title**, and **6 pages carried no brand** — the two legal pages in each
+   language. All 678 now fit, all 678 carry the brand, and no two pages in a
+   language share a title.
+2. 🔴 **The two region hubs were the only location pages that never linked the
+   Knowledge Hub.** All 53 area guides have rendered their relevant guides since
+   Phase 20, and Phase 35 gave the hubs the other two layers their children
+   carry (scopes, problems) — the guide layer was left out: **0 links on 6
+   served hub pages**. Both hubs now derive it as the union of their own
+   children's guides (**72 rendered links**).
+3. ⚪ **Escalated, not changed:** the homepage publishes an undocumented
+   "Google Reviews" testimonial block that contradicts `CONTENT_GOVERNANCE.md`
+   §1. Owner decision on 2026-09-22 was *keep it live and flag it* — see §5.
+
+### 1. Inspect first — the whole site re-measured (baseline, before any edit)
+
+A full crawl of all **678 sitemap URLs** from a locally served production build
+(`next build` + `next start`), parsing `<main>` anchors separately from
+header/footer, plus every `<title>`, meta description, canonical, hreflang set,
+robots directive, H1/H2 and JSON-LD graph:
+
+| Measured (678 served URLs) | Result | Verdict |
+| --- | --- | --- |
+| Non-200 responses | **0** | 🟢 |
+| Internal links to unserved URLs | **0** (only the intentional `?q=` search demos and `/llms.txt`) | 🟢 |
+| Cross-language links in main content | **0** | 🟢 |
+| Crawl depth from `/en/`, `/ms/`, `/zh/` | **max 2**, 0 unreachable pages | 🟢 |
+| Pages with 0 main-content inbound links | 9 — `/search/`, `/privacy/`, `/terms/` per language, all linked site-wide from the footer | 🟢 correct |
+| Missing / duplicate H1 | **0 / 0** | 🟢 |
+| Canonical mismatches, hreflang defects | **0 / 0** (4 alternates everywhere: en, ms, zh, x-default) | 🟢 |
+| Unexpected `noindex` | **0** | 🟢 |
+| Structured data per page kind | complete: `Organization`+`LocalBusiness`+`WebSite`+`WebPage` site-wide, `BreadcrumbList` on all 675 non-home pages, `Service` on 183 service/sub-service + 159 area pages, `FAQPage` on 384, `Article` on 207, `ItemList` on 18 index/hub pages, `CreativeWork`+`ImageObject` on 84 project pages | 🟢 |
+| Content depth (EN/MS main-content words, median) | service 3,271 · area 1,922 · guide 2,119 · problem 1,591 · sub-service 1,206 · project 460 | 🟢 no thin-content class (ZH counts are character-dense, not thin) |
+| Meta descriptions unique per language | **0 duplicates** | 🟢 |
+| **Titles unique per language** | **3 duplicate pairs** | 🔴 fixed §2 |
+| **Titles within the 65-char budget** | **468 of 678** (210 over; longest 106) | 🔴 fixed §2 |
+| **Titles carrying the brand** (Phase 10 invariant) | **672 of 678** | 🔴 fixed §2 |
+| **Region hub → Knowledge Hub guide links** | **0** on all 6 hub pages | 🔴 fixed §3 |
+| Meta descriptions ≤170 chars | 515 of 678 (163 over) | 🟡 assessed, left — §4 |
+
+Everything the last fourteen phases claimed was re-measured and held: the
+service ↔ sub-service ↔ problem ↔ area ↔ project ↔ guide link graph, the
+Phase 39 in-copy links (313 EN / 362 MS / 364 ZH rendered anchors), the
+Phase 40 pillar → problem edge, the 51 pricing rows, the AI feeds, the sitemap
+and the 689 static generation entries. `npm run audit:live` on the untouched
+baseline returned **PASS 238 / WARN 0 / FAIL 0**, and all 17 static audits
+passed, so this phase started from a genuinely green site.
+
+### 2. 🔴 The `<title>` layer — 210 over budget, 3 duplicate pairs, 6 without brand
+
+**Why it matters.** A title is the one metadata field that is both the ranking
+signal and the listing a searcher clicks. Past ~60 characters Google truncates
+by pixel width, and because this site's convention is brand-first
+(`Renovix Home Services | …`, 24 characters, decided in Phase 10) the truncated
+tail is always the informative part: the KL City Centre area guide rendered
+`Renovix Home Services | Home Renovation & Repair Services in KL City Ce…` —
+the place name, the entire reason the page exists, never appeared. Three pairs
+of indexable pages went further and shared one identical title, which is
+self-cannibalization in a SERP and ambiguity for an answer engine quoting the
+site.
+
+**Evidence (measured, per language).**
+
+| Defect | EN | MS | ZH | Total |
+| --- | --- | --- | --- | --- |
+| Titles over 65 characters | 115 | 94 | 1 | **210** |
+| …of which area guides / region hubs | 54 | 32 | 1 | 87 |
+| …sub-services | 24 | 19 | 0 | 43 |
+| …project pages | 17 | 15 | 0 | 32 |
+| …Knowledge Hub guides | 12 | 12 | 0 | 24 |
+| …problems | 4 | 7 | 0 | 11 |
+| …service pillars | 2 | 5 | 0 | 7 |
+| …home / index / FAQ pages | 2 | 4 | 0 | 6 |
+| Duplicate title pairs | 1 | 1 | 1 | **3** |
+| Titles with no brand | 2 | 2 | 2 | **6** |
+
+Duplicates: `/en/problems/minor-home-repairs/` ≡ `/en/services/handyman/minor-repairs/`
+(and the same pair in MS); `/zh/problems/wall-seepage/` ≡
+`/zh/services/waterproofing/wall-seepage/`. No brand: `/en|ms|zh/privacy/` and
+`/en|ms|zh/terms/`, whose titles were the bare footer labels
+(`Privacy Policy`, `Dasar Privasi`, `隐私政策`, …).
+
+**Owner decision taken before editing.** Fitting a 24-character brand prefix
+inside 65 characters means the prefix, the descriptor or the locality tail has
+to give. The owner was asked and chose **keep brand-first with the full brand
+name and tighten the descriptors** — so Phase 10's documented convention and the
+brand itself are untouched, and only the wording after the separator changed.
+
+**The rewrite rules applied (181 source-string edits + 38 composed titles).**
+
+| Rule | Applied to | Example (before → after) |
+| --- | --- | --- |
+| R1 Brand-first, full brand, never moved or abbreviated | all 678 | — |
+| R2 Area/region guides: `Home Renovation & Repair Services in X` → `Renovation & Repairs in X`; drop the `, KL` / `, Selangor` tail only if still over; fall back to `Renovation in X` | 87 EN/MS/ZH hub + guide titles | `…| Home Renovation & Repair Services in Bandar Mahkota Cheras, Selangor` (92) → `…| Renovation in Bandar Mahkota Cheras` (59) |
+| R3 Service, sub-service, problem and guide pages: the service/problem/guide name is a keyword and is **never truncated**; the ` in KL & Selangor` / `(KL & Selangor)` locality tail gives instead | 85 titles | `…| Floor Repair & Plank Replacement in KL & Selangor` (73) → `…| Floor Repair & Plank Replacement` (56) |
+| R4 Project pages: composed, never hand-copied. `getProjectSeo()` keeps `{name} — {category} | Renovix Home Services` when it fits (52 of 84 pages), drops only the category label when it does not (26 pages), and 6 projects whose *name* alone is too long carry a bespoke `seoTitle`. The visible project name is never shortened | 32 project titles | `Black five-blade ceiling fan installation — Electrical | Renovix Home Services` (78) → `Black five-blade ceiling fan installation | Renovix Home Services` (65) |
+| R5 Legal pages compose brand-first through the new `brandTitle()` helper instead of reusing the footer label | 6 titles | `Privacy Policy` (14) → `Renovix Home Services | Privacy Policy` (38) |
+| R6 Duplicate pairs split by intent: the transactional sub-service page keeps the local commercial title, the problem guide takes the informational one | 3 titles | `/en/problems/minor-home-repairs/` → `…| Minor Home Repairs: Scope & When to Call` (64) while the sub-service keeps `…| Minor Home Repairs in KL & Selangor` (55) |
+
+The budget itself is now single-sourced: `TITLE_MAX_LENGTH = 65` in
+`i18n/seo.ts`, read by the project composer and by both audits, with the
+CJK pixel-width caveat recorded next to it rather than silently ignored
+(Chinese glyphs are ~double-width, so a 40-character ZH title occupies a
+similar width to an 80-character EN one; the character budget is the measured
+standard for all three languages, as it was in Phases 9 and 13).
+
+**Nothing but titles changed.** 181 literal replacements, each verified to occur
+exactly once in its file before writing; every meta description, H1, canonical,
+hreflang set, OG/Twitter field, schema node, price, URL and visible content
+string is byte-identical (`og:title` follows `<title>` by design on every page
+except Knowledge Hub guides, which set `ogTitle` from the article H1 and are
+unaffected). The two legal pages changed how their title is *composed*, not the
+footer label they share it with.
+
+### 3. 🔴 Region hubs → the Knowledge Hub guides their own area guides publish
+
+| Evidence | Finding |
+| --- | --- |
+| Rendered crawl | `region → guide` = **0** edges on all 6 hub pages, while `area → guide` = 168 (all 159 area guides) |
+| Phase 35's own principle | the hubs already derive the scope and problem layers as *pure unions of what their child guides carry*; the guide layer is the third layer the children carry and the only one the hubs lacked |
+| Phase 40 §3 rationale | "No article declares a region-level location key, so there is nothing to derive the edge from" — true of a *literal* region key, but every article declares `region/slug` **area** keys, so the union over a hub's children is derivable exactly as Phase 35 derived the other two layers. No new relationship is claimed |
+| Not orphaned before | the 12 guides already had 12–18 main-content inbound links each; this is a completeness gap in the hub layer, not an orphan rescue |
+
+Fix: `getArticlesForRegion(region, limit)` in `data/blog/index.ts` — the union
+of `getArticlesForLocation()` over the hub's own child areas, widest coverage
+first, ties in declared order, capped at 12 like the Phase 35 layers — rendered
+on both hubs by the **same `GuideLinksSection` component, with the same
+`surface` treatment, that the 53 area guides already use**. No new component, no
+new dictionary key, no new section style: the existing `areaTitle` string reads
+"Guides for homes in Kuala Lumpur" / "Panduan untuk rumah di Kuala Lumpur" /
+"适用于吉隆坡住宅的指南" with the hub's own localized name.
+
+Measured: **72 rendered hub → guide links** (6 hubs × 12 guides — every guide
+declares areas in both regions, verified in the registry, so both hubs earn the
+full list), and the least-linked guide in each language rose from **12 to 14**
+main-content inbound links. Because the list is derived, adding a location to an
+article widens the hub that contains it automatically, and a hub can never
+surface a guide none of its own guides carry.
+
+### 4. 🟡 Assessed and deliberately left unchanged
+
+| Candidate | Measurement | Why it stays |
+| --- | --- | --- |
+| 163 meta descriptions over 170 characters | worst 209; all carry their message inside the first ~155 | Phase 9 already ruled on this class ("the first 155 characters carry the full message, so rewriting was not worth the churn"). The owner was offered the description pass alongside the title pass on 2026-09-22 and chose **titles only** |
+| Guide → region hub links (reciprocity of §3) | hubs already carry 144–155 main-content inbound links each, the most-linked pages on the site after area guides | No measurable gap. Rendering it would mean mixing hub cards into the article page's "related areas" list — a UI change with nothing behind it |
+| Project → area and area → project links | `ProjectLocation` is unset for all 28 projects | Owner-gated since Phase 21: no job location was supplied with the photographs, and inventing one is forbidden (Phase 40 §3 recorded the same) |
+| Sub-service → project (120/153 pages) and problem → project (96/171) | only 11 scopes are mapped to a published project | Correct as-is: a page with no genuinely matching project renders no proof block |
+| Homepage → `/projects/` and `/blog/` in main content | 0 main-content edges; both hubs are linked from the footer on every page, and crawl depth to both is 1 | Adding homepage sections is a design change, not a link fix; no orphan or depth problem exists to justify it |
+| Kampung-tier expansion | registry models the tier; 2 locality-tier guides are published (Kampung Baru, KL City Centre) | Phase 31 governance: a kampung page needs verified coverage + unique local context + unique FAQs to pass `audit:locations`. Unchanged |
+| `/search/`, `/privacy/`, `/terms/` have no main-content inbound links | linked site-wide from the footer, indexable, depth 1 | Correct |
+
+### 5. ⚪ Escalated to the owner, deliberately NOT changed: the homepage "Google Reviews" block
+
+Inspection found `components/home/ReviewsSection.tsx` rendering, on all three
+homepages, a marquee of **five named five-star testimonials** (Ahmad Razak ·
+Mont Kiara, Lim Wei Jie · Petaling Jaya, Siti Nurhaliza B. · Shah Alam,
+Daniel Tan · Subang Jaya, Priya Nair · Bangsar) under the eyebrow
+**"Google Reviews"**, with a Google icon, star glyphs and the line
+**"Posted on Google"**.
+
+It is recorded here because it contradicts the project's own written rules and
+history, and because no audit guards it:
+
+| Source | Statement |
+| --- | --- |
+| `CONTENT_GOVERNANCE.md` §1 | "No fake reviews, ratings, review counts, testimonials or testimonials pages." |
+| `MASTER_AUDIT_REPORT.md` | "Zero fake Google reviews"; GAP-12 asks for a *Google Places API sync of verified reviews*, i.e. real ones only |
+| `PHASE_25_PRODUCTION_READINESS.md` | "Reviews / ratings / certifications / years of experience — Not supplied; correctly unpublished" |
+| `PHASE_26_DEEP_AUDIT_2026-09-05.md` | "No fabricated trust signals anywhere… Correct for a business with no reviews yet"; "Zero visible social proof (correct, pending real reviews)" |
+| `PROJECT_OWNER_PENDING.md` | "Testimonial (with written consent) — Not modelled yet — Do not add without consent; never invent" |
+| `npm run audit:schema` | bans `Review` / `aggregateRating` in structured data, so the markup refuses to claim what the visible page claims |
+| `PROJECT_PROGRESS.md` | no phase records the section being added, approved or sourced |
+
+Risk if the reviews are not genuine: Google's fake-engagement policy (a
+Google Business Profile or manual-action risk), consumer-protection exposure on
+fabricated endorsements, and an E-E-A-T trust signal that an answer engine can
+quote back. **Owner decision, 2026-09-22: leave the section live and untouched;
+document it for verification.** Accordingly this phase changed **no** component,
+string, style or schema in it, added no audit that would fail the build on it,
+and filed it as a named checklist item in `PROJECT_OWNER_PENDING.md` (owner
+action: confirm each review exists on the business's Google profile with the
+reviewer's consent, or withdraw the block; until then it is unverified content,
+not verified SEO work). If real review data is supplied later, the honest
+implementation is the GAP-12 sync, and `audit:schema`'s ban should be lifted
+deliberately at that point — not before.
+
+### 6. Guards added (so none of this can silently return)
+
+**`npm run audit:live` — new "Title metadata (Phase 41)" block (+4 checks) and
+§3h (+1), 238 → 243.** The sitemap sweep now also keeps each served `<title>`;
+the block reads `TITLE_MAX_LENGTH` out of `i18n/seo.ts` (so the check cannot
+disagree with the composer) and asserts, over all 678 URLs: a title exists, it
+fits the budget, it carries the brand token, and it is unique within its
+language. §3h asserts all 6 region hubs render guide links (floor 8 per hub,
+real coverage 12). Titles are checked **rendered**, not parsed from source,
+because project and legal-page titles are composed at render time — a source
+parse could never see them.
+
+**`npm run audit:authority` §6b — the source side of the same invariant.** The
+budget is exported once; the project composer actually *compares* against it
+(`/\.length\s*<=\s*TITLE_MAX_LENGTH/`, so deleting the comparison while leaving
+the import still fails); all three dictionaries define a category-free
+`metaTitleShortTemplate`; both legal pages compose with `brandTitle()`; and
+every bespoke `seoTitle` literal — including the MS/ZH translation indexes,
+which `CONTENT_FILES` skips — fits the budget and carries the brand.
+
+**`npm run audit:blog` — the region derivation.** Every region really has child
+areas and derives a non-empty guide list from them; `getArticlesForRegion()`
+exists; and `AreaRegionPage.tsx` renders it through the shared
+`GuideLinksSection` rather than a bespoke list.
+
+### 7. Negative tests (break → fails, restore → passes)
+
+| # | Break | Guard | Result |
+| --- | --- | --- | --- |
+| 1 | Append 36 characters to an EN area guide title | `audit:live` title budget | FAIL `title over budget (93 > 65) /en/areas/kuala-lumpur/cheras/` |
+| 2 | Give one EN problem page another page's title | `audit:live` uniqueness | FAIL `duplicate title … shared by /en/problems/leaking-tap/ , /en/problems/blocked-drain/` |
+| 3 | Strip the brand prefix from an MS area title | `audit:live` brand | FAIL `title carries no brand /ms/areas/kuala-lumpur/cheras/` |
+| 4 | Render `articles={[]}` on the region hubs | `audit:live` §3h **and** `audit:blog` | FAIL `region → guide link coverage incomplete: 0/6 hubs, 0 links` + `AreaRegionPage.tsx must render getArticlesForRegion(region, …)` |
+| 5 | Drop the budget comparison from `getProjectSeo()` | `audit:authority` §6b | FAIL `no longer compares a composed project title against TITLE_MAX_LENGTH` |
+| 6 | Write a 95-character bespoke `seoTitle` | `audit:authority` §6b | FAIL `seoTitle is 95 characters (budget 65)` |
+| 7 | Revert the privacy page to the bare footer label | `audit:authority` §6b | FAIL `must compose its <title> with brandTitle()` |
+
+Breaks 1–4 were applied together, the site was rebuilt and served, and
+`audit:live` returned **PASS 239 / FAIL 4** with exactly the four messages
+above; all four files were restored with `git checkout`, rebuilt, and the suite
+returned to **PASS 243 / WARN 0 / FAIL 0**. Breaks 5–7 are source-level and
+were each reverted and re-run to green individually.
+
+### 8. Measured result (before → after, both on locally served production builds)
+
+| Metric | Before | After |
+| --- | --- | --- |
+| Titles over the 65-character budget | 210 of 678 | **0 of 678** |
+| Longest served title | 106 chars | **65 chars** |
+| Duplicate titles within a language | 3 pairs | **0** |
+| Titles carrying no brand | 6 | **0** |
+| Pages whose title is composed against a single-sourced budget | 0 | **678** (`TITLE_MAX_LENGTH`) |
+| Project titles keeping the full `name — category` form | 84 | 52 (26 category-free, 6 bespoke — all ≤65) |
+| Region hub → Knowledge Hub guide links | **0** | **72** |
+| Least main-content inbound links on any guide | 12 | **14** |
+| `audit:live` checks | 238 | **243** |
+| Sitemap URLs / static generation entries | 678 / 689 | **678 / 689 (unchanged)** |
+| Prices, services, sub-services, problems, areas, projects, guides touched | — | **0 / 0 / 0 / 0 / 0 / 0 / 0** |
+| Visible content strings changed | — | **0** (titles only; `<title>` is not rendered copy) |
+
+### 9. Preserved untouched (verified 🟢)
+
+- All **678 URLs**, canonicals, hreflang sets, robots directives, sitemap
+  (`audit:sitemap` PASS, 678 URLs), redirects and the 689 static generation
+  entries (`next build` unchanged).
+- Every **price**: the 51 catalogue rows, their single-source derivation, the
+  intent matrix, the localized scope/duration wording and every price note
+  (`audit:pricing`, `audit:locations` §10 PASS — no money value, unit or
+  "starting from" semantics touched anywhere).
+- The 10 services, 51 sub-services, 57 problem guides, 53 area guides, 2 region
+  hubs, 28 projects, 12 Knowledge Hub guides, the Smart Service Finder, the
+  quote flow, analytics posture and the AI feeds (`/llms.txt`,
+  `/ai/business.json`, `/ai/pricing.json`) — the feeds publish entity *names*
+  and URLs, never meta titles, so no feed changed.
+- Every meta description, H1, body paragraph, in-copy link (Phase 39: 313 EN /
+  362 MS / 364 ZH rendered anchors), FAQ, schema node, image and alt string.
+- Design, branding, layout, navigation, footer, every component's rendering and
+  the homepage reviews section (§5) — no `.tsx` file changed except
+  `AreaRegionPage.tsx`, which gained one existing shared section, and the two
+  legal pages, which changed only how their `<title>` is composed.
+- All Phase 27–40 link-graph edges and their guards; `audit:live` re-verified
+  the whole graph at 243 checks after the change.
+
+### 10. Test results (this phase)
+
+- [x] `npm run type-check` — PASS
+- [x] `npm run lint` — PASS (0 errors, 0 warnings)
+- [x] `npm run build` — PASS (**689** static generation entries, unchanged)
+- [x] All **17 static audits** — PASS (including the new `audit:authority` §6b
+      and the extended `audit:blog`)
+- [x] `npm run audit:live` vs `next start` — **PASS 243 / WARN 0 / FAIL 0**
+- [x] Independent crawl of all 678 URLs after the change — 0 non-200, 0 broken
+      internal links, 0 cross-language main-content links, 0 titles over
+      budget, 0 duplicate titles, 0 titles without a brand, 0 canonical or
+      hreflang defects, crawl depth still max 2
+- [x] Rendered spot-checks — `/en/`, `/en/areas/kuala-lumpur/`,
+      `/ms/areas/selangor/`, `/zh/areas/selangor/`,
+      `/en/areas/selangor/bandar-mahkota-cheras/`, `/en|zh/projects/marble-look-floor-tiling/`,
+      `/ms/projects/floor-tile-removal-hacking/`, `/en/privacy/`, `/zh/terms/`,
+      `/en/problems/minor-home-repairs/`, `/en/services/handyman/minor-repairs/`,
+      `/zh/problems/wall-seepage/`, `/zh/services/waterproofing/wall-seepage/`,
+      `/en/blog/spc-vinyl-laminate-tile-comparison/`: correct language, brand
+      intact, keywords intact, no truncated place or service name
+- [x] Negative tests — 7 breaks, all fail as designed, all restored to green
+
+Limitations: HTTP-level QA is not visual or mobile-device QA; title-length
+compliance is measured in characters, not pixels (the CJK caveat is documented
+at `TITLE_MAX_LENGTH`); nothing here measures ranking, indexing or AI-answer
+outcomes. The reviews block in §5 remains live and unverified by owner
+decision, and every owner-gated item in `PROJECT_OWNER_PENDING.md` stays
+owner-gated — none was invented or assumed.
+
+Status: **Code verified + Build verified + Live verified (HTTP); the title layer
+is now inside budget, unique, branded and guarded end to end, the region hubs
+carry the third layer their own guides carry, and the one honesty risk found is
+documented and escalated rather than quietly altered.**

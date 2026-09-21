@@ -206,7 +206,7 @@ export const handymanSubServices: SubServiceDefinition[] = [
       h1: "Door Repair & Lock Replacement in Kuala Lumpur & Selangor",
       metaDescription:
         "Repair sticky, squeaky or misaligned doors and replace faulty locks and handles in Kuala Lumpur & Selangor. Door repair & lock replacement from RM80/job. Free quote.",
-      title: "Renovix Home Services | Door Repair & Lock Replacement in KL & Selangor",
+      title: "Renovix Home Services | Door Repair & Lock Replacement",
       lead:
         "A door that scrapes, sticks, squeaks or will not lock is rarely a worn-out door — it is almost always a hinge, strike plate or lock that needs adjusting or replacing. We sort it at the source.",
       suitableFor: [
@@ -355,7 +355,7 @@ export const handymanSubServices: SubServiceDefinition[] = [
       h1: "TV Mounting & Shelf Installation in Kuala Lumpur & Selangor",
       metaDescription:
         "Secure TV wall mounting and shelf installation in Kuala Lumpur & Selangor for plasterboard, brick and concrete walls. From RM80/unit. Free quote.",
-      title: "Renovix Home Services | TV Mounting & Shelf Installation in KL & Selangor",
+      title: "Renovix Home Services | TV Mounting & Shelf Installation",
       lead:
         "A wall-mounted TV or shelf is only as safe as its fixing. We mount screens and fit shelves on the right wall material with the right anchors, so nothing comes down.",
       suitableFor: [
@@ -504,7 +504,7 @@ export const handymanSubServices: SubServiceDefinition[] = [
       h1: "Regrout & Silicone Recaulking in Kuala Lumpur & Selangor",
       metaDescription:
         "Remove old, stained or crumbling grout and replace worn silicone seals in bathrooms and kitchens across KL & Selangor. From RM80/job. Free quote.",
-      title: "Renovix Home Services | Regrout & Silicone Recaulking in KL & Selangor",
+      title: "Renovix Home Services | Regrout & Silicone Recaulking",
       lead:
         "Crumbling grout and black silicone are not just ugly — they let water behind your tiles. We cut out the old joint and replace it so your tiles stay sealed and look clean.",
       suitableFor: [
@@ -562,7 +562,7 @@ export const handymanSubServices: SubServiceDefinition[] = [
       h1: "Kerja Semula Grout & Silikon di Kuala Lumpur & Selangor",
       metaDescription:
         "Keluarkan grout lama yang bernoda atau hancur dan ganti pengedap silikon yang haus di bilik air dan dapur seluruh KL & Selangor. Bermula dari RM80/kerja.",
-      title: "Renovix Home Services | Kerja Semula Grout & Silikon di KL & Selangor",
+      title: "Renovix Home Services | Kerja Semula Grout & Silikon",
       lead:
         "Grout hancur dan silikon hitam bukan sahaja hodoh — ia membiarkan air masuk ke belakang jubin. Kami keluarkan sendi lama dan ganti supaya jubin kekal bersegel dan bersih.",
       suitableFor: [

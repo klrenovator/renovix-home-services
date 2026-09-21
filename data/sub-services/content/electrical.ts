@@ -144,7 +144,7 @@ export const electricalSubServices: SubServiceDefinition[] = [
       name: "Lighting Point Installation",
       h1: "Lighting Point Installation in Kuala Lumpur & Selangor",
       metaDescription: "New light points, downlights and fitting replacement in Kuala Lumpur & Selangor, wired back to the existing circuit and tested. Lighting point installation from RM60 per point.",
-      title: "Renovix Home Services | Lighting Point Installation in KL & Selangor",
+      title: "Renovix Home Services | Lighting Point Installation",
       lead: "Adding a light point is mostly a question of where the cable can run and what the existing circuit can carry — the fitting itself is the last and easiest part of the job.",
       suitableFor: [
         "Adding downlights to a room or a new ceiling.",
@@ -410,7 +410,7 @@ export const electricalSubServices: SubServiceDefinition[] = [
       name: "DB Box Upgrade & Replacement",
       h1: "DB Box Upgrade & Replacement in Kuala Lumpur & Selangor",
       metaDescription: "Distribution board replacement and upgrade in Kuala Lumpur & Selangor with RCD protection and correctly rated MCBs. DB box upgrade from RM400 per unit.",
-      title: "Renovix Home Services | DB Box Upgrade & Replacement in KL & Selangor",
+      title: "Renovix Home Services | DB Box Upgrade & Replacement",
       lead: "The distribution board is where the safety of the whole installation is decided. An older board without RCD protection will still deliver power perfectly well — it just will not disconnect fast enough if someone contacts a live conductor.",
       suitableFor: [
         "An older board with rewireable fuses and no RCD.",
@@ -723,7 +723,7 @@ export const electricalSubServices: SubServiceDefinition[] = [
       name: "Mencari Kerosakan Elektrik",
       h1: "Mencari Kerosakan Elektrik di Kuala Lumpur & Selangor",
       metaDescription: "Pencarian kerosakan elektrik sistematik untuk trip, litar mati dan kerosakan berselang di Kuala Lumpur & Selangor. Dari RM150 sekerja, pembaikan disebut harga berasingan.",
-      title: "Renovix Home Services | Mencari Kerosakan Elektrik di KL & Selangor",
+      title: "Renovix Home Services | Mencari Kerosakan Elektrik",
       lead: "Mencari kerosakan ialah kerja diagnostik, bukan kerja pembaikan. Anda membayar untuk proses mengasingkan kerosakan kepada satu litar dan satu punca — dan itulah yang menjadikan pembaikan selepasnya mudah dan bukan tekaan.",
       suitableFor: [
         "RCD atau MCB yang trip berulang tanpa sebab jelas.",

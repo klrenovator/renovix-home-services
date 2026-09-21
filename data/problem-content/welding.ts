@@ -15,7 +15,7 @@ export const weldingProblems: ProblemDetail[] = [
     slug: "rusted-gate-repair",
     category: "welding",
     name: "Rusted Gate & Grille",
-    title: "Renovix Home Services | Rusted Gate & Grille Repair in KL & Selangor",
+    title: "Renovix Home Services | Rusted Gate & Grille Repair",
     metaDescription:
       "Rusted gates, grilles and railings in Kuala Lumpur & Selangor. Learn what causes rust in a tropical climate, which rust can be treated, when a section must be replaced, and when to call a welder.",
     h1: "Rusted Gate & Grille",

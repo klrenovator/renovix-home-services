@@ -18,6 +18,8 @@ import { format, getDictionary } from "@/i18n";
 import { contentHref, localizedHref } from "@/i18n/hrefs";
 import { getServiceCategories } from "@/data/i18n";
 import { getOtherRegion } from "@/data/area-content";
+import { GuideLinksSection } from "@/components/blog/GuideLinksSection";
+import { getArticlesForRegion } from "@/data/blog";
 import { AreaRegionSubServicesBlock } from "@/components/area/AreaRegionSubServicesSection";
 import { AreaRegionProblemsSection } from "@/components/area/AreaRegionProblemsSection";
 import { getDistrictsForRegion } from "@/data/locations";
@@ -270,6 +272,19 @@ export function AreaRegionPage({ region, lang }: AreaRegionPageProps) {
           bordered white section mirrors the districts block above it, so the
           page keeps its existing surface/white rhythm. */}
       <AreaRegionProblemsSection region={region} lang={lang} />
+
+      {/* Phase 41 — the third layer the region's own area guides carry: the
+          Knowledge Hub guides they publish. Derived as their union in
+          `getArticlesForRegion`, capped like the Phase 35 layers, and rendered
+          by the same component the 53 area guides use, so a hub can never
+          surface a guide none of its own guides carry. */}
+      <GuideLinksSection
+        surface
+        articles={getArticlesForRegion(region, 12)}
+        scope="area"
+        name={region.name}
+        lang={lang}
+      />
 
       {other ? (
         <section className="section section-surface">

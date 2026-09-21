@@ -163,7 +163,7 @@ export const translations: AreaTranslations = {
   "kuala-lumpur/brickfields-mid-valley": {
     ...shared("十五碑"),
     name: "十五碑",
-    title: "Renovix Home Services | 十五碑与谷中城（Brickfields & Mid Valley）房屋装修与维修服务",
+    title: "Renovix Home Services | 十五碑与谷中城房屋装修与维修服务",
     metaDescription:
       "十五碑与谷中城（Brickfields & Mid Valley）房屋装修与维修——战前店屋、老组屋与 KL Sentral 一带公寓。免费报价。",
     h1: "十五碑与谷中城（Brickfields & Mid Valley）房屋装修与维修服务",

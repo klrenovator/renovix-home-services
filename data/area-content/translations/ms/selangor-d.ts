@@ -24,7 +24,7 @@ export const translations: AreaTranslations = {
   "selangor/setia-alam": {
     ...shared("Setia Alam"),
     name: "Setia Alam",
-    title: "Renovix Home Services | Renovasi & Pembaikan Rumah di Setia Alam, Selangor",
+    title: "Renovix Home Services | Renovasi & Pembaikan di Setia Alam",
     metaDescription:
       "Servis renovasi dan pembaikan rumah di Setia Alam, Selangor — rumah teres, superlink dan kondominium era 2000-an–2010-an. Sambungan, kalis air, pendawaian. Sebut harga percuma.",
     h1: "Servis Renovasi & Pembaikan Rumah di Setia Alam, Selangor",
@@ -72,7 +72,7 @@ export const translations: AreaTranslations = {
   "selangor/bandar-kinrara": {
     ...shared("Bandar Kinrara"),
     name: "Bandar Kinrara",
-    title: "Renovix Home Services | Renovasi & Pembaikan Rumah di Bandar Kinrara, Puchong",
+    title: "Renovix Home Services | Renovasi & Pembaikan di Bandar Kinrara",
     metaDescription:
       "Servis renovasi dan pembaikan rumah di Bandar Kinrara, Puchong — rumah teres, berkembar dan kondominium era 1990-an–2000-an. Pendawaian, bilik air, kalis air. Sebut harga percuma.",
     h1: "Servis Renovasi & Pembaikan Rumah di Bandar Kinrara, Puchong",
@@ -120,7 +120,7 @@ export const translations: AreaTranslations = {
   "selangor/batu-caves": {
     ...shared("Batu Caves"),
     name: "Batu Caves",
-    title: "Renovix Home Services | Renovasi & Pembaikan Rumah di Batu Caves, Selangor",
+    title: "Renovix Home Services | Renovasi & Pembaikan di Batu Caves",
     metaDescription:
       "Servis pembaikan dan renovasi rumah di Batu Caves, Selangor — rumah estet lama, rumah teres matang dan kediaman baharu di koridor KTM. Bumbung, pendawaian. Sebut harga percuma.",
     h1: "Servis Renovasi & Pembaikan Rumah di Batu Caves, Selangor",
@@ -169,7 +169,7 @@ export const translations: AreaTranslations = {
     ...shared("Bandar Mahkota Cheras"),
     name: "Bandar Mahkota Cheras",
     title:
-      "Renovix Home Services | Renovasi & Pembaikan Rumah di Bandar Mahkota Cheras, Selangor",
+      "Renovix Home Services | Renovasi di Bandar Mahkota Cheras",
     metaDescription:
       "Servis renovasi dan pembaikan rumah di Bandar Mahkota Cheras, Selangor — rumah teres, superlink dan kondominium era 2000-an di daerah Hulu Langat. Sebut harga percuma.",
     h1: "Servis Renovasi & Pembaikan Rumah di Bandar Mahkota Cheras, Selangor",

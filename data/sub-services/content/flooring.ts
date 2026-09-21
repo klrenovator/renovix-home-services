@@ -11,7 +11,7 @@ export const flooringSubServices: SubServiceDefinition[] = [
       name: "SPC Flooring Installation",
       h1: "SPC Flooring Installation in Kuala Lumpur & Selangor",
       metaDescription: "SPC click-lock flooring supplied and installed in Kuala Lumpur & Selangor with subfloor levelling check and skirting. SPC flooring from RM5.50 per sqft installed.",
-      title: "Renovix Home Services | SPC Flooring Installation in KL & Selangor",
+      title: "Renovix Home Services | SPC Flooring Installation",
       lead: "SPC has a rigid stone-composite core, which makes it the most dimensionally stable of the click-lock floors and the one that copes best with humidity — the usual reason people choose it over laminate here.",
       suitableFor: [
         "Living areas, bedrooms and hallways in a Malaysian climate.",
@@ -165,7 +165,7 @@ export const flooringSubServices: SubServiceDefinition[] = [
       name: "Vinyl Flooring Installation",
       h1: "Vinyl Flooring Installation in Kuala Lumpur & Selangor",
       metaDescription: "Vinyl plank and sheet flooring installed in Kuala Lumpur & Selangor with subfloor preparation and trims. Vinyl flooring from RM4.70 per sqft installed.",
-      title: "Renovix Home Services | Vinyl Flooring Installation in KL & Selangor",
+      title: "Renovix Home Services | Vinyl Flooring Installation",
       lead: "Vinyl is softer and quieter underfoot than SPC or laminate, and it is thinner — which is why it shows every bump in the subfloor and why preparation is the part that determines the result.",
       suitableFor: [
         "Bedrooms and living areas where comfort and quiet matter.",
@@ -316,7 +316,7 @@ export const flooringSubServices: SubServiceDefinition[] = [
       name: "Laminate Flooring Installation",
       h1: "Laminate Flooring Installation in Kuala Lumpur & Selangor",
       metaDescription: "Laminate flooring supplied and installed in Kuala Lumpur & Selangor with underlay, expansion gaps and trims. Laminate flooring from RM6 per sqft installed.",
-      title: "Renovix Home Services | Laminate Flooring Installation in KL & Selangor",
+      title: "Renovix Home Services | Laminate Flooring Installation",
       lead: "Laminate usually gives the most convincing timber look for the money. The trade-off is its core: it is wood-based, so water that reaches a joint and stays there will swell the plank permanently.",
       suitableFor: [
         "Bedrooms, living rooms and other dry areas.",
@@ -365,7 +365,7 @@ export const flooringSubServices: SubServiceDefinition[] = [
       name: "Pemasangan Lantai Laminat",
       h1: "Pemasangan Lantai Laminat di Kuala Lumpur & Selangor",
       metaDescription: "Lantai laminat dibekal dan dipasang di Kuala Lumpur & Selangor dengan underlay, celah pengembangan dan trim. Dari RM6 sekaki persegi dipasang.",
-      title: "Renovix Home Services | Pemasangan Lantai Laminat di KL & Selangor",
+      title: "Renovix Home Services | Pemasangan Lantai Laminat",
       lead: "Laminat biasanya memberi rupa kayu paling meyakinkan untuk harganya. Pertukarannya ialah terasnya: ia berasaskan kayu, jadi air yang sampai ke sambungan dan kekal di situ akan membengkakkan papan secara kekal.",
       suitableFor: [
         "Bilik tidur, ruang tamu dan kawasan kering lain.",
@@ -512,7 +512,7 @@ export const flooringSubServices: SubServiceDefinition[] = [
       name: "Memecah & Membuang Lantai",
       h1: "Memecah & Membuang Lantai di Kuala Lumpur & Selangor",
       metaDescription: "Membuang jubin, kayu dan vinil sedia ada di Kuala Lumpur & Selangor dengan pembersihan sisa, meninggalkan lantai bawah bersih. Dari RM2 sekaki persegi.",
-      title: "Renovix Home Services | Memecah & Membuang Lantai di KL & Selangor",
+      title: "Renovix Home Services | Memecah & Membuang Lantai",
       lead: "Membuang lantai lama ialah kerja berat dan berhabuk, dan ia peringkat yang mendedahkan apa yang sebenarnya anda hadapi di bawahnya — sebab itulah kami menilai dan melaporkan lantai bawah terdedah dan bukan sekadar membersih dan beredar.",
       suitableFor: [
         "Jubin yang ditanggalkan sebelum lantai baharu dipasang.",
@@ -603,7 +603,7 @@ export const flooringSubServices: SubServiceDefinition[] = [
       name: "Floor Repair & Plank Replacement",
       h1: "Floor Repair & Plank Replacement in Kuala Lumpur & Selangor",
       metaDescription: "Repair of lifting, swollen, squeaking and damaged floor planks in Kuala Lumpur & Selangor, including localised replacement. Floor repair from RM250 per job.",
-      title: "Renovix Home Services | Floor Repair & Plank Replacement in KL & Selangor",
+      title: "Renovix Home Services | Floor Repair & Plank Replacement",
       lead: "Most floor faults are localised and repairable — but the repair only holds if the reason the planks failed is dealt with, whether that is a missing expansion gap, an uneven subfloor or water reaching the joints.",
       suitableFor: [
         "A few planks that have swollen, lifted or been damaged.",
@@ -647,7 +647,7 @@ export const flooringSubServices: SubServiceDefinition[] = [
       name: "Pembaikan Lantai & Penggantian Papan",
       h1: "Pembaikan Lantai & Penggantian Papan di Kuala Lumpur & Selangor",
       metaDescription: "Pembaikan papan lantai terangkat, membengkak, berdecit dan rosak di Kuala Lumpur & Selangor, termasuk penggantian setempat. Dari RM250 sekerja.",
-      title: "Renovix Home Services | Pembaikan Lantai & Penggantian Papan di KL & Selangor",
+      title: "Renovix Home Services | Pembaikan Lantai & Penggantian Papan",
       lead: "Kebanyakan kerosakan lantai bersifat setempat dan boleh dibaiki — tetapi pembaikan hanya bertahan jika sebab papan itu gagal diuruskan, sama ada celah pengembangan yang hilang, lantai bawah tidak rata atau air sampai ke sambungan.",
       suitableFor: [
         "Beberapa papan yang membengkak, terangkat atau rosak.",

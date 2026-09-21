@@ -37,7 +37,7 @@ export const waterproofingSystemsCompared: ArticleDefinition = {
     "waterproofing-pu-injection",
   ],
   en: {
-    title: "Renovix Home Services | Cementitious vs PU vs Torch-On Waterproofing (Malaysia)",
+    title: "Renovix Home Services | Cementitious vs PU vs Torch-On",
     metaDescription:
       "Which waterproofing system suits your bathroom, balcony, flat roof or external wall in Malaysia — cementitious, PU coating, torch-on membrane or PU injection. Rates and honest limits.",
     h1: "Cementitious vs PU vs Torch-On Waterproofing: Which System for Which Surface",
@@ -224,7 +224,7 @@ export const waterproofingSystemsCompared: ArticleDefinition = {
       "Tell us which surface is leaking, what is above and below it, and whether the problem follows rain or follows water use inside the home. That is what determines the system — and we would rather diagnose it correctly than sell you the wrong membrane.",
   },
   ms: {
-    title: "Renovix Home Services | Kalis Air Simen vs PU vs Torch-On (Malaysia)",
+    title: "Renovix Home Services | Kalis Air Simen vs PU vs Torch-On",
     metaDescription:
       "Sistem kalis air mana yang sesuai untuk bilik air, balkoni, bumbung rata atau dinding luar anda di Malaysia — berasaskan simen, salutan PU, membran torch-on atau suntikan PU.",
     h1: "Kalis Air Simen vs PU vs Torch-On: Sistem Mana untuk Permukaan Mana",

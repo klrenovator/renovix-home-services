@@ -83,7 +83,7 @@ export const translations: ProblemTranslations = {
   "lifting-floor-planks": {
     ...base,
     name: "Papan Lantai Terangkat atau Terpisah",
-    title: "Renovix Home Services | Pembaikan Papan Lantai Terangkat di KL & Selangor",
+    title: "Renovix Home Services | Pembaikan Papan Lantai Terangkat",
     metaDescription:
       "Papan SPC, vinyl dan laminate terangkat, bercelah atau terbonjol di Kuala Lumpur & Selangor. Fahami ruang pengembangan, kerataan lantai bawah dan kegagalan pelekat serta cara setiap satu dibaiki.",
     h1: "Papan Lantai Terangkat atau Terpisah",
@@ -205,7 +205,7 @@ export const translations: ProblemTranslations = {
   "squeaky-flooring": {
     ...base,
     name: "Lantai Berdecit atau Berkeriut",
-    title: "Renovix Home Services | Pembaikan Lantai Berdecit di KL & Selangor",
+    title: "Renovix Home Services | Pembaikan Lantai Berdecit",
     metaDescription:
       "Lantai SPC, vinyl dan laminate yang berdecit dan berkeriut di Kuala Lumpur & Selangor. Ketahui punca bunyi, kenapa ia biasanya menunjuk kepada lantai bawah dan cara ia dibaiki.",
     h1: "Lantai Berdecit atau Berkeriut",

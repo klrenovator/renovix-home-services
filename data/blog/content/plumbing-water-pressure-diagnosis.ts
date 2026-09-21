@@ -31,7 +31,7 @@ export const plumbingWaterPressureDiagnosis: ArticleDefinition = {
   relatedProjects: [],
   pricingIds: ["plumbing-callout", "plumbing-pipe-leak-visible", "plumbing-hidden-leak"],
   en: {
-    title: "Renovix Home Services | Water Pressure Diagnosis Guide (KL & Selangor)",
+    title: "Renovix Home Services | Water Pressure Diagnosis Guide",
     metaDescription:
       "Work out why your water pressure is weak before paying for a fix — one outlet or the whole house, time of day, high-rise or landed, and when a call-out is worth it.",
     h1: "Diagnosing Low Water Pressure: Where to Look Before You Pay for a Fix",
@@ -217,7 +217,7 @@ export const plumbingWaterPressureDiagnosis: ArticleDefinition = {
       "Tell us what is weak — one tap or the whole home — when it happens, and whether your bill has changed. That is usually enough to point at the cause before a single fitting is opened.",
   },
   ms: {
-    title: "Renovix Home Services | Panduan Diagnosis Tekanan Air (KL & Selangor)",
+    title: "Renovix Home Services | Panduan Diagnosis Tekanan Air",
     metaDescription:
       "Kenal pasti kenapa tekanan air anda lemah sebelum membayar untuk pembaikan — satu saluran atau seluruh rumah, masa berlaku, bertingkat atau teres, dan bila panggilan pemeriksaan berbaloi.",
     h1: "Mendiagnosis Tekanan Air Lemah: Tempat Perlu Lihat Sebelum Bayar untuk Baik Pulih",

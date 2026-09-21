@@ -40,7 +40,7 @@ export const spcVinylLaminateTileComparison: ArticleDefinition = {
     "tiling-hacking",
   ],
   en: {
-    title: "Renovix Home Services | SPC vs Vinyl vs Laminate vs Tile — Flooring Guide (Malaysia)",
+    title: "Renovix Home Services | SPC vs Vinyl vs Laminate vs Tile",
     metaDescription:
       "SPC, vinyl, laminate and tile compared for Malaysian homes — water resistance, wear, noise, subfloor needs, installation speed and installed rates. Choose with your rooms in mind.",
     h1: "SPC vs Vinyl vs Laminate vs Tile: Choosing Flooring for a Malaysian Home",
@@ -235,7 +235,7 @@ export const spcVinylLaminateTileComparison: ArticleDefinition = {
       "Tell us the rooms, the approximate area and what is on the floor now — a photograph of the existing surface helps. We will tell you which of the four suits each room and whether the old floor can stay.",
   },
   ms: {
-    title: "Renovix Home Services | SPC vs Vinil vs Laminat vs Jubin — Panduan Lantai (Malaysia)",
+    title: "Renovix Home Services | SPC vs Vinil vs Laminat vs Jubin",
     metaDescription:
       "Perbandingan SPC, vinil, laminat dan jubin untuk rumah di Malaysia — ketahanan air, haus, bunyi, keperluan lantai asas, kelajuan pemasangan dan kadar pemasangan.",
     h1: "SPC vs Vinil vs Laminat vs Jubin: Memilih Lantai untuk Rumah di Malaysia",

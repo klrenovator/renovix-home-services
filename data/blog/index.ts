@@ -1,5 +1,8 @@
 import type { LanguageCode } from "@/data/languages";
 import { getLanguageCode } from "@/data/languages";
+// Type-only: a region hub is passed in by the caller, so this module never
+// imports the area registry at runtime (no cycle with `data/area-content`).
+import type { AreaRegion } from "@/data/area-content/types";
 import type {
   ArticleCategoryId,
   ArticleDefinition,
@@ -121,6 +124,52 @@ export function getArticlesForProblem(problemSlug: string): ArticleDefinition[] 
 /** Articles with real local context for an area guide (`region/slug`). */
 export function getArticlesForLocation(areaKey: string): ArticleDefinition[] {
   return articles.filter((article) => article.relatedLocations.includes(areaKey));
+}
+
+/**
+ * Phase 41 — articles a **region hub** may link: the pure union of the guides
+ * its own child area guides already publish, widest coverage first.
+ *
+ * Every article declares its local context as `region/slug` area keys, so no
+ * article names a region directly. Rather than invent a region-level key, the
+ * hub derives its list from the guides underneath it — the same derivation
+ * Phase 35 used for the hub's sub-service and problem layers
+ * (`getSubServicesForRegion` / `getRegionProblemSlugs`). A hub can therefore
+ * never surface a guide that none of its own area guides carry, and adding a
+ * location to an article automatically widens the hub that contains it.
+ *
+ * `limit` caps the block the way Phase 35 caps the other two hub layers; the
+ * child guides keep the full detail.
+ */
+export function getArticlesForRegion(
+  region: AreaRegion,
+  limit?: number,
+): ArticleDefinition[] {
+  const found = new Map<string, ArticleDefinition>();
+  const counts = new Map<string, number>();
+  const order: string[] = [];
+
+  for (const area of region.areas) {
+    for (const article of getArticlesForLocation(`${region.id}/${area.slug}`)) {
+      if (!found.has(article.slug)) {
+        found.set(article.slug, article);
+        order.push(article.slug);
+      }
+      counts.set(article.slug, (counts.get(article.slug) ?? 0) + 1);
+    }
+  }
+
+  // Widest coverage first; ties keep the order the child guides declared them.
+  const firstSeen = new Map(order.map((slug, index) => [slug, index]));
+  const ranked = [...order].sort((a, b) => {
+    const byCount = (counts.get(b) ?? 0) - (counts.get(a) ?? 0);
+    return byCount !== 0 ? byCount : (firstSeen.get(a) ?? 0) - (firstSeen.get(b) ?? 0);
+  });
+
+  const slugs = limit && limit > 0 ? ranked.slice(0, limit) : ranked;
+  return slugs
+    .map((slug) => found.get(slug))
+    .filter((article): article is ArticleDefinition => Boolean(article));
 }
 
 /** Articles that genuinely relate to a published project. */

@@ -97,6 +97,15 @@ less — quality over page count.
   inventory in `data/i18n/lists.ts`.
 - Unique metadata per language; correct hreflang + self-canonical on every
   page (via `buildPageMetadata`).
+- **Titles are budgeted, branded and unique.** Brand-first with the full brand
+  name, one 65-character budget exported as `TITLE_MAX_LENGTH` from `i18n/seo.ts`
+  (Phase 10 convention + Phase 41 enforcement). To fit it, drop locality tails
+  (`… in KL & Selangor`, `, Selangor`) or — for projects — the category label;
+  never truncate a service, problem, place or guide name, never move or
+  abbreviate the brand, never let two pages in one language share a title.
+  Composed titles (projects via `getProjectSeo()`, legal pages via
+  `brandTitle()`) rather than hand-copied strings; `audit:authority` §6b checks
+  the source and `audit:live` checks all 678 rendered pages.
 - **In-copy internal links are content, not decoration.** When an English
   paragraph links a service (`[label](/services/slug)`), the localized
   paragraph must stay structurally aligned with it (same paragraph count and
@@ -140,7 +149,9 @@ less — quality over page count.
 2. All six audits pass: `audit:business`, `audit:pricing`, `audit:locations`,
    `audit:authority`, `audit:project-assets`, `audit:og-fonts`.
 3. Served-site check: new/changed URLs return 200, canonicals match the
-   sitemap, hreflang resolves, JSON-LD valid, no console errors.
+   sitemap, hreflang resolves, JSON-LD valid, `<title>` fits the 65-character
+   budget with the brand intact and is unique in its language, no console
+   errors.
 4. `git status` / `git diff` reviewed: no debug code, temp files, secrets,
    accidental edits or (especially) parallel-edit corruption — verify hunk
    counts and file tails.

@@ -962,6 +962,7 @@ export const zh: Dictionary = {
   },
   projectPage: {
     metaTitleTemplate: "{title} — {category} | Renovix Home Services",
+    metaTitleShortTemplate: "{title} | Renovix Home Services",
     eyebrow: "工程案例",
     overviewEyebrow: "工程概述",
     overviewTitle: "关于这项工程",

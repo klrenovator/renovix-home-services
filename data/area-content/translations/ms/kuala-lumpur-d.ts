@@ -31,7 +31,7 @@ export const translations: AreaTranslations = {
     ...shared("Pusat Bandar KL"),
     name: "Pusat Bandar KL",
     title:
-      "Renovix Home Services | Renovasi & Pembaikan Rumah di Pusat Bandar KL (KLCC & Bukit Bintang)",
+      "Renovix Home Services | Renovasi di Pusat Bandar KL (KLCC)",
     metaDescription:
       "Servis renovasi dan pembaikan di Pusat Bandar Kuala Lumpur — kondominium dan pangsapuri servis di KLCC, Bukit Bintang dan Imbi. Kerja kemasan, kalis air, pendawaian. Sebut harga percuma.",
     h1: "Servis Renovasi & Pembaikan Rumah di Pusat Bandar KL (KLCC & Bukit Bintang)",
@@ -79,7 +79,7 @@ export const translations: AreaTranslations = {
   "kuala-lumpur/taman-desa": {
     ...shared("Taman Desa"),
     name: "Taman Desa",
-    title: "Renovix Home Services | Renovasi & Pembaikan Rumah di Taman Desa, KL",
+    title: "Renovix Home Services | Renovasi & Pembaikan di Taman Desa, KL",
     metaDescription:
       "Servis renovasi dan pembaikan rumah di Taman Desa, Kuala Lumpur — pangsapuri walk-up era 80-an, rumah teres dan kondominium baharu di Seputeh. Sebut harga percuma.",
     h1: "Servis Renovasi & Pembaikan Rumah di Taman Desa, Kuala Lumpur",
@@ -127,7 +127,7 @@ export const translations: AreaTranslations = {
   "kuala-lumpur/kampung-baru": {
     ...shared("Kampung Baru"),
     name: "Kampung Baru",
-    title: "Renovix Home Services | Renovasi & Pembaikan Rumah di Kampung Baru, KL",
+    title: "Renovix Home Services | Renovasi & Pembaikan di Kampung Baru, KL",
     metaDescription:
       "Servis pembaikan dan renovasi rumah di Kampung Baru, Kuala Lumpur — rumah kayu tradisional, rumah batu lama dan rumah kedai. Bumbung, pendawaian, pembaikan. Sebut harga percuma.",
     h1: "Servis Renovasi & Pembaikan Rumah di Kampung Baru, Kuala Lumpur",

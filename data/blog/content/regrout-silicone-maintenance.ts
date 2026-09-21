@@ -27,7 +27,7 @@ export const regroutSiliconeMaintenance: ArticleDefinition = {
   relatedProjects: [],
   pricingIds: ["handyman-grout-silicone", "tiling-repair", "waterproofing-bathroom-hack"],
   en: {
-    title: "Renovix Home Services | Regrouting & Silicone Maintenance Guide (KL & Selangor)",
+    title: "Renovix Home Services | Regrouting & Silicone Maintenance Guide",
     metaDescription:
       "When to regrout tiles and replace silicone in a Malaysian bathroom or kitchen, how to tell maintenance from a real leak, and what the work costs. Practical, honest guidance.",
     h1: "Regrouting and Silicone: When to Maintain, and When It Is Something Worse",
@@ -232,7 +232,7 @@ export const regroutSiliconeMaintenance: ArticleDefinition = {
       "Send a close photograph of the joint and a wider one of the room, and tell us whether anything is showing on the ceiling below. We will tell you honestly whether this is a maintenance visit or something that needs looking at underneath.",
   },
   ms: {
-    title: "Renovix Home Services | Panduan Penyelenggaraan Grout & Silikon (KL & Selangor)",
+    title: "Renovix Home Services | Panduan Penyelenggaraan Grout & Silikon",
     metaDescription:
       "Bila perlu grout semula jubin dan menggantikan silikon di bilik air atau dapur di Malaysia, cara membezakan penyelenggaraan daripada kebocoran sebenar, dan kosnya.",
     h1: "Grout dan Silikon: Bila Perlu Diselenggara, dan Bila Ia Masalah Lebih Besar",

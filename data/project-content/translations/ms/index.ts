@@ -15,6 +15,9 @@ export const msProjectTranslations: ProjectTranslations = {
   },
   "floor-tile-removal-hacking": {
     title: "Pembuangan jubin lantai sebelum pemasangan baharu",
+    // Project name is longer than the 65-character title budget, so the
+    // <title> is bespoke; the visible project name above stays untouched.
+    seoTitle: "Pembuangan jubin lantai lama | Renovix Home Services",
     shortDescription:
       "Jubin lantai lama dipecahkan di ruang koridor dan pintu masuk untuk menyediakan lapisan simen bagi kemasan jubin baharu.",
     alt:
@@ -40,6 +43,9 @@ export const msProjectTranslations: ProjectTranslations = {
   },
   "plaster-ceiling-design-downlights": {
     title: "Reka bentuk siling plaster dengan downlight",
+    // Project name is longer than the 65-character title budget, so the
+    // <title> is bespoke; the visible project name above stays untouched.
+    seoTitle: "Reka bentuk siling plaster & downlight | Renovix Home Services",
     shortDescription:
       "Siling plaster berpanel dengan lampu jalur tersembunyi, lampu sorot dan kipas siling di bahagian tengah.",
     alt:
@@ -252,6 +258,9 @@ export const msProjectTranslations: ProjectTranslations = {
   },
   "porcelain-floor-tile-installation": {
     title: "Pemasangan jubin lantai porselin format besar",
+    // Project name is longer than the 65-character title budget, so the
+    // <title> is bespoke; the visible project name above stays untouched.
+    seoTitle: "Pemasangan jubin porselin format besar | Renovix Home Services",
     shortDescription:
       "Jubin lantai porselin bersaiz besar dipasang rata dengan sistem klip perata, dipotong mengikut longkang lantai dan lubang pembuangan.",
     alt:
@@ -264,6 +273,9 @@ export const msProjectTranslations: ProjectTranslations = {
   },
   "instant-shower-heater-installation": {
     title: "Pemasangan pemanas air segera dan kolom hujan",
+    // Project name is longer than the 65-character title budget, so the
+    // <title> is bespoke; the visible project name above stays untouched.
+    seoTitle: "Pemanas air segera dan kolom hujan | Renovix Home Services",
     shortDescription:
       "Kolom hujan hitam dan pemanas air segera dipasang pada dinding berjubin yang telah siap serta disambungkan ke bekalan air dan elektrik.",
     alt:

@@ -414,7 +414,7 @@ export const translations: ProblemTranslations = {
   "ceiling-fan-wiring-problems": {
     ...base,
     name: "Masalah Pendawaian Kipas Siling",
-    title: "Renovix Home Services | Masalah Pendawaian Kipas Siling di KL & Selangor",
+    title: "Renovix Home Services | Masalah Pendawaian Kipas Siling",
     metaDescription:
       "Kipas siling yang tidak berputar, berpercikan atau tiada bekalan dibaiki di Kuala Lumpur & Selangor, termasuk pemasangan titik kipas baharu.",
     h1: "Masalah Pendawaian Kipas Siling",

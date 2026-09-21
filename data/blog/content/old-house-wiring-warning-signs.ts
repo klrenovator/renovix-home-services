@@ -46,7 +46,7 @@ export const oldHouseWiringWarningSigns: ArticleDefinition = {
     "electrical-socket-add",
   ],
   en: {
-    title: "Renovix Home Services | Signs Your House Wiring Needs Attention (KL & Selangor)",
+    title: "Renovix Home Services | Signs Your House Wiring Needs Attention",
     metaDescription:
       "Warning signs that an older Malaysian home's wiring needs checking or replacing — repeated tripping, warm sockets, burning smells, two-pin points and old DB boards. What to do first.",
     h1: "Warning Signs That Your House Wiring Needs Attention",
@@ -234,7 +234,7 @@ export const oldHouseWiringWarningSigns: ArticleDefinition = {
       "Tell us what the symptom is, which circuit it affects and what is running when it happens — and send a photograph of your distribution board. That is usually enough to say whether this is a single point, a circuit or a bigger conversation.",
   },
   ms: {
-    title: "Renovix Home Services | Tanda Pendawaian Rumah Anda Perlu Diperiksa (KL & Selangor)",
+    title: "Renovix Home Services | Tanda Pendawaian Rumah Perlu Diperiksa",
     metaDescription:
       "Tanda amaran bahawa pendawaian rumah lama di Malaysia perlu diperiksa atau diganti — kerap trip, soket panas, bau terbakar, soket dua pin dan papan DB lama. Apa yang perlu dibuat dahulu.",
     h1: "Tanda Amaran Bahawa Pendawaian Rumah Anda Perlu Diperiksa",

@@ -21,7 +21,7 @@ export const translations: ProblemTranslations = {
   "renovation-permit-approval": {
     ...base,
     name: "Kelulusan & Permit Renovasi",
-    title: "Renovix Home Services | Kelulusan & Permit Renovasi di KL & Selangor",
+    title: "Renovix Home Services | Kelulusan & Permit Renovasi",
     metaDescription:
       "Kelulusan renovasi di Kuala Lumpur & Selangor — persetujuan pengurusan strata, permit pihak berkuasa tempatan dan apa yang memerlukan kelulusan. Fahami prosesnya sebelum kerja bermula.",
     h1: "Kelulusan & Permit Renovasi",
@@ -82,7 +82,7 @@ export const translations: ProblemTranslations = {
   "renovation-scope-creep": {
     ...base,
     name: "Kos Renovasi Melebihi Bajet & Skop Membesar",
-    title: "Renovix Home Services | Kos Renovasi Melebihi Bajet di KL & Selangor",
+    title: "Renovix Home Services | Kos Renovasi Melebihi Bajet",
     metaDescription:
       "Kenapa bajet renovasi melebihi anggaran di Kuala Lumpur & Selangor. Fahami skop membesar, keadaan tapak tersembunyi, arahan perubahan dan cara sebut harga jelas mengelak kejutan.",
     h1: "Kos Renovasi Melebihi Bajet & Skop Membesar",

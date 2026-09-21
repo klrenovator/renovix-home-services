@@ -150,7 +150,7 @@ export const tilingSubServices: SubServiceDefinition[] = [
       name: "Porcelain Tile Installation",
       h1: "Porcelain Tile Installation in Kuala Lumpur & Selangor",
       metaDescription: "Porcelain floor and wall tile laying in Kuala Lumpur & Selangor with full adhesive coverage and levelled setting out. Porcelain tile installation from RM14 per sqft, labour only.",
-      title: "Renovix Home Services | Porcelain Tile Installation in KL & Selangor",
+      title: "Renovix Home Services | Porcelain Tile Installation",
       lead: "Porcelain is denser and less absorbent than ceramic, which makes it hard-wearing but also less forgiving: it needs a properly prepared bed and full adhesive coverage, or it sounds hollow within a year.",
       suitableFor: [
         "Living areas, kitchens and bathrooms where durability matters.",
@@ -198,7 +198,7 @@ export const tilingSubServices: SubServiceDefinition[] = [
       name: "Pemasangan Jubin Porselin",
       h1: "Pemasangan Jubin Porselin di Kuala Lumpur & Selangor",
       metaDescription: "Pemasangan jubin porselin lantai dan dinding di Kuala Lumpur & Selangor dengan liputan pelekat penuh dan susun atur rata. Dari RM14 sekaki persegi, upah sahaja.",
-      title: "Renovix Home Services | Pemasangan Jubin Porselin di KL & Selangor",
+      title: "Renovix Home Services | Pemasangan Jubin Porselin",
       lead: "Porselin lebih padat dan kurang menyerap berbanding seramik, menjadikannya tahan lasak tetapi kurang bertolak ansur: ia perlukan alas disediakan dengan betul dan liputan pelekat penuh, atau ia berbunyi kosong dalam setahun.",
       suitableFor: [
         "Ruang tamu, dapur dan bilik air yang memerlukan ketahanan.",
@@ -301,7 +301,7 @@ export const tilingSubServices: SubServiceDefinition[] = [
       name: "Bathroom Wall & Floor Tiling",
       h1: "Bathroom Wall & Floor Tiling in Kuala Lumpur & Selangor",
       metaDescription: "Full bathroom wall and floor tiling in Kuala Lumpur & Selangor including falls to the floor trap and silicone at movement joints. Bathroom tiling from RM16 per sqft, labour only.",
-      title: "Renovix Home Services | Bathroom Wall & Floor Tiling in KL & Selangor",
+      title: "Renovix Home Services | Bathroom Wall & Floor Tiling",
       lead: "Bathroom tiling is the one room where the tiling and the waterproofing have to be considered together — the tiles are a wearing surface, not the waterproof layer, and the falls decide whether the floor ever dries.",
       suitableFor: [
         "A bathroom being retiled after hacking off.",
@@ -449,7 +449,7 @@ export const tilingSubServices: SubServiceDefinition[] = [
       name: "Tile Repair & Replacement",
       h1: "Tile Repair & Replacement in Kuala Lumpur & Selangor",
       metaDescription: "Cracked, loose and hollow tile replacement in Kuala Lumpur & Selangor — individual tiles lifted and re-laid with full adhesive coverage. Tile repair from RM120 per job.",
-      title: "Renovix Home Services | Tile Repair & Replacement in KL & Selangor",
+      title: "Renovix Home Services | Tile Repair & Replacement",
       lead: "Replacing a few tiles is worthwhile when the rest of the floor is sound. What matters is finding out why those particular tiles failed, because a cracked tile is usually a symptom of what is underneath.",
       suitableFor: [
         "A handful of cracked, chipped or lifted tiles.",
@@ -490,7 +490,7 @@ export const tilingSubServices: SubServiceDefinition[] = [
       name: "Pembaikan & Penggantian Jubin",
       h1: "Pembaikan & Penggantian Jubin di Kuala Lumpur & Selangor",
       metaDescription: "Penggantian jubin retak, longgar dan kosong di Kuala Lumpur & Selangor — jubin diangkat dan dipasang semula dengan liputan pelekat penuh. Dari RM120 sekerja.",
-      title: "Renovix Home Services | Pembaikan & Penggantian Jubin di KL & Selangor",
+      title: "Renovix Home Services | Pembaikan & Penggantian Jubin",
       lead: "Menggantikan beberapa jubin berbaloi apabila selebihnya kukuh. Yang penting ialah mengetahui kenapa jubin tertentu itu gagal, kerana jubin retak biasanya gejala apa yang ada di bawahnya.",
       suitableFor: [
         "Beberapa jubin retak, terkopek atau terangkat.",

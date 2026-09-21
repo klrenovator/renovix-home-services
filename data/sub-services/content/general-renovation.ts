@@ -11,7 +11,7 @@ export const generalRenovationSubServices: SubServiceDefinition[] = [
       name: "Minor Renovation & Refresh",
       h1: "Minor Renovation & Refresh in Kuala Lumpur & Selangor",
       metaDescription: "Light renovation and cosmetic refresh in Kuala Lumpur & Selangor — painting, minor repairs, fittings and finishes without structural change. Minor refresh from RM20 per sqft.",
-      title: "Renovix Home Services | Minor Renovation & Refresh in KL & Selangor",
+      title: "Renovix Home Services | Minor Renovation & Refresh",
       lead: "A refresh is cosmetic work with the layout left alone: painting, repairs, replacing tired fittings and tidying finishes. It is the right scope when the space works and only looks dated.",
       suitableFor: [
         "A unit being prepared for moving in, selling or renting.",
@@ -481,7 +481,7 @@ export const generalRenovationSubServices: SubServiceDefinition[] = [
       name: "Pengubahsuaian Bilik Air Penuh",
       h1: "Pengubahsuaian Bilik Air Penuh di Kuala Lumpur & Selangor",
       metaDescription: "Pengubahsuaian bilik air lengkap di Kuala Lumpur & Selangor — penanggalan, paip, kalis air, jubin dan pemasangan. Dari RM8,000 sebilik air.",
-      title: "Renovix Home Services | Pengubahsuaian Bilik Air Penuh di KL & Selangor",
+      title: "Renovix Home Services | Pengubahsuaian Bilik Air Penuh",
       lead: "Dalam bilik air, kerja yang anda tidak akan lihat lagi paling penting. Kalis air dipasang sebelum jubin dan tidak boleh diperiksa selepasnya — itulah sebabnya ia peringkat yang berbaloi diteliti.",
       suitableFor: [
         "Bilik air yang diganti sepenuhnya selepas bertahun digunakan.",

@@ -185,7 +185,7 @@ export const translations: ProblemTranslations = {
   "wall-seepage": {
     ...base,
     name: "墙体渗水",
-    title: "Renovix Home Services | 吉隆坡与雪兰莪墙体渗水处理",
+    title: "Renovix Home Services | 墙体渗水：成因与处理方法",
     metaDescription:
       "在吉隆坡与雪兰莪处理墙体渗水，先判断水从哪一侧进来再施工。了解成因与解决方式。",
     h1: "墙体渗水",
