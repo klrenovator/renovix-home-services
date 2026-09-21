@@ -30,7 +30,7 @@ export const translations: AreaTranslations = {
       "雪兰莪最早的规划城市——五十年代的 Section 老屋、SS 区排屋，以及白沙罗走廊的新高楼。",
     intro: [
       "八打灵再也几乎每个年代的住宅都有。老 Section 的房子多半经历过几轮升级，我们的工作常常从确认之前做过什么开始。",
-      "我们在 PJ 提供装修、电气、水管、防水、油漆与天花服务，从 Section 老屋到白沙罗走廊的公寓都涵盖。",
+      "我们在 PJ 提供[装修](/services/general-renovation)、[电气](/services/electrical)、[水管](/services/plumbing)、[防水](/services/waterproofing)、[油漆](/services/painting)与[天花](/services/ceiling-partition)服务，从 Section 老屋到白沙罗走廊的公寓都涵盖。",
     ],
     serviceNotes: [
       "整体或分阶段的老屋升级工程。",
@@ -77,7 +77,7 @@ export const translations: AreaTranslations = {
       "成熟的 SS12–SS19 城镇——七八十年代的排屋街道、SS15 商业街，以及成熟的公寓群。",
     intro: [
       "SS12 至 SS19 的排屋如今已有四五十年楼龄。浴室防水、锈蚀水管与老旧线路，是这里最常见的工程。",
-      "我们在梳邦再也提供水管、电气、装修、瓷砖、油漆与防水服务，也包括 SS15 的店屋工程。",
+      "我们在梳邦再也提供[水管](/services/plumbing)、[电气](/services/electrical)、[装修](/services/general-renovation)、[瓷砖](/services/tiling)、[油漆](/services/painting)与[防水](/services/waterproofing)服务，也包括 SS15 的店屋工程。",
     ],
     serviceNotes: [
       "修复或更换锈蚀的旧水管。",
@@ -124,7 +124,7 @@ export const translations: AreaTranslations = {
       "雪兰莪的花园城市首府——宽敞的编号 Section、开阔绿化，以及 i-City 一带的新兴走廊。",
     intro: [
       "莎阿南按花园城市规划，地段宽敞、绿荫浓密，因此潮湿管理成为这里许多工程的核心主题。",
-      "我们在莎阿南各 Section 提供防水、油漆、装修、电气、水管与家居维修服务。",
+      "我们在莎阿南各 Section 提供[防水](/services/waterproofing)、[油漆](/services/painting)、[装修](/services/general-renovation)、[电气](/services/electrical)、[水管](/services/plumbing)与[家居维修](/services/handyman)服务。",
     ],
     serviceNotes: [
       "屋顶、阳台与潮湿区域的防水工程。",
@@ -171,7 +171,7 @@ export const translations: AreaTranslations = {
       "由旧矿区发展成的高速走廊——蒲种老镇、Bandar Puteri 等城镇，以及成排的新高层住宅。",
     intro: [
       "蒲种的住宅分几波发展：老镇、九十至两千年代的城镇住宅，以及较新的高层楼盘。每一类面对的问题都不同。",
-      "我们在蒲种提供装修、水管、防水、地板、电气与家居维修服务。",
+      "我们在蒲种提供[装修](/services/general-renovation)、[水管](/services/plumbing)、[防水](/services/waterproofing)、[地板](/services/flooring)、[电气](/services/electrical)与[家居维修](/services/handyman)服务。",
     ],
     serviceNotes: [
       "排屋与厨房的整体升级工程。",
@@ -218,7 +218,7 @@ export const translations: AreaTranslations = {
       "雪兰莪的皇城——河畔的战前店屋与老区排屋，以及向南扩展的 Bukit Tinggi 与 Bandar Botanic。",
     intro: [
       "巴生既有老区的历史建筑，也有南部较新的住宅区。潮湿与常年多雨的气候，对两者都是考验。",
-      "我们在巴生提供防水、电气、水管、油漆、装修与天花服务。",
+      "我们在巴生提供[防水](/services/waterproofing)、[电气](/services/electrical)、[水管](/services/plumbing)、[油漆](/services/painting)、[装修](/services/general-renovation)与[天花](/services/ceiling-partition)服务。",
     ],
     serviceNotes: [
       "屋顶、墙体与潮湿区域的防水工程。",
@@ -265,7 +265,7 @@ export const translations: AreaTranslations = {
       "雪兰莪北部的成熟城镇——老镇一带的组屋与排屋街道，以及绿意边缘的新公寓。",
     intro: [
       "士拉央有许多无电梯组屋与七十至九十年代的排屋。立管渗漏与浴室防水失效是最常见的投诉。",
-      "我们在士拉央提供水管、防水、油漆、电气、家居维修与装修服务。",
+      "我们在士拉央提供[水管](/services/plumbing)、[防水](/services/waterproofing)、[油漆](/services/painting)、[电气](/services/electrical)、[家居维修](/services/handyman)与[装修](/services/general-renovation)服务。",
     ],
     serviceNotes: [
       "定位并修复老楼的水管渗漏。",
@@ -312,7 +312,7 @@ export const translations: AreaTranslations = {
       "城市东北的老走廊——甘榜式住宅、老排屋街道，以及大学一带的租赁区。",
     intro: [
       "鹅唛混合了甘榜住宅、老排屋与学生出租单位。湿度偏高与木结构老化，让前期检查格外重要。",
-      "我们在鹅唛提供电气、水管、装修、油漆、家居维修与天花服务。",
+      "我们在鹅唛提供[电气](/services/electrical)、[水管](/services/plumbing)、[装修](/services/general-renovation)、[油漆](/services/painting)、[家居维修](/services/handyman)与[天花](/services/ceiling-partition)服务。",
     ],
     serviceNotes: [
       "为甘榜住宅与排屋更换老旧线路。",
@@ -359,7 +359,7 @@ export const translations: AreaTranslations = {
       "大安邦的雪兰莪一侧——班丹一带的城镇、成熟排屋，以及延伸到吉隆坡边界的老公寓带。",
     intro: [
       "安邦再也有大量八九十年代的排屋与老公寓，如今浴室与水管都到了需要翻新的时候。",
-      "我们在安邦再也提供水管、防水、电气、瓷砖、装修与家居维修服务。",
+      "我们在安邦再也提供[水管](/services/plumbing)、[防水](/services/waterproofing)、[电气](/services/electrical)、[瓷砖](/services/tiling)、[装修](/services/general-renovation)与[家居维修](/services/handyman)服务。",
     ],
     serviceNotes: [
       "定位老公寓的立管渗漏。",
@@ -406,7 +406,7 @@ export const translations: AreaTranslations = {
       "乌鲁冷岳的历史城镇与周边住宅区——老镇店屋、九十年代排屋，以及较新的门禁式住宅区。",
     intro: [
       "加影既有老镇，也有快速扩张的住宅区。这里九十年代的住宅正进入第一轮防水与浴室翻新周期。",
-      "我们在加影提供装修、防水、水管、电气、油漆与家居维修服务。",
+      "我们在加影提供[装修](/services/general-renovation)、[防水](/services/waterproofing)、[水管](/services/plumbing)、[电气](/services/electrical)、[油漆](/services/painting)与[家居维修](/services/handyman)服务。",
     ],
     serviceNotes: [
       "排屋与店屋的分阶段升级。",
@@ -453,7 +453,7 @@ export const translations: AreaTranslations = {
       "由旧沙登新村发展成的城镇——老店屋、九十至两千年代排屋，以及美奈湖与地铁一带的公寓群。",
     intro: [
       "沙登既有老新村区，也有较新的住宅区与公寓。浴室渗水与排水堵塞是这里最常见的工程。",
-      "我们在沙登提供水管、防水、装修、电气、油漆与家居维修服务。",
+      "我们在沙登提供[水管](/services/plumbing)、[防水](/services/waterproofing)、[装修](/services/general-renovation)、[电气](/services/electrical)、[油漆](/services/painting)与[家居维修](/services/handyman)服务。",
     ],
     serviceNotes: [
       "修复水管渗漏与地漏堵塞。",
@@ -500,7 +500,7 @@ export const translations: AreaTranslations = {
       "雪兰莪的科技重镇——湖畔大道、门禁式有地住宅与现代公寓。",
     intro: [
       "赛城的住宅较新，因此这里的工程更多是升级开发商饰面、修补交房缺陷与加装设备，而不是大规模改造。",
-      "我们在赛城提供地板、电气、装修、家居维修、水管与油漆服务。",
+      "我们在赛城提供[地板](/services/flooring)、[电气](/services/electrical)、[装修](/services/general-renovation)、[家居维修](/services/handyman)、[水管](/services/plumbing)与[油漆](/services/painting)服务。",
     ],
     serviceNotes: [
       "把原装地板换成更耐用的选择。",
@@ -547,7 +547,7 @@ export const translations: AreaTranslations = {
       "联邦行政首都——湖畔的规划分区、政府宿舍与较新的私人住宅。",
     intro: [
       "布城按花园城市规划，许多墙面常年处在树荫下，容易发霉。这里的油漆工程往往从清洗与表面处理开始。",
-      "我们在布城各分区提供油漆、水管、电气、家居维修、装修与地板服务。",
+      "我们在布城各分区提供[油漆](/services/painting)、[水管](/services/plumbing)、[电气](/services/electrical)、[家居维修](/services/handyman)、[装修](/services/general-renovation)与[地板](/services/flooring)服务。",
     ],
     serviceNotes: [
       "室内外油漆，包括霉菌处理。",
@@ -594,7 +594,7 @@ export const translations: AreaTranslations = {
       "介于 PJ 与双溪毛糯之间的大型城镇——九十年代排屋分区、The Strand 商业带，以及地铁沿线的公寓。",
     intro: [
       "哥打白沙罗分成多个年代不同的分区。较早的分区正面对防水与水管失效，新落成的高楼则需要收尾工程。",
-      "我们在哥打白沙罗提供装修、水管、防水、地板、电气与家居维修服务。",
+      "我们在哥打白沙罗提供[装修](/services/general-renovation)、[水管](/services/plumbing)、[防水](/services/waterproofing)、[地板](/services/flooring)、[电气](/services/electrical)与[家居维修](/services/handyman)服务。",
     ],
     serviceNotes: [
       "老分区排屋的分阶段升级。",
@@ -641,7 +641,7 @@ export const translations: AreaTranslations = {
       "快速发展的西部走廊——老镇与医院一带，紧邻成熟的门禁住宅区与新兴住宅项目。",
     intro: [
       "双溪毛糯既有老镇，也有成熟的门禁住宅区与新建住宅。这里的工程从老屋修复一直到新房收尾都有。",
-      "我们在双溪毛糯提供装修、水管、防水、电气、油漆与家居维修服务。",
+      "我们在双溪毛糯提供[装修](/services/general-renovation)、[水管](/services/plumbing)、[防水](/services/waterproofing)、[电气](/services/electrical)、[油漆](/services/painting)与[家居维修](/services/handyman)服务。",
     ],
     serviceNotes: [
       "老屋与镇上店屋的升级工程。",
@@ -688,7 +688,7 @@ export const translations: AreaTranslations = {
       "由旧矿镇发展成的成长走廊——老镇街道与店屋，被南部快速扩张的住宅区环绕。",
     intro: [
       "万挠有紧凑的老镇，也有南部迅速扩张的住宅区。工程涵盖老建筑修复，以及九十年代住宅的第一轮升级。",
-      "我们在万挠提供装修、防水、水管、电气、油漆与家居维修服务。",
+      "我们在万挠提供[装修](/services/general-renovation)、[防水](/services/waterproofing)、[水管](/services/plumbing)、[电气](/services/electrical)、[油漆](/services/painting)与[家居维修](/services/handyman)服务。",
     ],
     serviceNotes: [
       "店屋与排屋的分阶段升级。",
@@ -735,7 +735,7 @@ export const translations: AreaTranslations = {
       "乌鲁冷岳一带安静的大学城——甘榜道路、小镇店屋，以及快速成长的有地住宅区。",
     intro: [
       "士毛月混合了甘榜地区、小镇与新住宅区。这一带湿气较重，屋顶渗漏与霉菌是常见投诉。",
-      "我们在士毛月提供装修、防水、水管、电气、油漆与家居维修服务。",
+      "我们在士毛月提供[装修](/services/general-renovation)、[防水](/services/waterproofing)、[水管](/services/plumbing)、[电气](/services/electrical)、[油漆](/services/painting)与[家居维修](/services/handyman)服务。",
     ],
     serviceNotes: [
       "住宅区与镇上房屋的升级工程。",
@@ -782,7 +782,7 @@ export const translations: AreaTranslations = {
       "UEP 梳邦再也——围绕 Taipan 的大型九十年代城镇，如今正处在它的翻新年代。",
     intro: [
       "USJ 的住宅多在同一时期建成，因此整条街往往面对相同的老化周期：浴室防水、锈蚀水管与老化屋顶。",
-      "我们在 USJ 提供装修、防水、水管、电气、瓷砖与油漆服务。",
+      "我们在 USJ 提供[装修](/services/general-renovation)、[防水](/services/waterproofing)、[水管](/services/plumbing)、[电气](/services/electrical)、[瓷砖](/services/tiling)与[油漆](/services/painting)服务。",
     ],
     serviceNotes: [
       "双层排屋的整体升级工程。",

@@ -20,7 +20,7 @@
  *   3. Every cross-reference resolves: related services/problems, nearby
  *      areas, problem-to-service links and intent-matrix slugs (no orphan
  *      pages, no broken internal references).
- *   3b. Service ↔ problem edges are reciprocal (Phase 38, 2026-09-20): every
+ *   3b. Service ↔ problem edges are reciprocal (Phase 40, 2026-09-20): every
  *      problem guide names the service that fixes it, so that service page
  *      must link the guide back. The reverse is not required — a service page
  *      may legitimately cross-link another service's problem guides.

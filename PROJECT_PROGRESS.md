@@ -8,7 +8,7 @@
 - **Stack:** Next.js 16.3.3, React 19.2.8, TypeScript 6.0.3, Tailwind CSS 4.3.3
 - **Languages:** English (`/en/`), Bahasa Melayu (`/ms/`), Simplified Chinese (`/zh/`) — see Phase 6
 
-### Current site inventory (re-verified in Phase 37 and Phase 38, 2026-09-20, `npm run build` + locally served `/sitemap.xml`; Phase 38 added internal links only — no count below changed)
+### Current site inventory (re-verified in Phase 37, 2026-09-20, `npm run build` + locally served `/sitemap.xml`; re-checked 2026-09-21 after Phase 38–40 — Phase 40 added internal links only, so no count below changed)
 
 | Item | Count |
 |---|---|
@@ -24,7 +24,8 @@
 | Static generation entries | **689** (`next build` progress total; distinct from the 678 canonical sitemap URLs) |
 | Pricing rows (`data/pricing/pricing.ts`) | **51** |
 | Search-intent matrix entries | **24** (all pricing derived from `pricingId`) |
-| Audit scripts | 17 static + 1 live server QA |
+| Audit scripts | 17 static + 1 live server QA (237 served-site checks after Phase 39) |
+| In-copy contextual links (rendered anchors) | **313 EN / 362 MS / 364 ZH** (Phase 39) |
 
 ---
 
@@ -4878,7 +4879,362 @@ reopened by that local state.
 Status: **Code verified + Build verified + Local production HTTP verified;
 website preserved; documentation reconciled.**
 
-## Phase 38 — Service pillar → problem-guide edge restored, plus reciprocity guards (2026-09-20)
+---
+
+## Phase 38 — Location registry duplicate-service fix + regression guard (2026-09-20)
+
+**Result: 🟡 one genuine data defect found and fixed** (additive-only; no
+page, URL, price, service, claim, copy or piece of branding changed). This was
+a preservation-first pass: the full verification gate was re-run before any
+change, then every list field in every registry was scanned for duplicates.
+
+### 1. Baseline verification gate (all green before any change)
+
+- [x] `npm ci` — 371 packages, 0 vulnerabilities
+- [x] `npm run type-check` + `npm run lint` — PASS
+- [x] All 17 static audits — PASS (matches the Phase 37 record)
+- [x] `npm run build` — PASS, **689** static generation entries
+
+### 2. What the duplicate scan actually found
+
+A sweep of every string-array field in the content registries surfaced one
+real defect: five locations in `data/locations/registry.ts` listed the same
+service twice in `serviceRelevance.primaryServices` (all `"waterproofing"`):
+
+| Location | PrimaryServices before |
+| --- | --- |
+| `kuala-lumpur/taman-melawati` | waterproofing ×2, painting, general-renovation, plumbing |
+| `selangor/klang` | waterproofing ×2, plumbing, welding-metal-works, general-renovation |
+| `selangor/kajang` | general-renovation, waterproofing ×2, plumbing, welding-metal-works |
+| `selangor/sungai-buloh` | general-renovation, waterproofing ×2, welding-metal-works, painting |
+| `selangor/balakong` | waterproofing ×2, plumbing, electrical, flooring |
+
+`primaryServices` drives `getStartingRatesForLocation()` (data/locations/
+hierarchy.ts), which builds the indicative-rates section rendered by
+`components/area/AreaPricingSection.tsx`. That component keys each card by
+`rate.serviceSlug`, so each duplicate produced a **second, identical
+"Flat Roof Waterproofing" pricing card** and a duplicate-React-key warning on
+those five area pages — in all three languages (15 served pages). The existing
+location quality gate only enforced `length >= 3`, so the duplication passed
+undetected. No other registry list field (pricing ids/slugs, sub-service
+slugs, service slugs, intent-matrix ids, location ids, area guide service
+lists, nearby/related lists) contained a duplicate.
+
+### 3. What was changed (source-of-truth data only, additive guard)
+
+1. `data/locations/registry.ts` — removed the duplicated `"waterproofing"`
+   from each of the five `primaryServices` arrays. No service was added or
+   re-ordered; every remaining entry already existed in that location's list,
+   and every one resolves to a real pricing row and service page.
+2. `scripts/audit-locations.mjs` §4 — a uniqueness check beside the existing
+   `primaryServices` minimum-count check: a repeated service in a location's
+   `primaryServices` now fails the quality gate with the duplicated slug(s)
+   named. This is the same "regression guard, not a rule change" pattern as
+   Phases 27–36.
+
+### 4. Regression guard (negative-tested twice)
+
+- Re-inserted `"waterproofing","waterproofing"` into `selangor/klang` →
+  `audit:locations` exits 1 with
+  `Quality gate failed for "selangor/klang": duplicate primary service(s): waterproofing.`
+- Restored the data → audit returns PASS.
+
+### 5. Measured result (before → after)
+
+| Metric | Before | After |
+| --- | --- | --- |
+| Locations with a duplicated `primaryServices` entry | 5 | **0** |
+| Area pricing cards on the 5 affected pages (per language) | 5 (one duplicated) | **4 distinct** |
+| Served pages visually affected (5 areas × 3 languages) | 15 | **0** |
+| Sitemap URLs / generated routes | 678 / 689 | **678 / 689 (unchanged)** |
+| New pages / new URLs / prices touched | — | **0 / 0 / 0** |
+
+### 6. Preserved untouched (verified correct — 🟢)
+
+- All 678 URLs, canonicals, hreflang sets, structured data, robots.txt and the
+  sitemap (verified unchanged: 689 build entries, `audit:sitemap` PASS).
+- All 51 pricing rows, 24 search-intent entries and their single-source
+  derivation (`audit:pricing` + `audit:locations` §10 PASS — no price,
+  unit or starting-from semantics changed anywhere).
+- The 10 services, 51 sub-services, 57 problem guides, 53 area guides, 2
+  region hubs, 28 projects, 12 Knowledge Hub guides and the Smart Service
+  Finder.
+- The whole internal-link graph (`audit:live` link sample + service↔
+  sub-service, area↔scope, problem↔project wiring all PASS).
+- The AI feeds (`/llms.txt`, `/ai/business.json`, `/ai/pricing.json`) — no
+  generated content touched.
+- No UI, branding, copy, metadata, translation, route, asset, configuration
+  or dependency change. The diff is limited to the five registry lines and
+  the one audit guard (15 insertions / 5 deletions across two files).
+
+### 7. Test results (this phase)
+
+- [x] `npm run type-check` — PASS
+- [x] `npm run lint` — PASS (0 errors, 0 warnings)
+- [x] `npm run build` — PASS (689/689, unchanged)
+- [x] All 17 static audits — PASS (incl. the new duplicate guard)
+- [x] `npm run audit:live` vs `next start` — **PASS 228 / WARN 0 / FAIL 0**
+- [x] Rendered spot-checks — the 5 affected area pages in EN, MS and ZH each
+      render exactly 4 distinct, localized pricing cards (verified the card
+      titles and service chips on all 15 URLs)
+- [x] Negative test — duplicate re-introduction fails the guard; restore passes
+
+Status: **Code verified + Build verified + Live verified (HTTP); one
+data-quality defect removed and permanently guarded.**
+
+---
+
+## Phase 39 — MS/ZH copy now carries its own in-copy internal links (2026-09-21)
+
+### 1. Inspected first, classified, then touched only the 🔴 item
+
+The full gate was re-run on the merged Phase 38 tree before any edit:
+`type-check`, `lint`, `build` (689/689), all 17 static audits and `audit:live`
+(**PASS 228 / WARN 0 / FAIL 0**). Classification of the internal-link layer:
+
+| Item | Class | Action |
+| --- | --- | --- |
+| 678 URLs, canonicals, hreflang sets, JSON-LD, robots.txt, sitemap | 🟢 | verified, untouched |
+| Rendered link graph: no orphans, service↔sub-service both ways, area↔scope, problem↔project, no unserved target, no English slug label on `/ms/` `/zh/` (Phases 28–36) | 🟢 | verified, untouched |
+| 51 pricing rows, 24 intent-matrix entries, single-source derivation | 🟢 | verified, untouched |
+| AI feeds (`/llms.txt`, `/ai/business.json`, `/ai/pricing.json`) + per-language URL maps (Phase 36) | 🟢 | verified, untouched |
+| Location registry duplicate-service fix + guard (Phase 38) | 🟢 | verified, untouched |
+| **In-copy contextual links: the English area guides and region hubs write `[label](/services/slug)` inside their paragraphs; the MS/ZH translations write none** | 🔴 | **fixed** |
+| **One localized pillar page pair (`/services/general-renovation/`) missing a cross-service link its own copy names** | 🔴 | **fixed** |
+| Knowledge-Hub guide layer for the two region hubs | ⏸ | still deferred (editorial scope, owner-gated) |
+
+### 2. The defect, measured on the Phase 38 build (all 678 URLs fetched)
+
+`data/area-content/` and `data/service-content/` write contextual links inline
+in the copy, and `components/area/InlineLinks.tsx` /
+`components/service/InlineLinks.tsx` render them as real anchors carrying the
+page's own language. The MS/ZH area translations were re-authored without that
+markup, so on the merged build the served pages looked like this:
+
+| Rendered in-copy anchors | EN | MS | ZH |
+| --- | --- | --- | --- |
+| 53 area guides | 261 | **0** | **0** |
+| 2 region hubs | 18 | **0** | **0** |
+| 10 service pillar pages | 33 | 23 | 23 |
+| home page | 1 | 1 | 1 |
+| **total** | **313** | **24** | **24** |
+| location pages rendering **no** in-copy link | 0 | **55** | **55** |
+| pages whose whole-link set differs from the EN page | — | **17 of 226** | |
+
+Nothing was broken and nothing leaked markup: the links were simply absent.
+110 served location pages — the entire `/ms/` and `/zh/` location library —
+published paragraphs that name the work ("kerja jubin", "kalis air",
+"pendawaian", "瓷砖", "防水", "电气") with no anchor on any of them, while the
+English guide linked 279. A crawler or AI reader following a Malay or Chinese
+area guide reached the copy and stopped; the only links on those pages were the
+structured card, chip and list sections.
+
+### 3. What changed — markup only, not one visible word
+
+**a. Area guides and region hubs (14 files, 676 links).** Every MS/ZH paragraph
+was scanned for the site's own localized service vocabulary — the same words
+the MS/ZH service pages already link with (`kerja jubin`, `kalis air`,
+`pendawaian`, `renovasi`, `kerja besi`, `瓷砖`, `防水`, `电气`, `天花`,
+`整体装修`, …) — and each named service was wrapped in the existing
+`[label](/services/slug)` convention, longest term first, one link per
+(paragraph, service), placed in the sentence cluster that actually names the
+work. Result: **MS 337 / ZH 339** in-copy links across the 55 entities (EN 279
+unchanged), written into 116 paragraph lines. Kuala Lumpur's `kepong` guide
+needed a manual pass: its MS/ZH second intro paragraph enumerates six services
+while the English paragraph links one, so all six named services were linked
+(`renovasi`, `jubin`, `kerja paip`, `elektrik`, `cat`, `kalis air`) — the
+localized copy's own enumeration is the authority, exactly as for the region
+hubs.
+
+**b. Service pillar pages (2 files, 2 links).** `/ms/services/general-renovation/`
+and `/zh/services/general-renovation/` enumerate four trades in `intro[1]`
+(all four linked) while `intro[0]` names the fifth — `cat` / `油漆`. The
+English pillar links painting; both localized pillars did not. One link each
+was added on the word the localized copy already uses, so all three languages
+now link the same five services from that page.
+
+**c. Verification of "markup only".** All 5,558 string literals in the 16
+edited data files were compared with their `HEAD` versions after reducing link
+markup to its label: **0 visible-text changes** (and the diff is 118
+insertions / 118 deletions — every edit is a line-for-line replacement of the
+same paragraph). No component, route, style, metadata, price, schema, feed or
+registry was touched; the anchors render through the components that already
+existed.
+
+### 4. What was deliberately NOT changed
+
+- **47 of the 279 English in-copy links** sit in paragraphs whose localized
+  counterpart never names that service. Those stay unlinked — closing them
+  would mean rewriting localized copy, which is an editorial change, not a
+  link fix.
+- **Five pillar pages keep an English-only in-copy target** because the
+  localized pillar copy never names that service in the two fields rendered
+  through `InlineLinks` (`intro`, `overviewParagraphs`):
+
+  | Pillar page | EN links it, MS/ZH rendered copy never names it |
+  | --- | --- |
+  | `/services/electrical/` | painting |
+  | `/services/waterproofing/` | general-renovation |
+  | `/services/painting/` | general-renovation, welding-metal-works |
+  | `/services/flooring/` | general-renovation, handyman |
+  | `/services/handyman/` | painting |
+
+  Those words do appear elsewhere on the same pages (highlights, inclusions,
+  notes) — but those fields render as plain text, so markup there would print
+  `[cat](/services/painting)` to the reader. Extending `InlineLinks` to them
+  was considered and declined: that changes how list UI renders on every
+  service page, which is a UI change, not a link fix. None of those services
+  is orphaned in MS/ZH — all are linked from the localized area guides (e.g.
+  `kerja besi` → `/ms/services/welding-metal-works/` on Kampung Baru).
+- No new pages, URLs, services, sub-services, problems, areas, prices, claims
+  or business facts. No service×location doorway pages. No page for the
+  unpublished kampung entries in the registry comments.
+
+### 5. Regression guards added (guards, not rule changes)
+
+**`scripts/audit-multilingual.mjs` — Phase 39 section (source level).** The
+audit reads the same paragraph fields the components render, in all three
+languages:
+
+*Area guides + region hubs (55 entities):*
+1. **Paragraph alignment** — every localized guide keeps the English `intro` /
+   `context` paragraph count, so paragraphs can be compared by index.
+2. **No dropped link** — a service the English paragraph links *and* the
+   localized paragraph names must be linked in the localized paragraph too.
+3. **No invented target / no English anchor text** — every target is a
+   published service slug; a label may not be empty, an English service name
+   or a humanized slug (checked in every language, EN included, for targets).
+4. **No empty page** — all 55 entities publish in-copy links in EN, MS and ZH,
+   so the pre-Phase-39 zero cannot return silently.
+
+*Service pillar pages (10 pages):* the same four rules, with alignment as a
+**prefix** rule (a localized pillar may add a paragraph — `/services/ceiling-partition/`
+publishes a third, repair-specific one — but may never drop one) plus a
+**page-level** rule: a service the English pillar links and the localized
+pillar names *anywhere* in the copy it renders must be linked somewhere in
+that copy. That page-level rule is what caught `general-renovation`.
+
+The anchor-text rule is now shared by both sections (`ENGLISH_ANCHOR_TEXT` =
+every English service name + every humanized slug, compared case-sensitively),
+so the real Malay loanwords the localized copy writes (`plumbing`, `handyman`)
+stay legal while `Painting`, `Waterproofing` or `Ceiling Partition` cannot
+become anchor text on a `/ms/` or `/zh/` page.
+
+**`scripts/phase25-live-qa.mjs` — Phase 39 block (served pages, +9 checks:
+228 → 237).** The existing full-sitemap sweep now strips `<script>` blocks,
+counts the anchors stamped with the `InlineLinks` decoration class (read from
+the component itself, so a class rename is caught) and detects unrendered
+`[label](/path)` markup; then:
+
+1. no served page renders inline-link markup as visible text (all 678 URLs);
+2. all 165 area guides and region hubs render ≥1 in-copy anchor (EN/MS/ZH);
+3. all 30 service pillar pages render ≥1 in-copy anchor (EN/MS/ZH);
+4. pillar floors: `/en/` ≥30, `/ms/` ≥22, `/zh/` ≥22 (measured 33 / 24 / 24);
+5. location floors: `/en/` ≥270, `/ms/` ≥320, `/zh/` ≥320 (measured 279 / 337 / 339).
+
+Floors sit just below measured coverage so a mass regression fails while
+genuine copy edits do not. The RSC flight payload still serializes raw
+paragraph strings inside `<script>` blocks (truncated React keys) — that is
+pre-existing for English, is not visible text, and is why the sweep strips
+scripts before looking for leaks.
+
+### 6. Negative tests (break → fails, restore → passes)
+
+| # | Break | Result |
+| --- | --- | --- |
+| 1 | Drop an in-copy link from an MS area paragraph that names the service | `audit:multilingual` rule 2 FAILs |
+| 2 | Point an area link at `/services/painting-pro` | rule 3 FAILs ("not a published service page") |
+| 3 | Use `Waterproofing` / `Painting` as an MS label | shared anchor-text rule FAILs |
+| 4 | Use a humanized slug (`Ceiling Partition`) as an MS label | FAILs |
+| 5 | Delete an MS area paragraph | alignment rule FAILs |
+| 6 | Remove the new MS `general-renovation` painting link | pillar page-level rule FAILs |
+| 7 | Remove the new ZH `general-renovation` painting link | pillar page-level rule FAILs |
+| 8 | Delete an MS pillar `intro` paragraph | pillar prefix-alignment rule FAILs |
+| 9 | Make EN `/services/painting/` link flooring in a paragraph the MS copy names but does not link | pillar paragraph rule FAILs |
+| 10 | Strip every in-copy link from MS `/services/tiling/` | "only 9/10 service pillar pages publish in-copy internal links" FAILs |
+| 11 | Make `InlineLinks` return raw text (whole site) | `audit:live` FAILs: markup leaked on 165 pages + all location floors |
+
+Every one was restored and the gate re-run to green afterwards.
+
+### 7. Measured result (before → after, both on locally served builds)
+
+| Metric | Before | After |
+| --- | --- | --- |
+| Rendered in-copy anchors — EN | 313 | **313** (untouched) |
+| Rendered in-copy anchors — MS | 24 | **362** |
+| Rendered in-copy anchors — ZH | 24 | **364** |
+| Area guides + hubs rendering no in-copy link (MS / ZH) | 55 / 55 | **0 / 0** |
+| Service pillars rendering no in-copy link (MS / ZH) | 0 / 0 | **0 / 0** |
+| Source in-copy links, area entities (EN / MS / ZH) | 279 / 0 / 0 | **279 / 337 / 339** |
+| Source in-copy links, pillar pages (EN / MS / ZH) | 33 / 23 / 23 | **33 / 24 / 24** |
+| Pages whose whole internal-link set differs from EN | 17 of 226 | **9 of 226** |
+| Served pages with visible `[label](/path)` markup | 0 | **0** |
+| Visible-text changes in the 16 edited data files | — | **0 of 5,558 literals** |
+| Sitemap URLs / static generation entries | 678 / 689 | **678 / 689 (unchanged)** |
+| New pages / URLs / prices / services touched | — | **0 / 0 / 0 / 0** |
+| `audit:live` checks | 228 | **237** |
+
+### 8. Residual, accepted differences (9 of 226 pages)
+
+Each is a paragraph whose localized wording does not name the service the
+English paragraph links — recorded so a future agent does not "fix" it by
+rewriting copy:
+
+| Page | Difference | Why it stays |
+| --- | --- | --- |
+| `/en/services/painting/` | MS/ZH never link `welding-metal-works` anywhere on the page | the localized pillar copy names no metal-works term in a rendered field; the service is linked from MS/ZH area guides |
+| `wangsa-maju`, `kepong` | MS/ZH do not link `handyman` | localized paragraph does not name it |
+| `segambut`, `taman-melawati`, `gombak` | MS/ZH do not link `tiling` | localized paragraph does not name it |
+| `ampang-jaya`, `kota-damansara` | MS/ZH do not link `painting` | localized paragraph does not name it |
+| `brickfields-mid-valley` | MS/ZH **additionally** link `flooring` | the localized copy names `lantai` / `地板`; a localized extra, not a gap |
+
+### 9. Preserved untouched (verified 🟢)
+
+- All 678 URLs, canonicals, hreflang sets, structured data, robots.txt,
+  sitemap (689 build entries, `audit:sitemap` PASS).
+- All 51 pricing rows and their single-source derivation (`audit:pricing`,
+  `audit:locations` §10 PASS — no price, unit or starting-from semantics
+  touched anywhere).
+- The 10 services, 51 sub-services, 57 problem guides, 53 area guides, 2
+  region hubs, 28 projects, 12 Knowledge Hub guides, the Smart Service Finder
+  and the whole rendered link graph from Phases 28–38 (`audit:live` PASS).
+- The AI feeds — no generated content touched (`lib/ai-knowledge.ts` reads
+  entity names, not paragraph markup).
+- The Smart Service Finder is structurally unaffected: `scoreDocument()`
+  (`lib/search/match.ts`) scores title, summary, searchTerms, category,
+  aliases and synonyms — never the paragraph `content` string — and
+  `audit:search` (index integrity + fixtures) passes unchanged.
+- No UI, branding, component, route, metadata, schema, asset, configuration
+  or dependency change. The diff is 16 data files (markup only), 2 audit
+  scripts and 3 docs.
+
+### 10. Test results (this phase)
+
+- [x] `npm run type-check` — PASS
+- [x] `npm run lint` — PASS (0 errors, 0 warnings)
+- [x] `npm run build` — PASS (689/689, unchanged)
+- [x] All 17 static audits — PASS (incl. the extended `audit:multilingual`)
+- [x] `npm run audit:live` vs `next start` — **PASS 237 / WARN 0 / FAIL 0**
+- [x] Rendered spot-checks — `/ms/areas/kuala-lumpur/cheras/`,
+      `/zh/areas/selangor/bangi/`, `/ms/areas/kuala-lumpur/kampung-baru/`,
+      `/zh/areas/kuala-lumpur/`, `/ms/areas/selangor/`: localized labels,
+      in-language hrefs, natural reading order, no leaked markup
+- [x] Visible-text equivalence — 5,558 literals compared, 0 changes
+- [x] Negative tests — 11 breaks, all fail as designed, all restored to green
+
+Status: **Code verified + Build verified + Live verified (HTTP); the `/ms/` and
+`/zh/` copy now carries its own contextual internal links, and both the source
+and the served site are guarded against losing them again.**
+
+---
+
+## Phase 40 — Service pillar → problem-guide edge restored, plus reciprocity guards (2026-09-20, merged 2026-09-21)
+
+> **Numbering note:** this work was authored as "Phase 38" on its own branch.
+> The parallel Phase 38 (location registry duplicate-service fix) and Phase 39
+> (MS/ZH in-copy internal links) were merged to `main` first, so this record was
+> renumbered to Phase 40 during the merge to avoid two phases sharing a number.
+> Nothing else about the work changed.
 
 **Result: one genuine, evidence-backed internal-link gap found and fixed — 3 of
 the 10 service pillars never linked their own problem guides (11 guides, 33
@@ -4953,14 +5309,28 @@ an empty problem layer.
 - `CONTENT_MAP.md`: the link-graph table now lists the service → problem edge and
   the enforcement list names both guards.
 
-### 5. QA and preservation boundary
+### 5. Merge reconciliation with Phase 38 + Phase 39 (2026-09-21)
+
+The branch was merged with `main` after Phase 38 (location registry
+duplicate-service fix) and Phase 39 (MS/ZH in-copy internal links) landed.
+
+- Both phases are preserved in full; they touch different data and different
+  audits, and their link edges and in-copy links are unaffected by this phase.
+- `scripts/phase25-live-qa.mjs` auto-merged cleanly: Phase 39's in-copy link
+  checks and this phase's §3g pillar check both run.
+- The only content conflicts were in this progress file and `CONTENT_MAP.md`
+  (both sides appended prose); both were resolved by keeping both phases'
+  records in chronological order.
+
+### 6. QA and preservation boundary
 
 - [x] `npm run type-check` — PASS.
 - [x] `npm run lint` — PASS, no errors or warnings.
 - [x] `npm run build` — PASS, **689** static generation entries (unchanged).
-- [x] All **17 static audits** — PASS (including the new §3b check).
-- [x] `npm run audit:live` against locally served `next start` —
-      **PASS 229 / WARN 0 / FAIL 0** (228 before; +1 for the new link check).
+- [x] All **17 static audits** — PASS (including the new §3b check and Phase 39's
+      extended `audit:multilingual`).
+- [x] `npm run audit:live` against the merged, locally served `next start` —
+      **PASS 238 / WARN 0 / FAIL 0**.
 - [x] Independent crawl of all 678 sitemap URLs — **0 missing or redirecting
       internal link targets**, no cross-language main-content links, no page
       type left without its within-scope edges beyond the honesty-blocked ones

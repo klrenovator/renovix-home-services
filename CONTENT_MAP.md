@@ -33,23 +33,35 @@ to every published sub-service page for that service**) → problems → propert
 types → process → areas → FAQs → related services → quote + WhatsApp CTAs.
 Every section exists in all 3 languages.
 
+Since Phase 39 the hero `intro` and the overview paragraphs also carry
+**in-copy contextual links** — `[label](/services/slug)` written in the page's
+own language and rendered by `components/service/InlineLinks.tsx` (EN 33 /
+MS 24 / ZH 24 anchors across the 10 pillars). `intro` and `overviewParagraphs`
+are the only service-content fields rendered through that component, so link
+markup in any other field (highlights, inclusions, notes) would print to the
+reader instead of becoming an anchor.
+
 Sub-service link graph — one authored direction, every link derived from it:
 
 | Edge | Source of truth | Rendered on |
 | --- | --- | --- |
 | service → its sub-services | `getSubServicesByService` | service pillar (Phase 28) |
-| service → its own problem guides | the `relatedService` each guide declares, restated in the pillar's `relatedProblems` | service pillar's related-problems block (Phase 38) |
+| service → its own problem guides | the `relatedService` each guide declares, restated in the pillar's `relatedProblems` | service pillar's related-problems block (Phase 40) |
 | problem → the scopes that fix it | inverse of each sub-service's `relatedProblems` (`getSubServicesForProblem`) | problem guide (Phase 28) |
 | area → the scopes carried out there | published intent-matrix entries for the location, then `getSubServicesForProblem` over the area's own locally common problems (`getSubServicesForLocation`) | area guide's services section (Phase 29) |
 
 Rendered graph is enforced by `npm run audit:subservices` §5–§6 (wiring),
 `npm run audit:authority` §3b (the service ↔ problem edge is reciprocal — a
-guide's owning service must link it back, Phase 38),
-`npm run audit:multilingual` (no label is built by humanizing a slug) and
+guide's owning service must link it back, Phase 40),
+`npm run audit:multilingual` (no label is built by humanizing a slug; since
+Phase 39 also that the in-copy links survive translation — aligned paragraphs,
+published targets, localized anchor text, no page left without them) and
 `npm run audit:live` (no orphans, every sub-service page linked from its own
 pillar and back, every problem guide linked from the service pillar that owns
 it, every area guide linked to its scopes, no English slug label on a `/ms/` or
-`/zh/` page, no internal link to an unserved URL).
+`/zh/` page, no internal link to an unserved URL, and — since Phase 39 — every
+pillar and location page rendering its in-copy links in all three languages
+with no leaked `[label](/path)` markup anywhere).
 
 ## 2. Problem-first map (57 guides at `/{lang}/problems/{slug}/`)
 
@@ -100,6 +112,24 @@ problem guides its child guides cover most widely, derived by
 publish — so a hub can never claim a scope or a problem its own guides do not
 carry, and the 51 sub-service pages and 57 problem guides gain two more entry
 points each. Capped at 12 per hub; the child guides carry the full detail.
+
+Since Phase 39 every guide and hub also carries **in-copy contextual links** in
+all three languages: the introduction and context paragraphs name the work they
+describe and link it (`[label](/services/slug)`, rendered by
+`components/area/InlineLinks.tsx` as an anchor carrying that page's own
+language). English publishes 279 of them, Malay 337 and Chinese 339 — the
+localized counts are higher because the re-authored copy names more services in
+a linkable sentence. Where the localized sentence never names the service the
+English paragraph links, it stays unlinked rather than being forced into copy
+that does not mention it (9 of 226 page-level target differences remain, listed
+in Phase 39). `audit:multilingual` keeps paragraph structure aligned and
+rejects English labels, raw slugs and humanized slugs; `audit:live` fails any
+served page that renders the `[label](/path)` markup as visible text, and any
+location page that renders no in-copy link.
+
+The Smart Service Finder is unaffected by this layer: `scoreDocument()`
+(`lib/search/match.ts`) scores title, summary, searchTerms, category, aliases
+and synonyms — never the paragraph `content` string.
 
 ## 4. Intent → page mapping (where each intent ranks/answers)
 

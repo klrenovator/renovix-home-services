@@ -4,6 +4,9 @@
  * Talks to a running `next start` (default http://127.0.0.1:3000).
  * Does not invent results — every check is a real HTTP request.
  */
+import { readFileSync } from "node:fs";
+import { fileURLToPath } from "node:url";
+
 const BASE = process.env.QA_BASE || "http://127.0.0.1:3000";
 const CANONICAL_HOST = "https://renovixhomeservices.my";
 
@@ -450,8 +453,13 @@ async function sampleStatuses(locs) {
   // links, so the same crawl feeds the internal-link-graph check below.
   // Phase 29 — the same pass keeps each anchor's visible text, so localized
   // anchor text is checked without a second crawl.
+  // Phase 39 — the same pass also counts the anchors the shared InlineLinks
+  // component renders inside the copy, and looks for inline-link markup that
+  // reached the browser unrendered.
   const graph = new Map();
   const anchors = new Map();
+  const inCopy = new Map();
+  const leakedMarkup = [];
   for (let i = 0; i < locs.length; i += batchSize) {
     const batch = locs.slice(i, i + batchSize);
     const results = await Promise.all(
@@ -460,12 +468,19 @@ async function sampleStatuses(locs) {
         const res = await fetchRes(path);
         let hrefs = null;
         let pageAnchors = null;
+        let inCopyCount = 0;
+        let leaked = false;
         if (res.status === 200) {
           const html = await res.text();
           hrefs = extractInternalHrefs(html);
           pageAnchors = extractAnchors(html);
+          // Everything a crawler reads as page text: the flight-data scripts
+          // are hydration payload, not copy, so they are set aside first.
+          const visible = html.replace(/<script\b[\s\S]*?<\/script>/gi, " ");
+          inCopyCount = countInCopyAnchors(visible);
+          leaked = UNRENDERED_INLINE_LINK.test(visible);
         }
-        return { loc, path, status: res.status, hrefs, pageAnchors };
+        return { loc, path, status: res.status, hrefs, pageAnchors, inCopyCount, leaked };
       }),
     );
     for (const r of results) {
@@ -476,11 +491,134 @@ async function sampleStatuses(locs) {
       }
       if (r.hrefs) graph.set(r.path, r.hrefs);
       if (r.pageAnchors) anchors.set(r.path, r.pageAnchors);
+      if (r.status === 200) inCopy.set(r.path, r.inCopyCount);
+      if (r.leaked) leakedMarkup.push(r.path);
     }
   }
   if (bad === 0) pass(`all ${ok} sitemap URLs return 200`);
   else fail(`sitemap sweep ${ok} ok / ${bad} failed`);
-  return { graph, anchors };
+  return { graph, anchors, inCopy, leakedMarkup };
+}
+
+/* ------------------------------------------------------------------------ */
+/* Phase 39 — in-copy internal links on the location and pillar pages        */
+/*                                                                           */
+/* `data/area-content/` and `data/service-content/` write contextual links    */
+/* inline in the copy as `[label](/services/slug)`;                           */
+/* `components/service/InlineLinks.tsx` turns them into real anchors. Until    */
+/* Phase 39 the English guides carried 279 of those links and the MS/ZH        */
+/* translations carried none, so 110 served location pages published their     */
+/* in-copy links as plain text; the localized pillar pages were also missing   */
+/* one cross-service link each on `/services/general-renovation/`. The copy    */
+/* was restored without changing a visible word, and this check proves it at   */
+/* the HTTP level: every area guide, region hub and service pillar renders     */
+/* in-copy anchors in all three languages, the localized corpora are not       */
+/* smaller than the English one, and no page anywhere ships unrendered link    */
+/* markup.                                                                    */
+/* ------------------------------------------------------------------------ */
+
+/** The class the InlineLinks component stamps on every anchor it renders. */
+const IN_COPY_SIGNATURE = (() => {
+  const source = readFileSync(
+    fileURLToPath(new URL("../components/service/InlineLinks.tsx", import.meta.url)),
+    "utf8",
+  );
+  const m = source.match(/className="([^"]*decoration-brand[^"]*)"/);
+  const token = m ? m[1].split(" ").find((c) => c.startsWith("decoration-brand")) : null;
+  if (!token) {
+    fail("components/service/InlineLinks.tsx no longer stamps a decoration-brand class — the in-copy link check cannot identify its anchors");
+  }
+  return token;
+})();
+
+/** Inline-link markup that reached the browser without being rendered. */
+const UNRENDERED_INLINE_LINK = /\]\(\/(?:services|problems|areas|blog|projects)\//;
+
+function countInCopyAnchors(visibleHtml) {
+  if (!IN_COPY_SIGNATURE) return 0;
+  const signature = IN_COPY_SIGNATURE.replace("/", "\\/");
+  const rx = new RegExp(`<a\\b[^>]*class="[^"]*${signature}[^"]*"`, "g");
+  return (visibleHtml.match(rx) || []).length;
+}
+
+function checkInCopyLinks(locs, inCopy, leakedMarkup) {
+  console.log("\n== In-copy internal links (Phase 39) ==");
+  const paths = locs.map((loc) => loc.replace(CANONICAL_HOST, ""));
+
+  if (leakedMarkup.length === 0) {
+    pass(`no served page renders unrendered inline-link markup (all ${paths.length} URLs checked)`);
+  } else {
+    leakedMarkup
+      .slice(0, 10)
+      .forEach((p) => fail(`inline-link markup reached the browser as text on ${p}`));
+    if (leakedMarkup.length > 10) fail(`…and ${leakedMarkup.length - 10} more`);
+  }
+
+  const locationPaths = paths.filter((p) => /^\/(en|ms|zh)\/areas\/[^/]+(\/[^/]+)?\/$/.test(p));
+  const empty = locationPaths.filter((p) => (inCopy.get(p) ?? 0) === 0);
+  if (empty.length === 0) {
+    pass(
+      `all ${locationPaths.length} area guides and region hubs render in-copy internal links (EN/MS/ZH)`,
+    );
+  } else {
+    empty.slice(0, 10).forEach((p) => fail(`location page renders no in-copy internal link: ${p}`));
+    if (empty.length > 10) fail(`…and ${empty.length - 10} more`);
+  }
+
+  // The 10 service pillar pages render their `intro` / `overviewParagraphs`
+  // through the same component, so they are part of the same guarantee.
+  const pillarPaths = paths.filter((p) => /^\/(en|ms|zh)\/services\/[^/]+\/$/.test(p));
+  const pillarEmpty = pillarPaths.filter((p) => (inCopy.get(p) ?? 0) === 0);
+  if (pillarEmpty.length === 0) {
+    pass(
+      `all ${pillarPaths.length} service pillar pages render in-copy internal links (EN/MS/ZH)`,
+    );
+  } else {
+    pillarEmpty
+      .slice(0, 10)
+      .forEach((p) => fail(`service pillar page renders no in-copy internal link: ${p}`));
+    if (pillarEmpty.length > 10) fail(`…and ${pillarEmpty.length - 10} more`);
+  }
+
+  const pillarTotals = { en: 0, ms: 0, zh: 0 };
+  for (const p of pillarPaths) pillarTotals[p.split("/")[1]] += inCopy.get(p) ?? 0;
+  // Measured after Phase 39: 33 EN / 24 MS / 24 ZH in-copy links on the pillar
+  // pages (the localized pillars link every service the English pillar links
+  // and their own copy names; the three remaining English-only targets are
+  // services the localized paragraph never mentions — see PROJECT_PROGRESS
+  // Phase 39). Floors sit just below the measured coverage.
+  for (const [lang, floor] of [
+    ["en", 30],
+    ["ms", 22],
+    ["zh", 22],
+  ]) {
+    if (pillarTotals[lang] >= floor) {
+      pass(`/${lang}/ service pillar pages render ${pillarTotals[lang]} in-copy internal links (floor ${floor})`);
+    } else {
+      fail(
+        `/${lang}/ service pillar pages render only ${pillarTotals[lang]} in-copy internal links (floor ${floor}) — a pillar page lost its cross-service links`,
+      );
+    }
+  }
+
+  const totals = { en: 0, ms: 0, zh: 0 };
+  for (const p of locationPaths) totals[p.split("/")[1]] += inCopy.get(p) ?? 0;
+  // Measured after Phase 39: 279 EN / 337 MS / 339 ZH in-copy links on the
+  // location pages (before it: 279 / 18 / 18). The floors sit just below the
+  // real coverage so a mass regression fails while genuine copy edits do not.
+  for (const [lang, floor] of [
+    ["en", 270],
+    ["ms", 320],
+    ["zh", 320],
+  ]) {
+    if (totals[lang] >= floor) {
+      pass(`/${lang}/ location pages render ${totals[lang]} in-copy internal links (floor ${floor})`);
+    } else {
+      fail(
+        `/${lang}/ location pages render only ${totals[lang]} in-copy internal links (floor ${floor}) — the localized copy lost its contextual links`,
+      );
+    }
+  }
 }
 
 /* ------------------------------------------------------------------------ */
@@ -813,7 +951,7 @@ function checkInternalLinkGraph(locs, graph) {
     );
   }
 
-  // 3g. Phase 38 — service pillar → the problem guides that name it as their
+  // 3g. Phase 40 — service pillar → the problem guides that name it as their
   //     owner. Every problem guide already linked up to the service that fixes
   //     it, but the flooring, welding and general-renovation pillars linked
   //     none of their own guides back (11 guides, 33 localized pages), so those
@@ -1308,8 +1446,9 @@ async function main() {
   console.log(`Phase 25 live QA against ${BASE}\n`);
   await checkHeaders();
   const locs = await checkSitemapLive();
-  const { graph, anchors } = await sampleStatuses(locs);
+  const { graph, anchors, inCopy, leakedMarkup } = await sampleStatuses(locs);
   checkInternalLinkGraph(locs, graph);
+  checkInCopyLinks(locs, inCopy, leakedMarkup);
   await checkAiFeedCoverage(locs);
   await checkAiPhrasingCoverage(locs);
   await checkAiLocalizedUrlCoverage(locs);

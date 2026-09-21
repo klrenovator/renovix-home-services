@@ -7,7 +7,7 @@ export const translation: ServiceTranslation = {
     "Kerja renovasi rumah di Kuala Lumpur & Selangor — renovasi penuh dan separa, bilik air, dapur, hacking dinding, kerja bata, plaster dan pembaikan. Sebut harga percuma.",
   h1: "Renovasi & Pengubahsuaian Rumah di Kuala Lumpur & Selangor",
   intro: [
-    "Renovasi melibatkan banyak kerja yang perlu berlaku mengikut urutan yang betul. Hacking dahulu, kemudian kerja bata dan plaster, diikuti paip dan elektrik, kalis air, jubin, siling dan akhir sekali cat. Apabila urutan ini bercelaru, kerja terpaksa diulang dan kos meningkat.",
+    "Renovasi melibatkan banyak kerja yang perlu berlaku mengikut urutan yang betul. Hacking dahulu, kemudian kerja bata dan plaster, diikuti paip dan elektrik, kalis air, jubin, siling dan akhir sekali [cat](/services/painting). Apabila urutan ini bercelaru, kerja terpaksa diulang dan kos meningkat.",
     "Renovix menguruskan kerja renovasi rumah, kondominium, pejabat dan kedai di Kuala Lumpur, Selangor dan Lembah Klang dengan satu pasukan yang menyelaraskan semua peringkat — termasuk [kerja paip](/services/plumbing), [kerja elektrik](/services/electrical), [kalis air](/services/waterproofing) dan [kerja jubin](/services/tiling).",
   ],
   overviewTitle: "Renovasi Penuh, Renovasi Separa & Kerja Binaan",

@@ -97,6 +97,14 @@ less — quality over page count.
   inventory in `data/i18n/lists.ts`.
 - Unique metadata per language; correct hreflang + self-canonical on every
   page (via `buildPageMetadata`).
+- **In-copy internal links are content, not decoration.** When an English
+  paragraph links a service (`[label](/services/slug)`), the localized
+  paragraph must stay structurally aligned with it (same paragraph count and
+  position) and must link that service wherever its own wording names the
+  work — using that language's own words. Never paste an English label, a raw
+  slug or a humanized slug into a localized paragraph. `audit:multilingual`
+  enforces all of this at the source, and `audit:live` fails any served page
+  that renders `[label](/path)` markup as visible text.
 
 ## 6. Structured data honesty
 
