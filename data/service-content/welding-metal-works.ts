@@ -441,4 +441,10 @@ export const weldingMetalWorks: ServiceDetail = {
     "gate repair",
   ],
   relatedServices: ["general-renovation", "painting", "handyman", "electrical"],
+  relatedProblems: [
+    "rusted-gate-repair",
+    "railing-repair",
+    "gate-alignment-problems",
+    "broken-weld-joint",
+  ],
 };

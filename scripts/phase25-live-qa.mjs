@@ -951,6 +951,41 @@ function checkInternalLinkGraph(locs, graph) {
     );
   }
 
+  // 3g. Phase 40 — service pillar → the problem guides that name it as their
+  //     owner. Every problem guide already linked up to the service that fixes
+  //     it, but the flooring, welding and general-renovation pillars linked
+  //     none of their own guides back (11 guides, 33 localized pages), so those
+  //     pages had no hub link at all. The registry edge is now required by
+  //     `audit:authority` §3b; this proves it renders in all three languages.
+  //     The reverse is deliberately not asserted — a pillar may legitimately
+  //     cross-link another service's problem guides.
+  const reverseInbound = new Map();
+  for (const [from, hrefs] of graph) {
+    for (const to of hrefs) {
+      if (!reverseInbound.has(to)) reverseInbound.set(to, new Set());
+      reverseInbound.get(to).add(from);
+    }
+  }
+  let problemsWithoutPillar = 0;
+  let problemPillarEdges = 0;
+  for (const path of problemPaths) {
+    const lang = path.split("/")[1];
+    const pillarEdges = [...(reverseInbound.get(path) ?? [])].filter((from) =>
+      new RegExp(`^/${lang}/services/[^/]+/$`).test(from),
+    );
+    if (pillarEdges.length === 0) problemsWithoutPillar += 1;
+    problemPillarEdges += pillarEdges.length;
+  }
+  if (problemsWithoutPillar === 0) {
+    pass(
+      `link graph: all ${problemPaths.length} problem guides are linked from the service pillar that owns them (${problemPillarEdges} links)`,
+    );
+  } else {
+    fail(
+      `${problemsWithoutPillar} of ${problemPaths.length} problem guides are not linked from any service pillar page (service → problem hub link missing)`,
+    );
+  }
+
   // 4. No internal link may point at a URL the site does not serve.
   const deadLinks = new Map();
   for (const [from, hrefs] of graph) {

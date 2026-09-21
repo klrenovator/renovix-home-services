@@ -20,6 +20,10 @@
  *   3. Every cross-reference resolves: related services/problems, nearby
  *      areas, problem-to-service links and intent-matrix slugs (no orphan
  *      pages, no broken internal references).
+ *   3b. Service ↔ problem edges are reciprocal (Phase 40, 2026-09-20): every
+ *      problem guide names the service that fixes it, so that service page
+ *      must link the guide back. The reverse is not required — a service page
+ *      may legitimately cross-link another service's problem guides.
  *   4. Index pages iterate the registries (every published page has a place
  *      in the architecture) and the sitemap coverage guard stays wired.
  *   5. One question per page: no duplicate FAQ question on the same page,
@@ -317,6 +321,50 @@ for (const block of matrix.split(/\n  \{\n/).slice(1)) {
 note(
   `Intent-matrix pricing and sub-service references validated against ${pricingRowIds.size} catalogue rows.`,
 );
+
+// §3b Service ↔ problem edges must be reciprocal in the one direction that is
+// registry-derived: a problem guide names the service that fixes it
+// (`relatedService`), so that service page must link the guide back. Without
+// this the two halves drift — the guide links up to its pillar while the
+// pillar silently omits the guide (the flooring, welding and general-renovation
+// pillars did exactly that: 11 guides, 33 localized pages). Service pages may
+// still carry extra cross-service problems, so only the owning-service edge is
+// required.
+{
+  const problemsByService = new Map();
+
+  for (const file of problemFiles) {
+    const source = readFileSync(file, "utf8");
+    for (const block of source.split(/\n  \{\n/).slice(1)) {
+      const slug = block.match(/^\s*slug:\s*"([^"]+)"/m)?.[1];
+      const owningService = block.match(/relatedService:\s*"([^"]+)"/)?.[1];
+      if (!slug || !owningService) continue;
+      if (!problemsByService.has(owningService)) problemsByService.set(owningService, []);
+      problemsByService.get(owningService).push(slug);
+    }
+  }
+
+  for (const [service, slugs] of problemsByService) {
+    const file = join(ROOT, "data", "service-content", `${service}.ts`);
+    if (!existsSync(file)) {
+      fail(`problem guides declare service "${service}", which has no service page to link them from.`);
+      continue;
+    }
+    const linked = new Set();
+    for (const match of readFileSync(file, "utf8").matchAll(/relatedProblems:\s*\[([\s\S]*?)\]/g)) {
+      for (const slug of match[1].matchAll(/"([^"]+)"/g)) linked.add(slug[1]);
+    }
+    const unlinked = slugs.filter((slug) => !linked.has(slug));
+    if (unlinked.length > 0) {
+      fail(
+        `data/service-content/${service}.ts does not link its own problem guides: ${unlinked.join(", ")} — ` +
+          `each guide declares relatedService "${service}", so the pillar must link it back.`,
+      );
+    }
+  }
+
+  note("Every problem guide is linked back from the service page it declares as its owner.");
+}
 
 note("All related-service, related-problem, nearby-area and intent-matrix references resolve.");
 
