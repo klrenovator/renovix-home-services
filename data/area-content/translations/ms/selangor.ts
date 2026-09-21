@@ -30,7 +30,7 @@ export const translations: AreaTranslations = {
       "Bandar terancang pertama Selangor — rumah Seksyen era 1950-an, rumah teres kawasan SS dan menara baharu di koridor Damansara.",
     intro: [
       "Petaling Jaya mempunyai rumah dari hampir setiap dekad sejak 1950-an. Rumah Seksyen yang lama selalunya sudah melalui beberapa pusingan naik taraf, dan kerja kami sering bermula dengan menyemak apa yang telah dibuat sebelum ini.",
-      "Kami menyediakan renovasi, kerja elektrik, paip, kalis air, cat dan siling di seluruh PJ, daripada rumah Seksyen hingga kondominium di koridor Damansara.",
+      "Kami menyediakan [renovasi](/services/general-renovation), [kerja elektrik](/services/electrical), [paip](/services/plumbing), [kalis air](/services/waterproofing), [cat](/services/painting) dan [siling](/services/ceiling-partition) di seluruh PJ, daripada rumah Seksyen hingga kondominium di koridor Damansara.",
     ],
     serviceNotes: [
       "Naik taraf rumah lama secara menyeluruh atau berperingkat.",
@@ -77,7 +77,7 @@ export const translations: AreaTranslations = {
       "Bandar matang SS12–SS19 — jalan rumah teres era 70-an dan 80-an, deretan kedai SS15 dan kelompok kondominium yang telah lama berdiri.",
     intro: [
       "Rumah teres di SS12 hingga SS19 kini berusia empat hingga lima dekad. Kalis air bilik air, paip berkarat dan pendawaian lama adalah kerja yang paling kerap diminta di sini.",
-      "Kami menyediakan kerja paip, elektrik, renovasi, jubin, cat dan kalis air di seluruh Subang Jaya, termasuk lot kedai SS15.",
+      "Kami menyediakan [kerja paip](/services/plumbing), [elektrik](/services/electrical), [renovasi](/services/general-renovation), [jubin](/services/tiling), [cat](/services/painting) dan [kalis air](/services/waterproofing) di seluruh Subang Jaya, termasuk lot kedai SS15.",
     ],
     serviceNotes: [
       "Membaiki dan mengganti paip lama yang berkarat.",
@@ -124,7 +124,7 @@ export const translations: AreaTranslations = {
       "Ibu negeri bandar taman terancang — seksyen bernombor yang luas, landskap lebar dan koridor moden di sekitar i-City.",
     intro: [
       "Shah Alam direka sebagai bandar taman, jadi lot yang luas dan litupan pokok yang tebal menjadikan pengurusan kelembapan tema utama dalam banyak kerja di sini.",
-      "Kami menyediakan kerja kalis air, cat, renovasi, elektrik, paip dan servis handyman di seluruh seksyen Shah Alam.",
+      "Kami menyediakan [kerja kalis air](/services/waterproofing), [cat](/services/painting), [renovasi](/services/general-renovation), [elektrik](/services/electrical), [paip](/services/plumbing) dan [servis handyman](/services/handyman) di seluruh seksyen Shah Alam.",
     ],
     serviceNotes: [
       "Kalis air bumbung, balkoni dan kawasan basah.",
@@ -171,7 +171,7 @@ export const translations: AreaTranslations = {
       "Bekas kawasan perlombongan yang kini menjadi koridor pesat — pekan lama Puchong, taman Bandar Puteri dan barisan kediaman bertingkat tinggi.",
     intro: [
       "Rumah di Puchong berkembang dalam beberapa gelombang: pekan lama, taman perumahan 1990-an hingga 2000-an, dan menara kediaman yang lebih baharu. Setiap kumpulan menghadapi masalah yang berbeza.",
-      "Kami menyediakan renovasi, kerja paip, kalis air, lantai, elektrik dan servis handyman di seluruh Puchong.",
+      "Kami menyediakan [renovasi](/services/general-renovation), [kerja paip](/services/plumbing), [kalis air](/services/waterproofing), [lantai](/services/flooring), [elektrik](/services/electrical) dan [servis handyman](/services/handyman) di seluruh Puchong.",
     ],
     serviceNotes: [
       "Naik taraf rumah teres dan dapur secara menyeluruh.",
@@ -218,7 +218,7 @@ export const translations: AreaTranslations = {
       "Bandar diraja Selangor — rumah kedai sebelum perang dan rumah teres pekan lama, dengan perumahan baharu di Bukit Tinggi dan Bandar Botanic.",
     intro: [
       "Klang menggabungkan bangunan warisan di pekan lama dengan taman perumahan yang lebih baharu di selatan. Kelembapan dan cuaca yang lembap sepanjang tahun menjadi cabaran utama bagi kedua-duanya.",
-      "Kami menyediakan kerja kalis air, elektrik, paip, cat, renovasi dan siling di seluruh Klang.",
+      "Kami menyediakan [kerja kalis air](/services/waterproofing), [elektrik](/services/electrical), [paip](/services/plumbing), [cat](/services/painting), [renovasi](/services/general-renovation) dan [siling](/services/ceiling-partition) di seluruh Klang.",
     ],
     serviceNotes: [
       "Kalis air bumbung, dinding dan kawasan basah.",
@@ -265,7 +265,7 @@ export const translations: AreaTranslations = {
       "Bandar matang di utara Selangor — flat dan rumah teres lama di sekitar pekan, dengan pangsapuri baharu di pinggir yang lebih menghijau.",
     intro: [
       "Selayang mempunyai banyak flat walk-up dan rumah teres era 1970-an hingga 90-an. Kebocoran paip riser dan kalis air bilik air adalah antara aduan yang paling kerap.",
-      "Kami menyediakan kerja paip, kalis air, cat, elektrik, handyman dan renovasi di seluruh Selayang.",
+      "Kami menyediakan [kerja paip](/services/plumbing), [kalis air](/services/waterproofing), [cat](/services/painting), [elektrik](/services/electrical), [handyman](/services/handyman) dan [renovasi](/services/general-renovation) di seluruh Selayang.",
     ],
     serviceNotes: [
       "Mengesan dan membaiki kebocoran paip di blok lama.",
@@ -312,7 +312,7 @@ export const translations: AreaTranslations = {
       "Koridor lama di timur laut bandar — rumah bergaya kampung, jalan rumah teres lama dan kawasan sewa berhampiran universiti.",
     intro: [
       "Gombak mempunyai campuran rumah kampung, rumah teres lama dan unit sewa pelajar. Kelembapan tinggi dan struktur kayu yang menua menjadikan pemeriksaan awal sangat penting.",
-      "Kami menyediakan kerja elektrik, paip, renovasi, cat, handyman dan siling di seluruh Gombak.",
+      "Kami menyediakan [kerja elektrik](/services/electrical), [paip](/services/plumbing), [renovasi](/services/general-renovation), [cat](/services/painting), [handyman](/services/handyman) dan [siling](/services/ceiling-partition) di seluruh Gombak.",
     ],
     serviceNotes: [
       "Menggantikan pendawaian lama di rumah kampung dan teres.",
@@ -359,7 +359,7 @@ export const translations: AreaTranslations = {
       "Bahagian Selangor bagi kawasan Ampang — taman Pandan, rumah teres matang dan blok pangsapuri lama sehingga ke sempadan KL.",
     intro: [
       "Ampang Jaya mempunyai rumah teres era 1980-an hingga 90-an dan pangsapuri lama yang kini memerlukan pembaharuan bilik air serta paip.",
-      "Kami menyediakan kerja paip, kalis air, elektrik, jubin, renovasi dan servis handyman di seluruh Ampang Jaya.",
+      "Kami menyediakan [kerja paip](/services/plumbing), [kalis air](/services/waterproofing), [elektrik](/services/electrical), [jubin](/services/tiling), [renovasi](/services/general-renovation) dan [servis handyman](/services/handyman) di seluruh Ampang Jaya.",
     ],
     serviceNotes: [
       "Mengesan kebocoran paip riser di pangsapuri lama.",
@@ -406,7 +406,7 @@ export const translations: AreaTranslations = {
       "Pekan bersejarah Hulu Langat yang dikelilingi taman perumahan — rumah kedai pekan lama, rumah teres 1990-an dan taman berpagar yang lebih baharu.",
     intro: [
       "Kajang menggabungkan pekan lama dengan taman perumahan yang membesar pesat. Rumah 1990-an di sini kini memasuki kitaran kalis air dan pembaharuan bilik air yang pertama.",
-      "Kami menyediakan renovasi, kalis air, kerja paip, elektrik, cat dan servis handyman di seluruh Kajang.",
+      "Kami menyediakan [renovasi](/services/general-renovation), [kalis air](/services/waterproofing), [kerja paip](/services/plumbing), [elektrik](/services/electrical), [cat](/services/painting) dan [servis handyman](/services/handyman) di seluruh Kajang.",
     ],
     serviceNotes: [
       "Naik taraf rumah teres dan rumah kedai secara berperingkat.",
@@ -453,7 +453,7 @@ export const translations: AreaTranslations = {
       "Bekas Serdang Lama yang kini menjadi bandar — lot kedai lama, rumah teres 90-an hingga 2000-an dan kelompok pangsapuri berhampiran MRT.",
     intro: [
       "Seri Kembangan menggabungkan kawasan kampung baru yang lama dengan taman perumahan dan pangsapuri yang lebih baharu. Resapan bilik air dan saluran tersumbat adalah antara kerja paling kerap.",
-      "Kami menyediakan kerja paip, kalis air, renovasi, elektrik, cat dan servis handyman di seluruh Seri Kembangan.",
+      "Kami menyediakan [kerja paip](/services/plumbing), [kalis air](/services/waterproofing), [renovasi](/services/general-renovation), [elektrik](/services/electrical), [cat](/services/painting) dan [servis handyman](/services/handyman) di seluruh Seri Kembangan.",
     ],
     serviceNotes: [
       "Membaiki kebocoran paip dan saluran lantai tersumbat.",
@@ -500,7 +500,7 @@ export const translations: AreaTranslations = {
       "Hab teknologi Selangor — kediaman landed berpagar dan kondominium moden di sekitar tasik dan koridor pejabat.",
     intro: [
       "Rumah di Cyberjaya agak baharu, jadi kerja di sini lebih kerap melibatkan naik taraf kemasan pemaju, pembaikan kecacatan dan pemasangan tambahan berbanding renovasi berat.",
-      "Kami menyediakan kerja lantai, elektrik, renovasi, handyman, paip dan cat di seluruh Cyberjaya.",
+      "Kami menyediakan [kerja lantai](/services/flooring), [elektrik](/services/electrical), [renovasi](/services/general-renovation), [handyman](/services/handyman), [paip](/services/plumbing) dan [cat](/services/painting) di seluruh Cyberjaya.",
     ],
     serviceNotes: [
       "Menggantikan lantai asal dengan pilihan yang lebih tahan lama.",
@@ -547,7 +547,7 @@ export const translations: AreaTranslations = {
       "Pusat pentadbiran persekutuan — presint berlandskap di sekitar tasik, kuarters kerajaan dan kediaman swasta yang lebih baharu.",
     intro: [
       "Putrajaya direka sebagai bandar taman, jadi banyak dinding berada di bawah bayang pokok dan cenderung berkulat. Kerja cat di sini bermula dengan pembersihan dan rawatan permukaan.",
-      "Kami menyediakan kerja cat, paip, elektrik, handyman, renovasi dan lantai di seluruh presint Putrajaya.",
+      "Kami menyediakan [kerja cat](/services/painting), [paip](/services/plumbing), [elektrik](/services/electrical), [handyman](/services/handyman), [renovasi](/services/general-renovation) dan [lantai](/services/flooring) di seluruh presint Putrajaya.",
     ],
     serviceNotes: [
       "Cat dalaman dan luaran termasuk rawatan kulat.",
@@ -594,7 +594,7 @@ export const translations: AreaTranslations = {
       "Bandar besar antara PJ dan Sungai Buloh — seksyen rumah teres 90-an, deretan komersial The Strand dan kondominium era MRT.",
     intro: [
       "Kota Damansara terbahagi kepada seksyen dengan usia yang berbeza. Seksyen lama kini menghadapi kegagalan kalis air dan paip, manakala menara baharu memerlukan kerja kemasan.",
-      "Kami menyediakan renovasi, kerja paip, kalis air, lantai, elektrik dan servis handyman di seluruh Kota Damansara.",
+      "Kami menyediakan [renovasi](/services/general-renovation), [kerja paip](/services/plumbing), [kalis air](/services/waterproofing), [lantai](/services/flooring), [elektrik](/services/electrical) dan [servis handyman](/services/handyman) di seluruh Kota Damansara.",
     ],
     serviceNotes: [
       "Naik taraf rumah teres seksyen lama secara berperingkat.",
@@ -641,7 +641,7 @@ export const translations: AreaTranslations = {
       "Koridor barat yang berkembang pesat — pekan lama dan kawasan hospital bersebelahan taman berpagar serta perumahan baharu.",
     intro: [
       "Sungai Buloh menggabungkan pekan lama dengan taman berpagar yang telah lama berdiri dan perumahan baharu. Kerja di sini merangkumi pemulihan bangunan lama sehinggalah kemasan rumah baharu.",
-      "Kami menyediakan renovasi, kerja paip, kalis air, elektrik, cat dan servis handyman di seluruh Sungai Buloh.",
+      "Kami menyediakan [renovasi](/services/general-renovation), [kerja paip](/services/plumbing), [kalis air](/services/waterproofing), [elektrik](/services/electrical), [cat](/services/painting) dan [servis handyman](/services/handyman) di seluruh Sungai Buloh.",
     ],
     serviceNotes: [
       "Naik taraf rumah lama dan rumah kedai pekan.",
@@ -688,7 +688,7 @@ export const translations: AreaTranslations = {
       "Bekas pekan perlombongan yang kini menjadi koridor pertumbuhan — jalan dan rumah kedai pekan lama dikelilingi taman perumahan baharu.",
     intro: [
       "Rawang mempunyai pekan lama yang padat dan taman perumahan yang berkembang pesat di selatan. Kerja di sini merangkumi pemulihan bangunan lama dan kitaran naik taraf pertama rumah 1990-an.",
-      "Kami menyediakan renovasi, kalis air, kerja paip, elektrik, cat dan servis handyman di seluruh Rawang.",
+      "Kami menyediakan [renovasi](/services/general-renovation), [kalis air](/services/waterproofing), [kerja paip](/services/plumbing), [elektrik](/services/electrical), [cat](/services/painting) dan [servis handyman](/services/handyman) di seluruh Rawang.",
     ],
     serviceNotes: [
       "Naik taraf rumah kedai dan rumah teres secara berperingkat.",
@@ -735,7 +735,7 @@ export const translations: AreaTranslations = {
       "Pekan universiti yang tenang di Hulu Langat — jalan kampung, rumah kedai pekan dan taman perumahan yang berkembang pesat.",
     intro: [
       "Semenyih menggabungkan kawasan kampung, pekan kecil dan taman perumahan baharu. Iklim yang lembap di kawasan ini menjadikan kebocoran bumbung dan kulat aduan yang kerap.",
-      "Kami menyediakan renovasi, kalis air, kerja paip, elektrik, cat dan servis handyman di seluruh Semenyih.",
+      "Kami menyediakan [renovasi](/services/general-renovation), [kalis air](/services/waterproofing), [kerja paip](/services/plumbing), [elektrik](/services/electrical), [cat](/services/painting) dan [servis handyman](/services/handyman) di seluruh Semenyih.",
     ],
     serviceNotes: [
       "Naik taraf rumah taman dan rumah pekan.",
@@ -782,7 +782,7 @@ export const translations: AreaTranslations = {
       "UEP Subang Jaya — bandar 1990-an yang luas dengan rumah teres dan pangsapuri di sekitar Taipan, kini dalam dekad renovasinya.",
     intro: [
       "Kebanyakan rumah di USJ dibina dalam era yang sama, jadi satu jalan biasanya menghadapi kitaran kerosakan yang serupa: kalis air bilik air, paip berkarat dan bumbung yang menua.",
-      "Kami menyediakan renovasi, kalis air, kerja paip, elektrik, jubin dan cat di seluruh USJ.",
+      "Kami menyediakan [renovasi](/services/general-renovation), [kalis air](/services/waterproofing), [kerja paip](/services/plumbing), [elektrik](/services/electrical), [jubin](/services/tiling) dan [cat](/services/painting) di seluruh USJ.",
     ],
     serviceNotes: [
       "Naik taraf rumah teres dua tingkat secara menyeluruh.",

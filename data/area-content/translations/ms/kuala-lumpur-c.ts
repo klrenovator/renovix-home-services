@@ -30,7 +30,7 @@ export const translations: AreaTranslations = {
       "Taman Tun Dr Ismail — antara kawasan perumahan paling mantap di KL, dengan rumah landed era 1970-an, suasana rendah yang rindang dan kondominium baharu di koridor MRT.",
     intro: [
       "TTDI ialah kawasan perumahan yang dibangunkan sejak 1970-an dengan deretan rumah teres, rumah berkembar dan banglo, dikelilingi jalan yang rindang. Ia mengekalkan suasana rendah dan tenang, manakala koridor MRT dan pembangunan tinggi baharu menambah lapisan moden di sekeliling estet asal.",
-      "Lapisan itu menentukan kerja kami di sini. Rumah landed asal sudah sampai ke usia yang memerlukan pendawaian, paip dan bilik air diganti, manakala pemilik kondominium baharu meminta kerja kemasan, lantai dan pembaikan kecacatan. Kami menyediakan pendawaian semula, paip, bilik air dengan kalis air, sambungan rumah dan renovasi penuh di seluruh TTDI.",
+      "Lapisan itu menentukan kerja kami di sini. Rumah landed asal sudah sampai ke usia yang memerlukan pendawaian, paip dan bilik air diganti, manakala pemilik kondominium baharu meminta kerja kemasan, lantai dan pembaikan kecacatan. Kami menyediakan [pendawaian semula](/services/electrical), [paip](/services/plumbing), bilik air dengan [kalis air](/services/waterproofing), sambungan rumah dan [renovasi penuh](/services/general-renovation) di seluruh TTDI.",
     ],
     serviceNotes: [
       "Naik taraf seluruh rumah dan sambungan untuk rumah landed era 1970-an.",
@@ -77,7 +77,7 @@ export const translations: AreaTranslations = {
       "Antara pinggir bandar taman terawal di KL — banglo dan rumah berkembar era 1960-an–80-an di lereng bukit, kawasan kedutaan dan lapisan kondominium baharu sekitar Damansara City.",
     intro: [
       "Damansara Heights — atau Bukit Damansara kepada penduduk lamanya — ialah antara kawasan kediaman paling awal dan paling mapan di Kuala Lumpur, dibangunkan sejak 1960-an di lereng bukit sebelah barat Bangsar. Kawasan ini terkenal dengan lot banglo dan rumah berkembar di jalan berbukit yang rindang, kehadiran kedutaan, serta lapisan baharu pejabat dan kediaman tinggi sekitar Damansara City.",
-      "Rumah sebegini memerlukan pendekatan renovasi yang berbeza. Struktur asalnya kukuh, tetapi bumbung, pendawaian, saliran dan bilik air sudah berusia puluhan tahun, manakala lot lereng bukit membawa persoalan saliran dan pengurusan air. Kami memberi sebut harga untuk renovasi penuh, bumbung dan kalis air, pendawaian semula, paip serta cat di Damansara Heights dengan konteks itu — nilai dahulu, kemudian skop dengan jujur.",
+      "Rumah sebegini memerlukan pendekatan renovasi yang berbeza. Struktur asalnya kukuh, tetapi bumbung, pendawaian, saliran dan bilik air sudah berusia puluhan tahun, manakala lot lereng bukit membawa persoalan saliran dan pengurusan air. Kami memberi sebut harga untuk [renovasi penuh](/services/general-renovation), bumbung dan [kalis air](/services/waterproofing), [pendawaian semula](/services/electrical), [paip](/services/plumbing) serta [cat](/services/painting) di Damansara Heights dengan konteks itu — nilai dahulu, kemudian skop dengan jujur.",
     ],
     serviceNotes: [
       "Modenisasi seluruh rumah untuk banglo dan rumah berkembar era 1960-an–80-an.",
@@ -124,7 +124,7 @@ export const translations: AreaTranslations = {
       "Kawasan perbandaran 1990-an bersebelahan Mont Kiara — jalan rumah landed yang kini berusia tiga puluh tahun, blok kondominium dan kawasan komersial Desa Sri Hartamas yang sibuk.",
     intro: [
       "Sri Hartamas terletak di antara Mont Kiara dan Segambut, dibangunkan pada 1990-an sebagai kawasan perumahan rumah teres, rumah berkembar dan kondominium rendah, dengan kawasan komersial Desa Sri Hartamas yang terkenal dengan deretan kedai makan. Perumahannya kini berusia satu generasi — binaan 90-an yang kukuh tetapi sudah tiba masanya bilik air, pendawaian dan kemasan asal diganti.",
-      "Justeru, kerja di sini bersifat praktikal: pemilik rumah landed meminta bilik air baharu, dapur moden dan pendawaian semula; pemilik kondominium meminta kerja kemasan dan pembaikan kecacatan; manakala unit kedai-pejabat memerlukan pengubahsuaian komersial. Kami meliputi seluruh Sri Hartamas dengan renovasi penuh, elektrik, paip, kalis air, jubin dan cat.",
+      "Justeru, kerja di sini bersifat praktikal: pemilik rumah landed meminta bilik air baharu, dapur moden dan pendawaian semula; pemilik kondominium meminta kerja kemasan dan pembaikan kecacatan; manakala unit kedai-pejabat memerlukan pengubahsuaian komersial. Kami meliputi seluruh Sri Hartamas dengan [renovasi penuh](/services/general-renovation), [elektrik](/services/electrical), [paip](/services/plumbing), [kalis air](/services/waterproofing), [jubin](/services/tiling) dan [cat](/services/painting).",
     ],
     serviceNotes: [
       "Modenisasi dapur dan bilik air untuk rumah teres era 1990-an.",
@@ -171,7 +171,7 @@ export const translations: AreaTranslations = {
       "Daerah bersejarah 'Little India' KL bersebelahan kluster komersial Mid Valley — rumah kedai pra-perang, flat lama dan lingkaran kondominium sekitar KL Sentral.",
     intro: [
       "Brickfields ialah antara daerah tertua di Kuala Lumpur, terkenal sebagai Little India dan kini terletak betul-betul di sebelah hab pengangkutan KL Sentral. Stok hartanahnya benar-benar bercampur: rumah kedai dan rumah bandar pra-perang, flat pertengahan abad, serta lingkaran baharu kondominium dan pejabat sekitar KL Sentral dan Mid Valley City, di mana pusat beli-belah, menara pejabat dan kediaman tinggi membentuk salah satu kluster komersial paling sibuk di Lembah Klang.",
-      "Campuran itu menghasilkan dua jenis kerja yang berbeza. Bangunan lama memerlukan kesedaran struktur — bumbung uzur, pendawaian asal, dinding lembap dan paip haus — manakala kondominium dan unit komersial baharu meminta kerja kemasan, lantai, partition dan siling. Kami menyediakan kedua-duanya: renovasi penuh dan pembaikan yang berhati-hati untuk stok lama, serta elektrik, paip, kalis air, jubin dan cat di seluruh daerah.",
+      "Campuran itu menghasilkan dua jenis kerja yang berbeza. Bangunan lama memerlukan kesedaran struktur — bumbung uzur, pendawaian asal, dinding lembap dan paip haus — manakala kondominium dan unit komersial baharu meminta kerja kemasan, [lantai](/services/flooring), partition dan [siling](/services/ceiling-partition). Kami menyediakan kedua-duanya: [renovasi penuh](/services/general-renovation) dan pembaikan yang berhati-hati untuk stok lama, serta [elektrik](/services/electrical), [paip](/services/plumbing), [kalis air](/services/waterproofing), [jubin](/services/tiling) dan [cat](/services/painting) di seluruh daerah.",
     ],
     serviceNotes: [
       "Pengubahsuaian rumah bandar dan flat lama dengan kesedaran struktur dalam skop.",

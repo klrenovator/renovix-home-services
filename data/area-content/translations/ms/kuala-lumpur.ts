@@ -30,7 +30,7 @@ export const translations: AreaTranslations = {
       "Salah satu kawasan kediaman terbesar di KL — pangsapuri dan rumah teres era 70-an hingga 90-an bersama blok bertingkat tinggi yang lebih baharu.",
     intro: [
       "Cheras merangkumi kawasan yang luas, daripada pangsapuri walk-up lama sehinggalah kondominium baharu di sekitar stesen MRT. Kerana kebanyakan rumah di sini berusia serupa, masalah yang sama muncul di seluruh blok dan taman: paip tersembunyi yang bocor, kalis air bilik air yang gagal, dan pendawaian yang tidak lagi menampung beban hari ini.",
-      "Kami menyediakan kerja paip, kalis air, elektrik, jubin, cat dan renovasi penuh di seluruh Cheras. Kebanyakan kerja bermula dengan satu masalah yang jelas, dan kami akan beritahu dengan jujur sama ada ia boleh dibaiki setempat atau perlu diselesaikan dengan lebih menyeluruh.",
+      "Kami menyediakan [kerja paip](/services/plumbing), [kalis air](/services/waterproofing), [elektrik](/services/electrical), [jubin](/services/tiling), [cat](/services/painting) dan [renovasi penuh](/services/general-renovation) di seluruh Cheras. Kebanyakan kerja bermula dengan satu masalah yang jelas, dan kami akan beritahu dengan jujur sama ada ia boleh dibaiki setempat atau perlu diselesaikan dengan lebih menyeluruh.",
     ],
     serviceNotes: [
       "Mengesan kebocoran paip tersembunyi antara tingkat dan membaiki punca sebenar.",
@@ -77,7 +77,7 @@ export const translations: AreaTranslations = {
       "Kawasan matang di timur laut pusat bandar — rumah teres lama, pangsapuri sederhana tinggi dan pasaran sewa yang aktif berhampiran TAR UMT.",
     intro: [
       "Setapak ialah kawasan matang dengan rumah teres 1960-an hingga 80-an, pangsapuri sederhana tinggi dan banyak unit sewa. Rumah di sini selalunya sudah melalui beberapa pusingan pembaikan kecil, jadi kerja kami sering bermula dengan memahami apa yang telah dilakukan sebelum ini.",
-      "Kami mengendalikan kerja elektrik, paip, cat, jubin, handyman dan renovasi penuh di Setapak, termasuk kerja pembaharuan unit sewa antara penyewa.",
+      "Kami mengendalikan [kerja elektrik](/services/electrical), [paip](/services/plumbing), [cat](/services/painting), [jubin](/services/tiling), [handyman](/services/handyman) dan [renovasi penuh](/services/general-renovation) di Setapak, termasuk kerja pembaharuan unit sewa antara penyewa.",
     ],
     serviceNotes: [
       "Menggantikan pendawaian asal dan papan fius lama dengan sistem yang lebih selamat.",
@@ -124,7 +124,7 @@ export const translations: AreaTranslations = {
       "Bandar 1990-an yang berkembang daripada Setapak — seksyen rumah teres, kelompok kondominium dan kawasan sewa pelajar yang sibuk.",
     intro: [
       "Wangsa Maju dibangunkan pada 1990-an, jadi sebahagian besar rumah di sini kini memasuki kitaran naik taraf pertama. Kalis air bilik air, paip dapur dan cat luar adalah antara kerja yang paling kerap diminta.",
-      "Kami menyediakan renovasi, kalis air, kerja paip, jubin, cat dan elektrik untuk rumah teres, kondominium dan unit sewa di seluruh Wangsa Maju.",
+      "Kami menyediakan [renovasi](/services/general-renovation), [kalis air](/services/waterproofing), [kerja paip](/services/plumbing), [jubin](/services/tiling), [cat](/services/painting) dan [elektrik](/services/electrical) untuk rumah teres, kondominium dan unit sewa di seluruh Wangsa Maju.",
     ],
     serviceNotes: [
       "Naik taraf rumah teres 90-an termasuk dapur dan bilik air.",
@@ -171,7 +171,7 @@ export const translations: AreaTranslations = {
       "Kawasan timur KL yang menghijau — banglo pertengahan abad, kondominium matang dan enklaf kediaman yang tenang.",
     intro: [
       "Ampang menggabungkan banglo lama, kondominium yang telah lama beroperasi dan taman kediaman yang tenang. Litupan pokok yang tebal menjadikan pengurusan kelembapan tema berulang dalam hampir setiap kerja di sini.",
-      "Kami menyediakan renovasi, kerja elektrik, kalis air, kerja paip, siling dan cat di seluruh Ampang, termasuk kerja pembaharuan untuk unit sewaan.",
+      "Kami menyediakan [renovasi](/services/general-renovation), [kerja elektrik](/services/electrical), [kalis air](/services/waterproofing), [kerja paip](/services/plumbing), [siling](/services/ceiling-partition) dan [cat](/services/painting) di seluruh Ampang, termasuk kerja pembaharuan untuk unit sewaan.",
     ],
     serviceNotes: [
       "Renovasi berperingkat untuk banglo dan rumah lama.",
@@ -218,7 +218,7 @@ export const translations: AreaTranslations = {
       "Kawasan bandar besar di barat laut KL — taman perumahan teres yang matang, deretan lot kedai lama dan pangsapuri baharu berhampiran MRT.",
     intro: [
       "Kepong mempunyai rumah teres yang telah berdiri sejak 1960-an hingga 90-an, deretan kedai lama dan pangsapuri baharu di sekitar MRT. Kebanyakan kerja di sini dijalankan sementara keluarga masih tinggal di rumah.",
-      "Kami menyediakan renovasi, jubin, kerja paip, elektrik, cat dan kalis air di seluruh Kepong, termasuk kerja naik taraf lot kedai.",
+      "Kami menyediakan [renovasi](/services/general-renovation), [jubin](/services/tiling), [kerja paip](/services/plumbing), [elektrik](/services/electrical), [cat](/services/painting) dan [kalis air](/services/waterproofing) di seluruh Kepong, termasuk kerja naik taraf lot kedai.",
     ],
     serviceNotes: [
       "Naik taraf rumah teres secara berperingkat sambil rumah kekal didiami.",
@@ -265,7 +265,7 @@ export const translations: AreaTranslations = {
       "Kawasan utara KL yang tenang — rumah teres lama dan rumah bergaya kampung bersebelahan kediaman premium dan koridor kondominium baharu.",
     intro: [
       "Segambut mempunyai campuran rumah yang luas: rumah teres lama, rumah bergaya kampung, kediaman premium di sekitar Duta dan kondominium yang lebih baharu. Setiap satu memerlukan pendekatan berbeza.",
-      "Kami menyediakan renovasi, kerja elektrik, paip, cat, kalis air dan servis handyman di seluruh Segambut.",
+      "Kami menyediakan [renovasi](/services/general-renovation), [kerja elektrik](/services/electrical), [paip](/services/plumbing), [cat](/services/painting), [kalis air](/services/waterproofing) dan [servis handyman](/services/handyman) di seluruh Segambut.",
     ],
     serviceNotes: [
       "Renovasi rumah lama dengan urutan kerja yang jelas.",
@@ -312,7 +312,7 @@ export const translations: AreaTranslations = {
       "Kawasan keretapi lama Kuala Lumpur — jalan warisan dan flat lama di Sentul Baru, dengan menara baharu di Sentul Timur dan Barat.",
     intro: [
       "Sentul menggabungkan flat lama, rumah era keretapi dan menara kediaman baharu. Kerja di sini terbahagi antara pembaikan bangunan lama dan kerja kemasan unit baharu.",
-      "Kami menyediakan kerja paip, elektrik, cat, jubin, siling dan servis handyman di seluruh Sentul.",
+      "Kami menyediakan [kerja paip](/services/plumbing), [elektrik](/services/electrical), [cat](/services/painting), [jubin](/services/tiling), [siling](/services/ceiling-partition) dan [servis handyman](/services/handyman) di seluruh Sentul.",
     ],
     serviceNotes: [
       "Membaiki paip lama dan saluran tersumbat di blok matang.",
@@ -359,7 +359,7 @@ export const translations: AreaTranslations = {
       "Kawasan kondominium antarabangsa KL — menara generasi pertama yang kini memerlukan pembaharuan, bersama blok baharu yang memerlukan kerja kemasan.",
     intro: [
       "Mont Kiara dipenuhi kondominium, daripada menara generasi pertama 1990-an hingga blok yang baru siap. Kerja di sini hampir selalu melibatkan peraturan pengurusan bangunan, tempahan lif dan waktu kerja yang ditetapkan.",
-      "Kami menyediakan kerja paip, kalis air, renovasi, jubin, elektrik dan servis handyman untuk unit kediaman dan unit sewaan di Mont Kiara.",
+      "Kami menyediakan [kerja paip](/services/plumbing), [kalis air](/services/waterproofing), [renovasi](/services/general-renovation), [jubin](/services/tiling), [elektrik](/services/electrical) dan [servis handyman](/services/handyman) untuk unit kediaman dan unit sewaan di Mont Kiara.",
     ],
     serviceNotes: [
       "Mengesan dan membaiki kebocoran bilik air ke unit bawah.",
@@ -385,7 +385,7 @@ export const translations: AreaTranslations = {
     ],
     context: [
       "Setiap kerja di Mont Kiara tertakluk kepada badan pengurusan bangunan: waktu kerja, deposit, tempahan lif dan perlindungan laluan.",
-      "Unit tingkat atas menerima hujan yang ditiup angin, jadi kalis air balkoni dan sekeliling tingkap adalah kerja yang kerap diminta.",
+      "Unit tingkat atas menerima hujan yang ditiup angin, jadi [kalis air](/services/waterproofing) balkoni dan sekeliling tingkap adalah kerja yang kerap diminta.",
       "Bagi tuan rumah, kerja pembaharuan dijadualkan mengikut tarikh tamat sewa supaya unit boleh disewakan semula tanpa lengah.",
     ],
     faqs: [
@@ -406,7 +406,7 @@ export const translations: AreaTranslations = {
       "Salah satu kawasan berbukit paling matang di KL — banglo pertengahan abad, jalan rumah teres lama dan kondominium yang telah lama berdiri.",
     intro: [
       "Rumah di Bangsar selalunya telah melalui beberapa pusingan naik taraf separa selama berdekad. Kerja kami sering bermula dengan menyusun semula apa yang telah dibuat sebelum ini, terutamanya pendawaian dan paip.",
-      "Kami menyediakan renovasi, kerja elektrik, paip, cat, kalis air dan siling di seluruh Bangsar.",
+      "Kami menyediakan [renovasi](/services/general-renovation), [kerja elektrik](/services/electrical), [paip](/services/plumbing), [cat](/services/painting), [kalis air](/services/waterproofing) dan [siling](/services/ceiling-partition) di seluruh Bangsar.",
     ],
     serviceNotes: [
       "Renovasi rumah lama dengan menghormati ciri asal bangunan.",
@@ -432,7 +432,7 @@ export const translations: AreaTranslations = {
     ],
     context: [
       "Rumah lama di Bangsar sering menyimpan kerja separa daripada beberapa kontraktor. Kami menyemak keadaan sebenar dahulu supaya sebut harga tepat.",
-      "Litupan hijau yang menarik juga menjadikan dinding terlindung lembap. Kerja cat luaran di sini bermula dengan rawatan permukaan, bukan sekadar warna baharu.",
+      "Litupan hijau yang menarik juga menjadikan dinding terlindung lembap. [Kerja cat](/services/painting) luaran di sini bermula dengan rawatan permukaan, bukan sekadar warna baharu.",
       "Di jalan bercerun, dinding penahan dan longkang belakang menentukan sama ada bilik bawah kekal kering.",
     ],
     faqs: [
@@ -453,7 +453,7 @@ export const translations: AreaTranslations = {
       "Kawasan selatan KL — taman perumahan matang di sekitar Taman Yarl bersama gelombang kediaman bertingkat tinggi yang baharu.",
     intro: [
       "Bukit Jalil menggabungkan rumah teres matang dan kediaman bertingkat tinggi baharu. Kerja di sini terbahagi antara pembaikan rumah lama dan kemasan unit yang baru diserahkan.",
-      "Kami menyediakan renovasi, kerja lantai, paip, elektrik, kalis air dan servis handyman di seluruh Bukit Jalil.",
+      "Kami menyediakan [renovasi](/services/general-renovation), [kerja lantai](/services/flooring), [paip](/services/plumbing), [elektrik](/services/electrical), [kalis air](/services/waterproofing) dan [servis handyman](/services/handyman) di seluruh Bukit Jalil.",
     ],
     serviceNotes: [
       "Naik taraf rumah teres dan kemasan unit bertingkat tinggi.",
@@ -480,7 +480,7 @@ export const translations: AreaTranslations = {
     context: [
       "Kalendar acara di Bukit Jalil mempengaruhi akses. Pada hari perlawanan atau konsert, penghantaran bahan dijadualkan lebih awal.",
       "Bagi unit bertingkat tinggi, kami bekerja mengikut undang-undang kecil renovasi setiap bangunan, termasuk waktu kerja dan tempahan lif.",
-      "Ramai pemilik menggabungkan beberapa servis dalam satu projek, seperti bilik air bersama kerja jubin dan elektrik.",
+      "Ramai pemilik menggabungkan beberapa servis dalam satu projek, seperti bilik air bersama [kerja jubin](/services/tiling) dan [elektrik](/services/electrical).",
     ],
     faqs: [
       { question: "Boleh anda menyiapkan kemasan unit kondominium baharu?", answer: "Boleh, termasuk lantai, cat, lampu dan pemasangan sebelum anda berpindah masuk." },
@@ -500,7 +500,7 @@ export const translations: AreaTranslations = {
       "Bandar taman 1990-an di selatan KL — jalan rumah teres, deretan kedai yang sibuk dan pangsapuri baharu yang semakin bertambah.",
     intro: [
       "Rumah di Sri Petaling kebanyakannya dibina pada 1990-an, jadi kalis air asal, paip dan kemasan kini memasuki kitaran penggantian pertama.",
-      "Kami menyediakan renovasi, kerja paip, kalis air, jubin, elektrik dan cat untuk rumah teres, lot kedai dan pangsapuri di Sri Petaling.",
+      "Kami menyediakan [renovasi](/services/general-renovation), [kerja paip](/services/plumbing), [kalis air](/services/waterproofing), [jubin](/services/tiling), [elektrik](/services/electrical) dan [cat](/services/painting) untuk rumah teres, lot kedai dan pangsapuri di Sri Petaling.",
     ],
     serviceNotes: [
       "Naik taraf rumah teres 90-an secara berperingkat.",
@@ -547,7 +547,7 @@ export const translations: AreaTranslations = {
       "Koridor Jalan Klang Lama — taman matang seperti Taman Desa dan Taman Sri Sentosa bersama kondominium baharu di pinggir Mid Valley.",
     intro: [
       "Koridor Old Klang Road mempunyai campuran rumah teres matang, flat walk-up dan kondominium yang lebih baharu. Masalah saliran dan kebocoran bilik air adalah antara kerja yang paling kerap diminta.",
-      "Kami menyediakan kerja paip, kalis air, renovasi, jubin, cat dan elektrik di seluruh koridor ini.",
+      "Kami menyediakan [kerja paip](/services/plumbing), [kalis air](/services/waterproofing), [renovasi](/services/general-renovation), [jubin](/services/tiling), [cat](/services/painting) dan [elektrik](/services/electrical) di seluruh koridor ini.",
     ],
     serviceNotes: [
       "Membaiki saluran tersumbat dan paip lama yang bocor.",
@@ -594,7 +594,7 @@ export const translations: AreaTranslations = {
       "Bandar berbukit di timur laut KL — jalan rumah teres di kaki bukit granit, dengan kediaman premium di lereng yang lebih tinggi.",
     intro: [
       "Taman Melawati terletak di kaki bukit, jadi cara air mengalir di sekitar rumah menentukan banyak kerja pembaikan di sini. Kebocoran bumbung dan resapan dinding penahan adalah aduan yang kerap.",
-      "Kami menyediakan kerja kalis air, renovasi, paip, elektrik, cat dan servis handyman di seluruh Taman Melawati.",
+      "Kami menyediakan [kerja kalis air](/services/waterproofing), [renovasi](/services/general-renovation), [paip](/services/plumbing), [elektrik](/services/electrical), [cat](/services/painting) dan [servis handyman](/services/handyman) di seluruh Taman Melawati.",
     ],
     serviceNotes: [
       "Kalis air bumbung, dinding dan kawasan basah.",
@@ -641,7 +641,7 @@ export const translations: AreaTranslations = {
       "Komuniti terancang di barat KL — kediaman landed berpagar dan kondominium tepi taman dengan piawaian kemasan yang tinggi.",
     intro: [
       "Rumah di Desa ParkCity lebih baharu, jadi kerja di sini lebih kerap melibatkan naik taraf tersasar berbanding renovasi berat: lantai, pencahayaan, kemasan bilik air dan pembaikan kecil.",
-      "Kami menyediakan kerja lantai, elektrik, renovasi, paip, handyman dan cat mengikut garis panduan komuniti terurus di Desa ParkCity.",
+      "Kami menyediakan [kerja lantai](/services/flooring), [elektrik](/services/electrical), [renovasi](/services/general-renovation), [paip](/services/plumbing), [handyman](/services/handyman) dan [cat](/services/painting) mengikut garis panduan komuniti terurus di Desa ParkCity.",
     ],
     serviceNotes: [
       "Menggantikan lantai asal pemaju dengan pilihan yang lebih tahan lama.",
