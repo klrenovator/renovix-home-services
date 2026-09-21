@@ -11,7 +11,7 @@ export const translations: AreaRegionTranslations = {
       "联邦首都——历史店屋、成熟有地住宅区、老组屋与密集的高层住宅带，全都集中在同一座城市里。",
     intro: [
       "吉隆坡把各式各样的住宅集中在一座城市里。老城核心一带是战前店屋与上世纪中期的店铺；再往外是五十至八十年代的排屋与洋房住宅区；环绕市中心的，则是从 KLCC 一路延伸到安邦、满家乐与孟沙的密集公寓带。不同类型的房子老化方式不同，也决定了我们最常被要求处理的工程。",
-      "这座城市的气候同样影响深远。高温、潮湿与频繁的午后雷雨，不断消耗漆面、填缝、密封胶与平屋顶，水更会找到浴室地面与阳台楼板上的每一处弱点。Renovix 在吉隆坡全境提供瓷砖、电气、水管、防水、油漆、天花、地板、家居维修与整体装修服务，并为下列社区提供专属的地区指南。",
+      "这座城市的气候同样影响深远。高温、潮湿与频繁的午后雷雨，不断消耗漆面、填缝、密封胶与平屋顶，水更会找到浴室地面与阳台楼板上的每一处弱点。Renovix 在吉隆坡全境提供[瓷砖](/services/tiling)、[电气](/services/electrical)、[水管](/services/plumbing)、[防水](/services/waterproofing)、[油漆](/services/painting)、[天花](/services/ceiling-partition)、[地板](/services/flooring)、[家居维修](/services/handyman)与[整体装修](/services/general-renovation)服务，并为下列社区提供专属的地区指南。",
     ],
     landscapeIntro: "了解吉隆坡的住宅构成，几乎是我们在这座城市里每一份报价的起点。",
     landscape: [
@@ -49,7 +49,7 @@ export const translations: AreaRegionTranslations = {
       "马来西亚发展程度最高的州属——从五十年代的八打灵再也与皇城巴生，到蒲种、哥打白沙罗与赛城等高速走廊。",
     intro: [
       "雪兰莪从三面环绕吉隆坡，住宅类型是巴生谷中最丰富的。八打灵再也在五十年代成为本区第一座规划卫星市；莎阿南按花园城市规划；巴生作为皇城保留了战前店屋的历史面貌；而蒲种、梳邦再也、USJ、加影、沙登、哥打白沙罗、双溪毛糯、万挠与士毛月等走廊，如今已成为全国最大的住宅带之一。南端的赛城与布城，则构成较新的规划集群。",
-      "如此多样，也意味着不同城镇需要完全不同的施工范围。五十年代的 PJ 老屋，与九十年代的 USJ 排屋、二〇一〇年代的赛城公寓，需求截然不同。Renovix 在雪兰莪各主要城镇提供瓷砖、电气、水管、防水、油漆、天花、地板、家居维修与整体装修服务，并附有下列地区指南。",
+      "如此多样，也意味着不同城镇需要完全不同的施工范围。五十年代的 PJ 老屋，与九十年代的 USJ 排屋、二〇一〇年代的赛城公寓，需求截然不同。Renovix 在雪兰莪各主要城镇提供[瓷砖](/services/tiling)、[电气](/services/electrical)、[水管](/services/plumbing)、[防水](/services/waterproofing)、[油漆](/services/painting)、[天花](/services/ceiling-partition)、[地板](/services/flooring)、[家居维修](/services/handyman)与[整体装修](/services/general-renovation)服务，并附有下列地区指南。",
     ],
     landscapeIntro: "雪兰莪住宅的特点，可以按城镇逐一来看：",
     landscape: [

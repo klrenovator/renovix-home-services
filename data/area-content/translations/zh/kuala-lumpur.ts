@@ -30,7 +30,7 @@ export const translations: AreaTranslations = {
       "吉隆坡最大的住宅区之一——七十至九十年代的组屋与排屋，以及地铁沿线较新的高层住宅。",
     intro: [
       "蕉赖范围很广，从老式无电梯组屋到地铁站旁的新公寓都有。由于住宅楼龄接近，同样的问题常在整片区域重复出现：隐蔽水管渗漏、浴室防水失效，以及无法承受现代用电的旧线路。",
-      "我们在蕉赖提供水管、防水、电气、瓷砖、油漆与整体装修服务。多数工程都从一个明显的问题开始，我们会如实告诉您它能否局部修好，还是需要更彻底地处理。",
+      "我们在蕉赖提供[水管](/services/plumbing)、[防水](/services/waterproofing)、[电气](/services/electrical)、[瓷砖](/services/tiling)、[油漆](/services/painting)与[整体装修](/services/general-renovation)服务。多数工程都从一个明显的问题开始，我们会如实告诉您它能否局部修好，还是需要更彻底地处理。",
     ],
     serviceNotes: [
       "追查楼层之间的隐蔽水管渗漏，并修复真正的源头。",
@@ -77,7 +77,7 @@ export const translations: AreaTranslations = {
       "市中心东北的成熟社区——老排屋、中层公寓，以及拉曼大学一带活跃的租赁市场。",
     intro: [
       "文良港是成熟社区，六十至八十年代的排屋、中层公寓与大量出租单位并存。这里的房子多半经历过几轮零散维修，所以我们的工作常常从弄清楚“之前做过什么”开始。",
-      "我们在文良港提供电气、水管、油漆、瓷砖、家居维修与整体装修服务，也包括租约之间的单位翻新。",
+      "我们在文良港提供[电气](/services/electrical)、[水管](/services/plumbing)、[油漆](/services/painting)、[瓷砖](/services/tiling)、[家居维修](/services/handyman)与[整体装修](/services/general-renovation)服务，也包括租约之间的单位翻新。",
     ],
     serviceNotes: [
       "更换原装线路与旧配电盘，提升用电安全。",
@@ -124,7 +124,7 @@ export const translations: AreaTranslations = {
       "由文良港延伸出来的九十年代新镇——排屋区、公寓群，以及靠近大学的活跃租赁市场。",
     intro: [
       "旺沙玛珠建于九十年代，因此这里的住宅正进入第一轮升级周期。浴室防水、厨房水管与外墙油漆，是最常被要求处理的项目。",
-      "我们为旺沙玛珠的排屋、公寓与出租单位提供装修、防水、水管、瓷砖、油漆与电气服务。",
+      "我们为旺沙玛珠的排屋、公寓与出租单位提供[装修](/services/general-renovation)、[防水](/services/waterproofing)、[水管](/services/plumbing)、[瓷砖](/services/tiling)、[油漆](/services/painting)与[电气](/services/electrical)服务。",
     ],
     serviceNotes: [
       "九十年代排屋的整体升级，包括厨房与浴室。",
@@ -171,7 +171,7 @@ export const translations: AreaTranslations = {
       "吉隆坡东部绿意盎然的一带——上世纪中期的洋房、成熟公寓与安静的住宅小区。",
     intro: [
       "安邦既有老洋房，也有营运多年的公寓与安静的住宅区。茂密的树荫让潮湿管理几乎成为这里每一项工程的共同主题。",
-      "我们在安邦提供装修、电气、防水、水管、天花与油漆服务，也包括出租单位的翻新。",
+      "我们在安邦提供[装修](/services/general-renovation)、[电气](/services/electrical)、[防水](/services/waterproofing)、[水管](/services/plumbing)、[天花](/services/ceiling-partition)与[油漆](/services/painting)服务，也包括出租单位的翻新。",
     ],
     serviceNotes: [
       "老洋房与旧住宅的分阶段翻新。",
@@ -218,7 +218,7 @@ export const translations: AreaTranslations = {
       "吉隆坡西北的大型住宅带——成熟排屋区、繁忙的老店屋街，以及地铁沿线的新公寓。",
     intro: [
       "甲洞的排屋建于六十至九十年代，另有老店屋街与地铁旁的新公寓。这里的工程多半是在住户仍居住的情况下进行的。",
-      "我们在甲洞提供装修、瓷砖、水管、电气、油漆与防水服务，也包括店屋的升级工程。",
+      "我们在甲洞提供[装修](/services/general-renovation)、[瓷砖](/services/tiling)、[水管](/services/plumbing)、[电气](/services/electrical)、[油漆](/services/painting)与[防水](/services/waterproofing)服务，也包括店屋的升级工程。",
     ],
     serviceNotes: [
       "住户照常居住的排屋分阶段升级。",
@@ -265,7 +265,7 @@ export const translations: AreaTranslations = {
       "吉隆坡北部一带较安静的区域——老排屋与甘榜式住宅，与高档有地住宅及新公寓走廊并存。",
     intro: [
       "士甲末的住宅类型跨度很大：老排屋、甘榜式住宅、Duta 一带的高档住宅，以及较新的公寓。每一类都需要不同的处理方式。",
-      "我们在士甲末提供装修、电气、水管、油漆、防水与家居维修服务。",
+      "我们在士甲末提供[装修](/services/general-renovation)、[电气](/services/electrical)、[水管](/services/plumbing)、[油漆](/services/painting)、[防水](/services/waterproofing)与[家居维修](/services/handyman)服务。",
     ],
     serviceNotes: [
       "老屋翻新，施工顺序清楚明确。",
@@ -312,7 +312,7 @@ export const translations: AreaTranslations = {
       "吉隆坡的老铁道区——冼都旧区的老街与旧组屋，以及冼都东西两侧新建的高层住宅。",
     intro: [
       "冼都既有旧组屋与铁道时代的老房子，也有新落成的高层住宅。这里的工程分成两类：老楼的维修，与新单位的收尾。",
-      "我们在冼都提供水管、电气、油漆、瓷砖、天花与家居维修服务。",
+      "我们在冼都提供[水管](/services/plumbing)、[电气](/services/electrical)、[油漆](/services/painting)、[瓷砖](/services/tiling)、[天花](/services/ceiling-partition)与[家居维修](/services/handyman)服务。",
     ],
     serviceNotes: [
       "修复老楼的旧水管与堵塞排水。",
@@ -359,7 +359,7 @@ export const translations: AreaTranslations = {
       "吉隆坡的国际住宅区——第一代高层住宅进入翻新期，新落成的楼盘则需要收尾工程。",
     intro: [
       "满家乐以公寓为主，从九十年代的第一代高楼到刚交房的新盘都有。这里的工程几乎都要遵守管理层规定、预约电梯并在指定时段施工。",
-      "我们为满家乐的自住与出租单位提供水管、防水、装修、瓷砖、电气与家居维修服务。",
+      "我们为满家乐的自住与出租单位提供[水管](/services/plumbing)、[防水](/services/waterproofing)、[装修](/services/general-renovation)、[瓷砖](/services/tiling)、[电气](/services/electrical)与[家居维修](/services/handyman)服务。",
     ],
     serviceNotes: [
       "定位并修复渗到楼下单位的浴室漏水。",
@@ -385,7 +385,7 @@ export const translations: AreaTranslations = {
     ],
     context: [
       "满家乐的每项工程都受管理机构约束：施工时间、押金、电梯预约与通道保护。",
-      "高楼层单位常年承受风驱雨，因此阳台与窗周防水是常见需求。",
+      "高楼层单位常年承受风驱雨，因此阳台与窗周[防水](/services/waterproofing)是常见需求。",
       "对房东而言，翻新会尽量安排在租约结束时进行，好让单位尽快重新出租。",
     ],
     faqs: [
@@ -406,7 +406,7 @@ export const translations: AreaTranslations = {
       "吉隆坡最成熟的坡地住宅区之一——上世纪中期洋房、老排屋街，以及成熟的公寓群。",
     intro: [
       "孟沙的房子往往经历过几十年的多次局部改动。我们的工作常常从重新梳理这些改动开始，尤其是线路与水管。",
-      "我们在孟沙提供装修、电气、水管、油漆、防水与天花服务。",
+      "我们在孟沙提供[装修](/services/general-renovation)、[电气](/services/electrical)、[水管](/services/plumbing)、[油漆](/services/painting)、[防水](/services/waterproofing)与[天花](/services/ceiling-partition)服务。",
     ],
     serviceNotes: [
       "在保留原有特色的前提下翻新老屋。",
@@ -432,7 +432,7 @@ export const translations: AreaTranslations = {
     ],
     context: [
       "孟沙的老屋常留有多个承包商的半成品工程，我们会先确认真实状况，报价才会准确。",
-      "让孟沙好看的绿荫，也让背阴墙面长期潮湿。这里的外墙油漆从表面处理开始，而不只是换颜色。",
+      "让孟沙好看的绿荫，也让背阴墙面长期潮湿。这里的外墙[油漆](/services/painting)从表面处理开始，而不只是换颜色。",
       "在坡地街道上，挡土墙与后侧排水决定了底层房间是否干爽。",
     ],
     faqs: [
@@ -453,7 +453,7 @@ export const translations: AreaTranslations = {
       "吉隆坡南部的体育与科技区——Taman Yarl 一带的成熟有地住宅，以及一波新落成的高层住宅。",
     intro: [
       "武吉加里尔既有成熟排屋，也有大量新建高层住宅。工程因此分成两类：旧屋维修，与新单位的收尾。",
-      "我们在武吉加里尔提供装修、地板、水管、电气、防水与家居维修服务。",
+      "我们在武吉加里尔提供[装修](/services/general-renovation)、[地板](/services/flooring)、[水管](/services/plumbing)、[电气](/services/electrical)、[防水](/services/waterproofing)与[家居维修](/services/handyman)服务。",
     ],
     serviceNotes: [
       "排屋升级与高层单位的收尾工程。",
@@ -480,7 +480,7 @@ export const translations: AreaTranslations = {
     context: [
       "武吉加里尔的活动日程会影响出入。遇到赛事或演唱会，材料运送会提前安排。",
       "高层住宅按各建筑的装修细则施工，包括时间限制与电梯预约。",
-      "许多业主会把多项服务合并成一个项目，例如浴室工程连同瓷砖与电气一起做。",
+      "许多业主会把多项服务合并成一个项目，例如浴室工程连同[瓷砖](/services/tiling)与[电气](/services/electrical)一起做。",
     ],
     faqs: [
       { question: "全新公寓的收尾工程你们做吗？", answer: "做，包括入住前的地板、油漆、灯具与各类安装。" },
@@ -500,7 +500,7 @@ export const translations: AreaTranslations = {
       "吉隆坡南部的九十年代花园城镇——排屋街道、繁忙商业街，以及逐渐增多的新公寓。",
     intro: [
       "斯里布特拉的住宅多建于九十年代，因此原装防水、水管与饰面正进入第一轮更换周期。",
-      "我们为斯里布特拉的排屋、店屋与公寓提供装修、水管、防水、瓷砖、电气与油漆服务。",
+      "我们为斯里布特拉的排屋、店屋与公寓提供[装修](/services/general-renovation)、[水管](/services/plumbing)、[防水](/services/waterproofing)、[瓷砖](/services/tiling)、[电气](/services/electrical)与[油漆](/services/painting)服务。",
     ],
     serviceNotes: [
       "九十年代排屋的分阶段升级。",
@@ -547,7 +547,7 @@ export const translations: AreaTranslations = {
       "旧巴生路一带——Taman Desa 与 Taman Sri Sentosa 等成熟社区，以及谷中城边缘的新公寓群。",
     intro: [
       "旧巴生路沿线混合了成熟排屋、无电梯组屋与较新的公寓。排水问题与浴室渗漏是这里最常见的工程。",
-      "我们在这一带提供水管、防水、装修、瓷砖、油漆与电气服务。",
+      "我们在这一带提供[水管](/services/plumbing)、[防水](/services/waterproofing)、[装修](/services/general-renovation)、[瓷砖](/services/tiling)、[油漆](/services/painting)与[电气](/services/electrical)服务。",
     ],
     serviceNotes: [
       "疏通堵塞排水并修复渗漏的旧管。",
@@ -594,7 +594,7 @@ export const translations: AreaTranslations = {
       "吉隆坡东北的山脚住宅区——花岗岩山下的排屋街道，以及沿坡而上的高档有地住宅。",
     intro: [
       "美拉华蒂花园位于山脚，水在房屋周围如何流动，决定了这里许多维修工程的方向。屋顶渗漏与挡土墙渗水是常见投诉。",
-      "我们在这里提供防水、装修、水管、电气、油漆与家居维修服务。",
+      "我们在这里提供[防水](/services/waterproofing)、[装修](/services/general-renovation)、[水管](/services/plumbing)、[电气](/services/electrical)、[油漆](/services/painting)与[家居维修](/services/handyman)服务。",
     ],
     serviceNotes: [
       "屋顶、墙体与潮湿区域的防水工程。",
@@ -641,7 +641,7 @@ export const translations: AreaTranslations = {
       "吉隆坡西部的规划社区——门禁式有地住宅与公园旁的高层住宅，整体交付标准较高。",
     intro: [
       "百乐镇的住宅较新，因此这里的工程更多是有针对性的升级，而不是大规模改造：地板、照明、浴室饰面与小型维修。",
-      "我们按百乐镇的社区管理规定，提供地板、电气、装修、水管、家居维修与油漆服务。",
+      "我们按百乐镇的社区管理规定，提供[地板](/services/flooring)、[电气](/services/electrical)、[装修](/services/general-renovation)、[水管](/services/plumbing)、[家居维修](/services/handyman)与[油漆](/services/painting)服务。",
     ],
     serviceNotes: [
       "把开发商原装地板换成更耐用的选择。",

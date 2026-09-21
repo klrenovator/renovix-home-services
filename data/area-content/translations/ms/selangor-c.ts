@@ -30,7 +30,7 @@ export const translations: AreaTranslations = {
       "Perbandaran bersepadu Subang Jaya — kluster Sunway Pyramid dan Universiti Monash, kediaman tinggi dan kawasan komersial yang sibuk.",
     intro: [
       "Bandar Sunway ialah antara kawasan perbandaran paling terkenal di Lembah Klang, sebahagian daripada perbandaran Subang Jaya dan terkenal dengan Sunway Pyramid, Sunway Lagoon serta Universiti Monash Malaysia. Ia dibangunkan sebagai perbandaran bersepadu — beli-belah, pendidikan, kesihatan dan kediaman dalam satu kawasan — dan stok kediamannya mencerminkan itu: deretan padat kondominium dan pangsapuri servis sekitar teras komersial, dengan kedai-pejabat dan sebahagian kecil rumah landed di pinggir.",
-      "Kehidupan bertingkat tinggi serta ramai pelajar dan ekspatriat membentuk kerja di sini. Pemilik kondominium meminta kerja kemasan, naik taraf dapur dan bilik air, kalis air balkoni, serta penyelenggaraan handyman; tuan rumah dan ejen meminta pengubahsuaian yang pantas dan tahan lasak antara penyewa. Kami meliputi Bandar Sunway dengan kerja elektrik, paip, jubin, siling dan cat, semuanya dirancang mengikut peraturan strata kawasan ini.",
+      "Kehidupan bertingkat tinggi serta ramai pelajar dan ekspatriat membentuk kerja di sini. Pemilik kondominium meminta kerja kemasan, naik taraf dapur dan bilik air, [kalis air](/services/waterproofing) balkoni, serta [penyelenggaraan handyman](/services/handyman); tuan rumah dan ejen meminta pengubahsuaian yang pantas dan tahan lasak antara penyewa. Kami meliputi Bandar Sunway dengan [kerja elektrik](/services/electrical), [paip](/services/plumbing), [jubin](/services/tiling), [siling](/services/ceiling-partition) dan [cat](/services/painting), semuanya dirancang mengikut peraturan strata kawasan ini.",
     ],
     serviceNotes: [
       "Kerja kemasan penuh dan naik taraf unit di stok bertingkat tinggi.",
@@ -77,7 +77,7 @@ export const translations: AreaTranslations = {
       "Perbandaran Petaling Jaya era 1990-an yang dibina sekitar 1 Utama — estet teres dan rumah berkembar berpagar, kondominium dan teras komersial yang kukuh.",
     intro: [
       "Bandar Utama ialah perbandaran Petaling Jaya yang berkembang sekitar pusat beli-belah 1 Utama, dibangunkan sejak 1990-an merentasi seksyen BU bernombor menjadi salah satu perbandaran paling lengkap di koridor Damansara. Perumahannya kebanyakannya landed — teres berpagar dan berkawal, rumah berkembar dan sebahagian banglo — dengan lingkaran kondominium dan pangsapuri servis, stesen MRT dan teras komersial padat di tengah.",
-      "Stok landed asal kini berusia dua puluh lima hingga tiga puluh lima tahun, tepat di kitaran modenisasi utama pertamanya: bilik air baharu, dapur moden, pendawaian semula dan paip baharu. Unit tinggi yang baharu meminta kerja kemasan dan pembaikan kecacatan. Kami meliputi Bandar Utama dengan renovasi penuh, elektrik, paip, kalis air, jubin dan cat, mengikut peraturan komuniti berpagar dan jadual pengurusan.",
+      "Stok landed asal kini berusia dua puluh lima hingga tiga puluh lima tahun, tepat di kitaran modenisasi utama pertamanya: bilik air baharu, dapur moden, pendawaian semula dan paip baharu. Unit tinggi yang baharu meminta kerja kemasan dan pembaikan kecacatan. Kami meliputi Bandar Utama dengan [renovasi penuh](/services/general-renovation), [elektrik](/services/electrical), [paip](/services/plumbing), [kalis air](/services/waterproofing), [jubin](/services/tiling) dan [cat](/services/painting), mengikut peraturan komuniti berpagar dan jadual pengurusan.",
     ],
     serviceNotes: [
       "Modenisasi seluruh rumah untuk teres dan rumah berkembar era 1990-an.",
@@ -124,7 +124,7 @@ export const translations: AreaTranslations = {
       "Nod kompak di koridor Damansara — The Curve dan IPC di tengah, dikelilingi kondominium, pejabat dan kediaman servis.",
     intro: [
       "Mutiara Damansara ialah kawasan perbandaran padat di Petaling Jaya, dibina sekitar kluster komersial The Curve, IPC Shopping Centre serta pejabat dan hotel di sekelilingnya. Stok kediaman di sini hampir keseluruhannya bertingkat tinggi — kondominium dan kediaman servis — dengan tingkat komersial di bawah, memberikan rentak hidup-bekerja yang jelas bandar.",
-      "Campuran itu menentukan kerja yang kami sebut harga: kerja kemasan kondominium, kalis air bilik air dan balkoni, naik taraf elektrik, serta aliran tetap pengubahsuaian komersial di tingkat runcit dan pejabat. Kami meliputi Mutiara Damansara dengan paip, jubin, siling, cat dan renovasi penuh, dirancang mengikut peraturan strata dan waktu perniagaan.",
+      "Campuran itu menentukan kerja yang kami sebut harga: kerja kemasan kondominium, [kalis air](/services/waterproofing) bilik air dan balkoni, naik taraf [elektrik](/services/electrical), serta aliran tetap pengubahsuaian komersial di tingkat runcit dan pejabat. Kami meliputi Mutiara Damansara dengan [paip](/services/plumbing), [jubin](/services/tiling), [siling](/services/ceiling-partition), [cat](/services/painting) dan [renovasi penuh](/services/general-renovation), dirancang mengikut peraturan strata dan waktu perniagaan.",
     ],
     serviceNotes: [
       "Kerja kemasan unit dan renovasi penuh di kediaman bertingkat tinggi.",
@@ -171,7 +171,7 @@ export const translations: AreaTranslations = {
       "Perbandaran lereng bukit di atas koridor Damansara — kediaman tinggi, pejabat dan runcit di tanah cerun antara Bandar Utama dan Kepong.",
     intro: [
       "Damansara Perdana ialah perbandaran lereng bukit di Petaling Jaya, dibangunkan sejak awal 2000-an di tanah tinggi antara Bandar Utama dan koridor Kepong–Sungai Buloh. Stoknya hampir keseluruhannya bertingkat tinggi: kondominium, pangsapuri servis, pejabat dan kedai yang tersusun di sepanjang bukit, dengan blok runcit dan komersial di terasnya.",
-      "Dua perkara menentukan kerja di sini. Pertama, perumahannya bertingkat tinggi dan dikawal strata, jadi kerja kemasan, kalis air, elektrik dan pembaikan kecacatan lebih menonjol daripada renovasi struktur. Kedua, kedudukan lereng bukit menambah pertimbangan saliran dan pengurusan air untuk unit aras bawah. Kami meliputi Damansara Perdana dengan paip, jubin, siling, cat dan renovasi penuh, mengikut peraturan setiap bangunan.",
+      "Dua perkara menentukan kerja di sini. Pertama, perumahannya bertingkat tinggi dan dikawal strata, jadi kerja kemasan, [kalis air](/services/waterproofing), [elektrik](/services/electrical) dan pembaikan kecacatan lebih menonjol daripada renovasi struktur. Kedua, kedudukan lereng bukit menambah pertimbangan saliran dan pengurusan air untuk unit aras bawah. Kami meliputi Damansara Perdana dengan [paip](/services/plumbing), [jubin](/services/tiling), [siling](/services/ceiling-partition), [cat](/services/painting) dan [renovasi penuh](/services/general-renovation), mengikut peraturan setiap bangunan.",
     ],
     serviceNotes: [
       "Kerja kemasan unit dan renovasi penuh di kondominium serta pangsapuri servis.",
@@ -218,7 +218,7 @@ export const translations: AreaTranslations = {
       "Perbandaran PJ era 2000-an bersebelahan LRT — estet teres, blok kondominium dan kluster komersial Oasis antara Subang dan koridor Damansara.",
     intro: [
       "Ara Damansara ialah perbandaran Petaling Jaya yang dibangunkan sepanjang 2000-an, terletak di antara Subang dan koridor Damansara dengan stesen LRT di tengah dan kawasan komersial Oasis sebagai hab tempatan. Perumahannya mencampurkan landed dan tinggi: estet teres awal daripada fasa pertama, deretan kondominium yang luas, dan blok kedai-pejabat sekitar teras komersial.",
-      "Stok landed kini memasuki kitaran naik taraf pertama — bilik air, pendawaian dan dapur asal tiba masanya untuk diganti — manakala kondominium sibuk dengan kerja kemasan, pembaikan kecacatan dan kalis air. Kami meliputi Ara Damansara dengan renovasi penuh, elektrik, paip, jubin dan cat, mengikut peraturan setiap presint.",
+      "Stok landed kini memasuki kitaran naik taraf pertama — bilik air, pendawaian dan dapur asal tiba masanya untuk diganti — manakala kondominium sibuk dengan kerja kemasan, pembaikan kecacatan dan [kalis air](/services/waterproofing). Kami meliputi Ara Damansara dengan [renovasi penuh](/services/general-renovation), [elektrik](/services/electrical), [paip](/services/plumbing), [jubin](/services/tiling) dan [cat](/services/painting), mengikut peraturan setiap presint.",
     ],
     serviceNotes: [
       "Modenisasi dapur dan bilik air untuk rumah teres fasa pertama.",
@@ -265,7 +265,7 @@ export const translations: AreaTranslations = {
       "Perbandaran besar era 1990-an antara Kepong dan Sungai Buloh — estet teres, blok pangsapuri dan kondominium baharu yang kini dilalui MRT Laluan Putrajaya.",
     intro: [
       "Bandar Sri Damansara ialah perbandaran besar di kawasan Sungai Buloh, Selangor, dibangunkan sepanjang 1990-an dan 2000-an di sebelah koridor Kepong. Stoknya merangkumi estet teres awal dan pangsapuri rendah, blok kondominium kemudian, serta deretan komersial — jalur kediaman yang luas dan hampir lengkap sendiri, yang kini dilalui MRT Laluan Putrajaya.",
-      "Rumah fasa pertama kini berada pada usia yang memerlukan bilik air, pendawaian dan paip asal diganti, manakala blok baharu membawa kerja kemasan dan pembaikan kecacatan. Kami meliputi Bandar Sri Damansara dengan renovasi penuh, elektrik, paip, kalis air, jubin dan cat, mengikut peraturan setiap presint.",
+      "Rumah fasa pertama kini berada pada usia yang memerlukan bilik air, pendawaian dan paip asal diganti, manakala blok baharu membawa kerja kemasan dan pembaikan kecacatan. Kami meliputi Bandar Sri Damansara dengan [renovasi penuh](/services/general-renovation), [elektrik](/services/electrical), [paip](/services/plumbing), [kalis air](/services/waterproofing), [jubin](/services/tiling) dan [cat](/services/painting), mengikut peraturan setiap presint.",
     ],
     serviceNotes: [
       "Modenisasi dapur dan bilik air untuk teres serta pangsapuri era 1990-an.",
@@ -312,7 +312,7 @@ export const translations: AreaTranslations = {
       "Bandar universiti Selangor — estet Bandar Baru Bangi sejak 1970-an sekitar UKM, pekan Bangi lama dan jalur perbandaran baharu di koridor Kajang.",
     intro: [
       "Bangi ialah daerah matang di kawasan Hulu Langat, Selangor, terkenal sebagai lokasi Universiti Kebangsaan Malaysia dan Bandar Baru Bangi, perbandaran terancang yang dibangunkan sekitar kampus sejak 1970-an. Di sekeliling teras itu terletak pekan Bangi lama, kawasan penyelidikan dan institusi, serta lingkaran perbandaran baharu di koridor Kajang–Putrajaya.",
-      "Perumahannya merangkumi beberapa generasi, dan kerja kami mengikutinya. Rumah asal Bandar Baru Bangi — teres, rumah berkembar dan pangsapuri era 1970-an–90-an — kini dalam tahun pembaharuan, dengan pendawaian, paip dan bilik air tiba masanya diganti; pasaran sewa pelajar sekitar UKM mengekalkan permintaan untuk pengubahsuaian pantas dan tahan lasak; manakala perbandaran baharu membawa kerja kemasan dan pembaikan kecacatan. Kami meliputi Bangi dengan renovasi penuh, elektrik, paip, kalis air, jubin, cat dan handyman.",
+      "Perumahannya merangkumi beberapa generasi, dan kerja kami mengikutinya. Rumah asal Bandar Baru Bangi — teres, rumah berkembar dan pangsapuri era 1970-an–90-an — kini dalam tahun pembaharuan, dengan pendawaian, paip dan bilik air tiba masanya diganti; pasaran sewa pelajar sekitar UKM mengekalkan permintaan untuk pengubahsuaian pantas dan tahan lasak; manakala perbandaran baharu membawa kerja kemasan dan pembaikan kecacatan. Kami meliputi Bangi dengan [renovasi penuh](/services/general-renovation), [elektrik](/services/electrical), [paip](/services/plumbing), [kalis air](/services/waterproofing), [jubin](/services/tiling), [cat](/services/painting) dan [handyman](/services/handyman).",
     ],
     serviceNotes: [
       "Modenisasi seluruh rumah untuk stok era 1970-an–90-an di Bandar Baru Bangi.",
@@ -359,7 +359,7 @@ export const translations: AreaTranslations = {
       "Daerah universiti Selangor — UPM, perbandaran Serdang dan lingkaran kondominium baharu koridor MRT di sebelah Seri Kembangan.",
     intro: [
       "Serdang ialah daerah Selangor yang telah lama wujud di antara Puchong, Balakong dan Seri Kembangan, berteraskan Universiti Putra Malaysia serta kawasan penyelidikan dan ekspo di sekelilingnya. Perumahannya mencerminkan sejarah itu: estet teres dan pangsapuri lama dari 1970-an–90-an sekitar penempatan asal, perbandaran baharu, dan — sejak ketibaan laluan MRT — lingkaran kediaman tinggi yang semakin berkembang di koridor.",
-      "Campuran itu bermakna kerja berbeza mengikut blok. Rumah landed lama memerlukan pendawaian semula, paip dan bilik air baharu; sewaan pelajar dan staf memerlukan pengubahsuaian pantas dan tahan lasak; dan kondominium baharu membawa kerja kemasan, pembaikan kecacatan dan kalis air. Kami meliputi Serdang dengan renovasi penuh, elektrik, paip, jubin, cat dan handyman.",
+      "Campuran itu bermakna kerja berbeza mengikut blok. Rumah landed lama memerlukan pendawaian semula, paip dan bilik air baharu; sewaan pelajar dan staf memerlukan pengubahsuaian pantas dan tahan lasak; dan kondominium baharu membawa kerja kemasan, pembaikan kecacatan dan [kalis air](/services/waterproofing). Kami meliputi Serdang dengan [renovasi penuh](/services/general-renovation), [elektrik](/services/electrical), [paip](/services/plumbing), [jubin](/services/tiling), [cat](/services/painting) dan [handyman](/services/handyman).",
     ],
     serviceNotes: [
       "Modenisasi seluruh rumah untuk teres dan pangsapuri era 1970-an–90-an.",
@@ -406,7 +406,7 @@ export const translations: AreaTranslations = {
       "Pekan koridor Cheras South — teres perbandaran era 1990-an, estet perindustrian dan lapisan tinggi baharu di sepanjang rangkaian lebuh raya SILK.",
     intro: [
       "Balakong terletak di hujung selatan koridor Cheras dalam daerah Hulu Langat, di mana jalur perbandaran sepanjang Jalan Balakong dan lebuh raya SILK bertemu zon perindustrian yang besar. Ia berkembang pada 1990-an dan 2000-an sebagai kawasan kediaman yang mampu milik dan terhubung baik — rumah teres dua tingkat mendominasi, bersama pangsapuri, deretan kedai dan, kebelakangan ini, blok kondominium berhampiran pusat komersial.",
-      "Perumahannya kini berusia satu generasi, dan permintaan mengikut usia itu dengan tepat: bilik air baharu, dapur moden, pendawaian semula, paip dan kerja bumbung. Kami meliputi Balakong dengan renovasi penuh, elektrik, paip, kalis air, jubin dan cat — dengan sebut harga mengikut unit sebenar dan akses dirancang mengikut trafik koridor.",
+      "Perumahannya kini berusia satu generasi, dan permintaan mengikut usia itu dengan tepat: bilik air baharu, dapur moden, pendawaian semula, paip dan kerja bumbung. Kami meliputi Balakong dengan [renovasi penuh](/services/general-renovation), [elektrik](/services/electrical), [paip](/services/plumbing), [kalis air](/services/waterproofing), [jubin](/services/tiling) dan [cat](/services/painting) — dengan sebut harga mengikut unit sebenar dan akses dirancang mengikut trafik koridor.",
     ],
     serviceNotes: [
       "Modenisasi dapur dan bilik air untuk stok teres era 1990-an.",
@@ -453,7 +453,7 @@ export const translations: AreaTranslations = {
       "Perbandaran terancang di utara Klang — estet landed sejak 1980-an, blok pangsapuri dan kondominium baharu antara pekan Klang dan kawasan industri Bukit Raja.",
     intro: [
       "Bandar Baru Klang ialah perbandaran terancang utama di sebelah utara Klang, dibangunkan sejak 1980-an antara bandar diraja dan kawasan industri Bukit Raja. Ia berkembang sebagai daerah kediaman yang hampir lengkap sendiri — estet teres dan rumah berkembar, blok pangsapuri, deretan kedai dan, dalam fasa kemudian, kondominium di sekitar jalan utama dan pusat komersial.",
-      "Fasa terawal kini berusia tiga puluh hingga empat puluh tahun dan dalam tahun pembaharuan, jadi kerja yang kami sebut harga sepadan dengan kematangan itu: pendawaian semula, paip, bilik air baharu dan kerja bumbung pada stok landed, serta paip dan kalis air di pangsapuri lama. Kami meliputi Bandar Baru Klang dengan renovasi penuh, elektrik, paip, kalis air, jubin dan cat.",
+      "Fasa terawal kini berusia tiga puluh hingga empat puluh tahun dan dalam tahun pembaharuan, jadi kerja yang kami sebut harga sepadan dengan kematangan itu: pendawaian semula, paip, bilik air baharu dan kerja bumbung pada stok landed, serta paip dan kalis air di pangsapuri lama. Kami meliputi Bandar Baru Klang dengan [renovasi penuh](/services/general-renovation), [elektrik](/services/electrical), [paip](/services/plumbing), [kalis air](/services/waterproofing), [jubin](/services/tiling) dan [cat](/services/painting).",
     ],
     serviceNotes: [
       "Modenisasi dapur dan bilik air untuk stok landed era 1980-an–90-an.",
@@ -500,7 +500,7 @@ export const translations: AreaTranslations = {
       "Daerah selatan Selangor — KLIA dan Litar Sepang, koridor perbandaran Salak Tinggi serta jalur estet landed dan pangsapuri di sekitar pekan-pekannya.",
     intro: [
       "Sepang ialah daerah paling selatan di Selangor, terkenal di peringkat antarabangsa kerana Lapangan Terbang Antarabangsa Kuala Lumpur dan Litar Antarabangsa Sepang, serta terkenal kepada penduduk tempatan kerana pekan-pekannya — Salak Tinggi, ibu kota daerah, bersama pekan Sepang, Sungai Pelek dan kawasan kampung serta estet di sekelilingnya. Pembangunan mengikuti lapangan terbang: Salak Tinggi berkembang sebagai perbandaran terancang di koridor lapangan terbang, dan estet landed serta pangsapuri baharu tersebar di sepanjang jalan utama daerah.",
-      "Kerja di sini mengikut corak itu. Rumah perbandaran era 1990-an–2010-an memerlukan naik taraf bilik air, pendawaian semula dan pembaikan kecacatan; rumah kampung dan estet lama memerlukan kesedaran struktur, paip dan kerja bumbung; dan unit sewa yang menempatkan pekerja lapangan terbang serta logistik memerlukan pengubahsuaian yang pantas dan tahan lasak. Kami meliputi Sepang dan Salak Tinggi dengan renovasi penuh, elektrik, paip, kalis air, jubin, cat dan handyman.",
+      "Kerja di sini mengikut corak itu. Rumah perbandaran era 1990-an–2010-an memerlukan naik taraf bilik air, pendawaian semula dan pembaikan kecacatan; rumah kampung dan estet lama memerlukan kesedaran struktur, paip dan kerja bumbung; dan unit sewa yang menempatkan pekerja lapangan terbang serta logistik memerlukan pengubahsuaian yang pantas dan tahan lasak. Kami meliputi Sepang dan Salak Tinggi dengan [renovasi penuh](/services/general-renovation), [elektrik](/services/electrical), [paip](/services/plumbing), [kalis air](/services/waterproofing), [jubin](/services/tiling), [cat](/services/painting) dan [handyman](/services/handyman).",
     ],
     serviceNotes: [
       "Modenisasi seluruh rumah untuk perbandaran dan estet di seluruh daerah.",
