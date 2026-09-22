@@ -15,6 +15,12 @@ remain intact. Only service structured-data completeness/entity links and
 regression guards changed; no visible section, price or HTML link changed.
 
 Phase 44 re-verification (2026-09-22): the same inventory and all 678 URLs
+remain intact. Only the project pages' inline re-declarations of their pillar
+Service entities changed (69 of 84 localized project pages, names in JSON-LD
+only) plus the regression guards; no visible section, price, HTML link, title
+or metadata changed.
+
+Phase 45 re-verification (2026-09-22): the same inventory and all 678 URLs
 remain intact. The Knowledge Hub guides now link every priced scope whose table
 they quote (and are linked back on those scope pages); no URL, page, price,
 service, problem, area or project changed.
@@ -36,10 +42,10 @@ service, problem, area or project changed.
 | Static generation entries | **689** (`next build` progress total; distinct from the 678 canonical sitemap URLs) |
 | Pricing rows (`data/pricing/pricing.ts`) | **51** |
 | Search-intent matrix entries | **24** (all pricing derived from `pricingId`) |
-| Audit scripts | 17 static + 1 live server QA (**255** served-site checks after Phase 44) |
+| Audit scripts | 17 static + 1 live server QA (**257** served-site checks after Phase 45: 254 baseline + 2 entity-graph, Phase 44 + 1 quoted-scope, Phase 45) |
 | In-copy contextual links (rendered anchors) | **313 EN / 362 MS / 364 ZH** (Phase 39) |
 | Region hub → Knowledge Hub guide links (rendered) | **72** (6 hubs × 12 guides; Phase 41, was 0) |
-| Knowledge Hub ↔ quoted-scope links (rendered, both directions) | **144 + 144** (48 quoted price rows × 3 languages; Phase 44, was 75 + 75 with 31 quoted scopes unlinked) |
+| Knowledge Hub ↔ quoted-scope links (rendered, both directions) | **144 + 144** (48 quoted price rows × 3 languages; Phase 45, was 75 + 75 with 31 quoted scopes unlinked) |
 | Problem guides listed in `/llms.txt` | **57 of 57** in 10 categories (Phase 42, was 12 sampled) |
 | Pages rendering Q&A that publish a `FAQPage` node | **567 of 567** (Phase 42; the 3 homepages were the exception) |
 | `<title>` tags ≤65 characters | **678 of 678**, longest exactly 65 (Phase 41; was 468 of 678) |
@@ -6046,7 +6052,159 @@ provider/parent entity links now guarded against regression.**
 
 ---
 
-## Phase 44 — Knowledge Hub guides link every priced scope they quote (2026-09-22)
+## Phase 44 — One entity, one name: the portfolio's inline Service restatements now agree with their pillars (2026-09-22)
+
+**Result: 🟢 existing site, content graph and AI layers verified intact; 🔴 one entity-identity defect fixed in the project pages' structured data.** This is a schema alignment correction, not a redesign, a content expansion or a copy edit.
+
+### 1. Inspect and verify before deciding what needs work
+
+Read `AGENTS.md`, progress through Phase 43, `CONTENT_GOVERNANCE.md`,
+`CONTENT_MAP.md` and `PROJECT_OWNER_PENDING.md`, then re-verified the live
+layers from the served site: the internal link graph (edge matrix over all
+twelve content families, inbound floors, reciprocity), the metadata layer,
+both AI feeds, `/llms.txt` and the structured data of a representative page of
+every family. Baseline before any edit: type-check, lint, production build
+(689 entries), all **17 static audits** PASS, `audit:live` **PASS 254 / 0 / 0**,
+and an independent crawl of all **678 URLs** — 0 non-200, no family edge
+missing, no page without main-content inbound links beyond the chrome-linked
+legal/quote/search entries, crawl depth still 2. The Phase 27–43 work was
+found green as recorded and was left untouched.
+
+### 2. 🔴 The one defect found: the portfolio renamed its own pillars in the graph
+
+An independent full-site JSON-LD entity-graph verifier (group every node with
+both `@id` and `@type` by `@id` across all 678 pages: 2,659 definitions, 3,678
+bare `{"@id": …}` references) found 0 unresolved references and **36
+field conflicts over 18 entities — every one of them a pillar `#service`
+entity re-declared on project pages**. `ProjectJsonLd` legitimately restates
+the pillar's Service entity inline under the project's `about`; but it
+published the *portfolio category label* as that entity's `name`/`serviceType`
+while the pillar page publishes the registry name for the same `@id`:
+
+| Language | Pillar entity (owner page says) | Project pages said | Entities |
+|---|---|---|---|
+| EN | Tile & Tiling · Welding & Metal Works · Ceiling & Partition · General Renovation | Tiling · Welding · Ceiling · Renovation | 4 |
+| MS | Kerja Jubin & Pemasangan Jubin · Kerja Elektrik · Kimpalan & Kerja Logam · Siling & Partisyen · Renovasi & Pengubahsuaian Rumah · Kerja Paip (Plumbing) · Servis Handyman | Jubin · Elektrik · Kimpalan · Siling · Renovasi · Paip · Kerja Am | 7 |
+| ZH | 瓷砖与铺砖工程 · 焊接与金属工程 · 电气工程 · 天花板与隔间工程 · 综合装修工程 · 水管工程 · 家居维修服务 | 瓷砖 · 焊接 · 电工 · 天花板 · 装修 · 水管 · 居家维修 | 7 |
+
+Search and answer engines merge by `@id`: an entity that answers under two
+names in the same sitemap is an entity-resolution ambiguity — exactly what
+Phases 7, 16, 36 and 43 built this graph to avoid. The category labels are not
+wrong on their own surfaces (visible chips, gallery copy, `<title>` fragments
+— all untouched); they were only ever wrong as the *entity's* name. No price,
+no visible string and no relationship was invented or repointed.
+
+### 3. The fix (one builder, two derived fields)
+
+`components/projects/ProjectJsonLd.tsx` now resolves the localized pillar with
+the same `hasTranslation("service", …)` predicate it already used to pick the
+entity URL, then takes `name`/`serviceType` from
+`getServiceDetail(serviceSlug, serviceLang)?.name` — the exact registry and
+localization path that owns the pillar page's own `serviceNode()`. The
+category label survives only as the `??` fallback if a registry entry ever
+disappears. The 15 localized project pages whose category label already equals
+the pillar name (e.g. every EN painting/electrical/handyman project) were and
+remain byte-identical; **69 pages** (13 EN / 28 MS / 28 ZH) changed JSON-LD at
+all. A field-level diff of full-site before/after snapshots confirms the
+change is exactly **138 leaf edits = 69 pages × 2 fields**
+(`about[0].name`, `about[0].serviceType`): the sub-service restatements, image
+objects, `CreativeWork`, WebPage and breadcrumb nodes on those same pages are
+untouched, as are the other 594 pages' graphs. The sub-service references were
+verified to already derive their names from the same registry the scope pages
+publish from (`sub[code].name` = the page's `text.name`), so they needed no
+change; a restatement that omits an optional field (e.g. `description`)
+narrows, not contradicts, and stays allowed.
+
+### 4. Guards added (so none of this can silently return)
+
+**`npm run audit:live` — new "Entity graph consistency (Phase 44)" block
+(+2 checks), 254 → 256.** The existing 678-page sweep now also collects, per
+page, every typed entity definition and every bare `@id` reference (no second
+crawl). The new block asserts, site-wide: (1) every entity that more than one
+page defines agrees with its owner page on `name`, `url` and `serviceType` —
+58 re-declared entities today, nothing hard-coded, the owner page owns the
+truth; and (2) every one of the 3,678 entity references resolves to an entity
+the site publishes. `description` is deliberately not compared: the shared
+Organization node publishes a localized description on every page by design,
+and a restatement may omit copy without contradicting the owner.
+
+**`npm run audit:schema` — three new source checks:** the project builder must
+resolve the localized pillar with `hasTranslation` before minting the `@id`;
+the restated name must come from `getServiceDetail(serviceSlug,
+serviceLang)?.name` with a `categoryLabel` fallback; and neither `name:` nor
+`serviceType:` in `ProjectJsonLd` may carry the label directly. Comments are
+stripped before matching, in the Phase 43 style.
+
+| # | Break (revert or bypass the fix) | Guard | Result |
+|---|---|---|---|
+| 1 | Restore `name: categoryLabel` in the project builder (full revert, rebuilt + served) | `audit:schema` | FAIL 3 — pillar-URL resolution, registry name, label-as-name checks |
+| 2 | Same rebuilt break | `audit:live` | FAIL 9 in the new block — `"name"`/`"serviceType"` conflicts quoted per entity with an example owner and offender page, then `…and 28 more conflicting entities`; the reference-resolution check stayed ✓, isolating the defect class |
+| 3 | Restore the fix | both suites | `audit:schema` PASS; live **PASS 256 / 0 / 0**; strict site scan over the rebuilt pages: **0 field conflicts, 0 unresolved references** at the same 2,659 / 3,678 totals (nothing removed, only aligned) |
+
+Break 1 was run as a real rebuild against the running server, not a unit
+fixture, so the red state is the rendered payload answer engines would have
+read; `git stash` restored and re-verified green in the same session.
+
+### 5. 🟢 Verified and deliberately left untouched
+
+- All **678 URLs** / **689 static generation entries**, canonicals, hreflang,
+  robots, titles (all still ≤ 65 and branded — 0 title diffs in the
+  before/after crawl), meta descriptions, H1s, breadcrumbs and every visible
+  `<main>` byte-identical (0 diffs across all 678 pages excluding script
+  payloads).
+- Every **price** (`audit:pricing` / `audit:locations` §10 / `audit:business`
+  PASS; the project schema still carries no price, and `data/pricing/` is
+  untouched).
+- The Phase 27–43 link graph and all its floors (Phases 28/29/30/32/35/39/40/41
+  edges re-verified by `audit:live` at 256 checks); the 51 sub-service, 57
+  problem, 53 area, 28 project and 12 guide inventories; the Smart Service
+  Finder and its `?q=` noindex+canonical layer (spot-verified this phase);
+  `/llms.txt`, `/ai/business.json`, `/ai/pricing.json`; the quote flow,
+  analytics posture and security headers.
+- Visible project UI: category chips, gallery captions, `<title>` composition
+  (which keeps the label deliberately — `getProjectSeo` is a separate path and
+  was not modified) and every other string.
+- Honest gaps that remain owner-gated in `PROJECT_OWNER_PENDING.md`: real
+  project locations (so project ↔ area links stay unmade), kampung-level
+  coverage beyond the published `kuala-lumpur/kampung-baru` page, and the
+  homepage review block — none of it invented, none of it touched.
+
+### 6. Final QA and limits
+
+- [x] `npm run type-check` — PASS · `npm run lint` — PASS (0/0)
+- [x] `npm run build` — PASS, 689 static generation entries (unchanged)
+- [x] All **17 static audits** — PASS, including the three new `audit:schema` checks
+- [x] `npm run audit:live` — **PASS 256 / WARN 0 / FAIL 0** against the local production build
+- [x] Before/after full-site snapshot diff — 0 main-content diffs, 0 title
+      diffs, JSON-LD diffs on exactly the 69 intended project pages
+- [x] Independent strict entity scan (separate script from the audit) — 0 conflicts, 0 unresolved refs
+- [x] `git diff --check` — clean
+
+Limits: this is local production-build HTTP/JSON-LD QA, not a real-browser,
+real-phone or Search-Console-side inspection; entity consistency is measured
+as exact string equality on name/URL/serviceType, which cannot express
+legitimate future cases where a page *should* refine an entity (those must
+extend, not rename, and the guard documents why it ignores `description`).
+Read-only fetches to the public domain still fail TLS from this sandbox
+(`SSL_ERROR_SYSCALL` on 2026-09-22), so deployment freshness of this change on
+`renovixhomeservices.my` is not established here — that is not a claim the
+public site is down. During the repeated back-to-back red-state runs the
+quote API's per-instance limiter answered the QA suite's own repeated test
+submission with 413/429-class responses once; the first and final clean
+single runs pass the quote check, and the limiter behaving is the documented
+design (Phase 22/26). Live preview in the sandbox uses an untracked,
+sandbox-only header adapter to allow embedding; tracked production headers are
+unchanged.
+
+Status: **Code verified + Build verified + Local production HTTP verified; the
+structured-data graph is now identity-consistent end to end — every entity the
+site re-states says the same name, URL and serviceType as the page that owns
+it, and every entity reference resolves — guarded site-wide against
+regression.**
+
+---
+
+## Phase 45 — Knowledge Hub guides link every priced scope they quote (2026-09-22)
 
 **Result: 🟢 existing site, prices, UI and URLs preserved; 🔴 31 data-declared
 guide ↔ scope relations that were missing are now wired and guarded.** This is
@@ -6141,13 +6299,13 @@ Measured on the served build:
   scope "full-house-painting" but relatedSubServices does not link its page`;
   restoring returns to PASS.
 - **`npm run audit:live`** — new "Quoted-scope links (Knowledge Hub)" block
-  (254 → **255** checks): from the same registries the pages render, it walks
-  every language × article × quoted-scope triple and asserts on the crawled
-  link graph that the article page links the scope page **and** the scope page
-  links the article back. Currently **144 + 144** edges. Negative test (built
-  and served): dropping the same painting relation fails with exactly 6
-  messages — both directions × EN/MS/ZH — then returns to
-  **PASS 255 / WARN 0 / FAIL 0** after restore.
+  (**+1** check on the 254-check baseline this phase started from): from the
+  same registries the pages render, it walks every language × article ×
+  quoted-scope triple and asserts on the crawled link graph that the article
+  page links the scope page **and** the scope page links the article back.
+  Currently **144 + 144** edges. Negative test (built and served): dropping
+  the same painting relation fails with exactly 6 messages — both directions ×
+  EN/MS/ZH — then returns to green after restore.
 
 ### 5. 🟢 Verified and deliberately left untouched
 
@@ -6168,7 +6326,7 @@ Measured on the served build:
       were removed rather than tracked)
 - [x] `npm run build` — PASS, **689** static generation entries
 - [x] All **17 static audits** — PASS
-- [x] `npm run audit:live` — **PASS 255 / WARN 0 / FAIL 0**
+- [x] `npm run audit:live` — **PASS 257 / WARN 0 / FAIL 0** (merged tree; see §7)
 - [x] Negative tests — 1 static break + 1 served break, both fail as designed,
       both restored to green
 - [x] `git diff --check` — clean; change set is 8 article data lines + 2 audit
@@ -6178,6 +6336,32 @@ Limits: local production-build HTTP/HTML QA, not device, ranking or AI-answer
 measurement; no claim that the added links change search outcomes — they close
 a real inconsistency in the site's own link convention. Owner-gated items in
 `PROJECT_OWNER_PENDING.md` remain owner-gated; none was invented or assumed.
+
+### 7. Merge reconciliation with PR #62 (2026-09-22)
+
+This phase was authored and verified in parallel with PR #62 ("One entity, one
+name: the portfolio's inline Service restatements now agree with their
+pillars"), which merged to `main` first and therefore keeps the **Phase 44**
+number; this phase is recorded as **Phase 45**. The two touch disjoint
+application code (theirs: `components/projects/ProjectJsonLd.tsx` +
+`audit:schema`; mine: 8 article data files + `audit:blog`), and both extend
+`scripts/phase25-live-qa.mjs` and the progress docs, which conflicted only in
+documentation text. Both phases' work is preserved in full:
+
+- Their entity-graph block (+2 live checks) and this phase's quoted-scope
+  block (+1 live check) coexist in `scripts/phase25-live-qa.mjs`; the merged
+  suite runs **257** checks (254 baseline + 2 + 1), re-verified green on the
+  merged tree below.
+- The inventory table carries both phases' rows and both re-verification
+  paragraphs, ordered Phase 44 then Phase 45.
+- Guard comments in `scripts/audit-blog.mjs` and the quoted-scope block in
+  `scripts/phase25-live-qa.mjs` were renumbered from the draft "Phase 44" to
+  Phase 45 to match the final numbering; no logic changed.
+
+Post-merge gate (2026-09-22): type-check, lint, build (**689** entries), all
+17 static audits, and `npm run audit:live` **PASS 257 / WARN 0 / FAIL 0**
+against the merged production build — including both phases' new checks
+(144 + 144 quoted-scope edges and the entity-graph consistency block).
 
 Status: **Code verified + Build verified + Local production HTTP verified;
 every guide now links the scopes whose prices it quotes, in both directions

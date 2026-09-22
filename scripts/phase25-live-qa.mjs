@@ -98,6 +98,49 @@ function typesOf(node) {
   return Array.isArray(t) ? t : t ? [t] : [];
 }
 
+/**
+ * Phase 44 — entity-graph integrity. Every node that carries both `@id` and
+ * `@type` is an entity *definition*; a one-key `{"@id": …}` object anywhere
+ * in the graph is a reference. Collecting the definitions lets a later check
+ * assert that when several pages re-declare the same entity (a project page
+ * restating its pillar's Service node, say) they restate the same values: one
+ * entity, one name, one URL, everywhere. `description` is deliberately not
+ * compared — the shared Organization node publishes a localized description on
+ * every page by design, and partial restatements may omit copy without
+ * contradicting the owner.
+ */
+function collectEntityNodes(nodes) {
+  const defs = [];
+  const refs = [];
+  const compareFields = ["name", "url", "serviceType"];
+  const visit = (node) => {
+    if (!node || typeof node !== "object") return;
+    if (Array.isArray(node)) {
+      for (const item of node) visit(item);
+      return;
+    }
+    const id = node["@id"];
+    if (typeof id === "string") {
+      if (node["@type"]) {
+        defs.push({
+          id,
+          fields: compareFields
+            .filter((field) => node[field] !== undefined)
+            .map((field) => [field, String(node[field])]),
+        });
+      } else if (Object.keys(node).length === 1) {
+        refs.push(id);
+      }
+    }
+    for (const [key, value] of Object.entries(node)) {
+      if (key.startsWith("@")) continue;
+      visit(value);
+    }
+  };
+  for (const node of nodes) visit(node);
+  return { defs, refs };
+}
+
 async function checkPageSeo(path, expect = {}) {
   const { text, status } = await fetchText(path);
   if (status !== 200) {
@@ -467,6 +510,10 @@ async function sampleStatuses(locs) {
   const schemaTypes = new Map();
   // Phase 43 — retain only the service entities and their visible scope cards.
   const serviceSchemas = new Map();
+  // Phase 44 — entity definitions (@id + @type) and bare @id references kept
+  // from every page's JSON-LD graph, so the entity-consistency check below
+  // needs no second crawl.
+  const entities = new Map();
   for (let i = 0; i < locs.length; i += batchSize) {
     const batch = locs.slice(i, i + batchSize);
     const results = await Promise.all(
@@ -481,6 +528,7 @@ async function sampleStatuses(locs) {
         let faqBlocks = 0;
         let schemaTypes = null;
         let serviceSchema = null;
+        let entityNodes = null;
         if (res.status === 200) {
           const html = await res.text();
           hrefs = extractInternalHrefs(html);
@@ -496,6 +544,7 @@ async function sampleStatuses(locs) {
           const nodes = flattenGraph(jsonLdBlocks(html));
           schemaTypes = new Set(nodes.flatMap((node) => typesOf(node)));
           serviceSchema = extractServiceSchema(path, html, nodes);
+          entityNodes = collectEntityNodes(nodes);
           // Everything a crawler reads as page text: the flight-data scripts
           // are hydration payload, not copy, so they are set aside first.
           const visible = html.replace(/<script\b[\s\S]*?<\/script>/gi, " ");
@@ -514,6 +563,7 @@ async function sampleStatuses(locs) {
           faqBlocks,
           schemaTypes,
           serviceSchema,
+          entityNodes,
         };
       }),
     );
@@ -530,12 +580,13 @@ async function sampleStatuses(locs) {
       if (r.status === 200) faqBlocks.set(r.path, r.faqBlocks);
       if (r.schemaTypes) schemaTypes.set(r.path, r.schemaTypes);
       if (r.serviceSchema) serviceSchemas.set(r.path, r.serviceSchema);
+      if (r.entityNodes) entities.set(r.path, r.entityNodes);
       if (r.leaked) leakedMarkup.push(r.path);
     }
   }
   if (bad === 0) pass(`all ${ok} sitemap URLs return 200`);
   else fail(`sitemap sweep ${ok} ok / ${bad} failed`);
-  return { graph, anchors, inCopy, titles, leakedMarkup, faqBlocks, schemaTypes, serviceSchemas };
+  return { graph, anchors, inCopy, titles, leakedMarkup, faqBlocks, schemaTypes, serviceSchemas, entities };
 }
 
 /* ------------------------------------------------------------------------ */
@@ -1185,7 +1236,7 @@ function checkInternalLinkGraph(locs, graph) {
  * site no longer serves (stale entry after a page is unpublished).
  */
 /* ------------------------------------------------------------------------ */
-/* Phase 44 — Knowledge Hub guides that quote a scope's price must link that */
+/* Phase 45 — Knowledge Hub guides that quote a scope's price must link that */
 /* scope's page, and the scope's page must link back to the guide.           */
 /*                                                                          */
 /* Every pricing row belongs to a standalone sub-service page. When a guide  */
@@ -1533,6 +1584,82 @@ function checkServiceSchemaCoverage(locs, serviceSchemas, graph) {
   if (badCatalogues.length === 0) pass(`all ${pillars.length} OfferCatalogs match all ${visibleTotal} visible scope names and descriptions, in page order`);
   else fail(`${badCatalogues.length} OfferCatalogs differ from their complete visible scopes (e.g. ${badCatalogues.slice(0, 3).join(", ")})`);
 }
+
+/**
+ * Phase 44 — one entity, one identity, everywhere. The site defines each
+ * entity once and references it by `@id`; where a page restates a foreign
+ * entity inline (project pages re-publishing their pillar's `#service` node),
+ * every restated field must match the owner's values — an entity that answers
+ * engines find under two names is two entities. Over all 678 pages the sweep
+ * compares `name`, `url` and `serviceType` of every typed definition, and
+ * verifies that every bare `{"@id": …}` reference resolves to an entity the
+ * site actually publishes. Nothing here hard-codes an expected name: the
+ * pillar page owns the truth, every other page must agree with it.
+ */
+function checkEntityGraphConsistency(locs, pageEntities) {
+  console.log("\n== Entity graph consistency (Phase 44) ==");
+  const defs = new Map();
+  const refs = [];
+  let scanned = 0;
+  for (const loc of locs) {
+    const path = loc.replace(CANONICAL_HOST, "");
+    const entry = pageEntities.get(path);
+    if (!entry) continue;
+    scanned += 1;
+    for (const def of entry.defs) {
+      if (!defs.has(def.id)) defs.set(def.id, []);
+      defs.get(def.id).push({ path, fields: def.fields });
+    }
+    for (const id of entry.refs) refs.push({ path, id });
+  }
+  if (defs.size === 0 || refs.length === 0) {
+    fail("entity consistency check needs at least one definition and one reference; the extraction returned an empty set");
+    return;
+  }
+
+  const conflicts = [];
+  let shared = 0;
+  for (const [id, ds] of [...defs].sort()) {
+    if (ds.length < 2) continue;
+    shared += 1;
+    const byField = new Map();
+    for (const d of ds) {
+      for (const [field, value] of d.fields) {
+        if (!byField.has(field)) byField.set(field, new Map());
+        const byValue = byField.get(field);
+        if (!byValue.has(value)) byValue.set(value, []);
+        byValue.get(value).push(d.path);
+      }
+    }
+    for (const [field, byValue] of byField) {
+      if (byValue.size > 1) {
+        const [first, ...rest] = [...byValue];
+        conflicts.push(
+          `${id} — "${field}" published as ${JSON.stringify(first[0])} (e.g. ${first[1][0]}) ` +
+          `but also ${JSON.stringify(rest[0][0])} (e.g. ${rest[0][1][0]})`,
+        );
+      }
+    }
+  }
+  if (conflicts.length === 0) {
+    pass(`all ${shared} entities re-declared across pages agree with their owner page on name, URL and serviceType (${defs.size} definitions on ${scanned} pages)`);
+  } else {
+    for (const c of conflicts.slice(0, 8)) fail(c);
+    if (conflicts.length > 8) fail(`…and ${conflicts.length - 8} more conflicting entities`);
+  }
+
+  const unresolved = [];
+  for (const { path, id } of refs) {
+    if (!defs.has(id)) unresolved.push(`${path} references ${id}`);
+  }
+  if (unresolved.length === 0) {
+    pass(`all ${refs.length} entity @id references on the sitemap pages resolve to an entity the site publishes`);
+  } else {
+    for (const u of unresolved.slice(0, 8)) fail(`unresolved entity reference: ${u}`);
+    if (unresolved.length > 8) fail(`…and ${unresolved.length - 8} more unresolved references`);
+  }
+}
+
 
 /**
  * Phase 34 — the AI feed must carry the phrasing tables for every language
@@ -1901,7 +2028,7 @@ async function main() {
   console.log(`Phase 25 live QA against ${BASE}\n`);
   await checkHeaders();
   const locs = await checkSitemapLive();
-  const { graph, anchors, inCopy, titles, leakedMarkup, faqBlocks, schemaTypes, serviceSchemas } =
+  const { graph, anchors, inCopy, titles, leakedMarkup, faqBlocks, schemaTypes, serviceSchemas, entities } =
     await sampleStatuses(locs);
   checkInternalLinkGraph(locs, graph);
   checkQuotedScopeLinks(locs, graph);
@@ -1910,6 +2037,7 @@ async function main() {
   await checkAiFeedCoverage(locs);
   checkVisibleFaqCoverage(locs, faqBlocks, schemaTypes);
   checkServiceSchemaCoverage(locs, serviceSchemas, graph);
+  checkEntityGraphConsistency(locs, entities);
   await checkAiPhrasingCoverage(locs);
   await checkAiLocalizedUrlCoverage(locs);
   await checkLocalizedAnchors(anchors);

@@ -53,7 +53,7 @@ const pricingIds = new Set(
 );
 // pricingId -> sub-service slug. Every priced scope page owns exactly one
 // catalogue row, so this maps each quoted price row back to the page that
-// sells it (Phase 44's quoted-scope coverage check below).
+// sells it (Phase 45's quoted-scope coverage check below).
 const pricingToSubService = new Map();
 for (const f of readdirSync(path.join(root, "data/sub-services/content"))) {
   for (const m of read(`data/sub-services/content/${f}`).matchAll(
@@ -114,7 +114,7 @@ for (const file of files) {
     }
   }
 
-  // Phase 44 — an article that quotes a scope's price must link that scope's
+  // Phase 45 — an article that quotes a scope's price must link that scope's
   // page. Every pricing row belongs to a standalone sub-service page; when a
   // guide renders that row's table it is using the scope's own data, so the
   // guide must also carry the scope in relatedSubServices (the field that
