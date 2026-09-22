@@ -10,6 +10,7 @@ import {
   getProjectSubServices,
 } from "@/data/project-content";
 import { getProjectSeo } from "@/data/project-content/seo";
+import { getServiceDetail } from "@/data/service-content";
 import { subServiceLanguages } from "@/data/sub-services";
 import { siteConfig } from "@/data/site";
 import { getDictionary } from "@/i18n";
@@ -78,16 +79,29 @@ export function ProjectJsonLd({ project, lang }: ProjectJsonLdProps) {
       ?.label ?? t.projects.fallbackCategory;
 
   const serviceSlug = category?.servicePath.replace("/services/", "") ?? "";
-  const serviceUrl = hasTranslation("service", serviceSlug, code)
-    ? absoluteUrl(code, `/services/${serviceSlug}/`)
-    : absoluteUrl("en", `/services/${serviceSlug}/`);
+  const serviceLang = hasTranslation("service", serviceSlug, code)
+    ? code
+    : "en";
+  const serviceUrl = absoluteUrl(serviceLang, `/services/${serviceSlug}/`);
+
+  // Phase 44 — one entity, one name. This node re-declares the pillar page's
+  // own Service entity (`@id` is that page's entity ID), so its name must be
+  // the name the pillar publishes — `serviceNode()` reads it from the
+  // service-content registry, so this builder derives it from the same source
+  // with the same localized-page resolution. The portfolio category labels
+  // ("Tiling", "Ceiling", …) are chips and `<title>` fragments, which is
+  // correct for those surfaces but minted a second alias for the same entity
+  // in the graph; they remain only as the fallback if the registry entry ever
+  // disappears.
+  const serviceName =
+    getServiceDetail(serviceSlug, serviceLang)?.name ?? categoryLabel;
 
   /** Primary service involved in the work (WebPage.about points at the project). */
   const primaryServiceNode = {
     "@type": "Service",
     "@id": `${serviceUrl}#service`,
-    name: categoryLabel,
-    serviceType: categoryLabel,
+    name: serviceName,
+    serviceType: serviceName,
     url: serviceUrl,
   };
 
