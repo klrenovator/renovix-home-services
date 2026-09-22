@@ -63,6 +63,19 @@ it, every area guide linked to its scopes, no English slug label on a `/ms/` or
 pillar and location page rendering its in-copy links in all three languages
 with no leaked `[label](/path)` markup anywhere).
 
+Since Phase 43 the **structured service graph** also matches the existing
+visible architecture. Pillar `OfferCatalog` nodes enumerate all **208 overview
+scopes per language**, including both ceiling/partition groups, rather than
+silently stopping at 20 per service (168 scopes previously). These overview
+cards are **not** 208 standalone pages: the published detail-page inventory is
+still **51 sub-services**. Each detailed scope's `Service` node now references
+the shared business `provider` and its own localized pillar's existing
+`#service` entity via `isRelatedTo`. No relationship is guessed from an overview
+label, and no price, visible link, page or URL changes. `audit:schema` guards the
+source; `audit:live` compares every catalogue name/description against the
+rendered cards and resolves the provider/parent references on all 183 localized
+service and sub-service pages.
+
 ## 2. Problem-first map (57 guides at `/{lang}/problems/{slug}/`)
 
 Each guide: what it means → causes → warning signs → solutions → when to call

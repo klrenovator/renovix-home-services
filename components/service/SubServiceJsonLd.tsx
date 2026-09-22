@@ -2,6 +2,7 @@ import { JsonLd } from "@/components/seo/JsonLd";
 import {
   breadcrumbNode,
   faqNode,
+  ORGANIZATION_ID,
   schemaGraph,
   webPageNode,
 } from "@/components/seo/schema";
@@ -24,6 +25,7 @@ export function SubServiceJsonLd({
   const t = getDictionary(lang);
   const { slug, text, service, pricing } = detail;
   const canonical = absoluteUrl(lang, `/services/${detail.serviceSlug}/${slug}/`);
+  const serviceCanonical = absoluteUrl(lang, `/services/${detail.serviceSlug}/`);
   const places = ["Kuala Lumpur", "Selangor", "Klang Valley"].map((name) => ({
     "@type": "Place",
     name,
@@ -36,6 +38,10 @@ export function SubServiceJsonLd({
     serviceType: text.name,
     description: text.metaDescription,
     url: canonical,
+    // The provider and pillar are already named and linked on this page.
+    // Reuse their existing entity IDs rather than minting duplicate entities.
+    provider: { "@id": ORGANIZATION_ID },
+    isRelatedTo: { "@id": `${serviceCanonical}#service` },
     areaServed: places,
   };
 
@@ -81,7 +87,7 @@ export function SubServiceJsonLd({
       { name: t.servicePage.breadcrumbServices, url: absoluteUrl(lang, "/services/") },
       {
         name: service?.name ?? detail.serviceSlug,
-        url: absoluteUrl(lang, `/services/${detail.serviceSlug}/`),
+        url: serviceCanonical,
       },
       { name: text.name },
     ]),

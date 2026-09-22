@@ -266,7 +266,9 @@ export function serviceNode(detail: ServiceDetail, lang: string) {
     hasOfferCatalog: {
       "@type": "OfferCatalog",
       name: `${detail.name} services`,
-      itemListElement: catalogItems.slice(0, 20).map((subService) => ({
+      // Match every overview scope the page renders, including grouped
+      // ceiling/partition items. A sample cap silently omitted real work.
+      itemListElement: catalogItems.map((subService) => ({
         "@type": "Offer",
         itemOffered: {
           "@type": "Service",

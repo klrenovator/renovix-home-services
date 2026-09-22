@@ -61,6 +61,31 @@ if (sub.includes("pricing.startingPrice") && sub.includes("PriceSpecification"))
   pass("sub-service Offer prices come from the pricing registry");
 } else fail("sub-service schema price source unexpected");
 
+// Phase 43 — the service graph must describe the full visible catalogue and
+// connect detailed scopes to the same business and pillar the page links to.
+// Source checks are an early warning; audit:live compares actual names,
+// descriptions and @ids on every rendered service/sub-service page.
+const withoutComments = (source) => source
+  .replace(/\/\*[\s\S]*?\*\//g, "")
+  .replace(/^\s*\/\/.*$/gm, "");
+const schemaCode = withoutComments(schema);
+const serviceBuilder = schemaCode.match(/export function serviceNode\b[\s\S]*?(?=\nexport function|$)/)?.[0] ?? "";
+if (/itemListElement:\s*catalogItems\.map\(/.test(serviceBuilder)) {
+  pass("service OfferCatalog maps every visible scope without a sample cap");
+} else fail("service OfferCatalog must map the full catalogItems list (no slice/filter)");
+
+const subCode = withoutComments(sub);
+if (/provider:\s*\{\s*"@id":\s*ORGANIZATION_ID\s*\}/.test(subCode)) {
+  pass("sub-service provider references the shared ORGANIZATION_ID");
+} else fail("sub-service Service node must reference ORGANIZATION_ID as its provider");
+
+if (
+  /const serviceCanonical\s*=\s*absoluteUrl\(lang,\s*`\/services\/\$\{detail\.serviceSlug\}\/`\)/.test(subCode) &&
+  /isRelatedTo:\s*\{\s*"@id":\s*`\$\{serviceCanonical\}#service`\s*\}/.test(subCode)
+) {
+  pass("sub-service schema links its own localized parent Service entity");
+} else fail("sub-service isRelatedTo must reference the localized parent Service @id");
+
 if (failures.length) {
   console.log(`\nFAIL — ${failures.length} issue(s)`);
   process.exit(1);

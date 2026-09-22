@@ -465,6 +465,8 @@ async function sampleStatuses(locs) {
   // per served page.
   const faqBlocks = new Map();
   const schemaTypes = new Map();
+  // Phase 43 — retain only the service entities and their visible scope cards.
+  const serviceSchemas = new Map();
   for (let i = 0; i < locs.length; i += batchSize) {
     const batch = locs.slice(i, i + batchSize);
     const results = await Promise.all(
@@ -478,6 +480,7 @@ async function sampleStatuses(locs) {
         let title = null;
         let faqBlocks = 0;
         let schemaTypes = null;
+        let serviceSchema = null;
         if (res.status === 200) {
           const html = await res.text();
           hrefs = extractInternalHrefs(html);
@@ -490,9 +493,9 @@ async function sampleStatuses(locs) {
           // page publishes, so the rendered visible Q&A and the FAQPage node
           // that should describe it are compared without a second crawl.
           faqBlocks = countRenderedFaqBlocks(html);
-          schemaTypes = new Set(
-            flattenGraph(jsonLdBlocks(html)).flatMap((node) => typesOf(node)),
-          );
+          const nodes = flattenGraph(jsonLdBlocks(html));
+          schemaTypes = new Set(nodes.flatMap((node) => typesOf(node)));
+          serviceSchema = extractServiceSchema(path, html, nodes);
           // Everything a crawler reads as page text: the flight-data scripts
           // are hydration payload, not copy, so they are set aside first.
           const visible = html.replace(/<script\b[\s\S]*?<\/script>/gi, " ");
@@ -510,6 +513,7 @@ async function sampleStatuses(locs) {
           title,
           faqBlocks,
           schemaTypes,
+          serviceSchema,
         };
       }),
     );
@@ -525,12 +529,13 @@ async function sampleStatuses(locs) {
       if (r.status === 200) titles.set(r.path, r.title);
       if (r.status === 200) faqBlocks.set(r.path, r.faqBlocks);
       if (r.schemaTypes) schemaTypes.set(r.path, r.schemaTypes);
+      if (r.serviceSchema) serviceSchemas.set(r.path, r.serviceSchema);
       if (r.leaked) leakedMarkup.push(r.path);
     }
   }
   if (bad === 0) pass(`all ${ok} sitemap URLs return 200`);
   else fail(`sitemap sweep ${ok} ok / ${bad} failed`);
-  return { graph, anchors, inCopy, titles, leakedMarkup, faqBlocks, schemaTypes };
+  return { graph, anchors, inCopy, titles, leakedMarkup, faqBlocks, schemaTypes, serviceSchemas };
 }
 
 /* ------------------------------------------------------------------------ */
@@ -1333,6 +1338,129 @@ function checkVisibleFaqCoverage(locs, faqBlocks, schemaTypes) {
 }
 
 /**
+ * Phase 43 — complete, connected Service entities, checked against the page.
+ * The overview cards (208 EN scopes, repeated in MS/ZH) are not the same
+ * inventory as the 51 standalone sub-service pages. Compare each pillar's
+ * OfferCatalog with its own rendered cards, then verify every detailed scope
+ * points at the existing business and its own localized pillar Service @id.
+ */
+const SERVICE_PILLAR_PATH = /^\/(?:en|ms|zh)\/services\/[^/]+\/$/;
+const SUB_SERVICE_PATH = /^\/(?:en|ms|zh)\/services\/[^/]+\/[^/]+\/$/;
+const normalizeSchemaCopy = (text) => typeof text === "string"
+  ? text.replace(/\s+/g, " ").trim()
+  : null;
+
+function serviceScopeHtmlText(html) {
+  // Decode once: React escapes these characters in HTML, not in JSON-LD.
+  const entities = { amp: "&", lt: "<", gt: ">", quot: '"', apos: "'", nbsp: " " };
+  return normalizeSchemaCopy(html.replace(/<[^>]*>/g, "").replace(
+    /&(amp|lt|gt|quot|apos|nbsp|#x[0-9a-f]+|#\d+);/gi,
+    (entity, code) => {
+      if (!code.startsWith("#")) return entities[code.toLowerCase()];
+      const hex = code.slice(0, 2).toLowerCase() === "#x";
+      const point = Number.parseInt(code.slice(hex ? 2 : 1), hex ? 16 : 10);
+      return point <= 0x10ffff ? String.fromCodePoint(point) : entity;
+    },
+  ));
+}
+
+function extractServiceSchema(path, html, nodes) {
+  const isPillar = SERVICE_PILLAR_PATH.test(path);
+  if (!isPillar && !SUB_SERVICE_PATH.test(path)) return null;
+
+  const visibleScopes = [];
+  if (isPillar) {
+    const main = html.match(/<main\b[^>]*>([\s\S]*?)<\/main>/i)?.[1] ?? "";
+    // SubServicesSection's overview cards are the only <li> elements with
+    // these three classes. Match tokens, not their order. An empty extraction
+    // fails below, so a markup change cannot silently disable the comparison.
+    for (const card of main.matchAll(/<li\b([^>]*)>([\s\S]*?)<\/li>/gi)) {
+      const classes = new Set((card[1].match(/\bclass="([^"]*)"/)?.[1] ?? "").split(/\s+/));
+      if (!["card", "h-full", "p-5"].every((token) => classes.has(token))) continue;
+      visibleScopes.push({
+        name: serviceScopeHtmlText(card[2].match(/<h3\b[^>]*>([\s\S]*?)<\/h3>/i)?.[1] ?? ""),
+        description: serviceScopeHtmlText(card[2].match(/<p\b[^>]*>([\s\S]*?)<\/p>/i)?.[1] ?? ""),
+      });
+    }
+  }
+
+  return {
+    nodes: nodes.filter((node) => typesOf(node).includes("Service")),
+    organizationIds: nodes
+      .filter((node) => typesOf(node).includes("Organization") && typesOf(node).includes("LocalBusiness"))
+      .map((node) => node["@id"]),
+    visibleScopes,
+  };
+}
+
+function checkServiceSchemaCoverage(locs, serviceSchemas, graph) {
+  console.log("\n== Service catalogue + entity links (Phase 43) ==");
+  const paths = locs.map((loc) => loc.replace(CANONICAL_HOST, ""));
+  const pillars = paths.filter((path) => SERVICE_PILLAR_PATH.test(path));
+  const scopes = paths.filter((path) => SUB_SERVICE_PATH.test(path));
+  if (pillars.length === 0 || scopes.length === 0) {
+    fail("service schema comparison needs both pillar and sub-service pages; found an empty family");
+    return;
+  }
+
+  const servicePaths = [...pillars, ...scopes];
+  const primary = new Map();
+  const invalid = [];
+  for (const path of servicePaths) {
+    const canonical = `${CANONICAL_HOST}${path}`;
+    const matches = (serviceSchemas.get(path)?.nodes ?? []).filter(
+      (node) => node["@id"] === `${canonical}#service` && node.url === canonical,
+    );
+    if (matches.length === 1) primary.set(path, matches[0]);
+    else invalid.push(path);
+  }
+  if (invalid.length === 0) pass(`all ${servicePaths.length} service pages publish one canonical Service entity`);
+  else fail(`${invalid.length} service page(s) lack a unique canonical Service entity (e.g. ${invalid.slice(0, 3).join(", ")})`);
+
+  const organizationId = `${CANONICAL_HOST}/#organization`;
+  const badProviders = servicePaths.filter((path) =>
+    primary.get(path)?.provider?.["@id"] !== organizationId ||
+    !serviceSchemas.get(path)?.organizationIds.includes(organizationId),
+  );
+  if (badProviders.length === 0) pass(`all ${servicePaths.length} Service entities reference the shared Organization/LocalBusiness provider`);
+  else fail(`${badProviders.length} Service entities lack the shared provider link (e.g. ${badProviders.slice(0, 3).join(", ")})`);
+
+  const badParents = scopes.filter((path) => {
+    const parent = path.replace(/[^/]+\/$/, "");
+    const related = primary.get(path)?.isRelatedTo;
+    const targets = Array.isArray(related) ? related : [related];
+    return !primary.has(parent) || !graph.get(path)?.has(parent) || !targets.some(
+      (target) => target?.["@id"] === `${CANONICAL_HOST}${parent}#service`,
+    );
+  });
+  if (badParents.length === 0) pass(`all ${scopes.length} sub-service entities link their own served, visibly linked parent Service`);
+  else fail(`${badParents.length} sub-service entities lack their own localized parent Service link (e.g. ${badParents.slice(0, 3).join(", ")})`);
+
+  const badCatalogues = [];
+  let visibleTotal = 0;
+  for (const path of pillars) {
+    const expected = serviceSchemas.get(path)?.visibleScopes ?? [];
+    visibleTotal += expected.length;
+    const catalogue = primary.get(path)?.hasOfferCatalog;
+    const items = Array.isArray(catalogue?.itemListElement) ? catalogue.itemListElement : [];
+    const actual = items.map((offer) => ({
+      name: normalizeSchemaCopy(offer.itemOffered?.name),
+      description: normalizeSchemaCopy(offer.itemOffered?.description),
+    }));
+    if (
+      expected.length === 0 || expected.some((item) => !item.name || !item.description) ||
+      !typesOf(catalogue ?? {}).includes("OfferCatalog") ||
+      items.some((offer) => !typesOf(offer).includes("Offer") || !typesOf(offer.itemOffered ?? {}).includes("Service")) ||
+      JSON.stringify(actual) !== JSON.stringify(expected)
+    ) {
+      badCatalogues.push(`${path} (${actual.length} schema / ${expected.length} visible)`);
+    }
+  }
+  if (badCatalogues.length === 0) pass(`all ${pillars.length} OfferCatalogs match all ${visibleTotal} visible scope names and descriptions, in page order`);
+  else fail(`${badCatalogues.length} OfferCatalogs differ from their complete visible scopes (e.g. ${badCatalogues.slice(0, 3).join(", ")})`);
+}
+
+/**
  * Phase 34 — the AI feed must carry the phrasing tables for every language
  * the site serves. `/ai/business.json` publishes (phrase → kind + slug)
  * tuples so an assistant can map a customer's own words to the page that
@@ -1699,13 +1827,14 @@ async function main() {
   console.log(`Phase 25 live QA against ${BASE}\n`);
   await checkHeaders();
   const locs = await checkSitemapLive();
-  const { graph, anchors, inCopy, titles, leakedMarkup, faqBlocks, schemaTypes } =
+  const { graph, anchors, inCopy, titles, leakedMarkup, faqBlocks, schemaTypes, serviceSchemas } =
     await sampleStatuses(locs);
   checkInternalLinkGraph(locs, graph);
   checkTitles(locs, titles);
   checkInCopyLinks(locs, inCopy, leakedMarkup);
   await checkAiFeedCoverage(locs);
   checkVisibleFaqCoverage(locs, faqBlocks, schemaTypes);
+  checkServiceSchemaCoverage(locs, serviceSchemas, graph);
   await checkAiPhrasingCoverage(locs);
   await checkAiLocalizedUrlCoverage(locs);
   await checkLocalizedAnchors(anchors);
