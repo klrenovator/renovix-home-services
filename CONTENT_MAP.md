@@ -76,6 +76,21 @@ source; `audit:live` compares every catalogue name/description against the
 rendered cards and resolves the provider/parent references on all 183 localized
 service and sub-service pages.
 
+Phase 44 removed the last identity conflict inside that graph. A project page
+re-declares its pillar's `#service` entity inline under `about` — that is a
+legitimate restatement, not a second node — but it used to publish the
+portfolio *category label* (`Tiling`, `Ceiling`, `Renovation`, `焊接`, `居家维修`,
+…) as that entity's name, so across the three languages 18 shared pillar
+entities answered engines under two different names and serviceTypes. The name
+is now derived from the same service-content registry the pillar page itself
+publishes from, with the same localized-pillar resolution the `@id` already
+uses; the category label survives only as the fallback and on the visible
+surfaces it always belonged to (chips, `<title>` fragments, gallery copy).
+69 of the 84 localized project pages changed JSON-LD at all; the other 15
+already agreed with their pillar. `audit:schema` guards the source rule and
+`audit:live` now compares every re-declared entity with its owner page — and
+resolves every bare `@id` reference — across all 678 pages.
+
 ## 2. Problem-first map (57 guides at `/{lang}/problems/{slug}/`)
 
 Each guide: what it means → causes → warning signs → solutions → when to call
