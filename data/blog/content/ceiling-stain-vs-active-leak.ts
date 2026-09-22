@@ -10,7 +10,7 @@ export const ceilingStainVsActiveLeak: ArticleDefinition = {
   intents: ["troubleshooting", "signs-of-failure", "repair", "when-to-call"],
   published: "2026-09-04",
   relatedServices: ["ceiling-partition", "waterproofing", "plumbing", "painting"],
-  relatedSubServices: ["bathroom-waterproofing", "pipe-leak-repair"],
+  relatedSubServices: ["bathroom-waterproofing", "pipe-leak-repair", "pu-injection", "ceiling-repair", "callout-inspection", "concealed-leak-repair"],
   relatedProblems: [
     "ceiling-stains",
     "water-damaged-ceiling",

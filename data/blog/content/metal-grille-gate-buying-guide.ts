@@ -14,7 +14,7 @@ export const metalGrilleGateBuyingGuide: ArticleDefinition = {
   intents: ["material-comparison", "decision-guide", "cost", "maintenance", "lifespan"],
   published: "2026-09-04",
   relatedServices: ["welding-metal-works", "general-renovation", "painting"],
-  relatedSubServices: ["window-grille"],
+  relatedSubServices: ["window-grille", "main-gate", "railing-fencing", "awning-structure", "welding-repair"],
   relatedProblems: [],
   relatedLocations: [
     "selangor/rawang",

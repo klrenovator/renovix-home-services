@@ -11,7 +11,7 @@ export const waterproofingSystemsCompared: ArticleDefinition = {
   intents: ["material-comparison", "decision-guide", "lifespan", "installation"],
   published: "2026-09-04",
   relatedServices: ["waterproofing", "tiling", "ceiling-partition", "painting"],
-  relatedSubServices: ["bathroom-waterproofing"],
+  relatedSubServices: ["bathroom-waterproofing", "flat-roof-waterproofing", "balcony-waterproofing", "wall-seepage", "pu-injection"],
   relatedProblems: [
     "roof-leakage",
     "bathroom-leakage",

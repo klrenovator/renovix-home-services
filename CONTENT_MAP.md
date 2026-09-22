@@ -200,6 +200,16 @@ depth guides that closed the §5 flooring/plumbing/ceiling gaps. Each ships in
 EN+MS+ZH, quotes only `data/pricing/pricing.ts` rows, and is linked from its
 pillar service, its sub-service, its problems, its areas and the hub index.
 
+Since Phase 44 a guide must also **declare every priced scope it quotes**: each
+article's `relatedSubServices` carries the sub-service page behind every
+pricing row the guide renders (48 quoted rows across the 12 guides). The
+relation is data-declared, not editorial — the article renders that scope's own
+catalogue price, so it links the scope's page and the scope's page links the
+guide back through the shared `GuideLinksSection` (144 rendered edges each way
+across EN/MS/ZH). `npm run audit:blog` fails if a quoted row's page is missing
+from `relatedSubServices`, and `npm run audit:live` fails if either direction
+stops rendering.
+
 | # | Guide | Slug | Category |
 | --- | --- | --- | --- |
 | 1 | Bathroom rebuild cost | `bathroom-rebuild-cost-guide` | cost-guides |

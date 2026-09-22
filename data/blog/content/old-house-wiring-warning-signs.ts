@@ -16,7 +16,7 @@ export const oldHouseWiringWarningSigns: ArticleDefinition = {
   intents: ["signs-of-failure", "troubleshooting", "when-to-call", "lifespan", "cost"],
   published: "2026-09-04",
   relatedServices: ["electrical", "general-renovation"],
-  relatedSubServices: ["socket-installation"],
+  relatedSubServices: ["socket-installation", "troubleshooting", "db-box", "full-house-wiring"],
   relatedProblems: [
     "old-house-wiring",
     "power-tripping",
