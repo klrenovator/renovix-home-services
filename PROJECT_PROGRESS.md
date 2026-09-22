@@ -10,10 +10,17 @@
 
 ### Current site inventory (re-verified in Phase 37, 2026-09-20, `npm run build` + locally served `/sitemap.xml`; re-checked 2026-09-21 after Phase 38–40 — Phase 40 added internal links only, so no count below changed; re-checked 2026-09-22 after Phase 41, which changed `<title>` wording and added one rendered internal-link layer, so no URL, page, price or section count below changed; re-checked 2026-09-22 after Phase 42, which changed only the `/llms.txt` feed and the homepage's structured data, so no URL, page, price, section or link count below changed)
 
+Phase 43 re-verification (2026-09-22): the same inventory and all 678 URLs
+remain intact. Only service structured-data completeness/entity links and
+regression guards changed; no visible section, price or HTML link changed.
+
 | Item | Count |
 |---|---|
 | Service pillar pages | 10 per language |
 | Sub-service pages | 51 per language |
+| Existing overview scopes listed on the service pillars | **208 per language** (not standalone pages; re-counted in Phase 43) |
+| Overview scopes represented in pillar `OfferCatalog` nodes | **624 of 624** across 30 localized pillars (Phase 43; was 504) |
+| Sub-service `Service` nodes linked to the shared provider + localized pillar | **153 of 153** (Phase 43; was 0) |
 | Problem guides | 57 per language (10 categories) |
 | Area guides | **53** (21 Kuala Lumpur + 32 Selangor) + 2 region hubs + areas index per language |
 | Projects | 28 per language (Phase 23 added 7; 2 painting shots withdrawn by owner decision) |
@@ -24,7 +31,7 @@
 | Static generation entries | **689** (`next build` progress total; distinct from the 678 canonical sitemap URLs) |
 | Pricing rows (`data/pricing/pricing.ts`) | **51** |
 | Search-intent matrix entries | **24** (all pricing derived from `pricingId`) |
-| Audit scripts | 17 static + 1 live server QA (**250** served-site checks after Phase 42) |
+| Audit scripts | 17 static + 1 live server QA (**254** served-site checks after Phase 43) |
 | In-copy contextual links (rendered anchors) | **313 EN / 362 MS / 364 ZH** (Phase 39) |
 | Region hub → Knowledge Hub guide links (rendered) | **72** (6 hubs × 12 guides; Phase 41, was 0) |
 | Problem guides listed in `/llms.txt` | **57 of 57** in 10 categories (Phase 42, was 12 sampled) |
@@ -5874,3 +5881,159 @@ Status: **Code verified + Build verified + Live verified (HTTP); the
 machine-readable layer is now complete — every family in `/llms.txt` is at full
 parity with `/ai/business.json` and the served sitemap, and every page that
 shows a question now publishes the structured data that answers it.**
+
+---
+
+## Phase 43 — Complete service catalogues and connected sub-service entities (2026-09-22)
+
+**Result: 🟢 existing site and HTML link graph preserved; 🟡 truncated service
+catalogues completed; 🔴 missing sub-service entity links added.** This is a
+structured-data correction, not a redesign or a content/page expansion.
+
+### 1. Inspect and verify before deciding what needs work
+
+Read `AGENTS.md`, progress through Phase 42, `CONTENT_GOVERNANCE.md`,
+`CONTENT_MAP.md`, `PROJECT_OWNER_PENDING.md`, the real service/sub-service,
+problem, area, location, project and guide registries, their rendering/link
+components and the existing audits. The earlier standalone Master Prompt was
+not attached to this session; the current instructions and repository-recorded
+rules supplied the scope, not an assumed backlog.
+
+Baseline, before any application edit: type-check, lint, production build and
+all **17 static audits** PASS; existing live QA **250 PASS / 0 WARN / 0 FAIL**.
+An independent HTML crawl of all **678 URLs** additionally compared section
+anchors, metadata, the internal link graph and rendered FAQ text against schema.
+
+Reconfirmed the existing inventory: **10 services, 51 sub-service pages,
+57 problem guides, 53 area guides (21 KL + 32 Selangor), 2 region hubs,
+28 projects, 12 Knowledge Hub guides, 51 pricing rows and 24 intent entries**.
+The service names are the existing Tile & Tiling, Welding & Metal Works,
+Electrical, Painting, Ceiling & Partition, General Renovation, Plumbing,
+Waterproofing, Flooring and Handyman — nothing added or inferred.
+
+**Locality boundary:** `kuala-lumpur/kampung-baru` is still the only published
+`level: "kampung"` entity; `kl-city-centre` is a `sub_area`. Both retain their
+existing EN/MS/ZH service, scope, problem and nearby-area connections. Aliases,
+comment-only Kampung names and planned regions are not authority to publish
+new locations.
+
+### 2. 🟡 Confirmed catalogue gap — visible scopes silently capped in schema
+
+`SubServicesSection` renders every overview scope, including both grouped
+ceiling/partition lists. `serviceNode()` in `components/seo/schema.ts`, however,
+used `catalogItems.slice(0, 20)`. Six pillars therefore advertised less work in
+JSON-LD than the page actually lists:
+
+| Existing service | Visible scopes per language | Schema before → after |
+|---|---:|---:|
+| Tile & Tiling | 24 | 20 → 24 |
+| Welding & Metal Works | 22 | 20 → 22 |
+| Electrical | 31 | 20 → 31 |
+| Painting | 32 | 20 → 32 |
+| Ceiling & Partition | 30 | 20 → 30 |
+| General Renovation | 21 | 20 → 21 |
+| Plumbing | 15 | 🟢 15 → 15, output unchanged |
+| Waterproofing | 11 | 🟢 11 → 11, output unchanged |
+| Flooring | 10 | 🟢 10 → 10, output unchanged |
+| Handyman | 12 | 🟢 12 → 12, output unchanged |
+| **Total** | **208** | **168 → 208** |
+
+Fix: remove only the sample cap; keep the existing localized data, order,
+names, descriptions and schema shape. This restores **40 existing scope
+descriptions per language**, or **120** across the 18 affected localized
+pillars. The current overview inventory is **208**, not the historical "206"
+written in Phase 2; this is a recount, not two newly added services/scopes.
+These overview cards are distinct from the **51** standalone priced scope pages.
+
+### 3. 🔴 Missing business/pillar references on the detailed scope entities
+
+All **153 localized sub-service pages** already link visibly to their owning
+service, but their primary `Service` node had neither `provider` nor a relation
+to that pillar's entity. The 30 pillar entities already had the correct provider
+reference and were left as-is.
+
+`SubServiceJsonLd.tsx` now adds just:
+
+- `provider: { "@id": ORGANIZATION_ID }`, importing the site's existing shared
+  business ID rather than creating a second business.
+- `isRelatedTo: { "@id": "<localized parent canonical>#service" }`, derived
+  from `detail.serviceSlug` and `absoluteUrl(lang, ...)`. The same canonical is
+  reused in the existing breadcrumb, with identical breadcrumb output.
+
+No relationship was inferred from a keyword or label. These are the business
+and parent service the existing page already names. Every existing offer,
+`PriceSpecification`, price, range, currency and service-area value is unchanged.
+This strengthens the machine-readable service links; the already-correct HTML
+service ↔ scope ↔ problem ↔ area/locality graph needed no additional sections.
+
+### 4. Regression guards and red → green proof
+
+- **`audit:schema`:** three new source checks — full catalogue mapping (no cap),
+  shared provider reference, localized parent Service reference. Comments are
+  excluded from the new checks.
+- **`audit:live`:** four new rendered checks, using the existing sitemap crawl:
+  one canonical primary `Service` entity per service/scope page; provider IDs
+  resolving to the published Organization/LocalBusiness; scope → its own
+  served, visibly linked localized pillar; every catalogue's complete ordered
+  names/descriptions matching its own visible overview cards. Counts come from
+  the served pages, not a hard-coded 208-entry expectation. Empty extraction,
+  omissions, extra entries and same-count copy/language mismatches fail.
+- Ran the new guards **before** changing the application: `audit:schema`
+  **FAIL 3**; live QA **251 PASS / 0 WARN / 3 FAIL**, identifying exactly the
+  **18 incomplete catalogues**, **153 missing providers** and **153 missing
+  parent references**. After the fix: **254 PASS / 0 WARN / 0 FAIL**.
+- Exercised the actual new live-check functions against a served MS
+  pillar/scope snapshot: **1 positive + 14 negative in-memory fixtures** passed.
+  Rejected cases included a 20-entry cap, same-count wrong name/description,
+  duplicate extra offer, absent/invented/unresolved provider, absent/wrong-
+  language/wrong-service parent, missing visible parent link, noncanonical
+  entity ID, empty card extraction and an empty family. These tests changed
+  no application content or running-server responses.
+
+### 5. 🟢 Verified and deliberately left untouched
+
+| Surface | Verification / preservation decision |
+|---|---|
+| Prices and business data | All data files and pricing logic unchanged; `audit:pricing`/`audit:business` PASS; served old/new price specifications identical |
+| UI, branding, copy, images and controls | All 678 rendered `<main>` fragments byte-identical before/after after excluding scripts; no visual component, style or layout changed |
+| URLs and metadata | Same 678 sitemap URLs / 689 build entries; titles, descriptions, H1s, canonicals, hreflang, robots and social-image metadata unchanged |
+| HTML internal links | Every page's anchor inventory and main-content link targets identical; no broken page/fragment target, no orphan, no cross-language main-content link; crawl depth remains at most 2 |
+| Q&A | 567 Q&A-bearing pages / 2,564 rendered pairs still match the FAQ data, ignoring decorative disclosure glyphs and separate CTA labels; no FAQ copy or node changed |
+| AI feeds, search, quote flow and analytics | Existing audits re-pass; no feed, search, quote, measurement or configuration file changed |
+| Honest content gaps | No invented job locations, project proof, Kampung coverage, opening days or credentials; owner-gated work remains gated |
+| Homepage review block | Still **unverified**, not marked green; left untouched under the recorded owner decision in `PROJECT_OWNER_PENDING.md` |
+
+Before/after JSON-LD comparison found changes on **exactly 171 pages**:
+18 pillars gained only the omitted catalogue entries; 153 scope pages gained
+only the two entity references. All other schema nodes stayed identical.
+
+### 6. Final QA and limits
+
+- [x] `npm run type-check` — PASS.
+- [x] `npm run lint` — PASS, no errors or warnings.
+- [x] `npm run build` — PASS, **689** static generation entries.
+- [x] All **17 static audits** — PASS.
+- [x] `npm run audit:live` — **254 PASS / 0 WARN / 0 FAIL** against the local
+      production build, all **678 URLs HTTP 200**.
+- [x] Independent full-site before/after crawl and schema/preservation checks —
+      PASS; no duplicate titles/descriptions, missing social image metadata,
+      missing image alt, duplicate IDs or invalid JSON-LD.
+- [x] Regression fixtures and baseline red → green tests — PASS as above.
+- [x] `git diff --check` and preservation-boundary review — PASS.
+- [x] `PROJECT_PROGRESS.md`, `README.md` and `CONTENT_MAP.md` updated. Sitemap
+      architecture and content timestamps did not change.
+
+Limits: this is local production-build HTTP/HTML QA, not a real-phone test,
+Search Console/analytics dashboard inspection or a ranking/AI-answer result.
+Read-only requests to the public domain could not complete TLS from this
+sandbox, so deployment freshness was **not** established and this is **not** a
+claim that the public site is down. No production form was submitted. Local
+Resend/analytics secrets remain unset; their previously recorded owner-side
+production completion is not reopened by the sandbox's configuration.
+The live preview uses an untracked sandbox-only header adapter to permit
+embedding on the e2b preview host; local QA and the tracked production security
+headers remain unchanged.
+
+Status: **Code verified + Build verified + Local production HTTP verified;
+existing content preserved; complete service catalogues and explicit shared
+provider/parent entity links now guarded against regression.**
