@@ -13,7 +13,7 @@ export const bathroomRebuildCostGuide: ArticleDefinition = {
   intents: ["cost", "price-factors", "preparation", "decision-guide"],
   published: "2026-09-04",
   relatedServices: ["general-renovation", "waterproofing", "tiling", "plumbing"],
-  relatedSubServices: ["bathroom-waterproofing", "floor-tile-installation"],
+  relatedSubServices: ["bathroom-waterproofing", "floor-tile-installation", "bathroom-renovation", "bathroom-tiling", "tap-replacement", "toilet-repair"],
   relatedProblems: [
     "bathroom-leakage",
     "bathroom-tile-problems",

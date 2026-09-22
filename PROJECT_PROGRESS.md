@@ -20,6 +20,11 @@ Service entities changed (69 of 84 localized project pages, names in JSON-LD
 only) plus the regression guards; no visible section, price, HTML link, title
 or metadata changed.
 
+Phase 45 re-verification (2026-09-22): the same inventory and all 678 URLs
+remain intact. The Knowledge Hub guides now link every priced scope whose table
+they quote (and are linked back on those scope pages); no URL, page, price,
+service, problem, area or project changed.
+
 | Item | Count |
 |---|---|
 | Service pillar pages | 10 per language |
@@ -37,9 +42,10 @@ or metadata changed.
 | Static generation entries | **689** (`next build` progress total; distinct from the 678 canonical sitemap URLs) |
 | Pricing rows (`data/pricing/pricing.ts`) | **51** |
 | Search-intent matrix entries | **24** (all pricing derived from `pricingId`) |
-| Audit scripts | 17 static + 1 live server QA (**256** served-site checks after Phase 44) |
+| Audit scripts | 17 static + 1 live server QA (**257** served-site checks after Phase 45: 254 baseline + 2 entity-graph, Phase 44 + 1 quoted-scope, Phase 45) |
 | In-copy contextual links (rendered anchors) | **313 EN / 362 MS / 364 ZH** (Phase 39) |
 | Region hub → Knowledge Hub guide links (rendered) | **72** (6 hubs × 12 guides; Phase 41, was 0) |
+| Knowledge Hub ↔ quoted-scope links (rendered, both directions) | **144 + 144** (48 quoted price rows × 3 languages; Phase 45, was 75 + 75 with 31 quoted scopes unlinked) |
 | Problem guides listed in `/llms.txt` | **57 of 57** in 10 categories (Phase 42, was 12 sampled) |
 | Pages rendering Q&A that publish a `FAQPage` node | **567 of 567** (Phase 42; the 3 homepages were the exception) |
 | `<title>` tags ≤65 characters | **678 of 678**, longest exactly 65 (Phase 41; was 468 of 678) |
@@ -6195,3 +6201,168 @@ structured-data graph is now identity-consistent end to end — every entity the
 site re-states says the same name, URL and serviceType as the page that owns
 it, and every entity reference resolves — guarded site-wide against
 regression.**
+
+---
+
+## Phase 45 — Knowledge Hub guides link every priced scope they quote (2026-09-22)
+
+**Result: 🟢 existing site, prices, UI and URLs preserved; 🔴 31 data-declared
+guide ↔ scope relations that were missing are now wired and guarded.** This is
+a data-and-guards change; no component, layout, copy block, price or URL
+changed.
+
+### 1. Inspect and verify before deciding what needs work
+
+The Master Prompt was not attached to this session; the repository's recorded
+rules and the standing instructions supplied the scope, not an assumed backlog.
+Read `AGENTS.md`, `PROJECT_PROGRESS.md` through Phase 43,
+`CONTENT_GOVERNANCE.md`, `CONTENT_MAP.md`, `PROJECT_OWNER_PENDING.md` and the
+registries, then re-ran the full gate before touching anything:
+
+- [x] `npm run type-check` + `npm run lint` — PASS
+- [x] `npm run build` — PASS (**689** static generation entries, unchanged)
+- [x] All **17 static audits** — PASS
+- [x] `npm run audit:live` vs `next start` — **PASS 254 / WARN 0 / FAIL 0**
+- [x] Independent crawl of all 678 URLs + a family-to-family link matrix and a
+      per-page zero-link-layer analysis (scratch tooling, removed afterwards)
+
+Reconfirmed the inventory: 10 services, 51 sub-service pages, 57 problem
+guides, 53 area guides + 2 region hubs, 28 projects, 12 Knowledge Hub guides,
+51 pricing rows, 24 intent entries, 678 canonical URLs. Services, scopes,
+problems, areas and prices are exactly the existing ones — nothing was added,
+renamed or inferred.
+
+### 2. 🔴 The gap — 8 of 12 guides quoted a scope's price without linking its page
+
+Every one of the 51 pricing rows belongs to a standalone sub-service page
+(1:1 via `pricingId`/`subServiceSlug`). When an article renders a
+`{ type: "pricing" }` block it is displaying that scope's own catalogue data —
+yet the guide's `relatedSubServices` (the field that renders its sub-service
+cards **and** puts the guide on the scope's own page via
+`getArticlesForSubService`) did not carry 31 of the quoted scopes:
+
+| Guide | Declared | Quoted but unlinked (before) |
+| --- | --- | --- |
+| bathroom-rebuild-cost-guide | 2 | bathroom-renovation, bathroom-tiling, tap-replacement, toilet-repair |
+| ceiling-stain-vs-active-leak | 2 | pu-injection, ceiling-repair, callout-inspection, concealed-leak-repair |
+| house-painting-cost-by-property-type | **0** | all four painting scopes |
+| metal-grille-gate-buying-guide | 1 | main-gate, railing-fencing, awning-structure, welding-repair |
+| old-house-wiring-warning-signs | 1 | troubleshooting, db-box, full-house-wiring |
+| regrout-silicone-maintenance | 1 | tile-repair, bathroom-waterproofing |
+| spc-vinyl-laminate-tile-comparison | 1 | spc-flooring, vinyl-flooring, laminate-flooring, porcelain-tile-installation, floor-hacking, tile-hacking |
+| waterproofing-systems-compared | 1 | flat-roof-waterproofing, balcony-waterproofing, wall-seepage, pu-injection |
+| ceiling-partition-material-choice, condo-renovation-approval-checklist, flooring-subfloor-preparation, plumbing-water-pressure-diagnosis | — | 🟢 none — these four already declare exactly what they quote, proving the intended convention |
+
+The clearest case: the painting cost guide rendered all four painting price
+tables while linking **no** painting scope page at all — its pricing tables
+name "Full House Painting Package" etc. as plain `<th>` text with no link.
+
+Why this is not inventing: the relation "this guide quotes this scope's price"
+is already machine-declared in the article data (`pricingIds`, top-level field
+and every in-body pricing block). The fix adds each quoted scope's existing
+slug to the same article's `relatedSubServices` array — the site's own
+established pattern, followed by the four clean guides, and the same
+data-derived-edge rule Phases 28/29/40 used elsewhere. No new service, scope,
+problem, area, price, claim or page was created; every linked target already
+existed and was already quoted by the very same page.
+
+### 3. The fix (8 data lines) and what it renders
+
+One `relatedSubServices` line per article, existing entries kept first, quoted
+scopes appended in pricing order. Rendering needs no new component:
+
+- Article pages render the scopes through the existing `LinkCards`
+  sub-service section (`components/blog/ArticlePage.tsx`).
+- Scope pages render the guide through the existing shared
+  `GuideLinksSection` (`components/service/SubServicePage.tsx`), the same
+  section every other guide relation already uses.
+- One authored line propagates to EN/MS/ZH (the field is not localized); all
+  51 scopes publish in all three languages, so both directions render
+  everywhere.
+
+Measured on the served build:
+
+- blog → sub-service rendered edges: **75 → 168**; sub-service → blog:
+  **75 → 168** (each +93 = 31 scopes × 3 languages).
+- Knowledge Hub guides with zero sub-service links: **1 → 0**.
+- The search index (`data/search/build-index.ts`) carries the same field as
+  each article's validated related-entity data (`audit:search` re-checked every
+  new slug); result ranking itself is unchanged.
+
+### 4. Guards added (red → green proof)
+
+- **`npm run audit:blog`** — new check: every pricing row an article quotes
+  (top-level and in-body `pricingIds`) that belongs to a sub-service page must
+  appear in that article's `relatedSubServices`. The summary line now reports
+  **48 quoted price rows all link their scope pages**. Negative test: removing
+  `full-house-painting` from the painting guide fails with `pricing quotes
+  scope "full-house-painting" but relatedSubServices does not link its page`;
+  restoring returns to PASS.
+- **`npm run audit:live`** — new "Quoted-scope links (Knowledge Hub)" block
+  (**+1** check on the 254-check baseline this phase started from): from the
+  same registries the pages render, it walks every language × article ×
+  quoted-scope triple and asserts on the crawled link graph that the article
+  page links the scope page **and** the scope page links the article back.
+  Currently **144 + 144** edges. Negative test (built and served): dropping
+  the same painting relation fails with exactly 6 messages — both directions ×
+  EN/MS/ZH — then returns to green after restore.
+
+### 5. 🟢 Verified and deliberately left untouched
+
+| Surface | Verification / preservation decision |
+| --- | --- |
+| Prices | `data/pricing/pricing.ts` untouched; `audit:pricing` PASS; article pricing tables render the same rows from the same single source |
+| Pages, URLs, metadata | Same 678 sitemap URLs / 689 build entries; titles, descriptions, canonicals, hreflang, robots unchanged (live QA green) |
+| Rendering scope | Before/after crawl of all 678 served pages: **564 `<main>` fragments byte-identical**; the only 114 changed pages are the 24 article pages (8 × 3 languages, gained sub-service cards) and 90 scope pages (30 scopes × 3 languages, gained the shared `GuideLinksSection`); **0 pages changed JSON-LD** |
+| UI/branding | No component or style file changed; the cards and guide section are the existing shared components; diff of a changed scope page shows only the added standard guide section |
+| Phase 27 recorded decisions | Re-verified and **left as recorded**: the 4 problem guides without a sub-service block (`balcony-leakage`, `broken-tile-repair`, `kitchen-tile-problems`, `wall-seepage`), project ↔ area links (no real job locations), painting/waterproofing/flooring project proof, homepage reviews block — all remain owner-gated per `PROJECT_OWNER_PENDING.md` and the Phase 27 table |
+| In-copy links | Phase 39's 313/362/364 rendered in-copy anchors unchanged (live QA in-copy checks green) |
+| Full gate after restore | type-check, lint, build (689), all 17 static audits, `audit:live` **255/0/0** — PASS |
+
+### 6. Final QA
+
+- [x] `npm run type-check` — PASS
+- [x] `npm run lint` — PASS (0 errors, 0 warnings; scratch analysis scripts
+      were removed rather than tracked)
+- [x] `npm run build` — PASS, **689** static generation entries
+- [x] All **17 static audits** — PASS
+- [x] `npm run audit:live` — **PASS 257 / WARN 0 / FAIL 0** (merged tree; see §7)
+- [x] Negative tests — 1 static break + 1 served break, both fail as designed,
+      both restored to green
+- [x] `git diff --check` — clean; change set is 8 article data lines + 2 audit
+      scripts
+
+Limits: local production-build HTTP/HTML QA, not device, ranking or AI-answer
+measurement; no claim that the added links change search outcomes — they close
+a real inconsistency in the site's own link convention. Owner-gated items in
+`PROJECT_OWNER_PENDING.md` remain owner-gated; none was invented or assumed.
+
+### 7. Merge reconciliation with PR #62 (2026-09-22)
+
+This phase was authored and verified in parallel with PR #62 ("One entity, one
+name: the portfolio's inline Service restatements now agree with their
+pillars"), which merged to `main` first and therefore keeps the **Phase 44**
+number; this phase is recorded as **Phase 45**. The two touch disjoint
+application code (theirs: `components/projects/ProjectJsonLd.tsx` +
+`audit:schema`; mine: 8 article data files + `audit:blog`), and both extend
+`scripts/phase25-live-qa.mjs` and the progress docs, which conflicted only in
+documentation text. Both phases' work is preserved in full:
+
+- Their entity-graph block (+2 live checks) and this phase's quoted-scope
+  block (+1 live check) coexist in `scripts/phase25-live-qa.mjs`; the merged
+  suite runs **257** checks (254 baseline + 2 + 1), re-verified green on the
+  merged tree below.
+- The inventory table carries both phases' rows and both re-verification
+  paragraphs, ordered Phase 44 then Phase 45.
+- Guard comments in `scripts/audit-blog.mjs` and the quoted-scope block in
+  `scripts/phase25-live-qa.mjs` were renumbered from the draft "Phase 44" to
+  Phase 45 to match the final numbering; no logic changed.
+
+Post-merge gate (2026-09-22): type-check, lint, build (**689** entries), all
+17 static audits, and `npm run audit:live` **PASS 257 / WARN 0 / FAIL 0**
+against the merged production build — including both phases' new checks
+(144 + 144 quoted-scope edges and the entity-graph consistency block).
+
+Status: **Code verified + Build verified + Local production HTTP verified;
+every guide now links the scopes whose prices it quotes, in both directions
+and all three languages, guarded statically and live.**

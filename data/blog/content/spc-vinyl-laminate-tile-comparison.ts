@@ -16,7 +16,7 @@ export const spcVinylLaminateTileComparison: ArticleDefinition = {
   ],
   published: "2026-09-04",
   relatedServices: ["flooring", "tiling", "general-renovation"],
-  relatedSubServices: ["floor-tile-installation"],
+  relatedSubServices: ["floor-tile-installation", "spc-flooring", "vinyl-flooring", "laminate-flooring", "porcelain-tile-installation", "floor-hacking", "tile-hacking"],
   relatedProblems: [
     "uneven-tiles",
     "hollow-tile-problems",

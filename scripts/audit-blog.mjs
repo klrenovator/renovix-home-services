@@ -51,12 +51,24 @@ const locationKeys = new Set(
 const pricingIds = new Set(
   [...read("data/pricing/pricing.ts").matchAll(/id:\s*"([a-z0-9-]+)"/g)].map((m) => m[1]),
 );
+// pricingId -> sub-service slug. Every priced scope page owns exactly one
+// catalogue row, so this maps each quoted price row back to the page that
+// sells it (Phase 45's quoted-scope coverage check below).
+const pricingToSubService = new Map();
+for (const f of readdirSync(path.join(root, "data/sub-services/content"))) {
+  for (const m of read(`data/sub-services/content/${f}`).matchAll(
+    /slug:\s*"([a-z0-9-]+)",\s*\n\s*serviceSlug:\s*"([a-z-]+)",\s*\n\s*pricingId:\s*"([a-z0-9-]+)"/g,
+  )) {
+    pricingToSubService.set(m[3], m[1]);
+  }
+}
 
 // --- Per-article checks ---------------------------------------------------
 const slugs = [];
 const metaDescriptions = new Map();
 const h1s = new Map();
 const faqKeys = new Map();
+let quotedScopePairs = 0;
 
 for (const file of files) {
   const src = read(`${blogDir}/${file}`);
@@ -101,6 +113,30 @@ for (const file of files) {
       if (!pricingIds.has(id)) fail(`${slug}: pricing block references unknown row "${id}"`);
     }
   }
+
+  // Phase 45 — an article that quotes a scope's price must link that scope's
+  // page. Every pricing row belongs to a standalone sub-service page; when a
+  // guide renders that row's table it is using the scope's own data, so the
+  // guide must also carry the scope in relatedSubServices (the field that
+  // renders the article's sub-service cards and puts the article on the
+  // scope's own page via getArticlesForSubService). Before this guard, 8 of
+  // 12 articles quoted 31 scopes they never linked — e.g. the painting cost
+  // guide rendered all four painting price tables while linking no painting
+  // scope page at all. Quoting a scope without linking it cannot recur.
+  const declaredSubs = listOf("relatedSubServices") ?? [];
+  const quotedScopes = new Set();
+  for (const m of src.matchAll(/pricingIds:\s*\[([^\]]*)\]/g)) {
+    for (const id of [...m[1].matchAll(/"([^"]+)"/g)].map((x) => x[1])) {
+      const sub = pricingToSubService.get(id);
+      if (sub) quotedScopes.add(sub);
+    }
+  }
+  for (const sub of quotedScopes) {
+    if (!declaredSubs.includes(sub)) {
+      fail(`${slug}: pricing quotes scope "${sub}" but relatedSubServices does not link its page`);
+    }
+  }
+  quotedScopePairs += quotedScopes.size;
 
   // No hand-written ringgit figures anywhere in an article.
   for (const m of src.matchAll(/RM\s?\d/g)) {
@@ -227,5 +263,6 @@ if (errors.length > 0) {
 }
 console.log(
   `✓ blog audit passed — ${files.length} articles, all references resolve, no orphans, EN/MS/ZH complete, ` +
-    `${regionIds.size} region hubs derive ${hubGuidePairs} guide links from their own area guides`,
+    `${regionIds.size} region hubs derive ${hubGuidePairs} guide links from their own area guides, ` +
+    `${quotedScopePairs} quoted price rows all link their scope pages`,
 );

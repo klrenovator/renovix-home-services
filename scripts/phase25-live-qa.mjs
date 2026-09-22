@@ -4,7 +4,7 @@
  * Talks to a running `next start` (default http://127.0.0.1:3000).
  * Does not invent results — every check is a real HTTP request.
  */
-import { readFileSync } from "node:fs";
+import { readFileSync, readdirSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 
 const BASE = process.env.QA_BASE || "http://127.0.0.1:3000";
@@ -1235,6 +1235,80 @@ function checkInternalLinkGraph(locs, graph) {
  * only through the portfolio index) and a URL the feed advertises that the
  * site no longer serves (stale entry after a page is unpublished).
  */
+/* ------------------------------------------------------------------------ */
+/* Phase 45 — Knowledge Hub guides that quote a scope's price must link that */
+/* scope's page, and the scope's page must link back to the guide.           */
+/*                                                                          */
+/* Every pricing row belongs to a standalone sub-service page. When a guide  */
+/* renders that row's table it is using the scope's own data, so the guide   */
+/* must link the scope page (its relatedSubServices cards) and the scope     */
+/* page must carry the guide (GuideLinksSection via getArticlesForSubService)*/
+/* — in every language that publishes both pages. The quoted relation is     */
+/* read from the same registries the pages render; the links are read from   */
+/* the crawl, so a registry edge that fails to render fails QA.              */
+/* ------------------------------------------------------------------------ */
+
+/** article slug -> quoted scope slugs, and pricingId -> scope page, from source. */
+const QUOTED_SCOPES = (() => {
+  const subDir = fileURLToPath(new URL("../data/sub-services/content", import.meta.url));
+  const byPricing = new Map();
+  for (const f of readdirSync(subDir)) {
+    const src = readFileSync(`${subDir}/${f}`, "utf8");
+    for (const m of src.matchAll(
+      /slug:\s*"([a-z0-9-]+)",\s*\n\s*serviceSlug:\s*"([a-z-]+)",\s*\n\s*pricingId:\s*"([a-z0-9-]+)"/g,
+    )) {
+      byPricing.set(m[3], { service: m[2], slug: m[1] });
+    }
+  }
+  const blogDir = fileURLToPath(new URL("../data/blog/content", import.meta.url));
+  const quoted = new Map();
+  for (const f of readdirSync(blogDir)) {
+    if (!f.endsWith(".ts")) continue;
+    const src = readFileSync(`${blogDir}/${f}`, "utf8");
+    const slug = src.match(/^\s{2}slug:\s*"([a-z0-9-]+)"/m)?.[1];
+    if (!slug) continue;
+    const scopes = new Map(); // scope slug -> service slug, in first-appearance order
+    for (const m of src.matchAll(/pricingIds:\s*\[([^\]]*)\]/g)) {
+      for (const id of m[1].match(/"([^"]+)"/g) ?? []) {
+        const sub = byPricing.get(id.slice(1, -1));
+        if (sub) scopes.set(sub.slug, sub.service);
+      }
+    }
+    quoted.set(slug, scopes);
+  }
+  return quoted;
+})();
+
+function checkQuotedScopeLinks(locs, graph) {
+  console.log("\n== Quoted-scope links (Knowledge Hub) ==");
+  const served = new Set(locs.map((loc) => loc.replace(CANONICAL_HOST, "")));
+  let articleEdges = 0;
+  let scopeEdges = 0;
+  const missing = [];
+  for (const lang of ["en", "ms", "zh"]) {
+    for (const [article, scopes] of QUOTED_SCOPES) {
+      const articlePath = `/${lang}/blog/${article}/`;
+      if (!served.has(articlePath)) continue;
+      for (const [scope, service] of scopes) {
+        const scopePath = `/${lang}/services/${service}/${scope}/`;
+        if (!served.has(scopePath)) continue; // scope not published in this language
+        if (graph.get(articlePath)?.has(scopePath)) articleEdges += 1;
+        else missing.push(`${articlePath} does not link quoted scope ${scopePath}`);
+        if (graph.get(scopePath)?.has(articlePath)) scopeEdges += 1;
+        else missing.push(`${scopePath} does not link back to ${articlePath}`);
+      }
+    }
+  }
+  if (missing.length === 0) {
+    pass(
+      `all ${articleEdges} article → quoted-scope links and ${scopeEdges} scope → guide back-links render across EN/MS/ZH`,
+    );
+  } else {
+    missing.slice(0, 8).forEach((m) => fail(m));
+    if (missing.length > 8) fail(`…and ${missing.length - 8} more quoted-scope link defects`);
+  }
+}
+
 async function checkAiFeedCoverage(locs) {
   console.log("\n== AI feed coverage (/llms.txt) ==");
   const { status, text } = await fetchText("/llms.txt");
@@ -1957,6 +2031,7 @@ async function main() {
   const { graph, anchors, inCopy, titles, leakedMarkup, faqBlocks, schemaTypes, serviceSchemas, entities } =
     await sampleStatuses(locs);
   checkInternalLinkGraph(locs, graph);
+  checkQuotedScopeLinks(locs, graph);
   checkTitles(locs, titles);
   checkInCopyLinks(locs, inCopy, leakedMarkup);
   await checkAiFeedCoverage(locs);

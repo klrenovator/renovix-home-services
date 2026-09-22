@@ -10,7 +10,7 @@ export const regroutSiliconeMaintenance: ArticleDefinition = {
   intents: ["maintenance", "lifespan", "signs-of-failure", "repair", "when-to-call"],
   published: "2026-09-04",
   relatedServices: ["handyman", "tiling", "waterproofing"],
-  relatedSubServices: ["grout-silicone"],
+  relatedSubServices: ["grout-silicone", "tile-repair", "bathroom-waterproofing"],
   relatedProblems: [
     "tile-grout-problems",
     "bathroom-tile-problems",

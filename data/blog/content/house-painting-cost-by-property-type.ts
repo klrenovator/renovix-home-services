@@ -11,7 +11,7 @@ export const housePaintingCostByPropertyType: ArticleDefinition = {
   intents: ["cost", "price-factors", "preparation", "decision-guide"],
   published: "2026-09-04",
   relatedServices: ["painting", "general-renovation", "waterproofing"],
-  relatedSubServices: [],
+  relatedSubServices: ["full-house-painting", "interior-painting", "exterior-painting", "wall-repair-painting"],
   relatedProblems: ["peeling-paint", "faded-paint", "uneven-paint", "cracked-walls", "mouldy-walls"],
   relatedLocations: [
     "kuala-lumpur/cheras",
