@@ -225,7 +225,7 @@ pass both audits, and ship in EN+MS+ZH together.
 
 | Document | Source | Purpose |
 | --- | --- | --- |
-| `/llms.txt` | `lib/ai-knowledge.ts` | Crawler summary: services, prices, sub-services (Phase 29), problem guides, areas, projects (Phase 33), guides, process, limits |
+| `/llms.txt` | `lib/ai-knowledge.ts` | Crawler summary: services, prices, sub-services (Phase 29), all 57 problem guides by category (Phase 42), areas, projects (Phase 33), guides, process, limits |
 | `/ai/business.json` | `lib/ai-knowledge.ts` | Full business knowledge for assistants |
 | `/ai/pricing.json` | `data/pricing/pricing.ts` | Price catalogue with scope, disclaimer, review date |
 | `/sitemap.xml` | content registries | Crawl discovery (see SITEMAP.md) |
@@ -247,8 +247,18 @@ assistant asked "have they completed this kind of work?" can cite the actual
 job rather than the index. `audit:authority` §7 pins the wiring and the live
 QA compares the served feed against the served sitemap in both directions per
 family, so a family can neither drop out of the feed nor leave a stale URL
-behind. Every other list in the file is complete; the 57 problem guides are
-the one deliberate sample, kept behind their index link.
+behind.
+
+Since Phase 42 `/llms.txt` enumerates **all 57 problem guides**, grouped under
+the ten categories `/problems/` itself uses (`knowledge.problems.guides` now
+carries each guide's `category` and `categoryLabel`, read from the registry).
+Until then the section rendered `slice(0, 12)` of the corpus behind an index
+link while `/ai/business.json` carried all 57 and every other family in the
+file was complete — so the one document written for answer engines cited a
+fifth of the symptom corpus and forced a crawl of the index to find the rest.
+The problem family is now compared against the served sitemap in both
+directions like every other family, and `audit:authority` §7 additionally
+fails if a slice of `knowledge.problems.guides` reappears.
 
 Since Phase 34 `/ai/business.json` publishes the Smart Service Finder's
 phrasing tables for **all three languages** (`searchIntents.englishPhrasings`,

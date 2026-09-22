@@ -8,7 +8,7 @@
 - **Stack:** Next.js 16.3.3, React 19.2.8, TypeScript 6.0.3, Tailwind CSS 4.3.3
 - **Languages:** English (`/en/`), Bahasa Melayu (`/ms/`), Simplified Chinese (`/zh/`) — see Phase 6
 
-### Current site inventory (re-verified in Phase 37, 2026-09-20, `npm run build` + locally served `/sitemap.xml`; re-checked 2026-09-21 after Phase 38–40 — Phase 40 added internal links only, so no count below changed; re-checked 2026-09-22 after Phase 41, which changed `<title>` wording and added one rendered internal-link layer, so no URL, page, price or section count below changed)
+### Current site inventory (re-verified in Phase 37, 2026-09-20, `npm run build` + locally served `/sitemap.xml`; re-checked 2026-09-21 after Phase 38–40 — Phase 40 added internal links only, so no count below changed; re-checked 2026-09-22 after Phase 41, which changed `<title>` wording and added one rendered internal-link layer, so no URL, page, price or section count below changed; re-checked 2026-09-22 after Phase 42, which changed only the `/llms.txt` feed and the homepage's structured data, so no URL, page, price, section or link count below changed)
 
 | Item | Count |
 |---|---|
@@ -24,9 +24,11 @@
 | Static generation entries | **689** (`next build` progress total; distinct from the 678 canonical sitemap URLs) |
 | Pricing rows (`data/pricing/pricing.ts`) | **51** |
 | Search-intent matrix entries | **24** (all pricing derived from `pricingId`) |
-| Audit scripts | 17 static + 1 live server QA (**243** served-site checks after Phase 41) |
+| Audit scripts | 17 static + 1 live server QA (**250** served-site checks after Phase 42) |
 | In-copy contextual links (rendered anchors) | **313 EN / 362 MS / 364 ZH** (Phase 39) |
 | Region hub → Knowledge Hub guide links (rendered) | **72** (6 hubs × 12 guides; Phase 41, was 0) |
+| Problem guides listed in `/llms.txt` | **57 of 57** in 10 categories (Phase 42, was 12 sampled) |
+| Pages rendering Q&A that publish a `FAQPage` node | **567 of 567** (Phase 42; the 3 homepages were the exception) |
 | `<title>` tags ≤65 characters | **678 of 678**, longest exactly 65 (Phase 41; was 468 of 678) |
 | `<title>` tags unique within each language | **678 of 678** (Phase 41; 3 duplicate pairs fixed) |
 | `<title>` tags carrying the brand | **678 of 678** (Phase 41; the 6 legal pages now compose `brandTitle()`) |
@@ -5675,3 +5677,200 @@ Status: **Code verified + Build verified + Live verified (HTTP); the title layer
 is now inside budget, unique, branded and guarded end to end, the region hubs
 carry the third layer their own guides carry, and the one honesty risk found is
 documented and escalated rather than quietly altered.**
+
+---
+
+## Phase 42 — `/llms.txt` enumerates the whole problem corpus, and the homepage's Q&A is now described by structured data (2026-09-22)
+
+Trigger: the standing Master SEO + GEO + AEO + AI-search prompt, worked under
+the same PRESERVE → AUDIT → VERIFY → IMPROVE rule as Phases 27–41. Nothing was
+assumed green: the full gate was re-run first (type-check, lint, build, 17
+static audits, `audit:live` 243/0/0), then the served pages and both AI feeds
+were read back from the running server and compared against the served sitemap
+before anything was touched. No URL, price, service, sub-service, problem,
+area, project, guide or piece of branding changed.
+
+### 1. Baseline verification gate (all green before any change)
+
+- [x] `npm run type-check` + `npm run lint` — PASS
+- [x] `npm run build` — PASS (689 static generation entries, unchanged)
+- [x] All 17 static audits — PASS
+- [x] `npm run audit:live` vs `next start` — PASS 243 / WARN 0 / FAIL 0
+- [x] Independent crawl of all 678 served URLs — 0 non-200, 0 missing
+      `og:image` / `twitter:image` / `og:locale`, 0 pages without exactly one
+      H1, 0 images without alt (1,317 images), 0 duplicate meta descriptions
+      within a language, 0 orphan pages, crawl depth still max 2
+
+### 2. 🔴 `/llms.txt` listed 12 of 57 problem guides
+
+| Family | Served (EN) | `/ai/business.json` | `/llms.txt` before |
+|---|---|---|---|
+| Services | 10 | 10 | 10 |
+| Sub-services | 51 | 51 | 51 |
+| Region overviews | 2 | 2 | 2 |
+| Area guides | 53 | 53 | 53 |
+| **Problem guides** | **57** | **57** | **12 sampled + index link** |
+| Knowledge Hub guides | 12 | 12 | 12 |
+| Projects | 28 | 28 | 28 |
+
+The feed had carried all 57 since Phase 16, so the data was already built and
+already trusted — only `/llms.txt`, the one document on the site written
+specifically for answer engines, never rendered it. Phase 33 closed exactly
+this kind of gap for the project portfolio; Phase 29 closed it for
+sub-services. Problems were the last family out of step, and the live guard
+actively protected the shortfall: `checkAiFeedCoverage()` compared six families
+against the sitemap in both directions but held problems to a **floor of 12**,
+so the omission could not fail a build no matter how many guides were added.
+
+Fix: `knowledge.problems.guides` now carries each guide's `category` and
+`categoryLabel` (`lib/ai-knowledge.ts`, read from `getProblemCategory()` on the
+registry that groups the guides on `/problems/` itself), and
+`app/llms.txt/route.ts` enumerates the full list in the ten groups the site
+already uses, in registry order. No count, label or URL is typed into the
+file — remove a guide from the registry and the feed follows at the next build.
+
+Measured: **12 → 57** problem guides (58 problem URLs including the index
+link), grouped as 9 / 8 / 6 / 5 / 6 / 6 / 6 / 4 / 4 / 3 across the ten
+categories; `/llms.txt` grew 211 → 286 lines.
+
+### 3. 🟡 The homepage rendered six Q&As and published no `FAQPage` node
+
+`components/seo/schema.ts` states the site's own rule: an `FAQPage` node is
+built "from the same Q&A data the visible FAQ section renders". A crawl of all
+678 pages for rendered question-and-answer blocks found **567 pages with
+visible Q&A and 564 with an `FAQPage` node** — the three pages out of step were
+the homepages. `FAQPreview` renders six `<details>` disclosures on `/en/`,
+`/ms/` and `/zh/`; `/en/faq/` (18) and `/en/quote/` (4) already publish theirs.
+
+Fix: `getHomeFaqs()` in `data/i18n/index.ts` is now the single source both
+halves read — `FAQPreview` renders it and `app/[lang]/page.tsx` feeds the same
+array to the existing `faqNode()`. The node therefore describes exactly the
+questions the page shows, in all three languages, and no question is invented
+for the schema. Verified rendered: 6 Q&As on each homepage, node questions
+byte-identical to the visible `<summary>` text in EN, MS and ZH.
+
+### 4. Guards added (so neither can silently return)
+
+**`npm run audit:live` — 243 → 250 checks (+7).**
+- The problem-guide family joins the six fully-enumerated families in
+  `checkAiFeedCoverage()`: compared against the served sitemap **in both
+  directions** (nothing missing, nothing stale). The "≥12 sample floor" is
+  gone; the index link is still asserted separately.
+- New **"Rendered Q&A vs FAQPage"** block: the sitemap sweep now also keeps
+  each page's rendered `<details>` count (scoped to `<main>`, so the header's
+  own disclosures cannot count) and its published JSON-LD types, and the block
+  asserts over all 678 URLs that every page rendering Q&A publishes a
+  `FAQPage` node for it, that no page publishes one without rendered Q&A, that
+  the corpus floor holds (567 pages, floor 560), and — by name — that all
+  three homepages render their Q&A *and* publish the node.
+
+**`npm run audit:authority` §7** — the source side of both invariants: five new
+token assertions (`/llms.txt` reads `knowledge.problems.guides`; the knowledge
+builder derives each guide's category from `getProblemCategory()`; the homepage
+publishes `faqNode()`; it is built from `getHomeFaqs(code)`; and one shared
+source defines the homepage FAQ preview), plus a new negative rule that fails
+the audit if a `knowledge.problems.guides.slice(` reappears — comments
+stripped first, so the rule's own explanation cannot trip it.
+
+### 5. Negative tests (break → fails, restore → passes)
+
+| # | Break | Guard | Result |
+|---|---|---|---|
+| 1 | Re-add `.slice(0, 12)` to the problem enumeration | `audit:authority` §7 | FAIL `app/llms.txt/route.ts slices knowledge.problems.guides` |
+| 2 | Drop `getProblemCategory()` from the builder | `audit:authority` §7 | FAIL `lib/ai-knowledge.ts no longer contains "getProblemCategory(problem.category)"` |
+| 3 | Remove the homepage `faqNode()` | `audit:authority` §7 | FAIL (both `faqNode(` and `getHomeFaqs(code)` tokens) |
+| 4 | Point the homepage node at a different array than the accordion | `audit:authority` §7 | FAIL `no longer contains "getHomeFaqs(code)"` |
+| 5 | Serve the 12-entry sample | `audit:live` | FAIL `/llms.txt omits 45/57 problem guides (e.g. /en/problems/flickering-lights/…)` |
+| 6 | Serve the homepage with no FAQPage node | `audit:live` | FAIL `3 page(s) render visible Q&A with no FAQPage node` + the three by-name homepage checks |
+| 7 | Inject `/en/problems/does-not-exist/` into the feed | `audit:live` | FAIL `/llms.txt lists 1 problem guide URLs the site does not serve` |
+| 8 | Add a FAQPage node to `/{lang}/about/` (renders no Q&A) | `audit:live` | FAIL `3 page(s) publish a FAQPage node with no rendered Q&A (e.g. /en/about/…)` |
+
+Breaks 1–4 are source-level and were each reverted and re-run to green.
+Breaks 5–6 were built and served together: **PASS 245 / FAIL 5** with exactly
+the five messages above. Breaks 7–8 were built and served together: the stale
+URL and the over-claiming node both failed as designed. All files were then
+restored, rebuilt, and the suite returned to **PASS 250 / WARN 0 / FAIL 0**.
+
+### 6. Measured result (before → after, both on locally served production builds)
+
+| Metric | Before | After |
+|---|---|---|
+| Problem guides listed in `/llms.txt` | **12 / 57** | **57 / 57** (10 categories) |
+| Families at full feed↔sitemap parity in `/llms.txt` | 6 of 7 | **7 of 7** |
+| `/llms.txt` lines | 211 | **286** |
+| Pages rendering visible Q&A with a matching `FAQPage` node | **564 / 567** | **567 / 567** |
+| Pages over-claiming a `FAQPage` node | 0 | **0** (now guarded) |
+| `audit:live` checks | 243 | **250** |
+| Sitemap URLs / static generation entries | 678 / 689 | **678 / 689 (unchanged)** |
+| Prices, services, sub-services, problems, areas, projects, guides, in-copy links touched | — | **0 / 0 / 0 / 0 / 0 / 0 / 0 / 0** |
+| Rendered main-content internal-link edges (all types) | **33,820** | **33,820 (identical matrix)** |
+| Visible content strings changed | — | **0** (feed text + one invisible JSON-LD node) |
+
+### 7. Preserved untouched (verified 🟢)
+
+- All **678 URLs**, canonicals, hreflang sets, robots directives, the sitemap
+  (`audit:sitemap` PASS), redirects and the 689 static generation entries.
+- Every price: the 51 catalogue rows, the intent matrix, the localized
+  scope/duration wording and every price note (`audit:pricing`,
+  `audit:locations` §10 PASS). `/llms.txt` still hardcodes no figure
+  (`audit:authority` §7 no-hardcoded-price rule).
+- The 10 services, 51 sub-services, 57 problem guides, 53 area guides, 2 region
+  hubs, 28 projects, 12 Knowledge Hub guides, the Smart Service Finder, the
+  quote flow, analytics posture and `/ai/pricing.json`.
+- Every meta description, H1, `<title>` (still ≤65, unique, branded — Phase
+  41's guard re-passed at 250 checks), body paragraph, in-copy link, FAQ copy
+  and alt string. The homepage accordion renders the same six questions in the
+  same words as before.
+- Design, branding, layout, navigation and footer: no component changed its
+  rendering. `FAQPreview.tsx` changed only which function it reads its array
+  from; `app/[lang]/page.tsx` gained one invisible JSON-LD node.
+- `/ai/business.json`: 57 problem guides with the same `title`/`url`/`urls`
+  keys as before, plus the two new derived keys — no consumer of the existing
+  keys breaks.
+- The internal link graph, including every Phase 27–41 edge and the
+  assessed-and-deliberately-unchanged items recorded in Phase 41 §4
+  (guide → region hub reciprocity, project → area, homepage → `/projects/` and
+  `/blog/` sections, Kampung-tier expansion, footer-only legal pages).
+- The homepage "Google Reviews" block (Phase 41 §5) remains live and
+  unverified by owner decision — unchanged, still filed in
+  `PROJECT_OWNER_PENDING.md`.
+
+### 8. Test results (this phase)
+
+- [x] `npm run type-check` — PASS
+- [x] `npm run lint` — PASS (0 errors, 0 warnings)
+- [x] `npm run build` — PASS (**689** static generation entries, unchanged)
+- [x] All **17 static audits** — PASS (including the five new
+      `audit:authority` §7 tokens and the new no-slice rule)
+- [x] `npm run audit:live` vs `next start` — **PASS 250 / WARN 0 / FAIL 0**
+- [x] Independent crawl of all 678 URLs after the change — 0 non-200, 0 missing
+      OG/Twitter image, 0 pages without exactly one H1, 0 images without alt,
+      0 duplicate meta descriptions, 0 orphan pages, 0 titles over budget,
+      crawl depth still max 2
+- [x] Link graph compared before/after on two locally served production builds
+      (changes stashed, rebuilt, re-crawled, restored): the full page-type edge
+      matrix and every per-page inbound count **diff clean** — 33,820
+      main-content edges, identical in both runs, so the low/zero-inbound set
+      (footer-only legal pages, `/about/`, `/contact/`, `/faq/`, `/search/`,
+      three thin project pages) is exactly as Phase 41 §4 assessed it
+- [x] Rendered spot-checks — `/en/`, `/ms/`, `/zh/` (6 Q&As each, node
+      questions identical to the visible text), `/en/problems/`,
+      `/en/areas/kuala-lumpur/cheras/`, `/en/services/plumbing/`,
+      `/en/blog/bathroom-rebuild-cost-guide/`, `/en/faq/`, `/en/quote/`:
+      correct language, brand intact, no truncated name
+- [x] `/llms.txt` read back from the server — 57 guides in 10 categories, every
+      URL resolves, nothing stale, section placed between Sub-services and
+      Service areas as before
+- [x] Negative tests — 8 breaks, all fail as designed, all restored to green
+
+Limitations: HTTP-level QA is not visual or mobile-device QA; nothing here
+measures ranking, indexing or AI-answer outcomes, and no claim is made that
+listing 57 guides instead of 12 changes how any assistant ranks the site — the
+change removes a completeness gap in the one document the site publishes for
+answer engines. Every owner-gated item in `PROJECT_OWNER_PENDING.md` stays
+owner-gated; none was invented or assumed.
+
+Status: **Code verified + Build verified + Live verified (HTTP); the
+machine-readable layer is now complete — every family in `/llms.txt` is at full
+parity with `/ai/business.json` and the served sitemap, and every page that
+shows a question now publishes the structured data that answers it.**

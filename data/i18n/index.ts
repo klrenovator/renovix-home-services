@@ -229,6 +229,24 @@ export function getSiteFaqs(lang: LanguageCode | string): SiteFaq[] {
   });
 }
 
+/**
+ * How many site FAQs the homepage previews in its "Common questions" accordion.
+ *
+ * Phase 42: the homepage is the only page on the site that renders question and
+ * answer copy, so it is the only one that publishes no `FAQPage` node for it.
+ * The visible accordion and the structured data that describes it must never
+ * disagree — a schema node claiming Q&As the page does not show is exactly the
+ * dishonesty `audit:schema` exists to prevent — so the preview is read through
+ * this one function by both `FAQPreview` and `app/[lang]/page.tsx`. Change the
+ * number here and both follow.
+ */
+export const HOME_FAQ_COUNT = 6;
+
+/** The site FAQs the homepage previews, in the current language. */
+export function getHomeFaqs(lang: LanguageCode | string): SiteFaq[] {
+  return getSiteFaqs(lang).slice(0, HOME_FAQ_COUNT);
+}
+
 export type QuoteSubServiceOption = {
   /** Phase 19 registry slug — the value the form submits. */
   value: string;

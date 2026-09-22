@@ -1,7 +1,7 @@
 import { siteConfig, getWhatsAppHref, getPhoneHref } from "@/data/site";
 import { serviceDetails } from "@/data/service-content";
 import { getAllSubServices, formatSubServicePrice } from "@/data/sub-services";
-import { problemDetails } from "@/data/problem-content";
+import { getProblemCategory, problemDetails } from "@/data/problem-content";
 import { areaRegions } from "@/data/area-content";
 import { getActiveStateCoverage, getLocationBySlug } from "@/data/locations";
 import { getProjectContent, getPublishedProjects } from "@/data/project-content";
@@ -155,8 +155,17 @@ export function getAiKnowledge() {
     },
     problems: {
       index: absoluteUrl("en", "/problems/"),
+      // Phase 42 — each guide also carries the category it belongs to, read
+      // from the same registry that groups the guides on `/problems/` itself.
+      // `/ai/business.json` has published all 57 since Phase 16; `/llms.txt`
+      // only ever rendered a 12-entry sample, so the one document written for
+      // answer engines cited a fifth of the corpus. The category lets that
+      // document enumerate the whole set in the ten groups the site already
+      // uses, instead of a flat list or an arbitrary slice.
       guides: problemDetails.map((problem) => ({
         title: problem.h1,
+        category: problem.category,
+        categoryLabel: getProblemCategory(problem.category)?.label ?? problem.category,
         url: absoluteUrl("en", `/problems/${problem.slug}/`),
         urls: localizedUrls(`/problems/${problem.slug}/`),
       })),

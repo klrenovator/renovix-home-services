@@ -681,6 +681,27 @@ const aiChecks = [
     "llms.txt enumerates every published project page (Phase 33)",
   ],
   [
+    "app/llms.txt/route.ts",
+    "knowledge.problems.guides",
+    "llms.txt enumerates every problem guide, not a sample (Phase 42)",
+  ],
+  [
+    "lib/ai-knowledge.ts",
+    "getProblemCategory(problem.category)",
+    "knowledge builder derives each problem guide's category from the registry (Phase 42)",
+  ],
+  ["app/[lang]/page.tsx", "faqNode(", "the homepage publishes a FAQPage node (Phase 42)"],
+  [
+    "app/[lang]/page.tsx",
+    "getHomeFaqs(code)",
+    "the homepage FAQPage node is built from the same array the accordion renders (Phase 42)",
+  ],
+  [
+    "data/i18n/index.ts",
+    "export function getHomeFaqs(lang: LanguageCode | string)",
+    "one shared source defines the homepage FAQ preview (Phase 42)",
+  ],
+  [
     "lib/ai-knowledge.ts",
     "getSynonyms(\"ms\")",
     "knowledge builder publishes the Malay phrasing table (Phase 34)",
@@ -730,6 +751,24 @@ for (const file of ["lib/ai-knowledge.ts", "app/ai/business.json/route.ts", "app
     .join("\n");
   if (/RM\s?[0-9]/.test(source)) {
     fail(`${file} hardcodes a price — AI feeds must derive every figure from the catalogue.`);
+  }
+}
+
+// Phase 42 — the problem-guide section of /llms.txt used to render
+// `knowledge.problems.guides.slice(0, 12)`, which silently truncated the
+// corpus every time a guide was added. The guard above proves the full list is
+// read; this one proves no slice can quietly reappear. Comments are stripped
+// first so this rule's own explanation cannot trip it.
+{
+  const source = readFileSync(join(ROOT, "app/llms.txt/route.ts"), "utf8")
+    .replace(/\/\*[\s\S]*?\*\//g, "")
+    .split("\n")
+    .filter((line) => !line.trim().startsWith("//"))
+    .join("\n");
+  if (/knowledge\.problems\.guides\.slice\(/.test(source)) {
+    fail(
+      "app/llms.txt/route.ts slices knowledge.problems.guides — /llms.txt must enumerate every problem guide (Phase 42).",
+    );
   }
 }
 
