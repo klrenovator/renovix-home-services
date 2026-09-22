@@ -6,6 +6,7 @@ import {
   IconClipboard,
 } from "@/components/icons";
 import { format, getDictionary } from "@/i18n";
+import { getDistrictName } from "@/data/i18n";
 import { getDistrictForLocation } from "@/data/locations";
 import { formatPricingAmount, getPricingById } from "@/data/pricing";
 import type { AreaDetail } from "@/data/area-content/types";
@@ -30,7 +31,10 @@ export function AreaAnswerFirstSection({ area, lang }: AreaAnswerFirstSectionPro
   const district = getDistrictForLocation(area.slug);
   const regionLabel = area.region === "kuala-lumpur" ? t.common.kualaLumpur : t.common.selangor;
 
-  const districtName = district?.name ?? regionLabel;
+  // Phase 46 — the district name is spliced into the Malay and Chinese answer
+  // copy below, so it must come from the localized table, never the English
+  // registry string.
+  const districtName = district ? getDistrictName(district, lang) : regionLabel;
 
   // Answer-first localized content blocks
   const answers = [

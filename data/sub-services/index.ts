@@ -1,7 +1,11 @@
 import type { LanguageCode } from "@/data/languages";
 import { getLanguageCode } from "@/data/languages";
-import { getPricingBySubService, formatPricingAmount, getPricingUnitsLabel } from "@/data/pricing";
-import { pricingEntries } from "@/data/pricing/pricing";
+import {
+  getPricingBySubService,
+  getLocalizedPricingById,
+  formatPricingAmount,
+  getPricingUnitsLabel,
+} from "@/data/pricing";
 import type { PricingEntry } from "@/data/pricing/types";
 import { getServiceDetail } from "@/data/service-content";
 import type { ServiceDetail } from "@/data/service-content/types";
@@ -174,7 +178,12 @@ export type ResolvedSubService = {
   standaloneSearchIntent: boolean;
   relatedProblems: string[];
   text: SubServiceText;
-  /** Priced row when the sub-service has one (language-neutral numbers). */
+  /**
+   * Priced row when the sub-service has one. Numbers are language-neutral
+   * (always the English catalogue's); the wording — scope, duration, factors,
+   * disclaimer — is the localized copy for `lang` (Phase 46), so the page's
+   * pricing-detail block reads in the page's own language.
+   */
   pricing?: PricingEntry;
   /** Parent service detail resolved for the same language. */
   service?: ServiceDetail;
@@ -187,7 +196,7 @@ export function resolveSubService(
   const code = getLanguageCode(lang);
   const text = sub[code];
   const pricing = sub.pricingId
-    ? pricingEntries.find((entry) => entry.id === sub.pricingId)
+    ? getLocalizedPricingById(sub.pricingId, code)
     : undefined;
   const service = getServiceDetail(sub.serviceSlug, code);
 

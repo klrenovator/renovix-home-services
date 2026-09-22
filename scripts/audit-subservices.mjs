@@ -450,6 +450,30 @@ if (failures.length === 0) {
   );
 }
 
+/* ------------------------------------------------------------------------ */
+/* Phase 46 — every problem guide is claimed by at least one sub-service     */
+/*                                                                           */
+/* The problem → sub-service links (Phase 28) are the inverse of each         */
+/* scope's `relatedProblems`, so a problem no scope declares publishes with   */
+/* zero links to a bookable scope in every language. Four guides sat in that  */
+/* state through Phase 45 (wall-seepage, balcony-leakage, broken-tile-repair, */
+/* kitchen-tile-problems) even though a matching scope existed and, in three  */
+/* cases, the guide itself named the trade. This guard fails as soon as any   */
+/* problem is orphaned again — whether by a new guide or a trimmed list.      */
+/* ------------------------------------------------------------------------ */
+
+const claimedProblems = new Set(authored.flatMap((a) => a.relatedProblems));
+const orphanProblems = [...problemSlugs].filter((slug) => !claimedProblems.has(slug)).sort();
+if (orphanProblems.length > 0) {
+  fail(
+    `Phase 46 link guard: ${orphanProblems.length} problem guide(s) are not in any sub-service's relatedProblems, so their pages link to no bookable scope: ${orphanProblems.join(", ")}.`,
+  );
+} else {
+  console.log(
+    `  ✔ Phase 46 problem → scope coverage: all ${problemSlugs.size} problem guides are declared by at least one sub-service (no orphaned guide)`,
+  );
+}
+
 /* ---- report ---- */
 console.log("\n=== PHASE 19 SUB-SERVICE AUDIT ===\n");
 console.log(`Priced sub-services in catalogue: ${pricedSubs.length}`);

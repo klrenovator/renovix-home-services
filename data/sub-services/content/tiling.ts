@@ -444,7 +444,11 @@ export const tilingSubServices: SubServiceDefinition[] = [
     serviceSlug: "tiling",
     pricingId: "tiling-repair",
     standaloneSearchIntent: true,
-    relatedProblems: ["cracked-tile-repair", "loose-tile-repair", "hollow-tile-problems", "tile-grout-problems"],
+    // Phase 46 — broken-tile-repair and kitchen-tile-problems added: both
+    // guides describe a handful of cracked, chipped or lifted tiles (the
+    // suitableFor copy of this scope) and the kitchen guide states that
+    // kitchen tile repair is a tiling job; neither had a sub-service link.
+    relatedProblems: ["cracked-tile-repair", "broken-tile-repair", "kitchen-tile-problems", "loose-tile-repair", "hollow-tile-problems", "tile-grout-problems"],
     en: {
       name: "Tile Repair & Replacement",
       h1: "Tile Repair & Replacement in Kuala Lumpur & Selangor",

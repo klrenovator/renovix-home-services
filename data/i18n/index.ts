@@ -22,12 +22,15 @@ import type { AreaDetail, AreaFaq } from "@/data/area-content/types";
 import {
   areaNames,
   areasIndexFaqList,
+  districtList,
   problemCategoryList,
   problemList,
   projectCategoryLabels,
   regionList,
   serviceList,
+  stateNames,
 } from "./lists";
+import type { DistrictGroup } from "@/data/locations/types";
 
 /**
  * Language-aware accessors for the short shared lists. English values come from
@@ -186,6 +189,62 @@ export function getRegionSummary(
   }
 
   return fallback;
+}
+
+/**
+ * Phase 46 — localized name of a district group from the location hierarchy.
+ * The registry's English `name` is the fallback, exactly as `getRegionName`
+ * and `getAreaName` fall back, so a missing entry can never blank a page —
+ * `audit:multilingual` is what keeps the table complete.
+ */
+export function getDistrictName(
+  district: Pick<DistrictGroup, "id" | "name">,
+  lang: LanguageCode | string,
+): string {
+  const code = getLanguageCode(lang);
+
+  if (code !== "en") {
+    const entry = districtList[code][district.id];
+    if (entry) {
+      return entry.name;
+    }
+  }
+
+  return district.name;
+}
+
+/** Phase 46 — localized one-line description of a district group. */
+export function getDistrictDescription(
+  district: Pick<DistrictGroup, "id" | "description">,
+  lang: LanguageCode | string,
+): string {
+  const code = getLanguageCode(lang);
+
+  if (code !== "en") {
+    const entry = districtList[code][district.id];
+    if (entry) {
+      return entry.description;
+    }
+  }
+
+  return district.description;
+}
+
+/** Phase 46 — localized official state name for the coverage roadmap list. */
+export function getStateName(
+  state: { id: string; name: string },
+  lang: LanguageCode | string,
+): string {
+  const code = getLanguageCode(lang);
+
+  if (code !== "en") {
+    const entry = stateNames[code][state.id];
+    if (entry) {
+      return entry;
+    }
+  }
+
+  return state.name;
 }
 
 /** Localized display name for a location (proper nouns stay as-is in Malay). */

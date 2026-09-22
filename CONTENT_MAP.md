@@ -47,7 +47,7 @@ Sub-service link graph — one authored direction, every link derived from it:
 | --- | --- | --- |
 | service → its sub-services | `getSubServicesByService` | service pillar (Phase 28) |
 | service → its own problem guides | the `relatedService` each guide declares, restated in the pillar's `relatedProblems` | service pillar's related-problems block (Phase 40) |
-| problem → the scopes that fix it | inverse of each sub-service's `relatedProblems` (`getSubServicesForProblem`) | problem guide (Phase 28) |
+| problem → the scopes that fix it | inverse of each sub-service's `relatedProblems` (`getSubServicesForProblem`); since Phase 46 **every** one of the 57 guides is declared by at least one scope (`audit:subservices` fails on an orphaned guide; `audit:live` proves all 171 rendered guide pages link a scope) | problem guide (Phase 28) |
 | area → the scopes carried out there | published intent-matrix entries for the location, then `getSubServicesForProblem` over the area's own locally common problems (`getSubServicesForLocation`) | area guide's services section (Phase 29) |
 
 Rendered graph is enforced by `npm run audit:subservices` §5–§6 (wiring),
@@ -122,7 +122,10 @@ sagging-ceiling safety question) — see CONTENT_GOVERNANCE.md.
 → 21 Kuala Lumpur guides + 32 Selangor guides (verified by
 `npm run audit:locations`, which derives the count from the registry rather
 than from a number written here). Every guide carries
-district context (Phase 15 hierarchy), 6 locally-noted services, property
+district context (Phase 15 hierarchy — since Phase 46 the district name and
+description are rendered through `getDistrictName` / `getDistrictDescription`
+from `districtList` in `data/i18n/lists.ts`, so `/ms/` and `/zh/` pages no
+longer print the English registry strings), 6 locally-noted services, property
 types, local problems, process, pricing from the centralized catalogue
 (rendered through `getPricingById` / `getStartingRatesForLocation` — never
 typed into the page), FAQs and nearby-area links.
