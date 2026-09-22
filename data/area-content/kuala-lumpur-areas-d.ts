@@ -25,7 +25,7 @@ export const klAreasD: AreaDetail[] = [
     slug: "kl-city-centre",
     name: "KL City Centre",
     title:
-      "Renovix Home Services | Home Renovation & Repair Services in KL City Centre (KLCC & Bukit Bintang)",
+      "Renovix Home Services | Renovation in KL City Centre (KLCC)",
     metaDescription:
       "Renovation and repair services in KL City Centre — KLCC, Bukit Bintang, Imbi and Jalan Sultan Ismail condos and serviced apartments. Fit-outs, waterproofing, rewiring. Free quotation.",
     h1: "Home Renovation & Repair Services in KL City Centre (KLCC & Bukit Bintang)",
@@ -189,7 +189,7 @@ export const klAreasD: AreaDetail[] = [
     slug: "taman-desa",
     name: "Taman Desa",
     title:
-      "Renovix Home Services | Home Renovation & Repair Services in Taman Desa, KL",
+      "Renovix Home Services | Renovation & Repairs in Taman Desa, KL",
     metaDescription:
       "Renovation and repair services in Taman Desa, Kuala Lumpur — 1980s walk-up apartments, terraces and newer condos in Seputeh. Rewiring, bathrooms, waterproofing. Free quotation.",
     h1: "Home Renovation & Repair Services in Taman Desa, Kuala Lumpur",
@@ -358,7 +358,7 @@ export const klAreasD: AreaDetail[] = [
     slug: "kampung-baru",
     name: "Kampung Baru",
     title:
-      "Renovix Home Services | Home Renovation & Repair Services in Kampung Baru, KL",
+      "Renovix Home Services | Renovation & Repairs in Kampung Baru, KL",
     metaDescription:
       "Renovation and repair services in Kampung Baru, Kuala Lumpur — traditional timber houses, older brick homes and shoplots beside the city centre. Roofing, rewiring, repairs. Free quotation.",
     h1: "Home Renovation & Repair Services in Kampung Baru, Kuala Lumpur",

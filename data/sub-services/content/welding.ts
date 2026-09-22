@@ -12,7 +12,7 @@ export const weldingSubServices: SubServiceDefinition[] = [
       h1: "Window Grille Fabrication in Kuala Lumpur & Selangor",
       metaDescription:
         "Custom mild-steel window grilles fabricated and installed to your window measurements in Kuala Lumpur & Selangor. Window grille fabrication from RM12/sqft. Free quote.",
-      title: "Renovix Home Services | Window Grille Fabrication in KL & Selangor",
+      title: "Renovix Home Services | Window Grille Fabrication",
       lead:
         "A window grille is a security measure that has to be measured, fabricated and fixed correctly — a grille that is undersized, welded poorly or anchored loosely is not protection at all.",
       suitableFor: [
@@ -199,7 +199,7 @@ export const weldingSubServices: SubServiceDefinition[] = [
       name: "Fabrikasi Pintu Pagar Utama",
       h1: "Fabrikasi Pintu Pagar Utama di Kuala Lumpur & Selangor",
       metaDescription: "Pintu pagar utama besi lembut dan besi tempa dibuat dan dipasang di Kuala Lumpur & Selangor, disiapkan dengan primer dan lapisan atas. Dari RM18 sekaki persegi.",
-      title: "Renovix Home Services | Fabrikasi Pintu Pagar Utama di KL & Selangor",
+      title: "Renovix Home Services | Fabrikasi Pintu Pagar Utama",
       lead: "Pintu pagar utama menghabiskan seluruh hayatnya di luar dalam iklim yang menghukum keluli. Yang menentukan sama ada ia bertahan bukan reka bentuk — tetapi ketebalan keratan, kualiti kimpalan pada sambungan dan sebaik mana kemasan disediakan.",
       suitableFor: [
         "Menggantikan pintu pagar yang berkarat tembus di bahagian bawah.",
@@ -348,7 +348,7 @@ export const weldingSubServices: SubServiceDefinition[] = [
       name: "Pembaikan Kimpalan di Tapak",
       h1: "Pembaikan Kimpalan di Tapak di Kuala Lumpur & Selangor",
       metaDescription: "Pembaikan kimpalan di tapak untuk pagar, griil, pemegang tangan dan rangka logam di Kuala Lumpur & Selangor, termasuk rawatan karat. Dari RM150 sekerja.",
-      title: "Renovix Home Services | Pembaikan Kimpalan di Tapak di KL & Selangor",
+      title: "Renovix Home Services | Pembaikan Kimpalan di Tapak",
       lead: "Kebanyakan kegagalan kerja logam berlaku pada sambungan, bukan di tengah keratan. Mengimpal semula sambungan patah itu cepat; bahagian yang menentukan sama ada ia bertahan ialah merawat karat dan memulihkan salutan selepasnya.",
       suitableFor: [
         "Kimpalan retak atau patah pada pagar, griil atau pemegang tangan.",
@@ -439,7 +439,7 @@ export const weldingSubServices: SubServiceDefinition[] = [
       name: "Railing & Fencing Fabrication",
       h1: "Railing & Fencing Fabrication in Kuala Lumpur & Selangor",
       metaDescription: "Staircase railings, balcony rails and boundary fencing fabricated and installed in Kuala Lumpur & Selangor, primed and topcoated. Railing and fencing from RM80 per foot run.",
-      title: "Renovix Home Services | Railing & Fencing Fabrication in KL & Selangor",
+      title: "Renovix Home Services | Railing & Fencing Fabrication",
       lead: "A railing is a safety component before it is a design feature. Height, gap spacing and how firmly the posts are fixed matter more than the pattern — particularly on a staircase or a balcony with a drop behind it.",
       suitableFor: [
         "Staircase or landing railings in a house being renovated.",
@@ -487,7 +487,7 @@ export const weldingSubServices: SubServiceDefinition[] = [
       name: "Fabrikasi Pemegang Tangan & Pagar",
       h1: "Fabrikasi Pemegang Tangan & Pagar di Kuala Lumpur & Selangor",
       metaDescription: "Pemegang tangan tangga, rel balkoni dan pagar sempadan dibuat dan dipasang di Kuala Lumpur & Selangor, diprimer dan disalut. Dari RM80 sekaki larian.",
-      title: "Renovix Home Services | Fabrikasi Pemegang Tangan & Pagar di KL & Selangor",
+      title: "Renovix Home Services | Fabrikasi Pemegang Tangan & Pagar",
       lead: "Pemegang tangan ialah komponen keselamatan sebelum ia ciri reka bentuk. Ketinggian, jarak celah dan sekukuh mana tiang diikat lebih penting daripada coraknya — terutamanya pada tangga atau balkoni dengan jurang di belakangnya.",
       suitableFor: [
         "Pemegang tangan tangga atau pelantar di rumah yang diubah suai.",

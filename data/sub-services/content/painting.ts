@@ -452,7 +452,7 @@ export const paintingSubServices: SubServiceDefinition[] = [
       name: "Wall Repair & Touch-Up Painting",
       h1: "Wall Repair & Touch-Up Painting in Kuala Lumpur & Selangor",
       metaDescription: "Repair of cracked, peeling, mouldy or water-damaged walls in Kuala Lumpur & Selangor with filling, anti-mould treatment, skim and repaint. Wall repair from RM200 per job.",
-      title: "Renovix Home Services | Wall Repair & Touch-Up Painting in KL & Selangor",
+      title: "Renovix Home Services | Wall Repair & Touch-Up Painting",
       lead: "This is repair work rather than decorating: cracks filled, peeling material removed, mould treated and the surface skimmed back to something sound before any paint goes on.",
       suitableFor: [
         "A wall damaged by a leak that has since been fixed.",
@@ -497,7 +497,7 @@ export const paintingSubServices: SubServiceDefinition[] = [
       name: "Pembaikan Dinding & Cat Sentuh",
       h1: "Pembaikan Dinding & Cat Sentuh di Kuala Lumpur & Selangor",
       metaDescription: "Pembaikan dinding retak, mengelupas, berkulat atau rosak air di Kuala Lumpur & Selangor dengan tampalan, rawatan anti-kulat, skim dan cat semula. Dari RM200 sekerja.",
-      title: "Renovix Home Services | Pembaikan Dinding & Cat Sentuh di KL & Selangor",
+      title: "Renovix Home Services | Pembaikan Dinding & Cat Sentuh",
       lead: "Ini kerja pembaikan dan bukan hiasan: retak ditampal, bahan mengelupas ditanggalkan, kulat dirawat dan permukaan diskim kembali kepada sesuatu yang kukuh sebelum sebarang cat disapu.",
       suitableFor: [
         "Dinding rosak akibat kebocoran yang telah dibaiki.",

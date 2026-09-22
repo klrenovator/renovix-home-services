@@ -638,7 +638,7 @@ export const handymanProblems: ProblemDetail[] = [
     ...handymanBase,
     slug: "minor-home-repairs",
     name: "Minor Home Repairs",
-    title: "Renovix Home Services | Minor Home Repairs in KL & Selangor",
+    title: "Renovix Home Services | Minor Home Repairs: Scope & When to Call",
     metaDescription:
       "Minor home repairs in Kuala Lumpur & Selangor — small fixes, loose fittings, hooks, caulking, grout, doors and general maintenance. Learn the scope and when to call a handyman.",
     h1: "Minor Home Repairs",

@@ -492,7 +492,7 @@ export const translations: AreaTranslations = {
   "kuala-lumpur/sri-petaling": {
     ...shared("Sri Petaling"),
     name: "Sri Petaling",
-    title: "Renovix Home Services | Renovasi & Pembaikan Rumah di Sri Petaling",
+    title: "Renovix Home Services | Renovasi & Pembaikan di Sri Petaling",
     metaDescription:
       "Servis renovasi dan pembaikan rumah di Sri Petaling — renovasi, kerja paip, kalis air, jubin, elektrik dan cat. Sebut harga percuma.",
     h1: "Servis Renovasi & Pembaikan Rumah di Sri Petaling",
@@ -539,7 +539,7 @@ export const translations: AreaTranslations = {
   "kuala-lumpur/old-klang-road": {
     ...shared("Old Klang Road"),
     name: "Old Klang Road",
-    title: "Renovix Home Services | Renovasi & Pembaikan Rumah di Old Klang Road",
+    title: "Renovix Home Services | Renovasi & Pembaikan di Old Klang Road",
     metaDescription:
       "Servis renovasi dan pembaikan rumah di Old Klang Road — kerja paip, kalis air, renovasi, jubin, cat dan elektrik. Sebut harga percuma.",
     h1: "Servis Renovasi & Pembaikan Rumah di Old Klang Road",
@@ -586,7 +586,7 @@ export const translations: AreaTranslations = {
   "kuala-lumpur/taman-melawati": {
     ...shared("Taman Melawati"),
     name: "Taman Melawati",
-    title: "Renovix Home Services | Renovasi & Pembaikan Rumah di Taman Melawati",
+    title: "Renovix Home Services | Renovasi & Pembaikan di Taman Melawati",
     metaDescription:
       "Servis renovasi dan pembaikan rumah di Taman Melawati — kalis air, renovasi, kerja paip, elektrik, cat dan handyman. Sebut harga percuma.",
     h1: "Servis Renovasi & Pembaikan Rumah di Taman Melawati",
@@ -633,7 +633,7 @@ export const translations: AreaTranslations = {
   "kuala-lumpur/desa-parkcity": {
     ...shared("Desa ParkCity"),
     name: "Desa ParkCity",
-    title: "Renovix Home Services | Renovasi & Pembaikan Rumah di Desa ParkCity",
+    title: "Renovix Home Services | Renovasi & Pembaikan di Desa ParkCity",
     metaDescription:
       "Servis renovasi dan pembaikan rumah di Desa ParkCity — lantai, elektrik, renovasi, kerja paip, handyman dan cat mengikut garis panduan komuniti. Sebut harga percuma.",
     h1: "Servis Renovasi & Pembaikan Rumah di Desa ParkCity",

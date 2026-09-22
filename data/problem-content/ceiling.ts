@@ -519,7 +519,7 @@ export const ceilingProblems: ProblemDetail[] = [
     ...ceilingBase,
     slug: "old-plaster-ceiling",
     name: "Old Plaster Ceiling",
-    title: "Renovix Home Services | Old Plaster Ceiling Repair in KL & Selangor",
+    title: "Renovix Home Services | Old Plaster Ceiling Repair",
     metaDescription:
       "Old, cracked or crumbling plaster ceilings in Kuala Lumpur & Selangor? Learn the causes, warning signs, repair and replacement solutions, and when to call a ceiling professional.",
     h1: "Old Plaster Ceiling",

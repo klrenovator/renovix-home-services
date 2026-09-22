@@ -459,6 +459,7 @@ async function sampleStatuses(locs) {
   const graph = new Map();
   const anchors = new Map();
   const inCopy = new Map();
+  const titles = new Map();
   const leakedMarkup = [];
   for (let i = 0; i < locs.length; i += batchSize) {
     const batch = locs.slice(i, i + batchSize);
@@ -470,17 +471,20 @@ async function sampleStatuses(locs) {
         let pageAnchors = null;
         let inCopyCount = 0;
         let leaked = false;
+        let title = null;
         if (res.status === 200) {
           const html = await res.text();
           hrefs = extractInternalHrefs(html);
           pageAnchors = extractAnchors(html);
+          // Phase 41 — the same pass keeps the served <title> of every page.
+          title = extractTitleText(html);
           // Everything a crawler reads as page text: the flight-data scripts
           // are hydration payload, not copy, so they are set aside first.
           const visible = html.replace(/<script\b[\s\S]*?<\/script>/gi, " ");
           inCopyCount = countInCopyAnchors(visible);
           leaked = UNRENDERED_INLINE_LINK.test(visible);
         }
-        return { loc, path, status: res.status, hrefs, pageAnchors, inCopyCount, leaked };
+        return { loc, path, status: res.status, hrefs, pageAnchors, inCopyCount, leaked, title };
       }),
     );
     for (const r of results) {
@@ -492,12 +496,113 @@ async function sampleStatuses(locs) {
       if (r.hrefs) graph.set(r.path, r.hrefs);
       if (r.pageAnchors) anchors.set(r.path, r.pageAnchors);
       if (r.status === 200) inCopy.set(r.path, r.inCopyCount);
+      if (r.status === 200) titles.set(r.path, r.title);
       if (r.leaked) leakedMarkup.push(r.path);
     }
   }
   if (bad === 0) pass(`all ${ok} sitemap URLs return 200`);
   else fail(`sitemap sweep ${ok} ok / ${bad} failed`);
-  return { graph, anchors, inCopy, leakedMarkup };
+  return { graph, anchors, inCopy, titles, leakedMarkup };
+}
+
+/* ------------------------------------------------------------------------ */
+/* Phase 41 — the served <title> of every page: budget, brand, uniqueness    */
+/*                                                                           */
+/* Titles are the one metadata field the site had no guard for. Descriptions  */
+/* and H1s are checked for uniqueness by `audit:authority` §6, but titles     */
+/* were only ever audited by hand (Phases 9 and 13), and the pages added      */
+/* since — 51 sub-services, 11 problem guides, 12 Knowledge Hub guides, the   */
+/* project portfolio — drifted: 210 of 678 titles ran past the 65-character   */
+/* budget (the longest, an area guide, reached 106), three pairs of pages     */
+/* shared one identical title, and the two legal pages in each language       */
+/* carried no brand at all. The budget lives in `i18n/seo.ts` and is read     */
+/* from there, so this check cannot disagree with the composer that also      */
+/* honours it. Titles are checked on the served pages rather than in source    */
+/* because project and legal-page titles are composed at render time.         */
+/* ------------------------------------------------------------------------ */
+
+/** The single-sourced title budget, read from the module that defines it. */
+const TITLE_MAX_LENGTH = (() => {
+  const source = readFileSync(
+    fileURLToPath(new URL("../i18n/seo.ts", import.meta.url)),
+    "utf8",
+  );
+  const m = source.match(/export const TITLE_MAX_LENGTH\s*=\s*(\d+)/);
+  if (!m) {
+    fail("i18n/seo.ts no longer exports TITLE_MAX_LENGTH — the title budget check cannot run");
+    return 65;
+  }
+  return Number(m[1]);
+})();
+
+/** The brand token every title must carry (Phase 10: the full brand, always). */
+const TITLE_BRAND_TOKEN = "Renovix";
+
+function extractTitleText(html) {
+  const m = html.match(/<title[^>]*>([\s\S]*?)<\/title>/i);
+  if (!m) return null;
+  return m[1]
+    .replace(/&amp;/g, "&")
+    .replace(/&#x27;/g, "'")
+    .replace(/&quot;/g, '"')
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function checkTitles(locs, titles) {
+  console.log("\n== Title metadata (Phase 41) ==");
+
+  const missing = locs.filter((loc) => {
+    const path = loc.replace(CANONICAL_HOST, "");
+    return !titles.get(path);
+  });
+  if (missing.length === 0) pass(`all ${locs.length} served pages render a <title>`);
+  else fail(`${missing.length} served pages render no <title> (e.g. ${missing.slice(0, 3).join(", ")})`);
+
+  // 1. Budget.
+  const overBudget = [...titles]
+    .filter(([, title]) => title.length > TITLE_MAX_LENGTH)
+    .sort((a, b) => b[1].length - a[1].length);
+  if (overBudget.length === 0) {
+    const longest = [...titles.values()].reduce((max, t) => Math.max(max, t.length), 0);
+    pass(`all ${titles.size} titles fit the ${TITLE_MAX_LENGTH}-character budget (longest ${longest})`);
+  } else {
+    for (const [path, title] of overBudget.slice(0, 10)) {
+      fail(`title over budget (${title.length} > ${TITLE_MAX_LENGTH}) ${path} :: ${title}`);
+    }
+    if (overBudget.length > 10) fail(`…and ${overBudget.length - 10} more titles over ${TITLE_MAX_LENGTH} characters`);
+  }
+
+  // 2. Brand.
+  const noBrand = [...titles].filter(([, title]) => !title.includes(TITLE_BRAND_TOKEN));
+  if (noBrand.length === 0) {
+    pass(`every title carries the brand token "${TITLE_BRAND_TOKEN}"`);
+  } else {
+    for (const [path, title] of noBrand.slice(0, 10)) fail(`title carries no brand ${path} :: ${title}`);
+    if (noBrand.length > 10) fail(`…and ${noBrand.length - 10} more titles without the brand`);
+  }
+
+  // 3. Uniqueness within each language — two indexable pages sharing one title
+  //    compete for the same listing and cannot be told apart in a SERP.
+  const byLang = new Map();
+  for (const [path, title] of titles) {
+    const lang = path.split("/")[1];
+    const key = `${lang}|${title}`;
+    if (!byLang.has(key)) byLang.set(key, []);
+    byLang.get(key).push(path);
+  }
+  const duplicates = [...byLang].filter(([, paths]) => paths.length > 1);
+  if (duplicates.length === 0) {
+    const perLang = new Set([...titles.keys()].map((p) => p.split("/")[1])).size;
+    pass(`titles are unique within each of the ${perLang} published languages`);
+  } else {
+    for (const [key, paths] of duplicates.slice(0, 10)) {
+      fail(`duplicate title "${key.split("|")[1]}" shared by ${paths.join(" , ")}`);
+    }
+    if (duplicates.length > 10) fail(`…and ${duplicates.length - 10} more duplicated titles`);
+  }
 }
 
 /* ------------------------------------------------------------------------ */
@@ -986,6 +1091,35 @@ function checkInternalLinkGraph(locs, graph) {
     );
   }
 
+  // 3h. Phase 41 — region hubs → the Knowledge Hub guides their own area
+  //     guides publish. Area guides rendered that layer from Phase 20, and
+  //     Phase 35 gave the hubs the other two layers their children carry
+  //     (scopes, problems), but the guide layer was left out: both hubs linked
+  //     0 guides in all three languages. `getArticlesForRegion()` derives the
+  //     list as the union of its children's declared locations, so a hub can
+  //     only ever surface a guide at least one of its own guides carries.
+  let hubsWithGuides = 0;
+  let regionGuideEdges = 0;
+  for (const path of regionHubPaths) {
+    const hrefs = graph.get(path) ?? new Set();
+    const guideEdges = [...hrefs].filter((h) => blogArticlePaths.has(h));
+    if (guideEdges.length > 0) hubsWithGuides += 1;
+    regionGuideEdges += guideEdges.length;
+  }
+  // Six hubs (2 regions × 3 languages); every guide in the library is declared
+  // by areas in both regions, so the real coverage is 12 per hub and the floor
+  // sits well below it — a mass regression fails, an editorial cap change does
+  // not.
+  if (hubsWithGuides === regionHubPaths.length && regionGuideEdges >= regionHubPaths.length * 8) {
+    pass(
+      `link graph: all ${regionHubPaths.length} region hubs link to the Knowledge Hub guides their area guides publish (${regionGuideEdges} links)`,
+    );
+  } else {
+    fail(
+      `region → guide link coverage incomplete: ${hubsWithGuides}/${regionHubPaths.length} hubs, ${regionGuideEdges} links`,
+    );
+  }
+
   // 4. No internal link may point at a URL the site does not serve.
   const deadLinks = new Map();
   for (const [from, hrefs] of graph) {
@@ -1446,8 +1580,9 @@ async function main() {
   console.log(`Phase 25 live QA against ${BASE}\n`);
   await checkHeaders();
   const locs = await checkSitemapLive();
-  const { graph, anchors, inCopy, leakedMarkup } = await sampleStatuses(locs);
+  const { graph, anchors, inCopy, titles, leakedMarkup } = await sampleStatuses(locs);
   checkInternalLinkGraph(locs, graph);
+  checkTitles(locs, titles);
   checkInCopyLinks(locs, inCopy, leakedMarkup);
   await checkAiFeedCoverage(locs);
   await checkAiPhrasingCoverage(locs);

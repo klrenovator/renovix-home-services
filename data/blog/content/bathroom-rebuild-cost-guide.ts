@@ -36,7 +36,7 @@ export const bathroomRebuildCostGuide: ArticleDefinition = {
     "plumbing-toilet-repair",
   ],
   en: {
-    title: "Renovix Home Services | Bathroom Rebuild Cost Guide (KL & Selangor)",
+    title: "Renovix Home Services | Bathroom Rebuild Cost Guide",
     metaDescription:
       "What a full bathroom rebuild costs in Kuala Lumpur and Selangor, what sits inside the price, and when a partial repair is the better decision. Catalogue rates and a free quotation.",
     h1: "Bathroom Rebuild Cost Guide for Kuala Lumpur & Selangor",
@@ -229,7 +229,7 @@ export const bathroomRebuildCostGuide: ArticleDefinition = {
       "If you are weighing a rebuild against a repair, send photographs of the bathroom and of anything you can see in the room below, along with the property type and area. We will tell you which scope the evidence points to before quoting.",
   },
   ms: {
-    title: "Renovix Home Services | Panduan Kos Bina Semula Bilik Air (KL & Selangor)",
+    title: "Renovix Home Services | Panduan Kos Bina Semula Bilik Air",
     metaDescription:
       "Kos bina semula bilik air di Kuala Lumpur dan Selangor, apa yang termasuk dalam harga, dan bila pembaikan separa lebih berbaloi. Kadar rasmi kami dan sebut harga percuma.",
     h1: "Panduan Kos Bina Semula Bilik Air untuk Kuala Lumpur & Selangor",

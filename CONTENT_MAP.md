@@ -113,6 +113,18 @@ publish — so a hub can never claim a scope or a problem its own guides do not
 carry, and the 51 sub-service pages and 57 problem guides gain two more entry
 points each. Capped at 12 per hub; the child guides carry the full detail.
 
+Since Phase 41 they also carry the third layer their children carry — the
+**Knowledge Hub**: `getArticlesForRegion(region, 12)` in `data/blog/index.ts`
+unions `getArticlesForLocation()` over the hub's own child areas (widest
+coverage first, ties in declared order, capped at 12) and `AreaRegionPage.tsx`
+renders it with the same `GuideLinksSection` the 53 area guides use. Before this
+the hubs were the only location pages with 0 guide links, even though all 12
+guides declare `region/…` area keys; both hubs now surface all 12 (**72 rendered
+links**), the least-linked guide rose from 12 to 14 main-content inbound links,
+and the derivation stays honest by construction — a hub can never surface a
+guide none of its own child guides already publish. `audit:blog` verifies the
+derivation and the wiring; `audit:live` §3h counts the rendered links.
+
 Since Phase 39 every guide and hub also carries **in-copy contextual links** in
 all three languages: the introduction and context paragraphs name the work they
 describe and link it (`[label](/services/slug)`, rendered by
@@ -271,6 +283,21 @@ gzipped.
 
 Architecture is ready to measure: one canonical URL per page per language,
 hreflang sets, self-canonicals, unique titles/descriptions, single sitemap.
+
+**Title layer (Phase 41).** Every served `<title>` is brand-first with the full
+brand name — `Renovix Home Services | {descriptor}` (Phase 10 convention,
+unchanged) — fits the single-sourced 65-character budget `TITLE_MAX_LENGTH` in
+`i18n/seo.ts`, and is unique within its language. The descriptor carries the
+subject and the budget is met by dropping locality tails first
+(`… in KL & Selangor`, `, Selangor`) and never by truncating a service,
+problem, place or guide name; project titles are composed by `getProjectSeo()`
+(full `name — category` when it fits, category-free `metaTitleShortTemplate`
+when it does not, bespoke `seoTitle` for the 6 projects whose name alone is too
+long); legal pages compose `brandTitle(siteName, label)` rather than reusing
+their bare footer label. Meta descriptions are unchanged and still measured
+against the 160/170-character guidance (Phase 9 rationale). Enforced by
+`audit:authority` §6b on the source and by the `audit:live` title block over all
+678 rendered pages.
 Submit `/sitemap.xml` once in Search Console (see SITEMAP.md), then watch
 impressions, clicks, CTR, indexed pages, queries and conversions per
 cluster above. Discovery ≠ indexing; quality decides. No performance data is

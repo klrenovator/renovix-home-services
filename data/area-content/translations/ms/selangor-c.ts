@@ -22,7 +22,7 @@ export const translations: AreaTranslations = {
   "selangor/bandar-sunway": {
     ...shared("Bandar Sunway"),
     name: "Bandar Sunway",
-    title: "Renovix Home Services | Renovasi & Pembaikan Rumah di Bandar Sunway, Selangor",
+    title: "Renovix Home Services | Renovasi & Pembaikan di Bandar Sunway",
     metaDescription:
       "Servis renovasi dan pembaikan rumah di Bandar Sunway, Selangor — kondominium, pangsapuri servis dan kedai-pejabat sekitar Sunway Pyramid. Sebut harga percuma.",
     h1: "Servis Renovasi & Pembaikan Rumah di Bandar Sunway",
@@ -69,7 +69,7 @@ export const translations: AreaTranslations = {
   "selangor/bandar-utama": {
     ...shared("Bandar Utama"),
     name: "Bandar Utama",
-    title: "Renovix Home Services | Renovasi & Pembaikan Rumah di Bandar Utama, Selangor",
+    title: "Renovix Home Services | Renovasi & Pembaikan di Bandar Utama",
     metaDescription:
       "Servis renovasi dan pembaikan rumah di Bandar Utama, Petaling Jaya — rumah landed berpagar era 90-an, kondominium dan kedai-pejabat sekitar 1 Utama. Sebut harga percuma.",
     h1: "Servis Renovasi & Pembaikan Rumah di Bandar Utama",
@@ -116,7 +116,7 @@ export const translations: AreaTranslations = {
   "selangor/mutiara-damansara": {
     ...shared("Mutiara Damansara"),
     name: "Mutiara Damansara",
-    title: "Renovix Home Services | Renovasi & Pembaikan Rumah di Mutiara Damansara, Selangor",
+    title: "Renovix Home Services | Renovasi & Pembaikan di Mutiara Damansara",
     metaDescription:
       "Servis renovasi dan pembaikan rumah di Mutiara Damansara, Petaling Jaya — kondominium dan pejabat sekitar The Curve dan IPC. Kerja kemasan, kalis air, elektrik. Sebut harga percuma.",
     h1: "Servis Renovasi & Pembaikan Rumah di Mutiara Damansara",
@@ -163,7 +163,7 @@ export const translations: AreaTranslations = {
   "selangor/damansara-perdana": {
     ...shared("Damansara Perdana"),
     name: "Damansara Perdana",
-    title: "Renovix Home Services | Renovasi & Pembaikan Rumah di Damansara Perdana, Selangor",
+    title: "Renovix Home Services | Renovasi & Pembaikan di Damansara Perdana",
     metaDescription:
       "Servis renovasi dan pembaikan rumah di Damansara Perdana, Petaling Jaya — kondominium lereng bukit, pangsapuri servis dan kedai-pejabat. Kerja kemasan, kalis air. Sebut harga percuma.",
     h1: "Servis Renovasi & Pembaikan Rumah di Damansara Perdana",
@@ -210,7 +210,7 @@ export const translations: AreaTranslations = {
   "selangor/ara-damansara": {
     ...shared("Ara Damansara"),
     name: "Ara Damansara",
-    title: "Renovix Home Services | Renovasi & Pembaikan Rumah di Ara Damansara, Selangor",
+    title: "Renovix Home Services | Renovasi & Pembaikan di Ara Damansara",
     metaDescription:
       "Servis renovasi dan pembaikan rumah di Ara Damansara, Petaling Jaya — rumah teres era 2000-an, kondominium dan kedai-pejabat berhampiran LRT. Sebut harga percuma.",
     h1: "Servis Renovasi & Pembaikan Rumah di Ara Damansara",
@@ -257,7 +257,7 @@ export const translations: AreaTranslations = {
   "selangor/bandar-sri-damansara": {
     ...shared("Bandar Sri Damansara"),
     name: "Bandar Sri Damansara",
-    title: "Renovix Home Services | Renovasi & Pembaikan Rumah di Bandar Sri Damansara, Selangor",
+    title: "Renovix Home Services | Renovasi di Bandar Sri Damansara",
     metaDescription:
       "Servis renovasi dan pembaikan rumah di Bandar Sri Damansara, Selangor — rumah teres era 90-an, pangsapuri dan kondominium berhampiran MRT. Sebut harga percuma.",
     h1: "Servis Renovasi & Pembaikan Rumah di Bandar Sri Damansara",
@@ -304,7 +304,7 @@ export const translations: AreaTranslations = {
   "selangor/bangi": {
     ...shared("Bangi"),
     name: "Bangi",
-    title: "Renovix Home Services | Renovasi & Pembaikan Rumah di Bangi, Selangor",
+    title: "Renovix Home Services | Renovasi & Pembaikan di Bangi, Selangor",
     metaDescription:
       "Servis renovasi dan pembaikan rumah di Bangi, Selangor — rumah Bandar Baru Bangi era 70-an, sewaan sekitar UKM dan perbandaran baharu. Sebut harga percuma.",
     h1: "Servis Renovasi & Pembaikan Rumah di Bangi",
@@ -351,7 +351,7 @@ export const translations: AreaTranslations = {
   "selangor/serdang": {
     ...shared("Serdang"),
     name: "Serdang",
-    title: "Renovix Home Services | Renovasi & Pembaikan Rumah di Serdang, Selangor",
+    title: "Renovix Home Services | Renovasi & Pembaikan di Serdang, Selangor",
     metaDescription:
       "Servis renovasi dan pembaikan rumah di Serdang, Selangor — rumah landed sekitar UPM, kondominium koridor MRT dan deretan kedai berhampiran Seri Kembangan. Sebut harga percuma.",
     h1: "Servis Renovasi & Pembaikan Rumah di Serdang",
@@ -398,7 +398,7 @@ export const translations: AreaTranslations = {
   "selangor/balakong": {
     ...shared("Balakong"),
     name: "Balakong",
-    title: "Renovix Home Services | Renovasi & Pembaikan Rumah di Balakong, Selangor",
+    title: "Renovix Home Services | Renovasi & Pembaikan di Balakong",
     metaDescription:
       "Servis renovasi dan pembaikan rumah di Balakong, Selangor — teres perbandaran Cheras South era 90-an, estet berhampiran industri dan kondominium baharu. Sebut harga percuma.",
     h1: "Servis Renovasi & Pembaikan Rumah di Balakong",
@@ -445,7 +445,7 @@ export const translations: AreaTranslations = {
   "selangor/bandar-baru-klang": {
     ...shared("Bandar Baru Klang"),
     name: "Bandar Baru Klang",
-    title: "Renovix Home Services | Renovasi & Pembaikan Rumah di Bandar Baru Klang, Selangor",
+    title: "Renovix Home Services | Renovasi & Pembaikan di Bandar Baru Klang",
     metaDescription:
       "Servis renovasi dan pembaikan rumah di Bandar Baru Klang, Selangor — estet teres sejak 80-an, pangsapuri dan kondominium berhampiran Bukit Raja. Sebut harga percuma.",
     h1: "Servis Renovasi & Pembaikan Rumah di Bandar Baru Klang",
@@ -492,7 +492,7 @@ export const translations: AreaTranslations = {
   "selangor/sepang": {
     ...shared("Sepang"),
     name: "Sepang",
-    title: "Renovix Home Services | Renovasi & Pembaikan Rumah di Sepang & Salak Tinggi, Selangor",
+    title: "Renovix Home Services | Renovasi di Sepang & Salak Tinggi",
     metaDescription:
       "Servis renovasi dan pembaikan rumah di Sepang dan Salak Tinggi, Selangor — rumah perbandaran koridor lapangan terbang, estet landed dan pangsapuri. Sebut harga percuma.",
     h1: "Servis Renovasi & Pembaikan Rumah di Sepang & Salak Tinggi",

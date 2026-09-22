@@ -37,7 +37,7 @@ export const flooringSubfloorPreparation: ArticleDefinition = {
   relatedProjects: ["floor-tile-removal-hacking"],
   pricingIds: ["flooring-hacking", "flooring-spc", "flooring-vinyl", "flooring-laminate"],
   en: {
-    title: "Renovix Home Services | Flooring Subfloor Preparation Guide (KL & Selangor)",
+    title: "Renovix Home Services | Flooring Subfloor Preparation Guide",
     metaDescription:
       "What subfloor preparation really means before laying SPC, vinyl or laminate in a KL or Selangor home — level checks, moisture, screeding, hacking and what it costs.",
     h1: "Subfloor Preparation: The Step That Decides How Long Your Floor Lasts",
@@ -202,7 +202,7 @@ export const flooringSubfloorPreparation: ArticleDefinition = {
       "Tell us the room, the condition of the current floor and whether you have ever had leaks or damp there. We will assess the base and tell you honestly how much preparation it needs before a single plank is ordered.",
   },
   ms: {
-    title: "Renovix Home Services | Panduan Penyediaan Subfloor Lantai (KL & Selangor)",
+    title: "Renovix Home Services | Panduan Penyediaan Subfloor Lantai",
     metaDescription:
       "Apa maksud penyediaan subfloor sebelum memasang lantai SPC, vinil atau lamina di rumah KL atau Selangor — semakan aras, kelembapan, screeding, pemecahan dan kosnya.",
     h1: "Penyediaan Subfloor: Langkah yang Menentukan Berapa Lama Lantai Anda Tahan",

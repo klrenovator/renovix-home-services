@@ -736,6 +736,9 @@ export const projectContent: Record<string, ProjectContent> = {
   },
   "instant-shower-heater-installation": {
     title: "Instant shower heater and rain-shower column",
+    // Project name is longer than the 65-character title budget, so the
+    // <title> is bespoke; the visible project name above stays untouched.
+    seoTitle: "Instant shower heater and rain column | Renovix Home Services",
     shortDescription:
       "A black rain-shower column and instant shower heater mounted on a finished tiled wall and connected to water and power.",
     alt:
@@ -748,6 +751,9 @@ export const projectContent: Record<string, ProjectContent> = {
   },
   "pendant-lamp-installation": {
     title: "Pendant lamp installation over a living area",
+    // Project name is longer than the 65-character title budget, so the
+    // <title> is bespoke; the visible project name above stays untouched.
+    seoTitle: "Pendant lamp over a living area | Renovix Home Services",
     shortDescription:
       "A designer pendant lamp hung from a ceiling point, positioned over a finished living space with a textured feature wall.",
     alt:

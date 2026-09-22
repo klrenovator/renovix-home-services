@@ -41,7 +41,7 @@ export const ceilingPartitionMaterialChoice: ArticleDefinition = {
   ],
   pricingIds: ["ceiling-flat", "ceiling-lbox", "partition-drywall", "ceiling-repair"],
   en: {
-    title: "Renovix Home Services | Ceiling & Partition Material Guide (KL & Selangor)",
+    title: "Renovix Home Services | Ceiling & Partition Material Guide",
     metaDescription:
       "Gypsum, plaster, PVC, timber or metal — which ceiling and partition material suits each room in a KL or Selangor home, what each costs, and the details that decide durability.",
     h1: "Choosing Ceiling and Partition Materials: Gypsum, Plaster, PVC, Timber or Metal",
@@ -212,7 +212,7 @@ export const ceilingPartitionMaterialChoice: ArticleDefinition = {
       "Tell us the room, what is above it, and whether you want to cover services, divide space or both. We will recommend the material that suits the room — and be honest about the one or two places where spending more is actually worth it.",
   },
   ms: {
-    title: "Renovix Home Services | Panduan Bahan Siling & Partition (KL & Selangor)",
+    title: "Renovix Home Services | Panduan Bahan Siling & Partition",
     metaDescription:
       "Gypsum, plaster, PVC, kayu atau logam — bahan siling dan partition mana yang sesuai untuk setiap bilik di rumah KL atau Selangor, kos masing-masing, dan butiran yang menentukan ketahanan.",
     h1: "Memilih Bahan Siling dan Partition: Gypsum, Plaster, PVC, Kayu atau Logam",

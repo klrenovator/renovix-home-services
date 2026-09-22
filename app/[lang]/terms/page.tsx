@@ -4,7 +4,7 @@ import { LegalPage } from "@/components/LegalPage";
 import { PageSchema } from "@/components/seo/PageSchema";
 import { getLanguage, languages } from "@/data/languages";
 import { getDictionary } from "@/i18n";
-import { absoluteUrl, buildPageMetadata } from "@/i18n/seo";
+import { absoluteUrl, brandTitle, buildPageMetadata } from "@/i18n/seo";
 
 type TermsPageProps = {
   params: Promise<{ lang: string }>;
@@ -29,7 +29,9 @@ export async function generateMetadata({
   return buildPageMetadata({
     lang: language.code,
     path: "/terms/",
-    title: t.legal.terms,
+    // Phase 41 — the legal pages were the only indexable pages whose
+    // <title> carried no brand; composed brand-first like every other page.
+    title: brandTitle(t.meta.siteName, t.legal.terms),
     description: t.legalPage.termsMetaDescription,
     availableLanguages: languages.map((item) => item.code),
   });

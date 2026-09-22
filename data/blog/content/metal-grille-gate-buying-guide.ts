@@ -35,7 +35,7 @@ export const metalGrilleGateBuyingGuide: ArticleDefinition = {
     "welding-repair",
   ],
   en: {
-    title: "Renovix Home Services | Grilles, Gates & Railings — Metal Buying Guide (Malaysia)",
+    title: "Renovix Home Services | Metal Grille & Gate Buying Guide",
     metaDescription:
       "Mild steel, stainless steel and aluminium compared for Malaysian grilles, gates, railings and awnings — what drives the price, how each ages in our climate, and what maintenance each needs.",
     h1: "Choosing Metal for Grilles, Gates, Railings and Awnings in Malaysia",
@@ -229,7 +229,7 @@ export const metalGrilleGateBuyingGuide: ArticleDefinition = {
       "Send the measurements of the opening, a photograph of the position and a note of how you want it to open. We will advise which metal and which section suit the job, and quote from the rates above.",
   },
   ms: {
-    title: "Renovix Home Services | Grill, Pagar & Railing — Panduan Memilih Logam (Malaysia)",
+    title: "Renovix Home Services | Panduan Memilih Grill, Pagar & Railing",
     metaDescription:
       "Perbandingan besi lembut, keluli tahan karat dan aluminium untuk grill, pagar, railing dan awning di Malaysia — apa yang menentukan harga, cara ia menua dalam iklim kita dan penyelenggaraannya.",
     h1: "Memilih Logam untuk Grill, Pagar, Railing dan Awning di Malaysia",

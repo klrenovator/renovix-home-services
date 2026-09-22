@@ -22,7 +22,7 @@ export const translations: AreaTranslations = {
   "selangor/petaling-jaya": {
     ...shared("Petaling Jaya"),
     name: "Petaling Jaya",
-    title: "Renovix Home Services | Renovasi & Pembaikan Rumah di Petaling Jaya",
+    title: "Renovix Home Services | Renovasi & Pembaikan di Petaling Jaya",
     metaDescription:
       "Servis renovasi dan pembaikan rumah di Petaling Jaya — renovasi, elektrik, kerja paip, kalis air, cat dan siling. Sebut harga percuma.",
     h1: "Servis Renovasi & Pembaikan Rumah di Petaling Jaya",
@@ -445,7 +445,7 @@ export const translations: AreaTranslations = {
   "selangor/seri-kembangan": {
     ...shared("Seri Kembangan"),
     name: "Seri Kembangan",
-    title: "Renovix Home Services | Renovasi & Pembaikan Rumah di Seri Kembangan",
+    title: "Renovix Home Services | Renovasi & Pembaikan di Seri Kembangan",
     metaDescription:
       "Servis renovasi dan pembaikan rumah di Seri Kembangan — kerja paip, kalis air, renovasi, elektrik, cat dan handyman. Sebut harga percuma.",
     h1: "Servis Renovasi & Pembaikan Rumah di Seri Kembangan",
@@ -586,7 +586,7 @@ export const translations: AreaTranslations = {
   "selangor/kota-damansara": {
     ...shared("Kota Damansara"),
     name: "Kota Damansara",
-    title: "Renovix Home Services | Renovasi & Pembaikan Rumah di Kota Damansara",
+    title: "Renovix Home Services | Renovasi & Pembaikan di Kota Damansara",
     metaDescription:
       "Servis renovasi dan pembaikan rumah di Kota Damansara — renovasi, kerja paip, kalis air, lantai, elektrik dan handyman. Sebut harga percuma.",
     h1: "Servis Renovasi & Pembaikan Rumah di Kota Damansara",
@@ -633,7 +633,7 @@ export const translations: AreaTranslations = {
   "selangor/sungai-buloh": {
     ...shared("Sungai Buloh"),
     name: "Sungai Buloh",
-    title: "Renovix Home Services | Renovasi & Pembaikan Rumah di Sungai Buloh",
+    title: "Renovix Home Services | Renovasi & Pembaikan di Sungai Buloh",
     metaDescription:
       "Servis renovasi dan pembaikan rumah di Sungai Buloh — renovasi, kerja paip, kalis air, elektrik, cat dan handyman. Sebut harga percuma.",
     h1: "Servis Renovasi & Pembaikan Rumah di Sungai Buloh",

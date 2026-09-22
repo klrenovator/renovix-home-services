@@ -12,7 +12,7 @@ export const ms: Dictionary = {
     defaultDescription:
       "Renovix Home Services menyediakan perkhidmatan renovasi dan pembaikan rumah profesional di seluruh Kuala Lumpur, Selangor dan Lembah Klang. Kerja jubin, kimpalan, elektrik, cat, siling, partition, paip, kalis air, lantai, renovasi dan kerja am.",
     homeTitle:
-      "Renovix Home Services | Renovasi & Pembaikan Rumah di KL & Selangor",
+      "Renovix Home Services | Renovasi & Pembaikan di KL & Selangor",
     homeDescription:
       "Perkhidmatan renovasi dan pembaikan rumah di KL, Selangor dan Lembah Klang — kerja jubin, kimpalan, elektrik, cat, siling, paip dan kalis air.",
     ogBadge: "Berkhidmat di KL & Selangor · Lembah Klang",
@@ -475,7 +475,7 @@ export const ms: Dictionary = {
   },
   areasIndex: {
     metaTitle:
-      "Renovix Home Services | Kawasan Perkhidmatan di KL, Selangor & Lembah Klang",
+      "Renovix Home Services | Kawasan Perkhidmatan di KL & Selangor",
     metaDescription:
       "Renovix berkhidmat di KL, Selangor dan Lembah Klang. Lihat panduan tempatan untuk kejiranan KL dan pekan Selangor — perkhidmatan dan masalah biasa.",
     ogDescription:
@@ -897,7 +897,7 @@ export const ms: Dictionary = {
     notSureOption: "Tidak pasti / pelbagai perkhidmatan",
   },
   blogIndex: {
-    metaTitle: "Renovix Home Services | Panduan Renovasi Rumah untuk KL & Selangor",
+    metaTitle: "Renovix Home Services | Panduan Renovasi Rumah di KL & Selangor",
     metaDescription:
       "Panduan praktikal tentang kos renovasi, bahan, pembaikan dan penyelenggaraan untuk rumah di Kuala Lumpur dan Selangor — berdasarkan senarai harga kami sendiri.",
     ogDescription:
@@ -1032,6 +1032,7 @@ export const ms: Dictionary = {
   },
   projectPage: {
     metaTitleTemplate: "{title} — {category} | Renovix Home Services",
+    metaTitleShortTemplate: "{title} | Renovix Home Services",
     eyebrow: "Projek",
     overviewEyebrow: "Gambaran Keseluruhan Projek",
     overviewTitle: "Mengenai kerja ini",
@@ -1081,7 +1082,7 @@ export const ms: Dictionary = {
   },
   faq: {
     metaTitle:
-      "Renovix Home Services | Soalan Lazim Perkhidmatan di KL & Selangor",
+      "Renovix Home Services | Soalan Lazim di KL & Selangor",
     metaDescription:
       "Jawapan kepada soalan lazim tentang Renovix Home Services — pembaikan rumah, renovasi, liputan KL dan Selangor, kondominium, gambar untuk sebut harga dan kategori perkhidmatan khusus.",
     breadcrumb: "Soalan Lazim",

@@ -29,7 +29,7 @@ export const ceilingStainVsActiveLeak: ArticleDefinition = {
   relatedProjects: ["plaster-ceiling-cove-lighting"],
   pricingIds: ["waterproofing-pu-injection", "ceiling-repair", "plumbing-callout", "plumbing-hidden-leak"],
   en: {
-    title: "Renovix Home Services | Ceiling Stain or Active Leak? How to Tell (KL & Selangor)",
+    title: "Renovix Home Services | Ceiling Stain or Active Leak? How to Tell",
     metaDescription:
       "How to tell an old, dried ceiling stain from an active leak in a Malaysian home, what each cause looks like, and which trade to call. Practical diagnosis before you repair.",
     h1: "Ceiling Stain or Active Leak? How to Diagnose It Before You Repair",
@@ -224,7 +224,7 @@ export const ceilingStainVsActiveLeak: ArticleDefinition = {
       "Send a photograph of the stain with your pencil outline and the date, tell us what is directly above the room, and whether it changes with rain or with someone showering. That is usually enough for us to point at the likely source before any work is quoted.",
   },
   ms: {
-    title: "Renovix Home Services | Kesan Siling atau Bocor Aktif? Cara Membezakannya (KL & Selangor)",
+    title: "Renovix Home Services | Kesan Siling atau Bocor Aktif?",
     metaDescription:
       "Cara membezakan kesan air lama pada siling daripada kebocoran yang masih aktif di rumah Malaysia, rupa setiap punca, dan bidang mana yang perlu dipanggil.",
     h1: "Kesan Siling atau Bocor Aktif? Buat Diagnosis Sebelum Membaiki",

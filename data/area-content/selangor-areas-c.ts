@@ -12,7 +12,7 @@ export const selangorAreasC: AreaDetail[] = [
     slug: "bandar-sunway",
     name: "Bandar Sunway",
     title:
-      "Renovix Home Services | Home Renovation & Repair Services in Bandar Sunway, Selangor",
+      "Renovix Home Services | Renovation & Repairs in Bandar Sunway",
     metaDescription:
       "Renovation and repair services in Bandar Sunway, Selangor — condos, serviced apartments and shop offices around Sunway Pyramid and Monash University. Fit-outs, waterproofing, handyman. Free quote.",
     h1: "Home Renovation & Repair Services in Bandar Sunway",
@@ -176,7 +176,7 @@ export const selangorAreasC: AreaDetail[] = [
     slug: "bandar-utama",
     name: "Bandar Utama",
     title:
-      "Renovix Home Services | Home Renovation & Repair Services in Bandar Utama, Selangor",
+      "Renovix Home Services | Renovation & Repairs in Bandar Utama",
     metaDescription:
       "Renovation and repair services in Bandar Utama, Petaling Jaya — 1990s gated landed homes, condos and shop offices around 1 Utama. Rewiring, bathrooms, extensions. Free quote.",
     h1: "Home Renovation & Repair Services in Bandar Utama",
@@ -345,7 +345,7 @@ export const selangorAreasC: AreaDetail[] = [
     slug: "mutiara-damansara",
     name: "Mutiara Damansara",
     title:
-      "Renovix Home Services | Home Renovation & Repair Services in Mutiara Damansara, Selangor",
+      "Renovix Home Services | Renovation & Repairs in Mutiara Damansara",
     metaDescription:
       "Renovation and repair services in Mutiara Damansara, Petaling Jaya — condos and offices around The Curve and IPC. Fit-outs, waterproofing, electrical, commercial refits. Free quote.",
     h1: "Home Renovation & Repair Services in Mutiara Damansara",
@@ -509,7 +509,7 @@ export const selangorAreasC: AreaDetail[] = [
     slug: "damansara-perdana",
     name: "Damansara Perdana",
     title:
-      "Renovix Home Services | Home Renovation & Repair Services in Damansara Perdana, Selangor",
+      "Renovix Home Services | Renovation & Repairs in Damansara Perdana",
     metaDescription:
       "Renovation and repair services in Damansara Perdana, Petaling Jaya — hillside condos, serviced apartments and shop offices. Fit-outs, waterproofing, electrical. Free quote.",
     h1: "Home Renovation & Repair Services in Damansara Perdana",
@@ -673,7 +673,7 @@ export const selangorAreasC: AreaDetail[] = [
     slug: "ara-damansara",
     name: "Ara Damansara",
     title:
-      "Renovix Home Services | Home Renovation & Repair Services in Ara Damansara, Selangor",
+      "Renovix Home Services | Renovation & Repairs in Ara Damansara",
     metaDescription:
       "Renovation and repair services in Ara Damansara, Petaling Jaya — 2000s terrace estates, condos and shop offices near the LRT. Bathrooms, wiring, fit-outs. Free quote.",
     h1: "Home Renovation & Repair Services in Ara Damansara",
@@ -837,7 +837,7 @@ export const selangorAreasC: AreaDetail[] = [
     slug: "bandar-sri-damansara",
     name: "Bandar Sri Damansara",
     title:
-      "Renovix Home Services | Home Renovation & Repair Services in Bandar Sri Damansara, Selangor",
+      "Renovix Home Services | Renovation in Bandar Sri Damansara",
     metaDescription:
       "Renovation and repair services in Bandar Sri Damansara, Selangor — 1990s terraces, apartments and condos near the MRT. Rewiring, bathrooms, waterproofing. Free quote.",
     h1: "Home Renovation & Repair Services in Bandar Sri Damansara",
@@ -1001,7 +1001,7 @@ export const selangorAreasC: AreaDetail[] = [
     slug: "bangi",
     name: "Bangi",
     title:
-      "Renovix Home Services | Home Renovation & Repair Services in Bangi, Selangor",
+      "Renovix Home Services | Renovation & Repairs in Bangi, Selangor",
     metaDescription:
       "Renovation and repair services in Bangi, Selangor — Bandar Baru Bangi homes from the 1970s, UKM-area rentals and newer townships. Rewiring, bathrooms, handyman. Free quote.",
     h1: "Home Renovation & Repair Services in Bangi",
@@ -1165,7 +1165,7 @@ export const selangorAreasC: AreaDetail[] = [
     slug: "serdang",
     name: "Serdang",
     title:
-      "Renovix Home Services | Home Renovation & Repair Services in Serdang, Selangor",
+      "Renovix Home Services | Renovation & Repairs in Serdang, Selangor",
     metaDescription:
       "Renovation and repair services in Serdang, Selangor — UPM-area landed homes, MRT-corridor condos and shop rows near Seri Kembangan. Rewiring, bathrooms, fit-outs. Free quote.",
     h1: "Home Renovation & Repair Services in Serdang",
@@ -1329,7 +1329,7 @@ export const selangorAreasC: AreaDetail[] = [
     slug: "balakong",
     name: "Balakong",
     title:
-      "Renovix Home Services | Home Renovation & Repair Services in Balakong, Selangor",
+      "Renovix Home Services | Renovation & Repairs in Balakong",
     metaDescription:
       "Renovation and repair services in Balakong, Selangor — Cheras South township terraces from the 90s, industrial-adjacent estates and newer condos. Bathrooms, wiring, plumbing. Free quote.",
     h1: "Home Renovation & Repair Services in Balakong",
@@ -1493,7 +1493,7 @@ export const selangorAreasC: AreaDetail[] = [
     slug: "bandar-baru-klang",
     name: "Bandar Baru Klang",
     title:
-      "Renovix Home Services | Home Renovation & Repair Services in Bandar Baru Klang, Selangor",
+      "Renovix Home Services | Renovation & Repairs in Bandar Baru Klang",
     metaDescription:
       "Renovation and repair services in Bandar Baru Klang, Selangor — 1980s-onwards terrace estates, apartments and condos near Bukit Raja. Rewiring, bathrooms, plumbing. Free quote.",
     h1: "Home Renovation & Repair Services in Bandar Baru Klang",
@@ -1657,7 +1657,7 @@ export const selangorAreasC: AreaDetail[] = [
     slug: "sepang",
     name: "Sepang",
     title:
-      "Renovix Home Services | Home Renovation & Repair Services in Sepang & Salak Tinggi, Selangor",
+      "Renovix Home Services | Renovation in Sepang & Salak Tinggi",
     metaDescription:
       "Renovation and repair services in Sepang and Salak Tinggi, Selangor — airport-corridor township homes, landed estates and apartments. Bathrooms, wiring, rectification. Free quote.",
     h1: "Home Renovation & Repair Services in Sepang & Salak Tinggi",

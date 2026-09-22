@@ -758,6 +758,12 @@ export type Dictionary = {
   projectPage: {
     /** `{title}` + `{category}` + the full brand, as one `<title>`. */
     metaTitleTemplate: string;
+    /**
+     * Category-free fallback used when the full form would exceed the title
+     * budget (`TITLE_MAX_LENGTH`). The visible project name is never shortened
+     * to fit; the category label is the part that gives.
+     */
+    metaTitleShortTemplate: string;
     eyebrow: string;
     overviewEyebrow: string;
     overviewTitle: string;

@@ -22,7 +22,7 @@ export const housePaintingCostByPropertyType: ArticleDefinition = {
   relatedProjects: [],
   pricingIds: ["painting-full-house", "painting-interior", "painting-exterior", "painting-touchup-repair"],
   en: {
-    title: "Renovix Home Services | Full House Painting Cost by Property Type in KL & Selangor",
+    title: "Renovix Home Services | House Painting Cost by Property Type",
     metaDescription:
       "How full house painting is priced in Kuala Lumpur and Selangor — by wall area, not by room count — and what a condo, terrace, semi-D or bungalow typically involves. Free quotation.",
     h1: "Full House Painting Cost by Property Type in Kuala Lumpur & Selangor",
@@ -202,7 +202,7 @@ export const housePaintingCostByPropertyType: ArticleDefinition = {
       "Send us the property type, approximate size and a few photographs of the worst walls — especially anything peeling or stained. That is usually enough for a realistic figure before anyone visits.",
   },
   ms: {
-    title: "Renovix Home Services | Kos Cat Seluruh Rumah Mengikut Jenis Hartanah di KL & Selangor",
+    title: "Renovix Home Services | Kos Cat Rumah Mengikut Jenis Hartanah",
     metaDescription:
       "Cara kos mengecat seluruh rumah dikira di Kuala Lumpur dan Selangor — mengikut luas dinding, bukan bilangan bilik — dan apa yang biasa terlibat bagi kondo, teres, berkembar atau banglo.",
     h1: "Kos Cat Seluruh Rumah Mengikut Jenis Hartanah di Kuala Lumpur & Selangor",

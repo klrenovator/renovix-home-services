@@ -27,7 +27,7 @@ export const selangorAreasD: AreaDetail[] = [
     slug: "setia-alam",
     name: "Setia Alam",
     title:
-      "Renovix Home Services | Home Renovation & Repair Services in Setia Alam, Selangor",
+      "Renovix Home Services | Renovation & Repairs in Setia Alam",
     metaDescription:
       "Renovation and repair services in Setia Alam, Selangor — 2000s–2010s terrace homes, semidees and newer condos. Extensions, waterproofing, rewiring, tiling. Free quotation.",
     h1: "Home Renovation & Repair Services in Setia Alam, Selangor",
@@ -191,7 +191,7 @@ export const selangorAreasD: AreaDetail[] = [
     slug: "bandar-kinrara",
     name: "Bandar Kinrara",
     title:
-      "Renovix Home Services | Home Renovation & Repair Services in Bandar Kinrara, Puchong",
+      "Renovix Home Services | Renovation & Repairs in Bandar Kinrara",
     metaDescription:
       "Renovation and repair services in Bandar Kinrara, Puchong — 1990s–2000s terraces, semidees and condos. Rewiring, bathroom rebuilds, waterproofing, tiling. Free quotation.",
     h1: "Home Renovation & Repair Services in Bandar Kinrara, Puchong",
@@ -355,7 +355,7 @@ export const selangorAreasD: AreaDetail[] = [
     slug: "batu-caves",
     name: "Batu Caves",
     title:
-      "Renovix Home Services | Home Renovation & Repair Services in Batu Caves, Selangor",
+      "Renovix Home Services | Renovation & Repairs in Batu Caves",
     metaDescription:
       "Renovation and repair services in Batu Caves, Selangor — older estate housing, terraces and newer transit-corridor homes in the Gombak district. Roofing, rewiring, repairs. Free quotation.",
     h1: "Home Renovation & Repair Services in Batu Caves, Selangor",
@@ -519,7 +519,7 @@ export const selangorAreasD: AreaDetail[] = [
     slug: "bandar-mahkota-cheras",
     name: "Bandar Mahkota Cheras",
     title:
-      "Renovix Home Services | Home Renovation & Repair Services in Bandar Mahkota Cheras, Selangor",
+      "Renovix Home Services | Renovation in Bandar Mahkota Cheras",
     metaDescription:
       "Renovation and repair services in Bandar Mahkota Cheras, Selangor — 2000s terraces, semidees and condos in the Hulu Langat district. Waterproofing, rewiring, tiling. Free quotation.",
     h1: "Home Renovation & Repair Services in Bandar Mahkota Cheras, Selangor",

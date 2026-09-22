@@ -150,7 +150,7 @@ export const waterproofingSubServices: SubServiceDefinition[] = [
       name: "PU Injection Crack Sealing",
       h1: "PU Injection Crack Sealing in Kuala Lumpur & Selangor",
       metaDescription: "Polyurethane injection to seal active leaking cracks in concrete slabs and walls across Kuala Lumpur & Selangor. Works from inside without hacking. PU injection from RM350 per job.",
-      title: "Renovix Home Services | PU Injection Crack Sealing in KL & Selangor",
+      title: "Renovix Home Services | PU Injection Crack Sealing",
       lead: "PU injection is the method for a leak you can point at: a crack that is actively passing water. The resin is injected under pressure, expands on contact with the water and fills the crack from inside.",
       suitableFor: [
         "An active leaking crack in a concrete slab, beam or wall.",
@@ -195,7 +195,7 @@ export const waterproofingSubServices: SubServiceDefinition[] = [
       name: "Suntikan PU Menutup Retak",
       h1: "Suntikan PU Menutup Retak di Kuala Lumpur & Selangor",
       metaDescription: "Suntikan poliuretana untuk menutup retak bocor aktif pada papak dan dinding konkrit di Kuala Lumpur & Selangor. Tanpa memecah lantai. Suntikan PU dari RM350 sekerja.",
-      title: "Renovix Home Services | Suntikan PU Menutup Retak di KL & Selangor",
+      title: "Renovix Home Services | Suntikan PU Menutup Retak",
       lead: "Suntikan PU ialah kaedah untuk kebocoran yang boleh ditunjuk: retak yang sedang melepaskan air. Resin disuntik bertekanan, mengembang apabila bersentuhan air dan mengisi retak dari dalam.",
       suitableFor: [
         "Retak bocor aktif pada papak, rasuk atau dinding konkrit.",
@@ -434,7 +434,7 @@ export const waterproofingSubServices: SubServiceDefinition[] = [
       name: "Balcony & Terrace Waterproofing",
       h1: "Balcony & Terrace Waterproofing in Kuala Lumpur & Selangor",
       metaDescription: "Waterproofing for balconies, terraces and open decks in Kuala Lumpur & Selangor, including falls, coving and door thresholds. Balcony waterproofing from RM12 per sqft.",
-      title: "Renovix Home Services | Balcony & Terrace Waterproofing in KL & Selangor",
+      title: "Renovix Home Services | Balcony & Terrace Waterproofing",
       lead: "Balconies leak at their junctions far more often than in the middle: the door threshold, the wall upstand and the drain outlet are where water finds a way through, so that is where the work concentrates.",
       suitableFor: [
         "A balcony above a room that is showing damp on the ceiling below.",
@@ -475,7 +475,7 @@ export const waterproofingSubServices: SubServiceDefinition[] = [
       name: "Kalis Air Balkoni & Teres",
       h1: "Kalis Air Balkoni & Teres di Kuala Lumpur & Selangor",
       metaDescription: "Kalis air untuk balkoni, teres dan dek terbuka di Kuala Lumpur & Selangor, termasuk kecerunan, coving dan ambang pintu. Kalis air balkoni dari RM12 sekaki persegi.",
-      title: "Renovix Home Services | Kalis Air Balkoni & Teres di KL & Selangor",
+      title: "Renovix Home Services | Kalis Air Balkoni & Teres",
       lead: "Balkoni bocor pada simpangnya jauh lebih kerap berbanding di tengah: ambang pintu, upstand dinding dan saluran keluar ialah tempat air menemui jalan, jadi di situlah kerja tertumpu.",
       suitableFor: [
         "Balkoni di atas bilik yang menunjukkan lembap pada siling di bawah.",
@@ -564,7 +564,7 @@ export const waterproofingSubServices: SubServiceDefinition[] = [
       name: "Wall Seepage & Damp Treatment",
       h1: "Wall Seepage & Damp Treatment in Kuala Lumpur & Selangor",
       metaDescription: "External wall seepage and damp treatment in Kuala Lumpur & Selangor — crack treatment plus a weather-resistant coating to stop driven rain. Wall seepage treatment from RM10 per sqft.",
-      title: "Renovix Home Services | Wall Seepage & Damp Treatment in KL & Selangor",
+      title: "Renovix Home Services | Wall Seepage & Damp Treatment",
       lead: "Damp on an internal wall is usually water arriving from outside, not condensation. The repair belongs on the external face, and painting the inside before that is done simply hides it for a few months.",
       suitableFor: [
         "An internal wall that darkens or blisters after heavy rain.",

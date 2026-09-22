@@ -1,8 +1,41 @@
-# PROJECT OWNER-PENDING DATA — Phases 22, 24, 25 & 26
+# PROJECT OWNER-PENDING DATA — Phases 22, 24, 25, 26 & 41
 
 Status: **OWNER-PENDING**. Nothing on this list is a code defect. Each item
 can only be completed by the business or in the hosting/Search Console
 dashboards. Do not invent values.
+
+## Phase 41 (2026-09-22) — verify or withdraw the homepage "Google Reviews" block
+
+**Priority: honesty/trust — above every item below it.** This is not a code
+defect and no code was changed: the owner was asked on 2026-09-22 and chose
+*keep the section live and flag it*. It is recorded here so the flag travels
+with the project instead of living only in a phase log.
+
+What the site publishes today, on all three homepages
+(`components/home/ReviewsSection.tsx`): a marquee of five named five-star
+testimonials — Ahmad Razak (Mont Kiara), Lim Wei Jie (Petaling Jaya), Siti
+Nurhaliza B. (Shah Alam), Daniel Tan (Subang Jaya), Priya Nair (Bangsar) —
+under the eyebrow **"Google Reviews"** with a Google icon, star glyphs and the
+line "Posted on Google". No phase in `PROJECT_PROGRESS.md` records it being
+added, sourced or approved, and no audit guards it, while `CONTENT_GOVERNANCE.md`
+§1 forbids fake reviews/ratings/testimonials, `MASTER_AUDIT_REPORT.md` GAP-12
+asks for a *Google Places API sync of verified* reviews, Phases 25–26 both
+recorded reviews as "not supplied; correctly unpublished", and
+`audit:schema` still bans `Review`/`aggregateRating` in structured data.
+
+| # | Action | Where | Notes |
+| --- | --- | --- | --- |
+| 1 | Confirm each of the five testimonials exists on the business's Google Business Profile, and that each named reviewer consented to their name being republished on the website | Owner → GBP + written consent | Until confirmed, treat the block as unverified content. Two honest exits: publish the real, currently-live reviews (ideally the GAP-12 Places sync, with the `audit:schema` ban lifted deliberately), or withdraw the block |
+| 2 | Decide what the eyebrow and footer line should claim if real reviews are published | Owner reply to AI | "Google Reviews" + "Posted on Google" attributes them to Google; that attribution must be true and current, not approximate |
+| 3 | If real reviews are published: supply the profile ID/place ID so the sync is live data, not a typed snapshot | Owner → GBP | Typed review snapshots go stale and are indistinguishable from invented ones |
+| 4 | Do **not** add aggregate star counts, "4.9/5 from 128 reviews" style claims, or `aggregateRating` markup without the live source | — | `audit:schema` would fail, and the failure is correct |
+
+Also unchanged and still owner-gated: every Phase 22/24/25/26 item below, and
+the two Phase 40-era items the deep audits keep re-raising — real project
+locations for the 28 published projects (`ProjectLocation` is unset for all of
+them, so project ↔ area links stay unwired) and verified kampung-level coverage
+plus unique local context for the locality tier. Neither was invented in
+Phase 41.
 
 ## Phase 26 (2026-09-05) — current owner checklist
 

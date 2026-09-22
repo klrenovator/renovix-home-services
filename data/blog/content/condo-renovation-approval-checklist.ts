@@ -29,7 +29,7 @@ export const condoRenovationApprovalChecklist: ArticleDefinition = {
   relatedProjects: ["office-renovation-ceiling-and-tiling"],
   pricingIds: [],
   en: {
-    title: "Renovix Home Services | Condo Renovation Approval Checklist (KL & Selangor)",
+    title: "Renovix Home Services | Condo Renovation Approval Checklist",
     metaDescription:
       "What to prepare before renovating a condominium or strata unit in Kuala Lumpur and Selangor — management approval, contractor documents, working hours, deposits and access. A practical checklist.",
     h1: "Condominium Renovation Approval Checklist for KL & Selangor",
@@ -234,7 +234,7 @@ export const condoRenovationApprovalChecklist: ArticleDefinition = {
       "Send us your building's renovation guidelines along with what you want to change, and we will tell you which parts are straightforward, which need management's formal position, and how the schedule should be arranged around the permitted hours.",
   },
   ms: {
-    title: "Renovix Home Services | Senarai Semak Kelulusan Renovasi Kondominium (KL & Selangor)",
+    title: "Renovix Home Services | Senarai Semak Renovasi Kondominium",
     metaDescription:
       "Apa yang perlu disediakan sebelum merenovasi kondominium atau unit strata di Kuala Lumpur dan Selangor — kelulusan pengurusan, dokumen kontraktor, waktu kerja, deposit dan akses.",
     h1: "Senarai Semak Kelulusan Renovasi Kondominium untuk KL & Selangor",

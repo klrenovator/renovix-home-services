@@ -302,7 +302,7 @@ export const translations: ProblemTranslations = {
   "wall-surface-damage": {
     ...base,
     name: "Kerosakan Permukaan Dinding",
-    title: "Renovix Home Services | Kerosakan Permukaan Dinding di KL & Selangor",
+    title: "Renovix Home Services | Kerosakan Permukaan Dinding",
     metaDescription:
       "Lubang, kemek, plaster reput dan dinding rosak air dibaiki di Kuala Lumpur & Selangor sebelum dicat semula. Punca, tanda dan penyelesaian.",
     h1: "Kerosakan Permukaan Dinding",

@@ -12,7 +12,7 @@ export const klAreasC: AreaDetail[] = [
     slug: "taman-tun-dr-ismail",
     name: "TTDI",
     title:
-      "Renovix Home Services | Home Renovation & Repair Services in TTDI (Taman Tun Dr Ismail), KL",
+      "Renovix Home Services | Renovation in TTDI (Taman Tun Dr Ismail)",
     metaDescription:
       "Renovation and repair services in TTDI, Kuala Lumpur — 1970s landed homes, condos near the MRT and mature bungalow streets. Rewiring, bathrooms, extensions. Free quote.",
     h1: "Home Renovation & Repair Services in TTDI, Kuala Lumpur",
@@ -181,7 +181,7 @@ export const klAreasC: AreaDetail[] = [
     slug: "damansara-heights",
     name: "Damansara Heights",
     title:
-      "Renovix Home Services | Home Renovation & Repair Services in Damansara Heights, KL",
+      "Renovix Home Services | Renovation & Repairs in Damansara Heights",
     metaDescription:
       "Renovation and repair services in Damansara Heights (Bukit Damansara), Kuala Lumpur — 1960s hillside bungalows, semidees and newer condos. Rewiring, roofing, waterproofing. Free quote.",
     h1: "Home Renovation & Repair Services in Damansara Heights (Bukit Damansara)",
@@ -345,7 +345,7 @@ export const klAreasC: AreaDetail[] = [
     slug: "sri-hartamas",
     name: "Sri Hartamas",
     title:
-      "Renovix Home Services | Home Renovation & Repair Services in Sri Hartamas, KL",
+      "Renovix Home Services | Renovation & Repairs in Sri Hartamas, KL",
     metaDescription:
       "Renovation and repair services in Sri Hartamas, Kuala Lumpur — 1990s terraces, condos and shop-office units around Desa Sri Hartamas. Bathrooms, wiring, fit-outs. Free quote.",
     h1: "Home Renovation & Repair Services in Sri Hartamas",
@@ -509,7 +509,7 @@ export const klAreasC: AreaDetail[] = [
     slug: "brickfields-mid-valley",
     name: "Brickfields & Mid Valley",
     title:
-      "Renovix Home Services | Home Renovation & Repair Services in Brickfields & Mid Valley, KL",
+      "Renovix Home Services | Renovation in Brickfields & Mid Valley",
     metaDescription:
       "Renovation and repair services in Brickfields and Mid Valley City, Kuala Lumpur — pre-war shophouses, older flats and condos near KL Sentral. Rewiring, waterproofing, refits. Free quote.",
     h1: "Home Renovation & Repair Services in Brickfields & Mid Valley City",

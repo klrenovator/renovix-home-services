@@ -302,7 +302,7 @@ export const translations: ProblemTranslations = {
   "minor-home-repairs": {
     ...base,
     name: "Pembaikan Kecil Rumah",
-    title: "Renovix Home Services | Pembaikan Kecil Rumah di KL & Selangor",
+    title: "Renovix Home Services | Pembaikan Kecil Rumah: Skop Kerja",
     metaDescription:
       "Senarai kerja kecil di rumah diselesaikan dalam satu lawatan di Kuala Lumpur & Selangor. Punca, tanda amaran dan penyelesaian.",
     h1: "Pembaikan Kecil Rumah",

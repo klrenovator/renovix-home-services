@@ -22,7 +22,7 @@ export const translations: AreaTranslations = {
   "kuala-lumpur/taman-tun-dr-ismail": {
     ...shared("TTDI"),
     name: "TTDI",
-    title: "Renovix Home Services | Renovasi & Pembaikan Rumah di TTDI (Taman Tun Dr Ismail), KL",
+    title: "Renovix Home Services | Renovasi di TTDI (Taman Tun Dr Ismail)",
     metaDescription:
       "Servis renovasi dan pembaikan rumah di TTDI, Kuala Lumpur — rumah landed era 70-an, kondominium berhampiran MRT dan jalan banglo yang matang. Sebut harga percuma.",
     h1: "Servis Renovasi & Pembaikan Rumah di TTDI, Kuala Lumpur",
@@ -69,7 +69,7 @@ export const translations: AreaTranslations = {
   "kuala-lumpur/damansara-heights": {
     ...shared("Damansara Heights"),
     name: "Damansara Heights",
-    title: "Renovix Home Services | Renovasi & Pembaikan Rumah di Damansara Heights, KL",
+    title: "Renovix Home Services | Renovasi & Pembaikan di Damansara Heights",
     metaDescription:
       "Servis renovasi dan pembaikan rumah di Damansara Heights (Bukit Damansara), Kuala Lumpur — banglo dan rumah berkembar era 60-an di lereng bukit. Sebut harga percuma.",
     h1: "Servis Renovasi & Pembaikan Rumah di Damansara Heights (Bukit Damansara)",
@@ -116,7 +116,7 @@ export const translations: AreaTranslations = {
   "kuala-lumpur/sri-hartamas": {
     ...shared("Sri Hartamas"),
     name: "Sri Hartamas",
-    title: "Renovix Home Services | Renovasi & Pembaikan Rumah di Sri Hartamas, KL",
+    title: "Renovix Home Services | Renovasi & Pembaikan di Sri Hartamas, KL",
     metaDescription:
       "Servis renovasi dan pembaikan rumah di Sri Hartamas, Kuala Lumpur — rumah teres era 90-an, kondominium dan unit kedai-pejabat sekitar Desa Sri Hartamas. Sebut harga percuma.",
     h1: "Servis Renovasi & Pembaikan Rumah di Sri Hartamas",
@@ -163,7 +163,7 @@ export const translations: AreaTranslations = {
   "kuala-lumpur/brickfields-mid-valley": {
     ...shared("Brickfields & Mid Valley"),
     name: "Brickfields & Mid Valley",
-    title: "Renovix Home Services | Renovasi & Pembaikan Rumah di Brickfields & Mid Valley, KL",
+    title: "Renovix Home Services | Renovasi di Brickfields & Mid Valley",
     metaDescription:
       "Servis renovasi dan pembaikan rumah di Brickfields dan Mid Valley City, Kuala Lumpur — rumah kedai pra-perang, flat lama dan kondominium sekitar KL Sentral. Sebut harga percuma.",
     h1: "Servis Renovasi & Pembaikan Rumah di Brickfields & Mid Valley City",

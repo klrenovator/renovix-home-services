@@ -480,7 +480,7 @@ export const translations: ProblemTranslations = {
   "water-seepage-through-tiles": {
     ...base,
     name: "Resapan Air Melalui Jubin",
-    title: "Renovix Home Services | Resapan Air Melalui Jubin di KL & Selangor",
+    title: "Renovix Home Services | Resapan Air Melalui Jubin",
     metaDescription:
       "Resapan air melalui jubin dijejak dan dihentikan di Kuala Lumpur & Selangor dengan kerja kalis air dan pembaikan grout. Punca, tanda dan penyelesaian.",
     h1: "Resapan Air Melalui Jubin",
