@@ -58,9 +58,40 @@ export function GET() {
     lines.push(`- [${scope.name}](${scope.url}) — under ${scope.service}${price}`);
   }
 
+  // Phase 42 — every problem guide, not a sample. Until now this section
+  // listed `slice(0, 12)` of the 57 guides behind an index link, while
+  // `/ai/business.json` carried all 57 and every other family here was
+  // complete (10 services, 51 sub-services, 2 regions, 53 areas, 12 guides,
+  // 28 projects). An assistant reading only this document — the one written
+  // for it — could cite a fifth of the symptom corpus and had to crawl the
+  // index to find the rest. The data was already built and already trusted;
+  // only the rendering was incomplete.
+  //
+  // The groups are the same ten categories `/problems/` itself uses, and both
+  // the grouping and the titles come from the registry via
+  // `knowledge.problems.guides` — no count, label or URL is typed here, so
+  // removing a guide from the registry removes it from this feed at the next
+  // build.
+  const problemGroups: {
+    label: string;
+    guides: { title: string; url: string }[];
+  }[] = [];
+
+  for (const guide of knowledge.problems.guides) {
+    // `problemDetails` is concatenated category by category, so walking the
+    // list in order and opening a group on first sight reproduces the
+    // registry's own category order without re-reading it.
+    let group = problemGroups.find((item) => item.label === guide.categoryLabel);
+    if (!group) {
+      group = { label: guide.categoryLabel, guides: [] };
+      problemGroups.push(group);
+    }
+    group.guides.push(guide);
+  }
+
   lines.push(
     ``,
-    `## Problem guides (symptoms, causes, solutions)`,
+    `## Problem guides (${knowledge.problems.guides.length} guides, symptoms, causes, solutions)`,
     ``,
     `What each problem means, common causes, warning signs, possible solutions and when professional help is needed:`,
     ``,
@@ -68,10 +99,14 @@ export function GET() {
     ``,
   );
 
-  const problemSample = knowledge.problems.guides.slice(0, 12);
+  for (const group of problemGroups) {
+    lines.push(`### ${group.label} — ${group.guides.length} guides`, ``);
 
-  for (const guide of problemSample) {
-    lines.push(`- [${guide.title}](${guide.url})`);
+    for (const guide of group.guides) {
+      lines.push(`- [${guide.title}](${guide.url})`);
+    }
+
+    lines.push(``);
   }
 
   lines.push(

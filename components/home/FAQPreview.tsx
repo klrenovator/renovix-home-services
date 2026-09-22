@@ -2,7 +2,7 @@ import Link from "next/link";
 import { IconArrowRight, IconChevronDown } from "@/components/icons";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { getLanguageCode } from "@/data/languages";
-import { getSiteFaqs } from "@/data/i18n";
+import { getHomeFaqs } from "@/data/i18n";
 import { getDictionary } from "@/i18n";
 import { localizedHref } from "@/i18n/hrefs";
 
@@ -13,7 +13,10 @@ type FAQPreviewProps = {
 export function FAQPreview({ lang }: FAQPreviewProps) {
   const code = getLanguageCode(lang);
   const t = getDictionary(code);
-  const previewFaqs = getSiteFaqs(code).slice(0, 6);
+  // Phase 42 — the same array `app/[lang]/page.tsx` feeds the homepage's
+  // `FAQPage` node, so the structured data always describes exactly the
+  // questions this accordion renders.
+  const previewFaqs = getHomeFaqs(code);
 
   return (
     <section id="faq" className="section scroll-mt-24">

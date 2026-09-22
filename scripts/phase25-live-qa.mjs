@@ -461,6 +461,10 @@ async function sampleStatuses(locs) {
   const inCopy = new Map();
   const titles = new Map();
   const leakedMarkup = [];
+  // Phase 42 — rendered Q&A block count and published JSON-LD types, one entry
+  // per served page.
+  const faqBlocks = new Map();
+  const schemaTypes = new Map();
   for (let i = 0; i < locs.length; i += batchSize) {
     const batch = locs.slice(i, i + batchSize);
     const results = await Promise.all(
@@ -472,19 +476,41 @@ async function sampleStatuses(locs) {
         let inCopyCount = 0;
         let leaked = false;
         let title = null;
+        let faqBlocks = 0;
+        let schemaTypes = null;
         if (res.status === 200) {
           const html = await res.text();
           hrefs = extractInternalHrefs(html);
           pageAnchors = extractAnchors(html);
           // Phase 41 — the same pass keeps the served <title> of every page.
           title = extractTitleText(html);
+          // Phase 42 — the same pass counts the question-and-answer blocks the
+          // page actually renders (inside <main>, so the header's own
+          // disclosure widgets cannot count) and keeps the JSON-LD types the
+          // page publishes, so the rendered visible Q&A and the FAQPage node
+          // that should describe it are compared without a second crawl.
+          faqBlocks = countRenderedFaqBlocks(html);
+          schemaTypes = new Set(
+            flattenGraph(jsonLdBlocks(html)).flatMap((node) => typesOf(node)),
+          );
           // Everything a crawler reads as page text: the flight-data scripts
           // are hydration payload, not copy, so they are set aside first.
           const visible = html.replace(/<script\b[\s\S]*?<\/script>/gi, " ");
           inCopyCount = countInCopyAnchors(visible);
           leaked = UNRENDERED_INLINE_LINK.test(visible);
         }
-        return { loc, path, status: res.status, hrefs, pageAnchors, inCopyCount, leaked, title };
+        return {
+          loc,
+          path,
+          status: res.status,
+          hrefs,
+          pageAnchors,
+          inCopyCount,
+          leaked,
+          title,
+          faqBlocks,
+          schemaTypes,
+        };
       }),
     );
     for (const r of results) {
@@ -497,12 +523,14 @@ async function sampleStatuses(locs) {
       if (r.pageAnchors) anchors.set(r.path, r.pageAnchors);
       if (r.status === 200) inCopy.set(r.path, r.inCopyCount);
       if (r.status === 200) titles.set(r.path, r.title);
+      if (r.status === 200) faqBlocks.set(r.path, r.faqBlocks);
+      if (r.schemaTypes) schemaTypes.set(r.path, r.schemaTypes);
       if (r.leaked) leakedMarkup.push(r.path);
     }
   }
   if (bad === 0) pass(`all ${ok} sitemap URLs return 200`);
   else fail(`sitemap sweep ${ok} ok / ${bad} failed`);
-  return { graph, anchors, inCopy, titles, leakedMarkup };
+  return { graph, anchors, inCopy, titles, leakedMarkup, faqBlocks, schemaTypes };
 }
 
 /* ------------------------------------------------------------------------ */
@@ -1173,6 +1201,13 @@ async function checkAiFeedCoverage(locs) {
     ["sub-service page", /^\/en\/services\/[^/]+\/[^/]+\/$/],
     ["region overview", /^\/en\/areas\/[^/]+\/$/],
     ["area guide", /^\/en\/areas\/[^/]+\/[^/]+\/$/],
+    // Phase 42 — problem guides join the fully-enumerated families. Until now
+    // this feed listed 12 of the 57 guides behind an index link while
+    // `/ai/business.json` carried all 57 and every other family here was
+    // complete, so the one document written for answer engines cited a fifth
+    // of the symptom corpus. The sample floor below is gone: the family is now
+    // compared in both directions like every other one.
+    ["problem guide", /^\/en\/problems\/[^/]+\/$/],
     ["guide", /^\/en\/blog\/[^/]+\/$/],
     ["project page", /^\/en\/projects\/[^/]+\/$/],
   ];
@@ -1199,17 +1234,101 @@ async function checkAiFeedCoverage(locs) {
     }
   }
 
-  // Problem guides are the one sampled family: the index link plus a sample.
-  const problemPages = [...served].filter((p) => /^\/en\/problems\/[^/]+\/$/.test(p));
-  const listedProblems = [...listed].filter((p) => /^\/en\/problems\/[^/]+\/$/.test(p));
-  if (listed.has("/en/problems/") && listedProblems.length >= 12) {
+  // The symptom corpus is now enumerated in full, but readers still need the
+  // one-line route into the browsable index.
+  if (listed.has("/en/problems/")) {
+    pass("/llms.txt keeps the all-problem-guides index link");
+  } else {
+    fail("/llms.txt no longer links the problem-guide index at /en/problems/");
+  }
+}
+
+/**
+ * Phase 42 — every page that renders question-and-answer copy must publish the
+ * `FAQPage` node that describes it, and no page may claim a `FAQPage` node for
+ * Q&As it does not render.
+ *
+ * The site's own rule (`components/seo/schema.ts`) is that an `FAQPage` node is
+ * built "from the same Q&A data the visible FAQ section renders" — a node is
+ * only honest if the page shows what it claims. That rule had no guard: the
+ * homepage rendered six questions in `FAQPreview` and published no node at all,
+ * the one page on the site out of step with `/faq/` and `/quote/`. This check
+ * compares the rendered page against the served JSON-LD on all 678 URLs, so the
+ * two halves cannot drift apart again in either direction.
+ */
+function countRenderedFaqBlocks(html) {
+  const main = html.match(/<main\b[^>]*>([\s\S]*?)<\/main>/i);
+  const scope = main ? main[1] : html;
+  // A rendered Q&A block is a <details> disclosure: the accordion every FAQ
+  // section on this site renders, and nothing else uses the element.
+  return (scope.match(/<details\b/g) || []).length;
+}
+
+function checkVisibleFaqCoverage(locs, faqBlocks, schemaTypes) {
+  console.log("\n== Rendered Q&A vs FAQPage (Phase 42) ==");
+
+  const withBlocks = [];
+  const missing = [];
+  const overclaiming = [];
+
+  for (const loc of locs) {
+    const path = loc.replace(CANONICAL_HOST, "");
+    const blocks = faqBlocks.get(path) ?? 0;
+    const types = schemaTypes.get(path);
+    if (!types) continue;
+    const hasFaq = types.has("FAQPage");
+    if (blocks > 0) withBlocks.push({ path, blocks });
+    if (blocks > 0 && !hasFaq) missing.push(`${path} (${blocks} rendered)`);
+    if (blocks === 0 && hasFaq) overclaiming.push(path);
+  }
+
+  if (missing.length === 0) {
     pass(
-      `/llms.txt keeps the problem-guide sample (${listedProblems.length} of ${problemPages.length}) behind its index link`,
+      `all ${withBlocks.length} pages rendering visible Q&A publish a FAQPage node for it`,
     );
   } else {
     fail(
-      `/llms.txt problem-guide representation dropped: ${listedProblems.length} listed, index ${listed.has("/en/problems/") ? "present" : "missing"}`,
+      `${missing.length} page(s) render visible Q&A with no FAQPage node (e.g. ${missing
+        .slice(0, 4)
+        .join(", ")})`,
     );
+  }
+
+  if (overclaiming.length === 0) {
+    pass("no page publishes a FAQPage node without rendered Q&A on the page");
+  } else {
+    fail(
+      `${overclaiming.length} page(s) publish a FAQPage node with no rendered Q&A (e.g. ${overclaiming
+        .slice(0, 4)
+        .join(", ")})`,
+    );
+  }
+
+  // A regression floor: the corpus really is Q&A-bearing, so the check above
+  // cannot pass by finding nothing to look at.
+  if (withBlocks.length >= 560) {
+    pass(`${withBlocks.length} pages render Q&A blocks (floor 560)`);
+  } else {
+    fail(
+      `only ${withBlocks.length} pages render Q&A blocks (floor 560) — the corpus or the counter changed`,
+    );
+  }
+
+  // The homepage is why this block exists: it was the sole page rendering Q&A
+  // with no node. Assert it directly so the regression has a name.
+  for (const code of ["en", "ms", "zh"]) {
+    const path = `/${code}/`;
+    const blocks = faqBlocks.get(path) ?? 0;
+    const types = schemaTypes.get(path);
+    if (types && blocks > 0 && types.has("FAQPage")) {
+      pass(`${path} renders ${blocks} Q&A blocks and publishes the FAQPage node`);
+    } else {
+      fail(
+        `${path} renders ${blocks} Q&A blocks and publishes ${
+          types && types.has("FAQPage") ? "a FAQPage node" : "no FAQPage node"
+        } — homepage Q&A must be described by structured data (Phase 42)`,
+      );
+    }
   }
 }
 
@@ -1580,11 +1699,13 @@ async function main() {
   console.log(`Phase 25 live QA against ${BASE}\n`);
   await checkHeaders();
   const locs = await checkSitemapLive();
-  const { graph, anchors, inCopy, titles, leakedMarkup } = await sampleStatuses(locs);
+  const { graph, anchors, inCopy, titles, leakedMarkup, faqBlocks, schemaTypes } =
+    await sampleStatuses(locs);
   checkInternalLinkGraph(locs, graph);
   checkTitles(locs, titles);
   checkInCopyLinks(locs, inCopy, leakedMarkup);
   await checkAiFeedCoverage(locs);
+  checkVisibleFaqCoverage(locs, faqBlocks, schemaTypes);
   await checkAiPhrasingCoverage(locs);
   await checkAiLocalizedUrlCoverage(locs);
   await checkLocalizedAnchors(anchors);
