@@ -244,7 +244,24 @@ export default async function AreasPage({ params }: AreasPageProps) {
                       const region = areaRegions.find((r) => r.id === district.regionId);
                       const areaObj = region?.areas.find((a) => a.slug === slug);
                       const href = contentHref("area", `${district.regionId}/${slug}`, code);
-                      const label = areaObj?.name ?? slug;
+                      /*
+                       * Phase 47 — the chip label goes through `getAreaName`,
+                       * exactly like the region directory above it. Reading the
+                       * English registry object directly rendered all 53
+                       * locality names in Latin script on `/zh/areas/` (and
+                       * "KL City Centre" instead of "Pusat Bandar KL" on
+                       * `/ms/areas/`), so the chip disagreed with the guide it
+                       * links to. The English name is only the fallback for a
+                       * slug the registry does not know.
+                       */
+                      const label = getAreaName(
+                        {
+                          region: district.regionId,
+                          slug,
+                          name: areaObj?.name ?? slug,
+                        },
+                        code,
+                      );
 
                       return (
                         <span key={slug}>

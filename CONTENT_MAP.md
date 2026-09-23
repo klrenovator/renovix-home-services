@@ -116,6 +116,14 @@ tap; "Why is my wall paint peeling?" → peeling paint). Emergency framing is
 restricted to the audited triage set (power faults, active pipe bursts, the
 sagging-ceiling safety question) — see CONTENT_GOVERNANCE.md.
 
+Since Phase 47 the `/{lang}/problems/` index card for a guide (and the
+`ItemList` node built from the same call) reads that guide's own localized
+`name` + `subtitle` through `getProblemCardLabels` → `getProblemDetail`, so a
+card can never again advertise a different title from the page it opens. The
+second translation table that used to supply those labels (`problemList`, 57
+Malay + 57 Chinese rows) was retired; `i18n/verify.ts` fails the build if a
+card and its guide ever disagree.
+
 ## 3. Location map (53 guides + 2 hubs + index)
 
 `/{lang}/areas/` → `/{lang}/areas/kuala-lumpur/` + `/{lang}/areas/selangor/`
@@ -125,7 +133,13 @@ than from a number written here). Every guide carries
 district context (Phase 15 hierarchy — since Phase 46 the district name and
 description are rendered through `getDistrictName` / `getDistrictDescription`
 from `districtList` in `data/i18n/lists.ts`, so `/ms/` and `/zh/` pages no
-longer print the English registry strings), 6 locally-noted services, property
+longer print the English registry strings; since Phase 47 every *locality*
+label — the areas-index region directory and District Explorer chips, the
+`AreasSection` chips on service, scope and problem pages, hero and nearby-area
+lists — resolves through `getAreaName` in the order label table → the guide's
+own localized name → English registry name, so a chip always says what the
+guide it opens calls itself and no two guides in one language may share a
+name), 6 locally-noted services, property
 types, local problems, process, pricing from the centralized catalogue
 (rendered through `getPricingById` / `getStartingRatesForLocation` — never
 typed into the page), FAQs and nearby-area links.
