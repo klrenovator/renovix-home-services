@@ -6,13 +6,31 @@ import {
   ALL_PROJECTS,
   ALL_SERVICES,
 } from "./coverage";
-import { serviceDetails, translatedServiceSlugs } from "@/data/service-content";
-import { problemDetails, translatedProblemSlugs } from "@/data/problem-content";
+import {
+  getServiceDetail,
+  serviceDetails,
+  translatedServiceSlugs,
+} from "@/data/service-content";
+import {
+  getProblemDetail,
+  problemDetails,
+  translatedProblemSlugs,
+} from "@/data/problem-content";
 import {
   areaRegions,
+  getAllAreas,
+  getAreaDetail,
+  getAreaRegion,
   translatedAreaRegionIds,
   translatedAreaSlugs,
 } from "@/data/area-content";
+import { services } from "@/data/services";
+import {
+  getAreaName,
+  getProblemCardLabels,
+  getRegionName,
+  getServiceName,
+} from "@/data/i18n";
 import {
   getPublishedProjects,
   projects,
@@ -21,7 +39,6 @@ import {
 import { projectCategories } from "@/data/projects";
 import { getSubService } from "@/data/sub-services";
 import { siteFaqs } from "@/data/site-faqs";
-import { problemList } from "@/data/i18n/lists";
 import { languages } from "@/data/languages";
 import { getDictionary } from "./index";
 
@@ -95,7 +112,7 @@ export function assertCoverageInSync() {
   );
 
   assertFaqTranslationsInSync();
-  assertProblemLabelsInSync();
+  assertEntityNamesAreSingleSourced();
   assertProjectDataIsSound();
   assertProjectSubServiceLinksAreSound();
   assertTranslationRegistriesInSync();
@@ -248,23 +265,104 @@ function assertFaqTranslationsInSync() {
 }
 
 /**
- * The problem index lists every problem in all three languages, so a slug
- * missing from `problemList` would silently render an English card inside a
- * Malay or Chinese page.
+ * Phase 47 — one entity, one name, in every language.
+ *
+ * A label that links to a page must say what that page calls itself. Four
+ * families publish a short label from a shared table *and* a long-form page from
+ * a content registry, and nothing ever compared the two:
+ *
+ * - **areas** — `getAreaName()` (chips, cards, hero lists) vs the area guide's
+ *   own `name` (its H1, `<title>`, breadcrumb and `WebPage`/`Service` JSON-LD).
+ *   5 of 159 label/page pairs disagreed: `areaNames.ms` is empty for the 52
+ *   localities whose official Malay spelling *is* the English one, so every
+ *   `/ms/` page linked the `kl-city-centre` guide as "KL City Centre" while that
+ *   guide said "Pusat Bandar KL"; and 4 Chinese guides published a different
+ *   Chinese name from the one 120+ other `/zh/` pages used for them.
+ * - **problems** — the library index card vs the guide it opens. The card read a
+ *   second, independently authored translation table (retired in Phase 47): 10
+ *   Malay and 22 Chinese card names disagreed with the guide's own H1, and all
+ *   114 subtitles did.
+ * - **services** and **regions** — measured as already agreeing; guarded so they
+ *   cannot drift the way the two above did.
+ *
+ * Localized area names must also be **unique inside a language**. Two published
+ * Chinese guides both named 沙登 (`selangor/serdang` and
+ * `selangor/seri-kembangan`) left a Chinese reader — and an answer engine
+ * quoting the site — unable to tell two different towns apart; `seri-kembangan`
+ * now publishes 史里肯邦安, the spelling the rest of the `/zh/` corpus and its
+ * own neighbour's guide already used for it.
  */
-function assertProblemLabelsInSync() {
-  const ids = problemDetails.map((problem) => problem.slug);
-
+function assertEntityNamesAreSingleSourced() {
   for (const language of languages) {
-    if (language.code === "en") {
-      continue;
+    const code = language.code;
+
+    const areaNamesSeen = new Map<string, string>();
+
+    for (const area of getAllAreas()) {
+      const key = `${area.region}/${area.slug}`;
+      const guide = getAreaDetail(area.region, area.slug, code);
+
+      if (!guide?.name) {
+        throw new Error(
+          `[i18n/verify] ${code} area guide publishes no name: ${key}`,
+        );
+      }
+
+      const label = getAreaName(area, code);
+      if (label !== guide.name) {
+        throw new Error(
+          `[i18n/verify] ${code} area label "${label}" disagrees with the name the guide itself publishes ("${guide.name}"): ${key}`,
+        );
+      }
+
+      const other = areaNamesSeen.get(guide.name);
+      if (other) {
+        throw new Error(
+          `[i18n/verify] ${code} publishes two area guides under one name "${guide.name}": ${other} and ${key}`,
+        );
+      }
+      areaNamesSeen.set(guide.name, key);
     }
 
-    diff(
-      `${language.code} problem card`,
-      `problemList.${language.code}`,
-      Object.keys(problemList[language.code]),
-      ids,
-    );
+    for (const region of areaRegions) {
+      const localized = getAreaRegion(region.id, code);
+      const expected = localized?.name ?? region.name;
+      const label = getRegionName(region.id, code);
+
+      if (label !== expected) {
+        throw new Error(
+          `[i18n/verify] ${code} region label "${label}" disagrees with the name the region hub itself publishes ("${expected}"): ${region.id}`,
+        );
+      }
+    }
+
+    for (const service of services) {
+      const detail = getServiceDetail(service.slug, code);
+      const expected = detail?.name ?? service.name;
+      const label = getServiceName(service.slug, code);
+
+      if (label !== expected) {
+        throw new Error(
+          `[i18n/verify] ${code} service label "${label}" disagrees with the name the pillar page itself publishes ("${expected}"): ${service.slug}`,
+        );
+      }
+    }
+
+    for (const problem of problemDetails) {
+      const guide = getProblemDetail(problem.slug, code);
+
+      if (!guide?.name || !guide.subtitle) {
+        throw new Error(
+          `[i18n/verify] ${code} problem guide publishes no localized name or subtitle: ${problem.slug}`,
+        );
+      }
+
+      const card = getProblemCardLabels(code, problem);
+      if (card.name !== guide.name || card.subtitle !== guide.subtitle) {
+        throw new Error(
+          `[i18n/verify] ${code} problem index card ("${card.name}") disagrees with the guide it links to ("${guide.name}"): ${problem.slug}`,
+        );
+      }
+    }
   }
 }

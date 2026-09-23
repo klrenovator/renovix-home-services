@@ -106,6 +106,19 @@ less — quality over page count.
   Composed titles (projects via `getProjectSeo()`, legal pages via
   `brandTitle()`) rather than hand-copied strings; `audit:authority` §6b checks
   the source and `audit:live` checks all 678 rendered pages.
+- **One entity, one name — a label reads the page it links to (Phase 47,
+  binding).** A short label (locality chip, problem card, list row, `ItemList`
+  entry) may never publish a different name from the page behind it.
+  `getAreaName` resolves label table → the guide's own localized name → English
+  registry name; `getProblemCardLabels` reads `getProblemDetail`. Never add a
+  second translation table for names the content registries already publish —
+  the retired `problemList` drifted until 10 Malay + 22 Chinese card names and
+  all 114 subtitles disagreed with the guides they linked. Localized area names
+  must also be **unique within a language**: two guides may not share one name
+  (沙登 was published by two different towns until Phase 47).
+  `i18n/verify.ts::assertEntityNamesAreSingleSourced` fails the build;
+  `audit:multilingual` checks the source and `audit:live` checks the served
+  pages, chips, cards and anchors.
 - **In-copy internal links are content, not decoration.** When an English
   paragraph links a service (`[label](/services/slug)`), the localized
   paragraph must stay structurally aligned with it (same paragraph count and
@@ -119,7 +132,10 @@ less — quality over page count.
 
 - Schema nodes only from verified facts: Organization/LocalBusiness, WebSite,
   WebPage, BreadcrumbList, Service, Article, FAQPage where valid. Stable
-  `@id`s keep one entity graph site-wide.
+  `@id`s keep one entity graph site-wide (Phase 44), and the name a page
+  publishes for its own entity — `WebPage.name`, `Article.headline`, the
+  visible H1 and every label that links to it — is one string in one language
+  (Phase 47).
 - Never emit Review, AggregateRating, Offer prices, geo coordinates,
   dayOfWeek hours, or any credential the business has not supplied.
 

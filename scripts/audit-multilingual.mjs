@@ -723,6 +723,129 @@ if (!failures.some((f) => f.includes("no longer localizes"))) {
   pass(`all ${DISTRICT_RENDER_SITES.length} district render sites use the localized accessors`);
 }
 
+
+/* ------------------------------------------------------------------------ */
+/* Phase 47 — one entity, one name: shared labels vs the pages they link to   */
+/*                                                                           */
+/* Three defects this section keeps closed:                                   */
+/*                                                                           */
+/* 1. the areas index rendered its District Explorer chips from the English   */
+/*    registry object (`areaObj?.name`), so all 53 locality names on          */
+/*    `/zh/areas/` were Latin script while the region directory 40 lines      */
+/*    above used `getAreaName` correctly;                                     */
+/* 2. `getAreaName` fell back to the English registry name before the area    */
+/*    guide's own localized `name`, so every `/ms/` page linked the           */
+/*    `kl-city-centre` guide as "KL City Centre" while that guide published   */
+/*    "Pusat Bandar KL" (its H1, title, breadcrumb and 53 body occurrences);  */
+/* 3. the problem library index cards read a second translation table         */
+/*    (`problemList`) that had drifted from the guides: 10 MS + 22 ZH card    */
+/*    names and all 114 subtitles disagreed with the page they linked to.     */
+/*                                                                           */
+/* `i18n/verify.ts::assertEntityNamesAreSingleSourced` enforces the same       */
+/* invariants at build time across areas, regions, services and problems;     */
+/* this section is the readable static gate and also keeps the two area-name  */
+/* tables (`areaNames` and the guide translations) from contradicting each    */
+/* other, which is how the 4 Chinese double-names (including two guides both  */
+/* published as 沙登) went unnoticed.                                          */
+/* ------------------------------------------------------------------------ */
+
+const areasPage = read("app/[lang]/areas/page.tsx");
+const districtChipBlock = areasPage.slice(areasPage.indexOf("district.locationSlugs.map"));
+if (/const label = areaObj\?\.name/.test(areasPage)) {
+  fail("app/[lang]/areas/page.tsx renders the district chips from the English registry name again (areaObj?.name)");
+} else if (!/\bgetAreaName\(/.test(districtChipBlock)) {
+  fail("app/[lang]/areas/page.tsx: the District Explorer chips no longer localize through getAreaName");
+} else {
+  const sites = (areasPage.match(/\bgetAreaName\(/g) || []).length;
+  pass(`both areas-index locality lists (region directory + District Explorer) label through getAreaName (${sites} call sites)`);
+}
+
+const i18nSource = read("data/i18n/index.ts");
+const areaNameFn = i18nSource.slice(
+  i18nSource.indexOf("export function getAreaName"),
+  i18nSource.indexOf("export * from \"./lists\""),
+);
+const guideFallbackAt = areaNameFn.indexOf("getAreaDetail(");
+const englishFallbackAt = areaNameFn.lastIndexOf("return area.name;");
+if (guideFallbackAt === -1) {
+  fail("getAreaName no longer consults the area guide's own localized name — an /ms/ or /zh/ label could fall straight back to English");
+} else if (englishFallbackAt < guideFallbackAt) {
+  fail("getAreaName returns the English registry name before the localized guide name");
+} else {
+  pass("getAreaName prefers areaNames, then the guide's own localized name, then the English registry name");
+}
+
+if (/export const problemList\b/.test(lists)) {
+  fail("data/i18n/lists.ts re-introduces the retired problemList card-label table (a second translation of strings the guides already publish)");
+}
+const cardFn = i18nSource.slice(
+  i18nSource.indexOf("export function getProblemCardLabels"),
+  i18nSource.indexOf("export * from \"./lists\""),
+);
+if (!/\bgetProblemDetail\(/.test(cardFn) || /\bproblemList\[/.test(cardFn)) {
+  fail("getProblemCardLabels no longer reads the localized problem guide itself");
+} else {
+  pass("problem index cards (and the index ItemList node) read the localized guide's own name + subtitle");
+}
+
+/* The two area-name tables must not contradict each other. */
+const AREA_LANGS = ["ms", "zh"];
+const areaNameTable = lists.slice(
+  lists.indexOf("export const areaNames"),
+  lists.indexOf("export const problemCategoryList"),
+);
+for (const lang of AREA_LANGS) {
+  // `ms` is legitimately `{}` — the official Malay spelling of 52 of the 53
+  // localities *is* the English one, so only a genuine difference belongs here.
+  const tableStart = areaNameTable.indexOf(`\n  ${lang}: {`);
+  const nextLang = AREA_LANGS[AREA_LANGS.indexOf(lang) + 1];
+  const tableStop = nextLang ? areaNameTable.indexOf(`\n  ${nextLang}: {`) : areaNameTable.indexOf("\n};");
+  const tableBlock = areaNameTable.slice(tableStart, tableStop === -1 ? undefined : tableStop);
+  const entries = new Map(
+    [...tableBlock.matchAll(/"([a-z-]+\/[a-z0-9-]+)":\s*"([^"]*)"/g)]
+      .map((m) => [m[1], m[2]]),
+  );
+
+  // The guides' own published names, parsed from the translation registries.
+  const guideNames = new Map();
+  const dir = path.join(root, "data/area-content/translations", lang);
+  for (const file of fs.readdirSync(dir)) {
+    if (!file.endsWith(".ts") || file === "index.ts" || file === "regions.ts" || file === "types.ts") continue;
+    const src = fs.readFileSync(path.join(dir, file), "utf8");
+    for (const m of src.matchAll(/^\s{2}"([a-z-]+\/[a-z0-9-]+)":\s*\{/gm)) {
+      const nameMatch = src.slice(m.index + m[0].length, m.index + m[0].length + 4000).match(/^\s{4}name:\s*"([^"]*)"/m);
+      if (nameMatch) guideNames.set(m[1], nameMatch[1]);
+    }
+  }
+
+  if (guideNames.size !== inventories.ALL_AREAS.length) {
+    fail(`${lang}: parsed ${guideNames.size} localized area guide names, expected ${inventories.ALL_AREAS.length}`);
+  }
+
+  const contradictions = [...entries].filter(([key, value]) => guideNames.has(key) && guideNames.get(key) !== value);
+  if (contradictions.length) {
+    fail(
+      `${lang}: areaNames disagrees with the name the guide itself publishes — ` +
+        contradictions.map(([key, value]) => `${key} table "${value}" vs guide "${guideNames.get(key)}"`).join("; "),
+    );
+  } else {
+    pass(`${lang}: areaNames contradicts no localized area guide name (${entries.size} table entries, ${guideNames.size} guides)`);
+  }
+
+  const collisions = new Map();
+  let collided = false;
+  for (const [key, value] of guideNames) {
+    if (collisions.has(value)) {
+      collided = true;
+      fail(`${lang}: two area guides publish the same name "${value}" (${collisions.get(value)} and ${key}) — one entity, one name`);
+    }
+    collisions.set(value, key);
+  }
+  if (!collided) {
+    pass(`${lang}: all ${guideNames.size} localized area names are unique (no two guides share one name)`);
+  }
+}
+
 if (failures.length) {
   console.log(`\nFAIL — ${failures.length} issue(s)`);
   process.exit(1);

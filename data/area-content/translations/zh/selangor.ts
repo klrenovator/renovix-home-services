@@ -443,17 +443,17 @@ export const translations: AreaTranslations = {
     ],
   },
   "selangor/seri-kembangan": {
-    ...shared("沙登"),
-    name: "沙登",
-    title: "Renovix Home Services | 沙登房屋装修与维修服务",
+    ...shared("史里肯邦安"),
+    name: "史里肯邦安",
+    title: "Renovix Home Services | 史里肯邦安房屋装修与维修服务",
     metaDescription:
-      "沙登（Seri Kembangan）房屋装修与维修——水管、防水、装修、电气、油漆与家居维修。免费报价。",
-    h1: "沙登房屋装修与维修服务",
+      "史里肯邦安（Seri Kembangan）房屋装修与维修——水管、防水、装修、电气、油漆与家居维修。免费报价。",
+    h1: "史里肯邦安房屋装修与维修服务",
     summary:
       "由旧沙登新村发展成的城镇——老店屋、九十至两千年代排屋，以及美奈湖与地铁一带的公寓群。",
     intro: [
-      "沙登既有老新村区，也有较新的住宅区与公寓。浴室渗水与排水堵塞是这里最常见的工程。",
-      "我们在沙登提供[水管](/services/plumbing)、[防水](/services/waterproofing)、[装修](/services/general-renovation)、[电气](/services/electrical)、[油漆](/services/painting)与[家居维修](/services/handyman)服务。",
+      "史里肯邦安既有老新村区，也有较新的住宅区与公寓。浴室渗水与排水堵塞是这里最常见的工程。",
+      "我们在史里肯邦安提供[水管](/services/plumbing)、[防水](/services/waterproofing)、[装修](/services/general-renovation)、[电气](/services/electrical)、[油漆](/services/painting)与[家居维修](/services/handyman)服务。",
     ],
     serviceNotes: [
       "修复水管渗漏与地漏堵塞。",

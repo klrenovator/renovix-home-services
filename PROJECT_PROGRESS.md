@@ -33,6 +33,18 @@ localized, and the last 4 problem guides without a bookable-scope link are
 wired to the scopes whose own copy describes them; no URL, page, price,
 service, problem, area, project, title or JSON-LD node changed.
 
+Phase 47 re-verification (2026-09-23): the same inventory and all 678 URLs
+remain intact. Every short label that links to an area guide or a problem guide
+now says what that page calls itself (one entity, one name), in visible text
+and in the `ItemList` / `WebPage` nodes; 4 Chinese area guides were harmonized
+to the Chinese name the rest of the `/zh/` corpus already used for them, and
+the duplicate 114-row problem card-label table was retired in favour of the
+guides. Measured on a before/after crawl of all 678 URLs: **0 English pages
+changed**, **0 prices, 0 URLs, 0 headings, 0 links, 0 images, 0 canonicals,
+0 hreflang entries and 0 JSON-LD node counts changed**; only the 4 harmonized
+Chinese guides changed a `<title>`/description (the name token inside the
+existing pattern) and 148 localized pages changed a label string.
+
 | Item | Count |
 |---|---|
 | Service pillar pages | 10 per language |
@@ -820,6 +832,12 @@ no template changes are required.
     summaries in **English**. Malay and Chinese labels for all 46 problems are
     now in `data/i18n/lists.ts` (`problemList`), used by the cards and by the
     `ItemList` schema
+    *(Phase 47 note, recorded here rather than rewritten: that table was the
+    right fix for an English-only index, but it was a second, independently
+    authored translation of wording the guides themselves now publish in all
+    three languages. It drifted — 10 Malay + 22 Chinese card names and all 114
+    subtitles disagreed with the pages they link to — and was retired in
+    Phase 47 §3, which makes the card read `getProblemDetail()` instead.)*
   - The "Do you work in Kuala Lumpur?" FAQ was keyed `kualaLumpur` in the
     dictionaries but its id is `kuala-lumpur`, so the Malay and Chinese
     homepages and FAQ pages silently fell back to the **English** question and
@@ -6581,3 +6599,216 @@ Status: **Code verified + Build verified + Local production HTTP verified;
 no English registry copy remains on any `/ms/` or `/zh/` page, and all 57
 problem guides now lead to a bookable scope in every language, guarded
 statically and live.**
+
+## Phase 47 — One place, one name: every area and problem label now reads from the guide it links to (2026-09-23)
+
+**Result: 🟢 existing prices, UI, URLs, page inventory and every recorded
+owner-gate preserved — a before/after crawl of all 678 pages shows 0 English
+pages changed and 0 changed prices, links, headings, canonicals, hreflang
+entries or JSON-LD node counts; 🟡 four label families that published a
+different name from the page they link to are now single-sourced; 🔴 nothing
+was missing — this phase is a consistency and structured-data-accuracy phase,
+so no page, section, service or route was added.**
+
+### 1. Inspect and verify before deciding what needs work
+
+The Master Prompt was again not attached to this session; the repository's
+recorded rules (`AGENTS.md`, `CONTENT_GOVERNANCE.md`, `CONTENT_MAP.md`,
+`PROJECT_OWNER_PENDING.md`) and this log through Phase 46 supplied the scope.
+The gate was re-run before any edit:
+
+- [x] `npm run type-check` + `npm run lint` — PASS
+- [x] `npm run build` — PASS (**689** static generation entries)
+- [x] All **17 static audits** — PASS
+- [x] `npm run audit:live` vs `next start` — **PASS 259 / WARN 0 / FAIL 0**
+- [x] Independent crawl of all 678 URLs snapshotted **before** any change
+      (scratch tooling under `/tmp`, not tracked), plus a cross-source
+      measurement that compared, for all 53 areas × 3 languages and all 57
+      problems × 3 languages, (a) the short label a page can render
+      (`getAreaName`, `getProblemCardLabels`), (b) the name the guide itself
+      publishes (`getAreaDetail`, `getProblemDetail` → H1, `<title>`,
+      breadcrumb, `WebPage.name`, `Article.headline`) and (c) what the served
+      HTML actually shows
+
+That measurement found the phase's whole agenda: **5 area label/page pairs
+disagreed** (1 Malay, 4 Chinese), **one Chinese name was published by two
+different guides**, **32 problem card names and all 114 card subtitles
+disagreed with the guides they link to**, and one locality render site still
+read the English registry directly. The inventory re-verified unchanged:
+10 services, 51 sub-service pages, 57 problem guides, 53 area guides + 2
+region hubs, 28 projects, 12 Knowledge Hub guides, 51 pricing rows, 678
+canonical URLs. Every link and copy layer recorded in Phases 28–46 was
+re-verified green and left untouched.
+
+### 2. 🟡 What the labels actually said (measured on served HTML, pre-change)
+
+Phase 44 established the rule for shared `@id` entities — *one entity, one
+name, one URL, everywhere*. Short labels were never covered by it: they come
+from lookup tables (`areaNames`, `problemList`) while the pages they link to
+come from content registries, and nothing ever compared the two.
+
+| # | Surface | Root cause | Baseline, measured on the served site |
+| --- | --- | --- | --- |
+| A | Areas index **District Explorer** chips | `app/[lang]/areas/page.tsx` labelled the chip `areaObj?.name ?? slug` — the one locality render site Phase 46 did not convert to the localized accessor | all 53 chips rendered in Latin script on `/zh/areas/`; live-measured **55 of 106** chips on `/zh/areas/` and **2 of 106** on `/ms/areas/` did not name the guide they open |
+| B | Every Malay page linking `kuala-lumpur/kl-city-centre` | `getAreaName` fell straight back to the **English registry name** when a language had no table row. `areaNames.ms` is empty by design — the official Malay spelling of 52 of the 53 localities *is* the English one — and `kl-city-centre` is the single exception, whose Malay name its own guide publishes | **121 anchors labelled "KL City Centre"** across **120** served `/ms/` pages (242 occurrences of the string) while that guide's H1, `<title>`, breadcrumb and `WebPage.name` all read **Pusat Bandar KL** |
+| C | 4 Chinese area guides | the Chinese guide copy and the Chinese label table were authored separately | 士甲末 vs 泗岩沫 (7 `/zh/` pages), 斯里布特拉 vs 斯里八打灵 (9), 百乐镇 vs 帝沙公园城 (5) — the same guide carrying two names on one page; and **沙登 was the published name of two different guides** (`selangor/serdang` *and* `selangor/seri-kembangan`) on **128** `/zh/` pages, so a Chinese reader — or an answer engine quoting the site — could not tell two towns apart |
+| D | Problem library index cards **and the index `ItemList` node** | `getProblemCardLabels` read `problemList` (57 MS + 57 ZH rows), a second translation authored in Phase 6 when the guides were English-only and never reconciled after the guides were translated | `/ms/problems/`: **10 card names + 57 subtitles**; `/zh/problems/`: **22 card names + 57 subtitles** disagreed with the guides they open (card 破损瓷砖维修 → guide 破砖维修, card "Saliran Tersumbat" → guide "Saluran Tersumbat"), and the same divergence was published into `ItemList.itemListElement[].name` |
+| E | Project portfolio categories | verified already localized at every render site through `getProjectCategoryLabel` | 🟢 measured as agreeing — left untouched, now guarded so it cannot drift |
+
+### 3. Fixes (labels read the page they link to; nothing else changed)
+
+- **A — `app/[lang]/areas/page.tsx`.** The District Explorer chip now labels
+  through `getAreaName({ region, slug, name: areaObj?.name ?? slug }, code)`,
+  exactly like the region directory above it. Both locality lists on the areas
+  index are now accessor-labelled (2 call sites, asserted statically); the
+  English registry string survives only as the fallback for a slug the
+  registry does not know, and the chip's markup, order and styling are
+  unchanged.
+- **B — `data/i18n/index.ts` `getAreaName`.** Precedence is now
+  `areaNames[lang][region/slug]` → **the guide's own localized `name`**
+  (`getAreaDetail`) → the English registry name. No table gained a duplicate
+  string: `areaNames.ms` stays empty (0 rows), so the guide remains the single
+  Malay source for `kl-city-centre`, and the 53-row Chinese table stays as it
+  was. This is the same "the page owns the entity" rule Phase 44 applied to
+  shared `@id` nodes.
+- **C — 4 Chinese guides harmonized** to the spelling the rest of the `/zh/`
+  corpus already used for them (`data/area-content/translations/zh/kuala-lumpur.ts`,
+  `selangor.ts`): segambut 士甲末 → **泗岩沫** (9 occurrences), sri-petaling
+  斯里布特拉 → **斯里八打灵** (7), desa-parkcity 百乐镇 → **帝沙公园城** (7),
+  seri-kembangan 沙登 → **史里肯邦安** (7). Each replacement is the name token
+  only — no sentence, fact, price, link or section changed, and the one
+  historical reference inside the Seri Kembangan guide ("由旧沙登新村发展成的城镇",
+  matching the English source's "developed from the old Serdang village") was
+  deliberately kept. Evidence, recorded for the owner in
+  `PROJECT_OWNER_PENDING.md`: 泗岩沫 is the mainstream Malaysian-Chinese name
+  for Segambut (士甲末 is non-standard); 史里肯邦安 is the official
+  transliteration of Seri Kembangan — the town was renamed from Serdang in
+  1974 — while 沙登 remains the colloquial name and stays correct for the
+  neighbouring `selangor/serdang` guide; 帝沙公园城 ≈ the attested 帝沙城市园 /
+  帝沙城市公园 for Desa ParkCity (百乐镇 is attested nowhere); Sri Petaling is
+  published as the attested literal transliteration 斯里八打灵, with the
+  mainstream local name **大城堡** flagged to the owner as an optional rename
+  rather than chosen unilaterally.
+- **D — `getProblemCardLabels` reads the guide.** It now returns
+  `getProblemDetail(slug, lang)`'s own `name` + `subtitle`, so a card is
+  by construction the same string as the H1, `<title>`, breadcrumb and
+  `Article.headline` of the page it opens — and the index `ItemList` node,
+  which is built from the same call, publishes the same names. The retired
+  `problemList` table (57 MS + 57 ZH rows, 601 lines including its stale
+  "the guides are English-only / 46 problems" doc comment) was deleted from
+  `data/i18n/lists.ts`; no other consumer existed. Card markup, grid, order
+  and lengths are unchanged (longest new label measured against the existing
+  card width).
+- **E — nothing to change**; the project-category labels were measured as
+  already single-sourced and are now covered by the guard below.
+
+### 4. Guards added (never weakening an existing audit)
+
+- **`i18n/verify.ts` — `assertEntityNamesAreSingleSourced()`** (replaces
+  `assertProblemLabelsInSync`, whose `problemList` key-diff became meaningless
+  once the table was retired). Runs at build time through
+  `assertCoverageInSync()` (invoked from `app/sitemap.ts`), so a bad label
+  cannot ship. For every language it asserts: all 53 area guides publish a
+  localized name; `getAreaName` equals that name (a label may never disagree
+  with the page it links to); **no two area guides in one language share a
+  name**; region labels equal the hub's own name; service labels equal the
+  pillar's own name; all 57 problem guides publish a localized name *and*
+  subtitle; and `getProblemCardLabels` returns exactly those. Negative tests:
+  renaming one Chinese guide away from its card label throws
+  `zh problem index card ("破损瓷砖维修") disagrees with the guide it links to
+  ("破砖维修")`; giving two Chinese guides one name throws the contradiction;
+  removing the guide fallback from `getAreaName` throws
+  `ms area label "KL City Centre" disagrees with the name the guide itself
+  publishes ("Pusat Bandar KL")`. All restored → PASS.
+- **`npm run audit:multilingual`** — new Phase 47 section, **7 checks**: both
+  areas-index locality lists label through `getAreaName`; `getAreaName` keeps
+  the three-step precedence (table → guide → English); the problem index cards
+  *and* the index `ItemList` node read the localized guide's own name +
+  subtitle; `problemList` may not be re-introduced; and, per language,
+  `areaNames` contradicts no guide name and all 53 localized names are unique.
+  The language-block parser was fixed while adding these (it searched for a
+  `\n  };` terminator that does not exist, so the "ms block" it checked
+  actually contained the `zh:` rows — the cause of a false "0 of 53 Malay
+  names" report), and a pointless slug-vs-value heuristic was dropped.
+  Negative tests: reverting the chip to `areaObj?.name` fails as "renders the
+  district chips from the English registry name again"; re-adding
+  `export const problemList` fails as "re-introduces the retired problemList
+  card-label table"; harmonizing a name the wrong way round fails with both
+  the contradiction and the collision named.
+- **`npm run audit:live`** — new "Entity labels vs the pages they name
+  (Phase 47)" block, **+11 checks → 270**, all measured on the served HTML
+  with React's escaping: the sweep now retains each page's `WebPage.name` and
+  each problem-index card label, and the anchor extractor keeps its class
+  list, so the audit can tell a chip/card label from any other link. It
+  asserts all **159** area guides publish their own localized `WebPage.name`;
+  each language publishes **53 distinct** names; all **19,875** same-language
+  anchors pointing at an area guide use a localized label and never the
+  English name when a localized one exists; all **106** locality chips on each
+  of the 3 areas-index pages carry the exact name their guide publishes; and
+  all **57** problem cards on each of the 3 problem-index pages do the same.
+  A shared `decodeEntities()` was added to the three text extractors so
+  visible text (`&amp;`) and JSON-LD (`&`) compare equal — without it the new
+  checks reported 8 false failures.
+- **Full red-state regression run** (the guards were proven against the
+  baseline, not just against the fixed tree): with the six source files
+  reverted to `HEAD` and only the two audit scripts kept, the production build
+  was rebuilt and re-served. `audit:multilingual` → **FAIL 6** (all six defect
+  classes named) and `audit:live` → **PASS 264 / FAIL 30**, listing 173
+  English area labels on localized pages, 55 wrong `/zh/areas/` chips, 2 wrong
+  `/ms/areas/` chips, 10 + 22 mismatched problem cards and the duplicated
+  Chinese name 沙登 — the exact baseline defect set. Restoring the fix and
+  rebuilding returned both to green.
+
+### 5. 🟢 Verified and deliberately left untouched
+
+| Surface | Verification / preservation decision |
+| --- | --- |
+| Prices | `data/pricing/pricing.ts` untouched; a per-page extraction of every `RM` figure across all 678 served pages found **0 changes**; the price sentences in the area answer-first section still read the catalogue at render time |
+| Pages, URLs, routes | Same **678** sitemap URLs, same **689** build entries, same file list in the before/after crawl; nothing deleted, renamed or redirected |
+| Structure | Heading counts (H1/H2/H3), internal-link counts, image counts, `hreflang` counts, canonical URLs and JSON-LD block counts: **unchanged on all 678 pages** |
+| English site | **0 of 226** English pages changed once the Next.js build id is normalized — the phase is invisible to `/en/` |
+| Rendering scope | **148 of 678** pages changed (121 `/ms/` + 27 `/zh/`): the Malay `kl-city-centre` label on 120 pages, the 4 harmonized Chinese guides and the pages that name them (areas index, region hubs, 5 Knowledge Hub guides), the two problem indexes and the 57 Malay problem guides whose area list carried the English label. `ItemList` kept **57 entries** in both languages (names corrected, nothing removed) |
+| Titles / descriptions | changed on exactly **4 pages** — the harmonized Chinese guides, name token only, inside the existing `Renovix Home Services | {area}房屋装修与维修服务` pattern; all other 674 titles and descriptions byte-identical |
+| UI / branding | No style, layout or component-structure change: the chip, the card, the answer-first paragraph and the district grids are the same elements with corrected text. The Chinese OG font subsets already covered every character in the 4 harmonized names (`audit:og-fonts` PASS, no regeneration needed) |
+| Owner-gated items | Unchanged and not invented: project ↔ area links, real project photography, homepage reviews block, kampung-level pages, after-hours pricing wording, quote-form fields, distributed rate limiting, GBP claims. Two **new flags, no change**: the optional 大城堡 rename for Sri Petaling and a native-speaker read of the 4 harmonized Chinese names (both recorded in `PROJECT_OWNER_PENDING.md`) |
+| Existing guards | None weakened; the Phase 6 decision note about `problemList` was annotated with a pointer to §3 rather than rewritten |
+| Observed, not changed | `components/area/AreaAnswerFirstSection.tsx` splices `{area}, {district}` into its coverage answer, which now reads "泗岩沫、泗岩沫与满家乐区" on the Segambut guide because the district is named after the area. The identical construction has always shipped in English ("across Segambut, Segambut & Mont Kiara District, and the wider Klang Valley") and Malay, the sentence stays factually correct, and de-duplicating it would rewrite FAQ copy **and** `FAQPage` schema on every area page in all three languages — outside this phase's remit and against the "do not delete existing content" rule. Recorded here for the owner instead |
+
+### 6. Final QA
+
+- [x] `npm run type-check` — PASS
+- [x] `npm run lint` — PASS (0 errors, 0 warnings)
+- [x] `npm run build` — PASS, **689** static generation entries, with
+      `assertCoverageInSync()` (and therefore the new single-source guard)
+      executed during generation
+- [x] All **17 static audits** — PASS
+- [x] `npm run audit:live` — **PASS 270 / WARN 0 / FAIL 0** against the new
+      production build (was 259 before this phase)
+- [x] Negative tests — 6 static/runtime breaks (chip revert, `problemList`
+      re-added, duplicated Chinese name, `getAreaName` fallback removed, card
+      label forced to diverge, guide renamed) all fail as designed and were
+      restored to green, plus 1 full red-state served-baseline run
+- [x] Independent re-crawl of all 678 URLs and a normalized before/after diff:
+      0 English pages changed, 0 price/link/heading/canonical/hreflang/JSON-LD
+      changes, 4 title+description changes (the harmonized guides), 3
+      word-count deltas (the two problem indexes and `/zh/areas/`, all from
+      shorter canonical labels), 148 changed pages in total
+- [x] `git diff --check` — clean; no scratch file tracked (the crawl snapshots,
+      the TypeScript loader hook and the measurement probes all live in `/tmp`)
+- [x] Docs: `README.md` (two audit descriptions), `PROJECT_OWNER_PENDING.md`
+      (Phase 47 flags), the Phase 6 annotation and the inventory
+      re-verification note in this log
+
+Limits: local production-build HTTP/HTML QA, not device, ranking or AI-answer
+measurement. The 4 harmonized Chinese names were chosen from published
+Malaysian-Chinese usage (Wikipedia ZH, local property and dictionary sources)
+and from the spellings this site already used elsewhere; like every earlier
+translation batch they should get the owner's native-speaker read, and the
+Sri Petaling choice in particular has a mainstream alternative (大城堡) that
+only the owner should decide on. Nothing in `PROJECT_OWNER_PENDING.md` was
+invented or assumed.
+
+Status: **Code verified + Build verified + Local production HTTP verified;
+every area and problem label on the site now carries the same name as the page
+it links to in all three languages, in visible text and in structured data,
+guarded at build time, statically and live.**

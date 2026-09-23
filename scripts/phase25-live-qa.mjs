@@ -514,6 +514,12 @@ async function sampleStatuses(locs) {
   // from every page's JSON-LD graph, so the entity-consistency check below
   // needs no second crawl.
   const entities = new Map();
+  // Phase 47 — the name each page publishes for the entity it is about
+  // (`WebPage.name`), and the card labels the three problem-library indexes
+  // render, so "one entity, one name" can be checked on the served HTML with no
+  // second crawl.
+  const pageNames = new Map();
+  const cardNames = new Map();
   for (let i = 0; i < locs.length; i += batchSize) {
     const batch = locs.slice(i, i + batchSize);
     const results = await Promise.all(
@@ -529,6 +535,8 @@ async function sampleStatuses(locs) {
         let schemaTypes = null;
         let serviceSchema = null;
         let entityNodes = null;
+        let pageName = null;
+        let cards = null;
         if (res.status === 200) {
           const html = await res.text();
           hrefs = extractInternalHrefs(html);
@@ -545,6 +553,12 @@ async function sampleStatuses(locs) {
           schemaTypes = new Set(nodes.flatMap((node) => typesOf(node)));
           serviceSchema = extractServiceSchema(path, html, nodes);
           entityNodes = collectEntityNodes(nodes);
+          pageName = extractWebPageName(nodes);
+          // Only the three problem-library index pages render card labels that
+          // must name the guide behind them.
+          if (/^\/(en|ms|zh)\/problems\/$/.test(path)) {
+            cards = extractCardNames(html, `/${path.split("/")[1]}/problems/`);
+          }
           // Everything a crawler reads as page text: the flight-data scripts
           // are hydration payload, not copy, so they are set aside first.
           const visible = html.replace(/<script\b[\s\S]*?<\/script>/gi, " ");
@@ -564,6 +578,8 @@ async function sampleStatuses(locs) {
           schemaTypes,
           serviceSchema,
           entityNodes,
+          pageName,
+          cards,
         };
       }),
     );
@@ -581,12 +597,14 @@ async function sampleStatuses(locs) {
       if (r.schemaTypes) schemaTypes.set(r.path, r.schemaTypes);
       if (r.serviceSchema) serviceSchemas.set(r.path, r.serviceSchema);
       if (r.entityNodes) entities.set(r.path, r.entityNodes);
+      if (r.pageName) pageNames.set(r.path, r.pageName);
+      if (r.cards) cardNames.set(r.path, r.cards);
       if (r.leaked) leakedMarkup.push(r.path);
     }
   }
   if (bad === 0) pass(`all ${ok} sitemap URLs return 200`);
   else fail(`sitemap sweep ${ok} ok / ${bad} failed`);
-  return { graph, anchors, inCopy, titles, leakedMarkup, faqBlocks, schemaTypes, serviceSchemas, entities };
+  return { graph, anchors, inCopy, titles, leakedMarkup, faqBlocks, schemaTypes, serviceSchemas, entities, pageNames, cardNames };
 }
 
 /* ------------------------------------------------------------------------ */
@@ -625,14 +643,7 @@ const TITLE_BRAND_TOKEN = "Renovix";
 function extractTitleText(html) {
   const m = html.match(/<title[^>]*>([\s\S]*?)<\/title>/i);
   if (!m) return null;
-  return m[1]
-    .replace(/&amp;/g, "&")
-    .replace(/&#x27;/g, "'")
-    .replace(/&quot;/g, '"')
-    .replace(/&lt;/g, "<")
-    .replace(/&gt;/g, ">")
-    .replace(/\s+/g, " ")
-    .trim();
+  return decodeEntities(m[1]).replace(/\s+/g, " ").trim();
 }
 
 function checkTitles(locs, titles) {
@@ -851,16 +862,69 @@ function extractInternalHrefs(html) {
 }
 
 /**
+ * Decodes the HTML entities React escapes in text nodes, so a label read from
+ * the markup ("Brickfields &amp; Mid Valley") can be compared with the same
+ * string read from JSON-LD ("Brickfields & Mid Valley"). Phase 47 — shared by
+ * the title, anchor and card-label extractors.
+ */
+function decodeEntities(text) {
+  return text
+    .replace(/&amp;/g, "&")
+    .replace(/&#x27;/g, "'")
+    .replace(/&quot;/g, '"')
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&nbsp;/g, " ");
+}
+
+/**
  * Phase 29 — the visible text of every plain-text internal anchor, kept so the
  * sweep can check that no localized page renders a slug as its own label
  * (`/ms/problems/bathroom-leakage/` must never read "Bathroom Leakage").
  */
 function extractAnchors(html) {
   const out = [];
-  for (const m of html.matchAll(/<a\b[^>]*href="(\/[^"]*)"[^>]*>([^<]*)<\/a>/g)) {
-    const path = normalizeHref(m[1]);
-    const text = m[2].trim();
-    if (path && text) out.push({ path, text });
+  for (const m of html.matchAll(/<a\b([^>]*)href="(\/[^"]*)"([^>]*)>([^<]*)<\/a>/g)) {
+    const path = normalizeHref(m[2]);
+    const text = m[4].trim();
+    // Phase 47 — the class list is kept so a check can tell a chip/card label
+    // (which must name the entity exactly) from a prose link (which may not).
+    const cls = `${m[1]} ${m[3]}`.match(/class="([^"]*)"/);
+    if (path && text) out.push({ path, text: decodeEntities(text), className: cls ? cls[1] : "" });
+  }
+  return out;
+}
+
+/**
+ * Phase 47 — the name a page publishes for the entity it is about, taken from
+ * its own `WebPage` node. For an area guide that is the localized locality name
+ * ("满家乐", "Pusat Bandar KL"), for a problem guide the localized problem name;
+ * both are the string the page's H1, `<title>` and breadcrumb are built from,
+ * so it is the authoritative "what this page calls itself" value that every
+ * label pointing at the page must agree with.
+ */
+function extractWebPageName(nodes) {
+  for (const node of nodes) {
+    if (typesOf(node).includes("WebPage") && typeof node.name === "string" && node.name.trim()) {
+      return node.name.trim();
+    }
+  }
+  return null;
+}
+
+/**
+ * Phase 47 — the card labels an index page renders for its children, keyed by
+ * the href they point at. The card's visible name is the `<h3>` inside the link.
+ */
+function extractCardNames(html, basePath) {
+  const out = new Map();
+  const re = new RegExp(
+    `<a\\b[^>]*href="(${basePath}[a-z0-9-]+/)"[^>]*>([\\s\\S]*?)</a>`,
+    "g",
+  );
+  for (const m of html.matchAll(re)) {
+    const h3 = m[2].match(/<h3[^>]*>([^<]*)<\/h3>/);
+    if (h3 && h3[1].trim()) out.set(m[1], decodeEntities(h3[1].trim()));
   }
   return out;
 }
@@ -2119,6 +2183,149 @@ async function checkLocalizedRegistryCopy(locs) {
   }
 }
 
+/* ------------------------------------------------------------------------ */
+/* Phase 47 — one entity, one name, on the served pages                      */
+/*                                                                           */
+/* A label that links to a page must say what that page calls itself. Three   */
+/* rendered defects this closes:                                             */
+/*                                                                           */
+/* 1. `/zh/areas/` rendered all 53 District Explorer chips from the English   */
+/*    registry object, so a Chinese reader — and a Chinese-language answer    */
+/*    engine — saw Latin-script locality names linking to Chinese guides;     */
+/* 2. `getAreaName()` fell back to the English registry name, so every `/ms/` */
+/*    page linked the `kl-city-centre` guide as "KL City Centre" while that   */
+/*    guide's own H1, title, breadcrumb and body said "Pusat Bandar KL";      */
+/* 3. two published `/zh/` guides (`selangor/serdang` and                    */
+/*    `selangor/seri-kembangan`) both named themselves 沙登, and the problem  */
+/*    library index cards named 10 MS + 22 ZH guides differently from the     */
+/*    guide's own H1 (the divergence was published into the index ItemList    */
+/*    node too).                                                              */
+/*                                                                           */
+/* Every expectation is read from the served pages themselves: the name a     */
+/* guide publishes for itself is its own `WebPage.name`, so this check needs  */
+/* no copy of the registries and cannot disagree with what is actually live.  */
+/* ------------------------------------------------------------------------ */
+
+const AREA_PATH_RE = /^\/(en|ms|zh)\/areas\/(kuala-lumpur|selangor)\/([a-z0-9-]+)\/$/;
+
+function checkEntityLabels(locs, anchors, pageNames, cardNames) {
+  console.log("\n== Entity labels vs the pages they name (Phase 47) ==");
+  const paths = locs.map((loc) => loc.replace(CANONICAL_HOST, ""));
+  const languages = ["en", "ms", "zh"];
+
+  // The name every area guide publishes for itself, keyed `lang|region/slug`.
+  const areaName = new Map();
+  for (const path of paths) {
+    const m = path.match(AREA_PATH_RE);
+    if (!m) continue;
+    const name = pageNames.get(path);
+    if (!name) {
+      fail(`area guide ${path} publishes no WebPage name — the label check cannot run`);
+      continue;
+    }
+    areaName.set(`${m[1]}|${m[2]}/${m[3]}`, name);
+  }
+  if (areaName.size === 159) {
+    pass("all 159 area guides publish their own localized name (WebPage.name)");
+  } else {
+    fail(`expected 159 area guides publishing a localized name, found ${areaName.size}`);
+  }
+
+  // 1. One locality, one name — inside each language.
+  for (const lang of languages) {
+    const seen = new Map();
+    let collisions = 0;
+    for (const [key, name] of areaName) {
+      const [keyLang, id] = key.split("|");
+      if (keyLang !== lang) continue;
+      if (seen.has(name)) {
+        collisions += 1;
+        fail(`${lang}: two area guides publish the same name "${name}" (${seen.get(name)} and ${id})`);
+      }
+      seen.set(name, id);
+    }
+    if (collisions === 0) {
+      pass(`${lang}: all ${seen.size} area guides publish a distinct name (no two localities share one label)`);
+    }
+  }
+
+  // 2. No `/ms/` or `/zh/` page may label an area guide with its English name.
+  const englishLabels = [];
+  let areaAnchors = 0;
+  for (const [path, list] of anchors) {
+    const lang = path.split("/")[1];
+    for (const a of list) {
+      const m = a.path.match(AREA_PATH_RE);
+      if (!m || m[1] !== lang) continue;
+      areaAnchors += 1;
+      if (lang === "en") continue;
+      const id = `${m[2]}/${m[3]}`;
+      const localized = areaName.get(`${lang}|${id}`);
+      const english = areaName.get(`en|${id}`);
+      if (localized && english && localized !== english && a.text === english) {
+        englishLabels.push(`${path} labels ${a.path} "${a.text}" instead of "${localized}"`);
+      }
+    }
+  }
+  if (englishLabels.length === 0) {
+    pass(`all ${areaAnchors} same-language anchors pointing at an area guide use a localized label, never its English name`);
+  } else {
+    for (const hit of englishLabels.slice(0, 8)) fail(hit);
+    if (englishLabels.length > 8) fail(`…and ${englishLabels.length - 8} more English area labels on localized pages`);
+  }
+
+  // 3. The areas index chips name each guide exactly (both the region directory
+  //    and the District Explorer render `chip` anchors).
+  for (const lang of languages) {
+    const indexPath = `/${lang}/areas/`;
+    const list = anchors.get(indexPath) ?? [];
+    const chips = list.filter(
+      (a) => AREA_PATH_RE.test(a.path) && a.className.split(/\s+/).includes("chip"),
+    );
+    const wrong = chips.filter((a) => {
+      const m = a.path.match(AREA_PATH_RE);
+      return areaName.get(`${lang}|${m[2]}/${m[3]}`) !== a.text;
+    });
+    if (chips.length < 106) {
+      fail(`${indexPath} renders ${chips.length} locality chips, expected the 53 region-directory + 53 District Explorer chips`);
+    } else if (wrong.length) {
+      fail(
+        `${indexPath} renders ${wrong.length} locality chip(s) that do not name the guide they open: ` +
+          wrong.slice(0, 5).map((a) => `"${a.text}" → ${a.path}`).join(", "),
+      );
+    } else {
+      pass(`${indexPath}: all ${chips.length} locality chips carry the exact name their guide publishes`);
+    }
+  }
+
+  // 4. The problem library index cards name the guide they open.
+  for (const lang of languages) {
+    const indexPath = `/${lang}/problems/`;
+    const cards = cardNames.get(indexPath);
+    if (!cards || cards.size === 0) {
+      fail(`${indexPath} renders no problem cards — the card-label check cannot run`);
+      continue;
+    }
+    const wrong = [];
+    for (const [href, label] of cards) {
+      const guideName = pageNames.get(href);
+      if (!guideName) {
+        wrong.push(`${href} publishes no name`);
+      } else if (guideName !== label) {
+        wrong.push(`card "${label}" → guide "${guideName}" (${href})`);
+      }
+    }
+    if (cards.size < 57) {
+      fail(`${indexPath} renders ${cards.size} problem cards, expected 57`);
+    } else if (wrong.length) {
+      for (const hit of wrong.slice(0, 8)) fail(`${indexPath}: ${hit}`);
+      if (wrong.length > 8) fail(`…and ${wrong.length - 8} more mismatched problem cards on ${indexPath}`);
+    } else {
+      pass(`${indexPath}: all ${cards.size} problem cards carry the exact name their guide publishes`);
+    }
+  }
+}
+
 async function multilingualSpot() {
   console.log("\n== Multilingual / SEO / schema spot checks ==");
   await checkPageSeo("/en/", {
@@ -2184,7 +2391,7 @@ async function main() {
   console.log(`Phase 25 live QA against ${BASE}\n`);
   await checkHeaders();
   const locs = await checkSitemapLive();
-  const { graph, anchors, inCopy, titles, leakedMarkup, faqBlocks, schemaTypes, serviceSchemas, entities } =
+  const { graph, anchors, inCopy, titles, leakedMarkup, faqBlocks, schemaTypes, serviceSchemas, entities, pageNames, cardNames } =
     await sampleStatuses(locs);
   checkInternalLinkGraph(locs, graph);
   checkQuotedScopeLinks(locs, graph);
@@ -2198,6 +2405,7 @@ async function main() {
   await checkAiLocalizedUrlCoverage(locs);
   await checkLocalizedAnchors(anchors);
   await checkLocalizedRegistryCopy(locs);
+  checkEntityLabels(locs, anchors, pageNames, cardNames);
   await multilingualSpot();
   await checkQuoteApi();
   await checkInternalLinks();

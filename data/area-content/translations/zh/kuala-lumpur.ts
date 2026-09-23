@@ -255,17 +255,17 @@ export const translations: AreaTranslations = {
     ],
   },
   "kuala-lumpur/segambut": {
-    ...shared("士甲末"),
-    name: "士甲末",
-    title: "Renovix Home Services | 士甲末房屋装修与维修服务",
+    ...shared("泗岩沫"),
+    name: "泗岩沫",
+    title: "Renovix Home Services | 泗岩沫房屋装修与维修服务",
     metaDescription:
-      "士甲末（Segambut）房屋装修与维修——装修、电气、水管、油漆、防水与家居维修。免费报价。",
-    h1: "士甲末房屋装修与维修服务",
+      "泗岩沫（Segambut）房屋装修与维修——装修、电气、水管、油漆、防水与家居维修。免费报价。",
+    h1: "泗岩沫房屋装修与维修服务",
     summary:
       "吉隆坡北部一带较安静的区域——老排屋与甘榜式住宅，与高档有地住宅及新公寓走廊并存。",
     intro: [
-      "士甲末的住宅类型跨度很大：老排屋、甘榜式住宅、Duta 一带的高档住宅，以及较新的公寓。每一类都需要不同的处理方式。",
-      "我们在士甲末提供[装修](/services/general-renovation)、[电气](/services/electrical)、[水管](/services/plumbing)、[油漆](/services/painting)、[防水](/services/waterproofing)与[家居维修](/services/handyman)服务。",
+      "泗岩沫的住宅类型跨度很大：老排屋、甘榜式住宅、Duta 一带的高档住宅，以及较新的公寓。每一类都需要不同的处理方式。",
+      "我们在泗岩沫提供[装修](/services/general-renovation)、[电气](/services/electrical)、[水管](/services/plumbing)、[油漆](/services/painting)、[防水](/services/waterproofing)与[家居维修](/services/handyman)服务。",
     ],
     serviceNotes: [
       "老屋翻新，施工顺序清楚明确。",
@@ -290,7 +290,7 @@ export const translations: AreaTranslations = {
       { title: "过往装修留下的补丁", description: "半途而废的工程需要重新梳理。" },
     ],
     context: [
-      "士甲末的老屋需要正确的顺序：先安全与防水，再做潮湿区域，最后才是饰面。",
+      "泗岩沫的老屋需要正确的顺序：先安全与防水，再做潮湿区域，最后才是饰面。",
       "在高档住宅区，饰面品质与现场整洁最受重视，因此我们控制施工区域并每日清理。",
       "部分旧巷道较窄，材料运送与垃圾清运需要提前安排。",
     ],
@@ -298,7 +298,7 @@ export const translations: AreaTranslations = {
       { question: "可以先评估老屋再决定怎么做吗？", answer: "可以。我们会检查结构、水管与电气，并说明合理的选择。" },
       { question: "你们承接 Duta 一带的高端翻新吗？", answer: "承接，包括受控施工区、表面保护与每日清理。" },
       { question: "墙脚有潮气，能处理吗？", answer: "可以。我们会先判断是返潮、渗水还是漏水，再对症处理。" },
-      { question: "你们在士甲末的新公寓施工吗？", answer: "会，按管理层规定的施工时间与规范进行。" },
+      { question: "你们在泗岩沫的新公寓施工吗？", answer: "会，按管理层规定的施工时间与规范进行。" },
     ],
   },
   "kuala-lumpur/sentul": {
@@ -490,17 +490,17 @@ export const translations: AreaTranslations = {
     ],
   },
   "kuala-lumpur/sri-petaling": {
-    ...shared("斯里布特拉"),
-    name: "斯里布特拉",
-    title: "Renovix Home Services | 斯里布特拉房屋装修与维修服务",
+    ...shared("斯里八打灵"),
+    name: "斯里八打灵",
+    title: "Renovix Home Services | 斯里八打灵房屋装修与维修服务",
     metaDescription:
-      "斯里布特拉（Sri Petaling）房屋装修与维修——装修、水管、防水、瓷砖、电气与油漆工程。免费报价。",
-    h1: "斯里布特拉房屋装修与维修服务",
+      "斯里八打灵（Sri Petaling）房屋装修与维修——装修、水管、防水、瓷砖、电气与油漆工程。免费报价。",
+    h1: "斯里八打灵房屋装修与维修服务",
     summary:
       "吉隆坡南部的九十年代花园城镇——排屋街道、繁忙商业街，以及逐渐增多的新公寓。",
     intro: [
-      "斯里布特拉的住宅多建于九十年代，因此原装防水、水管与饰面正进入第一轮更换周期。",
-      "我们为斯里布特拉的排屋、店屋与公寓提供[装修](/services/general-renovation)、[水管](/services/plumbing)、[防水](/services/waterproofing)、[瓷砖](/services/tiling)、[电气](/services/electrical)与[油漆](/services/painting)服务。",
+      "斯里八打灵的住宅多建于九十年代，因此原装防水、水管与饰面正进入第一轮更换周期。",
+      "我们为斯里八打灵的排屋、店屋与公寓提供[装修](/services/general-renovation)、[水管](/services/plumbing)、[防水](/services/waterproofing)、[瓷砖](/services/tiling)、[电气](/services/electrical)与[油漆](/services/painting)服务。",
     ],
     serviceNotes: [
       "九十年代排屋的分阶段升级。",
@@ -631,17 +631,17 @@ export const translations: AreaTranslations = {
     ],
   },
   "kuala-lumpur/desa-parkcity": {
-    ...shared("百乐镇"),
-    name: "百乐镇",
-    title: "Renovix Home Services | 百乐镇房屋装修与维修服务",
+    ...shared("帝沙公园城"),
+    name: "帝沙公园城",
+    title: "Renovix Home Services | 帝沙公园城房屋装修与维修服务",
     metaDescription:
-      "百乐镇（Desa ParkCity）房屋装修与维修——地板、电气、装修、水管、家居维修与油漆，按社区规定施工。免费报价。",
-    h1: "百乐镇房屋装修与维修服务",
+      "帝沙公园城（Desa ParkCity）房屋装修与维修——地板、电气、装修、水管、家居维修与油漆，按社区规定施工。免费报价。",
+    h1: "帝沙公园城房屋装修与维修服务",
     summary:
       "吉隆坡西部的规划社区——门禁式有地住宅与公园旁的高层住宅，整体交付标准较高。",
     intro: [
-      "百乐镇的住宅较新，因此这里的工程更多是有针对性的升级，而不是大规模改造：地板、照明、浴室饰面与小型维修。",
-      "我们按百乐镇的社区管理规定，提供[地板](/services/flooring)、[电气](/services/electrical)、[装修](/services/general-renovation)、[水管](/services/plumbing)、[家居维修](/services/handyman)与[油漆](/services/painting)服务。",
+      "帝沙公园城的住宅较新，因此这里的工程更多是有针对性的升级，而不是大规模改造：地板、照明、浴室饰面与小型维修。",
+      "我们按帝沙公园城的社区管理规定，提供[地板](/services/flooring)、[电气](/services/electrical)、[装修](/services/general-renovation)、[水管](/services/plumbing)、[家居维修](/services/handyman)与[油漆](/services/painting)服务。",
     ],
     serviceNotes: [
       "把开发商原装地板换成更耐用的选择。",

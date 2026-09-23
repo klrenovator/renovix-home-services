@@ -16,7 +16,7 @@ import type {
   ProblemDetail,
 } from "@/data/problem-content/types";
 import { projectCategories, type ProjectCategory } from "@/data/projects";
-import { areasIndexFaqs } from "@/data/area-content";
+import { areasIndexFaqs, getAreaDetail } from "@/data/area-content";
 import { getSubServicesByService } from "@/data/sub-services";
 import type { AreaDetail, AreaFaq } from "@/data/area-content/types";
 import {
@@ -24,7 +24,6 @@ import {
   areasIndexFaqList,
   districtList,
   problemCategoryList,
-  problemList,
   projectCategoryLabels,
   regionList,
   serviceList,
@@ -117,24 +116,31 @@ export function getProblemCategories(
 }
 
 /**
- * Problem names and one-line summaries for the problem index cards. The full
- * problem guides are English-only, but the index lists all of them in every
- * language, so the card labels are translated here — otherwise a `/ms/` or
- * `/zh/` index page would render an English catalogue.
+ * Problem names and one-line summaries for the problem index cards.
+ *
+ * Phase 47 — the card now reads the guide itself. `getProblemDetail()` returns
+ * the localized guide in the requested language (English included), so the card
+ * label is by construction the same string as the H1, `<title>`, breadcrumb and
+ * `Article.headline` of the page the card links to.
+ *
+ * It used to read a second, independently authored translation table
+ * (`problemList` in `data/i18n/lists.ts`, retired here) whose doc comment still
+ * described the guides as English-only and counted 46 of them. That table had
+ * drifted from the guides it labelled: **10 Malay and 22 Chinese card names and
+ * all 57 + 57 card subtitles** disagreed with the page behind them — `/zh/`
+ * listed 破损瓷砖维修 for a guide whose own H1 reads 破砖维修, and the same
+ * divergence was published into the index page's `ItemList` node. A card is a
+ * preview of one page, so the page owns the wording.
  */
 export function getProblemCardLabels(
   lang: LanguageCode | string,
   problem: ProblemDetail,
 ): { name: string; subtitle: string } {
-  const code = getLanguageCode(lang);
+  const detail = getProblemDetail(problem.slug, lang);
 
-  if (code === "en") {
-    return { name: problem.name, subtitle: problem.subtitle };
-  }
-
-  return problemList[code][problem.slug] ?? {
-    name: problem.name,
-    subtitle: problem.subtitle,
+  return {
+    name: detail?.name ?? problem.name,
+    subtitle: detail?.subtitle ?? problem.subtitle,
   };
 }
 
@@ -247,7 +253,25 @@ export function getStateName(
   return state.name;
 }
 
-/** Localized display name for a location (proper nouns stay as-is in Malay). */
+/**
+ * Localized display name for a location (proper nouns stay as-is in Malay).
+ *
+ * Phase 47 — precedence, and why it is in this order:
+ *
+ * 1. `areaNames` — the short label table this file exists for.
+ * 2. the area guide's own localized `name` — a label may never disagree with
+ *    the page it links to. The guide owns the entity, the same rule Phase 44
+ *    applied to shared `@id` entities ("one entity, one name").
+ * 3. the English registry name — last, so a missing entry can never blank a
+ *    chip or a card.
+ *
+ * Until step 2 existed, the English name came second, and because `areaNames.ms`
+ * is deliberately empty for the 52 localities whose official Malay spelling is
+ * the English one, every `/ms/` page linked the `kl-city-centre` guide as
+ * "KL City Centre" while that guide's own H1, title, breadcrumb and 53 body
+ * occurrences said "Pusat Bandar KL". `i18n/verify.ts` now fails the build if a
+ * label and its guide ever disagree again.
+ */
 export function getAreaName(
   area: Pick<AreaDetail, "region" | "slug" | "name">,
   lang: LanguageCode | string,
@@ -258,6 +282,11 @@ export function getAreaName(
     const entry = areaNames[code][`${area.region}/${area.slug}`];
     if (entry) {
       return entry;
+    }
+
+    const guide = getAreaDetail(area.region, area.slug, code);
+    if (guide?.name) {
+      return guide.name;
     }
   }
 

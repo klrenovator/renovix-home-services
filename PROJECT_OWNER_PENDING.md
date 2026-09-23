@@ -1,8 +1,42 @@
-# PROJECT OWNER-PENDING DATA — Phases 22, 24, 25, 26, 41 & 46
+# PROJECT OWNER-PENDING DATA — Phases 22, 24, 25, 26, 41, 46 & 47
 
 Status: **OWNER-PENDING**. Nothing on this list is a code defect. Each item
 can only be completed by the business or in the hosting/Search Console
 dashboards. Do not invent values.
+
+## Phase 47 (2026-09-23) — native-speaker read of 4 Chinese locality names (+ 1 optional rename)
+
+**Not a code defect; flagged for the owner's language judgement.** Phase 47
+made every short label agree with the page it links to. Four Chinese area
+guides published a *different* Chinese name from the one the rest of the `/zh/`
+site (and the Chinese label table) already used for the same place, and one
+Chinese name (沙登) was being published by **two different towns**. The guides
+were harmonized to the established spellings; only the name token changed — no
+sentence, fact, price, link or section was touched, and the historical
+reference "由旧沙登新村发展成的城镇" inside the Seri Kembangan guide stays
+because it matches the English source.
+
+| Guide | Was | Now | Why this spelling |
+| --- | --- | --- | --- |
+| `/zh/areas/kuala-lumpur/segambut/` | 士甲末 | **泗岩沫** | Mainstream Malaysian-Chinese name for Segambut (Chinese Wikipedia, local dictionaries; 泗岩末/泗岩沬 are seen variants). 士甲末 is not attested in Malaysian usage |
+| `/zh/areas/selangor/seri-kembangan/` | 沙登 | **史里肯邦安** | Official transliteration of Seri Kembangan — the town was renamed from Serdang in 1974. 沙登 remains correct for the *neighbouring* `selangor/serdang` guide, which keeps it, so the two towns are now distinguishable |
+| `/zh/areas/kuala-lumpur/desa-parkcity/` | 百乐镇 | **帝沙公园城** | 帝沙城市园 / 帝沙城市公园 are the attested Malaysian-Chinese renderings; 帝沙公园城 is the spelling this site already used in its Chinese label table and district name. 百乐镇 is not attested for Desa ParkCity anywhere |
+| `/zh/areas/kuala-lumpur/sri-petaling/` | 斯里布特拉 | **斯里八打灵** | 斯里八打灵 is an attested literal transliteration of "Sri Petaling". 斯里布特拉 was wrong on the facts — "Sri Putra" is a different township in Bangi |
+
+**What the owner is asked to do:**
+
+| # | Action | Where | Notes |
+| --- | --- | --- | --- |
+| 1 | Give the 4 names above a native-speaker read (a Malaysian-Chinese customer, or the owner's own judgement) and confirm or supply replacements | Owner reply to AI | Each is a one-token change in `data/area-content/translations/zh/*.ts` plus the matching row in `areaNames.zh` (`data/i18n/lists.ts`); `i18n/verify.ts` fails the build if the two ever disagree again, so they cannot drift apart silently |
+| 2 | Decide whether Sri Petaling should be published as **大城堡** instead of 斯里八打灵 | Owner reply to AI | 大城堡 is the name Malaysian Chinese residents and property portals actually use for Sri Petaling; 斯里八打灵 is the literal transliteration and is what the site ships today. The AI did **not** choose it unilaterally because it is a branding/usage call, not a correctness fix. If the owner says yes, the change is the same two places as above |
+| 3 | Optional readability call: the area coverage answer splices "{area}, {district}" and so now reads "泗岩沫、泗岩沫与满家乐区" on the Segambut guide, because the district is named after the area | Owner reply to AI | The identical construction has always shipped in English ("across Segambut, Segambut & Mont Kiara District, and the wider Klang Valley") and in Malay, and the sentence stays factually correct, so Phase 47 left it alone rather than rewrite FAQ copy **and** `FAQPage` schema on all 165 area pages. If the owner wants the repetition removed, the fix is one conditional in `components/area/AreaAnswerFirstSection.tsx` (drop the district clause when the district name already contains the area name), applied in all three languages at once |
+
+Everything else Phase 47 changed needed no owner input: the Malay label
+"Pusat Bandar KL" was already the name the `kl-city-centre` guide published
+(121 links on 120 Malay pages said "KL City Centre" instead), and the problem
+index cards now read the guides' own Malay and Chinese names and subtitles
+(10 + 22 card names and all 114 subtitles previously disagreed with the pages
+they open).
 
 ## Phase 46 (2026-09-22) — confirm or reword one catalogue price factor
 
