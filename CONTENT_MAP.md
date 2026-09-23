@@ -170,6 +170,16 @@ and the derivation stays honest by construction — a hub can never surface a
 guide none of its own child guides already publish. `audit:blog` verifies the
 derivation and the wiring; `audit:live` §3h counts the rendered links.
 
+Since Phase 48 the **guides link back to those region hubs** within their
+existing related-areas card section: the linked regions are deduplicated from
+each guide's authored `relatedLocations` and only render when at least one
+localized area card for that region actually renders. The region name and
+summary come from the same localized hub registry as the hub itself. All
+**72** guide → hub links (12 guides × 2 regions × 3 languages) are reciprocal
+with the existing 72 hub → guide links; no new location or claimed coverage
+was inferred. The full-site live audit checks the main-content links (not
+the ubiquitous footer), their related-area support and served target URLs.
+
 Since Phase 39 every guide and hub also carries **in-copy contextual links** in
 all three languages: the introduction and context paragraphs name the work they
 describe and link it (`[label](/services/slug)`, rendered by

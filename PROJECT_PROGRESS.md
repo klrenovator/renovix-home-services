@@ -45,6 +45,17 @@ changed**, **0 prices, 0 URLs, 0 headings, 0 links, 0 images, 0 canonicals,
 Chinese guides changed a `<title>`/description (the name token inside the
 existing pattern) and 148 localized pages changed a label string.
 
+Phase 48 re-verification (2026-09-23): all inventory counts remain unchanged.
+The 12 Knowledge Hub guides already named specific area guides in both regions,
+and the two region hubs already linked back to every guide, but **0 of 72**
+guide → region links rendered in the guides' main content. Region links are
+now derived only from each guide's published, localized related-area cards;
+all **72 of 72** pairs link in both directions across EN/MS/ZH. An independent
+before/after crawl of all 678 pages found precisely 36 guide pages changed
+in the measured content fields (2 existing-style cards + 2 links each);
+the other 642 pages and every price, title, canonical, hreflang entry, image
+and JSON-LD block are unchanged in that comparison.
+
 | Item | Count |
 |---|---|
 | Service pillar pages | 10 per language |
@@ -62,9 +73,10 @@ existing pattern) and 148 localized pages changed a label string.
 | Static generation entries | **689** (`next build` progress total; distinct from the 678 canonical sitemap URLs) |
 | Pricing rows (`data/pricing/pricing.ts`) | **51** |
 | Search-intent matrix entries | **24** (all pricing derived from `pricingId`) |
-| Audit scripts | 17 static + 1 live server QA (**259** served-site checks after Phase 46: 254 baseline + 2 entity-graph, Phase 44 + 1 quoted-scope, Phase 45 + 2 localized-registry-copy, Phase 46) |
+| Audit scripts | 17 static + 1 live server QA (**271** served-site checks after Phase 48; 270 after Phase 47, 259 after Phase 46) |
 | In-copy contextual links (rendered anchors) | **313 EN / 362 MS / 364 ZH** (Phase 39) |
 | Region hub → Knowledge Hub guide links (rendered) | **72** (6 hubs × 12 guides; Phase 41, was 0) |
+| Knowledge Hub guide → related region hub links (rendered in main) | **72** (36 guides × 2 hub links; Phase 48, was 0; all 72 reciprocal with the existing hub → guide links) |
 | Knowledge Hub ↔ quoted-scope links (rendered, both directions) | **144 + 144** (48 quoted price rows × 3 languages; Phase 45, was 75 + 75 with 31 quoted scopes unlinked) |
 | Problem guides linked to at least one bookable sub-service scope | **57 of 57** — 171 of 171 localized guide pages, 1,158 rendered anchors (Phase 46; was 53 of 57 / 159 of 171 / 1,134) |
 | Pricing rows with localized `scope` + `duration` + `factors` in MS and ZH | **51 + 51** (Phase 46; `factors` was 0 + 0 — 160 English bullets on 20 localized pillars, English scope on 102 localized sub-service pages) |
@@ -6812,3 +6824,121 @@ Status: **Code verified + Build verified + Local production HTTP verified;
 every area and problem label on the site now carries the same name as the page
 it links to in all three languages, in visible text and in structured data,
 guarded at build time, statically and live.**
+
+---
+
+## Phase 48 — Knowledge Hub guides link back to the region hubs their own area links support (2026-09-23)
+
+**Result: 🟢 existing pages, prices, links and UI architecture preserved;
+🔴 the missing guide → region *main-content* return links added from existing
+area relationships; 🟡 an unrelated sitemap timestamp issue observed, not
+papered over with invented dates. No new service, scope, problem, area,
+Kampung, business claim, route or price.**
+
+### 1. Inspect first — separate genuine gaps from green work
+
+Read this log through Phase 47, `AGENTS.md`, `CONTENT_GOVERNANCE.md`,
+`CONTENT_MAP.md`, `PROJECT_OWNER_PENDING.md` and the actual site registries and
+page templates. The earlier Master Prompt was not attached to this turn; no
+unseen checklist was assumed. Before any site change:
+
+- [x] `npm ci`, `npm run type-check`, `npm run lint` and `npm run build` — PASS,
+      **689** static generation entries.
+- [x] All **17 static audits** — PASS; `npm run audit:live` on `next start` —
+      **PASS 270 / WARN 0 / FAIL 0** (Phase 47 baseline).
+- [x] Actual inventory from the code and 678 served sitemap URLs: **10 service
+      pillars, 51 priced sub-service pages, 57 problem guides, 53 area guides
+      (21 Kuala Lumpur / 32 Selangor), 2 region hubs, 28 real-photo projects,
+      12 Knowledge Hub guides, all in EN/MS/ZH**. The location registry has
+      one published `kampung`-tier guide (Kampung Baru) and one `sub_area`
+      (KL City Centre); the other named kampungs are not published pages.
+      No area or service×area doorway page was missing or warranted.
+- [x] 🟢 Service↔scope, scope↔problem, area↔scope, service/scope↔all 53
+      areas, problem↔project, guide↔quoted scope, canonical/hreflang, title,
+      sitemap/feed parity and localized entity labels all verified in the
+      baseline audits. Left untouched, as were owner-gated project locations,
+      new kampung coverage and the unverified homepage reviews block.
+
+**The actual gap:** every guide lists 4–6 genuinely related area guides in
+`relatedLocations`. Both region hubs already link to the 12 guides their own
+child areas publish, via `getArticlesForRegion` (Phase 41). On a main-content
+HTTP crawl of the **36 localized guide pages**, that gives **72** region →
+guide edges and **72** guide → area-family relationships, but **0 / 72**
+guide → region-hub return links. The footer did link each region once on each
+page, but it is boilerplate, not a contextual link from the guide's related
+areas. Neither adding more areas to a guide nor inventing project locations
+would have closed this specific gap honestly.
+
+### 2. Targeted improvement — links only where a guide already links an area
+
+`components/blog/ArticlePage.tsx` now derives a deduplicated region list from
+each article's existing `relatedLocations`. It links a region only if (a) the
+localized region hub is published via `contentHref("areaRegion", …)`, and (b)
+at least one localized child-area card for that region actually renders. The
+region card uses the *existing* localized hub `name` and `summary` from
+`getAreaRegion`, and follows the existing specific-area cards in the same
+`LinkCards` section. No new section, layout, class, translation, brand string,
+claim of coverage, or independently maintained relation table was introduced.
+Future articles with areas in only one region get only that hub; those with no
+localized related area get no hub card.
+
+### 3. Regression guard — proved red before the site change
+
+`scripts/phase25-live-qa.mjs` now retains **only the article `<main>` links**
+from the existing all-URL sweep (not the ubiquitous footer). For every
+published guide it derives eligible hubs from the area guides the page links
+in the same language, asserts each eligible hub is linked in `<main>`, and
+rejects a hub link not supported by a linked area. The sitemap and region hub
+links already prove all destinations resolve. With *only* the new guard
+applied to the untouched baseline production build it returned **PASS 270 /
+FAIL 1**, naming **72 missing guide → hub edges**, 0 unsupported and 0 missing
+`<main>` elements. Rebuilding after the two small template changes returned
+**PASS 271 / WARN 0 / FAIL 0** and 72 / 72 region-hub backlinks (each one
+reciprocated by the existing hub → guide link).
+
+### 4. Measured before → after (independent all-URL served-HTML snapshots)
+
+| Metric | Before | After |
+| --- | --- | --- |
+| Sitemap URLs / pages returning 200 | 678 / 678 | **678 / 678** |
+| Guides with a relevant region card in `<main>` | 0 of 36 | **36 of 36** (two per guide) |
+| Guide → region-hub contextual links | 0 | **72**, all supported by a rendered child-area link |
+| Existing region-hub → guide links | 72 | **72, unchanged** |
+| Pages with changed HTML | — | **36** (12 EN, 12 MS, 12 ZH); 642 unchanged |
+| Other differences | — | **0** changed prices, previous links, titles, canonicals, hreflang entries, images, JSON-LD blocks, H1/H2 or routes; precisely two new existing-style card H3s and two new links per changed guide |
+
+This was measured by fetching all 678 sitemap URLs **before and after** the
+change into untracked `/tmp` snapshots and comparing the served page's heading
+counts, link multisets, price tokens, titles, canonicals, hreflang,
+images and structured-data blocks. The 72 new links target served URLs in the
+correct language; the template keeps the original area links in their existing
+order.
+
+### 5. Final QA and preservation boundary
+
+- [x] `npm run type-check` — PASS.
+- [x] `npm run lint` — PASS, 0 errors/warnings.
+- [x] `npm run build` — PASS, **689 / 689** static generation entries.
+- [x] All **17 static audits** — PASS after the change, including pricing,
+      locations, multilingual, routes, blog, sitemap and schema.
+- [x] `npm run audit:live` against the new `next start` build — **PASS 271 /
+      WARN 0 / FAIL 0**; all 678 sitemap URLs fetched and linked URLs served.
+- [x] `git diff --check` — clean. No files, routes, business facts, prices,
+      testimonials, customer locations, or search indexing rules removed.
+- [x] Docs updated: `CONTENT_MAP.md` (reciprocal path), `README.md` (live
+      guard), `PROJECT_PROGRESS.md` (inventory + this entry).
+
+Limits: local production-build HTTP/HTML verification, not rankings, real
+customers or AI-answer measurement. Owner-supplied project locations and
+consented reviews remain owner-gated as already recorded in
+`PROJECT_OWNER_PENDING.md`. The sitemap's existing site-wide `lastmod` date
+(2026-09-01) predates the 12 guides' own recorded publication date
+(2026-09-04); this is an **observed 🟡 timestamp-provenance issue**, not
+marked green or silently "fixed" by stamping all 678 pages with today's date.
+Per-page content-edit dates are not stored for the other page families, so
+changing the site-wide sitemap policy requires a separate, evidence-based
+pass. This linking phase deliberately did not modify it.
+
+Status: **Code verified + production build verified + 678-URL local HTTP QA
+verified; the guide ↔ relevant region relationship now resolves both ways in
+every published language, with no new unsourced business or locality claim.**

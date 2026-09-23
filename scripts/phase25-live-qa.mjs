@@ -501,6 +501,9 @@ async function sampleStatuses(locs) {
   // reached the browser unrendered.
   const graph = new Map();
   const anchors = new Map();
+  // Keep the article's main-content links separately: the footer links every
+  // region on every page, but that is not a contextual guide → region link.
+  const articleMainHrefs = new Map();
   const inCopy = new Map();
   const titles = new Map();
   const leakedMarkup = [];
@@ -528,6 +531,7 @@ async function sampleStatuses(locs) {
         const res = await fetchRes(path);
         let hrefs = null;
         let pageAnchors = null;
+        let articleLinks = null;
         let inCopyCount = 0;
         let leaked = false;
         let title = null;
@@ -541,6 +545,10 @@ async function sampleStatuses(locs) {
           const html = await res.text();
           hrefs = extractInternalHrefs(html);
           pageAnchors = extractAnchors(html);
+          if (/^\/(en|ms|zh)\/blog\/[^/]+\/$/.test(path)) {
+            const main = html.match(/<main\b[^>]*>([\s\S]*?)<\/main>/i);
+            articleLinks = main ? extractInternalHrefs(main[1]) : null;
+          }
           // Phase 41 — the same pass keeps the served <title> of every page.
           title = extractTitleText(html);
           // Phase 42 — the same pass counts the question-and-answer blocks the
@@ -571,6 +579,7 @@ async function sampleStatuses(locs) {
           status: res.status,
           hrefs,
           pageAnchors,
+          articleLinks,
           inCopyCount,
           leaked,
           title,
@@ -591,6 +600,7 @@ async function sampleStatuses(locs) {
       }
       if (r.hrefs) graph.set(r.path, r.hrefs);
       if (r.pageAnchors) anchors.set(r.path, r.pageAnchors);
+      if (r.articleLinks) articleMainHrefs.set(r.path, r.articleLinks);
       if (r.status === 200) inCopy.set(r.path, r.inCopyCount);
       if (r.status === 200) titles.set(r.path, r.title);
       if (r.status === 200) faqBlocks.set(r.path, r.faqBlocks);
@@ -604,7 +614,7 @@ async function sampleStatuses(locs) {
   }
   if (bad === 0) pass(`all ${ok} sitemap URLs return 200`);
   else fail(`sitemap sweep ${ok} ok / ${bad} failed`);
-  return { graph, anchors, inCopy, titles, leakedMarkup, faqBlocks, schemaTypes, serviceSchemas, entities, pageNames, cardNames };
+  return { graph, anchors, articleMainHrefs, inCopy, titles, leakedMarkup, faqBlocks, schemaTypes, serviceSchemas, entities, pageNames, cardNames };
 }
 
 /* ------------------------------------------------------------------------ */
@@ -1287,6 +1297,66 @@ function checkInternalLinkGraph(locs, graph) {
       fail(`internal link to unserved URL ${target} (from ${[...sources].slice(0, 3).join(", ")})`);
     }
     if (deadLinks.size > 10) fail(`…and ${deadLinks.size - 10} more unserved internal targets`);
+  }
+}
+
+/**
+ * Knowledge Hub → region hub links must follow the article's own related-area
+ * links, not a blanket claim that a guide covers every region. Check the
+ * article's <main> rather than the full page: the footer already links every
+ * region, and counting it would hide a missing contextual return link.
+ */
+function checkArticleRegionLinks(locs, graph, articleMainHrefs) {
+  console.log("\n== Knowledge Hub ↔ relevant regions ==");
+  const sitemap = new Set(locs.map((loc) => loc.replace(CANONICAL_HOST, "")));
+  const articlePaths = [...sitemap].filter((p) => /^\/(en|ms|zh)\/blog\/[^/]+\/$/.test(p));
+  const missing = [];
+  const unsupported = [];
+  const missingMain = [];
+  let expectedPairs = 0;
+  let reciprocalPairs = 0;
+
+  for (const article of articlePaths) {
+    const mainLinks = articleMainHrefs.get(article);
+    if (!mainLinks) {
+      missingMain.push(article);
+      continue;
+    }
+
+    const lang = article.split("/")[1];
+    const relatedHubs = new Set();
+    for (const href of mainLinks) {
+      const area = href.match(new RegExp(`^/${lang}/areas/([^/]+)/[^/]+/$`));
+      if (area) relatedHubs.add(`/${lang}/areas/${area[1]}/`);
+    }
+
+    for (const hub of relatedHubs) {
+      if (!sitemap.has(hub) || !mainLinks.has(hub)) missing.push(`${article} → ${hub}`);
+      else if (graph.get(hub)?.has(article)) reciprocalPairs += 1;
+    }
+    expectedPairs += relatedHubs.size;
+
+    // A hub link without a declared related-area link would imply regional
+    // relevance the article's own registry never established.
+    for (const hub of mainLinks) {
+      if (/^\/(en|ms|zh)\/areas\/[^/]+\/$/.test(hub) && !relatedHubs.has(hub)) {
+        unsupported.push(`${article} → ${hub}`);
+      }
+    }
+  }
+
+  if (missingMain.length || missing.length || unsupported.length || expectedPairs === 0) {
+    fail(
+      `guide → region links: ${missing.length} missing, ${unsupported.length} unsupported, ` +
+        `${missingMain.length} pages without <main>; ${expectedPairs} region pairs backed by related area guides` +
+        (missing.length ? ` (examples: ${missing.slice(0, 3).join(", ")})` : "") +
+        (unsupported.length ? ` (unsupported: ${unsupported.slice(0, 3).join(", ")})` : ""),
+    );
+  } else {
+    pass(
+      `all ${expectedPairs} guide → region hub links render in <main> only where the guide links a related area ` +
+        `(${reciprocalPairs} already linked back from a hub)`,
+    );
   }
 }
 
@@ -2391,9 +2461,10 @@ async function main() {
   console.log(`Phase 25 live QA against ${BASE}\n`);
   await checkHeaders();
   const locs = await checkSitemapLive();
-  const { graph, anchors, inCopy, titles, leakedMarkup, faqBlocks, schemaTypes, serviceSchemas, entities, pageNames, cardNames } =
+  const { graph, anchors, articleMainHrefs, inCopy, titles, leakedMarkup, faqBlocks, schemaTypes, serviceSchemas, entities, pageNames, cardNames } =
     await sampleStatuses(locs);
   checkInternalLinkGraph(locs, graph);
+  checkArticleRegionLinks(locs, graph, articleMainHrefs);
   checkQuotedScopeLinks(locs, graph);
   checkTitles(locs, titles);
   checkInCopyLinks(locs, inCopy, leakedMarkup);

@@ -19,7 +19,7 @@ import type { ArticleDefinition } from "@/data/blog/types";
 import { getServiceDetail } from "@/data/service-content";
 import { getProblemsBySlugs } from "@/data/problem-content";
 import { getSubService, subServiceLanguages } from "@/data/sub-services";
-import { getAreaDetail } from "@/data/area-content";
+import { getAreaDetail, getAreaRegion } from "@/data/area-content";
 import { getProjectContent, getPublishedProjects } from "@/data/project-content";
 
 /**
@@ -147,6 +147,21 @@ export function ArticlePage({
       const area = getAreaDetail(region, slug, code);
       const href = contentHref("area", key, code);
       return area && href ? { href, title: area.name, subtitle: area.metaDescription } : null;
+    })
+    .filter((item): item is CardLink => item !== null);
+
+  // A region hub already links the guides its child areas publish. Link back
+  // only when this guide has a rendered, localized related area in that region;
+  // never imply relevance to a region from a keyword or an unpublished page.
+  const regionLinks: CardLink[] = [
+    ...new Set(article.relatedLocations.map((key) => key.split("/")[0])),
+  ]
+    .map((regionId): CardLink | null => {
+      const region = getAreaRegion(regionId, code);
+      const href = contentHref("areaRegion", regionId, code);
+      return region && href && areaLinks.some((area) => area.href.startsWith(href))
+        ? { href, title: region.name, subtitle: region.summary }
+        : null;
     })
     .filter((item): item is CardLink => item !== null);
 
@@ -295,7 +310,7 @@ export function ArticlePage({
         eyebrow={t.guideLinks.eyebrow}
         title={t.blogPage.relatedAreasTitle}
         description={t.blogPage.relatedAreasDescription}
-        links={areaLinks}
+        links={[...areaLinks, ...regionLinks]}
         cta={t.cta.viewAreas}
       />
       <LinkCards
