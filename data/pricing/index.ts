@@ -66,6 +66,25 @@ export function getPricingById(id: string): PricingEntry | undefined {
   return pricingEntries.find((entry) => entry.id === id);
 }
 
+/**
+ * Phase 46 — the same row with its wording localized for `lang`.
+ *
+ * Numbers, units and ranges are always the English source of truth (see
+ * `localizePricing`); only `subService`, `scope`, `factors`, `duration` and
+ * the disclaimer change. Use this wherever a page *renders* a row's wording
+ * for a reader — `getPricingById` is for numbers-only consumers (feeds,
+ * audits, price formatting). The sub-service pages used to read the raw row
+ * and so printed the English scope and duration on every `/ms/` and `/zh/`
+ * page even though the Malay and Chinese copy already existed.
+ */
+export function getLocalizedPricingById(
+  id: string,
+  lang: string = "en",
+): PricingEntry | undefined {
+  const entry = getPricingById(id);
+  return entry ? localizePricing(entry, lang) : undefined;
+}
+
 export function getPricingBySubService(subServiceSlug: string): PricingEntry | undefined {
   return pricingEntries.find((entry) => entry.subServiceSlug === subServiceSlug);
 }

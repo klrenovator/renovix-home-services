@@ -23,6 +23,7 @@ import { getArticlesForRegion } from "@/data/blog";
 import { AreaRegionSubServicesBlock } from "@/components/area/AreaRegionSubServicesSection";
 import { AreaRegionProblemsSection } from "@/components/area/AreaRegionProblemsSection";
 import { getDistrictsForRegion } from "@/data/locations";
+import { getDistrictDescription, getDistrictName } from "@/data/i18n";
 import type { AreaRegion } from "@/data/area-content/types";
 
 type AreaRegionPageProps = {
@@ -160,11 +161,12 @@ export function AreaRegionPage({ region, lang }: AreaRegionPageProps) {
                   key={district.id}
                   className="rounded-2xl border border-slate-200/80 bg-surface p-6 shadow-soft"
                 >
+                  {/* Phase 46 — localized; the registry strings are English only. */}
                   <h3 className="text-base font-bold text-navy">
-                    {district.name}
+                    {getDistrictName(district, lang)}
                   </h3>
                   <p className="mt-2 text-xs leading-5 text-secondary">
-                    {district.description}
+                    {getDistrictDescription(district, lang)}
                   </p>
 
                   <ul className="mt-4 flex flex-wrap gap-1.5 border-t border-slate-200/60 pt-4">

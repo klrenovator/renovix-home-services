@@ -25,6 +25,14 @@ remain intact. The Knowledge Hub guides now link every priced scope whose table
 they quote (and are linked back on those scope pages); no URL, page, price,
 service, problem, area or project changed.
 
+Phase 46 re-verification (2026-09-22): the same inventory and all 678 URLs
+remain intact. The English-only registry copy that reached `/ms/` and `/zh/`
+pages (pricing scope/duration on sub-service pages, price-factor bullets on
+pillars, district names/descriptions on area pages, hubs and indexes) is now
+localized, and the last 4 problem guides without a bookable-scope link are
+wired to the scopes whose own copy describes them; no URL, page, price,
+service, problem, area, project, title or JSON-LD node changed.
+
 | Item | Count |
 |---|---|
 | Service pillar pages | 10 per language |
@@ -42,10 +50,14 @@ service, problem, area or project changed.
 | Static generation entries | **689** (`next build` progress total; distinct from the 678 canonical sitemap URLs) |
 | Pricing rows (`data/pricing/pricing.ts`) | **51** |
 | Search-intent matrix entries | **24** (all pricing derived from `pricingId`) |
-| Audit scripts | 17 static + 1 live server QA (**257** served-site checks after Phase 45: 254 baseline + 2 entity-graph, Phase 44 + 1 quoted-scope, Phase 45) |
+| Audit scripts | 17 static + 1 live server QA (**259** served-site checks after Phase 46: 254 baseline + 2 entity-graph, Phase 44 + 1 quoted-scope, Phase 45 + 2 localized-registry-copy, Phase 46) |
 | In-copy contextual links (rendered anchors) | **313 EN / 362 MS / 364 ZH** (Phase 39) |
 | Region hub → Knowledge Hub guide links (rendered) | **72** (6 hubs × 12 guides; Phase 41, was 0) |
 | Knowledge Hub ↔ quoted-scope links (rendered, both directions) | **144 + 144** (48 quoted price rows × 3 languages; Phase 45, was 75 + 75 with 31 quoted scopes unlinked) |
+| Problem guides linked to at least one bookable sub-service scope | **57 of 57** — 171 of 171 localized guide pages, 1,158 rendered anchors (Phase 46; was 53 of 57 / 159 of 171 / 1,134) |
+| Pricing rows with localized `scope` + `duration` + `factors` in MS and ZH | **51 + 51** (Phase 46; `factors` was 0 + 0 — 160 English bullets on 20 localized pillars, English scope on 102 localized sub-service pages) |
+| District groups / coverage states with MS + ZH names | **13 of 13** (+ descriptions) / **5 of 5** (Phase 46; was 0 — 264 English district names on 112 localized pages) |
+| English registry strings on `/ms/` + `/zh/` pages (independent leak scan) | **0** (Phase 46; was 3 families across 234 pages) |
 | Problem guides listed in `/llms.txt` | **57 of 57** in 10 categories (Phase 42, was 12 sampled) |
 | Pages rendering Q&A that publish a `FAQPage` node | **567 of 567** (Phase 42; the 3 homepages were the exception) |
 | `<title>` tags ≤65 characters | **678 of 678**, longest exactly 65 (Phase 41; was 468 of 678) |
@@ -5316,7 +5328,7 @@ an empty problem layer.
 | --- | --- |
 | Project → area/region, area → project | `ProjectLocation` is unset for every project (no job location was supplied with the photographs), so `ProjectLocationSection` honestly links the areas index instead. Adding locations would invent facts. |
 | Sub-service → project (120/153 pages) and problem → project (96/171) | Only 11 of 51 scopes are mapped to a published project (`subServices`); everything else correctly renders no proof block. |
-| 4 problem guides with no sub-service block (`balcony-leakage`, `broken-tile-repair`, `kitchen-tile-problems`, `wall-seepage`) | No sub-service declares them; authoring a link would invent a scope relationship the owner has not confirmed. |
+| 4 problem guides with no sub-service block (`balcony-leakage`, `broken-tile-repair`, `kitchen-tile-problems`, `wall-seepage`) | No sub-service declares them; authoring a link would invent a scope relationship the owner has not confirmed. *(Revisited and closed in Phase 46: the published copy of the guides and of three existing scopes already states the relationship in prose — see Phase 46 §3 — so the edge restates, rather than invents, a relation the site publishes.)* |
 | Painting / waterproofing / flooring have no project proof | The 28 published projects fall in 7 categories only; no painting- or waterproofing-only project exists (already recorded as an accepted gap in `CONTENT_MAP.md` §5). |
 | Region hubs → guides | No article declares a region-level location key, so there is nothing to derive the edge from. |
 | Hub-to-hub links on `/services/`, `/problems/`, `/areas/` | Header and footer already give every hub a site-wide link from every page; service pillars carry 37–130 main-content inbound links each. No under-linking was measurable, so no section was added. |
@@ -6315,7 +6327,7 @@ Measured on the served build:
 | Pages, URLs, metadata | Same 678 sitemap URLs / 689 build entries; titles, descriptions, canonicals, hreflang, robots unchanged (live QA green) |
 | Rendering scope | Before/after crawl of all 678 served pages: **564 `<main>` fragments byte-identical**; the only 114 changed pages are the 24 article pages (8 × 3 languages, gained sub-service cards) and 90 scope pages (30 scopes × 3 languages, gained the shared `GuideLinksSection`); **0 pages changed JSON-LD** |
 | UI/branding | No component or style file changed; the cards and guide section are the existing shared components; diff of a changed scope page shows only the added standard guide section |
-| Phase 27 recorded decisions | Re-verified and **left as recorded**: the 4 problem guides without a sub-service block (`balcony-leakage`, `broken-tile-repair`, `kitchen-tile-problems`, `wall-seepage`), project ↔ area links (no real job locations), painting/waterproofing/flooring project proof, homepage reviews block — all remain owner-gated per `PROJECT_OWNER_PENDING.md` and the Phase 27 table |
+| Phase 27 recorded decisions | Re-verified and **left as recorded**: the 4 problem guides without a sub-service block (`balcony-leakage`, `broken-tile-repair`, `kitchen-tile-problems`, `wall-seepage`) *(closed in Phase 46 on the strength of the guides' own published copy)*, project ↔ area links (no real job locations), painting/waterproofing/flooring project proof, homepage reviews block — all remain owner-gated per `PROJECT_OWNER_PENDING.md` and the Phase 27 table |
 | In-copy links | Phase 39's 313/362/364 rendered in-copy anchors unchanged (live QA in-copy checks green) |
 | Full gate after restore | type-check, lint, build (689), all 17 static audits, `audit:live` **255/0/0** — PASS |
 
@@ -6366,3 +6378,206 @@ against the merged production build — including both phases' new checks
 Status: **Code verified + Build verified + Local production HTTP verified;
 every guide now links the scopes whose prices it quotes, in both directions
 and all three languages, guarded statically and live.**
+
+---
+
+## Phase 46 — Registry copy reaches `/ms/` and `/zh/` localized; every problem guide links a bookable scope (2026-09-22)
+
+**Result: 🟢 existing site, prices, UI, URLs and every recorded owner-gate
+preserved; 🟡 three English-only registry families that every Malay and
+Chinese reader was shown are now localized; 🔴 the last 4 problem guides with
+no path to a bookable scope are wired and guarded.** No price figure changed
+(the pricing audit now proves the translations quote the identical RM
+figures), no layout or style file changed, no URL, title, description or
+JSON-LD node changed.
+
+### 1. Inspect and verify before deciding what needs work
+
+The Master Prompt was not attached to this session; the repository's recorded
+rules (`AGENTS.md`, `CONTENT_GOVERNANCE.md`, `CONTENT_MAP.md`,
+`PROJECT_OWNER_PENDING.md`) and this log through Phase 45 supplied the scope,
+not an assumed backlog. Re-ran the full gate first:
+
+- [x] `npm run type-check` + `npm run lint` — PASS
+- [x] `npm run build` — PASS (**689** static generation entries)
+- [x] All **17 static audits** — PASS
+- [x] `npm run audit:live` vs `next start` — **PASS 257 / WARN 0 / FAIL 0**
+- [x] Independent crawl of all 678 URLs → family-to-family link matrix
+      (area→scope 4,470 · area→problem 1,272 · scope→area 8,109 ·
+      problem→area 9,063 · problem→scope 1,134 · scope→problem 567 ·
+      problem→project 156 · article→scope 168 · region hub→scope/problem/
+      article 144/72/72) and a per-page zero-layer analysis, plus a scan for
+      English sentences on `/ms/` and `/zh/` pages (scratch tooling, not
+      tracked)
+
+Reconfirmed the inventory: 10 services, 51 sub-service pages, 57 problem
+guides, 53 area guides + 2 region hubs, 28 projects, 12 Knowledge Hub guides,
+51 pricing rows, 24 intent entries, 678 canonical URLs. The Smart Service
+Finder already resolves sub-localities (SS2, Sierramas, Section 17, Kampung
+Pasir Segambut, TTDI, KLCC, Bukit Bintang, Kota Kemuning were spot-checked) so
+no alias work was needed; registry `aliases` stay unrendered as before.
+
+Every link layer recorded in Phases 28–45 was re-verified green and left
+untouched (pillar ↔ scope, area → scope, problem → project, project → guide,
+region hub → scope/problem/guide, in-copy links, pillar → problem, quoted-scope
+links, `AreasSection` chips to all 53 areas on every service/scope/problem
+page). The only measurable link gap that is **not** owner-gated was the 4
+problem guides in §3.
+
+### 2. 🟡 What Malay and Chinese readers were actually shown
+
+The English-sentence scan found exactly three families of English copy on
+localized pages, all from registries that only carried English strings:
+
+| Family | Root cause | Baseline (served HTML) |
+| --- | --- | --- |
+| Pricing **scope + duration** on sub-service pages | `resolveSubService` read the raw `pricingEntries` row instead of the localized row, although `ms.ts` / `zh.ts` already carried the Malay and Chinese scope/duration | **102** localized sub-service pages (51 × MS/ZH) |
+| **"What affects the price"** bullets on service pillars | `data/pricing/translations/ms.ts` and `zh.ts` had no `factors` at all, so `localizePricing` fell through to the English list | **160** English bullets on **20** localized pillars |
+| **District** name + description (area hero chip, answer-first paragraph, region-hub district grid, areas-index grid) and the state names of the coverage roadmap | `districtGroups` / `stateCoverage` in `data/locations/registry.ts` are English-only and four render sites read `district.name` / `district.description` / `state.name` directly | **264** district names + **52** descriptions on **112** localized pages (106 area guides, 4 region hubs, 2 indexes); "Kuala Lumpur (Federal Territory)" on both localized indexes |
+
+This is the exact defect class `CONTENT_GOVERNANCE.md` §5 forbids ("never
+English copy under `/ms/` or `/zh/`") and that Phases 29 and 39 fixed for
+slug labels and in-copy links; these three surfaces had simply never been
+scanned.
+
+Fixes (data + accessors; every render site keeps its existing markup):
+
+- **`data/pricing/index.ts`** — new exported `getLocalizedPricingById(id, lang)`
+  (wraps the existing private `localizePricing`; numbers, units and ranges
+  stay the English source of truth). `data/sub-services/index.ts` →
+  `resolveSubService` now uses it, so the scope/duration block on
+  `components/service/SubServicePage.tsx` renders the row's Malay/Chinese
+  wording. `getPricingById` is untouched for the numbers-only consumers
+  (feeds, audits, price formatting, JSON-LD offers).
+- **`data/pricing/translations/ms.ts` + `zh.ts`** — `factors` authored for all
+  **51 rows** each, translated from the English list one bullet for one
+  bullet with the **same RM figures, units and qualifiers** ("min 6 for RM30
+  rate" → "minimum 6 untuk kadar RM30" / "RM30 费率需至少 6 个"; "psf" →
+  "kaki persegi" / "平方英尺", matching the unit labels the catalogue already
+  uses; "per foot run" → "setiap kaki larian" / "按每英尺计"). No English
+  price was reworded.
+- **`data/i18n/lists.ts`** — `districtList` (13 district groups × MS/ZH,
+  name + description; Malay keeps the official place spellings, Chinese uses
+  the same established names as `areaNames` — 泗岩沫, 满家乐, 甲洞, 帝沙公园城,
+  士布爹, 武吉加里尔, 旺沙玛珠, 蒂蒂旺沙, 峇都, 冼都, 蕉赖, 敦拉萨镇, 甘榜峇鲁,
+  八打灵县, 乌鲁冷岳县, 巴生县, 鹅唛县, 雪邦与布城走廊) and `stateNames`
+  (5 coverage states; "Federal Territory" → "Wilayah Persekutuan" /
+  "联邦直辖区"). `data/i18n/index.ts` exposes `getDistrictName`,
+  `getDistrictDescription`, `getStateName` with the same English fallback
+  pattern as `getRegionName` / `getAreaName`.
+- Render sites switched to the accessors, nothing else changed:
+  `components/area/AreaHero.tsx`, `AreaAnswerFirstSection.tsx` (the district
+  name is spliced into the localized answer sentence), `AreaRegionPage.tsx`,
+  `app/[lang]/areas/page.tsx`.
+- `app/fonts/noto-sans-sc-og-{400,700}.ttf` regenerated with the repository's
+  own `scripts/make-og-fonts.py` (the audit's charset deliberately includes
+  every `name:` in `data/i18n/lists.ts`, and 16 new CJK glyphs — 班 底 爹 峇 萨
+  市 中 甘 榜 鲁 县 乌 冷 岳 走 廊 — were not in the subsets; 508 → 537
+  codepoints, Plus Jakarta Sans files byte-identical). The rendered `/zh/`
+  OG card was checked visually and is unchanged.
+
+### 3. 🔴 The 4 problem guides with no bookable scope
+
+Phase 27 recorded `balcony-leakage`, `broken-tile-repair`,
+`kitchen-tile-problems` and `wall-seepage` as "no sub-service declares them;
+authoring a link would invent a relationship". Re-reading the **published**
+copy shows the relationship is already stated by the site itself, in the
+guides and in three existing scopes, so declaring the edge restates a
+published relation rather than inventing one:
+
+| Problem guide | Its own published copy | Existing scope whose `suitableFor` copy describes the symptom |
+| --- | --- | --- |
+| `balcony-leakage` | "Balcony leakage is a waterproofing job." / "A wet balcony that leaks through to the floor below is a waterproofing problem." | `waterproofing/balcony-waterproofing` — "A balcony above a room that is showing damp on the ceiling below." |
+| `wall-seepage` | "Wall seepage is a waterproofing issue." | `waterproofing/wall-seepage` (same slug) — "An internal wall that darkens or blisters after heavy rain." |
+| `broken-tile-repair` | "A single broken tile does not have to mean a full retile. Renovix replaces damaged tiles cleanly…" | `tiling/tile-repair` — "A handful of cracked, chipped or lifted tiles." |
+| `kitchen-tile-problems` | "Kitchen tile repair is a tiling job." | `tiling/tile-repair` — same scope; the guide's solutions are the scope's inclusions |
+
+Change: 4 slugs added to three `relatedProblems` arrays
+(`data/sub-services/content/waterproofing.ts`, `tiling.ts`); the problem →
+scope, scope → problem, area → scope and region-hub layers all derive from
+that one field, exactly as Phases 28/29/35 designed. No project proof was
+touched (`tile-repair` still has none, as `PROJECT_OWNER_PENDING.md` records).
+
+Derived, verified side-effects on the served site: the 12 guide pages gained
+their sub-service block (problem → scope anchors 1,134 → **1,158**, scope →
+problem 567 → **579**), the three scope pages gained one or two problem
+cards, and 9 area guides whose locally-common problems include one of the
+four (e.g. Mont Kiara → Balcony & Terrace Waterproofing, Wangsa Maju → Tile
+Repair & Replacement) list the matching scope in their services section; the
+two region hubs re-ordered their derived scope cards within the existing cap.
+
+### 4. Guards added (never weakening an existing audit)
+
+- **`npm run audit:pricing` §5** — for every MS/ZH row: a localized `scope`
+  and `duration` exist, `factors` exists, has the **same bullet count** as the
+  English row, quotes **exactly the same RM figures** (a translation can never
+  change a price), and repeats no English bullet verbatim. Negative tests:
+  deleting one `factors` line fails with the row named; changing "RM30" to
+  "RM35" in one Malay bullet fails as "quote different RM figures (RM35) than
+  the English row (RM30)"; restored → PASS.
+- **`npm run audit:multilingual`** — new Phase 46 section: all 13 district
+  groups have a MS + ZH name **and** description with no English district
+  vocabulary, all 5 coverage states have a MS + ZH name, no `.tsx` under
+  `components/` or `app/` reads `district.name` / `district.description` /
+  `state.name` directly, and the four render sites keep calling the
+  accessors. Negative tests: reverting `AreaHero` to `district.name` fails
+  twice (direct read + accessor missing); deleting the `sel-sepang` Malay
+  entry fails with the id named; restored → PASS.
+- **`npm run audit:subservices`** — new Phase 46 guard: every one of the 57
+  problem slugs is declared by at least one sub-service's `relatedProblems`
+  (no orphaned guide). Negative test: stashing the 4 edges fails naming all
+  four slugs; restored → PASS (193 declared edges, was 189).
+- **`npm run audit:live`** — problem → sub-service coverage tightened from the
+  old "≥ 53 pages" floor to **all 171 of 171** guide pages, and a new
+  "Localized registry copy on /ms/ and /zh/ pages (Phase 46)" block (**+2**
+  checks → **259**): fetches every localized sub-service page (102), pillar
+  (20) and area guide / region hub / areas index (112) and asserts, on the
+  served HTML with React's escaping, that no English pricing scope, English
+  price-factor bullet or English district name appears **and** that the
+  localized string does. Negative test against the pre-change production
+  build: 24 failures (159/171 guides; 128 English registry strings on
+  localized pages; 108 pages missing the localized string) — the exact
+  baseline defect set — then green on the new build.
+- `scripts/make-og-fonts.py` + `audit:og-fonts` were exercised as designed
+  (the audit caught the missing glyphs before the build; fonts regenerated
+  with the repository tool, audit back to PASS).
+
+### 5. 🟢 Verified and deliberately left untouched
+
+| Surface | Verification / preservation decision |
+| --- | --- |
+| Prices | `data/pricing/pricing.ts` untouched; `audit:pricing` proves every MS/ZH factor list quotes the identical RM figures; `/ai/pricing.json` unchanged |
+| Pages, URLs, metadata | Same 678 sitemap URLs / 689 build entries; before/after crawl: **0 titles, 0 H1s and 0 JSON-LD graphs changed** on all 678 pages |
+| Rendering scope | **418 `<main>` fragments byte-identical**; the 260 changed pages are exactly the 234 localized pages that lost their English registry copy (102 scope + 20 pillar + 106 area + 4 hub + 2 index) plus the 26 pages that gained or re-ordered derived links (12 guides, 3 scopes in EN, 9 EN area guides, 2 EN hubs) |
+| Independent leak scan | English-sentence segments on `/ms/` + `/zh/` pages: **0** (was 3 families); the four baseline measures (102 / 160 / 264+52 / 12) all read **0** |
+| UI/branding | No style or layout change; the district chip, answer paragraph, district grids, pricing block and factor list are the same elements with localized text |
+| Owner-gated items | Unchanged and not invented: project ↔ area links, painting/waterproofing/flooring/tile-repair project proof, homepage reviews block, kampung-level pages, doorway pages. One **new flag, no change**: the pre-existing English factor "Emergency after hours RM150–300/hour" on `electrical-troubleshoot` (already public on the EN pillar and `/ai/pricing.json`) sits uneasily beside `CONTENT_GOVERNANCE.md` §4's "never promise after-hours service"; it was translated faithfully, not reworded, and is recorded for the owner in `PROJECT_OWNER_PENDING.md` |
+| Existing guards | None weakened; Phase 27/45 decision tables annotated with a pointer to §3 rather than rewritten |
+
+### 6. Final QA
+
+- [x] `npm run type-check` — PASS
+- [x] `npm run lint` — PASS (0 errors, 0 warnings)
+- [x] `npm run build` — PASS, **689** static generation entries
+- [x] All **17 static audits** — PASS (including the regenerated OG fonts)
+- [x] `npm run audit:live` — **PASS 259 / WARN 0 / FAIL 0** against the new
+      production build
+- [x] Negative tests — 3 static breaks + 1 served baseline run, all fail as
+      designed, all restored to green
+- [x] Independent re-crawl of all 678 URLs: baseline measures 0/0/0/0,
+      leak scan 0, JSON-LD/title/H1 parity 678/678
+- [x] `git diff --check` — clean
+- [x] Docs: `README.md` (four audit descriptions), `CONTENT_MAP.md` (edge
+      table + location map), `PROJECT_OWNER_PENDING.md` (Phase 46 flag),
+      this log and its inventory table
+
+Limits: local production-build HTTP/HTML QA, not device, ranking or AI-answer
+measurement; Malay and Chinese wording was authored to mirror the English
+catalogue line for line and should get the owner's native-speaker read like
+every earlier translation batch. Nothing in `PROJECT_OWNER_PENDING.md` was
+invented or assumed.
+
+Status: **Code verified + Build verified + Local production HTTP verified;
+no English registry copy remains on any `/ms/` or `/zh/` page, and all 57
+problem guides now lead to a bookable scope in every language, guarded
+statically and live.**

@@ -141,6 +141,169 @@ export const regionList: Record<
 };
 
 /**
+ * Phase 46 — localized district groups (`districtGroups` in
+ * `data/locations/registry.ts`, keyed by district id).
+ *
+ * The English name and description in the registry are the source of truth for
+ * the hierarchy; this table only supplies the Malay and Chinese wording. Until
+ * this table existed, `AreaHero`, `AreaAnswerFirstSection`, `AreaRegionPage`
+ * and the areas index rendered the English registry strings on every `/ms/`
+ * and `/zh/` page ("Segambut & Mont Kiara District", "High-density
+ * condominium enclaves, …"). Place names keep their official spelling in Malay
+ * and use the same established Chinese names as `areaNames` below.
+ * `audit:multilingual` fails if a district id is missing from either language.
+ */
+export const districtList: Record<
+  NonEnglish,
+  Record<string, { name: string; description: string }>
+> = {
+  ms: {
+    "kl-segambut": {
+      name: "Daerah Segambut & Mont Kiara",
+      description:
+        "Enklaf kondominium berkepadatan tinggi, kawasan kediaman ekspatriat dan poket rumah bertanah premium di barat laut Kuala Lumpur.",
+    },
+    "kl-lembah-pantai": {
+      name: "Daerah Lembah Pantai & Bangsar",
+      description:
+        "Kejiranan kediaman mantap, hab komersial, hab pengangkutan dan stok perumahan matang di barat daya Kuala Lumpur.",
+    },
+    "kl-kepong": {
+      name: "Daerah Kepong & Desa ParkCity",
+      description:
+        "Komuniti kediaman terancang, rumah teres pelbagai generasi dan jalur komersial yang aktif di utara Kuala Lumpur.",
+    },
+    "kl-seputeh": {
+      name: "Daerah Seputeh & Bukit Jalil",
+      description:
+        "Koridor kediaman bertingkat tinggi moden, pembangunan hab sukan dan perumahan pinggir bandar matang di selatan Kuala Lumpur.",
+    },
+    "kl-wangsa-maju": {
+      name: "Daerah Wangsa Maju & Titiwangsa",
+      description:
+        "Bandar kediaman berkepadatan tinggi, pembangunan teres matang dan jalan komersial mantap di timur laut Kuala Lumpur.",
+    },
+    "kl-batu": {
+      name: "Daerah Batu & Sentul",
+      description:
+        "Pekan kereta api bersejarah, menara kondominium baharu berorientasikan transit dan deretan kediaman bercampur di utara Kuala Lumpur.",
+    },
+    "kl-cheras": {
+      name: "Daerah Cheras & Bandar Tun Razak",
+      description:
+        "Perumahan teres pelbagai fasa yang luas, grid rumah kedai matang dan komuniti kondominium lereng bukit di seluruh tenggara Kuala Lumpur.",
+    },
+    "kl-city-core": {
+      name: "Daerah Pusat Bandar KL & Kampung Baru",
+      description:
+        "Teras bertingkat tinggi ibu kota di sekitar KLCC, Bukit Bintang dan Imbi, bersama penempatan bersejarah Kampung Baru di sebelahnya.",
+    },
+    "sel-petaling": {
+      name: "Daerah Petaling",
+      description:
+        "Nadi ekonomi dan kediaman Selangor, merangkumi Petaling Jaya, Subang Jaya, Shah Alam, Puchong dan koridor Damansara.",
+    },
+    "sel-hulu-langat": {
+      name: "Daerah Hulu Langat",
+      description:
+        "Koridor pertumbuhan kediaman yang rancak merangkumi Kajang, Bangi, Semenyih, Balakong dan sempadan Ampang Jaya.",
+    },
+    "sel-klang": {
+      name: "Daerah Klang",
+      description:
+        "Hab komersial, perindustrian dan kediaman bersejarah dengan rumah kedai pra-perang, taman perumahan mantap dan bandar komersial moden.",
+    },
+    "sel-gombak": {
+      name: "Daerah Gombak",
+      description:
+        "Daerah kediaman berbukit di utara yang menghubungkan Selayang, Gombak, Rawang dan komuniti pinggir utara.",
+    },
+    "sel-sepang": {
+      name: "Koridor Sepang & Putrajaya",
+      description:
+        "Koridor pentadbiran dan teknologi Malaysia dengan infrastruktur moden, bandar terancang dan pembangunan bandar pintar.",
+    },
+  },
+  zh: {
+    "kl-segambut": {
+      name: "泗岩沫与满家乐区",
+      description: "吉隆坡西北部的高密度公寓区、外籍人士社区及高档有地住宅地段。",
+    },
+    "kl-lembah-pantai": {
+      name: "班底谷与孟沙区",
+      description: "吉隆坡西南部成熟的住宅社区、商业中心、交通枢纽及历史悠久的房屋存量。",
+    },
+    "kl-kepong": {
+      name: "甲洞与帝沙公园城区",
+      description: "吉隆坡北部的规划型住宅社区、多代同堂的排屋区及活跃的商业带。",
+    },
+    "kl-seputeh": {
+      name: "士布爹与武吉加里尔区",
+      description: "吉隆坡南部的现代高层住宅走廊、体育中心发展区及成熟的郊区住宅。",
+    },
+    "kl-wangsa-maju": {
+      name: "旺沙玛珠与蒂蒂旺沙区",
+      description: "吉隆坡东北部的高密度住宅市镇、成熟排屋区及历史悠久的商业街。",
+    },
+    "kl-batu": {
+      name: "峇都与冼都区",
+      description: "吉隆坡北部的历史铁路市镇、新建的公交导向公寓大楼及混合住宅街区。",
+    },
+    "kl-cheras": {
+      name: "蕉赖与敦拉萨镇区",
+      description: "遍布吉隆坡东南部的大规模分期排屋区、成熟的店屋街区及山坡公寓社区。",
+    },
+    "kl-city-core": {
+      name: "吉隆坡市中心与甘榜峇鲁区",
+      description: "首都环绕 KLCC、武吉免登与燕美路的高层核心区，以及毗邻的历史聚落甘榜峇鲁。",
+    },
+    "sel-petaling": {
+      name: "八打灵县",
+      description: "雪兰莪的经济与住宅重镇，涵盖八打灵再也、梳邦再也、莎阿南、蒲种及白沙罗走廊。",
+    },
+    "sel-hulu-langat": {
+      name: "乌鲁冷岳县",
+      description: "蓬勃发展的住宅增长走廊，横跨加影、万宜、士毛月、无拉港及安邦再也交界地带。",
+    },
+    "sel-klang": {
+      name: "巴生县",
+      description: "历史悠久的商业、工业与住宅中心，拥有战前店屋、成熟住宅区及现代商业市镇。",
+    },
+    "sel-gombak": {
+      name: "鹅唛县",
+      description: "北部多丘陵的住宅县，连接士拉央、鹅唛、万挠及北部边缘社区。",
+    },
+    "sel-sepang": {
+      name: "雪邦与布城走廊",
+      description: "马来西亚的行政与科技走廊，拥有现代化基础设施、规划型市镇及智慧城市发展项目。",
+    },
+  },
+};
+
+/**
+ * Phase 46 — localized official state names for the coverage roadmap list on
+ * the areas index (`stateCoverage` in `data/locations/registry.ts`). Only the
+ * English qualifier changes in Malay ("Federal Territory" → "Wilayah
+ * Persekutuan"); Chinese uses the established names.
+ */
+export const stateNames: Record<NonEnglish, Record<string, string>> = {
+  ms: {
+    "kuala-lumpur": "Kuala Lumpur (Wilayah Persekutuan)",
+    selangor: "Selangor Darul Ehsan",
+    penang: "Pulau Pinang",
+    johor: "Johor Darul Ta'zim",
+    "negeri-sembilan": "Negeri Sembilan",
+  },
+  zh: {
+    "kuala-lumpur": "吉隆坡（联邦直辖区）",
+    selangor: "雪兰莪",
+    penang: "槟城",
+    johor: "柔佛",
+    "negeri-sembilan": "森美兰",
+  },
+};
+
+/**
  * Localized place names. Malay keeps the official Malay spellings, so only the
  * Chinese names differ; established Malaysian Chinese names are used.
  */

@@ -429,7 +429,13 @@ export const waterproofingSubServices: SubServiceDefinition[] = [
     serviceSlug: "waterproofing",
     pricingId: "waterproofing-balcony",
     standaloneSearchIntent: true,
-    relatedProblems: ["water-leakage", "water-damaged-ceiling", "damp-walls", "loose-tile-repair"],
+    // Phase 46 — balcony-leakage added: the problem guide itself states that
+    // balcony leakage is a waterproofing job, and the suitableFor copy of this
+    // scope describes the exact symptom (a balcony above a room that is showing
+    // damp on the ceiling below). It was the only balcony problem with no
+    // sub-service link. Keep these comments free of quote characters: the
+    // audits parse this file with a quote-aware object splitter.
+    relatedProblems: ["balcony-leakage", "water-leakage", "water-damaged-ceiling", "damp-walls", "loose-tile-repair"],
     en: {
       name: "Balcony & Terrace Waterproofing",
       h1: "Balcony & Terrace Waterproofing in Kuala Lumpur & Selangor",
@@ -559,7 +565,10 @@ export const waterproofingSubServices: SubServiceDefinition[] = [
     serviceSlug: "waterproofing",
     pricingId: "waterproofing-wall-seepage",
     standaloneSearchIntent: true,
-    relatedProblems: ["damp-walls", "water-leakage", "peeling-paint", "water-stains"],
+    // Phase 46 — the wall-seepage problem guide had no sub-service link even
+    // though this scope shares its slug and treats exactly that symptom (an
+    // internal wall that darkens or blisters after heavy rain).
+    relatedProblems: ["wall-seepage", "damp-walls", "water-leakage", "peeling-paint", "water-stains"],
     en: {
       name: "Wall Seepage & Damp Treatment",
       h1: "Wall Seepage & Damp Treatment in Kuala Lumpur & Selangor",

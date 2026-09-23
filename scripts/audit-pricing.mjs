@@ -238,6 +238,55 @@ for (const lang of ["ms", "zh"]) {
   if (missingLabels.length > 0) {
     fail(`${lang}.ts is missing localized sub-service labels for: ${missingLabels.join(", ")}`);
   }
+
+  /* Phase 46 — localized `factors` and `scope`/`duration` for every row.
+   * The "What affects the price" bullets and the sub-service pricing scope are
+   * rendered from the localized row; before Phase 46 `ms.ts`/`zh.ts` carried no
+   * `factors` at all, so 160 English bullets appeared on 20 `/ms/` + `/zh/`
+   * pillar pages. Each translated list must (a) exist, (b) have the same number
+   * of bullets as the English row, (c) quote exactly the same RM figures (price
+   * parity — translations may never change a price), and (d) not simply repeat
+   * the English string. */
+  const FIGURE = /RM\s?([0-9][0-9,]*(?:\.[0-9]+)?)\s*([kKmM])?\b/g;
+  const figuresOf = (list) =>
+    list
+      .flatMap((text) => [...text.matchAll(FIGURE)].map((m) => `RM${m[1].replace(/,+$/, "")}${(m[2] ?? "").toLowerCase()}`))
+      .sort()
+      .join("|");
+  let factorRows = 0;
+  for (const entry of entries) {
+    if (!entry.id) continue;
+    const block = source.match(new RegExp(`"${entry.id}":\\s*\\{([\\s\\S]*?)\\n  \\},`));
+    if (!block) {
+      fail(`${lang}.ts: could not parse the block for ${entry.id}.`);
+      continue;
+    }
+    for (const key of ["scope", "duration"]) {
+      if (!new RegExp(`\\b${key}:\\s*"`).test(block[1])) {
+        fail(`${lang}.ts: ${entry.id} has no localized ${key} — the English text would render on /${lang}/ sub-service pages.`);
+      }
+    }
+    const factors = listField(block[1], "factors");
+    const english = entry.factors ?? [];
+    if (!factors) {
+      fail(`${lang}.ts: ${entry.id} has no localized factors — English "what affects the price" bullets would render on /${lang}/ pages.`);
+      continue;
+    }
+    if (factors.length !== english.length) {
+      fail(`${lang}.ts: ${entry.id} has ${factors.length} factors but the English row has ${english.length}.`);
+    }
+    if (figuresOf(factors) !== figuresOf(english)) {
+      fail(`${lang}.ts: ${entry.id} factors quote different RM figures (${figuresOf(factors) || "none"}) than the English row (${figuresOf(english) || "none"}).`);
+    }
+    const untranslated = factors.filter((text) => english.includes(text));
+    if (untranslated.length > 0) {
+      fail(`${lang}.ts: ${entry.id} repeats English factor text verbatim: ${untranslated.map((t) => `"${t}"`).join(", ")}`);
+    }
+    factorRows += 1;
+  }
+  if (factorRows === entries.length) {
+    note(`${lang.toUpperCase()} factors, scope and duration are localized for all ${entries.length} rows with identical RM figures.`);
+  }
 }
 
 /* ------------------------------------------------------------------------ */

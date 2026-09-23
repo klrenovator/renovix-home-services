@@ -1,8 +1,29 @@
-# PROJECT OWNER-PENDING DATA — Phases 22, 24, 25, 26 & 41
+# PROJECT OWNER-PENDING DATA — Phases 22, 24, 25, 26, 41 & 46
 
 Status: **OWNER-PENDING**. Nothing on this list is a code defect. Each item
 can only be completed by the business or in the hosting/Search Console
 dashboards. Do not invent values.
+
+## Phase 46 (2026-09-22) — confirm or reword one catalogue price factor
+
+**Not a code change; flagged only.** The electrical troubleshooting row
+(`electrical-troubleshoot` in `data/pricing/pricing.ts`) has carried the
+"what affects the price" factor **"Emergency after hours RM150–300/hour"**
+since the catalogue was supplied. It is already published on the English
+electrical pillar, on the `/ai/pricing.json` feed, and — since Phase 46, which
+localized every factor list — with the identical RM figures in Malay
+("Kecemasan di luar waktu kerja RM150–300/jam") and Chinese
+("非工作时间紧急服务 RM150–300/小时"). `CONTENT_GOVERNANCE.md` §4 says the
+site must never *promise* after-hours service (business hours 9:00 AM –
+6:00 PM, no rapid-response policy stated by the owner). A price modifier is
+not a promise of availability, so the figure was left exactly as supplied
+(prices are never changed or reworded by the AI), but the owner should
+confirm one of two outcomes:
+
+| # | Action | Where | Notes |
+| --- | --- | --- | --- |
+| 1 | Confirm that after-hours electrical fault call-outs are genuinely offered at RM150–300/hour, and on what terms (which hours, which faults) | Owner reply to AI | If confirmed, the factor stays and the governance note can record the sanctioned exception |
+| 2 | Otherwise supply the replacement wording (or ask for the factor to be removed from the row) | Owner reply to AI | The change is one line in `data/pricing/pricing.ts` plus the matching MS/ZH factor; `audit:pricing` enforces that all three stay in step |
 
 ## Phase 41 (2026-09-22) — verify or withdraw the homepage "Google Reviews" block
 

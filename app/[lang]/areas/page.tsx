@@ -12,7 +12,15 @@ import { InlineSearch } from "@/components/search/InlineSearch";
 import { AreaFaqSection } from "@/components/area/AreaFaqSection";
 import { AreaCtaSection } from "@/components/area/AreaCtaSection";
 import { getLanguage, languages } from "@/data/languages";
-import { getAreaName, getAreasIndexFaqs, getRegionName, getRegionSummary } from "@/data/i18n";
+import {
+  getAreaName,
+  getAreasIndexFaqs,
+  getDistrictDescription,
+  getDistrictName,
+  getRegionName,
+  getRegionSummary,
+  getStateName,
+} from "@/data/i18n";
 import { getWhatsAppHref } from "@/data/site";
 import { areaRegions } from "@/data/area-content";
 import { districtGroups, getStateCoverage } from "@/data/locations";
@@ -218,8 +226,9 @@ export default async function AreasPage({ params }: AreasPageProps) {
                   className="rounded-2xl border border-slate-200/80 bg-surface p-6 shadow-soft"
                 >
                   <div className="flex items-center justify-between gap-2">
+                    {/* Phase 46 — localized; the registry strings are English only. */}
                     <h4 className="text-base font-bold text-navy">
-                      {district.name}
+                      {getDistrictName(district, code)}
                     </h4>
                     <span className="text-xs font-semibold text-brand">
                       {district.regionId === "kuala-lumpur" ? t.common.kualaLumpur : t.common.selangor}
@@ -227,7 +236,7 @@ export default async function AreasPage({ params }: AreasPageProps) {
                   </div>
 
                   <p className="mt-2 text-xs leading-5 text-secondary">
-                    {district.description}
+                    {getDistrictDescription(district, code)}
                   </p>
 
                   <div className="mt-4 flex flex-wrap gap-1.5 border-t border-slate-200/60 pt-4">
@@ -297,7 +306,7 @@ export default async function AreasPage({ params }: AreasPageProps) {
                     key={state.id}
                     className="flex items-center justify-between text-xs"
                   >
-                    <span className="font-medium text-navy">{state.name}</span>
+                    <span className="font-medium text-navy">{getStateName(state, code)}</span>
                     {state.published ? (
                       <span className="inline-flex items-center gap-1 font-semibold text-emerald-600">
                         <IconCheck className="h-3.5 w-3.5" />

@@ -928,10 +928,13 @@ function checkInternalLinkGraph(locs, graph) {
     if (edges.length > 0) problemsWithScopes += 1;
     problemEdges += edges.length;
   }
-  // 53 of the 57 problem guides have at least one genuinely related
-  // sub-service in the registry (four have none and correctly render no
-  // block), so the guard sits just below that real coverage.
-  if (problemsWithScopes >= 53 && problemEdges >= 180) {
+  // Phase 46 — every one of the 57 problem guides is now declared by at least
+  // one sub-service (the last four — wall-seepage, balcony-leakage,
+  // broken-tile-repair, kitchen-tile-problems — were wired to the scopes whose
+  // own copy describes them), so all 171 localized guide pages must link to a
+  // bookable scope. `audit:subservices` fails first if a guide is orphaned in
+  // the registry; this is the rendered-HTML proof.
+  if (problemsWithScopes === problemPaths.length && problemEdges >= 180) {
     pass(
       `link graph: ${problemsWithScopes}/${problemPaths.length} problem guides link to related sub-service scopes (${problemEdges} links)`,
     );
@@ -1963,6 +1966,159 @@ async function checkInternalLinks() {
   else broken.forEach((b) => fail(b));
 }
 
+/* ------------------------------------------------------------------------ */
+/* Phase 46 — registry copy must reach /ms/ and /zh/ pages localized          */
+/*                                                                           */
+/* Three data families were rendered from English-only registries on every    */
+/* Malay and Chinese page until Phase 46:                                     */
+/*   1. the pricing row's `scope` + `duration` on the 102 localized            */
+/*      sub-service pages (the resolver read `getPricingById` instead of the   */
+/*      localized row);                                                       */
+/*   2. the "what affects the price" `factors` bullets on the 20 localized     */
+/*      service pillars (`ms.ts`/`zh.ts` carried no factors at all — 160       */
+/*      English bullets);                                                     */
+/*   3. the district-group name/description on the 106 localized area guides,  */
+/*      4 region hubs and 2 area indexes (264 names, 52 descriptions).        */
+/* The static audits pin the data and the accessors; this section proves the  */
+/* served HTML: no English registry string on a localized page, and the       */
+/* localized string present instead. Strings are compared HTML-escaped        */
+/* exactly as React serialises them.                                          */
+/* ------------------------------------------------------------------------ */
+
+function escapeHtml(text) {
+  return text
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#x27;");
+}
+
+function stringField(block, key) {
+  const m = block.match(new RegExp(`\\b${key}:\\s*\\n?\\s*"((?:[^"\\\\]|\\\\.)*)"`));
+  return m ? m[1].replace(/\\"/g, '"') : undefined;
+}
+
+function listField(block, key) {
+  const m = block.match(new RegExp(`\\b${key}:\\s*\\[([\\s\\S]*?)\\]`));
+  return m ? [...m[1].matchAll(/"((?:[^"\\]|\\.)*)"/g)].map((x) => x[1].replace(/\\"/g, '"')) : [];
+}
+
+const LOCALIZED_REGISTRY_COPY = (() => {
+  const src = (rel) => readFileSync(fileURLToPath(new URL(`../${rel}`, import.meta.url)), "utf8");
+  const pricing = src("data/pricing/pricing.ts");
+  const en = { scope: new Set(), factors: new Set(), districts: new Set() };
+  for (const block of pricing.split(/\n  \{\n/).slice(1)) {
+    if (!/\bid:\s*"/.test(block)) continue;
+    const scope = stringField(block, "scope");
+    if (scope) en.scope.add(scope);
+    for (const f of listField(block, "factors")) en.factors.add(f);
+  }
+  const registry = src("data/locations/registry.ts");
+  const districtSrc = registry.slice(
+    registry.indexOf("export const districtGroups"),
+    registry.indexOf("export const stateCoverage"),
+  );
+  for (const m of districtSrc.matchAll(/\n\s*name:\s*"([^"]+)"/g)) en.districts.add(m[1]);
+  const localized = {};
+  for (const lang of ["ms", "zh"]) {
+    const rows = src(`data/pricing/translations/${lang}.ts`);
+    const out = { scope: new Set(), factors: new Set(), districts: new Set() };
+    for (const block of rows.split(/\n  "[a-z0-9-]+": \{\n/).slice(1)) {
+      const scope = stringField(block, "scope");
+      if (scope) out.scope.add(scope);
+      for (const f of listField(block, "factors")) out.factors.add(f);
+    }
+    const lists = src("data/i18n/lists.ts");
+    const table = lists.slice(lists.indexOf("export const districtList"), lists.indexOf("export const stateNames"));
+    const start = table.indexOf(`\n  ${lang}: {`);
+    const end = lang === "ms" ? table.indexOf("\n  zh: {") : table.length;
+    for (const m of table.slice(start, end).matchAll(/\n\s*name:\s*"([^"]+)"/g)) out.districts.add(m[1]);
+    localized[lang] = out;
+  }
+  return { en, localized };
+})();
+
+async function checkLocalizedRegistryCopy(locs) {
+  console.log("\n== Localized registry copy on /ms/ and /zh/ pages (Phase 46) ==");
+  const { en, localized } = LOCALIZED_REGISTRY_COPY;
+  if (en.scope.size < 51 || en.factors.size < 150 || en.districts.size < 13) {
+    fail(
+      `could not parse the English registries for the Phase 46 check (${en.scope.size} scopes, ${en.factors.size} factors, ${en.districts.size} districts)`,
+    );
+    return;
+  }
+  const escapedEn = {
+    scope: [...en.scope].map(escapeHtml),
+    factors: [...en.factors].map(escapeHtml),
+    districts: [...en.districts].map(escapeHtml),
+  };
+  const targets = [];
+  for (const loc of locs) {
+    const path = loc.replace(CANONICAL_HOST, "");
+    const lang = path.match(/^\/(ms|zh)\//)?.[1];
+    if (!lang) continue;
+    if (/^\/(ms|zh)\/services\/[^/]+\/[^/]+\/$/.test(path)) targets.push({ path, lang, kind: "sub-service" });
+    else if (/^\/(ms|zh)\/services\/[^/]+\/$/.test(path)) targets.push({ path, lang, kind: "pillar" });
+    else if (/^\/(ms|zh)\/areas\/(?:[^/]+\/){0,2}$/.test(path)) targets.push({ path, lang, kind: "area" });
+  }
+  const counts = { "sub-service": 0, pillar: 0, area: 0 };
+  const englishHits = [];
+  const missingLocalized = [];
+  const batchSize = 25;
+  for (let i = 0; i < targets.length; i += batchSize) {
+    await Promise.all(
+      targets.slice(i, i + batchSize).map(async ({ path, lang, kind }) => {
+        const { text, status } = await fetchText(path);
+        if (status !== 200) {
+          fail(`${path} returned ${status} during the Phase 46 localized-copy check`);
+          return;
+        }
+        counts[kind] += 1;
+        const loc = localized[lang];
+        if (kind === "sub-service") {
+          const leaked = escapedEn.scope.filter((s) => text.includes(s));
+          if (leaked.length) englishHits.push(`${path} renders the English pricing scope "${leaked[0].slice(0, 60)}…"`);
+          if (![...loc.scope].some((s) => text.includes(escapeHtml(s)))) {
+            missingLocalized.push(`${path} renders no localized pricing scope`);
+          }
+        } else if (kind === "pillar") {
+          const leaked = escapedEn.factors.filter((f) => text.includes(`>${f}<`));
+          if (leaked.length) englishHits.push(`${path} renders ${leaked.length} English price factor(s), e.g. "${leaked[0]}"`);
+          if (![...loc.factors].some((f) => text.includes(`>${escapeHtml(f)}<`))) {
+            missingLocalized.push(`${path} renders no localized price factors`);
+          }
+        } else {
+          const leaked = escapedEn.districts.filter((d) => text.includes(`>${d}<`));
+          if (leaked.length) englishHits.push(`${path} renders the English district name "${leaked[0]}"`);
+          if (![...loc.districts].some((d) => text.includes(`>${escapeHtml(d)}<`))) {
+            missingLocalized.push(`${path} renders no localized district name`);
+          }
+        }
+      }),
+    );
+  }
+  if (counts["sub-service"] < 100 || counts.pillar < 20 || counts.area < 110) {
+    fail(
+      `Phase 46 check covered too few pages (${counts["sub-service"]} sub-service, ${counts.pillar} pillar, ${counts.area} area/region/index)`,
+    );
+  }
+  if (englishHits.length === 0) {
+    pass(
+      `no English pricing scope, price factor or district name on ${counts["sub-service"]} localized sub-service, ${counts.pillar} pillar and ${counts.area} area/region/index pages`,
+    );
+  } else {
+    for (const hit of englishHits.slice(0, 10)) fail(`English registry copy on a localized page: ${hit}`);
+    if (englishHits.length > 10) fail(`…and ${englishHits.length - 10} more English registry strings on localized pages`);
+  }
+  if (missingLocalized.length === 0) {
+    pass("every localized sub-service, pillar and area/region/index page renders the localized scope / factors / district name");
+  } else {
+    for (const miss of missingLocalized.slice(0, 10)) fail(miss);
+    if (missingLocalized.length > 10) fail(`…and ${missingLocalized.length - 10} more pages missing localized registry copy`);
+  }
+}
+
 async function multilingualSpot() {
   console.log("\n== Multilingual / SEO / schema spot checks ==");
   await checkPageSeo("/en/", {
@@ -2041,6 +2197,7 @@ async function main() {
   await checkAiPhrasingCoverage(locs);
   await checkAiLocalizedUrlCoverage(locs);
   await checkLocalizedAnchors(anchors);
+  await checkLocalizedRegistryCopy(locs);
   await multilingualSpot();
   await checkQuoteApi();
   await checkInternalLinks();

@@ -624,6 +624,105 @@ for (const lang of ["en", "ms", "zh"]) {
   }
 }
 
+/* ------------------------------------------------------------------------ */
+/* Phase 46 — district groups and state names are localized wherever rendered */
+/*                                                                           */
+/* `districtGroups` and `stateCoverage` in `data/locations/registry.ts` carry  */
+/* English-only `name` / `description` strings. Four render sites (area hero   */
+/* chip, area answer-first paragraph, region hub district grid, areas index    */
+/* district grid + coverage roadmap) read them directly, so every `/ms/` and   */
+/* `/zh/` area, region and index page published English district copy         */
+/* ("Segambut & Mont Kiara District", "High-density condominium enclaves…") —  */
+/* 264 English names and 52 English descriptions across 112 localized pages.  */
+/* `data/i18n/lists.ts` now carries `districtList` + `stateNames`, and         */
+/* `getDistrictName` / `getDistrictDescription` / `getStateName` in           */
+/* `data/i18n/index.ts` are the only sanctioned readers. This section keeps    */
+/* the tables complete and the render sites on the accessors.                 */
+/* ------------------------------------------------------------------------ */
+
+const registrySource = read("data/locations/registry.ts");
+const districtIds = [
+  ...registrySource
+    .slice(registrySource.indexOf("export const districtGroups"), registrySource.indexOf("export const stateCoverage"))
+    .matchAll(/\n\s*id: "([a-z0-9-]+)"/g),
+].map((m) => m[1]);
+const stateIds = [
+  ...registrySource.slice(registrySource.indexOf("export const stateCoverage")).matchAll(/\n\s*id: "([a-z0-9-]+)"/g),
+].map((m) => m[1]);
+if (districtIds.length < 13 || stateIds.length < 5) {
+  fail(`could not parse the location registry (found ${districtIds.length} districts / ${stateIds.length} states)`);
+}
+
+const districtTable = lists.slice(lists.indexOf("export const districtList"), lists.indexOf("export const stateNames"));
+const stateTable = lists.slice(lists.indexOf("export const stateNames"), lists.indexOf("export const areaNames"));
+const ENGLISH_DISTRICT_WORDS = /\b(?:District|Centre|corridor|enclaves|neighbourhoods|townships|housing|corridors|communities|hub)\b/;
+for (const lang of ["ms", "zh"]) {
+  const langBlock = (table) => {
+    const start = table.indexOf(`\n  ${lang}: {`);
+    const next = table.indexOf(`\n  ${lang === "ms" ? "zh" : "END"}: {`);
+    return table.slice(start, next === -1 ? undefined : next);
+  };
+  const districtBlock = langBlock(districtTable);
+  const stateBlock = langBlock(stateTable);
+  const missingDistricts = districtIds.filter((id) => {
+    const entry = districtBlock.match(new RegExp(`"${id}":\\s*\\{([\\s\\S]*?)\\n    \\}`));
+    return !entry || !/\bname:\s*"[^"]+"/.test(entry[1]) || !/\bdescription:\s*\n?\s*"[^"]+"/.test(entry[1]);
+  });
+  if (missingDistricts.length) {
+    fail(`${lang}: districtList lacks a name + description for ${missingDistricts.join(", ")} — the English registry text would render on /${lang}/ pages`);
+  } else {
+    pass(`${lang}: all ${districtIds.length} district groups have a localized name and description`);
+  }
+  const englishLeft = [...districtBlock.matchAll(/(?:name|description):\s*\n?\s*"([^"]+)"/g)]
+    .map((m) => m[1])
+    .filter((text) => ENGLISH_DISTRICT_WORDS.test(text));
+  if (englishLeft.length) {
+    fail(`${lang}: districtList still contains English wording: ${englishLeft.map((t) => `"${t}"`).join(", ")}`);
+  }
+  const missingStates = stateIds.filter((id) => !new RegExp(`(?:"${id}"|\\b${id}):\\s*"[^"]+"`).test(stateBlock));
+  if (missingStates.length) {
+    fail(`${lang}: stateNames lacks ${missingStates.join(", ")}`);
+  } else {
+    pass(`${lang}: all ${stateIds.length} coverage states have a localized name`);
+  }
+}
+
+const DISTRICT_RENDER_SITES = [
+  "components/area/AreaHero.tsx",
+  "components/area/AreaAnswerFirstSection.tsx",
+  "components/area/AreaRegionPage.tsx",
+  "app/[lang]/areas/page.tsx",
+];
+const directReads = [];
+for (const rel of [...componentFiles, ...walk("app")]) {
+  if (!/\.tsx$/.test(rel)) continue;
+  const src = read(rel);
+  const hits = [
+    ...src.matchAll(/\bdistrict\.(?:name|description)\b|\bstate\.name\b/g),
+  ].map((m) => m[0]);
+  if (hits.length) directReads.push(`${rel} (${[...new Set(hits)].join(", ")})`);
+}
+if (directReads.length) {
+  fail(`district/state registry strings are rendered directly instead of through getDistrictName/getDistrictDescription/getStateName: ${directReads.join("; ")}`);
+} else {
+  pass("no component or page renders district.name / district.description / state.name directly");
+}
+for (const rel of DISTRICT_RENDER_SITES) {
+  const src = read(rel);
+  const uses = rel.endsWith("AreaHero.tsx") || rel.endsWith("AreaAnswerFirstSection.tsx")
+    ? /\bgetDistrictName\(/.test(src)
+    : /\bgetDistrictName\(/.test(src) && /\bgetDistrictDescription\(/.test(src);
+  if (!uses) {
+    fail(`${rel} no longer localizes its district copy through data/i18n`);
+  }
+}
+if (!/\bgetStateName\(/.test(read("app/[lang]/areas/page.tsx"))) {
+  fail("app/[lang]/areas/page.tsx no longer localizes the coverage-roadmap state names through getStateName");
+}
+if (!failures.some((f) => f.includes("no longer localizes"))) {
+  pass(`all ${DISTRICT_RENDER_SITES.length} district render sites use the localized accessors`);
+}
+
 if (failures.length) {
   console.log(`\nFAIL — ${failures.length} issue(s)`);
   process.exit(1);
