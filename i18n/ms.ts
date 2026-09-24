@@ -1101,6 +1101,9 @@ export const ms: Dictionary = {
       "Jawapan ini menerangkan struktur perkhidmatan semasa dan langkah seterusnya. Untuk skop khusus sesuatu perkhidmatan, ikuti pautan dalam setiap jawapan yang berkaitan.",
     browseServices: "Lihat semua perkhidmatan",
     exploreAreas: "Terokai kawasan perkhidmatan",
+    browseProblems: "Lihat semua masalah",
+    exploreGuides: "Terokai panduan",
+    viewProjects: "Lihat projek terkini",
     ctaEyebrow: "Masih ada soalan?",
     ctaTitle: "Kongsi butiran kerja dan soalan yang anda perlukan jawapannya",
     ctaDescription:

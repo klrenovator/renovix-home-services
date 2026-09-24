@@ -825,6 +825,9 @@ export type Dictionary = {
     asideLead: string;
     browseServices: string;
     exploreAreas: string;
+    browseProblems: string;
+    exploreGuides: string;
+    viewProjects: string;
     ctaEyebrow: string;
     ctaTitle: string;
     ctaDescription: string;

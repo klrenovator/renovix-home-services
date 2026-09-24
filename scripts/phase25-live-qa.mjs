@@ -537,6 +537,9 @@ async function sampleStatuses(locs) {
   // Keep the article's main-content links separately: the footer links every
   // region on every page, but that is not a contextual guide → region link.
   const articleMainHrefs = new Map();
+  // Phase 51 — the main-content anchors of the three `/faq/` pages, so the
+  // answer-link layer is verified on the served HTML.
+  const faqMainAnchors = new Map();
   const inCopy = new Map();
   const titles = new Map();
   const leakedMarkup = [];
@@ -568,6 +571,7 @@ async function sampleStatuses(locs) {
         let hrefs = null;
         let pageAnchors = null;
         let articleLinks = null;
+        let faqMainAnchors = null;
         let inCopyCount = 0;
         let leaked = false;
         let title = null;
@@ -585,6 +589,14 @@ async function sampleStatuses(locs) {
           if (/^\/(en|ms|zh)\/blog\/[^/]+\/$/.test(path)) {
             const main = html.match(/<main\b[^>]*>([\s\S]*?)<\/main>/i);
             articleLinks = main ? extractInternalHrefs(main[1]) : null;
+          }
+          // Phase 51 — the three `/faq/` pages are the site's answer surface and
+          // their links live inside `<main>`; keep those anchors (href + visible
+          // text) so the answer-link layer is checked on the served HTML rather
+          // than on the source that built it.
+          if (/^\/(en|ms|zh)\/faq\/$/.test(path)) {
+            const main = html.match(/<main\b[^>]*>([\s\S]*?)<\/main>/i);
+            faqMainAnchors = main ? extractAnchorsDeep(main[1]) : null;
           }
           // Phase 41 — the same pass keeps the served <title> of every page.
           title = extractTitleText(html);
@@ -620,6 +632,7 @@ async function sampleStatuses(locs) {
           hrefs,
           pageAnchors,
           articleLinks,
+          faqMainAnchors,
           inCopyCount,
           leaked,
           title,
@@ -642,6 +655,7 @@ async function sampleStatuses(locs) {
       if (r.hrefs) graph.set(r.path, r.hrefs);
       if (r.pageAnchors) anchors.set(r.path, r.pageAnchors);
       if (r.articleLinks) articleMainHrefs.set(r.path, r.articleLinks);
+      if (r.faqMainAnchors) faqMainAnchors.set(r.path, r.faqMainAnchors);
       if (r.status === 200) inCopy.set(r.path, r.inCopyCount);
       if (r.status === 200) titles.set(r.path, r.title);
       if (r.status === 200) faqBlocks.set(r.path, r.faqBlocks);
@@ -656,7 +670,7 @@ async function sampleStatuses(locs) {
   }
   if (bad === 0) pass(`all ${ok} sitemap URLs return 200`);
   else fail(`sitemap sweep ${ok} ok / ${bad} failed`);
-  return { graph, anchors, articleMainHrefs, inCopy, titles, leakedMarkup, faqBlocks, schemaTypes, serviceSchemas, entities, pageNames, cardNames, localeSignals };
+  return { graph, anchors, articleMainHrefs, faqMainAnchors, inCopy, titles, leakedMarkup, faqBlocks, schemaTypes, serviceSchemas, entities, pageNames, cardNames, localeSignals };
 }
 
 /* ------------------------------------------------------------------------ */
@@ -749,6 +763,93 @@ function checkTitles(locs, titles) {
       fail(`duplicate title "${key.split("|")[1]}" shared by ${paths.join(" , ")}`);
     }
     if (duplicates.length > 10) fail(`…and ${duplicates.length - 10} more duplicated titles`);
+  }
+}
+
+/* ------------------------------------------------------------------------ */
+/* Phase 51 — the answer surface links the page its own copy names            */
+/*                                                                           */
+/* A full crawl found `/faq/` was the only hub on the site whose main content */
+/* carried 0 links into the problem library, the Knowledge Hub and the        */
+/* portfolio, and that 6 of its 18 answers named a page outright — "Visit the */
+/* Service Areas page", the Get-a-Quote form, the Kuala Lumpur and Selangor   */
+/* coverage sections — while rendering no link at all.                        */
+/*                                                                           */
+/* This section checks the served HTML, not the source: all three `/faq/`     */
+/* pages must link every content family in their own language, must render    */
+/* the anchors the registry targets resolve to, and must not label them with  */
+/* a raw slug or with English text on a `/ms/` or `/zh/` page (Phase 46's     */
+/* leak rule, applied to the answer surface).                                 */
+/* ------------------------------------------------------------------------ */
+function checkFaqAnswerLinks(faqMainAnchors) {
+  console.log("\n== FAQ answer links (Phase 51) ==");
+
+  // The five content families the hub must reach, plus the entity targets the
+  // answers themselves name.
+  const familyRoutes = ["/services/", "/problems/", "/areas/", "/blog/", "/projects/"];
+  const entityRoutes = [
+    "/areas/kuala-lumpur/",
+    "/areas/selangor/",
+    "/blog/condo-renovation-approval-checklist/",
+  ];
+  const labelSets = {};
+
+  for (const lang of ["en", "ms", "zh"]) {
+    const path = `/${lang}/faq/`;
+    const found = faqMainAnchors.get(path);
+
+    if (!found) {
+      fail(`${path} was not crawled — the FAQ answer-link layer could not be checked`);
+      continue;
+    }
+
+    const byPath = new Map();
+    for (const a of found) {
+      if (!byPath.has(a.path)) byPath.set(a.path, []);
+      byPath.get(a.path).push(a.text);
+    }
+
+    const missing = [...familyRoutes, ...entityRoutes].filter((r) => !byPath.has(`/${lang}${r}`));
+    if (missing.length) {
+      fail(`${path} main content does not link ${missing.join(", ")}`);
+    } else {
+      pass(
+        `${path} links all ${familyRoutes.length} content families and all ${entityRoutes.length} entity targets its answers name`,
+      );
+    }
+
+    // A label must be the target's own name in that language — never a slug.
+    const labels = [];
+    for (const route of [...familyRoutes, ...entityRoutes]) {
+      for (const text of byPath.get(`/${lang}${route}`) ?? []) {
+        labels.push(text);
+        if (/^[a-z0-9]+(-[a-z0-9]+)+$/.test(text)) {
+          fail(`${path} links ${route} with the raw slug "${text}"`);
+        }
+      }
+    }
+    labelSets[lang] = labels;
+
+    // Localized pages may not publish the English label for the same target.
+    if (lang !== "en") {
+      const english = labelSets.en ?? [];
+      const leaked = labels.filter((text) => english.includes(text));
+      if (leaked.length) {
+        fail(
+          `${path} publishes the English anchor text for ${leaked.length} FAQ target(s): ${leaked.slice(0, 4).join(" | ")}`,
+        );
+      }
+    }
+  }
+
+  if (labelSets.en && labelSets.ms && labelSets.zh) {
+    if (labelSets.en.length === labelSets.ms.length && labelSets.ms.length === labelSets.zh.length) {
+      pass(`all three FAQ hubs render the same ${labelSets.en.length} target anchors, each in its own language`);
+    } else {
+      fail(
+        `FAQ hub anchor counts differ by language (en ${labelSets.en.length} / ms ${labelSets.ms.length} / zh ${labelSets.zh.length})`,
+      );
+    }
   }
 }
 
@@ -943,6 +1044,25 @@ function extractAnchors(html) {
     // (which must name the entity exactly) from a prose link (which may not).
     const cls = `${m[1]} ${m[3]}`.match(/class="([^"]*)"/);
     if (path && text) out.push({ path, text: decodeEntities(text), className: cls ? cls[1] : "" });
+  }
+  return out;
+}
+
+/**
+ * Phase 51 — anchors whose label may contain inline markup.
+ *
+ * `extractAnchors` matches `>([^<]*)</a>`, which is exact for the label tables
+ * it was written for but silently skips any anchor containing an element — and
+ * every CTA-style link on the site carries an inline `<svg>` arrow. This variant
+ * keeps the inner HTML, strips tags, and decodes entities, so the FAQ answer
+ * links (and the hub's own row links) can be read off the served page.
+ */
+function extractAnchorsDeep(html) {
+  const out = [];
+  for (const m of html.matchAll(/<a\b[^>]*href="(\/[^"]*)"[^>]*>([\s\S]*?)<\/a>/g)) {
+    const path = normalizeHref(m[1]);
+    const text = decodeEntities(m[2].replace(/<[^>]*>/g, " ")).replace(/\s+/g, " ").trim();
+    if (path && text) out.push({ path, text });
   }
   return out;
 }
@@ -2818,7 +2938,7 @@ async function main() {
   console.log(`Phase 25 live QA against ${BASE}\n`);
   await checkHeaders();
   const locs = await checkSitemapLive();
-  const { graph, anchors, articleMainHrefs, inCopy, titles, leakedMarkup, faqBlocks, schemaTypes, serviceSchemas, entities, pageNames, cardNames, localeSignals } =
+  const { graph, anchors, articleMainHrefs, faqMainAnchors, inCopy, titles, leakedMarkup, faqBlocks, schemaTypes, serviceSchemas, entities, pageNames, cardNames, localeSignals } =
     await sampleStatuses(locs);
   await checkSitemapLastmod(locs);
   checkOgLocaleParity(localeSignals);
@@ -2837,6 +2957,7 @@ async function main() {
   await checkLocalizedAnchors(anchors);
   await checkLocalizedRegistryCopy(locs);
   checkEntityLabels(locs, anchors, pageNames, cardNames);
+  checkFaqAnswerLinks(faqMainAnchors);
   await multilingualSpot();
   await checkQuoteApi();
   await checkInternalLinks();

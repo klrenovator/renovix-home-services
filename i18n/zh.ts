@@ -1030,6 +1030,9 @@ export const zh: Dictionary = {
       "这些答案说明目前的服务架构与下一步。如需个别服务的工程范围，请点选相关答案中的链接。",
     browseServices: "浏览全部服务",
     exploreAreas: "浏览服务地区",
+    browseProblems: "浏览常见问题",
+    exploreGuides: "浏览装修指南",
+    viewProjects: "查看工程案例",
     ctaEyebrow: "还有疑问？",
     ctaTitle: "告诉我们工程详情与您想知道的答案",
     ctaDescription:
