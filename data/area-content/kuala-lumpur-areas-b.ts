@@ -315,7 +315,14 @@ export const klAreasB: AreaDetail[] = [
     ],
     relatedServices: ["general-renovation", "electrical", "plumbing", "painting"],
     relatedProblems: ["old-house-wiring", "mouldy-walls", "wall-seepage", "peeling-paint"],
-    nearbyAreas: ["brickfields-mid-valley", "damansara-heights", "old-klang-road"],
+    nearbyAreas: [
+      "brickfields-mid-valley",
+      "damansara-heights",
+      "old-klang-road",
+      "mont-kiara",
+      "taman-tun-dr-ismail",
+      "taman-desa",
+    ],
   },
   {
     region: "kuala-lumpur",
@@ -473,7 +480,7 @@ export const klAreasB: AreaDetail[] = [
     ],
     relatedServices: ["general-renovation", "flooring", "plumbing", "electrical"],
     relatedProblems: ["uneven-paint", "bathroom-leakage", "blocked-drain", "insufficient-power-points"],
-    nearbyAreas: ["sri-petaling", "old-klang-road", "puchong"],
+    nearbyAreas: ["sri-petaling", "old-klang-road", "puchong", "bandar-kinrara"],
   },
   {
     region: "kuala-lumpur",
@@ -631,7 +638,7 @@ export const klAreasB: AreaDetail[] = [
     ],
     relatedServices: ["general-renovation", "plumbing", "waterproofing", "painting"],
     relatedProblems: ["bathroom-leakage", "roof-leakage", "leaking-pipe", "tile-grout-problems"],
-    nearbyAreas: ["bukit-jalil", "cheras", "puchong"],
+    nearbyAreas: ["bukit-jalil", "cheras", "puchong", "taman-desa", "bandar-kinrara"],
   },
   {
     region: "kuala-lumpur",
@@ -947,7 +954,7 @@ export const klAreasB: AreaDetail[] = [
     ],
     relatedServices: ["waterproofing", "general-renovation", "plumbing", "painting"],
     relatedProblems: ["roof-leakage", "wall-seepage", "damp-walls", "mouldy-walls"],
-    nearbyAreas: ["wangsa-maju", "ampang", "gombak"],
+    nearbyAreas: ["wangsa-maju", "ampang", "gombak", "ampang-jaya"],
   },
   {
     region: "kuala-lumpur",

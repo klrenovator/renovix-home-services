@@ -94,6 +94,18 @@ to any page's status, `<title>`, canonical, meta description, H1 or JSON-LD
 block count; the whole-site source→target link matrix changed in exactly one
 row.
 
+Phase 53 re-verification (2026-09-24): all inventory counts, all 678 URLs and
+all 689 static generation entries remain unchanged. A whole-corpus link-graph
+analysis found **52 of the `nearbyAreas` adjacency relations were one-way**
+(e.g. Kampung Baru named Sentul, Setapak and Ampang; none linked back). Every
+missing return link was added from the pair the other guide already asserted,
+making 53 of 53 area guides symmetric, and a regression guard now fails the
+build on any one-way pair. An independent before/after crawl of all 678 pages
+found exactly **81 pages changed** (27 area guides × 3 languages, +156 anchors)
+and **0 changes** to any status, title, description, canonical, H1, image or
+JSON-LD block count. Projects remain unlinked to areas by design: no project
+carries a confirmed location.
+
 Phase 52 verification (2026-09-24): the current checkout was inspected before
 any change. The 17 static audits, `type-check`, ESLint and a fresh production
 build all pass; the build generated **689 / 689** entries. A fresh `next start`
@@ -7561,3 +7573,85 @@ claims, prices or layout changes.
 
 **Status:** **🟢 verified and stable. No pending code defect was assumed; no
 speculative change was made.**
+
+---
+
+## PHASE 53 — Reciprocal Area Adjacency (nearby-areas link graph) — [x]
+
+**Result: 🟢 one genuine, data-derived internal-linking defect found and fixed;
+everything else verified and left untouched.**
+
+Phase 52 closed with "no defect found". This phase re-inspected the checkout
+without assuming that verdict, re-ran every gate, and then measured signals the
+17 audits had never compared. One real defect surfaced.
+
+### 1. Verified first (green — left untouched)
+
+Before any change, on the unmodified checkout:
+
+- **17 static audits** — PASS; `type-check` — PASS; `lint` — PASS
+- `npm run build` — PASS, **689 / 689** static generation entries
+- `npm run audit:live` on a fresh `next start` — **PASS 284 / 284, WARN 0, FAIL 0**
+- An independent crawl of all **678** sitemap URLs confirmed: **678/678** return
+  200, **0** canonical mismatches, **0** pages without exactly one `<h1>`,
+  **0** duplicate meta descriptions within any language, **0** images missing an
+  `alt` attribute (the 2,025 empty `alt`s are all decorative/`aria-hidden`
+  chrome, which is correct), a complete `hreflang` set **with `x-default` on all
+  678 pages**, and a `BreadcrumbList` on **675 of 678** (the 3 exceptions are the
+  homepages, which are correctly the breadcrumb root).
+- **Deliberately NOT changed:** projects still carry no `location`, because
+  `ProjectLocation` is documented as unset for every project — no site address or
+  area was supplied with the work photographs. Area↔project linking would have
+  required inventing business data, so the 0 area→project links remain 0 by
+  design. Prices, URLs, pages, features, branding and UI were not touched.
+
+### 2. The defect — one-way geographic adjacency
+
+A whole-corpus link-graph analysis found that **52 of the `nearbyAreas`
+relations were one-way**. Adjacency is symmetric by nature, so each of these was
+a genuine missing return link, not a judgement call:
+
+| Example | Was |
+|---|---|
+| `kampung-baru` → `sentul`, `setapak`, `ampang` | none of the three linked back |
+| `kl-city-centre` → `brickfields-mid-valley`, `ampang`, `sentul` | no return link |
+| `puchong` ← claimed by 4 guides | linked back to none of them |
+
+Effect: the smaller guide received link equity from its neighbour but sent none
+back, and a visitor on the larger guide could not reach the neighbour that named
+it.
+
+### 3. The fix
+
+Every missing return link was added — **derived only from the pair the other
+guide had already asserted**. No neighbour was invented, no new area, page,
+price or string was created, and the localized names/summaries already existed,
+so MS and ZH render correctly (e.g. Sentul now shows 甘榜峇鲁 on `/zh/`).
+
+- **27** area guides gained at least one neighbour; per-guide counts stay in the
+  existing **3–8** range and render in the existing `NearbyAreasSection` grid.
+- Non-reciprocal pairs: **52 → 0** (53 of 53 guides now fully symmetric).
+- A **regression guard** was added to `audit:locations` that fails the build on
+  any future one-way pair. It was verified to genuinely fail by temporarily
+  removing one link, then restored.
+
+### 4. Measured before/after impact (independent crawl of all 678 pages)
+
+- URLs: **678 → 678**, identical set
+- Pages changed: **exactly 81** = 27 area guides × 3 languages
+- Anchors added: **156** = 52 reciprocal links × 3 languages
+- **0** changes to any page's status, `<title>`, meta description, canonical,
+  `<h1>`, `<h2>` count, image count or JSON-LD block count — on all 678 pages
+- **0** prices, routes, pages, features or UI/branding changed
+
+### 5. QA after changes
+
+- [x] `npm run type-check` — PASS
+- [x] `npm run lint` — PASS (0 errors, 0 warnings)
+- [x] `npm run build` — PASS, **689 / 689** static generation entries (unchanged)
+- [x] All **17 static audits** — PASS (incl. the new reciprocity guard)
+- [x] `npm run audit:live` — **PASS 284 / 284, WARN 0, FAIL 0**
+- [x] All **678 / 678** sitemap URLs return 200
+
+**Status:** **🟢 complete.** Internal linking between areas is now symmetric;
+all previously correct SEO/GEO/AEO work is preserved.

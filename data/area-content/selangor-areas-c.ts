@@ -338,6 +338,7 @@ export const selangorAreasC: AreaDetail[] = [
       "mutiara-damansara",
       "taman-tun-dr-ismail",
       "kota-damansara",
+      "petaling-jaya",
     ],
   },
   {
@@ -1158,7 +1159,7 @@ export const selangorAreasC: AreaDetail[] = [
       "bathroom-leakage",
       "minor-home-repairs",
     ],
-    nearbyAreas: ["kajang", "semenyih", "putrajaya"],
+    nearbyAreas: ["kajang", "semenyih", "putrajaya", "sepang"],
   },
   {
     region: "selangor",
@@ -1486,7 +1487,7 @@ export const selangorAreasC: AreaDetail[] = [
       "power-tripping",
       "water-damaged-ceiling",
     ],
-    nearbyAreas: ["cheras", "seri-kembangan", "serdang", "kajang"],
+    nearbyAreas: ["cheras", "seri-kembangan", "serdang", "kajang", "bandar-mahkota-cheras"],
   },
   {
     region: "selangor",
@@ -1650,7 +1651,7 @@ export const selangorAreasC: AreaDetail[] = [
       "water-leakage",
       "water-damaged-ceiling",
     ],
-    nearbyAreas: ["klang", "shah-alam", "usj"],
+    nearbyAreas: ["klang", "shah-alam", "usj", "setia-alam"],
   },
   {
     region: "selangor",

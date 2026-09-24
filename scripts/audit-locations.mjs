@@ -439,6 +439,30 @@ for (const entity of published) {
   }
 }
 
+/*
+ * Adjacency is symmetric: if guide A calls B a nearby area, a visitor (and a
+ * crawler) on B must be able to walk back to A. One-way "nearby" links leak
+ * link equity in a single direction and hide genuine neighbours from the
+ * smaller guide. Derived entirely from the pair each guide already asserts —
+ * nothing here invents a neighbour that no guide has claimed.
+ */
+const nearbyBySlug = new Map(guides.map((guide) => [guide.slug, guide.nearbyAreas]));
+const oneWay = [];
+for (const guide of guides) {
+  for (const slug of guide.nearbyAreas) {
+    const back = nearbyBySlug.get(slug);
+    if (back && !back.includes(guide.slug)) {
+      oneWay.push(`${guide.slug} -> ${slug}`);
+    }
+  }
+}
+if (oneWay.length > 0) {
+  fail(
+    `Non-reciprocal "nearby areas" link(s): ${oneWay.join(", ")}. ` +
+      "Geographic adjacency is symmetric — add the return link to the neighbouring guide.",
+  );
+}
+
 const orphans = [...inboundLinks.entries()].filter(([, count]) => count === 0).map(([slug]) => slug);
 if (orphans.length > 0) {
   fail(

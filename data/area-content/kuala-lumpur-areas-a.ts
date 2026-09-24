@@ -157,7 +157,14 @@ export const klAreasA: AreaDetail[] = [
     ],
     relatedServices: ["plumbing", "waterproofing", "electrical", "general-renovation"],
     relatedProblems: ["water-leakage", "bathroom-leakage", "old-house-wiring", "hollow-tile-problems"],
-    nearbyAreas: ["balakong", "sri-petaling", "ampang"],
+    nearbyAreas: [
+      "balakong",
+      "sri-petaling",
+      "ampang",
+      "setapak",
+      "ampang-jaya",
+      "bandar-mahkota-cheras",
+    ],
   },
   {
     region: "kuala-lumpur",
@@ -315,7 +322,7 @@ export const klAreasA: AreaDetail[] = [
     ],
     relatedServices: ["electrical", "plumbing", "painting", "general-renovation"],
     relatedProblems: ["old-house-wiring", "low-water-pressure", "bathroom-leakage", "minor-home-repairs"],
-    nearbyAreas: ["wangsa-maju", "gombak", "cheras"],
+    nearbyAreas: ["wangsa-maju", "gombak", "cheras", "sentul", "kampung-baru"],
   },
   {
     region: "kuala-lumpur",
@@ -631,7 +638,7 @@ export const klAreasA: AreaDetail[] = [
     ],
     relatedServices: ["general-renovation", "electrical", "waterproofing", "ceiling-partition"],
     relatedProblems: ["water-damaged-ceiling", "old-house-wiring", "bathroom-leakage", "mouldy-walls"],
-    nearbyAreas: ["ampang-jaya", "taman-melawati", "cheras"],
+    nearbyAreas: ["ampang-jaya", "taman-melawati", "cheras", "kl-city-centre", "kampung-baru"],
   },
   {
     region: "kuala-lumpur",
@@ -789,7 +796,16 @@ export const klAreasA: AreaDetail[] = [
     ],
     relatedServices: ["general-renovation", "tiling", "plumbing", "painting"],
     relatedProblems: ["bathroom-leakage", "roof-leakage", "hollow-tile-problems", "old-house-wiring"],
-    nearbyAreas: ["bandar-sri-damansara", "sungai-buloh", "segambut"],
+    nearbyAreas: [
+      "bandar-sri-damansara",
+      "sungai-buloh",
+      "segambut",
+      "sentul",
+      "desa-parkcity",
+      "selayang",
+      "damansara-perdana",
+      "batu-caves",
+    ],
   },
   {
     region: "kuala-lumpur",
@@ -947,7 +963,7 @@ export const klAreasA: AreaDetail[] = [
     ],
     relatedServices: ["general-renovation", "electrical", "plumbing", "waterproofing"],
     relatedProblems: ["old-house-wiring", "wall-seepage", "damp-walls", "water-damaged-ceiling"],
-    nearbyAreas: ["sri-hartamas", "mont-kiara", "kepong"],
+    nearbyAreas: ["sri-hartamas", "mont-kiara", "kepong", "sentul"],
   },
   {
     region: "kuala-lumpur",
@@ -1105,6 +1121,6 @@ export const klAreasA: AreaDetail[] = [
     ],
     relatedServices: ["plumbing", "electrical", "painting", "handyman"],
     relatedProblems: ["blocked-drain", "water-leakage", "water-damaged-ceiling", "bathroom-tile-problems"],
-    nearbyAreas: ["segambut", "setapak", "kepong"],
+    nearbyAreas: ["segambut", "setapak", "kepong", "kl-city-centre", "kampung-baru"],
   },
 ];
