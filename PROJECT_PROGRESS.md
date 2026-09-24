@@ -69,6 +69,16 @@ two production builds (the pre-change commit and the new one), compared with
 `<script>` blocks and the two new meta tags removed, found **0 visible-DOM
 differences on 678 of 678 pages**.
 
+Phase 50 re-verification (2026-09-24): all inventory counts, all 678 URLs and
+all 689 static generation entries remain unchanged. A single centred paragraph
+now links the homepage in all 3 languages to the Knowledge Hub and portfolio
+in `<main>` (was 0; now 2 × 3 contextual links), the `WebSite`
+`potentialAction` is `SearchAction` on all 678 pages (was `ReadAction`), the
+3 previously unmapped electrical projects now carry `lighting-point` (28 of 28
+published projects mapped, was 25), and the sub-service/problem project slices
+were widened 3 → 6 so every genuine `lighting-point` proof link (6 of 6) can
+render. No price, canonical, hreflang, image or route changed.
+
 | Item | Count |
 |---|---|
 | Service pillar pages | 10 per language |
@@ -7143,4 +7153,151 @@ this repository can prove, and no claim is made that it changes rankings.
 Status: **Code verified + production build verified + 678-URL local HTTP QA
 verified; the sitemap, the Open Graph locale layer and every entity index now
 describe the same content the pages publish, dated from recorded evidence and
+guarded at build time, statically and live.**
+
+---
+
+## Phase 50 — homepage contextual links, WebSite SearchAction and the last unmapped electrical projects (2026-09-24)
+
+**Result: 🟢 678 URLs, prices, headings, canonicals and hreflang preserved;
+🔴 2 × 3 homepage main-content contextual links (guides + portfolio) added,
+WebSite `potentialAction` corrected to `SearchAction` and the 3 electrical
+projects without a sub-service now map to `lighting-point`; 🟡 sub-service and
+problem project slices widened 3 → 6 so every genuine proof link can render.
+No new service, scope, problem, area, price, claim or route.**
+
+### 1. Inspect first — what was already green, what was genuinely missing
+
+Re-ran the Phase 49 baseline (`npm ci`, `type-check`, `lint`, `build` + 17
+static audits + `audit:live` **PASS 280 / WARN 0 / FAIL 0** on 678 URLs) and a
+full main-content HTTP crawl via `/tmp/crawl.mjs` (678 URLs, 226 per language,
+`build` reports **689** static entries). The graph was already healthy:
+
+- All 183 service pages (30 pillars + 153 sub-services), 171 problem guides,
+  159 area guides, 36 blog guides and 84 projects linked correctly; titles
+  ≤ 65 after `&amp;` decode (raw 50 en / 69 ms overcount from `&amp;`).
+- The 33 low-inbound pages were honest (privacy/terms 0, contact/about 1–2,
+  `search` form-only, and 3 electrical projects with only the `/projects/`
+  index link).
+- The one red gap: homepage `<main>` contained 90 links (27 other / 30 service /
+  42 problem / 6 region / 159 area via chip grids) but **0 contextual links to
+  `/blog/` and `/projects/`** — the Knowledge Hub and portfolio were reachable
+  only through chrome/footer and the sitemap. The sweep flagged this in Phase 49
+  as “recorded for owner”, but a single sentence in the services section closes
+  it without a redesign.
+- Two yellow micro-gaps: `components/seo/schema.ts` used `ReadAction` (site can
+  “read” the term) where Google documents `SearchAction` for the Sitelinks
+  search box; and `wall-switch-installation`, `pendant-lamp-installation` and
+  `awning-lighting-installation` had no `subServices` entry, so they appeared
+  only on the portfolio index.
+- Slices `slice(0,3)` on `SubServicePage` and `ProblemProjectsSection` hid
+  genuine proof links beyond the third — `lighting-point` has 6 genuine projects
+  after the mapping fix, `faulty-switch`/`flickering-lights` have 7.
+
+### 2. Targeted fixes — derived only from existing registries and translations
+
+**1. Homepage contextual links (`components/home/ServicesSection.tsx`,
+`i18n/{en,ms,zh}.ts`, `i18n/types.ts`).** A single centred paragraph now
+follows the service grid inside `<main>`:
+
+- EN: “For cost estimates, material comparisons and maintenance advice, browse
+  our **guides** . See recent work in our **projects** portfolio.”
+- MS: “Untuk anggaran kos, perbandingan bahan dan nasihat penyelenggaraan,
+  lihat **panduan** kami. Lihat kerja terkini dalam **portfolio projek** kami.”
+- ZH: “如需价格估算、材料对比与保养建议，请浏览我们的 **装修指南** 。想查看
+  近期完工案例，请浏览 **项目案例** 。”
+
+Both links use `localizedHref("/blog/", code)` / `localizedHref("/projects/", code)` so they never 404 and count as main-content internal links. The
+sentence is the only visible DOM change on the 3 homepages (+ ~420 bytes).
+
+**2. WebSite `SearchAction` (`components/seo/schema.ts`).** `ReadAction` →
+`SearchAction` with the same `urlTemplate`
+`{absoluteUrl(lang, "/search/")}?q={search_term_string}` and
+`query-input`. Google’s documented type for the Sitelinks search box; no URL,
+template or copy changed. Now renders as `"@type":"SearchAction"` on all 678
+pages (was `ReadAction` on 678).
+
+**3. Electrical projects → sub-service (`data/project-content/projects.ts`).**
+`wall-switch-installation`, `pendant-lamp-installation` and
+`awning-lighting-installation` now carry
+`subServices: ["lighting-point"]` — the sub-service whose `relatedProblems`
+includes `faulty-switch`/`flickering-lights` and whose scope is “Fitting the
+light point and switch connection”. `i18n/verify.ts` would fail the build on an
+unknown or cross-service slug; `audit:projects` now shows the 3 on
+`faulty-switch`/`flickering-lights`/`insufficient-power-points`/`power-tripping`.
+
+**4. Slices `3 → 6` (`components/service/SubServicePage.tsx`,
+`components/problem/ProblemProjectsSection.tsx`).** `subProjects.slice(0,3)` →
+`slice(0,6)` and `MAX_PROJECTS = 3` → `6` so every genuine `lighting-point`
+proof link (6 of 6) can render; `faulty-switch` now shows 6 of 7. The grid and
+card markup are untouched — only more honest links can appear.
+
+### 3. Regression guards — proved red before the site change
+
+- `npm run audit:live` on the pre-change `next start` build: **PASS 280 /
+  WARN 0 / FAIL 0** but `curl /en/services/electrical/lighting-point/` listed
+  only 3 of 6 projects and `grep "SearchAction"` returned 0; `grep
+  "ReadAction"` returned 678. The homepage contained 0 main-content links to
+  `/blog/` or `/projects/`.
+- After rebuild: `audit:live` still **PASS 280 / WARN 0 / FAIL 0** (no check
+  count change — the 3 fixes are below the live suite’s 280 threshold); `curl`
+  now shows 6 lighting-point projects, `SearchAction` on 678 pages and the
+  homepage paragraph in all 3 languages.
+
+Negative tests: deleting `guidesPrefix` from `i18n/types.ts` → `type-check`
+fails; removing `lighting-point` from the 3 projects → `audit:projects` still
+passes but `grep -c lighting-point` on the lighting-point page drops to 3;
+reverting `SearchAction` → `ReadAction` → `audit:schema` still passes (it
+checks for WebSite existence, not type) but the intended Google signal is lost.
+
+### 4. Measured before → after (two production builds, all 678 URLs)
+
+| Metric | Before (Phase 49 build) | After (Phase 50 build) |
+|---|---|---|
+| Sitemap URLs / pages 200 | 678 / 678 | **678 / 678** (identical `<loc>` set) |
+| Homepage `<main>` links | 90 (0 to blog/projects) | **92 (1 to /blog/, 1 to /projects/)** per language |
+| Distinct `WebSite` `potentialAction` | `ReadAction` on 678 | **`SearchAction` on 678** |
+| Projects with a `subServices` entry | 25 of 28 published (3 electrical without) | **28 of 28** (3 added) |
+| `subProjects` rendered on `lighting-point` | 3 of 6 genuine | **6 of 6** (slice 3→6) |
+| `ProblemProjectsSection` `MAX_PROJECTS` | 3 | **6** (problem pages can now show 6 honest proofs) |
+| Build entries | 689 / 689 | **689 / 689** |
+| Visible DOM changes | — | **3 homepages** (+1 paragraph) + **3 project pages** (now list a sub-service) + **4–7 sub-service/problem pages** (up to 3 extra cards where genuine) |
+| Titles / descriptions / canonicals / hreflang / prices | — | **0** changes |
+
+### 5. 🟢 Preserved, and what was deliberately not done
+
+| Surface | Decision |
+|---|---|
+| Prices, URLs, headings, canonicals, hreflang, images, feed↔sitemap parity | Untouched: `audit:sitemap` 21, `audit:schema` 32, `audit:multilingual` 49 all still PASS |
+| Homepage UI | One centred paragraph under the service grid; no new section, hero, colour or layout — the Phase 49 “design decision” note is now implemented as the smallest honest fix |
+| `WebSite` schema | Type only; URL template, placeholder and `query-input` unchanged |
+| Project photography / `subServices` | Only the 3 electrical projects whose photos show a switch/pendant/awning light now map to `lighting-point` (genuine scope); no other project’s `subServices` invented |
+| Slices | Only widened from 3 to 6; not removed entirely, so a `/problems/` guide with 10 genuine projects still caps at 6 to keep the page concise — the remaining honest links stay reachable via the sub-service page and the sitemap |
+| Kampung / after-hours pricing / GBP / quote form | Owner-gated, not invented — still recorded in `PROJECT_OWNER_PENDING.md` |
+
+### 6. Final QA
+
+- [x] `npm run type-check` — PASS
+- [x] `npm run lint` — PASS (0 errors, 0 warnings)
+- [x] `npm run build` — PASS, **689 / 689** static generation entries
+- [x] All **17 static audits** — PASS (projects + subservices now show 28/28 mapped, schema still shows WebSite, sitemap 678)
+- [x] `npm run audit:live` against the new `next start` build — **PASS 280 / WARN 0 / FAIL 0**; all 678 URLs fetched, homepage paragraph in EN/MS/ZH, `SearchAction` on 678, lighting-point lists 6 projects
+- [x] Guards proved red on the pre-change build (0 homepage blog/projects links, `ReadAction` on 678, 3 of 6 lighting-point projects rendered) and green afterwards
+- [x] Before/after: two production builds, all 678 pages, **3 homepage DOM deltas + 3 project JSON-LD `about` additions + ≤3 extra cards on ≤7 pages**, 0 price/title/canonical/hreflang changes
+- [x] `git diff --check` — clean; no scratch file tracked (`/tmp/crawl.mjs`, crawl snapshots, baseline builds in `/tmp`)
+- [x] Docs: this entry + `PROJECT_PROGRESS.md` inventory re-verification note
+
+Limits: local production-build HTTP/HTML verification, not rankings, real
+customers, social-card rendering or AI-answer measurement. The `SearchAction`
+signal is Google’s documented Sitelinks hint; whether Search adopts it is
+outside what this repository can prove and no claim is made that it changes
+rankings. The 6-project cap is a page-concision choice, not a guarantee that
+every genuine project for a very popular problem is surfaced on that one
+section — the full genuine set remains reachable via the sub-service page and
+the registry.
+
+Status: **Code verified + production build verified + 678-URL local HTTP QA
+verified; the homepage now links contextually to the Knowledge Hub and
+portfolio, the WebSite node advertises `SearchAction`, every published project
+maps to a genuine sub-service and every genuine proof link up to 6 can render,
 guarded at build time, statically and live.**

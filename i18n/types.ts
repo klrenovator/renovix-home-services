@@ -123,7 +123,17 @@ export type Dictionary = {
       imageTitle: string;
       imageCaption: string;
     };
-    services: { eyebrow: string; title: string; description: string };
+    services: {
+      eyebrow: string;
+      title: string;
+      description: string;
+      /** Homepage contextual links to the Knowledge Hub and project portfolio (§50). */
+      guidesPrefix: string;
+      guidesLink: string;
+      guidesMiddle: string;
+      projectsLink: string;
+      guidesSuffix: string;
+    };
     problems: {
       eyebrow: string;
       title: string;

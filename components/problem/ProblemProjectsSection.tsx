@@ -16,7 +16,7 @@ type ProblemProjectsSectionProps = {
   lang: string;
 };
 
-const MAX_PROJECTS = 3;
+const MAX_PROJECTS = 6;
 
 /**
  * Phase 30 — project proof on problem guides (the Problem → Project edge).
