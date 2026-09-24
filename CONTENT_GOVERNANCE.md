@@ -119,6 +119,24 @@ less — quality over page count.
   `i18n/verify.ts::assertEntityNamesAreSingleSourced` fails the build;
   `audit:multilingual` checks the source and `audit:live` checks the served
   pages, chips, cards and anchors.
+- **An answer links the page it names, and the label is that page's own name
+  (Phase 51, binding).** A FAQ answer that names a page — "Visit the Service
+  Areas page", "Use the Get a Quote form" — must render that link, and its
+  anchor must be the target's published name in the answer's own language. The
+  reference lives in `SiteFaq.related` (`data/site-faqs.ts`) as a *target, never
+  a label*, and `lib/faq-links.ts` is the only place that resolves one, reading
+  every label from the target's own registry (`getServiceName`,
+  `getRegionName`, the guide's `h1`, the dictionary string the header and footer
+  already use). Never declare a relation the answer's own copy does not name;
+  never type a label into a component or a translation.
+  `audit:multilingual` checks the references and the resolver;
+  `audit:live` checks the anchors on all three served `/faq/` pages.
+- **A hub links every content layer (Phase 51).** An index or hub page's main
+  content must reach the content families the site publishes — services,
+  problems, areas, guides and projects. `/faq/` was the only page that reached
+  none of the last three from its main content while sitting in the primary
+  header nav; `audit:multilingual` now fails if it stops linking any of the
+  five.
 - **In-copy internal links are content, not decoration.** When an English
   paragraph links a service (`[label](/services/slug)`), the localized
   paragraph must stay structurally aligned with it (same paragraph count and
@@ -166,8 +184,8 @@ less — quality over page count.
    `audit:authority`, `audit:project-assets`, `audit:og-fonts`.
 3. Served-site check: new/changed URLs return 200, canonicals match the
    sitemap, hreflang resolves, JSON-LD valid, `<title>` fits the 65-character
-   budget with the brand intact and is unique in its language, no console
-   errors.
+   budget with the brand intact and is unique in its language, every internal
+   link resolves, no console errors.
 4. `git status` / `git diff` reviewed: no debug code, temp files, secrets,
    accidental edits or (especially) parallel-edit corruption — verify hunk
    counts and file tails.

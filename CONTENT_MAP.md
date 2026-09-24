@@ -45,10 +45,25 @@ Sub-service link graph — one authored direction, every link derived from it:
 
 | Edge | Source of truth | Rendered on |
 | --- | --- | --- |
+| site FAQ → the page its own copy names | `SiteFaq.related` (`data/site-faqs.ts`) resolved by `lib/faq-links.ts` | `/faq/` answer blocks — 1 of every answer that names a page (Phase 51) |
+| `/faq/` → services, problems, areas, guides, projects | the hub's own browse list in `app/[lang]/faq/page.tsx` | `/faq/` aside — all 5 content families (Phase 51) |
 | service → its sub-services | `getSubServicesByService` | service pillar (Phase 28) |
 | service → its own problem guides | the `relatedService` each guide declares, restated in the pillar's `relatedProblems` | service pillar's related-problems block (Phase 40) |
 | problem → the scopes that fix it | inverse of each sub-service's `relatedProblems` (`getSubServicesForProblem`); since Phase 46 **every** one of the 57 guides is declared by at least one scope (`audit:subservices` fails on an orphaned guide; `audit:live` proves all 171 rendered guide pages link a scope) | problem guide (Phase 28) |
 | area → the scopes carried out there | published intent-matrix entries for the location, then `getSubServicesForProblem` over the area's own locally common problems (`getSubServicesForLocation`) | area guide's services section (Phase 29) |
+
+Since Phase 51 the answer surface carries its own links: every `/faq/` answer
+whose copy names a page renders that page, and the hub's browse list links all
+five content families. `SiteFaq.related` holds **references only** (service,
+area region, guide slug, route) and `lib/faq-links.ts` is the single place that
+turns one into an anchor — the label is always the target's own published name
+in that language, so the Phase 47 rule holds and a translation cannot carry an
+English label. Nothing is declared that the answer's own text does not name: no
+FAQ links a sub-service, an individual problem guide, an area guide or a
+project, because none of the 18 answers names one, and `send-photos` links
+nothing at all. `npm run audit:multilingual` checks the references against the
+registries; `npm run audit:live` checks the anchors on all three served `/faq/`
+pages.
 
 Rendered graph is enforced by `npm run audit:subservices` §5–§6 (wiring),
 `npm run audit:authority` §3b (the service ↔ problem edge is reciprocal — a
@@ -56,8 +71,8 @@ guide's owning service must link it back, Phase 40),
 `npm run audit:multilingual` (no label is built by humanizing a slug; since
 Phase 39 also that the in-copy links survive translation — aligned paragraphs,
 published targets, localized anchor text, no page left without them) and
-`npm run audit:live` (no orphans, every sub-service page linked from its own
-pillar and back, every problem guide linked from the service pillar that owns
+`npm run audit:live` (no orphans, every `/faq/` answer link rendered in its own
+language, every sub-service page linked from its own pillar and back, every problem guide linked from the service pillar that owns
 it, every area guide linked to its scopes, no English slug label on a `/ms/` or
 `/zh/` page, no internal link to an unserved URL, and — since Phase 39 — every
 pillar and location page rendering its in-copy links in all three languages

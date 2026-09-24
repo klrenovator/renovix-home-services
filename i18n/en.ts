@@ -1090,6 +1090,9 @@ export const en: Dictionary = {
       "These answers describe the current service structure and next steps. For service-specific scope, follow the links in each relevant answer.",
     browseServices: "Browse all services",
     exploreAreas: "Explore service areas",
+    browseProblems: "Browse all problems",
+    exploreGuides: "Explore the guides",
+    viewProjects: "See recent projects",
     ctaEyebrow: "Still have a question?",
     ctaTitle: "Share the job details and the question you need answered",
     ctaDescription:

@@ -79,6 +79,21 @@ published projects mapped, was 25), and the sub-service/problem project slices
 were widened 3 → 6 so every genuine `lighting-point` proof link (6 of 6) can
 render. No price, canonical, hreflang, image or route changed.
 
+Phase 51 re-verification (2026-09-24): all inventory counts, all 678 URLs and
+all 689 static generation entries remain unchanged. The site's answer surface
+(`/faq/`, reachable from the header, footer and homepage) was the one hub on the
+site whose main content carried **0 links** into the problem library, the
+Knowledge Hub and the portfolio, and **6 of its 18 answers named a page
+outright** — "Visit the Service Areas page", the Get-a-Quote form, the Kuala
+Lumpur and Selangor coverage sections, condo renovation approvals — while
+rendering no link at all. Every FAQ now links the page its own copy names, and
+the hub's existing browse list gained the three content layers it was missing.
+An independent before/after crawl of all 678 pages found exactly **3 pages
+changed** (`/en/faq/`, `/ms/faq/`, `/zh/faq/`, +9 anchors each) and **0 changes**
+to any page's status, `<title>`, canonical, meta description, H1 or JSON-LD
+block count; the whole-site source→target link matrix changed in exactly one
+row.
+
 | Item | Count |
 |---|---|
 | Service pillar pages | 10 per language |
@@ -96,8 +111,11 @@ render. No price, canonical, hreflang, image or route changed.
 | Static generation entries | **689** (`next build` progress total; distinct from the 678 canonical sitemap URLs) |
 | Pricing rows (`data/pricing/pricing.ts`) | **51** |
 | Search-intent matrix entries | **24** (all pricing derived from `pricingId`) |
-| Audit scripts | 17 static + 1 live server QA (**280** served-site checks after Phase 49; 271 after Phase 48, 270 after Phase 47, 259 after Phase 46) |
+| Audit scripts | 17 static + 1 live server QA (**284** served-site checks after Phase 51; 280 after Phase 49, 271 after Phase 48, 270 after Phase 47, 259 after Phase 46) |
 | In-copy contextual links (rendered anchors) | **313 EN / 362 MS / 364 ZH** (Phase 39) |
+| FAQ hub rendered main-content links per language | **26** (was 17; Phase 51) — all 5 content families (services, problems, areas, guides, projects) plus the 17 anchors the 18 answers resolve to |
+| FAQ answers linking the page their own copy names | **17 of 18** (Phase 51; was **11 of 18** — 6 answers named a page and rendered no link, and `send-photos` names no page so it correctly links none) |
+| Site-wide rendered main-content internal links | **46,114** (Phase 51; was 46,087 — +9 anchors on each of the 3 `/faq/` pages) |
 | Region hub → Knowledge Hub guide links (rendered) | **72** (6 hubs × 12 guides; Phase 41, was 0) |
 | Knowledge Hub guide → related region hub links (rendered in main) | **72** (36 guides × 2 hub links; Phase 48, was 0; all 72 reciprocal with the existing hub → guide links) |
 | Knowledge Hub ↔ quoted-scope links (rendered, both directions) | **144 + 144** (48 quoted price rows × 3 languages; Phase 45, was 75 + 75 with 31 quoted scopes unlinked) |
@@ -7301,3 +7319,188 @@ verified; the homepage now links contextually to the Knowledge Hub and
 portfolio, the WebSite node advertises `SearchAction`, every published project
 maps to a genuine sub-service and every genuine proof link up to 6 can render,
 guarded at build time, statically and live.**
+
+---
+
+## Phase 51 — the answer surface now links the page its own copy names (2026-09-24)
+
+**Result: 🟢 678 URLs, prices, headings, canonicals, hreflang, images and
+JSON-LD preserved; 🔴 6 site FAQs that named a page and rendered no link now
+render it, and the `/faq/` hub gained the 3 content layers it was the only hub
+on the site not to link; 🟡 the FAQ link layer is now guarded at the source and
+on the served HTML. No new service, scope, problem, area, price, claim or
+route.**
+
+### 1. Inspect first — what was already green, what was genuinely missing
+
+Re-ran the whole baseline on a fresh `npm ci`: `type-check`, `lint`, `build`
+(**689 / 689** static entries), all **17 static audits** PASS and
+`npm run audit:live` **PASS 280 / WARN 0 / FAIL 0** on all 678 URLs. Then
+crawled every sitemap URL (`/tmp/crawl.mjs`) and built two independent views of
+the rendered link graph:
+
+- a **source-family → target-family matrix** (`/tmp/matrix.mjs`, same-language
+  links only, self-family edges excluded), and
+- the **intra-family** edge counts (`/tmp/intra.mjs`).
+
+Everything except one page family was already healthy: pillars link their
+sub-services, problems, areas and projects; sub-services link problems and
+areas; problems link sub-services and projects; area guides link nearby areas;
+blog guides link out to 5 families and back to the region hubs; projects reuse
+the registries.
+
+The one empty row in the matrix was **`/faq/`**. Measured on all 678 served
+pages:
+
+| Family edge, `/faq/` main content | Before | Why it mattered |
+|---|---|---|
+| → problem library index | **0** | the symptom library was unreachable from the site's answer page |
+| → Knowledge Hub index and guides | **0 / 0** | same for the 12 guides |
+| → portfolio index and projects | **0 / 0** | same for the 28 projects |
+| → region hubs | **0** | while the answer below literally names Kuala Lumpur and Selangor coverage |
+| → area guides, sub-services, individual problems | 0 | correctly 0 — no answer names one, and inventing the relation is not an option |
+
+It was also the least-linked main-content page on the site (1 inbound link, from
+the homepage), while sitting in the **primary header nav**. Two measured
+defects, both verifiable against the page's own copy:
+
+1. **6 of the 18 answers named a page and rendered no link**, although the
+   aside promises "follow the links in each relevant answer":
+   `services-provided` (enumerates the ten trades), `request-quote` ("Use the
+   Get a Quote form"), `areas-covered` ("Visit the Service Areas page"),
+   `kuala-lumpur` and `selangor` (the coverage sections), and `condos`
+   ("renovation approvals"). Only **11 of 18** rendered any link at all
+   (grep counted 12 `relatedServiceSlug` hits — the 12th was the optional type
+   declaration — and the crawl corroborated 11 × 3 = 33 pillar links).
+2. **The hub linked none of the three content layers** every other index page
+   on the site links in full (`/services/` → 10 pillars, `/problems/` → 57
+   guides, `/areas/` → 53 + 2, `/blog/` → 12, `/projects/` → 28).
+
+### 2. Targeted fixes — derived only from existing registries and translations
+
+**1. One general FAQ link model (`data/site-faqs.ts`).** The single
+`relatedServiceSlug?: string` field became a tagged `related?: FaqRelated[]`
+union — `service` | `areaRegion` | `article` | `route` — where every entry is a
+**reference to a registry**, never a label. The 11 existing service references
+were converted unchanged.
+
+**2. One resolver (`lib/faq-links.ts`, new).** `resolveFaqLinks(faq, lang)`
+turns each reference into `{ label, href }` and is the only place that decides
+them:
+
+- **href** — entity targets go through `contentHref`, so an untranslated
+  target yields `null` and the caller renders plain text instead of a 404 link
+  (the guard every other internal link on the site uses); routes normalize
+  through `localizedHref`.
+- **label** — always the target's own published name: `getServiceName` /
+  `getRegionName` (the accessors Phase 47 made every other label read from),
+  a guide's own `h1` (the string the Knowledge Hub index, its `ItemList` node
+  and its cards publish), and — for routes — the exact dictionary string the
+  header and footer already link that page with (`t.nav.services`,
+  `t.nav.areas`, `t.cta.getQuote`). Nothing is hand-typed, so the Phase 47 rule
+  holds: an anchor cannot advertise something different from the page it opens,
+  and a translation cannot carry an English label.
+- **prefix** — `t.faq.explorePrefix` + entity name, kept verbatim so the 11
+  existing service anchors ("Explore Electrical") are byte-identical.
+
+**3. The six missing links, in all three languages.** `services-provided` →
+`/services/`, `request-quote` → `/quote/`, `areas-covered` → `/areas/`,
+`kuala-lumpur` → `/areas/kuala-lumpur/`, `selangor` → `/areas/selangor/`,
+`condos` → `/blog/condo-renovation-approval-checklist/`. Rendered labels are
+each page's own name in that language — e.g. `Areas We Serve` / `Kawasan` /
+`服务地区`, and the guide's own localized H1
+(`Senarai Semak Kelulusan Renovasi Kondominium untuk KL & Selangor`,
+`吉隆坡与雪兰莪公寓装修准证申请清单`). `send-photos` stays unlinked: it names a
+channel, not a page.
+
+**4. The hub's three missing layers (`app/[lang]/faq/page.tsx`).** The aside's
+existing "browse" list (which already held `Browse all services` and
+`Explore service areas`) gained `Browse all problems`, `Explore the guides`
+and `See recent projects` — the same row component and the same class string,
+no new section, no layout change. Three new keys
+(`browseProblems`, `exploreGuides`, `viewProjects`) were added to
+`i18n/types.ts` and all three dictionaries.
+
+### 3. Regression guards — proved red before the site change
+
+- **`npm run audit:multilingual`** (49 → **54** checks) now verifies at the
+  source that every declared FAQ target resolves to a **published registry
+  entry** (services, region hubs, real blog slugs, known routes), that
+  `FaqAccordion` resolves only through `lib/faq-links.ts`, that the resolver
+  still reads every label from an accessor and names routes with the dictionary
+  the chrome uses, that the FAQ page links all five content families, and that
+  all three dictionaries carry the three new keys.
+- **`npm run audit:live`** (280 → **284** checks) verifies the **served** HTML:
+  all three `/faq/` pages link all 5 families and the 3 entity targets their
+  answers name; no anchor uses a raw slug; a `/ms/` or `/zh/` page may not
+  publish the English anchor text; and all three hubs must render the same
+  number of target anchors.
+- Negative tests, each proved red then restored: an unresolvable service slug
+  → `✗ … not a published registry entry: service:tilingg`; a bad blog slug →
+  `✗ … article:condo-approvals-nope`; bypassing the resolver →
+  `✗ FaqAccordion.tsx no longer resolves its links through lib/faq-links.ts`;
+  removing the portfolio row → `✗ … no longer links the portfolio (/projects)`;
+  deleting the Chinese `viewProjects` key → `✗ i18n/zh.ts is missing the FAQ hub
+  label viewProjects`. On a rebuilt negative binary (rows removed) `audit:live`
+  reported **FAIL 3** — `/en|ms|zh/faq/ main content does not link /problems/,
+  /blog/, /projects/`.
+- The guard's own first draft used `[a-z]+` for the target kind and silently
+  skipped both camel-cased `areaRegion` targets (15 of 17); found by reading its
+  own output, fixed to `[a-zA-Z]+`, and the check now reports **17 targets
+  across 4 kinds**.
+
+### 4. Measured before → after (two production builds, all 678 URLs)
+
+| Metric | Before | After |
+|---|---|---|
+| Sitemap URLs / pages 200 | 678 / 678 | **678 / 678** (identical `<loc>` set) |
+| Build entries | 689 / 689 | **689 / 689** |
+| Site-wide rendered main-content links | 46,087 | **46,114** (+27 = +9 × 3) |
+| `/faq/` main-content links per language | 17 | **26** |
+| FAQ answers rendering a link | 11 of 18 | **17 of 18** |
+| `/faq/` → problem library / guides / portfolio indexes | 0 / 0 / 0 | **3 / 3 / 3** (all 3 languages) |
+| `/faq/` → region hubs / guide / guide index | 0 / 0 / 0 | **6 / 3 / 3** |
+| `/faq/` → services index / areas index / quote | 3 / 3 / 6 | **6 / 6 / 9** |
+| `/faq/` → sub-service, individual problem, area guide, project | 0 / 0 / 0 / 0 | **0 / 0 / 0 / 0** (no answer names one — still correct) |
+| Pages with any changed rendered link set | — | **3** (`/en/faq/`, `/ms/faq/`, `/zh/faq/`, +6 distinct hrefs each) |
+| Changed `<title>` / canonical / description / H1 / JSON-LD block count / status | — | **0 of 678** each |
+| Whole-site source→target matrix rows changed | — | **1** (the `/faq/` row) |
+| 17 static audits / live QA | PASS / 280 | **PASS / 284, WARN 0, FAIL 0** |
+
+### 5. 🟢 Preserved, and what was deliberately not done
+
+| Surface | Decision |
+|---|---|
+| Prices, URLs, headings, canonicals, hreflang, images, schema, feed↔sitemap parity | Untouched: `audit:pricing`, `audit:schema`, `audit:sitemap`, `audit:locations` all still PASS |
+| The 11 existing FAQ anchors | Byte-identical ("Explore Electrical", "Terokai Kerja Elektrik", "了解 电气工程") — `explorePrefix` kept verbatim |
+| FAQ questions and answers | **Not one character changed** in any language; only links were added beside them. So the `FAQPage` nodes (homepage and `/faq/`) still describe exactly the copy the page renders |
+| Homepage FAQ preview (`FAQPreview`) | Left alone deliberately: it renders 6 answers with no links, but its own copy says "Visit the full FAQ for service-specific answers, **areas** and quote guidance" and it already links `/faq/` (the page's only main-content inbound link). The deep links belong on the hub, and the smallest honest change was to put them there |
+| FAQ hub aside UI | Three rows appended to the existing `space-y-3` list, same row markup and class string as the two already there; no new section, heading, colour or layout |
+| Relations not declared | No FAQ was given a sub-service, individual problem guide, area guide or project target: none of the 18 answers names one, and the matrix deliberately still shows 0 for each |
+| `/faq/` inbound link count | Still 1 (the homepage). Recorded, not changed: adding a "view all FAQs" link to ~570 pages' FAQ sections is a site-wide UI decision, not a defect with a one-line fix |
+| Kampung tier, owner data, reviews, after-hours pricing, Chinese locality names | Owner-gated, not invented — still in `PROJECT_OWNER_PENDING.md` |
+
+### 6. Final QA
+
+- [x] `npm run type-check` — PASS
+- [x] `npm run lint` — PASS (0 errors, 0 warnings)
+- [x] `npm run build` — PASS, **689 / 689** static generation entries
+- [x] All **17 static audits** — PASS, including `audit:multilingual` at 54 checks
+- [x] `npm run audit:live` against the final `next start` build — **PASS 284 / WARN 0 / FAIL 0**; all 678 URLs fetched, all three `/faq/` pages verified against the served HTML
+- [x] Guards proved red on a rebuilt negative binary and on 5 source-level regressions, then green after restore
+- [x] Before/after: two production builds, all 678 pages, **3 pages changed, 6 new hrefs each, 0 changes in any other measured field**
+- [x] Whole-site link matrix: exactly one row changed
+- [x] `git status` reviewed — no scratch file tracked (`/tmp/*.mjs`, baseline crawls and the negative build live in `/tmp`)
+- [x] Docs: this entry + the inventory rows and re-verification note above + `CONTENT_MAP.md` §1 link-graph table + `CONTENT_GOVERNANCE.md` §5
+
+Limits: local production-build HTTP/HTML verification, not rankings, real
+customers or AI-answer measurement. The new FAQ anchors are honest internal
+links between pages that already existed; no claim is made about how any engine
+weights them. The link model allows several targets per answer, but every FAQ
+declares exactly one today and nothing here asserts that a FAQ must have a link
+— `send-photos` correctly has none.
+
+Status: **Code verified + production build verified + 678-URL local HTTP QA
+verified; every site FAQ now links the page its own copy names, the answer hub
+links all five content families, and both rules are guarded at build time,
+statically and on the served HTML.**

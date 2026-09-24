@@ -1,9 +1,7 @@
 import Link from "next/link";
 import { IconArrowRight, IconChevronDown } from "@/components/icons";
 import { getLanguageCode } from "@/data/languages";
-import { getServiceName } from "@/data/i18n";
-import { getDictionary } from "@/i18n";
-import { contentHref } from "@/i18n/hrefs";
+import { resolveFaqLinks } from "@/lib/faq-links";
 import type { SiteFaq } from "@/data/site-faqs";
 
 type FaqAccordionProps = {
@@ -13,17 +11,16 @@ type FaqAccordionProps = {
 
 export function FaqAccordion({ faqs, lang }: FaqAccordionProps) {
   const code = getLanguageCode(lang);
-  const t = getDictionary(code);
 
   return (
     <div className="space-y-3">
       {faqs.map((faq) => {
-        const serviceName = faq.relatedServiceSlug
-          ? getServiceName(faq.relatedServiceSlug, code)
-          : undefined;
-        const href = faq.relatedServiceSlug
-          ? contentHref("service", faq.relatedServiceSlug, code)
-          : null;
+        // Phase 51 — every link is resolved from the target's own registry
+        // (name, href and translation availability) by `resolveFaqLinks`, so an
+        // answer links the page its own copy names, in its own language, and a
+        // target without a complete translation degrades to plain text instead
+        // of a dead link.
+        const links = resolveFaqLinks(faq, code);
 
         return (
           <details
@@ -36,14 +33,19 @@ export function FaqAccordion({ faqs, lang }: FaqAccordionProps) {
             </summary>
             <div className="pr-7">
               <p className="mt-3 text-sm leading-6 text-secondary">{faq.answer}</p>
-              {serviceName && href ? (
-                <Link
-                  href={href}
-                  className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-brand transition-colors hover:text-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
-                >
-                  {t.faq.explorePrefix} {serviceName}
-                  <IconArrowRight className="h-4 w-4" />
-                </Link>
+              {links.length > 0 ? (
+                <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2">
+                  {links.map((link) => (
+                    <Link
+                      key={link.href}
+                      href={link.href}
+                      className="inline-flex items-center gap-1.5 text-sm font-semibold text-brand transition-colors hover:text-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                    >
+                      {link.label}
+                      <IconArrowRight className="h-4 w-4" />
+                    </Link>
+                  ))}
+                </div>
               ) : null}
             </div>
           </details>

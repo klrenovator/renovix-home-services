@@ -103,6 +103,34 @@ export default async function FaqPage({ params }: FaqPageProps) {
                 {t.faq.exploreAreas}
                 <IconMapPin className="h-4 w-4 text-brand" />
               </Link>
+              {/* Phase 51 — the three content layers this hub was the only
+                  index page on the site not to link. A measured crawl of all
+                  678 pages found `/faq/`'s main content carried 0 links to the
+                  problem library, the Knowledge Hub and the portfolio, while
+                  `/services/`, `/problems/`, `/areas/`, `/blog/` and
+                  `/projects/` each link their own family in full. Same row
+                  component and classes as the two above; no new section. */}
+              <Link
+                href={localizedHref("/problems", code)}
+                className="flex items-center justify-between rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-navy transition-colors hover:border-brand/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+              >
+                {t.faq.browseProblems}
+                <IconArrowRight className="h-4 w-4 text-brand" />
+              </Link>
+              <Link
+                href={localizedHref("/blog", code)}
+                className="flex items-center justify-between rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-navy transition-colors hover:border-brand/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+              >
+                {t.faq.exploreGuides}
+                <IconArrowRight className="h-4 w-4 text-brand" />
+              </Link>
+              <Link
+                href={localizedHref("/projects", code)}
+                className="flex items-center justify-between rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-navy transition-colors hover:border-brand/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+              >
+                {t.faq.viewProjects}
+                <IconArrowRight className="h-4 w-4 text-brand" />
+              </Link>
             </div>
           </aside>
 

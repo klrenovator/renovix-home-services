@@ -846,6 +846,150 @@ for (const lang of AREA_LANGS) {
   }
 }
 
+/* ------------------------------------------------------------------------ */
+/* Phase 51 — the answer surface links the page its own copy names            */
+/*                                                                           */
+/* The site FAQ answers were the last content surface with a one-way link     */
+/* policy: 12 of the 18 answers linked their service pillar, and the other 6   */
+/* named a page outright — "Visit the Service Areas page", the Kuala Lumpur   */
+/* and Selangor coverage sections, the Get a Quote form — while rendering no  */
+/* link at all, and the page carried 0 main-content links to the problem      */
+/* library, the Knowledge Hub and the portfolio that every other index page   */
+/* links in full.                                                             */
+/*                                                                           */
+/* Two rules keep that closed:                                                */
+/*                                                                           */
+/* 1. every declared target must be a real published registry entry, so a     */
+/*    typo cannot ship a dead or invented link, and a route target must be    */
+/*    one the resolver actually knows;                                       */
+/* 2. every label must be *read* from the target's own registry, not typed    */
+/*    into a component or a translation — the Phase 47 rule applied to the    */
+/*    answer surface. A hardcoded label here would let an anchor advertise    */
+/*    something different from the page it opens, in one language only.       */
+/* ------------------------------------------------------------------------ */
+
+const faqSource = read("data/site-faqs.ts");
+const faqResolver = read("lib/faq-links.ts");
+const faqAccordion = read("components/faq/FaqAccordion.tsx");
+const faqPage = read("app/[lang]/faq/page.tsx");
+
+const articleSlugs = [];
+for (const file of fs.readdirSync(path.join(root, "data/blog/content"))) {
+  if (!file.endsWith(".ts")) continue;
+  const m = read(path.join("data/blog/content", file)).match(/^\s{2}slug: "([^"]+)",/m);
+  if (m) articleSlugs.push(m[1]);
+}
+
+const declaredTargets = [
+  // `[a-zA-Z]` — `areaRegion` is camel-cased, and a `[a-z]+` class silently
+  // skipped both region targets (caught by this guard's own target count).
+  ...faqSource.matchAll(/\{ kind: "([a-zA-Z]+)", (?:slug|route): "([^"]+)" \}/g),
+].map((m) => ({ kind: m[1], id: m[2] }));
+
+// `FaqRelated` needs to allow any of these; a kind the union does not declare
+// would be dropped silently by the resolver's discriminated union.
+const KNOWN_KINDS = ["service", "areaRegion", "article", "route"];
+const KNOWN_ROUTES = [...faqSource.matchAll(/FaqRouteKey = ([^;]+);/g)]
+  .flatMap((m) => [...m[1].matchAll(/"([^"]+)"/g)].map((x) => x[1]));
+
+const unknownKind = declaredTargets.filter((t) => !KNOWN_KINDS.includes(t.kind));
+const unresolved = declaredTargets.filter((t) => {
+  if (t.kind === "service") return !inventories.ALL_SERVICES.includes(t.id);
+  if (t.kind === "areaRegion") return !inventories.ALL_AREA_REGIONS.includes(t.id);
+  if (t.kind === "article") return !articleSlugs.includes(t.id);
+  if (t.kind === "route") return !KNOWN_ROUTES.includes(t.id);
+  return true;
+});
+
+if (faqSource.includes("relatedServiceSlug")) {
+  fail("data/site-faqs.ts fell back to the retired single-target `relatedServiceSlug` field");
+} else if (declaredTargets.length === 0) {
+  fail("data/site-faqs.ts declares no FAQ link targets at all — the answer surface went dark again");
+} else if (unknownKind.length) {
+  fail(`data/site-faqs.ts declares unknown FAQ target kinds: ${unknownKind.map((t) => t.kind).join(", ")}`);
+} else if (unresolved.length) {
+  fail(
+    "data/site-faqs.ts links a target that is not a published registry entry: " +
+      unresolved.map((t) => `${t.kind}:${t.id}`).join(", "),
+  );
+} else {
+  pass(
+    `every FAQ link target resolves to a published registry entry (${declaredTargets.length} targets across ${[...new Set(declaredTargets.map((t) => t.kind))].length} kinds)`,
+  );
+}
+
+// The accordion must resolve through the one accessor, and the resolver must
+// read every label from a registry — a literal label string is the defect.
+if (!faqAccordion.includes("resolveFaqLinks(")) {
+  fail("FaqAccordion.tsx no longer resolves its links through lib/faq-links.ts");
+} else if (/relatedServiceSlug|getServiceName\(/.test(faqAccordion)) {
+  fail("FaqAccordion.tsx resolves a FAQ label itself instead of through the shared resolver");
+} else {
+  pass("FaqAccordion.tsx renders only the links lib/faq-links.ts resolves");
+}
+
+for (const accessor of [
+  "getServiceName",
+  "getRegionName",
+  "getArticleText",
+  "hasArticleTranslation",
+  "contentHref",
+  "localizedHref",
+]) {
+  if (!faqResolver.includes(accessor)) {
+    fail(`lib/faq-links.ts no longer derives a FAQ target through ${accessor}()`);
+  }
+}
+
+const routeBlock = faqResolver.slice(faqResolver.indexOf("ROUTE_TARGETS"));
+if (!/t\.nav\.services/.test(routeBlock) || !/t\.nav\.areas/.test(routeBlock) || !/t\.cta\.getQuote/.test(routeBlock)) {
+  fail("lib/faq-links.ts no longer names route targets with the dictionary string the header and footer use");
+} else {
+  pass("lib/faq-links.ts reads every route label from the dictionary the site chrome already links it with");
+}
+
+for (const [label, rx] of [
+  ["service", /getServiceName\(/],
+  ["region", /getRegionName\(/],
+  ["guide", /getArticleText\(/],
+]) {
+  if (!rx.test(faqResolver)) fail(`lib/faq-links.ts no longer reads the ${label} label from its own registry`);
+}
+
+// The hub itself: the three content layers the page used to be alone in not
+// linking. The label text is checked by audit:live against the served pages.
+for (const [family, route] of [
+  ["problem library", "/problems"],
+  ["Knowledge Hub", "/blog"],
+  ["portfolio", "/projects"],
+  ["services index", "/services"],
+  ["areas index", "/areas"],
+]) {
+  if (!faqPage.includes(`localizedHref("${route}", code)`)) {
+    fail(`app/[lang]/faq/page.tsx no longer links the ${family} (${route})`);
+  }
+}
+if (
+  new Set(
+    [...faqPage.matchAll(/localizedHref\("(\/[a-z-]+)", code\)/g)].map((m) => m[1]),
+  ).size >= 5
+) {
+  pass("app/[lang]/faq/page.tsx links all five content families (services, problems, areas, guides, projects)");
+} else {
+  fail("app/[lang]/faq/page.tsx links fewer than five content families");
+}
+
+// The three new row labels must exist in all three dictionaries — a missing MS
+// or ZH string would fall back to English on a localized page.
+for (const key of ["browseProblems", "exploreGuides", "viewProjects"]) {
+  for (const lang of ["en", "ms", "zh"]) {
+    if (!new RegExp(`\\b${key}:\\s*"`, "m").test(read(`i18n/${lang}.ts`))) {
+      fail(`i18n/${lang}.ts is missing the FAQ hub label ${key}`);
+    }
+  }
+}
+pass("all three FAQ hub row labels are present in EN/MS/ZH");
+
 if (failures.length) {
   console.log(`\nFAIL — ${failures.length} issue(s)`);
   process.exit(1);
