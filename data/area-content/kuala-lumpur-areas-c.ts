@@ -502,7 +502,7 @@ export const klAreasC: AreaDetail[] = [
       "water-leakage",
       "mouldy-walls",
     ],
-    nearbyAreas: ["mont-kiara", "segambut", "damansara-heights"],
+    nearbyAreas: ["mont-kiara", "segambut", "damansara-heights", "taman-tun-dr-ismail"],
   },
   {
     region: "kuala-lumpur",
@@ -666,6 +666,6 @@ export const klAreasC: AreaDetail[] = [
       "water-damaged-ceiling",
       "bathroom-leakage",
     ],
-    nearbyAreas: ["bangsar", "old-klang-road", "petaling-jaya"],
+    nearbyAreas: ["bangsar", "old-klang-road", "petaling-jaya", "kl-city-centre", "taman-desa"],
   },
 ];

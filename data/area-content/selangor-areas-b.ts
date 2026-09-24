@@ -157,7 +157,7 @@ export const selangorAreasB: AreaDetail[] = [
     ],
     relatedServices: ["plumbing", "waterproofing", "general-renovation", "painting"],
     relatedProblems: ["bathroom-leakage", "old-house-wiring", "blocked-drain", "toilet-problems"],
-    nearbyAreas: ["serdang", "balakong", "puchong"],
+    nearbyAreas: ["serdang", "balakong", "puchong", "kajang", "semenyih", "bandar-kinrara"],
   },
   {
     region: "selangor",
@@ -631,7 +631,7 @@ export const selangorAreasB: AreaDetail[] = [
     ],
     relatedServices: ["general-renovation", "plumbing", "waterproofing", "flooring"],
     relatedProblems: ["bathroom-leakage", "leaking-pipe", "tile-grout-problems", "uneven-paint"],
-    nearbyAreas: ["bandar-utama", "mutiara-damansara", "sungai-buloh"],
+    nearbyAreas: ["bandar-utama", "mutiara-damansara", "sungai-buloh", "petaling-jaya"],
   },
   {
     region: "selangor",
@@ -789,7 +789,14 @@ export const selangorAreasB: AreaDetail[] = [
     ],
     relatedServices: ["general-renovation", "plumbing", "waterproofing", "painting"],
     relatedProblems: ["roof-leakage", "old-house-wiring", "water-leakage", "mouldy-walls"],
-    nearbyAreas: ["bandar-sri-damansara", "kota-damansara", "kepong"],
+    nearbyAreas: [
+      "bandar-sri-damansara",
+      "kota-damansara",
+      "kepong",
+      "desa-parkcity",
+      "rawang",
+      "batu-caves",
+    ],
   },
   {
     region: "selangor",
@@ -1105,7 +1112,7 @@ export const selangorAreasB: AreaDetail[] = [
     ],
     relatedServices: ["general-renovation", "waterproofing", "painting", "plumbing"],
     relatedProblems: ["roof-leakage", "mouldy-walls", "old-house-wiring", "water-leakage"],
-    nearbyAreas: ["kajang", "bangi", "seri-kembangan"],
+    nearbyAreas: ["kajang", "bangi", "seri-kembangan", "rawang", "bandar-mahkota-cheras"],
   },
   {
     region: "selangor",
@@ -1263,6 +1270,6 @@ export const selangorAreasB: AreaDetail[] = [
     ],
     relatedServices: ["general-renovation", "waterproofing", "plumbing", "painting"],
     relatedProblems: ["bathroom-leakage", "leaking-pipe", "roof-leakage", "blocked-drain"],
-    nearbyAreas: ["bandar-sunway", "subang-jaya", "puchong"],
+    nearbyAreas: ["bandar-sunway", "subang-jaya", "puchong", "klang", "bandar-baru-klang"],
   },
 ];
