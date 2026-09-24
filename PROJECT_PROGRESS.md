@@ -7655,3 +7655,55 @@ so MS and ZH render correctly (e.g. Sentul now shows 甘榜峇鲁 on `/zh/`).
 
 **Status:** **🟢 complete.** Internal linking between areas is now symmetric;
 all previously correct SEO/GEO/AEO work is preserved.
+
+
+---
+
+## Phase 54 — preservation-first SEO/GEO/AEO re-verification (2026-09-24)
+
+**Result: 🟢 the current implementation is sound; no website-code change was
+warranted.** This is a fresh review of the checked-out project state, not an
+assumption that an earlier phase left work pending. The verification was run on
+`arena/01a0d176-renovix-home-services`.
+
+### 1. Current inventory and structure confirmed
+
+The source registries still publish 10 service pillars, 51 sub-service pages,
+57 problem guides, 53 area guides, 2 region hubs, 12 Knowledge Hub guides and
+28 project pages. The locality tier was inspected rather than inferred: the
+published `kampung`-level record is **Kampung Baru**, with its dedicated area
+guide, distinct local context, localized copy, service/problem/nearby links,
+and an entry in the areas index's district explorer. Other mentions of
+kampung-style housing remain context in existing area guides, not evidence for
+inventing more locality URLs.
+
+### 2. 🟢 Correct surfaces verified and left untouched
+
+- Prices and pricing rows, existing URLs/pages/features, UI and branding,
+  canonical/hreflang/schema, sitemap and AI feeds.
+- The existing service ↔ sub-service ↔ problem ↔ area ↔ guide ↔ project
+  relationships and the Phase 53 reciprocal nearby-area graph.
+- EN/MS/ZH coverage and localized labels. The live checks confirm each locality
+  chip/anchor uses the name its own target page publishes.
+- Project locations and further locality coverage remain owner/data gated;
+  no client address, service coverage, project detail, review or business claim
+  was added or guessed.
+
+### 3. QA performed
+
+- [x] `npm ci` — PASS; 0 vulnerabilities reported.
+- [x] `npm run type-check` — PASS.
+- [x] `npm run lint` — PASS (0 errors, 0 warnings).
+- [x] `npm run build` — PASS; **689 / 689** static generation entries.
+- [x] All **17 static audits** — PASS, including location reciprocity,
+      multilingual coverage, pricing, schema, routes and sitemap checks.
+- [x] Fresh production `next start` + `npm run audit:live` — **PASS 284 / 284,
+      WARN 0, FAIL 0**; all **678 / 678** sitemap URLs returned 200.
+- [x] Live link-graph QA: no orphan pages; every internal link resolves;
+      all 159 localized area-guide pages link to their real scopes; all 3
+      Kampung Baru language routes are included in the complete sitemap sweep.
+- [x] `git diff --check` — PASS. No generated artifacts or dependency changes
+      are tracked.
+
+**Status:** **🟢 verified and stable. No SEO/GEO/AEO defect justified a site
+change; existing work is preserved.** Only this progress record was updated.
