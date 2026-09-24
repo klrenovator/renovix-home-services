@@ -282,12 +282,20 @@ for (const lang of ["ms", "zh"]) {
     if (untranslated.length > 0) {
       fail(`${lang}.ts: ${entry.id} repeats English factor text verbatim: ${untranslated.map((t) => `"${t}"`).join(", ")}`);
     }
+    if (
+      entry.id === "electrical-troubleshoot" &&
+      [...english, ...factors].some((text) => /after[ -]?hours|di luar waktu kerja|非工作时间|非工作時段/i.test(text))
+    ) {
+      fail(`${lang}.ts: electrical-troubleshoot still publishes the withdrawn after-hours factor.`);
+    }
     factorRows += 1;
   }
   if (factorRows === entries.length) {
     note(`${lang.toUpperCase()} factors, scope and duration are localized for all ${entries.length} rows with identical RM figures.`);
   }
 }
+
+note("Electrical troubleshooting factors contain no withdrawn after-hours pricing wording in EN/MS/ZH.");
 
 /* ------------------------------------------------------------------------ */
 /* 6. Nothing is presented as a final or guaranteed price                    */

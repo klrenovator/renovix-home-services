@@ -166,7 +166,7 @@ export const msPricingTranslations: Record<string, PricingTranslation> = {
     subService: "Diagnosis Elektrik & Pembaikan Trip Kuasa",
     scope: "Diagnosis dan pembaikan masalah trip kuasa, litar pintas, soket atau suis rosak.",
     duration: "1–3 jam",
-    factors: ["Kerumitan kerosakan", "Akses", "Alat ganti yang diperlukan", "Kecemasan di luar waktu kerja RM150–300/jam"],
+    factors: ["Kerumitan kerosakan", "Akses", "Alat ganti yang diperlukan"],
   },
   "flooring-spc": {
     subService: "Pemasangan Lantai SPC",
