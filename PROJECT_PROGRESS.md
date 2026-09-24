@@ -94,6 +94,18 @@ to any page's status, `<title>`, canonical, meta description, H1 or JSON-LD
 block count; the whole-site source→target link matrix changed in exactly one
 row.
 
+Phase 52 verification (2026-09-24): the current checkout was inspected before
+any change. The 17 static audits, `type-check`, ESLint and a fresh production
+build all pass; the build generated **689 / 689** entries. A fresh `next start`
+served all **678 / 678** sitemap URLs and `audit:live` passed **284 / 284**
+checks with **0 warnings and 0 failures**. The actual service, sub-service,
+problem, area/region, Kampung Baru locality, project and Knowledge Hub
+registries remain internally linked, localized and represented in the feeds,
+sitemap and structured data. No genuine SEO/GEO/AEO defect was found that could
+be fixed without inventing business data, changing prices, adding an
+unsupported page or making an owner-gated decision, so the website code and
+branding were deliberately left untouched.
+
 | Item | Count |
 |---|---|
 | Service pillar pages | 10 per language |
@@ -7504,3 +7516,48 @@ Status: **Code verified + production build verified + 678-URL local HTTP QA
 verified; every site FAQ now links the page its own copy names, the answer hub
 links all five content families, and both rules are guarded at build time,
 statically and on the served HTML.**
+
+
+---
+
+## Phase 52 — preservation-first baseline verification (2026-09-24)
+
+**Result: 🟢 current website verified; no website-code change was warranted.**
+The instruction was to inspect the current state rather than assume a backlog.
+The prior Phase 51 implementation was present and correct, so this phase
+records the re-verification instead of introducing speculative SEO pages,
+claims, prices or layout changes.
+
+### 1. What was verified
+
+- **Repository state:** started from a clean working tree on
+  `arena/01a0d150-renovix-home-services`; `PROJECT_PROGRESS.md`, the current
+  registries and the existing audit documentation were inspected first.
+- **Content inventory:** the live data sources still contain 10 service pillars,
+  51 published sub-services, 57 problem guides, 53 area guides, 2 region hubs,
+  the actual `kampung-baru` locality entry, 28 published projects and 12
+  Knowledge Hub guides, in EN/MS/ZH where the site publishes them.
+- **Green surfaces left untouched:** prices and pricing rows, public URLs,
+  service/sub-service/problem/area structure, existing headings and branding,
+  canonical and hreflang signals, images, JSON-LD, AI feeds, sitemap and
+  existing internal-link graph.
+- **Owner-gated items left untouched:** unverified review content, after-hours
+  pricing wording, content-review dates, further Kampung/locality expansion,
+  owner-supplied project details, live Resend delivery, analytics IDs and
+  hosting/Search Console actions remain documented in
+  `PROJECT_OWNER_PENDING.md`. No value was guessed or silently published.
+
+### 2. QA after inspection
+
+- [x] `npm ci` — completed; 0 vulnerabilities reported
+- [x] `npm run type-check` — PASS
+- [x] `npm run lint` — PASS (0 errors, 0 warnings)
+- [x] `npm run build` — PASS, **689 / 689** static generation entries
+- [x] All **17 static audits** — PASS
+- [x] `npm run audit:live` against a fresh `next start` — **PASS 284 / 284,
+      WARN 0, FAIL 0**; all **678 / 678** sitemap URLs returned 200
+- [x] `git diff --check` — PASS
+- [x] Prices, routes, pages and features — unchanged
+
+**Status:** **🟢 verified and stable. No pending code defect was assumed; no
+speculative change was made.**
