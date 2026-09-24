@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PageSchema } from "@/components/seo/PageSchema";
-import { faqNode } from "@/components/seo/schema";
+import { faqNode, itemListNode } from "@/components/seo/schema";
 import { Breadcrumbs } from "@/components/service/Breadcrumbs";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button, WhatsAppButton } from "@/components/ui/Button";
@@ -21,7 +21,7 @@ import {
   getRegionSummary,
   getStateName,
 } from "@/data/i18n";
-import { getWhatsAppHref } from "@/data/site";
+import { getWhatsAppHref, siteConfig } from "@/data/site";
 import { areaRegions } from "@/data/area-content";
 import { districtGroups, getStateCoverage } from "@/data/locations";
 import { getDictionary } from "@/i18n";
@@ -73,6 +73,25 @@ export default async function AreasPage({ params }: AreasPageProps) {
   const canonical = absoluteUrl(code, "/areas/");
   const allStates = getStateCoverage();
 
+  // The full area-guide library as an ItemList, in the same order and with the
+  // same labels the directory below renders (Phase 49). Every other entity
+  // index on the site — services, problems, projects and the Knowledge Hub —
+  // publishes the node for the list it renders, so a crawler or an assistant
+  // can read the coverage as a list rather than a bag of links. Each item
+  // points at the guide in the current language and is named with
+  // `getAreaName`, the one accessor Phase 47 made every area label read from,
+  // so the node cannot drift from the chips or from the guide's own name.
+  const areaItems = areaRegions.flatMap((region) =>
+    region.areas.map((area) => {
+      const href = contentHref("area", `${area.region}/${area.slug}`, code);
+
+      return {
+        name: getAreaName(area, code),
+        ...(href ? { url: `${siteConfig.url}${href}` } : {}),
+      };
+    }),
+  );
+
   return (
     <>
       <PageSchema
@@ -84,7 +103,10 @@ export default async function AreasPage({ params }: AreasPageProps) {
           { name: t.common.home, url: absoluteUrl(code, "/") },
           { name: t.areasIndex.breadcrumb },
         ]}
-        extra={[faqNode(canonical, faqs)]}
+        extra={[
+          faqNode(canonical, faqs),
+          itemListNode(canonical, t.areasIndex.title, areaItems),
+        ]}
       />
 
       <section className="relative overflow-hidden bg-navy text-white">

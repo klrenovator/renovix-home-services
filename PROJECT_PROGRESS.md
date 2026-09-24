@@ -56,6 +56,19 @@ in the measured content fields (2 existing-style cards + 2 links each);
 the other 642 pages and every price, title, canonical, hreflang entry, image
 and JSON-LD block are unchanged in that comparison.
 
+Phase 49 re-verification (2026-09-23): all inventory counts, all 678 URLs and
+all 689 static generation entries remain unchanged. Three crawler-facing
+signals that had never been compared were measured and corrected: the sitemap's
+`lastmod` (36 guide entries were dated before the guides were published),
+`og:locale:alternate` (absent on all 678 pages while every page published
+`og:locale` and a complete hreflang set), and the areas index's `ItemList` (12
+of 15 index pages published one). Fixed from data the registries already
+recorded; no page, price, URL, heading, visible sentence, canonical, hreflang
+set or image changed. An independent before/after fetch of all 678 pages from
+two production builds (the pre-change commit and the new one), compared with
+`<script>` blocks and the two new meta tags removed, found **0 visible-DOM
+differences on 678 of 678 pages**.
+
 | Item | Count |
 |---|---|
 | Service pillar pages | 10 per language |
@@ -73,7 +86,7 @@ and JSON-LD block are unchanged in that comparison.
 | Static generation entries | **689** (`next build` progress total; distinct from the 678 canonical sitemap URLs) |
 | Pricing rows (`data/pricing/pricing.ts`) | **51** |
 | Search-intent matrix entries | **24** (all pricing derived from `pricingId`) |
-| Audit scripts | 17 static + 1 live server QA (**271** served-site checks after Phase 48; 270 after Phase 47, 259 after Phase 46) |
+| Audit scripts | 17 static + 1 live server QA (**280** served-site checks after Phase 49; 271 after Phase 48, 270 after Phase 47, 259 after Phase 46) |
 | In-copy contextual links (rendered anchors) | **313 EN / 362 MS / 364 ZH** (Phase 39) |
 | Region hub → Knowledge Hub guide links (rendered) | **72** (6 hubs × 12 guides; Phase 41, was 0) |
 | Knowledge Hub guide → related region hub links (rendered in main) | **72** (36 guides × 2 hub links; Phase 48, was 0; all 72 reciprocal with the existing hub → guide links) |
@@ -87,6 +100,10 @@ and JSON-LD block are unchanged in that comparison.
 | `<title>` tags ≤65 characters | **678 of 678**, longest exactly 65 (Phase 41; was 468 of 678) |
 | `<title>` tags unique within each language | **678 of 678** (Phase 41; 3 duplicate pairs fixed) |
 | `<title>` tags carrying the brand | **678 of 678** (Phase 41; the 6 legal pages now compose `brandTitle()`) |
+| Sitemap entries dated from a recorded content date, never before it | **36 of 36** guide entries (**2026-09-04**); the other 642 keep the site-wide reviewed date **2026-09-01** (Phase 49; was 0 — all 678 shared one date, 36 of them three days before publication) |
+| Pages publishing `og:locale:alternate` matching their hreflang set | **678 of 678**, **1,356** tags (Phase 49; was **0**, while all 678 already published `og:locale`) |
+| Entity index pages publishing an `ItemList` for the list they render | **15 of 15** (5 indexes × 3 languages; Phase 49; was **12** — the 3 `/areas/` indexes listed 53 guides with no node) |
+| Areas index `ItemList` entries named as the guide names itself | **159 of 159** (53 × 3; Phase 49, was 0) |
 
 ---
 
@@ -6942,3 +6959,188 @@ pass. This linking phase deliberately did not modify it.
 Status: **Code verified + production build verified + 678-URL local HTTP QA
 verified; the guide ↔ relevant region relationship now resolves both ways in
 every published language, with no new unsourced business or locality claim.**
+
+---
+
+## Phase 49 — the crawler-facing signals that had never been compared: sitemap `lastmod`, `og:locale:alternate` and the areas index `ItemList` (2026-09-23)
+
+**Result: 🟢 every page, price, URL, link, heading, canonical, hreflang set and
+image preserved — an independent before/after fetch of all 678 pages from two
+production builds found 0 visible-DOM differences; 🔴 three crawler-facing
+signals that were missing or self-contradictory are now derived from the dates
+and registries the repository already records; 🟡 one timestamp-provenance
+question raised by Phase 48 is answered for the only family with recorded
+dates, and the rest is recorded for the owner rather than papered over. No new
+service, scope, problem, area, Kampung, business claim, route, price or
+visible sentence.**
+
+### 1. Inspect first — separate genuine gaps from green work
+
+Read this log through Phase 48, `AGENTS.md`, `CONTENT_GOVERNANCE.md`,
+`CONTENT_MAP.md`, `SITEMAP.md`, `PROJECT_OWNER_PENDING.md` and the actual site
+registries and templates. The earlier Master Prompt was not attached to this
+turn; no unseen checklist was assumed. Before any site change:
+
+- [x] `npm ci`, `npm run type-check`, `npm run lint` and `npm run build` — PASS,
+      **689** static generation entries.
+- [x] All **17 static audits** — PASS; `npm run audit:live` on `next start` —
+      **PASS 271 / WARN 0 / FAIL 0** (the Phase 48 baseline).
+- [x] Actual inventory from the code and 678 served URLs: **10 service pillars,
+      51 priced sub-service pages, 57 problem guides, 53 area guides (21
+      Kuala Lumpur / 32 Selangor), 2 region hubs, 28 real-photo projects, 12
+      Knowledge Hub guides, all in EN/MS/ZH**. No page family was missing.
+- [x] 🟢 Every link layer recorded in Phases 28–48 re-verified green and left
+      untouched (pillar ↔ scope, area ↔ scope, problem ↔ project, project ↔
+      guide, guide ↔ quoted scope, guide ↔ region hub, in-copy links, pillar →
+      problem), as were titles, canonicals, hreflang, sitemap/feed parity,
+      localized entity labels, image alt text and the feed↔sitemap comparisons.
+      Owner-gated items (project locations, consented reviews, the electrical
+      after-hours factor) stayed untouched.
+
+**What was measured instead of assumed.** The existing audits assert that these
+signals *exist*; none compared them against the content the same page
+publishes. An independent sweep of all 678 served pages plus the served
+`/sitemap.xml` (untracked scratch tooling in `/tmp`) measured every
+crawler-facing field the audits do not: `lastmod` against the page's own dates,
+the Open Graph locale block against the page's hreflang set, and the structured
+data of the five entity indexes. It found exactly three gaps — and nothing else:
+
+| # | Signal | Baseline (served HTML / sitemap) | Why it is a defect, not a style choice |
+|---|---|---|---|
+| 1 | Sitemap `<lastmod>` | **678 / 678** entries stamp `2026-09-01`. **36** of them (12 guides × 3 languages) publish a guide whose own recorded, rendered and schema-published date is **2026-09-04** | The sitemap tells a crawler those 36 pages were *modified three days before they were published*. The date is not invented — it is the shared reviewed-content date — but it is false for a page whose own content is newer |
+| 2 | `og:locale:alternate` | **0 / 678** pages, while **678 / 678** publish `og:locale` and a complete 3-language hreflang set | `og:locale:alternate` is the Open Graph equivalent of `hreflang`: without it a social crawler, a link unfurl or an assistant reading the card sees one language version and no route to the other two |
+| 3 | Areas index `ItemList` | **12 of 15** index pages publish an `ItemList` for the list they render; the **3** `/areas/` indexes render 53 guides, 2 region hubs and the locality chips with no node | `/services/`, `/problems/`, `/projects/` and `/blog/` (and both region hubs) all publish the node. The areas index — the largest list on the site —was the only one a crawler could not read as a list |
+
+Everything else the sweep measured was already correct and was left alone:
+0 pages without a description, canonical, `og:image`, `og:type`, `twitter:card`
+or alt text; 0 duplicated descriptions within a language; every page exactly
+one H1; `html lang` = `en-MY` / `ms-MY` / `zh-MY` by language; BreadcrumbList on
+675 of 678 (the three homepages, by design); no page deeper than three clicks
+from its homepage; no orphan pages.
+
+### 2. Targeted fixes — derived only from dates and registries already in the repo
+
+**1. `lastmod` is now dated from the content, never before it**
+(`lib/sitemap.ts`, `app/sitemap.ts`). New exported
+`contentLastModified(...evidence)` returns the **later** of the site-wide
+reviewed date and every content date the registries record for that page, and
+throws at build time on a malformed or computed value. The Knowledge Hub is the
+one family whose content carries its own recorded date — `published`, plus
+`updated` when a guide is materially revised — and those are exactly the values
+the page already renders as `<time datetime=…>` and publishes as
+`Article.datePublished` / `dateModified`. The blog loop now passes
+`contentLastModified(article.published, article.updated)`; every other entry
+keeps `CONTENT_LAST_MODIFIED`. **The site-wide date was deliberately not
+bumped** — stamping 642 unchanged pages with today's date is the
+misrepresentation `SITEMAP.md` already forbids, so it is recorded for the owner
+instead (§5).
+
+**2. `og:locale:alternate` derived from the hreflang set** (`i18n/seo.ts`).
+`buildPageMetadata` now emits `alternateLocale` from the *same* `languageSet`
+that builds the page's hreflang alternates, minus the page's own locale — so a
+page can never advertise a translation it does not publish, and the two signals
+cannot drift apart. No page template changed; the tags come from the one
+metadata builder every page already calls.
+
+**3. The areas index publishes the list it renders**
+(`app/[lang]/areas/page.tsx`). `itemListNode(canonical, t.areasIndex.title,
+areaItems)` joins the existing `faqNode` in `PageSchema`'s `extra`. `areaItems`
+walks `areaRegions` in the order the directory below renders them, names each
+guide through `getAreaName` (the single accessor Phase 47 made every area label
+read from, so the node cannot disagree with the chips or with the guide's own
+name) and links it through `contentHref("area", …)`, so an unpublished
+translation yields a name with no URL rather than a link to a page that does not
+exist. No new section, component, heading, class or string.
+
+### 3. Regression guards — each proved red before the site change
+
+The three new live checks were run **first, against the untouched pre-change
+production build**: `PASS 276 / FAIL 4`, naming exactly the baseline defects —
+`guide lastmod: 36 older than the guide's published date`,
+`og:locale parity: 678 mismatched` and
+`3 entity index page(s) render a list without an ItemList node`.
+
+- **`npm run audit:live`** — **271 → 280** checks (+9): (a) *Sitemap lastmod vs
+  recorded content dates*: every entry parses with a valid, non-future ISO
+  date; every page without its own recorded date carries the single reviewed
+  date; all **36** guide pages publish their recorded date in the page and all
+  **36** entries are dated from it, never before it; (b) *og:locale ↔ hreflang
+  parity*: all **678** pages publish `og:locale` plus **1,356**
+  `og:locale:alternate` tags equal to their hreflang set minus their own
+  locale; (c) *Index pages publish the list they render*: all **15** entity
+  indexes publish an `ItemList`, and the areas index's node lists **159** area
+  guides (53 × 3) under the name each guide publishes.
+- **`npm run audit:sitemap`** — 14 → **21** checks (+7): every guide records a
+  valid `published` date, `lib/sitemap.ts` exports `contentLastModified` and
+  resolves to the *later* date, the module computes no runtime date, the blog
+  loop passes the guide's own dates into the helper, and the site-wide constant
+  is a valid ISO date.
+- **`npm run audit:schema`** — 25 → **32** checks (+7): all five entity indexes
+  build an `ItemList` (the Knowledge Hub through its own `BlogIndexJsonLd`),
+  and the areas index names each guide through `getAreaName` and links it
+  through `contentHref("area", …)`.
+- **`npm run audit:authority`** — three new source rules (silent when passing):
+  `alternateLocale` must be derived from `languageSet`, must exclude the page's
+  own locale, and `og:locale` must stay localized.
+
+Negative tests (each break fails as designed, then restored to green): flipping
+`value > latest` to `value < latest` → *"contentLastModified does not resolve to
+the later date"*; deleting `alternateLocale` → two authority failures; removing
+`itemListNode` from the areas index → *"areas index renders a registry list with
+no ItemList node"*; swapping `getAreaName(area, code)` for `area.name` →
+*"must use getAreaName, not the English registry name"*.
+
+### 4. Measured before → after (two production builds, all 678 URLs)
+
+The pre-change commit was built in a scratch copy and served on a second port,
+so both builds were fetched and compared side by side.
+
+| Metric | Before | After |
+|---|---|---|
+| Sitemap URLs / pages returning 200 | 678 / 678 | **678 / 678** (identical `<loc>` set; identical 2,712 `xhtml:link` alternates) |
+| Distinct `<lastmod>` values | 1 (`2026-09-01`) | **2** — `2026-09-04` on the 36 guide entries, `2026-09-01` on the other 642 |
+| Guide entries dated before their own published date | **36** | **0** |
+| Pages publishing `og:locale:alternate` | 0 of 678 | **678 of 678** (1,356 tags, each matching that page's hreflang set) |
+| Entity index pages publishing an `ItemList` | 12 of 15 | **15 of 15** (areas index: 53 guides × 3 languages, named as the guides name themselves) |
+| Pages with a changed **visible DOM** (`<script>` blocks and the two new meta tags excluded) | — | **0 of 678** |
+| Other differences | — | **0** changed titles, descriptions, canonicals, hreflang entries, images, alt text, H1/H2/H3 counts, link sets or prices; 675 pages +278 bytes (the two meta tags), the 3 areas indexes +14,855 / +14,832 / +14,008 bytes (the `ItemList` JSON-LD and its RSC payload) |
+| JSON-LD `@type` sets | — | **3** pages changed: `/en/areas/`, `/ms/areas/`, `/zh/areas/` each gained `ItemList` |
+
+### 5. 🟢 Preserved, and what was deliberately not done
+
+| Surface | Decision |
+|---|---|
+| Prices, pages, URLs, headings, links, canonicals, hreflang, images, feed↔sitemap parity | Untouched and re-verified: all 17 static audits pass, `audit:live` **PASS 280 / WARN 0 / FAIL 0** |
+| Site-wide `CONTENT_LAST_MODIFIED` (`2026-09-01`) | **Not bumped.** Phase 48 flagged the timestamp as an observed issue; the honest fix is to date each page from evidence, which is now done for the only family with recorded dates. Bumping the shared date would stamp 642 unchanged pages with a date nothing supports. Recorded for the owner in `PROJECT_OWNER_PENDING.md` |
+| The homepage's contextual links | The sweep found the homepage links 53 area guides, the problem library and all 10 services in its main content, but the Knowledge Hub and the portfolio are reachable only through the site chrome and the sitemap. Adding a homepage block is a design decision, not a defect fix, so it is recorded for the owner instead of being slipped in |
+| `/search/` | Reachable from the footer on every page and from the sitemap, but carries no contextual (main-content) inbound link, because `InlineSearch` is a form. Recorded, not changed |
+| Pricing `lastReviewed` (`2026-09-03`) | Considered and rejected as a `lastmod` source: a catalogue review date is not, by itself, a change to every page that quotes a row. Recorded rather than asserted |
+
+### 6. Final QA
+
+- [x] `npm run type-check` — PASS
+- [x] `npm run lint` — PASS (0 errors, 0 warnings)
+- [x] `npm run build` — PASS, **689 / 689** static generation entries
+- [x] All **17 static audits** — PASS (sitemap 21, schema 32, multilingual 49,
+      analytics 71, quote 67, security 24, routes 38, + the rest)
+- [x] `npm run audit:live` against the new `next start` build — **PASS 280 /
+      WARN 0 / FAIL 0**; all 678 sitemap URLs fetched and linked URLs served
+- [x] Guards proved red against the pre-change build (**PASS 276 / FAIL 4**) and
+      green afterwards; 4 source-level negative tests, all restored
+- [x] Before/after: two production builds, all 678 pages, **0 visible-DOM
+      differences**
+- [x] `git diff --check` — clean; no scratch file tracked (the sweep tooling,
+      the two crawl snapshots and the baseline build all live in `/tmp`)
+- [x] Docs: `README.md` (four audit descriptions), `SITEMAP.md` (`lastmod`
+      policy), `PROJECT_OWNER_PENDING.md` (Phase 49 flags), the inventory
+      re-verification note and this entry in `PROJECT_PROGRESS.md`
+
+Limits: local production-build HTTP/HTML verification, not rankings, real
+customers, social-card rendering or AI-answer measurement. `og:locale:alternate`
+is a protocol-level signal; whether a given platform acts on it is outside what
+this repository can prove, and no claim is made that it changes rankings.
+
+Status: **Code verified + production build verified + 678-URL local HTTP QA
+verified; the sitemap, the Open Graph locale layer and every entity index now
+describe the same content the pages publish, dated from recorded evidence and
+guarded at build time, statically and live.**

@@ -27,6 +27,41 @@ import { siteConfig } from "@/data/site";
  */
 export const CONTENT_LAST_MODIFIED = "2026-09-01";
 
+/**
+ * The `lastModified` for one sitemap entry: the *later* of the site-wide
+ * reviewed date and every content date the registries record for that page.
+ *
+ * Phase 49 — the Knowledge Hub is the first family whose content carries its
+ * own recorded date (`published`, and `updated` when a guide is materially
+ * revised), and those dates are already rendered on the page and published as
+ * `Article.datePublished`. Emitting the site-wide date for a guide dated after
+ * it told crawlers the page was modified before it was published. A page can
+ * never be older than the content it publishes, so the later date wins.
+ *
+ * Only dates the repository actually records may be passed here — this is a
+ * floor derived from evidence, not a per-build stamp. A malformed or empty
+ * argument fails the build rather than silently falling back.
+ */
+export function contentLastModified(...evidence: (string | undefined)[]): string {
+  let latest = CONTENT_LAST_MODIFIED;
+
+  for (const value of evidence) {
+    if (typeof value !== "string" || value.length === 0) {
+      continue;
+    }
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(value) || Number.isNaN(Date.parse(`${value}T00:00:00Z`))) {
+      throw new Error(
+        `[sitemap] content date "${value}" is not a YYYY-MM-DD date — lastmod must come from recorded content dates, never from a computed value.`,
+      );
+    }
+    if (value > latest) {
+      latest = value;
+    }
+  }
+
+  return latest;
+}
+
 /** The sitemap URL referenced from robots.txt and submitted to Google Search Console. */
 export function mainSitemapUrl(): string {
   return `${siteConfig.url}/sitemap.xml`;

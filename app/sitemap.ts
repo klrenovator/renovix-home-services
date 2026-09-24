@@ -9,7 +9,7 @@ import {
   ALL_SERVICES,
 } from "@/i18n/coverage";
 import { absoluteUrl } from "@/i18n/seo";
-import { CONTENT_LAST_MODIFIED } from "@/lib/sitemap";
+import { CONTENT_LAST_MODIFIED, contentLastModified } from "@/lib/sitemap";
 import { assertCoverageInSync } from "@/i18n/verify";
 import { runSearchAudits } from "@/data/search/audit-data";
 import { getAllSubServices, subServiceLanguages } from "@/data/sub-services";
@@ -65,6 +65,12 @@ type SitemapEntry = {
   path: string;
   priority: number;
   changeFrequency: MetadataRoute.Sitemap[number]["changeFrequency"];
+  /**
+   * Content date the registries record for this page (a Knowledge Hub guide's
+   * published/revised date). Omitted for every page that carries no per-page
+   * date, which then falls back to the site-wide reviewed date below.
+   */
+  lastModified?: string;
 };
 
 function pathsForLanguage(lang: LanguageCode): SitemapEntry[] {
@@ -109,12 +115,20 @@ function pathsForLanguage(lang: LanguageCode): SitemapEntry[] {
 
   // Knowledge Hub articles. Every article ships in all three languages, so
   // each publishes here and carries a complete hreflang set.
+  //
+  // The guide's own recorded date (Phase 49): `published` is the date the
+  // article was written and `updated` is only set when its copy was materially
+  // revised — the same two values the page renders as `<time>` and publishes as
+  // `Article.datePublished` / `dateModified`. A sitemap entry may never claim a
+  // page changed before the content it publishes existed, so the later of those
+  // dates and the site-wide reviewed date is what this entry declares.
   for (const article of getArticles()) {
     if (articleLanguages(article.slug).includes(lang)) {
       entries.push({
         path: `/blog/${article.slug}/`,
         priority: 0.65,
         changeFrequency: "monthly",
+        lastModified: contentLastModified(article.published, article.updated),
       });
     }
   }
@@ -246,10 +260,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
       byUrl.set(url, {
         url,
-        // Every entry shares the site-wide reviewed content date — see
-        // `lib/sitemap.ts` for why a per-request or build-date stamp is not
-        // used.
-        lastModified: CONTENT_LAST_MODIFIED,
+        // The page's own recorded content date when the registries carry one,
+        // otherwise the site-wide reviewed content date — see `lib/sitemap.ts`
+        // for why a per-request or build-date stamp is not used.
+        lastModified: entry.lastModified ?? CONTENT_LAST_MODIFIED,
         changeFrequency: entry.changeFrequency,
         priority: entry.priority,
         alternates: { languages: alternates },

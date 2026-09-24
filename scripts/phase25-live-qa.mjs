@@ -59,6 +59,39 @@ function extractLink(html, rel) {
   return [...html.matchAll(re)].map((m) => m[0]);
 }
 
+/**
+ * Every `content` of a `<meta property="…">` tag, in document order. Attribute
+ * order is not guaranteed by React, so both orders are matched.
+ */
+function metaPropertyContents(html, property) {
+  const escaped = property.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const re = new RegExp(
+    `<meta[^>]+property=["']${escaped}["'][^>]*content=["']([^"']+)["'][^>]*>`,
+    "gi",
+  );
+  const re2 = new RegExp(
+    `<meta[^>]+content=["']([^"']+)["'][^>]*property=["']${escaped}["'][^>]*>`,
+    "gi",
+  );
+  return [...html.matchAll(re), ...html.matchAll(re2)].map((m) => m[1]);
+}
+
+/**
+ * Phase 49 — the page's Open Graph locale block and its `hreflang` set, so
+ * `og:locale:alternate` can be compared against the same published-language
+ * set the alternates are derived from.
+ */
+function extractLocaleSignals(html) {
+  const hreflangs = [...html.matchAll(/<link[^>]+hreflang=["']([^"']+)["'][^>]*>/gi)].map(
+    (m) => m[1],
+  );
+  return {
+    locale: metaPropertyContents(html, "og:locale")[0] ?? null,
+    alternates: metaPropertyContents(html, "og:locale:alternate"),
+    hreflangs,
+  };
+}
+
 function hrefOf(tag) {
   if (!tag) return null;
   const m = tag.match(/href=["']([^"']+)["']/i);
@@ -523,6 +556,9 @@ async function sampleStatuses(locs) {
   // second crawl.
   const pageNames = new Map();
   const cardNames = new Map();
+  // Phase 49 — the page's og:locale block and hreflang set, so the same pass
+  // can check Open Graph locale parity without crawling the site again.
+  const localeSignals = new Map();
   for (let i = 0; i < locs.length; i += batchSize) {
     const batch = locs.slice(i, i + batchSize);
     const results = await Promise.all(
@@ -541,6 +577,7 @@ async function sampleStatuses(locs) {
         let entityNodes = null;
         let pageName = null;
         let cards = null;
+        let locales = null;
         if (res.status === 200) {
           const html = await res.text();
           hrefs = extractInternalHrefs(html);
@@ -572,6 +609,9 @@ async function sampleStatuses(locs) {
           const visible = html.replace(/<script\b[\s\S]*?<\/script>/gi, " ");
           inCopyCount = countInCopyAnchors(visible);
           leaked = UNRENDERED_INLINE_LINK.test(visible);
+          // Phase 49 — og:locale / og:locale:alternate / hreflang, for the
+          // Open Graph ↔ hreflang parity check below.
+          locales = extractLocaleSignals(html);
         }
         return {
           loc,
@@ -589,6 +629,7 @@ async function sampleStatuses(locs) {
           entityNodes,
           pageName,
           cards,
+          locales,
         };
       }),
     );
@@ -609,12 +650,13 @@ async function sampleStatuses(locs) {
       if (r.entityNodes) entities.set(r.path, r.entityNodes);
       if (r.pageName) pageNames.set(r.path, r.pageName);
       if (r.cards) cardNames.set(r.path, r.cards);
+      if (r.locales) localeSignals.set(r.path, r.locales);
       if (r.leaked) leakedMarkup.push(r.path);
     }
   }
   if (bad === 0) pass(`all ${ok} sitemap URLs return 200`);
   else fail(`sitemap sweep ${ok} ok / ${bad} failed`);
-  return { graph, anchors, articleMainHrefs, inCopy, titles, leakedMarkup, faqBlocks, schemaTypes, serviceSchemas, entities, pageNames, cardNames };
+  return { graph, anchors, articleMainHrefs, inCopy, titles, leakedMarkup, faqBlocks, schemaTypes, serviceSchemas, entities, pageNames, cardNames, localeSignals };
 }
 
 /* ------------------------------------------------------------------------ */
@@ -2396,6 +2438,321 @@ function checkEntityLabels(locs, anchors, pageNames, cardNames) {
   }
 }
 
+/* -------------------------------------------------------------------------- */
+/* Phase 49 — crawler-facing signals that had never been compared:            */
+/*   (1) the sitemap's `lastmod` against the content dates the pages publish, */
+/*   (2) `og:locale:alternate` against the same hreflang set it is derived    */
+/*       from, and                                                            */
+/*   (3) the entity index pages against the `ItemList` node each one should   */
+/*       publish for the list it renders.                                     */
+/*                                                                            */
+/* All three are read from the served site (sitemap XML and page HTML), the   */
+/* way a crawler sees them, so a signal that is merely present in the source  */
+/* but missing or wrong on the wire fails here.                               */
+/* -------------------------------------------------------------------------- */
+
+/** `<loc>` + `<lastmod>` of every served sitemap entry, in document order. */
+function parseSitemapEntries(xml) {
+  const entries = [];
+  for (const block of xml.matchAll(/<url\b[^>]*>([\s\S]*?)<\/url>/gi)) {
+    const loc = block[1].match(/<loc>([^<]+)<\/loc>/i)?.[1];
+    const lastmod = block[1].match(/<lastmod>([^<]+)<\/lastmod>/i)?.[1];
+    if (loc) entries.push({ loc, lastmod: lastmod ?? null });
+  }
+  return entries;
+}
+
+/** The published/revised dates the Knowledge Hub registry records, from source. */
+const ARTICLE_DATES = (() => {
+  const blogDir = fileURLToPath(new URL("../data/blog/content", import.meta.url));
+  const bySlug = new Map();
+  for (const f of readdirSync(blogDir)) {
+    if (!f.endsWith(".ts")) continue;
+    const src = readFileSync(`${blogDir}/${f}`, "utf8");
+    const slug = src.match(/^\s{2}slug:\s*"([a-z0-9-]+)"/m)?.[1];
+    const published = src.match(/^\s{2}published:\s*"([0-9-]+)"/m)?.[1];
+    if (!slug || !published) continue;
+    bySlug.set(slug, {
+      published,
+      updated: src.match(/^\s{2}updated:\s*"([0-9-]+)"/m)?.[1] ?? null,
+    });
+  }
+  return bySlug;
+})();
+
+const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
+
+function isValidIsoDate(value) {
+  if (typeof value !== "string" || !ISO_DATE.test(value)) return false;
+  const parsed = new Date(`${value}T00:00:00Z`);
+  return !Number.isNaN(parsed.getTime()) && parsed.toISOString().slice(0, 10) === value;
+}
+
+/**
+ * A sitemap `lastmod` tells a crawler when a page's content last changed. It
+ * can never be earlier than the date the page itself publishes for its own
+ * content — the 12 Knowledge Hub guides render `<time datetime=…>` and an
+ * `Article.datePublished` of 2026-09-04, so an entry stamped 2026-09-01 claims
+ * those pages were modified three days before they were published.
+ */
+async function checkSitemapLastmod(locs) {
+  console.log("\n== Sitemap lastmod vs recorded content dates (Phase 49) ==");
+  const { text, status } = await fetchText("/sitemap.xml");
+  if (status !== 200) {
+    fail(`sitemap.xml ${status} (lastmod check)`);
+    return;
+  }
+  const entries = parseSitemapEntries(text);
+  const servedPaths = new Set(locs.map((loc) => loc.replace(CANONICAL_HOST, "")));
+
+  if (entries.length !== locs.length) {
+    fail(`parsed ${entries.length} sitemap <url> entries, expected ${locs.length}`);
+  } else pass(`all ${entries.length} sitemap entries parsed with a <loc>`);
+
+  const noLastmod = entries.filter((e) => !e.lastmod).map((e) => e.loc.replace(CANONICAL_HOST, ""));
+  const invalid = entries
+    .filter((e) => e.lastmod && !isValidIsoDate(e.lastmod))
+    .map((e) => `${e.loc.replace(CANONICAL_HOST, "")} → ${e.lastmod}`);
+  if (noLastmod.length === 0 && invalid.length === 0) {
+    pass(`all ${entries.length} <lastmod> values are valid ISO dates`);
+  } else {
+    fail(
+      `lastmod invalid: ${invalid.length} malformed, ${noLastmod.length} missing` +
+        (invalid.length ? ` (examples: ${invalid.slice(0, 3).join(", ")})` : ""),
+    );
+  }
+
+  const today = new Date().toISOString().slice(0, 10);
+  const future = entries.filter((e) => e.lastmod && e.lastmod > today);
+  if (future.length === 0) pass(`no <lastmod> in the future (today ${today})`);
+  else fail(`future <lastmod> on ${future.length} entries (e.g. ${future[0].lastmod})`);
+
+  // The shared reviewed-content date: what every page without its own recorded
+  // content date carries (the policy documented in SITEMAP.md).
+  const articlePaths = new Set(
+    [...servedPaths].filter((p) => /^\/(en|ms|zh)\/blog\/[^/]+\/$/.test(p)),
+  );
+  const counts = new Map();
+  for (const e of entries) {
+    const path = e.loc.replace(CANONICAL_HOST, "");
+    if (articlePaths.has(path) || !e.lastmod) continue;
+    counts.set(e.lastmod, (counts.get(e.lastmod) ?? 0) + 1);
+  }
+  const sharedDate = [...counts.entries()].sort((a, b) => b[1] - a[1])[0]?.[0] ?? null;
+  const offShared = [...counts.keys()].length;
+  if (sharedDate && offShared === 1) {
+    pass(`every page without its own recorded content date carries ${sharedDate}`);
+  } else {
+    fail(
+      `pages without their own content date carry ${offShared} different lastmod values` +
+        (sharedDate ? ` (most common ${sharedDate})` : ""),
+    );
+  }
+
+  // Article entries: the sitemap date must be at least the guide's own
+  // published/revised date, and the page must publish that same date.
+  const contradictions = [];
+  const unrendered = [];
+  const notDerived = [];
+  let checked = 0;
+  const paths = [...articlePaths].sort();
+  for (let i = 0; i < paths.length; i += 12) {
+    const batch = paths.slice(i, i + 12);
+    const pages = await Promise.all(
+      batch.map(async (path) => {
+        const res = await fetchText(path);
+        const html = res.text;
+        const nodes = flattenGraph(jsonLdBlocks(html));
+        const published =
+          nodes.find((n) => typeof n.datePublished === "string")?.datePublished ?? null;
+        const time = html.match(/<time[^>]+datetime="(\d{4}-\d{2}-\d{2})"/i)?.[1] ?? null;
+        return { path, published, time };
+      }),
+    );
+    for (const page of pages) {
+      const slug = page.path.split("/")[3];
+      const recorded = ARTICLE_DATES.get(slug);
+      const entry = entries.find((e) => e.loc.replace(CANONICAL_HOST, "") === page.path);
+      if (!recorded || !entry) continue;
+      checked += 1;
+      if (!page.published || page.published !== recorded.published) {
+        unrendered.push(`${page.path} renders ${page.published ?? "no datePublished"}`);
+      }
+      const expected = [sharedDate, recorded.published, recorded.updated]
+        .filter((d) => typeof d === "string" && d.length > 0)
+        .sort()
+        .pop();
+      if (entry.lastmod < recorded.published) {
+        contradictions.push(
+          `${page.path} lastmod ${entry.lastmod} < published ${recorded.published}`,
+        );
+      } else if (entry.lastmod !== expected) {
+        notDerived.push(`${page.path} lastmod ${entry.lastmod}, expected ${expected}`);
+      }
+    }
+  }
+
+  if (unrendered.length === 0) {
+    pass(`all ${checked} Knowledge Hub pages publish their recorded date in the page`);
+  } else {
+    fail(
+      `${unrendered.length} guide(s) do not publish their recorded date (e.g. ${unrendered[0]})`,
+    );
+  }
+
+  if (contradictions.length === 0 && notDerived.length === 0) {
+    pass(
+      `all ${checked} guide entries are dated from their own content date, never before it` +
+        (sharedDate ? ` (site-wide floor ${sharedDate})` : ""),
+    );
+  } else {
+    fail(
+      `guide lastmod: ${contradictions.length} older than the guide's published date, ` +
+        `${notDerived.length} not derived from it` +
+        (contradictions.length ? ` (examples: ${contradictions.slice(0, 3).join("; ")})` : "") +
+        (notDerived.length ? ` (examples: ${notDerived.slice(0, 3).join("; ")})` : ""),
+    );
+  }
+}
+
+/**
+ * `og:locale:alternate` is the Open Graph equivalent of `hreflang`: it names
+ * the other language versions of the same page. The site already publishes a
+ * localized `og:locale` and a complete hreflang set on every page, so the
+ * alternates must be the same set — otherwise a social crawler (or an
+ * assistant reading the card) is told about one language only.
+ */
+function checkOgLocaleParity(localeSignals) {
+  console.log("\n== og:locale ↔ hreflang parity (Phase 49) ==");
+  const missing = [];
+  const mismatched = [];
+  let alternates = 0;
+
+  for (const [path, signal] of [...localeSignals].sort()) {
+    const lang = path.split("/")[1];
+    const expectedLocale = `${lang}_MY`;
+    if (!signal.locale) {
+      missing.push(`${path}: no og:locale`);
+      continue;
+    }
+    if (signal.locale !== expectedLocale) {
+      mismatched.push(`${path}: og:locale ${signal.locale} ≠ ${expectedLocale}`);
+    }
+    const declared = new Set(
+      signal.hreflangs
+        .filter((h) => h !== "x-default")
+        .map((h) => h.replace(/-/g, "_"))
+        .filter((l) => l !== expectedLocale),
+    );
+    if (declared.size === 0) {
+      mismatched.push(`${path}: no hreflang alternates to compare against`);
+      continue;
+    }
+    const actual = new Set(signal.alternates);
+    const missingHere = [...declared].filter((l) => !actual.has(l));
+    const extraHere = [...actual].filter((l) => !declared.has(l));
+    if (missingHere.length || extraHere.length) {
+      mismatched.push(
+        `${path}: og:locale:alternate [${[...actual].sort().join(", ")}] ≠ hreflang ` +
+          `[${[...declared].sort().join(", ")}]`,
+      );
+    } else {
+      alternates += declared.size;
+    }
+  }
+
+  if (missing.length === 0 && mismatched.length === 0) {
+    pass(
+      `all ${localeSignals.size} pages publish og:locale plus ${alternates} og:locale:alternate entries matching their hreflang set`,
+    );
+  } else {
+    fail(
+      `og:locale parity: ${missing.length} pages without og:locale, ` +
+        `${mismatched.length} mismatched` +
+        (missing.length ? ` (examples: ${missing.slice(0, 3).join("; ")})` : "") +
+        (mismatched.length ? ` (examples: ${mismatched.slice(0, 3).join("; ")})` : ""),
+    );
+  }
+}
+
+/**
+ * Every entity index renders the full registry as a list of cards — services,
+ * problems, areas, projects and guides — and every one but the areas index
+ * publishes the matching `ItemList` node. The node is what lets a crawler or an
+ * assistant read the list as a list rather than a bag of links.
+ */
+async function checkIndexItemLists(locs, schemaTypes, pageNames) {
+  console.log("\n== Index pages publish the list they render (Phase 49) ==");
+  const served = new Set(locs.map((loc) => loc.replace(CANONICAL_HOST, "")));
+  const indexes = ["/services/", "/problems/", "/areas/", "/projects/", "/blog/"];
+
+  const withoutItemList = [];
+  for (const lang of ["en", "ms", "zh"]) {
+    for (const index of indexes) {
+      const path = `/${lang}${index}`;
+      if (!served.has(path)) {
+        withoutItemList.push(`${path} not served`);
+        continue;
+      }
+      if (!schemaTypes.get(path)?.has("ItemList")) withoutItemList.push(path);
+    }
+  }
+
+  if (withoutItemList.length === 0) {
+    pass(`all ${indexes.length * 3} entity index pages publish an ItemList for the list they render`);
+  } else {
+    fail(
+      `${withoutItemList.length} entity index page(s) render a list without an ItemList node` +
+        ` (examples: ${withoutItemList.slice(0, 3).join(", ")})`,
+    );
+  }
+
+  // The areas index's ItemList must carry every area guide it links, named the
+  // way that guide names itself (Phase 47: one entity, one name).
+  const wrong = [];
+  let listed = 0;
+  for (const lang of ["en", "ms", "zh"]) {
+    const indexPath = `/${lang}/areas/`;
+    const areaPaths = [...served].filter((p) =>
+      new RegExp(`^/${lang}/areas/[^/]+/[^/]+/$`).test(p),
+    );
+    const { text } = await fetchText(indexPath);
+    const itemLists = flattenGraph(jsonLdBlocks(text)).filter((n) => n["@type"] === "ItemList");
+    if (itemLists.length === 0) continue;
+    const items = (itemLists[0].itemListElement ?? []).map((item) => ({
+      name: item.name,
+      url: typeof item.url === "string" ? item.url.replace(CANONICAL_HOST, "") : null,
+    }));
+    const listedAreas = items.filter((item) => item.url && served.has(item.url));
+    listed += listedAreas.length;
+    if (itemLists[0].numberOfItems !== items.length) {
+      wrong.push(`${indexPath}: numberOfItems ${itemLists[0].numberOfItems} ≠ ${items.length} elements`);
+    }
+    if (listedAreas.length !== areaPaths.length) {
+      wrong.push(
+        `${indexPath}: ItemList carries ${listedAreas.length} of ${areaPaths.length} area guides`,
+      );
+    }
+    for (const item of listedAreas) {
+      const publishedName = pageNames.get(item.url);
+      if (publishedName && item.name !== publishedName) {
+        wrong.push(`${indexPath}: "${item.name}" ≠ guide name "${publishedName}"`);
+      }
+    }
+  }
+
+  if (wrong.length === 0 && listed > 0) {
+    pass(`the areas index ItemList lists ${listed} area guides by the name each guide publishes`);
+  } else if (wrong.length === 0) {
+    fail("areas index ItemList listed 0 area guides");
+  } else {
+    fail(
+      `areas index ItemList: ${wrong.length} problem(s)` +
+        ` (examples: ${wrong.slice(0, 3).join("; ")})`,
+    );
+  }
+}
+
 async function multilingualSpot() {
   console.log("\n== Multilingual / SEO / schema spot checks ==");
   await checkPageSeo("/en/", {
@@ -2461,8 +2818,11 @@ async function main() {
   console.log(`Phase 25 live QA against ${BASE}\n`);
   await checkHeaders();
   const locs = await checkSitemapLive();
-  const { graph, anchors, articleMainHrefs, inCopy, titles, leakedMarkup, faqBlocks, schemaTypes, serviceSchemas, entities, pageNames, cardNames } =
+  const { graph, anchors, articleMainHrefs, inCopy, titles, leakedMarkup, faqBlocks, schemaTypes, serviceSchemas, entities, pageNames, cardNames, localeSignals } =
     await sampleStatuses(locs);
+  await checkSitemapLastmod(locs);
+  checkOgLocaleParity(localeSignals);
+  await checkIndexItemLists(locs, schemaTypes, pageNames);
   checkInternalLinkGraph(locs, graph);
   checkArticleRegionLinks(locs, graph, articleMainHrefs);
   checkQuotedScopeLinks(locs, graph);

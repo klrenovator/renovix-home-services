@@ -602,6 +602,26 @@ const TITLE_BUDGET = (() => {
   if (!/export function brandTitle\(/.test(seo)) {
     fail("i18n/seo.ts must export brandTitle() so the brand-first separator cannot drift between pages.");
   }
+
+  // Phase 49 — `og:locale:alternate` is the Open Graph equivalent of the
+  // hreflang set, and must be derived from the same published-language set:
+  // a page must never advertise a translation it does not publish, and must
+  // never list itself. Nothing checked this before Phase 49, so all 678 pages
+  // carried `og:locale` and no alternates at all. `audit:live` compares the
+  // served tags on every page; this pins the derivation in source.
+  const ogBlock = seo.match(/openGraph:\s*\{[\s\S]*?\n    \},/)?.[0] ?? "";
+  // Only the failures are recorded — this audit reports the rules it keeps,
+  // so a passing derivation speaks through the checks that did not fire.
+  if (!/alternateLocale:\s*languages\s*\n?\s*\.filter\(/.test(seo) || !/languageSet\.has\(language\.code\)/.test(seo)) {
+    fail("i18n/seo.ts must derive alternateLocale from languageSet (the hreflang set), not a fixed list.");
+  }
+  if (!/language\.code !== getLanguageCodeSafe\(lang\)/.test(seo)) {
+    fail("og:locale:alternate must exclude the page's own locale (a page is not its own alternate).");
+  }
+  if (!ogBlock.includes("locale: getOgLocale(lang)")) {
+    fail("og:locale must be localized (getOgLocale(lang))");
+  }
+
   return m ? Number(m[1]) : 65;
 })();
 

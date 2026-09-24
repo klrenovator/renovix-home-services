@@ -45,12 +45,30 @@ tag matches its sitemap `<loc>`.
 
 ## `lastModified` policy
 
-The registries carry no per-page timestamps, so all entries share one
-**reviewed content date** (`CONTENT_LAST_MODIFIED` in `lib/sitemap.ts`). It is
-bumped by hand when page content materially changes — it is never set to "now"
-per request or per build, because stamping unchanged pages with a fresh date
-would misrepresent them to crawlers. If the data model ever gains real
-`updatedAt` values, use those instead and delete the constant.
+Every entry is dated from **recorded content dates**, never from the build and
+never from "now".
+
+- `CONTENT_LAST_MODIFIED` in `lib/sitemap.ts` is the site-wide **reviewed
+  content date**. It is bumped by hand when page content materially changes.
+  Pages with no per-page date of their own carry it.
+- A page that *does* record its own content date is dated from the later of the
+  two, through `contentLastModified(...)` — so a page is never stamped as
+  modified before the content it publishes existed. The Knowledge Hub is the
+  first such family: each guide's `published` (and `updated`, when a guide is
+  materially revised) is the same date the page renders as `<time
+  datetime=…>` and publishes as `Article.datePublished` / `dateModified`, so
+  the sitemap now agrees with what the page says about itself.
+- `contentLastModified` throws at build time on a malformed or computed
+  argument, and `npm run audit:sitemap` + `npm run audit:live` both re-check
+  the result (valid ISO dates, nothing in the future, no guide dated before it
+  was published).
+- Adding a new content family with per-page dates: pass those dates into
+  `contentLastModified` in `app/sitemap.ts` and extend the two audits. Do not
+  stamp pages with a date nothing in the repository supports — bumping the
+  site-wide constant marks *every* page without its own date as changed.
+
+If the data model ever gains real per-page `updatedAt` values for every family,
+use those instead and delete the constant.
 
 ## Google Search Console — one-time setup only
 

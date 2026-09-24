@@ -37,7 +37,8 @@ export function brandTitle(siteName: string, page: string): string {
  * Builds page metadata with the multilingual SEO requirements applied:
  * unique localized title + description, a self-referencing canonical,
  * `hreflang` alternates for every language that actually publishes the page,
- * an `x-default` pointing at English, and a localized `og:locale`.
+ * an `x-default` pointing at English, and a localized `og:locale` plus the
+ * `og:locale:alternate` set for the same published languages.
  *
  * `path` is the language-agnostic path with a trailing slash, e.g. `/quote/`.
  */
@@ -119,6 +120,18 @@ export function buildPageMetadata({
       title: ogTitle ?? title,
       description: ogDescription ?? description,
       locale: getOgLocale(lang),
+      // Phase 49 — `og:locale:alternate` is the Open Graph equivalent of the
+      // `hreflang` set above, and is derived from the same `languageSet`, so
+      // the two can never disagree: a page names exactly the translations it
+      // publishes, never a language whose version does not exist, and never
+      // itself. Without it a social crawler or an assistant reading the card
+      // sees one language version and no way to reach the others.
+      alternateLocale: languages
+        .filter(
+          (language) =>
+            language.code !== getLanguageCodeSafe(lang) && languageSet.has(language.code),
+        )
+        .map((language) => language.ogLocale),
       siteName: getDictionary(lang).meta.siteName,
       // Explicit image (not just the file-convention route): guarantees every
       // page carries og:image + dimensions + alt, independent of segment
