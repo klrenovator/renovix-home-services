@@ -112,6 +112,47 @@ if (/name:\s*categoryLabel|serviceType:\s*categoryLabel/.test(projectSchemaCode)
   fail("ProjectJsonLd must not publish the portfolio category label as an entity name");
 } else pass("no portfolio category label is used as an entity name in ProjectJsonLd");
 
+/* -------------------------------------------------------------------------- */
+/* Phase 49 — every entity index publishes the list it renders.               */
+/*                                                                            */
+/* `/services/`, `/problems/`, `/areas/`, `/projects/` and `/blog/` each      */
+/* render the full registry as cards. Four of them paired that list with an   */
+/* `ItemList` node; the areas index rendered 53 guides with no node at all,   */
+/* so the coverage was invisible to anything reading the page's data rather   */
+/* than its links. The source check keeps all five in step; audit:live reads  */
+/* the served nodes.                                                          */
+/* -------------------------------------------------------------------------- */
+
+// An index emits its ItemList either inline or through its own schema
+// component (the Knowledge Hub uses `BlogIndexJsonLd`); both count, and both
+// are required to build the node from the registry.
+const INDEX_PAGES = [
+  ["app/[lang]/services/page.tsx", "services", null],
+  ["app/[lang]/problems/page.tsx", "problems", null],
+  ["app/[lang]/areas/page.tsx", "areas", null],
+  ["app/[lang]/projects/page.tsx", "projects", null],
+  ["app/[lang]/blog/page.tsx", "blog", "components/blog/BlogIndexJsonLd.tsx"],
+];
+
+for (const [file, label, component] of INDEX_PAGES) {
+  const src = read(file);
+  const extra = component ? read(component) : "";
+  if (src.includes("itemListNode(") || extra.includes("itemListNode(")) {
+    pass(`${label} index publishes an ItemList for the list it renders`);
+  } else fail(`${label} index renders a registry list with no ItemList node`);
+}
+
+// The areas index must name each guide the way the guide names itself: the
+// Phase 47 accessor, not the registry's English `name` field.
+const areasIndex = read("app/[lang]/areas/page.tsx");
+if (/name:\s*getAreaName\(area, code\)/.test(areasIndex)) {
+  pass("areas index ItemList names each guide through getAreaName (one entity, one name)");
+} else fail("areas index ItemList must use getAreaName, not the English registry name");
+
+if (/contentHref\(\s*"area"/.test(areasIndex)) {
+  pass("areas index ItemList links only guides published in the page's language");
+} else fail("areas index ItemList must resolve URLs through contentHref(\"area\", …)");
+
 if (failures.length) {
   console.log(`\nFAIL — ${failures.length} issue(s)`);
   process.exit(1);

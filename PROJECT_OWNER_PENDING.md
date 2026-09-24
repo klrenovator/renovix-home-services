@@ -1,8 +1,19 @@
-# PROJECT OWNER-PENDING DATA — Phases 22, 24, 25, 26, 41, 46 & 47
+# PROJECT OWNER-PENDING DATA — Phases 22, 24, 25, 26, 41, 46, 47 & 49
 
 Status: **OWNER-PENDING**. Nothing on this list is a code defect. Each item
 can only be completed by the business or in the hosting/Search Console
 dashboards. Do not invent values.
+
+## Phase 49 (2026-09-23) — two decisions the AI deliberately did not make
+
+Both were found by an independent sweep of all 678 served pages. Neither is a
+defect the code can honestly fix on its own: one needs a judgement about what
+counts as "the content changed", the other is a design call.
+
+| # | Observation (measured, not assumed) | What the owner decides | Notes |
+| --- | --- | --- | --- |
+| 1 | The site-wide reviewed content date (`CONTENT_LAST_MODIFIED` in `lib/sitemap.ts`) is still **2026-09-01**. Phase 49 fixed the one family with recorded dates — the 12 Knowledge Hub guides are now dated **2026-09-04**, their own published date — but the other 642 pages still carry the hand-bumped constant, even though Phases 39–48 changed content on specific page families afterwards | Either (a) bump the constant to the date the owner considers the last whole-site content review, or (b) leave it until a review is done | One line in `lib/sitemap.ts`. It was **not** bumped automatically: the constant marks *every* page without its own date, so setting it to today would stamp 642 unchanged pages with a date nothing in the repository supports — exactly what `SITEMAP.md` forbids. If the owner wants true per-page dates for services, problems, areas and projects, that needs a real `updatedAt` field in those registries (a data-model change, worth doing properly rather than inferred) |
+| 2 | The homepage links all 10 services, the problem library and all 53 area guides from its main content, but the **Knowledge Hub (`/blog/`) and the project portfolio (`/projects/`) are reachable only through the site chrome (header/footer) and the sitemap** — 0 contextual links from any page's main content into those two hubs. `/search/` is in the same position: the Smart Service Finder is linked from the footer and the sitemap, but `InlineSearch` is a form, so it carries no crawlable anchor | Whether the homepage should gain a "latest guides" / "recent work" block, or the owner prefers the current homepage structure as it is | This is a **design** decision, not a missing edge in the content graph: every guide already links — and is linked by — the services, scopes, problems, areas, region hubs and projects it is about (Phases 32, 41, 45, 48). Adding a homepage section was left to the owner rather than slipped into a phase that otherwise changed no visible DOM on any of the 678 pages |
 
 ## Phase 47 (2026-09-23) — native-speaker read of 4 Chinese locality names (+ 1 optional rename)
 
