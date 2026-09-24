@@ -114,6 +114,11 @@ export const en: Dictionary = {
       title: "Complete home improvement under one roof",
       description:
         "From small repairs to larger renovation jobs, Renovix provides a practical range of home services across Kuala Lumpur and Selangor.",
+      guidesPrefix: "For cost estimates, material comparisons and maintenance advice, browse our",
+      guidesLink: "guides",
+      guidesMiddle: ". See recent work in our",
+      projectsLink: "projects",
+      guidesSuffix: " portfolio.",
     },
     problems: {
       eyebrow: "Common Home Issues",

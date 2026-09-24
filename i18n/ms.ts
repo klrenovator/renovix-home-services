@@ -119,6 +119,11 @@ export const ms: Dictionary = {
       title: "Semua keperluan rumah, di bawah satu bumbung",
       description:
         "Daripada pembaikan kecil hingga kerja renovasi yang lebih besar, Renovix menyediakan pelbagai perkhidmatan rumah yang praktikal di Kuala Lumpur dan Selangor.",
+      guidesPrefix: "Untuk anggaran kos, perbandingan bahan dan nasihat penyelenggaraan, lihat",
+      guidesLink: "panduan",
+      guidesMiddle: " kami. Lihat kerja terkini dalam",
+      projectsLink: "portfolio projek",
+      guidesSuffix: " kami.",
     },
     problems: {
       eyebrow: "Masalah Rumah Yang Kerap Berlaku",

@@ -239,6 +239,7 @@ export const projects: Project[] = [
   {
     slug: "wall-switch-installation",
     category: "electrical",
+    subServices: ["lighting-point"],
     status: "published",
     image: {
       src: "/images/projects/wall-switch-installation-kl-selangor.webp",
@@ -395,6 +396,7 @@ export const projects: Project[] = [
   {
     slug: "pendant-lamp-installation",
     category: "electrical",
+    subServices: ["lighting-point"],
     status: "published",
     image: {
       src: "/images/projects/pendant-lamp-installation-kl-selangor.webp",
@@ -426,6 +428,7 @@ export const projects: Project[] = [
   {
     slug: "awning-lighting-installation",
     category: "electrical",
+    subServices: ["lighting-point"],
     status: "published",
     image: {
       src: "/images/projects/awning-lighting-installation-kl-selangor.webp",

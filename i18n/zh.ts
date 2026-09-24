@@ -104,6 +104,11 @@ export const zh: Dictionary = {
       title: "一站式解决全屋装修与改善需求",
       description:
         "从小型维修到较大规模的装修工程，Renovix 为吉隆坡与雪兰莪住户提供多元化的实用房屋服务。",
+      guidesPrefix: "如需价格估算、材料对比与保养建议，请浏览我们的",
+      guidesLink: "装修指南",
+      guidesMiddle: "。想查看近期完工案例，请浏览",
+      projectsLink: "项目案例",
+      guidesSuffix: "。",
     },
     problems: {
       eyebrow: "常见家居问题",

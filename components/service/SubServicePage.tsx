@@ -117,7 +117,7 @@ export function SubServicePage({ detail, lang }: SubServicePageProps) {
               description={format(t.subServicePage.projectDescription, { service: name })}
             />
             <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {subProjects.slice(0, 3).map((project) => {
+              {subProjects.slice(0, 6).map((project) => {
                 const href = contentHref("project", project.slug, lang);
                 const content = getProjectContent(project.slug, lang);
                 return (
