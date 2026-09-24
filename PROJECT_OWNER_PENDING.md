@@ -1,8 +1,24 @@
 # PROJECT OWNER-PENDING DATA — Phases 22, 24, 25, 26, 41, 46, 47 & 49
 
-Status: **OWNER-PENDING**. Nothing on this list is a code defect. Each item
-can only be completed by the business or in the hosting/Search Console
-dashboards. Do not invent values.
+Status: **OWNER-PENDING — only the items still listed as open below.** Nothing
+on this list is a code defect. Business facts must come from the owner; do not
+invent values. The 2026-09-24 owner decisions below supersede older checklist
+wording where it conflicts.
+
+### Latest owner decisions (2026-09-24)
+
+- Keep the homepage review block exactly as it is; this records the owner's
+  presentation decision, not independent verification of each review.
+- Remove the electrical after-hours pricing factor from EN/MS/ZH. The catalogue
+  price rows and numeric prices remain unchanged.
+- Use established Chinese locality names; Sri Petaling now uses **大城堡**.
+  The other four Phase 47 locality harmonizations were already in place.
+- Owner confirms the real project information currently supplied is uploaded;
+  existing project records/photos are retained. Do not create missing details;
+  any future real project information can be added when supplied.
+- Owner confirms phone/device QA and Google Business Profile checks are done.
+- Distributed rate limiting is not needed now; keep it parked until traffic
+  justifies it. Optional design decisions remain unchanged.
 
 ## Phase 49 (2026-09-23) — two decisions the AI deliberately did not make
 
@@ -15,32 +31,29 @@ counts as "the content changed", the other is a design call.
 | 1 | The site-wide reviewed content date (`CONTENT_LAST_MODIFIED` in `lib/sitemap.ts`) is still **2026-09-01**. Phase 49 fixed the one family with recorded dates — the 12 Knowledge Hub guides are now dated **2026-09-04**, their own published date — but the other 642 pages still carry the hand-bumped constant, even though Phases 39–48 changed content on specific page families afterwards | Either (a) bump the constant to the date the owner considers the last whole-site content review, or (b) leave it until a review is done | One line in `lib/sitemap.ts`. It was **not** bumped automatically: the constant marks *every* page without its own date, so setting it to today would stamp 642 unchanged pages with a date nothing in the repository supports — exactly what `SITEMAP.md` forbids. If the owner wants true per-page dates for services, problems, areas and projects, that needs a real `updatedAt` field in those registries (a data-model change, worth doing properly rather than inferred) |
 | 2 | The homepage links all 10 services, the problem library and all 53 area guides from its main content, but the **Knowledge Hub (`/blog/`) and the project portfolio (`/projects/`) are reachable only through the site chrome (header/footer) and the sitemap** — 0 contextual links from any page's main content into those two hubs. `/search/` is in the same position: the Smart Service Finder is linked from the footer and the sitemap, but `InlineSearch` is a form, so it carries no crawlable anchor | Whether the homepage should gain a "latest guides" / "recent work" block, or the owner prefers the current homepage structure as it is | This is a **design** decision, not a missing edge in the content graph: every guide already links — and is linked by — the services, scopes, problems, areas, region hubs and projects it is about (Phases 32, 41, 45, 48). Adding a homepage section was left to the owner rather than slipped into a phase that otherwise changed no visible DOM on any of the 678 pages |
 
-## Phase 47 (2026-09-23) — native-speaker read of 4 Chinese locality names (+ 1 optional rename)
+## Phase 47 (2026-09-23) — Chinese locality names (owner decision recorded 2026-09-24)
 
-**Not a code defect; flagged for the owner's language judgement.** Phase 47
-made every short label agree with the page it links to. Four Chinese area
-guides published a *different* Chinese name from the one the rest of the `/zh/`
-site (and the Chinese label table) already used for the same place, and one
-Chinese name (沙登) was being published by **two different towns**. The guides
-were harmonized to the established spellings; only the name token changed — no
-sentence, fact, price, link or section was touched, and the historical
-reference "由旧沙登新村发展成的城镇" inside the Seri Kembangan guide stays
-because it matches the English source.
+Phase 47 harmonized the four Chinese area-guide names with established
+local usage and kept the two different Serdang-area towns distinct. On
+2026-09-24 the owner confirmed that actual established Chinese locality names
+should be used. The previously optional Sri Petaling name is now **大城堡** in
+both its guide and the shared localized-name registry; build-time checks keep
+the two aligned. The optional Segambut wording decision remains unchanged.
 
 | Guide | Was | Now | Why this spelling |
 | --- | --- | --- | --- |
 | `/zh/areas/kuala-lumpur/segambut/` | 士甲末 | **泗岩沫** | Mainstream Malaysian-Chinese name for Segambut (Chinese Wikipedia, local dictionaries; 泗岩末/泗岩沬 are seen variants). 士甲末 is not attested in Malaysian usage |
 | `/zh/areas/selangor/seri-kembangan/` | 沙登 | **史里肯邦安** | Official transliteration of Seri Kembangan — the town was renamed from Serdang in 1974. 沙登 remains correct for the *neighbouring* `selangor/serdang` guide, which keeps it, so the two towns are now distinguishable |
 | `/zh/areas/kuala-lumpur/desa-parkcity/` | 百乐镇 | **帝沙公园城** | 帝沙城市园 / 帝沙城市公园 are the attested Malaysian-Chinese renderings; 帝沙公园城 is the spelling this site already used in its Chinese label table and district name. 百乐镇 is not attested for Desa ParkCity anywhere |
-| `/zh/areas/kuala-lumpur/sri-petaling/` | 斯里布特拉 | **斯里八打灵** | 斯里八打灵 is an attested literal transliteration of "Sri Petaling". 斯里布特拉 was wrong on the facts — "Sri Putra" is a different township in Bangi |
+| `/zh/areas/kuala-lumpur/sri-petaling/` | 斯里布特拉 | 斯里八打灵 → **大城堡** (owner decision 2026-09-24) | 斯里八打灵 was the attested literal transliteration; the owner selected the established local name 大城堡. 斯里布特拉 was wrong on the facts — "Sri Putra" is a different township in Bangi |
 
-**What the owner is asked to do:**
+**Historical decision requests — now resolved except the optional wording call:**
 
 | # | Action | Where | Notes |
 | --- | --- | --- | --- |
-| 1 | Give the 4 names above a native-speaker read (a Malaysian-Chinese customer, or the owner's own judgement) and confirm or supply replacements | Owner reply to AI | Each is a one-token change in `data/area-content/translations/zh/*.ts` plus the matching row in `areaNames.zh` (`data/i18n/lists.ts`); `i18n/verify.ts` fails the build if the two ever disagree again, so they cannot drift apart silently |
-| 2 | Decide whether Sri Petaling should be published as **大城堡** instead of 斯里八打灵 | Owner reply to AI | 大城堡 is the name Malaysian Chinese residents and property portals actually use for Sri Petaling; 斯里八打灵 is the literal transliteration and is what the site ships today. The AI did **not** choose it unilaterally because it is a branding/usage call, not a correctness fix. If the owner says yes, the change is the same two places as above |
-| 3 | Optional readability call: the area coverage answer splices "{area}, {district}" and so now reads "泗岩沫、泗岩沫与满家乐区" on the Segambut guide, because the district is named after the area | Owner reply to AI | The identical construction has always shipped in English ("across Segambut, Segambut & Mont Kiara District, and the wider Klang Valley") and in Malay, and the sentence stays factually correct, so Phase 47 left it alone rather than rewrite FAQ copy **and** `FAQPage` schema on all 165 area pages. If the owner wants the repetition removed, the fix is one conditional in `components/area/AreaAnswerFirstSection.tsx` (drop the district clause when the district name already contains the area name), applied in all three languages at once |
+| 1 | ~~Owner requested established Chinese locality names~~ **DONE 2026-09-24** | `data/area-content/translations/zh/` + `data/i18n/lists.ts` | Existing four harmonizations retained; the guide and shared label for Sri Petaling now both use **大城堡**; `i18n/verify.ts` guards agreement |
+| 2 | ~~Choose the established Chinese name for Sri Petaling~~ **DONE 2026-09-24** — **大城堡** | Same two localized sources | This is the owner-directed name now published on the guide and links |
+| 3 | Optional readability call: the area coverage answer splices "{area}, {district}" and so reads "泗岩沫、泗岩沫与满家乐区" on the Segambut guide | Leave unchanged per owner's 2026-09-24 direction to keep optional decisions as they are | No copy/schema change |
 
 Everything else Phase 47 changed needed no owner input: the Malay label
 "Pusat Bandar KL" was already the name the `kl-city-centre` guide published
@@ -49,33 +62,33 @@ index cards now read the guides' own Malay and Chinese names and subtitles
 (10 + 22 card names and all 114 subtitles previously disagreed with the pages
 they open).
 
-## Phase 46 (2026-09-22) — confirm or reword one catalogue price factor
+## Phase 46 (2026-09-22) — after-hours catalogue factor (resolved 2026-09-24)
 
-**Not a code change; flagged only.** The electrical troubleshooting row
-(`electrical-troubleshoot` in `data/pricing/pricing.ts`) has carried the
-"what affects the price" factor **"Emergency after hours RM150–300/hour"**
-since the catalogue was supplied. It is already published on the English
-electrical pillar, on the `/ai/pricing.json` feed, and — since Phase 46, which
-localized every factor list — with the identical RM figures in Malay
-("Kecemasan di luar waktu kerja RM150–300/jam") and Chinese
-("非工作时间紧急服务 RM150–300/小时"). `CONTENT_GOVERNANCE.md` §4 says the
+**Historical finding from the original audit.** At that time the electrical
+troubleshooting row (`electrical-troubleshoot` in `data/pricing/pricing.ts`)
+carried the "what affects the price" factor **"Emergency after hours
+RM150–300/hour"** on the English electrical pillar and `/ai/pricing.json`,
+with corresponding localized Malay ("Kecemasan di luar waktu kerja
+RM150–300/jam") and Chinese ("非工作时间紧急服务 RM150–300/小时") wording. `CONTENT_GOVERNANCE.md` §4 says the
 site must never *promise* after-hours service (business hours 9:00 AM –
 6:00 PM, no rapid-response policy stated by the owner). A price modifier is
-not a promise of availability, so the figure was left exactly as supplied
-(prices are never changed or reworded by the AI), but the owner should
-confirm one of two outcomes:
+not a promise of availability. The owner directed removal of the after-hours
+factor on 2026-09-24. It has been removed from the English, Malay and Chinese
+troubleshooting factors and from the internal after-hours research note; no
+catalogue price or price range was changed. The following original options are
+kept only as historical audit context:
 
-| # | Action | Where | Notes |
-| --- | --- | --- | --- |
-| 1 | Confirm that after-hours electrical fault call-outs are genuinely offered at RM150–300/hour, and on what terms (which hours, which faults) | Owner reply to AI | If confirmed, the factor stays and the governance note can record the sanctioned exception |
-| 2 | Otherwise supply the replacement wording (or ask for the factor to be removed from the row) | Owner reply to AI | The change is one line in `data/pricing/pricing.ts` plus the matching MS/ZH factor; `audit:pricing` enforces that all three stay in step |
+| # | Original action | Resolution |
+| --- | --- | --- |
+| 1 | Confirm after-hours call-outs or remove the factor | **Resolved:** owner chose removal; all three localized factors are now clear of it |
 
 ## Phase 41 (2026-09-22) — verify or withdraw the homepage "Google Reviews" block
 
 **Priority: honesty/trust — above every item below it.** This is not a code
-defect and no code was changed: the owner was asked on 2026-09-22 and chose
-*keep the section live and flag it*. It is recorded here so the flag travels
-with the project instead of living only in a phase log.
+defect and no code was changed: the owner chose to keep the section live and
+flag it, and reconfirmed on 2026-09-24 that it should remain exactly as it is.
+This records the presentation decision; the repository does not independently
+verify review provenance or reviewer consent.
 
 What the site publishes today, on all three homepages
 (`components/home/ReviewsSection.tsx`): a marquee of five named five-star
@@ -89,19 +102,18 @@ asks for a *Google Places API sync of verified* reviews, Phases 25–26 both
 recorded reviews as "not supplied; correctly unpublished", and
 `audit:schema` still bans `Review`/`aggregateRating` in structured data.
 
-| # | Action | Where | Notes |
-| --- | --- | --- | --- |
-| 1 | Confirm each of the five testimonials exists on the business's Google Business Profile, and that each named reviewer consented to their name being republished on the website | Owner → GBP + written consent | Until confirmed, treat the block as unverified content. Two honest exits: publish the real, currently-live reviews (ideally the GAP-12 Places sync, with the `audit:schema` ban lifted deliberately), or withdraw the block |
-| 2 | Decide what the eyebrow and footer line should claim if real reviews are published | Owner reply to AI | "Google Reviews" + "Posted on Google" attributes them to Google; that attribution must be true and current, not approximate |
-| 3 | If real reviews are published: supply the profile ID/place ID so the sync is live data, not a typed snapshot | Owner → GBP | Typed review snapshots go stale and are indistinguishable from invented ones |
-| 4 | Do **not** add aggregate star counts, "4.9/5 from 128 reviews" style claims, or `aggregateRating` markup without the live source | — | `audit:schema` would fail, and the failure is correct |
+| Owner instruction | Status |
+| --- | --- |
+| Keep the current five-review block exactly as it is | **Confirmed 2026-09-24.** No review content, attribution, structured review schema or layout was changed. The owner is responsible for its real-world accuracy and permissions. |
+| Do not add aggregate ratings/counts or review schema without verified live data | Preserved; `audit:schema` continues to prohibit those signals. |
 
-Also unchanged and still owner-gated: every Phase 22/24/25/26 item below, and
-the two Phase 40-era items the deep audits keep re-raising — real project
-locations for the 28 published projects (`ProjectLocation` is unset for all of
-them, so project ↔ area links stay unwired) and verified kampung-level coverage
-plus unique local context for the locality tier. Neither was invented in
-Phase 41.
+Still data-gated: project-to-area links remain absent because no verified
+project locations are present in the project registry; do not infer a location
+from a photograph. The locality tier has since been implemented and verified:
+Kampung Baru is the one published `kampung`-level guide. Add further locality
+pages only if the owner supplies verified coverage and genuinely unique local
+context. Other historical Phase 22/24/25/26 entries below are superseded by
+their later completion notes where marked.
 
 ## Phase 26 (2026-09-05) — current owner checklist
 
@@ -120,11 +132,11 @@ or real-data action; none of it can or should be faked in code.**
 | 3 | ~~Submit `https://renovixhomeservices.my/sitemap.xml` once (apex property) in Google Search Console~~ **DONE 2026-09-06** — completion already recorded in the Phase 25 table below; current checklist reconciled 2026-09-20 | GSC | ✅ CLOSED per the existing owner record, not a new dashboard verification. Do not resubmit or infer indexing status from submission |
 | 4 | ~~Supply analytics IDs (GA4 or GTM, never both)~~ **DONE 2026-09-06** — GA4 property created by owner (KUL/MYR), `NEXT_PUBLIC_GA4_MEASUREMENT_ID` in Vercel Production, redeployed, Realtime verified. Clarity/Ads labels left optional | Vercel env | ✅ Analytics LIVE — quote/WhatsApp/phone events now measured |
 | 5 | ◐ 7 wired 2026-09-06, then ⏸ PARKED by owner decision — real Painting + Waterproofing photos to be uploaded from an actual future job; the 2 US-fittings painting shots are withdrawn from publication | Owner → `public/images/projects/` + `data/project-content/` | Raw jpgs on `main` were replaced by audited webp (originals recoverable from git history). Painting pair (US-style fittings) stays unpublished per owner's 2026-09-06 decision. Never stock/AI images |
-| 6 | Real-device QA pass: mobile menu, quote form, WhatsApp deep link, `tel:` | Phone | Flagged since Phase 22; no browser/device exists in code environments |
-| 7 | Approve quote-form field list expansion (optional budget band + preferred time-of-day; decision on photo upload needing a storage policy) | Owner reply to AI | `audit` item I-09 / plan T-09. AI implements once approved |
-| 8 | Before high-traffic launch: provision Vercel KV or Upstash Redis and let AI wire distributed rate limiting (T-11) | Vercel/Upstash | Current limiter is per-instance by design |
-| 9 | Enable GitHub Dependabot alerts + security updates on the repo (npm audit came back 0 on 2026-09-05; keep it monitored) | GitHub → Settings → Code security | One click |
-| 10 | Claim Google Business Profile; supply confirmed opening days if schema should ever show hours | GBP | Schema intentionally omits dayOfWeek/geo until real (governance §6) |
+| 6 | ~~Real-device QA: mobile menu, quote form, WhatsApp deep link, `tel:`~~ **DONE per owner 2026-09-24** | Owner checked on phone | No further device task pending |
+| 7 | ~~Quote-form field expansion~~ **CLOSED — no new fields requested** | Owner decision already recorded 2026-09-07 | Existing form remains unchanged |
+| 8 | Distributed rate limiting (Vercel KV/Upstash) | **PARKED per owner 2026-09-24** | Not needed now; reconsider only if traffic warrants it |
+| 9 | ~~Enable GitHub Dependabot alerts + security updates~~ **DONE 2026-09-07** | GitHub settings | Completion already recorded in the progress log |
+| 10 | ~~Google Business Profile / opening days check~~ **DONE per owner 2026-09-24** | Owner checked GBP | Do not add unconfirmed hours or geo data to schema |
 | 11 | Optional E-E-A-T: short About/founder note (real names/bio only) | Owner | No credentials invented — write "what's true" |
 
 **CSP decision (owner + AI):** `'unsafe-inline'` stays for now — removing it

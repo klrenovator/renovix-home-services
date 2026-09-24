@@ -490,17 +490,17 @@ export const translations: AreaTranslations = {
     ],
   },
   "kuala-lumpur/sri-petaling": {
-    ...shared("斯里八打灵"),
-    name: "斯里八打灵",
-    title: "Renovix Home Services | 斯里八打灵房屋装修与维修服务",
+    ...shared("大城堡"),
+    name: "大城堡",
+    title: "Renovix Home Services | 大城堡房屋装修与维修服务",
     metaDescription:
-      "斯里八打灵（Sri Petaling）房屋装修与维修——装修、水管、防水、瓷砖、电气与油漆工程。免费报价。",
-    h1: "斯里八打灵房屋装修与维修服务",
+      "大城堡（Sri Petaling）房屋装修与维修——装修、水管、防水、瓷砖、电气与油漆工程。免费报价。",
+    h1: "大城堡房屋装修与维修服务",
     summary:
       "吉隆坡南部的九十年代花园城镇——排屋街道、繁忙商业街，以及逐渐增多的新公寓。",
     intro: [
-      "斯里八打灵的住宅多建于九十年代，因此原装防水、水管与饰面正进入第一轮更换周期。",
-      "我们为斯里八打灵的排屋、店屋与公寓提供[装修](/services/general-renovation)、[水管](/services/plumbing)、[防水](/services/waterproofing)、[瓷砖](/services/tiling)、[电气](/services/electrical)与[油漆](/services/painting)服务。",
+      "大城堡的住宅多建于九十年代，因此原装防水、水管与饰面正进入第一轮更换周期。",
+      "我们为大城堡的排屋、店屋与公寓提供[装修](/services/general-renovation)、[水管](/services/plumbing)、[防水](/services/waterproofing)、[瓷砖](/services/tiling)、[电气](/services/electrical)与[油漆](/services/painting)服务。",
     ],
     serviceNotes: [
       "九十年代排屋的分阶段升级。",

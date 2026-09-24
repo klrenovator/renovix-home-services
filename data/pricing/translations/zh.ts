@@ -166,7 +166,7 @@ export const zhPricingTranslations: Record<string, PricingTranslation> = {
     subService: "电力故障排查与跳闸维修",
     scope: "跳电、短路、插座或开关故障的诊断与维修。",
     duration: "1–3 小时",
-    factors: ["故障复杂程度", "出入通道", "所需配件", "非工作时间紧急服务 RM150–300/小时"],
+    factors: ["故障复杂程度", "出入通道", "所需配件"],
   },
   "flooring-spc": {
     subService: "SPC 地板铺设",

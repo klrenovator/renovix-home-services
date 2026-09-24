@@ -320,7 +320,7 @@ export const areaNames: Record<NonEnglish, Record<string, string>> = {
     "kuala-lumpur/mont-kiara": "满家乐",
     "kuala-lumpur/bangsar": "孟沙",
     "kuala-lumpur/bukit-jalil": "武吉加里尔",
-    "kuala-lumpur/sri-petaling": "斯里八打灵",
+    "kuala-lumpur/sri-petaling": "大城堡",
     "kuala-lumpur/old-klang-road": "旧巴生路",
     "kuala-lumpur/taman-melawati": "美拉华蒂花园",
     "kuala-lumpur/desa-parkcity": "帝沙公园城",

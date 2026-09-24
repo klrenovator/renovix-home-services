@@ -566,11 +566,11 @@ export const pricingEntries: PricingEntry[] = [
     scope: "Diagnosis and repair of power tripping, short circuit, faulty socket/switch.",
     includes: ["Inspection", "Fault tracing", "Minor repair"],
     excludes: ["Major rewiring", "Parts if needed"],
-    factors: ["Fault complexity", "Access", "Parts required", "Emergency after hours RM150–300/hour"],
+    factors: ["Fault complexity", "Access", "Parts required"],
     disclaimer: DISCLAIMER,
     duration: "1–3 hours",
     lastReviewed: LAST_REVIEWED,
-    researchNote: "Emergency electrical RM150–300/hour, inspections RM200–500, wiring repairs RM300–800, breaker RM250–600.",
+    researchNote: "Inspections RM200–500, wiring repairs RM300–800, breaker RM250–600.",
     intentModifiers: ["power tripping repair", "emergency electrician", "electrical repair near me"],
   },
 
