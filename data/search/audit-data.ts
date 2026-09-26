@@ -1,7 +1,7 @@
 /**
  * Smart Service Finder — build-time integrity guard.
  *
- * Invariants enforced (Phase 1 §1.5 + Master Plan §7). A failure here
+ * Invariants enforced by this guard. A failure here
  * fails `next build` via `lib/verify.ts`.
  *
  * 1. Every `SearchDocument.id` resolves to a real entity in the registries.
@@ -204,7 +204,7 @@ export function auditSynonyms(lang: LanguageCode): SearchAuditIssue[] {
 }
 
 /**
- * Replay every query fixture (Master Plan §12) through the real pipeline
+ * Replay every query fixture through the real pipeline
  * — tokenize → synonym expansion → match → rank — and require the
  * expected entity to appear among the first 3 result cards. Fixtures
  * without an expected href must return zero results.

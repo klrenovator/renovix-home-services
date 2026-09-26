@@ -6,7 +6,7 @@
  * surfaces over others, and surfaces related-services as a follow-on
  * view through the result card.
  *
- * Caps (per Master Plan §4):
+ * Result caps (the visible-result budget):
  *   - services           3
  *   - sub-services       3
  *   - problems           3

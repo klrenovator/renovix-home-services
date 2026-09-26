@@ -132,7 +132,7 @@ export type SearchDocument = {
  *
  * Built by `data/search/build-index.ts` and consumed by:
  * - `lib/search/match.ts` (server ranking, results page)
- * - `data/search/serialize.ts` (JSON mirror, client typeahead)
+ * - `data/search/index.ts` (re-export for the client components)
  */
 export type SearchIndex = {
   lang: LanguageCode;

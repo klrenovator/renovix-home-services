@@ -2,7 +2,7 @@
 /**
  * Smart Service Finder — dependency-free audit script.
  *
- * Verifies every invariant declared in the master plan §7:
+ * Verifies the search-index invariants:
  *
  *   1. Every SearchDocument.id resolves to a real registry entity.
  *   2. Every SearchDocument.pricing.id resolves to a pricing row.
@@ -210,8 +210,7 @@ if (!existsSync(pagePath)) {
 }
 
 // ---------------------------------------------------------------------------
-// 5. The search index builder walks every registry the master plan §2
-//    promises to walk.
+// 5. The search index builder walks every content registry.
 // ---------------------------------------------------------------------------
 const buildPath = join(SRC, "build-index.ts");
 if (!existsSync(buildPath)) {
@@ -243,8 +242,8 @@ if (!existsSync(buildPath)) {
 }
 
 // ---------------------------------------------------------------------------
-// 6. Universal placement — the master plan §5 promises the search entry
-//    points listed below. Each file must render exactly one InlineSearch
+// 6. Universal placement — the search entry points listed below must exist.
+//    Each file must render exactly one InlineSearch
 //    (import lines don't count) and the chrome files must reference the
 //    expected components / localized label.
 // ---------------------------------------------------------------------------
@@ -314,7 +313,7 @@ if (bodyPlacementFailures === 0) {
 }
 
 // ---------------------------------------------------------------------------
-// 7. Query fixtures (Master Plan §12) — the static table in
+// 7. Query fixtures — the static table in
 //    `data/search/fixtures.ts` is the fixture authority for this script;
 //    the matching results themselves are replayed at build time by
 //    `data/search/audit-data.ts::auditQueryFixtures`.
@@ -328,7 +327,7 @@ if (!existsSync(fixturesPath)) {
     fixturesSource.matchAll(/\{\s*lang:\s*"(en|ms|zh)"\s*,\s*query:\s*"([^"]+)"(?:\s*,\s*expectedTopHref:\s*"([^"]+)")?\s*\}/g),
   );
   if (fixtureEntries.length < 25) {
-    fail(`query fixture table has ${fixtureEntries.length} entries; the master plan requires at least 25`);
+    fail(`query fixture table has ${fixtureEntries.length} entries; the finder requires at least 25`);
   } else {
     pass(`query fixture table has ${fixtureEntries.length} entries (≥ 25)`);
   }

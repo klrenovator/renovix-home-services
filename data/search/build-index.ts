@@ -5,8 +5,8 @@
  * guides, area guides, blog guides, published projects) and projects one
  * `SearchDocument` per published entity per language. This file is the
  * single place where the search index is built; the result is consumed by
- * `lib/search/match.ts` (server) and `data/search/serialize.ts` (client
- * typeahead mirror).
+ * `lib/search/match.ts` (server) and re-exported through
+ * `data/search/index.ts` for the client components.
  *
  * Hard rules:
  *
