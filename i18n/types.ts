@@ -605,11 +605,23 @@ export type Dictionary = {
       descriptionTooLong: string;
       preferredContact: string;
     };
-    /** WhatsApp alternative shown before/next to the form (no form needed). */
-    whatsappQuickTitle: string;
-    whatsappQuickBody: string;
-    whatsappQuickCta: string;
-    whatsappQuickMessage: string;
+    /**
+     * Lead-generation Task 1.2 — the quote page's single WhatsApp quick
+     * path, now form-aware: the banner lives right above the form and its
+     * `wa.me` link is rebuilt from the customer's input as they type.
+     */
+    instantTitle: string;
+    instantBody: string;
+    instantCta: string;
+    /** Explains that form input is carried into the message automatically. */
+    instantHint: string;
+    /** `wa.me` prefill base; entered details are appended as `instantLine*` lines. */
+    instantMessage: string;
+    /** One entered detail per line; `{value}` is a localized label or the location. */
+    instantLineService: string;
+    instantLineSubService: string;
+    instantLinePropertyType: string;
+    instantLineLocation: string;
     deliveryTitle: string;
     deliveryBody: string;
     submit: string;

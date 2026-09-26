@@ -749,10 +749,21 @@ export const zh: Dictionary = {
       descriptionTooLong: "留言过长，请精简后再提交。",
       preferredContact: "请选择您希望我们联系您的方式。",
     },
-    whatsappQuickTitle: "更喜欢用 WhatsApp？",
-    whatsappQuickBody: "无需填写表格——直接发信息给我们，在对话中说明详情。",
-    whatsappQuickCta: "用 WhatsApp 联系",
-    whatsappQuickMessage: "您好，Renovix Home Services，我想咨询房屋服务工程的报价。",
+    /**
+     * Lead-generation Task 1.2 —— WhatsApp 立即报价通道。横幅位于表单正上方，
+     * wa.me 链接会根据客户已填写的服务、子服务、房产类型和所在地实时更新，
+     * 改用 WhatsApp 沟通也不会丢失任何已填写的咨询信息。
+     */
+    instantTitle: "想通过 WhatsApp 立即获取报价？",
+    instantBody: "无需等待——直接与我们聊天，并用手机发送工程照片。您在下方表单中填写的内容会自动添加到信息里。",
+    instantCta: "带照片通过 WhatsApp 聊天",
+    instantHint:
+      "填写表单时，您选择的服务、房产类型和所在地会自动复制到信息中——改用 WhatsApp 继续沟通，您已提供的信息也不会丢失。",
+    instantMessage: "您好，Renovix Home Services，我想立即咨询房屋服务工程的报价。",
+    instantLineService: "服务：{value}",
+    instantLineSubService: "所需工程：{value}",
+    instantLinePropertyType: "房产类型：{value}",
+    instantLineLocation: "所在地：{value}",
     deliveryTitle: "本表单的提交方式",
     deliveryBody:
       "您的申请会发送给我们的团队。报价不会即时生成 —— 我们会先审阅资料，并可能需要更多信息或照片。您也可以拨打或通过 WhatsApp 联系 +601159259521。",

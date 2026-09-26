@@ -44,7 +44,7 @@ export type ConversionEvent = (typeof CONVERSION_EVENTS)[number];
  * name, values truncated by this module).
  */
 export type ConversionContext = Partial<{
-  /** Where the CTA lives, e.g. `quote_quick_path`, `quote_success`, `header`, `footer`, or a page-type token like `services`. */
+  /** Where the CTA lives, e.g. `quote_instant_path`, `quote_success`, `header`, `footer`, or a page-type token like `services`. */
   surface: string;
   /** Registry slug of the selected service — never a free-text value. */
   service: string;

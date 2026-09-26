@@ -231,7 +231,6 @@ if (!failures.some((message) => message.includes("platform-neutral"))) {
 
 /* Firing surfaces */
 const quoteForm = read("components/quote/QuoteForm.tsx");
-const quotePage = read("app/[lang]/quote/page.tsx");
 const serviceHero = read("components/service/ServiceHero.tsx");
 const serviceCta = read("components/service/CtaSection.tsx");
 const subServicePage = read("components/service/SubServicePage.tsx");
@@ -241,8 +240,10 @@ const fireChecks = [
   [quoteForm, "quote_form_submit", "QuoteForm"],
   [quoteForm, "quote_form_success", "QuoteForm"],
   [quoteForm, "quote_form_error", "QuoteForm"],
-  [quotePage, "whatsapp_click", "quote page quick path"],
-  [quoteForm, "whatsapp_click", "QuoteForm fallback/success"],
+  // Lead-generation Task 1.2: the quick path moved from the page into
+  // QuoteForm, which now fires whatsapp_click for the instant banner above
+  // the form as well as the fallback/success handoffs.
+  [quoteForm, "whatsapp_click", "QuoteForm instant banner/fallback/success"],
   [measurement, "phone_click", "delegated click listener"],
   [measurement, "email_click", "delegated click listener"],
   [measurement, "whatsapp_click", "delegated click listener"],
