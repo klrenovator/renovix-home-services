@@ -11,13 +11,20 @@
  *  3. Truthful photo handling: no file input exists, nothing pretends photos
  *     were transmitted, and the WhatsApp photo handoff is localized.
  *  4. i18n completeness: the quote dictionary ships every new key in
- *     EN/MS/ZH (sections, propertyTypes by id, quick-path + success photo
+ *     EN/MS/ZH (sections, propertyTypes by id, instant-quote + success photo
  *     handoff copy, sub-service validation, FAQs) with no removed keys and
  *     no mojibake/replacement characters.
  *  5. Analytics preparation: the six conversion events exist, the quote flow
  *     fires them, and nothing loads an analytics platform or sends PII.
  *  6. SEO: the quote page carries FAQPage structured data, the WhatsApp CTA
  *     uses the single site configuration, and `/quote/` stays in the sitemap.
+ *  7. Lead-generation Task 1.2 — the instant WhatsApp quote route: message
+ *     composition is built on the localized quote templates with the
+ *     customer-typed location sanitized and truncated, the form renders the
+ *     form-aware banner (`quote_instant_path`) right above the fields, the
+ *     error fallback carries the entered details too, the static pre-form
+ *     quick path is gone (one live WhatsApp route), and every new key exists
+ *     as a real translation in EN/MS/ZH.
  *
  * Run with: npm run audit:quote
  */
@@ -193,9 +200,9 @@ console.log("\n4. Multilingual quote dictionary");
 
 const REQUIRED_QUOTE_KEYS = [
   "sections:",
-  "whatsappQuickTitle:",
-  "whatsappQuickCta:",
-  "whatsappQuickMessage:",
+  "instantTitle:",
+  "instantCta:",
+  "instantMessage:",
   "successPhotosTitle:",
   "successPhotosCta:",
   "successPhotosMessage:",
@@ -209,6 +216,12 @@ const REMOVED_QUOTE_KEYS = [
   "notSureSubService:",
   "multipleServicesSubService:",
   'propertyTypes: [',
+  // Lead-generation Task 1.2: the static pre-form quick path was replaced by
+  // the form-aware instant route inside QuoteForm.
+  "whatsappQuickTitle:",
+  "whatsappQuickBody:",
+  "whatsappQuickCta:",
+  "whatsappQuickMessage:",
 ];
 
 for (const [label, file] of [
@@ -231,7 +244,7 @@ for (const [label, file] of [
   }
   if (dict.includes("subService:")) {
     const quoteBlock = dict.slice(dict.indexOf("  quote: {"));
-    const validationBlock = quoteBlock.slice(0, quoteBlock.indexOf("whatsappQuickTitle"));
+    const validationBlock = quoteBlock.slice(0, quoteBlock.indexOf("instantTitle"));
     if (/subService:/.test(validationBlock)) {
       pass(`${label}: sub-service validation message present`);
     } else {
@@ -344,10 +357,10 @@ if (page.includes("faqNode") && page.includes("t.quote.faqs")) {
 } else {
   fail("page: FAQPage node missing");
 }
-if (page.includes("getWhatsAppHref()") && page.includes("whatsappQuickMessage")) {
-  pass("WhatsApp quick path reuses the single site WhatsApp configuration");
+if (page.includes("getWhatsAppHref()") && page.includes("whatsappHref={whatsappHref}")) {
+  pass("the form's WhatsApp routes reuse the single site WhatsApp configuration");
 } else {
-  fail("page: WhatsApp quick path not wired to site config");
+  fail("page: quote form not wired to the single site WhatsApp configuration");
 }
 if (page.includes("getQuoteServiceOptions(code)")) {
   pass("form options come from getQuoteServiceOptions(lang)");
@@ -383,6 +396,154 @@ if (!/quote/.test(robots)) {
   pass("robots.ts has no quote-specific exclusion (page stays indexable)");
 } else {
   fail("robots.ts excludes a quote route unexpectedly");
+}
+
+/* ------------------------------------------------------------------------ */
+/* 7. Lead-generation Task 1.2 — instant WhatsApp quote route                */
+/* ------------------------------------------------------------------------ */
+console.log("\n7. Instant WhatsApp quote route (Task 1.2)");
+
+const prefill = read("lib/quote/whatsapp.ts");
+if (prefill.includes('Dictionary["quote"]') && prefill.includes("instantLine")) {
+  pass("message composition is built on the localized quote templates (no free text, no slugs)");
+} else {
+  fail("lib/quote/whatsapp.ts: composition no longer uses the localized quote templates");
+}
+if (prefill.includes("QUOTE_LIMITS.location.max") && prefill.includes("replace(/\\s+/g")) {
+  pass("customer-typed location is whitespace-collapsed and truncated before entering a wa.me URL");
+} else {
+  fail("lib/quote/whatsapp.ts: location value not sanitized/truncated");
+}
+if (!/wa\.me|whatsapp:\/\//.test(prefill) && !/\+60/.test(prefill)) {
+  pass("composition never hardcodes a WhatsApp URL or number");
+} else {
+  fail("lib/quote/whatsapp.ts hardcodes a WhatsApp URL/number");
+}
+
+const INSTANT_KEYS = [
+  "instantTitle:",
+  "instantBody:",
+  "instantCta:",
+  "instantHint:",
+  "instantMessage:",
+  "instantLineService:",
+  "instantLineSubService:",
+  "instantLinePropertyType:",
+  "instantLineLocation:",
+];
+
+/** Pulls the single-line string value of a template key from the quote block. */
+function instantValue(quoteBlock, key) {
+  const match = quoteBlock.match(new RegExp(`${key}\\s*\\n?\\s*"((?:[^"\\\\]|\\\\.)*)"`));
+  return match ? match[1] : null;
+}
+
+const quoteBlocks = {};
+for (const [label, file] of [
+  ["en", "i18n/en.ts"],
+  ["ms", "i18n/ms.ts"],
+  ["zh", "i18n/zh.ts"],
+]) {
+  const dict = read(file);
+  const quoteStart = dict.indexOf("  quote: {");
+  const quoteEnd = dict.indexOf("\n  },", quoteStart);
+  const block = dict.slice(quoteStart, quoteEnd);
+  quoteBlocks[label] = block;
+
+  const missing = INSTANT_KEYS.filter((key) => !block.includes(key));
+  if (missing.length === 0) {
+    pass(`${label}: all ${INSTANT_KEYS.length} instant-quote keys present`);
+  } else {
+    fail(`${label}: missing instant-quote keys: ${missing.join(", ")}`);
+  }
+  if (/�/.test(block)) {
+    fail(`${label}: replacement character (mojibake) in the instant-quote copy`);
+  }
+}
+
+if (INSTANT_KEYS.every((key) => types.includes(`${key} string;`))) {
+  pass("the Dictionary type enforces every instant-quote key in all three languages");
+} else {
+  fail("types.ts does not type every instant-quote key");
+}
+
+/* The `{value}` slot must appear exactly once per detail line, the base
+   message must stay short enough for a wa.me URL, and the localized copies
+   must be genuine translations. */
+for (const key of INSTANT_KEYS.filter((k) => k.startsWith("instantLine"))) {
+  const problems = [];
+  for (const lang of ["en", "ms", "zh"]) {
+    const value = instantValue(quoteBlocks[lang], key);
+    if (value === null) {
+      problems.push(`${lang}: unreadable`);
+      continue;
+    }
+    const slots = [...value.matchAll(/\{(\w+)\}/g)].map((m) => m[1]);
+    if (slots.length !== 1 || slots[0] !== "value") {
+      problems.push(`${lang}: expected one {value} slot, got {${slots.join("}, {")}}`);
+    }
+  }
+  if (problems.length === 0) {
+    pass(`${key}: exactly one {value} slot in EN/MS/ZH`);
+  } else {
+    fail(`${key}: ${problems.join("; ")}`);
+  }
+}
+
+let instantCopyProblems = 0;
+for (const key of ["instantMessage", "instantHint", "instantBody", "instantCta", "instantTitle"]) {
+  const en = instantValue(quoteBlocks.en, `${key}:`);
+  const ms = instantValue(quoteBlocks.ms, `${key}:`);
+  const zh = instantValue(quoteBlocks.zh, `${key}:`);
+  if (en === null || ms === null || zh === null) {
+    fail(`${key}: could not read the EN/MS/ZH values`);
+    instantCopyProblems += 1;
+    continue;
+  }
+  if (en.length > 200) {
+    fail(`${key}: EN copy is ${en.length} characters — too long for a wa.me message`);
+    instantCopyProblems += 1;
+  }
+  if (en === ms) {
+    fail(`${key}: the Malay copy is the English string verbatim`);
+    instantCopyProblems += 1;
+  }
+  if (!/[\u4e00-\u9fff]/.test(zh)) {
+    fail(`${key}: the Chinese copy contains no Chinese characters`);
+    instantCopyProblems += 1;
+  }
+}
+if (instantCopyProblems === 0) {
+  pass("instant-route copy is a real translation in MS/ZH and short enough for wa.me");
+}
+
+if (form.includes("composeQuoteWhatsAppMessage(") && form.includes("instantHref")) {
+  pass("the form recomposes the live WhatsApp message through the shared helper");
+} else {
+  fail("form: instant route no longer composed via lib/quote/whatsapp.ts");
+}
+if (form.includes('surface: "quote_instant_path"') && form.includes('event="whatsapp_click"')) {
+  pass("the banner above the form fires whatsapp_click with the quote_instant_path surface");
+} else {
+  fail("form: instant banner missing the tracked quote_instant_path surface");
+}
+if (form.includes('status !== "success"')) {
+  pass("the banner hands over to the success panel's photo handoff (one CTA per state)");
+} else {
+  fail("form: instant banner still competes with the success photo handoff");
+}
+if (
+  form.includes("fallbackHref") &&
+  form.includes("composeQuoteWhatsAppMessage(t.whatsappFallbackMessage")
+) {
+  pass("the error fallback carries the entered details into WhatsApp too (no inquiry lost)");
+} else {
+  fail("form: error fallback no longer encodes the entered details");
+}
+if (!page.includes("quote_quick_path")) {
+  pass("the static pre-form quick path is retired — one live WhatsApp route remains");
+} else {
+  fail("page: a second, static WhatsApp quick path still renders above the form");
 }
 
 /* ------------------------------------------------------------------------ */

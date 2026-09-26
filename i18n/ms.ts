@@ -805,12 +805,24 @@ export const ms: Dictionary = {
       descriptionTooLong: "Mesej ini terlalu panjang. Sila ringkaskan.",
       preferredContact: "Sila pilih cara anda mahu kami menghubungi anda.",
     },
-    whatsappQuickTitle: "Lebih suka WhatsApp?",
-    whatsappQuickBody:
-      "Tak perlu isi borang — terus mesej kami dan kongsi butiran dalam sembang.",
-    whatsappQuickCta: "Sembang di WhatsApp",
-    whatsappQuickMessage:
-      "Helo Renovix Home Services, saya ingin bertanya tentang sebut harga untuk kerja perkhidmatan rumah.",
+    /**
+     * Lead-generation Task 1.2 — laluan sebut harga segera WhatsApp. Banner
+     * ini berada tepat di atas borang; pautan wa.me dibina semula setiap
+     * kali berdasarkan perkhidmatan, sub-perkhidmatan, jenis hartanah dan
+     * lokasi yang dimasukkan, jadi tiada pertanyaan yang hilang.
+     */
+    instantTitle: "Lebih suka sebut harga segera melalui WhatsApp?",
+    instantBody:
+      "Terus sembang dengan kami dan hantar gambar kerja terus dari telefon anda. Apa sahaja yang anda isi dalam borang di bawah ditambahkan pada mesej anda secara automatik.",
+    instantCta: "Sembang dengan gambar di WhatsApp",
+    instantHint:
+      "Semasa anda mengisi borang, perkhidmatan, jenis hartanah dan lokasi anda disalin ke dalam mesej — tiada maklumat yang anda berikan hilang jika anda teruskan di WhatsApp.",
+    instantMessage:
+      "Helo Renovix Home Services, saya ingin sebut harga segera untuk kerja perkhidmatan rumah.",
+    instantLineService: "Perkhidmatan: {value}",
+    instantLineSubService: "Kerja diperlukan: {value}",
+    instantLinePropertyType: "Jenis hartanah: {value}",
+    instantLineLocation: "Lokasi: {value}",
     deliveryTitle: "Cara borang ini dihantar",
     deliveryBody:
       "Permintaan anda dihantar kepada pasukan kami. Sebut harga tidak dijana serta-merta — kami semak butiran dahulu dan mungkin meminta maklumat atau gambar lanjut. Anda juga boleh WhatsApp atau telefon +601159259521.",

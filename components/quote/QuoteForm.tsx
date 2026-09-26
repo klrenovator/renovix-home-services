@@ -30,6 +30,7 @@ import {
   type PreferredContactMethod,
 } from "@/lib/quote/constants";
 import { isValidEmail, isValidPhone } from "@/lib/quote/validators";
+import { composeQuoteWhatsAppMessage } from "@/lib/quote/whatsapp";
 
 type QuoteFormProps = {
   serviceOptions: QuoteOption[];
@@ -122,6 +123,8 @@ export function QuoteForm({
   const formInstanceId = useId();
   const [selectedService, setSelectedService] = useState("");
   const [selectedSubService, setSelectedSubService] = useState("");
+  const [selectedPropertyType, setSelectedPropertyType] = useState("");
+  const [locationValue, setLocationValue] = useState("");
   const [preferredContact, setPreferredContact] = useState<PreferredContactMethod>("whatsapp");
   const [status, setStatus] = useState<FormStatus>("idle");
   const [errors, setErrors] = useState<FieldErrors>({});
@@ -397,7 +400,26 @@ export function QuoteForm({
   const successPhotosHref = whatsappLink(
     t.successPhotosMessage.replace("{service}", submittedServiceLabel),
   );
-  const fallbackHref = whatsappLink(t.whatsappFallbackMessage);
+
+  /**
+   * Lead-generation Task 1.2 — the pre-filled WhatsApp direct route. The
+   * message is recomposed from what the customer has entered so far, so the
+   * banner above the form (and the error fallback) always opens WhatsApp
+   * carrying the current service, sub-service, property type and location —
+   * no inquiry is lost when someone continues in the chat instead.
+   */
+  const prefillDetails = {
+    serviceLabel: submittedServiceLabel,
+    subServiceLabel: selectedSubService
+      ? subServiceOptions.find((option) => option.value === selectedSubService)?.label ?? ""
+      : "",
+    propertyTypeLabel: selectedPropertyType ? propertyTypes[selectedPropertyType] ?? "" : "",
+    location: locationValue,
+  };
+  const instantHref = whatsappLink(composeQuoteWhatsAppMessage(t.instantMessage, prefillDetails, t));
+  const fallbackHref = whatsappLink(
+    composeQuoteWhatsAppMessage(t.whatsappFallbackMessage, prefillDetails, t),
+  );
 
   const contactHeadingId = `quote-section-contact-${formInstanceId}`;
   const jobHeadingId = `quote-section-job-${formInstanceId}`;
@@ -411,13 +433,56 @@ export function QuoteForm({
   }
 
   return (
-    <form
-      id="quote-form"
-      className="relative rounded-2xl border border-slate-200 bg-white p-5 shadow-card sm:p-7"
-      onSubmit={handleSubmit}
-      noValidate
-      aria-busy={busy}
-    >
+    <>
+      {/*
+        Lead-generation Task 1.2 — the quote page's single WhatsApp quick
+        path, right above the form. On load the link opens the chat with the
+        plain instant-quote greeting; every answered field below quietly
+        rewrites the pre-filled message (service, sub-service, property type,
+        location), so switching to WhatsApp mid-form loses nothing. It hides
+        once the request is accepted — the success panel then owns the photo
+        handoff, and one CTA per state keeps the path unambiguous.
+      */}
+      {status !== "success" ? (
+        <div className="rounded-2xl border border-[#25D366]/40 bg-[#25D366]/5 p-4">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+            <div className="flex items-start gap-3">
+              <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#25D366]/15 text-[#128C4A]">
+                <IconWhatsApp className="h-5 w-5" aria-hidden="true" />
+              </span>
+              <div>
+                <p className="text-sm font-bold text-navy">{t.instantTitle}</p>
+                <p className="mt-0.5 text-sm leading-6 text-secondary">{t.instantBody}</p>
+              </div>
+            </div>
+            <TrackedLink
+              href={instantHref}
+              event="whatsapp_click"
+              context={{
+                surface: "quote_instant_path",
+                lang,
+                ...(selectedService ? { service: selectedService } : {}),
+                ...(selectedSubService ? { subservice: selectedSubService } : {}),
+              }}
+              className="btn btn-whatsapp shrink-0"
+            >
+              <IconWhatsApp className="h-4 w-4 shrink-0" aria-hidden="true" />
+              <span>{t.instantCta}</span>
+            </TrackedLink>
+          </div>
+          <p className="mt-3 border-t border-[#25D366]/20 pt-2.5 text-xs leading-5 text-secondary">
+            {t.instantHint}
+          </p>
+        </div>
+      ) : null}
+
+      <form
+        id="quote-form"
+        className="relative rounded-2xl border border-slate-200 bg-white p-5 shadow-card sm:p-7"
+        onSubmit={handleSubmit}
+        noValidate
+        aria-busy={busy}
+      >
       <div className="flex items-start gap-3 border-b border-slate-200 pb-5">
         <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-brand/10 text-brand">
           <IconClipboard className="h-5 w-5" aria-hidden="true" />
@@ -655,12 +720,13 @@ export function QuoteForm({
                   id="quote-property-type"
                   name="propertyType"
                   required
-                  defaultValue=""
+                  value={selectedPropertyType}
                   aria-required="true"
                   aria-invalid={errors.propertyType ? true : undefined}
                   aria-describedby={describedBy("quote-property-type", errors.propertyType)}
-                  onChange={() => {
+                  onChange={(event) => {
                     markStarted();
+                    setSelectedPropertyType(event.target.value);
                     clearFieldError("propertyType");
                   }}
                 >
@@ -755,8 +821,9 @@ export function QuoteForm({
                   maxLength={QUOTE_LIMITS.location.max}
                   aria-invalid={errors.location ? true : undefined}
                   aria-describedby={describedBy("quote-location", errors.location, "quote-location-help")}
-                  onChange={() => {
+                  onChange={(event) => {
                     markStarted();
+                    setLocationValue(event.target.value);
                     clearFieldError("location");
                   }}
                 />
@@ -844,6 +911,7 @@ export function QuoteForm({
           {t.submitting}
         </p>
       ) : null}
-    </form>
+      </form>
+    </>
   );
 }

@@ -7,10 +7,8 @@ import {
   IconCheck,
   IconClipboard,
   IconMapPin,
-  IconWhatsApp,
 } from "@/components/icons";
 import { QuoteForm } from "@/components/quote/QuoteForm";
-import { TrackedLink } from "@/components/analytics/TrackedLink";
 import { PageSchema } from "@/components/seo/PageSchema";
 import { PageHero } from "@/components/support/PageHero";
 import { Button } from "@/components/ui/Button";
@@ -64,10 +62,9 @@ export default async function QuotePage({ params }: QuotePageProps) {
 
   const code = language.code;
   const t = getDictionary(code);
+  // Single site WhatsApp configuration, handed to the form which owns the
+  // form-aware instant WhatsApp quote route (lead-generation Task 1.2).
   const whatsappHref = getWhatsAppHref();
-  const whatsappQuickHref = `${whatsappHref}?text=${encodeURIComponent(
-    t.quote.whatsappQuickMessage,
-  )}`;
 
   return (
     <>
@@ -102,33 +99,13 @@ export default async function QuotePage({ params }: QuotePageProps) {
         <div className="container-app grid gap-8 lg:grid-cols-[minmax(0,1.35fr)_minmax(280px,0.65fr)] lg:items-start lg:gap-10">
           <div className="space-y-5">
             {/*
-              WhatsApp quick path: customers who prefer chat never have to open
-              the form. Uses the same site WhatsApp configuration as every
-              other CTA — there is no second contact system.
+              The WhatsApp quick path lives inside QuoteForm (lead-generation
+              Task 1.2): a form-aware banner right above the fields whose
+              wa.me link is rebuilt from the customer's input as they type,
+              so continuing in the chat never loses what was entered. It uses
+              the same site WhatsApp configuration as every other CTA — one
+              contact system, one conversion path per page.
             */}
-            <div className="flex flex-col gap-3 rounded-2xl border border-[#25D366]/40 bg-[#25D366]/5 p-4 sm:flex-row sm:items-center sm:justify-between">
-              <div className="flex items-start gap-3">
-                <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#25D366]/15 text-[#128C4A]">
-                  <IconWhatsApp className="h-5 w-5" aria-hidden="true" />
-                </span>
-                <div>
-                  <p className="text-sm font-bold text-navy">{t.quote.whatsappQuickTitle}</p>
-                  <p className="mt-0.5 text-sm leading-6 text-secondary">
-                    {t.quote.whatsappQuickBody}
-                  </p>
-                </div>
-              </div>
-              <TrackedLink
-                href={whatsappQuickHref}
-                event="whatsapp_click"
-                context={{ surface: "quote_quick_path", lang: code }}
-                className="btn btn-whatsapp shrink-0"
-              >
-                <IconWhatsApp className="h-4 w-4 shrink-0" aria-hidden="true" />
-                <span>{t.quote.whatsappQuickCta}</span>
-              </TrackedLink>
-            </div>
-
             <QuoteForm
               serviceOptions={getQuoteServiceOptions(code)}
               propertyTypes={t.quote.propertyTypes}

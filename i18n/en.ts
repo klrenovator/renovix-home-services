@@ -795,12 +795,25 @@ export const en: Dictionary = {
       descriptionTooLong: "This message is too long. Please shorten it.",
       preferredContact: "Please choose how you would like us to contact you.",
     },
-    whatsappQuickTitle: "Prefer WhatsApp?",
-    whatsappQuickBody:
-      "No form needed — message us directly and share the details in the chat.",
-    whatsappQuickCta: "Chat on WhatsApp",
-    whatsappQuickMessage:
-      "Hello Renovix Home Services, I would like to ask about a quote for home service work.",
+    /**
+     * Lead-generation Task 1.2 — instant WhatsApp quote route. The banner
+     * sits right above the form; its wa.me link is rebuilt on every change
+     * from the service, sub-service, property type and location entered so
+     * far (the `instantLine*` templates), so continuing on WhatsApp never
+     * loses what the customer already told us.
+     */
+    instantTitle: "Prefer an instant WhatsApp quote?",
+    instantBody:
+      "Skip the wait — chat with us and send photos of the work straight from your phone. Anything you enter in the form below is added to your message automatically.",
+    instantCta: "Chat with photos on WhatsApp",
+    instantHint:
+      "As you fill in the form, your service, property type and location are copied into the message — nothing you have told us is lost if you continue on WhatsApp instead.",
+    instantMessage:
+      "Hello Renovix Home Services, I would like an instant quote for home service work.",
+    instantLineService: "Service: {value}",
+    instantLineSubService: "Work needed: {value}",
+    instantLinePropertyType: "Property type: {value}",
+    instantLineLocation: "Location: {value}",
     deliveryTitle: "How this form is delivered",
     deliveryBody:
       "Your request is sent to our team. A quotation is not generated instantly — we review the details first and may ask for more information or photos. You can also WhatsApp or call +601159259521.",

@@ -7863,3 +7863,103 @@ offset, `z-30`, print hiding, `.btn` target).
 
 **Status:** **🟢 complete.** Task 1.1 is marked ✅ COMPLETED in
 `LEAD_GENERATION_PLAN.md`; Tasks 1.2–1.4 and Phases 2–3 remain `[PENDING]`.
+
+---
+
+## Lead-generation Task 1.2 — quote page pre-filled WhatsApp direct route (2026-09-26)
+
+**Result: 🟢 shipped and QA-verified. The `/quote/` WhatsApp quick path is now
+form-aware: its one-click `wa.me` link is recomposed from the customer's
+input as they type (service, sub-service, property type, location), and the
+error fallback carries the same details — no inquiry is lost to a failed
+submission or to a customer who prefers to finish in the chat. No URL,
+price, heading, canonical, hreflang entry, image, structured-data node or
+existing internal link changed.**
+
+### 1. What was missing (lead-generation plan P-04)
+
+Task 1.2 in `LEAD_GENERATION_PLAN.md`: the quote page's WhatsApp option was a
+static, server-rendered banner with one generic greeting. A customer who had
+already chosen a service and typed their location, then decided they would
+rather continue on WhatsApp (or hit a submission failure — rate limit,
+provider outage, network), had to start the conversation from zero. The plan
+calls for a prominent instant-WhatsApp option right above the form whose URL
+automatically encodes the user's inputs, so no inquiry is ever lost.
+
+### 2. What was built
+
+- **`lib/quote/whatsapp.ts`** — `composeQuoteDetailLines` /
+  `composeQuoteWhatsAppMessage`: pure helpers that turn the details entered
+  so far into localized message lines (*Service: … / Work needed: … /
+  Property type: … / Location: …*) appended to a localized base message.
+  Registry-derived labels only — the service/sub-service labels come from the
+  quote options, the property type is the localized label of its stable ID —
+  and the one customer-typed value (location) is whitespace-collapsed and
+  truncated to `QUOTE_LIMITS.location.max` before it enters a `wa.me` URL.
+  With nothing entered the base message is returned untouched, so the
+  banner works from first paint.
+- **`components/quote/QuoteForm.tsx`** — the prominent banner now renders
+  right above the form fields (it moved inside the client component so it
+  can react): *"Prefer an instant WhatsApp quote? Skip the wait — chat with
+  us and send photos of the work straight from your phone. Anything you
+  enter in the form below is added to your message automatically."* The
+  property-type select became controlled and the location input is mirrored
+  into state, so `instantHref` is rebuilt on every change. The error
+  fallback's "Message us on WhatsApp" link uses the same composition, so the
+  generic "it did not go through" message now carries whatever the customer
+  had already told us. The banner hides once the request succeeds — the
+  success panel alone owns the photo handoff (one CTA per state).
+- **`app/[lang]/quote/page.tsx`** — the old static pre-form quick path was
+  retired; the page hands the single site WhatsApp configuration
+  (`getWhatsAppHref()`) to the form and renders one live WhatsApp route.
+  Exactly one conversion path per page, as in Task 1.1.
+- **Localized copy (`i18n/types.ts`, `i18n/en.ts`, `i18n/ms.ts`,
+  `i18n/zh.ts`)** — nine `quote.instant*` templates per language (title,
+  body, CTA, hint, base message, four `{value}` detail lines), e.g. EN
+  *"Hello Renovix Home Services, I would like an instant quote for home
+  service work."* → *"…\nService: Tile & Tiling\nProperty type: Condominium
+  / apartment\nLocation: Mont Kiara"*, with genuine MS/ZH wording. The four
+  retired `whatsappQuick*` keys were removed from all three dictionaries and
+  the type.
+- **Conversion tracking** — the banner fires `whatsapp_click` through
+  `TrackedLink` with surface `quote_instant_path` plus the selected
+  service/sub-service registry slugs when present (the closed context key
+  set — no free text, no customer data). `lib/analytics.ts`'s surface
+  example was updated to match.
+
+### 3. Guards updated
+
+- **`scripts/audit-quote-flow.mjs`** — new section 7 pins the instant route:
+  composition reads the localized quote templates (no free text, no slugs),
+  the location is sanitized and truncated, no hardcoded WhatsApp URL/number,
+  all nine keys present in EN/MS/ZH with exactly one `{value}` slot per
+  detail line and real translations (no verbatim English in `ms`, Chinese
+  copy in Chinese, ≤ 200 characters), the form recomposes through the shared
+  helper, the banner fires the tracked `quote_instant_path` surface, the
+  error fallback encodes the details, the banner yields to the success
+  panel, and the retired static quick path (and its four dictionary keys)
+  cannot return. `audit-analytics.mjs` follows the moved firing surface.
+- **`README.md`** — the `audit:quote` row documents the Task 1.2 invariants.
+
+### 4. QA after changes
+
+- [x] `npm run lint` — PASS (0 errors, 0 warnings).
+- [x] `npm run type-check` — PASS (`next typegen && tsc --noEmit`).
+- [x] `npm run build` — PASS; **689 / 689** static generation entries.
+- [x] All **18 static audits** — PASS (17 pre-existing, with the quote-flow
+      and analytics audits extended for Task 1.2, plus `audit:cro`).
+- [x] Fresh production `next start` + `npm run audit:live` — **PASS 284 /
+      284, WARN 0, FAIL 0**.
+- [x] Rendered checks of `/en/quote/`, `/ms/quote/`, `/zh/quote/`: the
+      banner renders in all three languages and its server-rendered link
+      already opens WhatsApp with the localized instant-quote greeting.
+- [x] Composition verified against the real dictionaries: partial input
+      appends localized detail lines in EN/MS/ZH, empty input returns the
+      base message, the error fallback carries the details, and a >200-char
+      multi-line location is collapsed and truncated.
+- [x] `git diff` review — only the quote form/page, the new helper, the
+      dictionary block, the two audit scripts, the README row and the plan /
+      progress records changed.
+
+**Status:** **🟢 complete.** Task 1.2 is marked ✅ COMPLETED in
+`LEAD_GENERATION_PLAN.md`; Tasks 1.3–1.4 and Phases 2–3 remain `[PENDING]`.
