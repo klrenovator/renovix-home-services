@@ -922,6 +922,21 @@ export const en: Dictionary = {
     prefillProject:
       "Hello Renovix Home Services, I saw the project \"{name}\" and would like a quote.",
   },
+  /**
+   * Lead-generation Task 1.3 — "Fast Photo Quote" banner under the pricing
+   * tables. `{name}` is the localized service/sub-service name.
+   */
+  photoQuote: {
+    eyebrow: "Fast Photo Quote",
+    title: "Have photos of the issue?",
+    body: "Send them to us directly on WhatsApp and we will assess the {name} work from the pictures before a quotation is prepared.",
+    cta: "Send photos on WhatsApp",
+    hint: "A wide shot, a close-up and your location are usually enough for us to assess the work.",
+    prefillService:
+      "Hello Renovix Home Services, I have photos of the {name} work. I would like a quote.",
+    prefillSubService:
+      "Hello Renovix Home Services, I have photos of the {name} ({service}) work. I would like a quote.",
+  },
   blogIndex: {
     metaTitle: "Renovix Home Services | Home Renovation Guides for KL & Selangor",
     metaDescription:

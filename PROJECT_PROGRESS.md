@@ -7963,3 +7963,114 @@ automatically encodes the user's inputs, so no inquiry is ever lost.
 
 **Status:** **🟢 complete.** Task 1.2 is marked ✅ COMPLETED in
 `LEAD_GENERATION_PLAN.md`; Tasks 1.3–1.4 and Phases 2–3 remain `[PENDING]`.
+
+---
+
+## Lead-generation Task 1.3 — "Fast Photo Quote" banner under every service pricing table (2026-09-26)
+
+**Result: 🟢 shipped and QA-verified. Every one of the 30 service pillar
+pages and 153 sub-service pages (EN/MS/ZH) now offers a photo-first WhatsApp
+path directly under the pricing table / price block, so the moment a customer
+has read the price list they can send pictures of their actual site instead of
+leaving to hunt for a contact. No URL, price, heading, canonical, hreflang
+entry, image, structured-data node or existing internal link changed.**
+
+### 1. What was missing (lead-generation plan Phase 1 — the pricing decision moment)
+
+Task 1.3 in `LEAD_GENERATION_PLAN.md`: the pricing tables ended with a
+text-only prompt ("Share photos of the affected area, measurements, property
+type and location…") and a text link to the quote form. A visitor who had
+just read the price list — the moment of highest intent on the page — had no
+dedicated action of their own; they could scroll back to the hero CTA or find
+the floating button. Malaysian contractor enquiries usually start on WhatsApp
+with photographs of the problem, so the plan asks for a dedicated visual
+banner under the pricing tables that turns that moment into a chat.
+
+### 2. What was built
+
+- **`components/service/FastPhotoQuoteBanner.tsx`** — a **server component**
+  (only the shared `TrackedLink` leaf hydrates, so the banner adds no layout
+  JavaScript of its own). A camera badge, the eyebrow, the question headline,
+  one sentence of explanation, a practical "what to send" hint and the
+  WhatsApp-green CTA, on a brand-tinted panel built from the existing design
+  tokens (`.btn btn-whatsapp`, 44 px target) plus one new rule in
+  `app/globals.css` — `.fast-photo-quote` paints only the soft brand→accent
+  wash, so the border, radius and spacing keep coming from the shared
+  utilities. It takes the page's own entity
+  as a typed `subject` — `service`, or `subservice` plus its parent service —
+  exactly like the floating CTA from Task 1.1.
+- **Render sites** — `components/service/PricingSection.tsx` (directly under
+  the pricing table and its cost-factor callout; all 10 service pillars × 3
+  languages) and `components/service/SubServicePage.tsx` (inside the
+  `id="pricing"` section, under the price card; all 51 sub-services × 3
+  languages). Exactly one banner per page, and none on the quote flow, the
+  area guides, the problem guides, the Knowledge Hub or the home page.
+- **Copy, and one deliberate change from the plan's draft** — the draft read
+  *"Send them directly on WhatsApp for an immediate assessment."* Promising a
+  response time would contradict the owner-confirmed policy that
+  `CONTENT_GOVERNANCE.md` §4 enforces (no 24/7, same-day or rapid-response
+  promise), so the shipped copy invites the photographs and states what they
+  are actually for: *"Have photos of the issue? — Send them to us directly on
+  WhatsApp and we will assess the [service] work from the pictures before a
+  quotation is prepared."* The plan's intent — a photo-first quote path at the
+  pricing decision point — is delivered without an unverifiable claim.
+- **Localized copy (`i18n/types.ts`, `i18n/en.ts`, `i18n/ms.ts`,
+  `i18n/zh.ts`)** — a new typed `photoQuote` block, 7 keys per language
+  (eyebrow, title, body, CTA, hint, and two pre-fill messages), with
+  `{name}`/`{service}` slots so each language keeps its own word order.
+  MS/ZH are genuine translations (e.g. *"Ada gambar masalahnya?"* /
+  *"手上有现场照片吗？"*), and the ZH copy was written so a registry name that
+  already ends in 工程 cannot be duplicated (*"…我有瓷砖与铺砖工程的照片…"*).
+- **Conversion tracking** — every click fires `whatsapp_click` through
+  `TrackedLink` with the coarse surface `photo_quote_banner_service` /
+  `photo_quote_banner_subservice` plus the page's registry slugs (the closed
+  Phase 24 context key set — no free text, no customer data), and the
+  `data-renovix-tracked` marker keeps the delegated listener from
+  double-counting. The new surfaces are documented in
+  `PHASE_24_ANALYTICS.md` §5.
+- **One contact system** — the link is composed by the shared
+  `buildWhatsAppHref` (`lib/whatsapp.ts`, the single number in `data/site.ts`);
+  the component never contains a `wa.me` URL or a number.
+
+### 3. Guards updated
+
+- **`scripts/audit-cro.mjs`** — new section 5 pins the Task 1.3 surface:
+  server component, single link builder, `whatsapp_click` via `TrackedLink`
+  with a `photo_quote_banner_*` surface, both pre-fill templates read, visible
+  localized CTA label with decorative camera/WhatsApp icons hidden from
+  assistive tech, `.btn btn-whatsapp` target, all seven `photoQuote` keys in
+  EN/MS/ZH with the exact `{name}`/`{service}` slots, per-key length caps, no
+  mojibake, no English string reused as a translation, Chinese copy written in
+  Chinese, the banner rendered exactly once per family **after** the pricing
+  table (`PricingSection.tsx`) and **after** `id="pricing"`
+  (`SubServicePage.tsx`) with registry-derived labels only, and no banner in
+  the quote flow.
+- **`README.md`** — the `audit:cro` row documents the Task 1.3 invariants.
+- **`PHASE_24_ANALYTICS.md`** — the surface catalogue lists the two new
+  surfaces, and the stale `quote_quick_path` example was corrected to the live
+  `quote_instant_path` (the static quick path retired in Task 1.2).
+
+### 4. QA after changes
+
+- [x] `npm run lint` — PASS (0 errors, 0 warnings).
+- [x] `npm run type-check` — PASS (`next typegen && tsc --noEmit`).
+- [x] `npm run build` — PASS; **689 / 689** static generation entries (route
+      set unchanged — the task adds a banner, not a URL).
+- [x] All **18 static audits** — PASS, including the extended `audit:cro`.
+- [x] Fresh production `next start` + `npm run audit:live` — **PASS 284 / 284,
+      WARN 0, FAIL 0**; all **678 / 678** sitemap URLs returned 200.
+- [x] Rendered checks on the served site: EN/MS/ZH pillar and sub-service
+      pages each render exactly one banner under the pricing block, with the
+      localized headline, CTA and `wa.me` pre-fill naming the page's own work
+      (e.g. *"…I have photos of the Bathroom Wall & Floor Tiling (Tile &
+      Tiling) work…"* / *"…saya ada gambar untuk Pembaikan Pintu & Penggantian
+      Kunci (Servis Handyman)…"* / *"…我有门维修与锁具更换（家居维修服务）的照片…"*);
+      `/quote/`, area, problem, blog and home pages render none.
+- [x] `git diff` review — only the new banner component, the two render sites,
+      the dictionary block (types + EN/MS/ZH), the `.fast-photo-quote` CSS
+      rule, the CRO audit section, the README row, the analytics doc surfaces
+      and the plan / progress records changed (11 files + 1 new, no stray
+      artifacts; `git status` shows no build output, temp files or secrets).
+
+**Status:** **🟢 complete.** Task 1.3 is marked ✅ COMPLETED in
+`LEAD_GENERATION_PLAN.md`; Task 1.4 and Phases 2–3 remain `[PENDING]`.
