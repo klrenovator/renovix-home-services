@@ -17,6 +17,7 @@ import { AreasSection } from "@/components/service/AreasSection";
 import { FaqSection } from "@/components/service/FaqSection";
 import { RelatedServicesSection } from "@/components/service/RelatedServicesSection";
 import { CtaSection } from "@/components/service/CtaSection";
+import { FloatingWhatsApp } from "@/components/whatsapp/FloatingWhatsApp";
 import { GuideLinksSection } from "@/components/blog/GuideLinksSection";
 import { InlineSearch } from "@/components/search/InlineSearch";
 import { getArticlesForService } from "@/data/blog";
@@ -72,6 +73,12 @@ export function ServicePage({ detail, related, relatedProblems, lang }: ServiceP
       />
       <RelatedServicesSection related={related} current={detail} lang={lang} />
       <CtaSection detail={detail} lang={lang} />
+      {/* Task 1.1 — page-aware floating WhatsApp CTA. */}
+      <FloatingWhatsApp
+        lang={lang}
+        subject={{ kind: "service", label: detail.name }}
+        service={detail.slug}
+      />
     </>
   );
 }

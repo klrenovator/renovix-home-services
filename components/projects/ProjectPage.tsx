@@ -11,6 +11,7 @@ import { ProjectCtaSection } from "./ProjectCtaSection";
 import { GuideLinksSection } from "@/components/blog/GuideLinksSection";
 import { InlineSearch } from "@/components/search/InlineSearch";
 import { getArticlesForProject } from "@/data/blog";
+import { FloatingWhatsApp } from "@/components/whatsapp/FloatingWhatsApp";
 import type { ResolvedProject } from "@/data/project-content/types";
 
 type ProjectPageProps = {
@@ -51,6 +52,8 @@ export function ProjectPage({ project, lang }: ProjectPageProps) {
       />
       <ProjectRelatedSection project={project} lang={lang} />
       <ProjectCtaSection lang={lang} />
+      {/* Task 1.1 — page-aware floating WhatsApp CTA (quotes the project). */}
+      <FloatingWhatsApp lang={lang} subject={{ kind: "project", label: project.content.title }} />
     </>
   );
 }

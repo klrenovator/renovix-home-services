@@ -13,6 +13,7 @@ import { CtaSection } from "@/components/problem/CtaSection";
 import { GuideLinksSection } from "@/components/blog/GuideLinksSection";
 import { SubServiceLinksSection } from "@/components/service/SubServiceLinksSection";
 import { InlineSearch } from "@/components/search/InlineSearch";
+import { FloatingWhatsApp } from "@/components/whatsapp/FloatingWhatsApp";
 import { getArticlesForProblem } from "@/data/blog";
 import { getSubServicesForProblem } from "@/data/sub-services";
 import { IconAlertTriangle, IconCheck, IconShieldCheck } from "@/components/icons";
@@ -89,6 +90,11 @@ export function ProblemPage({ problem, lang }: ProblemPageProps) {
         <RelatedProblemsSection problems={related} lang={lang} />
       ) : null}
       <CtaSection problem={problem} lang={lang} />
+      {/* Task 1.1 — page-aware floating WhatsApp CTA. */}
+      <FloatingWhatsApp
+        lang={lang}
+        subject={{ kind: "problem", label: problem.name }}
+      />
     </>
   );
 }

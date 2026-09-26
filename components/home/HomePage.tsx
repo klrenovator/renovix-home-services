@@ -7,6 +7,7 @@ import { AreasSection } from "@/components/home/AreasSection";
 import { ReviewsSection } from "@/components/home/ReviewsSection";
 import { CTASection } from "@/components/home/CTASection";
 import { FAQPreview } from "@/components/home/FAQPreview";
+import { FloatingWhatsApp } from "@/components/whatsapp/FloatingWhatsApp";
 
 type HomePageProps = {
   lang: string;
@@ -24,6 +25,8 @@ export function HomePage({ lang }: HomePageProps) {
       <ReviewsSection lang={lang} />
       <CTASection lang={lang} />
       <FAQPreview lang={lang} />
+      {/* Task 1.1 — floating WhatsApp CTA (generic page message). */}
+      <FloatingWhatsApp lang={lang} />
     </>
   );
 }

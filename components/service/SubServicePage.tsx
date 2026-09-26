@@ -17,6 +17,7 @@ import { getProjectContent, getProjectsForSubService } from "@/data/project-cont
 import { GuideLinksSection } from "@/components/blog/GuideLinksSection";
 import { InlineSearch } from "@/components/search/InlineSearch";
 import { getArticlesForSubService } from "@/data/blog";
+import { FloatingWhatsApp } from "@/components/whatsapp/FloatingWhatsApp";
 
 type SubServicePageProps = {
   detail: ResolvedSubService;
@@ -473,6 +474,13 @@ export function SubServicePage({ detail, lang }: SubServicePageProps) {
           </div>
         </div>
       </section>
+      {/* Task 1.1 — page-aware floating WhatsApp CTA: scope + parent service. */}
+      <FloatingWhatsApp
+        lang={lang}
+        subject={{ kind: "subservice", label: name, parent: service?.name ?? name }}
+        service={serviceSlug}
+        subservice={detail.slug}
+      />
     </>
   );
 }

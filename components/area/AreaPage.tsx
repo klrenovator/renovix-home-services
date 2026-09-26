@@ -13,6 +13,7 @@ import { NearbyAreasSection } from "@/components/area/NearbyAreasSection";
 import { AreaCtaSection } from "@/components/area/AreaCtaSection";
 import { GuideLinksSection } from "@/components/blog/GuideLinksSection";
 import { InlineSearch } from "@/components/search/InlineSearch";
+import { FloatingWhatsApp } from "@/components/whatsapp/FloatingWhatsApp";
 import { getArticlesForLocation } from "@/data/blog";
 import type { AreaDetail } from "@/data/area-content/types";
 
@@ -49,6 +50,8 @@ export function AreaPage({ area, lang }: AreaPageProps) {
       />
       <NearbyAreasSection area={area} lang={lang} />
       <AreaCtaSection name={area.name} lang={lang} />
+      {/* Task 1.1 — page-aware floating WhatsApp CTA. */}
+      <FloatingWhatsApp lang={lang} subject={{ kind: "area", label: area.name }} />
     </>
   );
 }

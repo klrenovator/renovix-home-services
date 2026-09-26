@@ -18,6 +18,7 @@ import {
   getPublishedProjects,
 } from "@/data/project-content";
 import { getDictionary } from "@/i18n";
+import { FloatingWhatsApp } from "@/components/whatsapp/FloatingWhatsApp";
 import { contentHref, localizedHref } from "@/i18n/hrefs";
 import { absoluteUrl, buildPageMetadata } from "@/i18n/seo";
 
@@ -255,6 +256,8 @@ export default async function ProjectsPage({ params }: ProjectsPageProps) {
           </div>
         </div>
       </section>
+      {/* Task 1.1 — floating WhatsApp CTA (generic page message). */}
+      <FloatingWhatsApp lang={code} />
     </>
   );
 }

@@ -13,6 +13,7 @@ import { getLanguage, languages } from "@/data/languages";
 import { getServiceCategories } from "@/data/i18n";
 import { getWhatsAppHref } from "@/data/site";
 import { getDictionary } from "@/i18n";
+import { FloatingWhatsApp } from "@/components/whatsapp/FloatingWhatsApp";
 import { hasTranslation } from "@/i18n/coverage";
 import { contentHref, localizedHref } from "@/i18n/hrefs";
 import { absoluteUrl, buildPageMetadata } from "@/i18n/seo";
@@ -170,6 +171,8 @@ export default async function ServicesPage({ params }: ServicesPageProps) {
           <p className="mt-8 text-sm text-secondary">{t.servicesIndex.oneStopNote}</p>
         </div>
       </section>
+      {/* Task 1.1 — floating WhatsApp CTA (generic page message). */}
+      <FloatingWhatsApp lang={code} />
     </>
   );
 }

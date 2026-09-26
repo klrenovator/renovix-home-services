@@ -9,6 +9,7 @@ import { getPhoneHref, getWhatsAppHref } from "@/data/site";
 import { getDictionary } from "@/i18n";
 import { localizedHref } from "@/i18n/hrefs";
 import { getLanguageCode } from "@/data/languages";
+import { FloatingWhatsApp } from "@/components/whatsapp/FloatingWhatsApp";
 import {
   articleCategoryLabels,
   getArticleCategoryLabel,
@@ -146,6 +147,8 @@ export function BlogIndexPage({ lang }: { lang: string }) {
           </div>
         </div>
       </section>
+      {/* Task 1.1 — floating WhatsApp CTA (generic page message). */}
+      <FloatingWhatsApp lang={code} />
     </>
   );
 }

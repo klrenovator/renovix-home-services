@@ -901,6 +901,25 @@ export const ms: Dictionary = {
     },
     notSureOption: "Tidak pasti / pelbagai perkhidmatan",
   },
+  /**
+   * Lead-generation Task 1.1 — prefill WhatsApp untuk butang terapung.
+   * `{name}` ialah nama berdaftar yang telah disetempatkan; `{service}` ialah
+   * perkhidmatan induk bagi sesuatu sub-perkhidmatan.
+   */
+  whatsapp: {
+    prefillGeneral:
+      "Helo Renovix Home Services, saya ingin sebut harga untuk kerja renovasi atau pembaikan rumah.",
+    prefillService: "Helo Renovix Home Services, saya ingin sebut harga untuk {name}.",
+    prefillSubService:
+      "Helo Renovix Home Services, saya ingin sebut harga untuk {name} ({service}).",
+    prefillProblem:
+      "Helo Renovix Home Services, saya perlukan bantuan untuk {name}. Saya ingin sebut harga.",
+    prefillArea: "Helo Renovix Home Services, saya ingin sebut harga untuk kerja di {name}.",
+    prefillGuide:
+      "Helo Renovix Home Services, saya membaca \"{name}\" di laman web anda dan ingin sebut harga.",
+    prefillProject:
+      "Helo Renovix Home Services, saya melihat projek \"{name}\" dan ingin sebut harga.",
+  },
   blogIndex: {
     metaTitle: "Renovix Home Services | Panduan Renovasi Rumah di KL & Selangor",
     metaDescription:

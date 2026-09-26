@@ -24,6 +24,7 @@ import { SmartSearchBar } from "@/components/search/SmartSearchBar";
 import { getLanguage, languages } from "@/data/languages";
 import { getSearchIndex } from "@/data/search";
 import { getDictionary } from "@/i18n";
+import { FloatingWhatsApp } from "@/components/whatsapp/FloatingWhatsApp";
 import { absoluteUrl, buildPageMetadata } from "@/i18n/seo";
 import { tokenize } from "@/lib/search/tokenize";
 import { matchAll } from "@/lib/search/match";
@@ -166,6 +167,8 @@ export default async function SearchPage({ params, searchParams }: SearchPagePro
           </p>
         </div>
       </section>
+      {/* Task 1.1 — floating WhatsApp CTA (generic page message). */}
+      <FloatingWhatsApp lang={code} />
     </>
   );
 }

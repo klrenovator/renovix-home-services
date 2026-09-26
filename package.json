@@ -18,6 +18,7 @@
     "audit:authority": "node scripts/audit-authority.mjs",
     "audit:subservices": "node scripts/audit-subservices.mjs",
     "audit:blog": "node scripts/audit-blog.mjs",
+    "audit:cro": "node scripts/audit-cro.mjs",
     "audit:quote": "node scripts/audit-quote-flow.mjs",
     "audit:analytics": "node scripts/audit-analytics.mjs",
     "audit:security": "node scripts/audit-security.mjs",

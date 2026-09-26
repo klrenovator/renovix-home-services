@@ -890,6 +890,25 @@ export const en: Dictionary = {
     },
     notSureOption: "Not sure / multiple services",
   },
+  /**
+   * Lead-generation Task 1.1 — floating WhatsApp CTA pre-fill.
+   * `{name}` is a localized registry name; `{service}` the parent service.
+   */
+  whatsapp: {
+    prefillGeneral:
+      "Hello Renovix Home Services, I would like a quote for home renovation or repair work.",
+    prefillService: "Hello Renovix Home Services, I would like a quote for {name}.",
+    prefillSubService:
+      "Hello Renovix Home Services, I would like a quote for {name} ({service}).",
+    prefillProblem:
+      "Hello Renovix Home Services, I need help with {name}. I would like a quote.",
+    prefillArea:
+      "Hello Renovix Home Services, I would like a quote for work in {name}.",
+    prefillGuide:
+      "Hello Renovix Home Services, I read your guide \"{name}\" and would like a quote.",
+    prefillProject:
+      "Hello Renovix Home Services, I saw the project \"{name}\" and would like a quote.",
+  },
   blogIndex: {
     metaTitle: "Renovix Home Services | Home Renovation Guides for KL & Selangor",
     metaDescription:

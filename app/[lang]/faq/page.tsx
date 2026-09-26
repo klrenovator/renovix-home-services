@@ -11,6 +11,7 @@ import { InlineSearch } from "@/components/search/InlineSearch";
 import { getLanguage, languages } from "@/data/languages";
 import { getSiteFaqs } from "@/data/i18n";
 import { getDictionary } from "@/i18n";
+import { FloatingWhatsApp } from "@/components/whatsapp/FloatingWhatsApp";
 import { localizedHref } from "@/i18n/hrefs";
 import { absoluteUrl, buildPageMetadata } from "@/i18n/seo";
 
@@ -192,6 +193,8 @@ export default async function FaqPage({ params }: FaqPageProps) {
           </div>
         </div>
       </section>
+      {/* Task 1.1 — floating WhatsApp CTA (generic page message). */}
+      <FloatingWhatsApp lang={code} />
     </>
   );
 }
