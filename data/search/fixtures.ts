@@ -1,5 +1,5 @@
 /**
- * Smart Service Finder — regression fixtures (Master Plan §12).
+ * Smart Service Finder — regression fixtures.
  *
  * Each entry pairs a realistic customer query (in one of the three
  * published languages) with the result the matcher must surface in its

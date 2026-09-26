@@ -97,8 +97,8 @@ Nurhaliza B. (Shah Alam), Daniel Tan (Subang Jaya), Priya Nair (Bangsar) —
 under the eyebrow **"Google Reviews"** with a Google icon, star glyphs and the
 line "Posted on Google". No phase in `PROJECT_PROGRESS.md` records it being
 added, sourced or approved, and no audit guards it, while `CONTENT_GOVERNANCE.md`
-§1 forbids fake reviews/ratings/testimonials, `MASTER_AUDIT_REPORT.md` GAP-12
-asks for a *Google Places API sync of verified* reviews, Phases 25–26 both
+§1 forbids fake reviews/ratings/testimonials, an earlier audit asked for a
+*Google Places API sync of verified* reviews, Phases 25–26 both
 recorded reviews as "not supplied; correctly unpublished", and
 `audit:schema` still bans `Review`/`aggregateRating` in structured data.
 
@@ -121,8 +121,8 @@ The Phase 26 deep audit was completed and every code-side fix it recommended
 landed the same day (robots `host:` removed, legacy problem taxonomy retired,
 location-registry duplicate copy fields removed, answer-first/FAQ duplication
 fixed on all 10 services + regression guard, build/lint/npm-audit/live-QA all
-independently verified green — see `PHASE_26_DEEP_AUDIT_2026-09-05.md` and
-`PHASE_26_IMPLEMENTATION_PLAN.md`). **Everything below is an owner/dashboard
+independently verified green — see `PROJECT_PROGRESS.md` Phases 26–55).
+**Everything below is an owner/dashboard
 or real-data action; none of it can or should be faked in code.**
 
 | # | Action | Where | Notes |

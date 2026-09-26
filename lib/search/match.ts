@@ -5,7 +5,7 @@
  * the score (and the per-signal breakdown used by the ranker / explain
  * mode). The scorer never reaches into a registry or the filesystem.
  *
- * Weights (must stay in sync with the master plan §4):
+ * Weights (the ranking signals, strongest first):
  *
  * | Signal                                          | Weight |
  * | ----------------------------------------------- | ------ |

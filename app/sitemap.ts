@@ -27,8 +27,8 @@ function isSubServicePublished(serviceSlug: string, slug: string, lang: Language
 // registries.
 assertCoverageInSync();
 
-// Same build-time guard for the Smart Service Finder (Master Plan §7): index
-// integrity, synonym resolution and the §12 query fixtures. A stale registry
+// Same build-time guard for the Smart Service Finder: index integrity,
+// synonym resolution and the query fixtures. A stale registry
 // reference or a ranking regression fails `next build` here.
 for (const lang of languages) {
   const searchIssues = runSearchAudits(lang.code);

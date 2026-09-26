@@ -3578,8 +3578,9 @@ normal post-launch maintenance, not a new build phase.
 
 ## Phase 26 — Deep audit + debt clearance (2026-09-05)
 
-External deep audit of the whole site (report: `PHASE_26_DEEP_AUDIT_2026-09-05.md`;
-living tracker: `PHASE_26_IMPLEMENTATION_PLAN.md`). All findings were
+External deep audit of the whole site (findings recorded in this phase; the
+standalone audit report and its living tracker were retired once every finding
+was closed). All findings were
 independently re-verified in a network-enabled sandbox before touching code:
 `npm ci`, `type-check` 0 errors, `eslint` 0 warnings, `next build`
 665 static pages, all 17 audits PASS, `npm audit` → **0 vulnerabilities**,
@@ -3616,10 +3617,10 @@ Fixes landed in code:
 6. **Verification closures** — I-12 (dependency CVEs) and I-13 (build claims)
    are no longer "unverifiable": independently run green this session.
 
-Not done (tracked in `PHASE_26_IMPLEMENTATION_PLAN.md`): www/apex Vercel
-primary, Resend keys, GSC sitemap submission, project photos, analytics IDs,
-real-device pass (all OWNER); I-09 quote-field expansion (gated on owner
-approving the field list); I-03 CSP nonce (**deferred by decision** — a real
+Not done (all owner-side, or deferred by decision — see `PROJECT_OWNER_PENDING.md`):
+www/apex Vercel primary, Resend keys, GSC sitemap submission, project photos,
+analytics IDs, real-device pass (all OWNER); I-09 quote-field expansion (gated on
+owner approval — since declined); I-03 CSP nonce (**deferred by decision** — a real
 nonce forces per-request dynamic rendering and would forfeit the fully-static
 665-page architecture; revisit trigger recorded); I-10 distributed rate
 limiting (needs owner-provisioned KV before high-traffic launch).
@@ -3720,7 +3721,7 @@ No superlatives, no invented credentials, no price changes.
 
 ### 5. Still owner-pending (cannot be done in code; unchanged this phase)
 
-Per `PROJECT_OWNER_PENDING.md` / `PHASE_26_IMPLEMENTATION_PLAN.md`: real
+Per `PROJECT_OWNER_PENDING.md`: real
 Painting/Waterproofing project photos (owner-parked), GBP claim + confirmed
 opening days, Vercel KV/Upstash for distributed rate limiting, optional
 founder/About E-E-A-T note. None fabricated.
@@ -5671,9 +5672,7 @@ history, and because no audit guards it:
 | Source | Statement |
 | --- | --- |
 | `CONTENT_GOVERNANCE.md` §1 | "No fake reviews, ratings, review counts, testimonials or testimonials pages." |
-| `MASTER_AUDIT_REPORT.md` | "Zero fake Google reviews"; GAP-12 asks for a *Google Places API sync of verified reviews*, i.e. real ones only |
-| `PHASE_25_PRODUCTION_READINESS.md` | "Reviews / ratings / certifications / years of experience — Not supplied; correctly unpublished" |
-| `PHASE_26_DEEP_AUDIT_2026-09-05.md` | "No fabricated trust signals anywhere… Correct for a business with no reviews yet"; "Zero visible social proof (correct, pending real reviews)" |
+| The retired Phase 16/17/25/26 audits | All recorded reviews as *not supplied / correctly unpublished* — "no fabricated trust signals anywhere", "zero visible social proof (correct, pending real reviews)" — and the Phase 16 audit's GAP-12 asked for a *Google Places API sync of verified reviews*, i.e. real ones only |
 | `PROJECT_OWNER_PENDING.md` | "Testimonial (with written consent) — Not modelled yet — Do not add without consent; never invent" |
 | `npm run audit:schema` | bans `Review` / `aggregateRating` in structured data, so the markup refuses to claim what the visible page claims |
 | `PROJECT_PROGRESS.md` | no phase records the section being added, approved or sourced |
