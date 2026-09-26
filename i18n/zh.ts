@@ -836,6 +836,19 @@ export const zh: Dictionary = {
     },
     notSureOption: "不确定 / 需要多项服务",
   },
+  /**
+   * Lead-generation Task 1.1 —— 浮动 WhatsApp 按钮的预填信息。
+   * `{name}` 为已本地化的资料库名称，`{service}` 为子服务所属的主要服务。
+   */
+  whatsapp: {
+    prefillGeneral: "您好，Renovix Home Services，我想索取房屋装修或维修的报价。",
+    prefillService: "您好，Renovix Home Services，我想索取{name}的报价。",
+    prefillSubService: "您好，Renovix Home Services，我想索取{name}（{service}）的报价。",
+    prefillProblem: "您好，Renovix Home Services，我遇到{name}的问题，想索取报价。",
+    prefillArea: "您好，Renovix Home Services，我想索取在{name}的工程报价。",
+    prefillGuide: "您好，Renovix Home Services，我看了你们的《{name}》，想索取报价。",
+    prefillProject: "您好，Renovix Home Services，我看了你们的「{name}」工程案例，想索取报价。",
+  },
   blogIndex: {
     metaTitle: "Renovix Home Services | 吉隆坡与雪兰莪住宅装修指南",
     metaDescription:

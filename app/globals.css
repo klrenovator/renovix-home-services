@@ -196,6 +196,21 @@
   .skip-link {
     @apply fixed left-4 top-4 z-50 -translate-y-20 rounded-md bg-navy px-4 py-2 text-sm font-semibold text-white transition-transform focus-visible:translate-y-0;
   }
+
+  /**
+   * Lead-generation Task 1.1 — floating WhatsApp CTA.
+   *
+   * Pinned to the bottom-right corner and offset by the device safe areas, so
+   * it clears the iPhone home bar and rounded corners in landscape. `z-30`
+   * keeps it above the page but below the sticky header (`z-40`) and the
+   * mobile menu / search overlays (`z-50`), which therefore cover it while
+   * they are open instead of being covered by it.
+   */
+  .floating-whatsapp {
+    @apply fixed z-30 flex justify-end;
+    right: max(1rem, env(safe-area-inset-right));
+    bottom: max(1rem, env(safe-area-inset-bottom));
+  }
 }
 
 @keyframes menu-in {

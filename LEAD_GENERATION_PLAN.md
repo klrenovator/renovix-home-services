@@ -25,32 +25,39 @@
 ## 2. Multi-Phase Implementation Plan
 
 ### Phase 1: Lead Capture & Conversion Engine (Codebase Updates)
-- [ ] **Task 1.1: Mobile Floating WhatsApp CTA Component**
+- [x] **Task 1.1: Mobile Floating WhatsApp CTA Component** — ✅ COMPLETED (2026-09-26)
   - Implement a mobile-optimized, accessible, non-intrusive floating WhatsApp action button that appears across all service, problem, area, and blog pages.
   - Pre-fill message dynamically based on page context (e.g. *"Hi Renovix, I would like a quote for [Service Name]"*).
-- [ ] **Task 1.2: Quote Page Pre-filled WhatsApp Direct Route**
+  - **Shipped as:** `components/whatsapp/FloatingWhatsApp.tsx` (server component — no client state; only the shared `TrackedLink` leaf hydrates) + `lib/whatsapp.ts` (`buildWhatsAppHref`, the single `wa.me` link builder) + `.floating-whatsapp` in `app/globals.css`.
+  - **Coverage (counted across EN/MS/ZH):** all 30 service pillar pages and 153 sub-service pages, all 171 problem-guide pages, all 159 area-guide pages + 6 region hubs, all 36 Knowledge Hub article pages + 3 hub indexes, all 84 project pages, and the home / services / problems / areas / projects / about / contact / FAQ / search index pages — one CTA per page, no page renders two.
+  - **Page-aware pre-fill (EN/MS/ZH):** service → *"…a quote for Tile & Tiling."*; sub-service → *"…for Tile Repair & Replacement (Tile & Tiling)."*; problem → *"…I need help with Power Tripping."*; area/region → *"…for work in Mont Kiara."*; guide → *"…I read your guide "…" and would like a quote."*; project → *"…I saw the project "…"."*; index/support pages → generic message.
+  - **Localized via the dictionary** (`i18n/{en,ms,zh}.ts` → `whatsapp.prefill*`, 7 templates per language, typed in `i18n/types.ts`); every `{name}`/`{service}` value is a localized registry name, never a slug.
+  - **Accessible & non-intrusive:** visible localized label (`cta.whatsappUs`), decorative icon `aria-hidden`, shared `.btn` 44 px tap target, `aria`-safe anchor, safe-area-aware fixed bottom-right placement (`env(safe-area-inset-*)`), `z-30` so the `z-40` header and `z-50` mobile-menu/search overlays cover it, hidden from print, skipped on `/quote/` (it owns the form-aware quick path, Task 1.2) and on legal pages.
+  - **Tracked:** every click fires `whatsapp_click` through `TrackedLink` with a `floating_whatsapp_{service|subservice|problem|area|guide|project|general}` surface plus registry slugs where the page has them — no customer data.
+  - **Verified by:** `npm run build` (689 static entries) + `npm run audit:cro` (new) + all 17 pre-existing `scripts/audit-*.mjs` + `npm run audit:live` (284/284 live checks, 0 failures) + rendered spot checks of `/en/`, `/ms/`, `/zh/` service, sub-service, problem, area, region, guide, project and index pages.
+- [ ] **Task 1.2: Quote Page Pre-filled WhatsApp Direct Route** — [PENDING]
   - Enhance `/quote/` with an prominent "Prefer Instant WhatsApp Quote? Click here to chat with photos" option right above the form.
   - Automatically encode user inputs (service, property type, area) into a one-click WhatsApp URL so no inquiry is ever lost.
-- [ ] **Task 1.3: Service Page "Fast Photo Quote" Banners**
+- [ ] **Task 1.3: Service Page "Fast Photo Quote" Banners** — [PENDING]
   - Add a dedicated visual banner under pricing tables: *"Have photos of the issue? Send them directly on WhatsApp for an immediate assessment."*
-- [ ] **Task 1.4: Homepage Value Proposition Clarification**
+- [ ] **Task 1.4: Homepage Value Proposition Clarification** — [PENDING]
   - Add clear reassurance chips: *"No Job Too Small (Handyman & Repairs) to Complete Home Renovations"*.
 
 ### Phase 2: Analytics & Lead Delivery Infrastructure
-- [ ] **Task 2.1: Verify & Activate Lead Notification Pipeline**
+- [ ] **Task 2.1: Verify & Activate Lead Notification Pipeline** — [PENDING]
   - Provide complete step-by-step documentation for owner to supply `RESEND_API_KEY`, `QUOTE_FROM_EMAIL`, and `QUOTE_NOTIFICATION_EMAIL`.
-- [ ] **Task 2.2: Activate Google Analytics 4 & Clarity**
+- [ ] **Task 2.2: Activate Google Analytics 4 & Clarity** — [PENDING]
   - Configure GA4 measurement ID and Microsoft Clarity ID in deployment environment variables.
   - Verify end-to-end event firing for `whatsapp_click`, `phone_click`, `quote_form_submit`, and `quote_form_success`.
 
 ### Phase 3: Local Authority & Google Search Dominance (Owner Action Items)
-- [ ] **Task 3.1: Google Business Profile (GBP) Creation & Verification**
+- [ ] **Task 3.1: Google Business Profile (GBP) Creation & Verification** — [PENDING]
   - Set up profile with exact NAP: *Renovix Home Services, Jalan Kiara, Mont Kiara, 50480 Kuala Lumpur, +601159259521*.
-- [ ] **Task 3.2: Google Search Console Sitemap Indexing**
+- [ ] **Task 3.2: Google Search Console Sitemap Indexing** — [PENDING]
   - Confirm sitemap `https://renovixhomeservices.my/sitemap.xml` is submitted and processed in GSC.
-- [ ] **Task 3.3: Local Malaysian Citations**
+- [ ] **Task 3.3: Local Malaysian Citations** — [PENDING]
   - Register profile on Yellow Pages Malaysia, Hotfrog, BusinessList.my, and Facebook Local Business.
-- [ ] **Task 3.4: Project Area Tagging**
+- [ ] **Task 3.4: Project Area Tagging** — [PENDING]
   - Map verified locations (Mont Kiara, PJ, Subang, Cheras, etc.) to the 28 projects once confirmed by owner.
 
 ---
@@ -60,3 +67,4 @@
 | Date | Phase | Task Completed | Verified By / Test Result |
 |---|---|---|---|
 | 2026-09-26 | Setup | Created Master Action Plan & Issues Register (`LEAD_GENERATION_PLAN.md`) | Build and audits clean |
+| 2026-09-26 | Phase 1 | **Task 1.1 — Mobile Floating WhatsApp CTA** (`components/whatsapp/FloatingWhatsApp.tsx`, `lib/whatsapp.ts`, `app/globals.css`, `i18n/{types,en,ms,zh}.ts`, 17 render sites) | `npm run build` clean (689 static entries); new `npm run audit:cro` PASS; all 16 pre-existing `scripts/audit-*.mjs` PASS; `npm run audit:live` 284 PASS / 0 FAIL; rendered pre-fill verified in EN/MS/ZH on service, sub-service, problem, area, region, guide, project, home and index pages (exactly one CTA per page, none on `/quote/`) |

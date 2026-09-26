@@ -154,7 +154,7 @@ dedupe guard are audited by `npm run audit:analytics`.
 | `quote_form_submit` | A validated submission left the browser | `lang`, `service` |
 | `quote_form_success` | Server accepted the submission | `lang`, `service` |
 | `quote_form_error` | Submission attempt failed | `lang`, `reason` (`validation` \| `rate_limited` \| `unavailable` \| `network`), `service` if known |
-| `whatsapp_click` | Any WhatsApp link: header, footer, hero/CTA blocks, quote quick-path, success & error fallbacks, contact page | `lang`, `surface`, sometimes `service` |
+| `whatsapp_click` | Any WhatsApp link: header, footer, hero/CTA blocks, the floating WhatsApp CTA on every commercial page, quote quick-path, success & error fallbacks, contact page | `lang`, `surface`, sometimes `service` / `subservice` |
 | `phone_click` | Any `tel:` link | `lang`, `surface` |
 | `email_click` | Any `mailto:` link | `lang`, `surface` |
 | `service_cta_click` | Quote CTA on a service page (hero + bottom CTA) | `lang`, `surface`, `service` |
@@ -163,8 +163,13 @@ dedupe guard are audited by `npm run audit:analytics`.
 
 `surface` values: `header`, `footer`, the path section of the page the click
 happened on (`home`, `services`, `areas`, `quote`, `contact`, `blog`, `about`,
-`projects`, `problems`, `faq`), or the explicit quote-flow surfaces from
-Phase 22 (`quote_quick_path`, `quote_success`, `quote_error`).
+`projects`, `problems`, `faq`), the explicit quote-flow surfaces from Phase 22
+(`quote_quick_path`, `quote_success`, `quote_error`), or the floating-CTA
+surfaces added by Lead-generation Task 1.1
+(`floating_whatsapp_general`, `floating_whatsapp_service`,
+`floating_whatsapp_subservice`, `floating_whatsapp_problem`,
+`floating_whatsapp_area`, `floating_whatsapp_guide`,
+`floating_whatsapp_project`).
 
 ## 6. Google Ads conversion tracking — OWNER CONFIGURATION PENDING
 

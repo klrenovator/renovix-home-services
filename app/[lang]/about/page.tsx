@@ -17,6 +17,7 @@ import { Button } from "@/components/ui/Button";
 import { getLanguage, languages } from "@/data/languages";
 import { getServiceCategories } from "@/data/i18n";
 import { getDictionary } from "@/i18n";
+import { FloatingWhatsApp } from "@/components/whatsapp/FloatingWhatsApp";
 import { contentHref, localizedHref } from "@/i18n/hrefs";
 import { absoluteUrl, buildPageMetadata } from "@/i18n/seo";
 
@@ -240,6 +241,8 @@ export default async function AboutPage({ params }: AboutPageProps) {
           </div>
         </div>
       </section>
+      {/* Task 1.1 — floating WhatsApp CTA (generic page message). */}
+      <FloatingWhatsApp lang={code} />
     </>
   );
 }

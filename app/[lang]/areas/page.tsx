@@ -25,6 +25,7 @@ import { getWhatsAppHref, siteConfig } from "@/data/site";
 import { areaRegions } from "@/data/area-content";
 import { districtGroups, getStateCoverage } from "@/data/locations";
 import { getDictionary } from "@/i18n";
+import { FloatingWhatsApp } from "@/components/whatsapp/FloatingWhatsApp";
 import { contentHref, localizedHref } from "@/i18n/hrefs";
 import { absoluteUrl, buildPageMetadata } from "@/i18n/seo";
 
@@ -379,6 +380,8 @@ export default async function AreasPage({ params }: AreasPageProps) {
         title={t.areasIndex.ctaTitle}
         description={t.areasIndex.ctaDescription}
       />
+      {/* Task 1.1 — floating WhatsApp CTA (generic page message). */}
+      <FloatingWhatsApp lang={code} />
     </>
   );
 }

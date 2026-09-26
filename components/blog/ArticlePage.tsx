@@ -21,6 +21,7 @@ import { getProblemsBySlugs } from "@/data/problem-content";
 import { getSubService, subServiceLanguages } from "@/data/sub-services";
 import { getAreaDetail, getAreaRegion } from "@/data/area-content";
 import { getProjectContent, getPublishedProjects } from "@/data/project-content";
+import { FloatingWhatsApp } from "@/components/whatsapp/FloatingWhatsApp";
 
 /**
  * A Knowledge Hub article.
@@ -366,6 +367,9 @@ export function ArticlePage({
           </div>
         </div>
       </section>
+      {/* Task 1.1 — page-aware floating WhatsApp CTA. The quoted name is the
+          guide's own H1, not the `| Renovix` search-title variant. */}
+      <FloatingWhatsApp lang={lang} subject={{ kind: "guide", label: text.h1 }} />
     </>
   );
 }

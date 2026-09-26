@@ -7771,3 +7771,95 @@ No generated build output or local dependency folder is tracked.
 **Status:** **🟢 complete and QA verified.** Existing project photos/details
 were retained. Any additional genuine project material can be added when the
 owner supplies it; no optional decisions or unverified details were changed.
+
+---
+
+## Lead-generation Task 1.1 — mobile floating WhatsApp CTA on every commercial page (2026-09-26)
+
+**Result: 🟢 shipped and QA-verified. One persistent, page-aware WhatsApp
+conversion path now renders on every commercial page in EN/MS/ZH. No URL,
+price, heading, canonical, hreflang entry, image, structured-data node or
+existing internal link changed.**
+
+### 1. What was missing (lead-generation plan P-03)
+
+Task 1.1 in `LEAD_GENERATION_PLAN.md`: mobile visitors had to scroll back to
+the header (or hunt through the footer) to start a WhatsApp chat, and no CTA
+on any page carried the page's own context into the message. In the Malaysian
+market most contractor enquiries begin as a WhatsApp message, so the action
+must be reachable at any scroll position and must open with the page's subject
+already written for the customer.
+
+### 2. What was built
+
+- **`components/whatsapp/FloatingWhatsApp.tsx`** — a **server component** (no
+  client state of its own; only the shared `TrackedLink` leaf hydrates, so the
+  CTA adds no layout JavaScript) rendering a fixed bottom-right pill.
+  It takes the page's own entity as a typed `subject` (`service`,
+  `subservice` + parent service, `problem`, `area`, `guide`, `project`) or
+  nothing at all for index/support pages.
+- **`lib/whatsapp.ts`** — `buildWhatsAppHref(message)`, the single place a
+  `wa.me?text=` link is composed. It reads the one number from
+  `data/site.ts`, so there is still exactly one contact system.
+- **`app/globals.css`** — `.floating-whatsapp`: `position: fixed` bottom-right,
+  offset by `max(1rem, env(safe-area-inset-*))` (iPhone home bar, landscape
+  notch), `z-index: 30` so the `z-40` sticky header and the `z-50` mobile-menu
+  / search overlays cover it rather than the reverse, plus `print:hidden`.
+- **Localized pre-fill (`i18n/types.ts`, `i18n/en.ts`, `i18n/ms.ts`,
+  `i18n/zh.ts`)** — seven `whatsapp.prefill*` templates per language with
+  `{name}` (and `{service}` for a sub-service) slots, so each language keeps
+  its own word order: e.g. *"Hello Renovix Home Services, I would like a quote
+  for Tile Repair & Replacement (Tile & Tiling)."* / *"Helo Renovix Home
+  Services, saya ingin sebut harga untuk Pembaikan & Penggantian Jubin (Kerja
+  Jubin & Pemasangan Jubin)."* / *"您好，Renovix Home Services，我想索取瓷砖修补与更换（瓷砖与铺砖工程）的报价。"*
+  Every substituted value is a **localized registry name** resolved by the
+  page — never a slug, which is the defect the multilingual audit was written
+  to stop.
+- **17 render sites** — service pillars, sub-service pages, problem guides,
+  area guides, both region hubs, Knowledge Hub articles, the Knowledge Hub
+  index, project case studies, and the home / services / problems / areas /
+  projects / about / contact / FAQ / search pages. Exactly one CTA renders per
+  page. The **quote page deliberately does not render it**: that page owns the
+  form-aware WhatsApp quick path (Task 1.2) and two competing CTAs would split
+  the same click. Legal pages do not render it either.
+- **Conversion tracking** — every click fires `whatsapp_click` through
+  `TrackedLink` (so the delegated listener cannot double-count it) with a
+  coarse `floating_whatsapp_{kind}` surface plus the page's service /
+  sub-service slugs where they exist. No customer data can reach the event:
+  the context keys remain the closed set from Phase 24.
+- **Accessibility** — a real link with the visible localized label
+  (`cta.whatsappUs`), decorative icon `aria-hidden`, the shared `.btn` 44 px
+  target minimum, visible focus ring, and safe-area-aware placement that never
+  covers the header or an open menu/search overlay.
+
+### 3. New guard — `npm run audit:cro`
+
+`scripts/audit-cro.mjs` statically verifies the surface so it cannot silently
+regress: single-source link builder, `whatsapp_click` via `TrackedLink`, no
+hardcoded number/URL, the seven templates present in EN/MS/ZH with the exact
+placeholder slots, length and language integrity (no English verbatim in
+`ms`/`zh`, Chinese copy contains Chinese characters), every family render site
+passing a **registry-derived** label (a quoted literal fails the audit), the
+generic index/support sites, the quote page's deliberate exclusion, and the
+accessibility/placement invariants (label, `aria-hidden` icon, safe-area
+offset, `z-30`, print hiding, `.btn` target).
+
+### 4. QA after changes
+
+- [x] `npm run lint` — PASS (0 errors, 0 warnings).
+- [x] `npm run type-check` — PASS (`next typegen && tsc --noEmit`).
+- [x] `npm run build` — PASS; **689 / 689** static generation entries.
+- [x] All **18 static audits** — PASS (the 17 pre-existing audits plus the new
+      `audit:cro`).
+- [x] Fresh production `next start` + `npm run audit:live` — **PASS 284 / 284,
+      WARN 0, FAIL 0**; all **678 / 678** sitemap URLs returned 200.
+- [x] Rendered checks of the pre-fill message on served pages: service,
+      sub-service, problem, area, region hub, guide, project, home and index
+      pages in EN/MS/ZH, each carrying a localized, page-specific first
+      message; exactly one CTA per page and none on `/quote/`.
+- [x] `git diff` review — only the new CTA files, the dictionary block, the
+      CSS rule, the render sites, the audit script/README row and the plan /
+      progress records changed.
+
+**Status:** **🟢 complete.** Task 1.1 is marked ✅ COMPLETED in
+`LEAD_GENERATION_PLAN.md`; Tasks 1.2–1.4 and Phases 2–3 remain `[PENDING]`.

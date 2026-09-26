@@ -648,6 +648,32 @@ export type Dictionary = {
     propertyTypes: Record<QuotePropertyTypeId, string>;
     notSureOption: string;
   };
+  /**
+   * Lead-generation Task 1.1 — the pre-filled first message of the floating
+   * WhatsApp CTA, per page family.
+   *
+   * `{name}` is always a localized registry name (service, sub-service,
+   * problem, area, guide or project page title) and `{service}` the parent
+   * service of a sub-service, so each language keeps its own word order and a
+   * `/ms/` or `/zh/` page never sends an English sentence. The visible button
+   * label is the shared `cta.whatsappUs` string — one CTA wording, one place.
+   */
+  whatsapp: {
+    /** Index, support and any other page without a specific subject. */
+    prefillGeneral: string;
+    /** Service pillar page, e.g. "…a quote for Tiling." */
+    prefillService: string;
+    /** Sub-service page — `{name}` (scope) plus `{service}` (parent pillar). */
+    prefillSubService: string;
+    /** Problem guide, e.g. "…I need help with Power Tripping." */
+    prefillProblem: string;
+    /** Area guide or region hub. */
+    prefillArea: string;
+    /** Knowledge Hub article (quoted by title). */
+    prefillGuide: string;
+    /** Project case study (quoted by title). */
+    prefillProject: string;
+  };
   /** Knowledge Hub index (`/{lang}/blog/`). */
   blogIndex: {
     metaTitle: string;

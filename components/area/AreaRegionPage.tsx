@@ -24,6 +24,7 @@ import { AreaRegionSubServicesBlock } from "@/components/area/AreaRegionSubServi
 import { AreaRegionProblemsSection } from "@/components/area/AreaRegionProblemsSection";
 import { getDistrictsForRegion } from "@/data/locations";
 import { getDistrictDescription, getDistrictName } from "@/data/i18n";
+import { FloatingWhatsApp } from "@/components/whatsapp/FloatingWhatsApp";
 import type { AreaRegion } from "@/data/area-content/types";
 
 type AreaRegionPageProps = {
@@ -316,6 +317,8 @@ export function AreaRegionPage({ region, lang }: AreaRegionPageProps) {
           </div>
         </section>
       ) : null}
+      {/* Task 1.1 — page-aware floating WhatsApp CTA (the hub's own name). */}
+      <FloatingWhatsApp lang={lang} subject={{ kind: "area", label: region.name }} />
     </>
   );
 }
