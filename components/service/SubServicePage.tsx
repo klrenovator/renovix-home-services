@@ -15,6 +15,7 @@ import type { ProblemDetail } from "@/data/problem-content/types";
 import { getSubServicesByService, formatSubServicePrice, type ResolvedSubService } from "@/data/sub-services";
 import { getProjectContent, getProjectsForSubService } from "@/data/project-content";
 import { GuideLinksSection } from "@/components/blog/GuideLinksSection";
+import { FastPhotoQuoteBanner } from "@/components/service/FastPhotoQuoteBanner";
 import { InlineSearch } from "@/components/search/InlineSearch";
 import { getArticlesForSubService } from "@/data/blog";
 import { FloatingWhatsApp } from "@/components/whatsapp/FloatingWhatsApp";
@@ -318,6 +319,14 @@ export function SubServicePage({ detail, lang }: SubServicePageProps) {
               </div>
               <p className="mt-5 text-xs leading-5 text-secondary">{getPricingDisclaimer(lang)}</p>
             </div>
+
+            {/* Task 1.3 — photo-first quote path directly under the price block. */}
+            <FastPhotoQuoteBanner
+              lang={lang}
+              subject={{ kind: "subservice", label: name, parent: service?.name ?? name }}
+              service={serviceSlug}
+              subservice={detail.slug}
+            />
           </div>
         </section>
       ) : null}

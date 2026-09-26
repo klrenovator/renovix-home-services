@@ -860,6 +860,19 @@ export const zh: Dictionary = {
     prefillGuide: "您好，Renovix Home Services，我看了你们的《{name}》，想索取报价。",
     prefillProject: "您好，Renovix Home Services，我看了你们的「{name}」工程案例，想索取报价。",
   },
+  /**
+   * Lead-generation Task 1.3 —— 价格表下方的「照片快速报价」横幅。
+   * `{name}` 为已本地化的服务或子服务名称。
+   */
+  photoQuote: {
+    eyebrow: "照片快速报价",
+    title: "手上有现场照片吗？",
+    body: "直接把照片发到我们的 WhatsApp，我们就能先根据照片评估，再准备{name}的报价。",
+    cta: "在 WhatsApp 发送照片",
+    hint: "通常只要一张全景照片、一张特写照片，再加上您的位置，就足够我们评估工程。",
+    prefillService: "您好，Renovix Home Services，我有{name}的照片，想索取报价。",
+    prefillSubService: "您好，Renovix Home Services，我有{name}（{service}）的照片，想索取报价。",
+  },
   blogIndex: {
     metaTitle: "Renovix Home Services | 吉隆坡与雪兰莪住宅装修指南",
     metaDescription:

@@ -26,6 +26,13 @@
  *  5. **Accessible & non-intrusive.** Visible localized label, decorative icon
  *     hidden from assistive tech, 44 px tap target via `.btn`, safe-area aware
  *     fixed positioning below the header/overlay z-index, hidden from print.
+ *  6. **Photo-first quote path (Task 1.3).** The "Fast Photo Quote" banner
+ *     renders directly under the pricing table of every service pillar page
+ *     and under the price block of every sub-service page, invites the
+ *     customer to send photographs of the real site on WhatsApp, and does so
+ *     with the same single number, the same tracked event and the same
+ *     localized-copy discipline as the floating CTA. Copy stays honest: no
+ *     response time is promised.
  *
  * Run with: npm run audit:cro
  */
@@ -311,6 +318,245 @@ if (component.includes('className="btn btn-whatsapp')) {
   pass("the CTA reuses .btn (44 px minimum tap target) and the official WhatsApp green");
 } else {
   fail("the floating CTA no longer uses the shared .btn/.btn-whatsapp classes");
+}
+
+/* ------------------------------------------------------------------------ */
+/* 5. Fast Photo Quote banner (lead-generation Task 1.3)                     */
+/* ------------------------------------------------------------------------ */
+console.log("\n5. Fast photo quote banner (Task 1.3)");
+
+const banner = read("components/service/FastPhotoQuoteBanner.tsx");
+/** Comments are documentation, not URLs or markup — strip them before checking. */
+const bannerCode = banner
+  .replace(/\/\*[\s\S]*?\*\//g, "")
+  .split("\n")
+  .filter((line) => !line.trim().startsWith("//"))
+  .join("\n");
+
+if (!/^"use client"/.test(banner)) {
+  pass("photo banner ships as a server component (no client state of its own)");
+} else {
+  fail("FastPhotoQuoteBanner is a client component — it needs no client-side state");
+}
+
+if (bannerCode.includes("buildWhatsAppHref(") && !/wa\.me|whatsapp:\/\//.test(bannerCode)) {
+  pass("banner builds its link through lib/whatsapp.ts (no hardcoded number or URL)");
+} else {
+  fail("FastPhotoQuoteBanner hardcodes a WhatsApp URL/number instead of buildWhatsAppHref()");
+}
+
+if (bannerCode.includes("<TrackedLink") && bannerCode.includes('event="whatsapp_click"')) {
+  pass("every banner click fires whatsapp_click through TrackedLink");
+} else {
+  fail("FastPhotoQuoteBanner does not emit whatsapp_click via TrackedLink");
+}
+
+if (/surface:\s*`photo_quote_banner_\$\{[^}]+\}`/.test(banner)) {
+  pass("banner events carry a coarse photo_quote_banner_* surface");
+} else {
+  fail("FastPhotoQuoteBanner carries no photo_quote_banner surface token");
+}
+
+if (banner.includes("copy.prefillService") && banner.includes("copy.prefillSubService")) {
+  pass("both page families read their own pre-fill template (service and sub-service + parent)");
+} else {
+  fail("the banner does not read both photoQuote pre-fill templates");
+}
+
+if (/\{copy\.cta\}/.test(banner) && /<span[^>]*aria-hidden="true"[^>]*>\s*<IconCamera/.test(banner) && /<IconWhatsApp[^>]*aria-hidden="true"/.test(banner)) {
+  pass("visible localized CTA label + decorative camera and WhatsApp icons hidden from assistive tech");
+} else {
+  fail("the banner lost its visible localized label or hides an icon incorrectly");
+}
+
+if (bannerCode.includes("btn btn-whatsapp")) {
+  pass("the banner reuses .btn (44 px minimum target) and the official WhatsApp green");
+} else {
+  fail("the banner no longer uses the shared .btn/.btn-whatsapp classes");
+}
+
+if (bannerCode.includes("fast-photo-quote") && /\.fast-photo-quote\s*\{[^}]*background-image/.test(css)) {
+  pass("the banner renders .fast-photo-quote and app/globals.css defines its brand wash");
+} else {
+  fail("the banner's .fast-photo-quote identity hook or its app/globals.css rule is missing");
+}
+
+/* Copy: the photoQuote block must be complete, localized and short enough. */
+const PHOTO_KEYS = [
+  "eyebrow",
+  "title",
+  "body",
+  "cta",
+  "hint",
+  "prefillService",
+  "prefillSubService",
+];
+
+const PHOTO_PLACEHOLDERS = {
+  eyebrow: [],
+  title: [],
+  body: ["name"],
+  cta: [],
+  hint: [],
+  prefillService: ["name"],
+  prefillSubService: ["name", "service"],
+};
+
+/** Longest acceptable value per key: pre-fills travel in a `wa.me?text=` URL. */
+const PHOTO_MAX_LENGTH = {
+  eyebrow: 60,
+  title: 80,
+  body: 260,
+  cta: 60,
+  hint: 200,
+  prefillService: 200,
+  prefillSubService: 200,
+};
+
+/**
+ * Extracts the `photoQuote: { … }` block of a source file. Dictionaries close
+ * members with `,` while `i18n/types.ts` closes them with `;`, so both markers
+ * are accepted.
+ */
+function photoQuoteBlock(source) {
+  const start = source.indexOf("\n  photoQuote: {");
+  if (start === -1) return null;
+  const ends = ["\n  },", "\n  };"]
+    .map((marker) => source.indexOf(marker, start))
+    .filter((index) => index !== -1);
+  return ends.length === 0 ? null : source.slice(start, Math.min(...ends));
+}
+
+const photoBlocks = {};
+for (const [lang, source] of Object.entries(dictionaries)) {
+  const block = photoQuoteBlock(source);
+  if (!block) {
+    fail(`${lang}: no photoQuote block in the dictionary`);
+    continue;
+  }
+  photoBlocks[lang] = block;
+
+  const missing = PHOTO_KEYS.filter((key) => !block.includes(`${key}:`));
+  if (missing.length === 0) {
+    pass(`${lang}: all ${PHOTO_KEYS.length} photoQuote keys present`);
+  } else {
+    fail(`${lang}: missing photoQuote keys: ${missing.join(", ")}`);
+  }
+
+  if (/\uFFFD/.test(block)) {
+    fail(`${lang}: replacement character (mojibake) in the photoQuote copy`);
+  }
+}
+
+/** Pulls the single-line string value of a photoQuote key. */
+function photoValue(lang, key) {
+  const block = photoBlocks[lang];
+  if (!block) return null;
+  const match = block.match(new RegExp(`${key}:\\s*\\n?\\s*"((?:[^"\\\\]|\\\\.)*)"`));
+  return match ? match[1] : null;
+}
+
+const typesPhotoBlock = photoQuoteBlock(types);
+if (typesPhotoBlock && PHOTO_KEYS.every((key) => typesPhotoBlock.includes(`${key}: string;`))) {
+  pass("i18n/types.ts types every photoQuote key in all three languages");
+} else {
+  fail("i18n/types.ts does not type every photoQuote key");
+}
+
+for (const key of PHOTO_KEYS) {
+  const expected = PHOTO_PLACEHOLDERS[key];
+  const maxLength = PHOTO_MAX_LENGTH[key];
+  const problems = [];
+
+  for (const lang of ["en", "ms", "zh"]) {
+    const value = photoValue(lang, key);
+    if (value === null) {
+      problems.push(`${lang}: unreadable`);
+      continue;
+    }
+
+    const slots = [...value.matchAll(/\{(\w+)\}/g)].map((match) => match[1]);
+    const wrongSlots =
+      slots.length !== expected.length || expected.some((slot) => !slots.includes(slot));
+    if (wrongSlots) {
+      problems.push(`${lang}: expected {${expected.join("}, {")}} but got {${slots.join("}, {")}}`);
+    }
+    if (value.length > maxLength) {
+      problems.push(`${lang}: ${value.length} characters (max ${maxLength})`);
+    }
+    if (/[\r\n]/.test(value)) {
+      problems.push(`${lang}: value spans multiple lines`);
+    }
+  }
+
+  if (problems.length === 0) {
+    pass(`photoQuote.${key}: correct placeholder slots and length in EN/MS/ZH`);
+  } else {
+    fail(`photoQuote.${key}: ${problems.join("; ")}`);
+  }
+}
+
+/* Genuine translations, not the English strings, and MS/ZH stay photo-first. */
+for (const key of PHOTO_KEYS) {
+  const en = photoValue("en", key);
+  const ms = photoValue("ms", key);
+  const zh = photoValue("zh", key);
+
+  if (en && ms && en === ms) {
+    fail(`photoQuote.${key}: the Malay string is the English string verbatim`);
+  }
+  if (zh && !/[\u4e00-\u9fff]/.test(zh)) {
+    fail(`photoQuote.${key}: the Chinese string contains no Chinese characters`);
+  }
+}
+if (!failures.some((message) => message.includes("photoQuote."))) {
+  pass("photoQuote copy is genuinely localized in EN/MS/ZH");
+}
+
+/* Rendered where the plan needs it: under both service pricing blocks. */
+const pricingSection = read("components/service/PricingSection.tsx");
+const subServiceTemplate = read("components/service/SubServicePage.tsx");
+
+const serviceBannerCount = (pricingSection.match(/<FastPhotoQuoteBanner/g) ?? []).length;
+const serviceBannerIndex = pricingSection.indexOf("<FastPhotoQuoteBanner");
+const serviceTableIndex = pricingSection.indexOf("<table");
+if (
+  serviceBannerCount === 1 &&
+  serviceBannerIndex > serviceTableIndex &&
+  /subject=\{\{\s*kind:\s*"service",\s*label:\s*[\w.]+\s*\}\}/.test(pricingSection) &&
+  !/subject=\{\{\s*kind:\s*"[a-z]+",\s*label:\s*"/.test(pricingSection)
+) {
+  pass("every service pillar page renders the banner under its pricing table with a registry name");
+} else {
+  fail(
+    "PricingSection.tsx must render exactly one FastPhotoQuoteBanner after the pricing <table>, passing a registry-derived service label",
+  );
+}
+
+const subBannerCount = (subServiceTemplate.match(/<FastPhotoQuoteBanner/g) ?? []).length;
+const subBannerIndex = subServiceTemplate.indexOf("<FastPhotoQuoteBanner");
+const subPricingIndex = subServiceTemplate.indexOf('id="pricing"');
+if (
+  subBannerCount === 1 &&
+  subBannerIndex > subPricingIndex &&
+  /subject=\{\{\s*kind:\s*"subservice",\s*label:\s*\w+,\s*parent:\s*[^}]+\}\}/.test(subServiceTemplate) &&
+  !/subject=\{\{\s*kind:\s*"[a-z]+",\s*label:\s*"/.test(subServiceTemplate)
+) {
+  pass("every sub-service page renders the banner under its price block with a registry name + parent");
+} else {
+  fail(
+    "SubServicePage.tsx must render exactly one FastPhotoQuoteBanner inside the pricing section, passing a registry-derived sub-service label and parent service",
+  );
+}
+
+/* The quote page owns the form and its form-aware quick path. */
+const photoQuoteElsewhere = ["app/[lang]/quote/page.tsx", "components/quote/QuoteForm.tsx"].filter(
+  (file) => read(file).includes("<FastPhotoQuoteBanner"),
+);
+if (photoQuoteElsewhere.length === 0) {
+  pass("the quote page keeps its single form-aware WhatsApp path (no banner competing with the form)");
+} else {
+  fail(`the photo banner renders on the quote flow: ${photoQuoteElsewhere.join(", ")}`);
 }
 
 /* ------------------------------------------------------------------------ */

@@ -932,6 +932,22 @@ export const ms: Dictionary = {
     prefillProject:
       "Helo Renovix Home Services, saya melihat projek \"{name}\" dan ingin sebut harga.",
   },
+  /**
+   * Lead-generation Task 1.3 — sepanduk "Sebut Harga dengan Gambar" di bawah
+   * jadual harga. `{name}` ialah nama perkhidmatan/sub-perkhidmatan yang telah
+   * disetempatkan.
+   */
+  photoQuote: {
+    eyebrow: "Sebut Harga dengan Gambar",
+    title: "Ada gambar masalahnya?",
+    body: "Hantar gambar terus kepada kami di WhatsApp, dan kami akan menilai {name} daripada gambar tersebut sebelum sebut harga disediakan.",
+    cta: "Hantar gambar di WhatsApp",
+    hint: "Gambar keseluruhan kawasan, satu gambar jarak dekat dan lokasi anda biasanya sudah cukup untuk kami menilai kerja itu.",
+    prefillService:
+      "Helo Renovix Home Services, saya ada gambar untuk {name}. Saya ingin sebut harga.",
+    prefillSubService:
+      "Helo Renovix Home Services, saya ada gambar untuk {name} ({service}). Saya ingin sebut harga.",
+  },
   blogIndex: {
     metaTitle: "Renovix Home Services | Panduan Renovasi Rumah di KL & Selangor",
     metaDescription:

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { FastPhotoQuoteBanner } from "@/components/service/FastPhotoQuoteBanner";
 import { IconArrowRight } from "@/components/icons";
 import { getDictionary, format } from "@/i18n";
 import { localizedHref } from "@/i18n/hrefs";
@@ -125,6 +126,13 @@ export function PricingSection({ detail, lang }: PricingSectionProps) {
             <span className="text-sm text-secondary">{t.servicePage.quotePromptBody}</span>
           </div>
         </div>
+
+        {/* Task 1.3 — photo-first quote path directly under the pricing table. */}
+        <FastPhotoQuoteBanner
+          lang={lang}
+          subject={{ kind: "service", label: detail.name }}
+          service={detail.slug}
+        />
       </div>
     </section>
   );

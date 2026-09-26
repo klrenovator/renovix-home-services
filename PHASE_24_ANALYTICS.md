@@ -108,7 +108,7 @@ Key files:
   1. `language` (site language: en/ms/zh) — lets the funnel be split per
      language route.
   2. `service` (registry slug, e.g. `plaster-ceiling`) — quote and CTA events.
-  3. `surface` (e.g. `header`, `footer`, `quote_quick_path`) — where a click
+  3. `surface` (e.g. `header`, `footer`, `quote_instant_path`) — where a click
      happened.
   Nothing else needs a dimension; page type/location are already visible in
   `page_path` because every route is language- and section-prefixed.
@@ -164,12 +164,14 @@ dedupe guard are audited by `npm run audit:analytics`.
 `surface` values: `header`, `footer`, the path section of the page the click
 happened on (`home`, `services`, `areas`, `quote`, `contact`, `blog`, `about`,
 `projects`, `problems`, `faq`), the explicit quote-flow surfaces from Phase 22
-(`quote_quick_path`, `quote_success`, `quote_error`), or the floating-CTA
+(`quote_success`, `quote_error`), the floating-CTA
 surfaces added by Lead-generation Task 1.1
 (`floating_whatsapp_general`, `floating_whatsapp_service`,
 `floating_whatsapp_subservice`, `floating_whatsapp_problem`,
 `floating_whatsapp_area`, `floating_whatsapp_guide`,
-`floating_whatsapp_project`).
+`floating_whatsapp_project`), the form-aware quick path added by Task 1.2
+(`quote_instant_path`), or the "Fast Photo Quote" banner surfaces added by
+Task 1.3 (`photo_quote_banner_service`, `photo_quote_banner_subservice`).
 
 ## 6. Google Ads conversion tracking — OWNER CONFIGURATION PENDING
 

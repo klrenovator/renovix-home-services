@@ -686,6 +686,35 @@ export type Dictionary = {
     /** Project case study (quoted by title). */
     prefillProject: string;
   };
+  /**
+   * Lead-generation Task 1.3 — the "Fast Photo Quote" banner that sits directly
+   * under the pricing table of every service pillar page and under the price
+   * block of every sub-service page.
+   *
+   * The banner answers the moment a customer has just read the price list and
+   * is deciding whether to ask: it invites them to send photographs of the
+   * actual site, which is the fastest way for the team to assess scope. Copy
+   * stays honest — photographs help the assessment, no response time is
+   * promised. `{name}` is the page's localized registry name and `{service}`
+   * the parent pillar of a sub-service, so the pre-filled message is written in
+   * the customer's language and names the real page they came from.
+   */
+  photoQuote: {
+    /** Small label above the heading. */
+    eyebrow: string;
+    /** Question headline, e.g. "Have photos of the issue?" */
+    title: string;
+    /** One sentence; `{name}` is the service or sub-service name. */
+    body: string;
+    /** WhatsApp button label. */
+    cta: string;
+    /** Practical guidance on which photos to send. */
+    hint: string;
+    /** `wa.me` pre-fill for a service pillar page. */
+    prefillService: string;
+    /** `wa.me` pre-fill for a sub-service page (`{name}` + `{service}`). */
+    prefillSubService: string;
+  };
   /** Knowledge Hub index (`/{lang}/blog/`). */
   blogIndex: {
     metaTitle: string;
