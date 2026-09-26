@@ -33,6 +33,9 @@
  *     with the same single number, the same tracked event and the same
  *     localized-copy discipline as the floating CTA. Copy stays honest: no
  *     response time is promised.
+ *  7. **Homepage value proposition (Task 1.4).** A visible hero chip explains
+ *     that the service range includes small handyman repairs through full
+ *     renovations, with genuine EN/MS/ZH copy.
  *
  * Run with: npm run audit:cro
  */
@@ -557,6 +560,43 @@ if (photoQuoteElsewhere.length === 0) {
   pass("the quote page keeps its single form-aware WhatsApp path (no banner competing with the form)");
 } else {
   fail(`the photo banner renders on the quote flow: ${photoQuoteElsewhere.join(", ")}`);
+}
+
+/* ------------------------------------------------------------------------ */
+/* 6. Homepage value proposition (lead-generation Task 1.4)                  */
+/* ------------------------------------------------------------------------ */
+console.log("\n6. Homepage value proposition (Task 1.4)");
+
+const hero = read("components/home/Hero.tsx");
+const reassuranceCopy = {
+  en: "From small handyman repairs to full renovations",
+  ms: "Daripada pembaikan kecil oleh tukang am hingga renovasi penuh",
+  zh: "从小型家居维修到全面装修",
+};
+
+if (
+  hero.includes("hero.highlights.map") &&
+  hero.includes('className="chip bg-white/80 backdrop-blur-sm"') &&
+  hero.includes("{highlight}")
+) {
+  pass("homepage renders localized hero highlights as visible reassurance chips");
+} else {
+  fail("homepage hero no longer renders localized highlights as visible chips");
+}
+
+for (const [lang, copy] of Object.entries(reassuranceCopy)) {
+  const source = dictionaries[lang];
+  if (source.includes(`"${copy}"`)) {
+    pass(`${lang}: reassurance chip covers small handyman repairs through full renovations`);
+  } else {
+    fail(`${lang}: missing localized small-jobs-to-full-renovations reassurance chip`);
+  }
+}
+if (!/[\u4e00-\u9fff]/.test(reassuranceCopy.zh)) {
+  fail("zh: homepage reassurance chip contains no Chinese characters");
+}
+if (new Set(Object.values(reassuranceCopy)).size !== 3) {
+  fail("homepage reassurance chip must be independently translated in EN/MS/ZH");
 }
 
 /* ------------------------------------------------------------------------ */
