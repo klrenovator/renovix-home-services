@@ -102,6 +102,7 @@ export const en: Dictionary = {
         "One-stop home services",
         "KL & Selangor coverage",
         "Easy quotation process",
+        "From small handyman repairs to full renovations",
       ],
       imageAlt:
         "Completed plaster ceiling with cove lighting, downlights and a ceiling fan in a Malaysian home",

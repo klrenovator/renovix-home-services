@@ -107,6 +107,7 @@ export const ms: Dictionary = {
         "Semua kerja rumah, satu tempat",
         "Liputan KL & Selangor",
         "Proses sebut harga yang mudah",
+        "Daripada pembaikan kecil oleh tukang am hingga renovasi penuh",
       ],
       imageAlt:
         "Siling plaster siap dengan lampu cove, downlight dan kipas siling di sebuah rumah di Malaysia",
