@@ -27,7 +27,8 @@
     "audit:multilingual": "node scripts/audit-multilingual.mjs",
     "audit:routes": "node scripts/audit-routes.mjs",
     "audit:search": "node scripts/audit-search.mjs",
-    "audit:live": "node scripts/phase25-live-qa.mjs"
+    "audit:live": "node scripts/phase25-live-qa.mjs",
+    "verify:quote-email": "node scripts/verify-quote-email.mjs"
   },
   "dependencies": {
     "next": "16.3.3",
