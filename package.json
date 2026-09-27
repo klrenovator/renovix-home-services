@@ -30,6 +30,7 @@
     "audit:live": "node scripts/phase25-live-qa.mjs",
     "verify:quote-email": "node scripts/verify-quote-email.mjs",
     "verify:analytics": "node scripts/verify-analytics.mjs",
+    "verify:local-seo": "node scripts/verify-local-seo.mjs",
     "verify:analytics:e2e": "node scripts/verify-analytics-e2e.mjs"
   },
   "dependencies": {

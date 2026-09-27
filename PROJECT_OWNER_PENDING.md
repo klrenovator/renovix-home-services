@@ -20,6 +20,36 @@ wording where it conflicts.
 - Distributed rate limiting is not needed now; keep it parked until traffic
   justifies it. Optional design decisions remain unchanged.
 
+## Lead-generation Task 3.1 — Google Business Profile (2026-09-27)
+
+> **Canonical guide: `LOCAL_SEO_SETUP.md`.** Run `npm run verify:local-seo`
+> first: it prints the exact NAP block, phone, website and hours to paste, the
+> published service-area reference list, and whether the homepage reviews link
+> is armed. It contacts no Google service.
+
+**Unresolved record, do not skip:** the 2026-09-24 owner decisions above and the
+Phase 26 checklist record a "Google Business Profile check" as done, while
+`LEAD_GENERATION_PLAN.md` **P-06** (2026-09-26) records *"Zero Google Business
+Profile (GBP / Maps) footprint"* and marks it CRITICAL. Neither can be settled
+from the repository. `LOCAL_SEO_SETUP.md` §2.1 gives the two checks that settle
+it (Google Maps search, and the Businesses list at business.google.com); a
+second profile for the same business damages both listings, so claim rather
+than create if a listing is found.
+
+| # | Action | Where | Notes |
+| --- | --- | --- | --- |
+| 1 | Confirm whether a profile already exists, then claim or create it with the exact NAP from `npm run verify:local-seo` | Google account the business controls | Name exactly `Renovix Home Services` — no keywords, no neighbourhood. Address `Jalan Kiara, Mont Kiara`, `50480`, `Kuala Lumpur`, `Wilayah Persekutuan Kuala Lumpur` |
+| 2 | Decide the **opening days** (Google asks day by day; the site states only `9:00 AM – 6:00 PM`) | Owner decision | If the real days/hours differ, `data/site.ts` must be updated **first** so site and profile agree; the site still publishes no opening days in structured data because none have been supplied |
+| 3 | Choose the service areas actually worked in | Owner decision | `npm run verify:local-seo` lists the 53 published locality guides as a reference; the profile claim must stay truthful, so select only real coverage |
+| 4 | Upload real job photos only | Owner → profile | No stock, no AI-generated images — the same rule the project pages follow |
+| 5 | Complete verification, then **paste the profile's review URL into `googleReviewsUrl` in `data/site.ts`** | `data/site.ts` (one line) | This is the only code-side step. The homepage link, its EN/MS/ZH labels and its `review_profile_click` event are already wired and inert until the value is set (`LOCAL_SEO_SETUP.md` §6) |
+| 6 | Publish the same NAP on the Task 3.3 citation sites (Yellow Pages Malaysia, Hotfrog, BusinessList.my, Facebook Local Business) | Owner | Copy from `npm run verify:local-seo` output — no rewording, no abbreviations |
+
+Nothing about a profile, its verification, its Maps visibility or its review
+count is claimed anywhere on the site, and none of it may be added to the
+site's structured data. **NOT CLAIMED** until the owner has personally seen
+every item in `LOCAL_SEO_SETUP.md` §7.
+
 ## Phase 49 (2026-09-23) — two decisions the AI deliberately did not make
 
 Both were found by an independent sweep of all 678 served pages. Neither is a
@@ -105,6 +135,7 @@ recorded reviews as "not supplied; correctly unpublished", and
 | Owner instruction | Status |
 | --- | --- |
 | Keep the current five-review block exactly as it is | **Confirmed 2026-09-24.** No review content, attribution, structured review schema or layout was changed. The owner is responsible for its real-world accuracy and permissions. |
+| — | 2026-09-27 (Lead-generation Task 3.1): the block now has an **optional** link to the live Google Business Profile, wired behind `siteConfig.googleReviewsUrl` in `data/site.ts`. It renders nothing while the value is empty (verified: the built EN/MS/ZH homepages carry no Google link), so the five reviews, the "Posted on Google" line, the layout and the schema are all exactly as the owner froze them. Arming it is a one-line data change once a verified profile exists — see `LOCAL_SEO_SETUP.md` §6 and the Task 3.1 table above. |
 | Do not add aggregate ratings/counts or review schema without verified live data | Preserved; `audit:schema` continues to prohibit those signals. |
 
 Still data-gated: project-to-area links remain absent because no verified

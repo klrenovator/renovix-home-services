@@ -172,6 +172,7 @@ dedupe guard are audited by `npm run audit:analytics`.
 | `email_click` | Any `mailto:` link | `lang`, `surface` |
 | `service_cta_click` | Quote CTA on a service page (hero + bottom CTA) | `lang`, `surface`, `service` |
 | `subservice_cta_click` | Quote CTA on a sub-service page (hero + bottom CTA) | `lang`, `surface`, `service`, `subservice` |
+| `review_profile_click` | The homepage reviews block was followed to the live Google Business Profile (Lead-generation Task 3.1). The link only renders when the owner has supplied a verified profile URL, so the event cannot fire while none exists. | `lang`, `surface` (`home_reviews`) |
 | `web_vitals` | Each Core Web Vital reported (see §7) | `metric_name`, `metric_value`, `metric_rating`, `navigation_type`, `language`, `non_interaction` |
 
 `surface` values: `header`, `footer`, the path section of the page the click
@@ -183,8 +184,10 @@ surfaces added by Lead-generation Task 1.1
 `floating_whatsapp_subservice`, `floating_whatsapp_problem`,
 `floating_whatsapp_area`, `floating_whatsapp_guide`,
 `floating_whatsapp_project`), the form-aware quick path added by Task 1.2
-(`quote_instant_path`), or the "Fast Photo Quote" banner surfaces added by
-Task 1.3 (`photo_quote_banner_service`, `photo_quote_banner_subservice`).
+(`quote_instant_path`), the "Fast Photo Quote" banner surfaces added by
+Task 1.3 (`photo_quote_banner_service`, `photo_quote_banner_subservice`), or
+`home_reviews` for the homepage Google Business Profile link added by
+Lead-generation Task 3.1.
 
 ## 6. Google Ads conversion tracking — OWNER CONFIGURATION PENDING
 

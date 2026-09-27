@@ -1,6 +1,8 @@
+import { TrackedLink } from "@/components/analytics/TrackedLink";
 import { IconGoogle } from "@/components/icons";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { getLanguageCode } from "@/data/languages";
+import { siteConfig } from "@/data/site";
 import { getDictionary } from "@/i18n";
 
 type ReviewsSectionProps = {
@@ -60,6 +62,15 @@ export function ReviewsSection({ lang }: ReviewsSectionProps) {
   const reviews = t.home.reviews;
   const loop = [...reviews.items, ...reviews.items];
 
+  /**
+   * Lead-generation Task 3.1 — the attribution becomes checkable the moment the
+   * business has a verified Google Business Profile. The URL is owner-supplied
+   * (`data/site.ts`); while it is empty this section renders exactly as it did
+   * before: the reviews, the "Posted on Google" line, and no link claiming a
+   * profile that has not been verified.
+   */
+  const reviewsUrl = siteConfig.googleReviewsUrl.trim();
+
   return (
     <section className="section bg-white">
       <div className="container-app">
@@ -77,6 +88,21 @@ export function ReviewsSection({ lang }: ReviewsSectionProps) {
           ))}
         </div>
       </div>
+
+      {reviewsUrl ? (
+        <div className="container-app mt-8 flex justify-center">
+          <TrackedLink
+            href={reviewsUrl}
+            event="review_profile_click"
+            context={{ surface: "home_reviews", lang: getLanguageCode(lang) }}
+            className="btn btn-secondary inline-flex items-center gap-2"
+            external
+          >
+            <IconGoogle className="h-4 w-4 shrink-0" aria-hidden="true" />
+            <span>{reviews.viewOnGoogle}</span>
+          </TrackedLink>
+        </div>
+      ) : null}
     </section>
   );
 }

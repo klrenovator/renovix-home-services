@@ -226,6 +226,7 @@ export const en: Dictionary = {
       description:
         "Recent five-star feedback from Kuala Lumpur and Selangor customers across tiling, plumbing, electrical, painting and renovation work.",
       postedOn: "Posted on Google",
+      viewOnGoogle: "Read the reviews on Google",
       items: [
         {
           name: "Ahmad Razak",

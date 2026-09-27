@@ -213,6 +213,9 @@ const EVENTS = [
   "email_click",
   "service_cta_click",
   "subservice_cta_click",
+  // Lead-generation Task 3.1: fires only when the owner has supplied a
+  // verified Google Business Profile URL (see audit-authority §9).
+  "review_profile_click",
 ];
 for (const event of EVENTS) {
   if (analytics.includes(`"${event}"`)) {
@@ -253,6 +256,7 @@ const fireChecks = [
   [serviceHero, "service_cta_click", "ServiceHero quote CTA"],
   [serviceCta, "service_cta_click", "service CtaSection quote CTA"],
   [subServicePage, "subservice_cta_click", "SubServicePage quote CTAs"],
+  [read("components/home/ReviewsSection.tsx"), "review_profile_click", "homepage reviews profile link"],
 ];
 for (const [source, event, where] of fireChecks) {
   if (source.includes(`"${event}"`)) {

@@ -53,6 +53,7 @@ Renovix Home Services – Home Renovation & Improvement Services in Kuala Lumpur
 | `npm run verify:quote-email` | Lead-notification configuration check (Lead-generation Task 2.1) — formats of `RESEND_API_KEY` / `QUOTE_FROM_EMAIL` / `QUOTE_NOTIFICATION_EMAIL`, freemail and public-prefix mistakes; sends nothing, prints no secrets, always exits 0 |
 | `npm run verify:analytics` | Measurement configuration check (Lead-generation Task 2.2) — ID formats identical to `lib/analytics-config.ts`, the GA4-xor-GTM delivery route, the exact CSP origins the build will allow, misnamed variables; loads no script, makes no network call |
 | `npm run verify:analytics:e2e` | End-to-end conversion-event verification (Lead-generation Task 2.2) — serves the real production build, drives a real headless Chromium over CDP and asserts `whatsapp_click` (EN/MS/ZH), `phone_click`, `quote_form_submit`, `quote_form_success`, `quote_form_error`, the consent defaults and the no-PII allowlist each hold exactly once; `-- --configured` rebuilds into a throwaway `.next-analytics-e2e/` with TEST-format IDs and additionally asserts the provider hop (gtag.js + Clarity tags, CSP, `page_view` dedupe, `window.dataLayer`, web vitals) with every external hostname unresolvable |
+| `npm run verify:local-seo` | Local authority readiness check (Lead-generation Task 3.1) — prints the exact NAP block, phone, website and hours a Google Business Profile and every Malaysian citation must use, read live from `data/site.ts` so profile and site cannot diverge; lists the 53 published locality guides grouped by region as the service-area reference; reports whether the homepage reviews link is armed with a verified profile URL. Contacts no Google service, prints only supplied facts, always exits 0 |
 ## Pricing data
 
 Indicative *starting* prices live in one place, `data/pricing/pricing.ts`. Malay
@@ -114,6 +115,32 @@ verification gate. Two local checks come with it:
 
 Neither check claims live dashboard data: that is the owner's to confirm in
 GA4 Realtime / DebugView and Clarity (`ANALYTICS_SETUP.md` §5.2–§5.3).
+
+## Local SEO (Google Business Profile)
+
+The website's half of local search is complete and enforced: one name, address,
+phone number, email and hours range published from `data/site.ts`
+(`npm run audit:business` fails the build if a second set appears), a
+`LocalBusiness` entity on every page (`components/seo/schema.ts`, with no
+`geo`, `rating` or `sameAs` — those signals have not been supplied), and 53
+locality guides under `/areas/`.
+
+What remains is the Google Business Profile itself, which only the business's
+own Google account can create and verify. Full owner guide (Lead-generation
+Task 3.1): **`LOCAL_SEO_SETUP.md`** — categories, service areas, hours, the
+real-photos rule, verification, the first-30-days routine and the live
+verification checklist. Print the exact details with:
+
+```bash
+npm run verify:local-seo
+```
+
+The homepage reviews block ("Posted on Google") links to the live profile as
+soon as one verified URL is supplied — set `googleReviewsUrl` in `data/site.ts`
+(`LOCAL_SEO_SETUP.md` §6). Until then it renders no link at all, and
+`audit:authority` fails the build on a guessed, templated, search-shaped or
+hardcoded profile URL. Following the link fires a tracked
+`review_profile_click` event (`surface: home_reviews`) in all three languages.
 
 ## Version notes
 
