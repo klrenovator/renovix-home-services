@@ -214,6 +214,12 @@ the values themselves are configured in the hosting dashboard. Live delivery
 should only be declared "verified" after a real end-to-end test with these
 credentials, which has not happened yet.
 
+**Canonical activation guide (Lead-generation Task 2.1):**
+`QUOTE_EMAIL_SETUP.md` — step-by-step Resend account, sending-domain
+verification, API key, Vercel variables, redeploy, the end-to-end production
+test, troubleshooting, rotation, and the activation checklist. Local format
+check (sends nothing, prints no secrets): `npm run verify:quote-email`.
+
 ## How project-proof data gets in (Phase 21)
 
 | Owner supplies | Goes into | Field(s) |

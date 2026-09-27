@@ -8074,3 +8074,109 @@ banner under the pricing tables that turns that moment into a chat.
 
 **Status:** **🟢 complete.** Task 1.3 is marked ✅ COMPLETED in
 `LEAD_GENERATION_PLAN.md`; Task 1.4 and Phases 2–3 remain `[PENDING]`.
+
+## Lead-generation Task 2.1 — lead-notification pipeline runbook + local verify check (2026-09-26)
+
+**Result: 🟢 shipped and QA-verified. The owner now has one canonical,
+step-by-step Resend + Vercel activation guide and a non-destructive local
+configuration check. No URL, component, dictionary entry, price, heading,
+canonical, hreflang entry, image, structured-data node or existing internal
+link changed.**
+
+### 1. What was missing (lead-generation plan P-01 / Task 2.1)
+
+Task 2.1 in `LEAD_GENERATION_PLAN.md`: the quote-form email pipeline was
+fully coded but its activation knowledge was fragmented across a README
+table, `.env.example` comments and the Phase 22 owner-pending rows — with no
+single runbook covering the Resend account, sending-domain verification, API
+key, Vercel variable scoping, redeploy, and the end-to-end production test
+in one place, and no local tool letting the owner distinguish "not
+configured yet" from "configured but broken" without submitting a form.
+
+### 2. What was built
+
+- **`QUOTE_EMAIL_SETUP.md`** — the canonical owner runbook, written in the
+  same honest style as `PHASE_24_ANALYTICS.md`: a status table
+  (code-complete / owner-configuration / not-claimed-live), the full request
+  flow diagram (`POST /api/quote/` → origin → body cap → honeypot → field
+  validation → rate limit → Resend → inbox, with every honest failure code),
+  the three-variable table, then step-by-step activation (Resend account,
+  `renovixhomeservices.my` domain verification via SPF/DKIM DNS, a
+  Sending-only API key, Vercel Production variables + redeploy, the
+  `npm run verify:quote-email` format check, `.env.local` local testing),
+  the §5 end-to-end production gate (real quote → success panel + inbox
+  email + Resend dashboard send — the only LIVE VERIFIED path),
+  troubleshooting for every failure signature (`email provider is not
+  configured`, `resend_4xx/5xx`, `network`, `429`, `400`, silent spam
+  success, DNS pending), security notes (server-side only, never
+  `NEXT_PUBLIC_`, never committed), rotation/removal, and an activation
+  checklist. Placeholders only — no secret was invented or recorded.
+- **`scripts/verify-quote-email.mjs`** (`npm run verify:quote-email`) — a
+  local, dependency-free configuration check. It reads the three variables
+  from the process environment with `.env.local`/`.env` fallback (Next.js
+  precedence), validates the key shape (`re_` + length, reporting at most
+  length and prefix shape), parses `QUOTE_FROM_EMAIL` (`Name <addr>` or bare
+  address, warning on freemail domains Resend cannot verify), validates the
+  optional inbox (else reports the `data/site.ts` default), and prints
+  `CONFIGURED` or `NOT CONFIGURED` with per-variable next steps. It makes no
+  network calls, sends no email, never prints a secret, and always exits 0
+  so an unconfigured checkout stays informational rather than a build
+  failure.
+- **Entry-point pointers** — `.env.example` (server-side block),
+  `README.md` (quote-email section) and `PROJECT_OWNER_PENDING.md` (Phase 22
+  section) now all point at `QUOTE_EMAIL_SETUP.md` and the verify script, so
+  every place an owner looks for the variables leads to the same runbook.
+- **No application or translation changes** — deliberately. The pipeline
+  code (`app/api/quote/route.ts`, `lib/quote/email.ts`,
+  `lib/quote/validation.ts`, `lib/quote/rate-limit.ts`,
+  `lib/quote/origin.ts`, `components/quote/QuoteForm.tsx`) was already
+  complete and already honest without configuration, and the user-facing
+  quote flow was already fully localized in EN/MS/ZH by Task 1.2. The guide
+  is English-only, like the other owner runbooks
+  (`PHASE_24_ANALYTICS.md`, `PROJECT_OWNER_PENDING.md`).
+
+### 3. Guards updated
+
+- **`scripts/audit-quote-flow.mjs`** — new section 8 pins the Task 2.1
+  surface: the guide exists and names all three variables, documents
+  sending-domain verification (Resend + SPF/DKIM/DNS), Vercel variables +
+  redeploy, the end-to-end production test (real quote + Resend Emails
+  dashboard), the WhatsApp fallback beside the `503`, the server-side-only /
+  `NEXT_PUBLIC_` rule, and the local format check; it claims no live
+  delivery (`NOT CLAIMED` + `LIVE VERIFIED` gate) and holds no credential
+  patterns. The code side re-pins that `lib/quote/email.ts` reads exactly
+  the documented variables, defaults the inbox to `siteConfig.email`, posts
+  to the Resend emails API behind a timeout, stays `NEXT_PUBLIC_`-free, and
+  that the route still answers the honest unconfigured `503`; `.env.example`
+  documents all three variables, keeps `RESEND_API_KEY` empty and points at
+  the guide; `README.md` links guide + verify script; the verify script
+  checks all three variables, reports both verdicts, documents its
+  no-secrets guarantee, makes no network calls, holds no credentials; and
+  `package.json` exposes `npm run verify:quote-email`.
+- **`README.md`** — the `audit:quote` row documents the Task 2.1 invariants.
+- **`package.json`** — new `verify:quote-email` script.
+
+### 4. QA after changes
+
+- [x] `npm run lint` — PASS (0 errors, 0 warnings).
+- [x] `npm run type-check` — PASS (`next typegen && tsc --noEmit`).
+- [x] `npm run build` — PASS; **689 / 689** static generation entries (route
+      set unchanged — the task adds documentation, not a URL).
+- [x] All **18 static audits** — PASS, including the extended `audit:quote`
+      with the new Task 2.1 §8.
+- [x] Fresh production `next start` + `npm run audit:live` — **PASS 284 / 284,
+      WARN 0, FAIL 0**; all **678 / 678** sitemap URLs returned 200.
+- [x] `npm run verify:quote-email` exercised in four states on the
+      unconfigured checkout and with inline test variables: `NOT CONFIGURED`
+      (both required variables missing), `CONFIGURED` (valid key + From +
+      inbox), invalid-From (flagged with the `Name <addr>` guidance), and
+      freemail-From (flagged with the Resend-verification warning) — each
+      printing the right next steps, sending nothing, and leaking no secret.
+- [x] `git diff` review — only the new runbook, the new verify script, the
+      `package.json` script, the three doc pointers (`.env.example`,
+      `README.md`, `PROJECT_OWNER_PENDING.md`), the quote-audit section 8,
+      and the plan / progress records changed (7 files + 2 new, no stray
+      artifacts; `git status` shows no build output, temp files or secrets).
+
+**Status:** **🟢 complete.** Task 2.1 is marked ✅ COMPLETED in
+`LEAD_GENERATION_PLAN.md`; Task 2.2 and Phase 3 remain `[PENDING]`.

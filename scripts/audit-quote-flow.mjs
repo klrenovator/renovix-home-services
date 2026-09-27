@@ -25,6 +25,15 @@
  *     error fallback carries the entered details too, the static pre-form
  *     quick path is gone (one live WhatsApp route), and every new key exists
  *     as a real translation in EN/MS/ZH.
+ *  8. Lead-generation Task 2.1 — the lead-notification pipeline guide
+ *     (`QUOTE_EMAIL_SETUP.md`): it names all three variables, documents
+ *     sending-domain verification, Vercel scoping + redeploy, the end-to-end
+ *     production test, the WhatsApp fallback and the server-side-only rule,
+ *     claims no live delivery without that test, and contains no secrets;
+ *     `.env.example` + `README.md` point at it, the local
+ *     `verify:quote-email` check verifies format only (never sends, never
+ *     prints secrets), and the code still reads the documented variables and
+ *     fails honestly without them.
  *
  * Run with: npm run audit:quote
  */
@@ -544,6 +553,178 @@ if (!page.includes("quote_quick_path")) {
   pass("the static pre-form quick path is retired — one live WhatsApp route remains");
 } else {
   fail("page: a second, static WhatsApp quick path still renders above the form");
+}
+
+/* ------------------------------------------------------------------------ */
+/* 8. Lead-generation Task 2.1 — lead-notification pipeline guide & wiring   */
+/* ------------------------------------------------------------------------ */
+console.log("\n8. Lead-notification pipeline guide & wiring (Task 2.1)");
+
+let setupGuide = null;
+try {
+  setupGuide = read("QUOTE_EMAIL_SETUP.md");
+} catch {
+  fail("QUOTE_EMAIL_SETUP.md is missing — the Task 2.1 owner guide must exist");
+}
+
+if (setupGuide) {
+  const requiredTopics = [
+    ["names RESEND_API_KEY", setupGuide.includes("RESEND_API_KEY")],
+    ["names QUOTE_FROM_EMAIL", setupGuide.includes("QUOTE_FROM_EMAIL")],
+    ["names QUOTE_NOTIFICATION_EMAIL", setupGuide.includes("QUOTE_NOTIFICATION_EMAIL")],
+    [
+      "documents sending-domain verification",
+      setupGuide.includes("verify") &&
+        setupGuide.includes("Resend") &&
+        (/SPF/i.test(setupGuide) || /DKIM/i.test(setupGuide) || /DNS/i.test(setupGuide)),
+    ],
+    [
+      "documents Vercel variables + redeploy",
+      /Vercel.*Environment Variables/.test(setupGuide) && /edeploy/.test(setupGuide),
+    ],
+    [
+      "documents the end-to-end production test",
+      /real quote/i.test(setupGuide) && setupGuide.includes("Resend") && /Emails/.test(setupGuide),
+    ],
+    [
+      "documents the WhatsApp fallback (no inquiry lost)",
+      /WhatsApp fallback/.test(setupGuide) && /503/.test(setupGuide),
+    ],
+    [
+      "states the server-side-only rule",
+      setupGuide.includes("server-side only") && setupGuide.includes("NEXT_PUBLIC_"),
+    ],
+    [
+      "points at the local format check",
+      setupGuide.includes("verify:quote-email") && setupGuide.includes("verify-quote-email.mjs"),
+    ],
+    [
+      "claims no live delivery without the production test",
+      /NOT CLAIMED/i.test(setupGuide) && /LIVE VERIFIED/i.test(setupGuide),
+    ],
+  ];
+  for (const [label, ok] of requiredTopics) {
+    if (ok) {
+      pass(`the owner guide ${label}`);
+    } else {
+      fail(`QUOTE_EMAIL_SETUP.md: missing coverage — ${label}`);
+    }
+  }
+
+  const secretInGuide =
+    /re_[A-Za-z0-9]{20,}/.test(setupGuide) ||
+    /sk_live_[A-Za-z0-9]+/.test(setupGuide) ||
+    /AIza[0-9A-Za-z\-_]{20,}/.test(setupGuide);
+  if (!secretInGuide) {
+    pass("the owner guide contains no real credential patterns");
+  } else {
+    fail("QUOTE_EMAIL_SETUP.md appears to contain a real credential — placeholders only");
+  }
+}
+
+/* The code must still read exactly the variables the guide documents. */
+const emailLibChecks = [
+  ["reads process.env.RESEND_API_KEY", emailLib.includes("process.env.RESEND_API_KEY")],
+  ["reads process.env.QUOTE_FROM_EMAIL", emailLib.includes("process.env.QUOTE_FROM_EMAIL")],
+  ["reads process.env.QUOTE_NOTIFICATION_EMAIL", emailLib.includes("process.env.QUOTE_NOTIFICATION_EMAIL")],
+  ["defaults the inbox to the public business email", emailLib.includes("siteConfig.email")],
+  ["delivers through the Resend emails API", emailLib.includes("https://api.resend.com/emails")],
+  ["bounds the provider call with a timeout", emailLib.includes("AbortSignal.timeout")],
+];
+for (const [label, ok] of emailLibChecks) {
+  if (ok) {
+    pass(`lib/quote/email.ts ${label}`);
+  } else {
+    fail(`lib/quote/email.ts: ${label} — the guide no longer matches the code`);
+  }
+}
+if (!emailLib.includes("NEXT_PUBLIC_")) {
+  pass("the email config stays server-side only (no NEXT_PUBLIC_ variable)");
+} else {
+  fail("lib/quote/email.ts reads a NEXT_PUBLIC_ variable — the key would leak to browsers");
+}
+if (/getEmailConfig\(\)[\s\S]{0,300}503/.test(`${route} ${emailLib}`) && route.includes("getEmailConfig()")) {
+  pass("the API still answers an honest 503 when the provider is unconfigured");
+} else {
+  fail("route: the honest unconfigured-503 path no longer matches the guide");
+}
+
+/* Entry points must lead the owner to the canonical guide. */
+const envExample = read(".env.example");
+const envExampleChecks = [
+  ["documents RESEND_API_KEY", envExample.includes("RESEND_API_KEY")],
+  ["documents QUOTE_FROM_EMAIL", envExample.includes("QUOTE_FROM_EMAIL")],
+  ["documents QUOTE_NOTIFICATION_EMAIL", envExample.includes("QUOTE_NOTIFICATION_EMAIL")],
+  ["points at QUOTE_EMAIL_SETUP.md", envExample.includes("QUOTE_EMAIL_SETUP.md")],
+  ["warns the key must never be NEXT_PUBLIC_", envExample.includes("NEXT_PUBLIC_")],
+];
+for (const [label, ok] of envExampleChecks) {
+  if (ok) {
+    pass(`.env.example ${label}`);
+  } else {
+    fail(`.env.example: ${label}`);
+  }
+}
+const resendLine = envExample.split("\n").find((line) => line.startsWith("RESEND_API_KEY=")) ?? "";
+if (/^RESEND_API_KEY=\s*$/.test(resendLine)) {
+  pass(".env.example keeps RESEND_API_KEY empty (no secret in git)");
+} else {
+  fail(".env.example: RESEND_API_KEY must stay empty in the repository");
+}
+
+const readme = read("README.md");
+if (readme.includes("QUOTE_EMAIL_SETUP.md") && readme.includes("verify:quote-email")) {
+  pass("README.md points the owner at the guide and the local format check");
+} else {
+  fail("README.md: the quote-email section no longer links QUOTE_EMAIL_SETUP.md + verify:quote-email");
+}
+
+/* The local check verifies format only: it never sends and never prints secrets. */
+let verifyScript = null;
+try {
+  verifyScript = read("scripts/verify-quote-email.mjs");
+} catch {
+  fail("scripts/verify-quote-email.mjs is missing — npm run verify:quote-email must exist");
+}
+if (verifyScript) {
+  const verifyChecks = [
+    ["checks RESEND_API_KEY", verifyScript.includes("RESEND_API_KEY")],
+    ["checks QUOTE_FROM_EMAIL", verifyScript.includes("QUOTE_FROM_EMAIL")],
+    ["checks QUOTE_NOTIFICATION_EMAIL", verifyScript.includes("QUOTE_NOTIFICATION_EMAIL")],
+    ["reports both CONFIGURED and NOT CONFIGURED", verifyScript.includes("CONFIGURED") && verifyScript.includes("NOT CONFIGURED")],
+    ["points at QUOTE_EMAIL_SETUP.md", verifyScript.includes("QUOTE_EMAIL_SETUP.md")],
+  ];
+  for (const [label, ok] of verifyChecks) {
+    if (ok) {
+      pass(`verify:quote-email ${label}`);
+    } else {
+      fail(`scripts/verify-quote-email.mjs: ${label}`);
+    }
+  }
+  if (/never prints secret|prints no secret/i.test(verifyScript)) {
+    pass("verify:quote-email documents that it never prints secrets");
+  } else {
+    fail("scripts/verify-quote-email.mjs: the no-secrets guarantee is undocumented");
+  }
+  if (!verifyScript.includes("fetch(") && !verifyScript.includes("api.resend.com")) {
+    pass("verify:quote-email makes no network calls (format check only, never sends)");
+  } else {
+    fail("scripts/verify-quote-email.mjs must not call the network — format checks only");
+  }
+  const secretInVerify =
+    /re_[A-Za-z0-9]{20,}/.test(verifyScript) || /sk_live_[A-Za-z0-9]+/.test(verifyScript);
+  if (!secretInVerify) {
+    pass("verify:quote-email contains no real credential patterns");
+  } else {
+    fail("scripts/verify-quote-email.mjs appears to contain a real credential");
+  }
+}
+
+const packageJson = read("package.json");
+if (packageJson.includes('"verify:quote-email"') && packageJson.includes("verify-quote-email.mjs")) {
+  pass("package.json exposes npm run verify:quote-email");
+} else {
+  fail("package.json: the verify:quote-email script is missing");
 }
 
 /* ------------------------------------------------------------------------ */
