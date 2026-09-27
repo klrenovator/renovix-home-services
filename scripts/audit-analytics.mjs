@@ -33,6 +33,9 @@ import { fileURLToPath } from "node:url";
 const ROOT = join(fileURLToPath(new URL(".", import.meta.url)), "..");
 const read = (p) => readFileSync(join(ROOT, p), "utf8");
 
+/** Throwaway build directory the Task 2.2 harness uses for `--configured`. */
+const CONFIGURED_DIST = ".next-analytics-e2e";
+
 const failures = [];
 const fail = (message) => failures.push(message);
 const pass = (message) => console.log(`  ✓ ${message}`);
@@ -210,6 +213,9 @@ const EVENTS = [
   "email_click",
   "service_cta_click",
   "subservice_cta_click",
+  // Lead-generation Task 3.1: fires only when the owner has supplied a
+  // verified Google Business Profile URL (see audit-authority §9).
+  "review_profile_click",
 ];
 for (const event of EVENTS) {
   if (analytics.includes(`"${event}"`)) {
@@ -250,6 +256,7 @@ const fireChecks = [
   [serviceHero, "service_cta_click", "ServiceHero quote CTA"],
   [serviceCta, "service_cta_click", "service CtaSection quote CTA"],
   [subServicePage, "subservice_cta_click", "SubServicePage quote CTAs"],
+  [read("components/home/ReviewsSection.tsx"), "review_profile_click", "homepage reviews profile link"],
 ];
 for (const [source, event, where] of fireChecks) {
   if (source.includes(`"${event}"`)) {
@@ -439,6 +446,218 @@ if (!/analytics|gtag|measurement/i.test(sitemap)) {
   pass("sitemap generation untouched by measurement");
 } else {
   fail("app/sitemap.ts references measurement — unexpected");
+}
+
+/* ------------------------------------------------------------------------ */
+/* 8. Lead-generation Task 2.2 — activation guide & end-to-end harness       */
+/* ------------------------------------------------------------------------ */
+console.log("\n8. Task 2.2 — activation runbook, config check, browser harness");
+
+const setupGuide = read("ANALYTICS_SETUP.md");
+const verifyConfig = read("scripts/verify-analytics.mjs");
+const verifyE2E = read("scripts/verify-analytics-e2e.mjs");
+const packageJson = read("package.json");
+
+/* 8.1 The owner runbook covers the whole activation path */
+const guideVariables = [
+  "NEXT_PUBLIC_GA4_MEASUREMENT_ID",
+  "NEXT_PUBLIC_CLARITY_PROJECT_ID",
+  "NEXT_PUBLIC_GTM_CONTAINER_ID",
+  "NEXT_PUBLIC_GOOGLE_ADS_CONVERSION_ID",
+  "NEXT_PUBLIC_GOOGLE_ADS_QUOTE_LABEL",
+  "NEXT_PUBLIC_GOOGLE_ADS_WHATSAPP_LABEL",
+  "NEXT_PUBLIC_GOOGLE_ADS_PHONE_LABEL",
+  "NEXT_PUBLIC_ANALYTICS_DEBUG",
+];
+const missingGuideVariables = guideVariables.filter((name) => !setupGuide.includes(name));
+if (missingGuideVariables.length === 0) {
+  pass(`ANALYTICS_SETUP.md names all ${guideVariables.length} measurement variables`);
+} else {
+  fail(`ANALYTICS_SETUP.md does not document: ${missingGuideVariables.join(", ")}`);
+}
+
+const guideTopics = [
+  ["GA4 property + web data stream creation", /Data streams/i],
+  ["Measurement ID copied from the stream", /G-XXXXXXXXXX/],
+  ["Clarity project creation", /clarity\.microsoft\.com/i],
+  ["the variables set in Vercel", /Environment Variables/],
+  ["the mandatory redeploy (IDs are inlined at build time)", /build time/i],
+  ["GA4 Realtime as the live check", /Realtime/],
+  ["GA4 DebugView for the four events", /DebugView/],
+  ["Clarity recordings as the live check", /Recordings/],
+  ["changing / removing IDs", /## 8\. Changing, rotating or removing IDs/],
+  ["a tick-box activation checklist", /## 9\. Activation checklist/],
+  ["the local config check", /npm run verify:analytics(?!:e2e)/],
+  ["the browser harness", /npm run verify:analytics:e2e/],
+];
+for (const [topic, pattern] of guideTopics) {
+  if (pattern.test(setupGuide)) {
+    pass(`guide covers ${topic}`);
+  } else {
+    fail(`ANALYTICS_SETUP.md does not cover ${topic}`);
+  }
+}
+
+for (const event of ["whatsapp_click", "phone_click", "quote_form_submit", "quote_form_success"]) {
+  if (setupGuide.includes(event)) {
+    pass(`guide names the business event ${event}`);
+  } else {
+    fail(`ANALYTICS_SETUP.md never mentions ${event}`);
+  }
+}
+
+if (/NOT CLAIMED — LIVE VERIFIED only after the owner completes/.test(setupGuide)) {
+  pass("guide claims no live dashboard data (LIVE VERIFIED gate kept)");
+} else {
+  fail("ANALYTICS_SETUP.md lost its NOT CLAIMED gate — it must not assert live delivery");
+}
+
+if (/### 2\.1 Where the record stands/.test(setupGuide)) {
+  pass("guide flags the unreconciled 2026-09-06 GA4 record instead of assuming either answer");
+} else {
+  fail("ANALYTICS_SETUP.md no longer tells the owner to confirm whether GA4 is already set");
+}
+
+/* Only documented placeholder shapes and the harness's own TEST IDs may appear */
+const guideIds = setupGuide.match(/\bG-[A-Z0-9]{6,12}\b|\bAW-\d{8,12}\b|\bGTM-[A-Z0-9]{4,10}\b/g) ?? [];
+const allowedGuideIds = new Set(["G-XXXXXXXXXX", "AW-123456789", "GTM-XXXXXX", "G-E2EVERIFY0"]);
+const unexpectedGuideIds = [...new Set(guideIds)].filter((id) => !allowedGuideIds.has(id));
+if (unexpectedGuideIds.length === 0) {
+  pass("no measurement ID in the guide except documented placeholders and the harness's TEST ID");
+} else {
+  fail(`ANALYTICS_SETUP.md contains an unexplained ID: ${unexpectedGuideIds.join(", ")}`);
+}
+
+/* 8.2 The configuration check stays honest and in sync with the app */
+if (packageJson.includes('"verify:analytics": "node scripts/verify-analytics.mjs"')) {
+  pass("npm run verify:analytics is wired to scripts/verify-analytics.mjs");
+} else {
+  fail("package.json does not wire npm run verify:analytics");
+}
+if (packageJson.includes('"verify:analytics:e2e": "node scripts/verify-analytics-e2e.mjs"')) {
+  pass("npm run verify:analytics:e2e is wired to scripts/verify-analytics-e2e.mjs");
+} else {
+  fail("package.json does not wire npm run verify:analytics:e2e");
+}
+
+function patternOf(source, name) {
+  const match = source.match(new RegExp(`${name}\\s*=\\s*(\\/[^\\n]+?\\/[a-z]*);`));
+  return match ? match[1] : null;
+}
+const sharedPatterns = [
+  "GA4_ID_PATTERN",
+  "GTM_ID_PATTERN",
+  "ADS_ID_PATTERN",
+  "ADS_LABEL_PATTERN",
+  "CLARITY_ID_PATTERN",
+];
+const driftedPatterns = sharedPatterns.filter(
+  (name) => !patternOf(verifyConfig, name) || patternOf(verifyConfig, name) !== patternOf(config, name),
+);
+if (driftedPatterns.length === 0) {
+  pass(`verify-analytics.mjs validates with the exact ${sharedPatterns.length} patterns lib/analytics-config.ts uses`);
+} else {
+  fail(`ID patterns drifted between verify-analytics.mjs and lib/analytics-config.ts: ${driftedPatterns.join(", ")}`);
+}
+
+if (/gtmValid \? "gtm" : ga4Valid \? "ga4" : "none"/.test(verifyConfig)) {
+  pass("verify-analytics.mjs resolves the delivery route the same way the app does (GTM wins)");
+} else {
+  fail("verify-analytics.mjs no longer mirrors the GA4-xor-GTM route resolution");
+}
+
+const networkCallChecks = [
+  [/\bfetch\s*\(/, "fetch()"],
+  [/from\s+["']node:https?["']/, "a node:http(s) import"],
+  [/\bXMLHttpRequest\b/, "XMLHttpRequest"],
+  [/\bWebSocket\b/, "a WebSocket"],
+  [/\bnet\.connect\b|\bdgram\b/, "a raw socket"],
+];
+const networkCallsFound = networkCallChecks.filter(([pattern]) => pattern.test(verifyConfig));
+if (networkCallsFound.length === 0) {
+  pass("verify-analytics.mjs makes no network call and loads no script (CSP origins are only printed)");
+} else {
+  fail(`verify-analytics.mjs uses ${networkCallsFound.map(([, name]) => name).join(", ")} — it must stay a local format check`);
+}
+
+if (!/process\.exit\(1\)/.test(verifyConfig)) {
+  pass("verify-analytics.mjs always exits 0 (informational, never a build breaker)");
+} else {
+  fail("verify-analytics.mjs must not fail a build for an unconfigured checkout");
+}
+
+/* 8.3 The browser harness proves the four events and cannot leak */
+for (const event of ["whatsapp_click", "phone_click", "quote_form_submit", "quote_form_success"]) {
+  if (verifyE2E.includes(`"${event}"`) || verifyE2E.includes(event)) {
+    pass(`harness verifies ${event}`);
+  } else {
+    fail(`verify-analytics-e2e.mjs does not verify ${event}`);
+  }
+}
+
+if (verifyE2E.includes("quote_form_error") && verifyE2E.includes('"unavailable"')) {
+  pass("harness also verifies the honest failure path (quote_form_error reason=unavailable)");
+} else {
+  fail("verify-analytics-e2e.mjs lost the quote_form_error / unavailable check");
+}
+
+if (verifyE2E.includes("MAP * ~NOTFOUND")) {
+  pass("harness launches Chromium with every non-loopback hostname unresolvable");
+} else {
+  fail("verify-analytics-e2e.mjs no longer blocks external DNS — a test ID could report somewhere real");
+}
+
+if (verifyE2E.includes("Fetch.fulfillRequest") && verifyE2E.includes("/api/quote/")) {
+  pass("harness fulfils the quote request in-browser instead of sending a real lead");
+} else {
+  fail("verify-analytics-e2e.mjs must stub POST /api/quote/ rather than contact a real provider");
+}
+
+const harnessIds = verifyE2E.match(/\bG-[A-Z0-9]{6,12}\b/g) ?? [];
+const unexpectedHarnessIds = [...new Set(harnessIds)].filter((id) => id !== "G-E2EVERIFY0");
+if (unexpectedHarnessIds.length === 0 && verifyE2E.includes("G-E2EVERIFY0")) {
+  pass("the harness's only GA4-shaped value is the clearly-marked TEST ID G-E2EVERIFY0");
+} else {
+  fail(`verify-analytics-e2e.mjs carries an unexplained GA4 ID: ${unexpectedHarnessIds.join(", ") || "(none declared)"}`);
+}
+
+if (verifyE2E.includes(CONFIGURED_DIST) && read(".gitignore").includes(CONFIGURED_DIST)) {
+  pass(`the throwaway configured build (${CONFIGURED_DIST}/) is git-ignored`);
+} else {
+  fail(`the harness's throwaway build directory (${CONFIGURED_DIST}/) is not git-ignored`);
+}
+
+if (/distDir: process\.env\.RENOVIX_DIST_DIR \|\| "\.next"/.test(nextConfig)) {
+  pass("next.config.ts keeps a single distDir knob that defaults to .next");
+} else {
+  fail("next.config.ts lost the RENOVIX_DIST_DIR default — the harness would overwrite the real build");
+}
+
+/* 8.4 Pointers + the privacy disclosure still names both providers */
+for (const [file, needle] of [
+  [".env.example", "ANALYTICS_SETUP.md"],
+  ["README.md", "ANALYTICS_SETUP.md"],
+  ["PROJECT_OWNER_PENDING.md", "ANALYTICS_SETUP.md"],
+  ["PHASE_24_ANALYTICS.md", "ANALYTICS_SETUP.md"],
+]) {
+  if (read(file).includes(needle)) {
+    pass(`${file} points at the activation guide`);
+  } else {
+    fail(`${file} no longer points at ANALYTICS_SETUP.md`);
+  }
+}
+
+for (const [file, marker] of [
+  ["i18n/en.ts", "Microsoft Clarity"],
+  ["i18n/ms.ts", "Microsoft Clarity"],
+  ["i18n/zh.ts", "Microsoft Clarity"],
+]) {
+  const dictionary = read(file);
+  if (dictionary.includes(marker) && dictionary.includes("Google Analytics")) {
+    pass(`privacy disclosure names Google Analytics and Clarity (${file})`);
+  } else {
+    fail(`privacy disclosure in ${file} must name both Google Analytics and Microsoft Clarity`);
+  }
 }
 
 /* Report */

@@ -52,6 +52,14 @@ const securityHeaders = [
 
 const nextConfig: NextConfig = {
   /**
+   * Build output directory. Overridable for exactly one reason: the
+   * measurement end-to-end harness (`scripts/verify-analytics-e2e.mjs
+   * --configured`) builds a throwaway copy of the site with clearly-marked
+   * TEST-format provider IDs baked in, and must not disturb the real `.next`
+   * output that `npm run build` produces. Nothing else reads this variable.
+   */
+  distDir: process.env.RENOVIX_DIST_DIR || ".next",
+  /**
    * The `X-Powered-By` header reveals stack details and saves a few bytes on
    * every response; nothing depends on it.
    */

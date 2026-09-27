@@ -34,6 +34,13 @@ export const CONVERSION_EVENTS = [
   "service_cta_click",
   /** A quote CTA on a sub-service page was clicked (Phase 24). */
   "subservice_cta_click",
+  /**
+   * The homepage reviews attribution was followed to the business's live
+   * Google Business Profile (Lead-generation Task 3.1). Fires only when the
+   * owner has supplied a verified profile URL — with none supplied the link is
+   * not rendered, so the event cannot exist.
+   */
+  "review_profile_click",
 ] as const;
 
 export type ConversionEvent = (typeof CONVERSION_EVENTS)[number];

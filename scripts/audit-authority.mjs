@@ -36,6 +36,11 @@
  *      exist, are generated from the shared knowledge builder, and are
  *      discoverable from the footer.
  *   8. Image SEO basics: every rendered image carries alt text.
+ *   9. Google Business Profile attribution (Lead-generation Task 3.1): the
+ *      homepage reviews link is owner-supplied or absent — never guessed,
+ *      templated or search-shaped, never hardcoded in the component, never
+ *      copied into structured data, and its label exists in all three
+ *      languages.
  */
 
 import { readFileSync, readdirSync, existsSync } from "node:fs";
@@ -820,6 +825,190 @@ for (const file of [...collectTsxFiles(join(ROOT, "components")), ...collectTsxF
 }
 
 note("Every rendered image carries alt text.");
+
+/* ------------------------------------------------------------------------ */
+/* 9. Google Business Profile attribution (Lead-generation Task 3.1)          */
+/* ------------------------------------------------------------------------ */
+
+/**
+ * The homepage reviews block becomes checkable only when the business has a
+ * verified Google Business Profile. Until the owner supplies that URL the
+ * section must publish no profile link at all — a guessed, templated or
+ * search-shaped URL would be an invented trust signal (CONTENT_GOVERNANCE §1).
+ */
+const site = readFileSync(join(ROOT, "data/site.ts"), "utf8");
+const reviewsSection = readFileSync(join(ROOT, "components/home/ReviewsSection.tsx"), "utf8");
+const schemaSource = readFileSync(join(ROOT, "components/seo/schema.ts"), "utf8");
+
+/* The full address as the site publishes it (contact page, footer, AI feeds). */
+const businessAddressFull =
+  site.match(/\n\s*full:\s*"([^"]+)"/)?.[1] ?? "(address not found)";
+
+const reviewsUrlMatch = site.match(/googleReviewsUrl:\s*"([^"]*)"/);
+const reviewsUrl = reviewsUrlMatch ? reviewsUrlMatch[1].trim() : null;
+
+if (reviewsUrl === null) {
+  fail("data/site.ts no longer declares googleReviewsUrl — the reviews link cannot be armed");
+} else if (reviewsUrl === "") {
+  note("Google reviews link: not armed (no verified Business Profile URL supplied yet)");
+} else if (!/^https:\/\/(www\.)?(google\.[a-z.]+\/maps|maps\.google\.[a-z.]+|g\.page|search\.google\.[a-z.]+)\/?/i.test(reviewsUrl)) {
+  fail(
+    "data/site.ts googleReviewsUrl must be a real Google Business Profile URL " +
+      "(google.com/maps, maps.google.com, g.page or search.google.com), never a search or guessed URL",
+  );
+} else {
+  note("Google reviews link: armed with an owner-supplied profile URL");
+}
+
+if (reviewsUrl !== null && reviewsUrl !== "") {
+  if (!reviewsSection.includes("review_profile_click")) {
+    fail("the armed reviews link does not fire review_profile_click");
+  }
+  if (!/surface:\s*"home_reviews"/.test(reviewsSection)) {
+    fail("the armed reviews link must carry the coarse surface home_reviews");
+  }
+}
+
+if (!/const reviewsUrl = siteConfig\.googleReviewsUrl\.trim\(\)/.test(reviewsSection)) {
+  fail("ReviewsSection must read the profile URL from data/site.ts (no local URL literal)");
+}
+if (!/\{reviewsUrl \?/.test(reviewsSection)) {
+  fail("ReviewsSection must render the profile link only when a URL exists");
+}
+if (!reviewsSection.includes("{reviews.viewOnGoogle}")) {
+  fail("the reviews link must use the localized dictionary label, never hardcoded copy");
+}
+/* The component has no reason to contain any URL literal: the only href it
+ * renders is built from `siteConfig.googleReviewsUrl`. A hardcoded profile
+ * URL could be g.page, goo.gl/maps, maps.app.goo.gl, search.google.com, … so
+ * match any absolute URL rather than a list of Google shapes. */
+const urlLiterals = reviewsSection.match(/https?:\/\/[^\s"'`)\]]+/g) ?? [];
+if (urlLiterals.length > 0) {
+  fail(
+    `ReviewsSection hardcodes a URL (${urlLiterals.join(", ")}) — the profile URL must come from data/site.ts`,
+  );
+}
+if (/googleReviewsUrl/.test(schemaSource)) {
+  fail("the reviews URL must not enter structured data (no sameAs; audit-business forbids it)");
+}
+
+/* Only the single business source and this one component may know the URL. */
+const reviewsUrlSites = [];
+for (const file of [...collectTsFiles(join(ROOT, "data")), ...collectTsFiles(join(ROOT, "lib"))]) {
+  if (readFileSync(file, "utf8").includes("googleReviewsUrl") && !file.endsWith(join("data", "site.ts"))) {
+    reviewsUrlSites.push(file.slice(ROOT.length + 1));
+  }
+}
+for (const file of collectTsxFiles(join(ROOT, "components"))) {
+  if (readFileSync(file, "utf8").includes("googleReviewsUrl") && !file.endsWith("ReviewsSection.tsx")) {
+    reviewsUrlSites.push(file.slice(ROOT.length + 1));
+  }
+}
+if (reviewsUrlSites.length === 0) {
+  note("Only data/site.ts and ReviewsSection.tsx know the profile URL.");
+} else {
+  fail(`the profile URL leaked into: ${reviewsUrlSites.join(", ")}`);
+}
+
+/* The owner runbook and its verifier must stay wired and must not invent facts. */
+const localSeoGuide = (() => {
+  try {
+    return readFileSync(join(ROOT, "LOCAL_SEO_SETUP.md"), "utf8");
+  } catch {
+    return null;
+  }
+})();
+const packageJson = readFileSync(join(ROOT, "package.json"), "utf8");
+
+if (localSeoGuide === null) {
+  fail("LOCAL_SEO_SETUP.md is missing — the Google Business Profile steps have nowhere to live");
+} else {
+  for (const [topic, pattern] of [
+    ["the exact NAP block", /Jalan Kiara, Mont Kiara/],
+    ["the published phone number", /\+601159259521/],
+    ["the hours question (days are not stated)", /days not stated|day by day/i],
+    ["the business-name keyword rule", /keyword/i],
+    ["service areas as a claim", /service area/i],
+    ["the reviews-link step", /googleReviewsUrl/],
+    ["the citation cross-reference", /Task 3\.3/],
+    ["a NOT CLAIMED gate for Maps/Local Pack", /NOT CLAIMED/],
+    ["real photos only (no stock, no AI)", /never AI-generated|no AI/i],
+    ["no invented experience/certification claims", /no years of experience|years of experience/i],
+    ["the duplicate-listing check before creating", /business\.google\.com/],
+    ["the unresolved 'P-06 vs the owner note' record", /Where the record stands/],
+  ]) {
+    if (pattern.test(localSeoGuide)) {
+      note(`LOCAL_SEO_SETUP.md covers ${topic}.`);
+    } else {
+      fail(`LOCAL_SEO_SETUP.md does not cover ${topic}`);
+    }
+  }
+
+  /* The guide must quote the same NAP the site publishes, not a stale copy. */
+  if (localSeoGuide.includes(businessAddressFull)) {
+    note("LOCAL_SEO_SETUP.md publishes the address exactly as the site does.");
+  } else {
+    fail(
+      `LOCAL_SEO_SETUP.md must quote the published address verbatim ("${businessAddressFull}") so the profile and the site cannot diverge`,
+    );
+  }
+}
+
+if (packageJson.includes('"verify:local-seo": "node scripts/verify-local-seo.mjs"')) {
+  note("npm run verify:local-seo is wired to scripts/verify-local-seo.mjs.");
+} else {
+  fail("package.json does not wire npm run verify:local-seo");
+}
+
+const localSeoVerifier = (() => {
+  try {
+    return readFileSync(join(ROOT, "scripts/verify-local-seo.mjs"), "utf8");
+  } catch {
+    return null;
+  }
+})();
+
+if (localSeoVerifier === null) {
+  fail("scripts/verify-local-seo.mjs is missing");
+} else {
+  const networkUse = [
+    [/\bfetch\s*\(/, "fetch()"],
+    [/from\s+["']node:https?["']/, "a node:http(s) import"],
+    [/\bXMLHttpRequest\b/, "XMLHttpRequest"],
+  ].filter(([pattern]) => pattern.test(localSeoVerifier));
+  if (networkUse.length === 0) {
+    note("The local-SEO verifier contacts no service (no network call anywhere in it).");
+  } else {
+    fail(`scripts/verify-local-seo.mjs uses ${networkUse.map(([, name]) => name).join(", ")}`);
+  }
+  if (/process\.exit\(1\)/.test(localSeoVerifier)) {
+    fail("scripts/verify-local-seo.mjs must stay informational (exit 0) — an unclaimed profile is not a defect");
+  }
+}
+
+/* The label exists in all three languages and is genuinely translated. */
+const reviewLabels = {};
+for (const [code, file] of [["en", "i18n/en.ts"], ["ms", "i18n/ms.ts"], ["zh", "i18n/zh.ts"]]) {
+  const dictionary = readFileSync(join(ROOT, file), "utf8");
+  const match = dictionary.match(/viewOnGoogle:\s*"([^"]+)"/);
+  if (!match) {
+    fail(`${file} is missing home.reviews.viewOnGoogle — the reviews link would render an empty label`);
+    continue;
+  }
+  reviewLabels[code] = match[1];
+}
+if (Object.keys(reviewLabels).length === 3) {
+  if (new Set(Object.values(reviewLabels)).size === 3) {
+    note(`The reviews link label is translated in all three languages (EN/MS/ZH).`);
+  } else {
+    fail("home.reviews.viewOnGoogle must be genuinely translated per language, not repeated");
+  }
+  for (const [code, label] of Object.entries(reviewLabels)) {
+    if (label.length > 60) {
+      fail(`home.reviews.viewOnGoogle (${code}) is ${label.length} characters — keep it a button label`);
+    }
+  }
+}
 
 /* ------------------------------------------------------------------------ */
 /* Report                                                                    */

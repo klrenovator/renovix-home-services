@@ -8180,3 +8180,250 @@ configured yet" from "configured but broken" without submitting a form.
 
 **Status:** **🟢 complete.** Task 2.1 is marked ✅ COMPLETED in
 `LEAD_GENERATION_PLAN.md`; Task 2.2 and Phase 3 remain `[PENDING]`.
+
+---
+
+## Lead-generation Task 2.2 — GA4 & Clarity activation guide + end-to-end event verification (2026-09-27)
+
+**Result: 🟢 shipped and QA-verified. The owner now has one canonical GA4 +
+Clarity activation runbook, a local configuration check, and — for the first
+time — proof in a real browser that the four business events fire. No
+measurement ID was invented, and no live dashboard claim is made anywhere.**
+
+### 1. What was missing (lead-generation plan P-02 / Task 2.2)
+
+Task 2.2 in `LEAD_GENERATION_PLAN.md`: GA4 and Clarity were "completely
+dormant" (P-02, CRITICAL). `PHASE_24_ANALYTICS.md` had shipped the whole
+measurement architecture but its activation knowledge sat in a 5-step
+checklist, and §13 recorded an unresolved gap in plain words: *"Browser-level
+runtime testing (headless click-through) could not run in this sandbox (no
+browser available), so live event delivery is not claimed."* Nothing had ever
+executed a real click through the real build and asserted that
+`whatsapp_click`, `phone_click`, `quote_form_submit` or `quote_form_success`
+actually fired.
+
+### 2. What was built
+
+- **`ANALYTICS_SETUP.md`** — the canonical owner runbook, in the same shape as
+  `QUOTE_EMAIL_SETUP.md`: status table (code-complete / owner-configuration /
+  not-claimed-live), the event-delivery flow, the eight-variable table, then
+  step-by-step activation (GA4 property + web data stream in KUL/MYR, the
+  Vercel variables, the **mandatory redeploy** because `NEXT_PUBLIC_*` values
+  are inlined at build time, Microsoft Clarity, optional Google Ads
+  conversions, optional GTM, two GA4 settings worth changing), local
+  development, verification, a troubleshooting table, privacy/security notes,
+  changing or removing IDs, and a tick-box checklist. **§2.1 is new
+  thinking, not filler:** `PROJECT_OWNER_PENDING.md` records a GA4 ID being set
+  in Vercel on 2026-09-06 while `PHASE_24_ANALYTICS.md` says every ID is unset.
+  Neither can be resolved from the repository, so the guide gives the two
+  cheap checks that settle it (`vercel env ls`; searching the deployed page
+  source for `googletagmanager`) and says to do them *before* creating
+  anything, so a second property is never added on top of a working one.
+- **`scripts/verify-analytics.mjs`** (`npm run verify:analytics`) — local,
+  dependency-free config check: the same five ID patterns
+  `lib/analytics-config.ts` applies at build time (pinned identical by the
+  audit), the same GA4-xor-GTM route resolution (GTM wins), a preview of the
+  exact CSP origins the build would add, and detection of the two mistakes
+  that silently do nothing — a malformed ID, and an ID set without the
+  `NEXT_PUBLIC_` prefix. Loads no script, makes no network call, prints IDs
+  masked (prefix + length), always exits 0.
+- **`scripts/verify-analytics-e2e.mjs`** (`npm run verify:analytics:e2e`) —
+  zero-dependency end-to-end harness. It serves the real production build with
+  `next start`, drives a real headless Chromium over the DevTools Protocol
+  (Node's built-in `WebSocket`; no Playwright/Puppeteer dependency) and
+  performs the actual customer actions, then asserts one event each with the
+  right parameters: the floating WhatsApp CTA on `/en/`, `/ms/` and `/zh/`
+  (`whatsapp_click`, `surface: floating_whatsapp_general`, correct `lang`), the
+  header `tel:` CTA (`phone_click`, `surface: header`), and a filled and
+  submitted quote form (`quote_form_start` → `quote_form_submit` →
+  `quote_form_success`, carrying the selected service slug). It also verifies
+  the **honest failure path** against the real, unstubbed endpoint:
+  `quote_form_error` with `reason: "unavailable"` (the 503 that exists until
+  Resend is configured), plus Consent Mode defaults, the
+  `{surface, service, subservice, reason, lang}` allowlist, and that none of
+  the name, phone, location or description typed into the form ever reaches an
+  event parameter.
+- **`-- --configured`** builds a throwaway copy into `.next-analytics-e2e/`
+  (git-ignored; `.next/` untouched) with the clearly-marked TEST IDs
+  `G-E2EVERIFY0` / `e2everify01`, and additionally proves the provider half:
+  `gtag.js` and the Clarity tag really load with those IDs, the CSP widens for
+  exactly those two origins, Consent Mode defaults are pushed before anything
+  else, `page_view` fires once per route and exactly once more on a
+  client-side navigation (verified as client-side by a surviving window
+  marker), every event reaches `window.dataLayer` in provider shape, and
+  real-user web vitals (TTFB/FCP/LCP) arrive.
+- **Safety by construction:** Chromium runs with
+  `--host-resolver-rules=MAP * ~NOTFOUND` so every non-loopback hostname fails
+  to resolve; the harness probes this before starting and **aborts if the
+  block is not active**, so a test ID can never report to a real property. The
+  success path fulfils `POST /api/quote/` inside the browser via the CDP
+  `Fetch` domain, so no email provider is contacted and no real lead is sent.
+  Without a browser the harness prints `SKIPPED` and claims nothing — a skip
+  is never a pass.
+
+### 3. Guards updated
+
+- `scripts/audit-analytics.mjs` gains **§8 (43 checks)**: the guide names all
+  eight variables and covers every activation topic; it claims no live
+  dashboard data; it carries no unexplained ID (only documented placeholders
+  plus the harness's TEST ID); both verify scripts stay wired in
+  `package.json`; the verifier's five patterns are **string-identical** to
+  `lib/analytics-config.ts` so they cannot drift; the verifier makes no
+  network call and never fails a build; the harness covers all four business
+  events plus the failure path, blocks external DNS, stubs the quote endpoint
+  instead of contacting a provider, and the throwaway build directory is
+  git-ignored.
+- `next.config.ts` gains one line — `distDir: process.env.RENOVIX_DIST_DIR ||
+  ".next"` — so the harness can build its throwaway copy without touching the
+  real output; the harness restores `tsconfig.json` afterwards, because
+  `next build` rewrites it to include `<distDir>/types`. `eslint.config.mjs`
+  and `.gitignore` ignore the throwaway directory (without the ESLint ignore,
+  lint went from 0 to 4,814 problems — found and fixed during QA).
+- `PHASE_24_ANALYTICS.md` §13 no longer says browser testing was impossible;
+  the status table, §12 checklist and the new pointers record it. `.env.example`,
+  `README.md` and `PROJECT_OWNER_PENDING.md` point at the guide.
+
+### 4. QA after changes
+
+- [x] `npm run lint` — PASS (0 errors, 0 warnings).
+- [x] `npm run type-check` — PASS (`next typegen && tsc --noEmit`).
+- [x] `npm run build` — PASS; **689 / 689** static generation entries (route
+      set unchanged).
+- [x] All **18 static audits** — PASS, including `audit:analytics` (113 checks)
+      with the new §8.
+- [x] Fresh production `next start` + `npm run audit:live` — **PASS 284 / 284,
+      WARN 0, FAIL 0**.
+- [x] `npm run verify:analytics` exercised in five states: NOT CONFIGURED,
+      GA4+Clarity CONFIGURED, GTM-wins (with the both-set warning), malformed
+      Clarity ID, and an ID set without the `NEXT_PUBLIC_` prefix — each
+      printing the right next steps and leaking no reusable value.
+- [x] `npm run verify:analytics:e2e` — **PASS, 0 failures**, real headless
+      Chromium 153 against the real build: `whatsapp_click` ×3 languages,
+      `phone_click`, `quote_form_start`/`submit`/`success`, `quote_form_error`
+      (`unavailable`), consent defaults, no PII, no external request.
+- [x] `npm run verify:analytics:e2e -- --configured` — **PASS, 0 failures**,
+      from a clean throwaway build: both provider tags load, CSP allows exactly
+      those origins, one `page_view` per route plus one per client-side
+      navigation, every event in `window.dataLayer`, web vitals delivered, and
+      all 16–19 provider requests failing at DNS (`www.googletagmanager.com`,
+      `www.clarity.ms`).
+- [x] Harness hygiene checked: no leftover `next-server` processes or held
+      ports after a run (process-group cleanup + a pre-flight port check);
+      `tsconfig.json` restored byte-for-byte after `--configured`;
+      `git status` shows no stray artifacts.
+
+**Status:** **🟢 complete.** Task 2.2 is marked ✅ COMPLETED in
+`LEAD_GENERATION_PLAN.md`; Tasks 3.1–3.4 remain `[PENDING]`. Live dashboard
+data (GA4 Realtime/DebugView, Clarity recordings) is **not claimed** — it
+requires the owner's own IDs and is gated by `ANALYTICS_SETUP.md` §5.2–§5.3.
+
+---
+
+## Lead-generation Task 3.1 — Google Business Profile runbook + verifiable reviews link (2026-09-27)
+
+**Result: 🟢 shipped and QA-verified. The owner has one canonical guide for
+creating and verifying the Google Business Profile, a local check that prints
+the exact details to paste, and the homepage reviews block now links to the
+profile the moment a verified URL exists. No profile, URL or business fact was
+invented, and no Maps/Local-Pack claim is made anywhere.**
+
+### 1. What was missing (lead-generation plan P-06 / Task 3.1)
+
+Task 3.1 asks for the profile to be set up with the exact NAP. Creating and
+verifying a Google Business Profile needs the business's own Google account and
+Google's own verification, so no part of it can be done from a repository —
+what was missing was the runbook, the exact strings, and the *code half* of the
+problem the profile unblocks: **P-05**, the homepage reviews block that says
+"Posted on Google" with no way for a visitor to check it.
+
+### 2. What was built
+
+- **`LOCAL_SEO_SETUP.md`** — the canonical owner guide: why the map pack
+  matters more than another ranking spot, the exact NAP table, the
+  business-name rule (no keywords, no neighbourhood — the most common way a
+  new profile is lost), creating/claiming, address and service-area
+  representation, category selection limited to work the business really takes,
+  the opening-**days** decision, contact and website rules (bare URL, no UTM in
+  the profile field), description limits, the real-photos-only rule, the ten
+  verification methods' outcome, the first 30 days, the Task 3.3 citations
+  hand-off, the reviews-link step, a troubleshooting table, ownership and
+  access, and a tick-box checklist.
+- **§2.1 settles the record before anything is created.** The 2026-09-24 owner
+  decisions and the Phase 26 checklist record a "Google Business Profile check"
+  as done, while this plan's own **P-06** (2026-09-26) records *"Zero Google
+  Business Profile footprint — CRITICAL"*. A duplicate listing is the one
+  mistake that damages both, so the guide gives the two checks that settle it
+  (Google Maps search for the business and for the exact address; the
+  **Businesses** list at business.google.com) and says to claim rather than
+  create if either finds one — then to update P-06 with which case applied.
+- **`scripts/verify-local-seo.mjs`** (`npm run verify:local-seo`) — prints the
+  NAP block, phone, WhatsApp, email, website and hours **read live from
+  `data/site.ts`** so the profile and the site cannot diverge; the
+  "days not stated" caveat Google forces the owner to resolve; the 53 published
+  locality guides grouped by region as the service-area reference (explicitly
+  framed as a marketing list, not a service commitment); and whether the
+  reviews link is armed. Contacts no Google service, prints only supplied
+  facts, always exits 0.
+- **Code side, unblocking P-05:** `data/site.ts` gains `googleReviewsUrl`
+  (empty, documented as owner-supplied only and never guessable), and
+  `components/home/ReviewsSection.tsx` renders a tracked link to the profile
+  **only when that value is set**. While it is empty the built EN/MS/ZH
+  homepages carry **no Google link at all** — so the five reviews, the "Posted
+  on Google" line, the layout and the schema stay exactly as the owner froze
+  them on 2026-09-24. Once armed it renders *"Read the reviews on Google"* /
+  *"Baca ulasan di Google"* / *"在 Google 上查看评价"* (a new typed
+  `home.reviews.viewOnGoogle` key in all three dictionaries) and fires
+  `review_profile_click` (`surface: home_reviews`), added to the Phase 24 event
+  catalogue so the business can see how many visitors check the reviews before
+  enquiring.
+
+### 3. Guards updated
+
+- `scripts/audit-authority.mjs` gains **§9**: the URL is owner-supplied or
+  absent; it must be a real profile URL (`google.com/maps`, `maps.google.com`,
+  `g.page`, `search.google.com`) and a search-shaped URL is rejected; the
+  component may not contain **any** URL literal, only the `data/site.ts` value;
+  an armed URL whose link does not fire `review_profile_click` with the coarse
+  `home_reviews` surface fails; the URL may not enter structured data (no
+  `sameAs`; `audit:schema` still bans `Review`/`aggregateRating`); the label
+  must exist and differ across EN/MS/ZH; only `data/site.ts` and
+  `ReviewsSection.tsx` may know the URL. The same section pins that
+  `LOCAL_SEO_SETUP.md` quotes the published address **verbatim**, covers the
+  name/keyword rule, the hours question, service areas, the reviews step, the
+  citations hand-off, the duplicate-listing check and the NOT CLAIMED gate, and
+  that `verify-local-seo` stays offline and informational.
+- `scripts/audit-analytics.mjs` adds `review_profile_click` to the event
+  catalogue checks; `PHASE_24_ANALYTICS.md` documents the event and the new
+  surface.
+
+### 4. QA after changes
+
+- [x] `npm run lint` — PASS (0 errors, 0 warnings).
+- [x] `npm run type-check` — PASS.
+- [x] `npm run build` — PASS; **689 / 689** static generation entries (route
+      set unchanged).
+- [x] All **18 static audits** — PASS, including `audit:authority` §9 and
+      `audit:analytics` with `review_profile_click`.
+- [x] Fresh production `next start` + `npm run audit:live` — **PASS 284 / 284,
+      WARN 0, FAIL 0**.
+- [x] `npm run verify:local-seo` — PASS; NAP, hours caveat, 53 locality guides
+      and the reviews status printed from the single source. (QA caught and
+      fixed a real bug: `region` was being read from the top-level market field
+      instead of the address block, which would have printed
+      "Kuala Lumpur & Selangor" as the state.)
+- [x] **Three negative tests** proving the new guards bite: a search-shaped URL
+      fails; a hardcoded profile URL in the component fails (the check was
+      widened to any absolute URL after the first version let `g.page` through
+      — a test that could not fail); an armed URL without the tracked event
+      fails.
+- [x] Rendered spot checks, both states: unarmed → 0 Google links in EN/MS/ZH;
+      armed with a test URL → the link, `target="_blank" rel="noreferrer"`,
+      `data-renovix-tracked` and the correct localized label in all three
+      languages.
+- [x] Both analytics harness modes re-run after these changes — **0 failures**
+      each; `git status` clean, no throwaway build left behind.
+
+**Status:** **🟢 complete.** Task 3.1 is marked ✅ COMPLETED in
+`LEAD_GENERATION_PLAN.md`; Tasks 3.2–3.4 remain `[PENDING]`. The profile
+itself, its verification, its Maps visibility and its review count are
+**not claimed** — they are owner actions, gated by `LOCAL_SEO_SETUP.md` §7.

@@ -231,6 +231,7 @@ export const ms: Dictionary = {
       description:
         "Maklum balas lima bintang daripada pelanggan di Kuala Lumpur dan Selangor untuk kerja jubin, paip, elektrik, cat dan renovasi.",
       postedOn: "Diposkan di Google",
+      viewOnGoogle: "Baca ulasan di Google",
       items: [
         {
           name: "Ahmad Razak",

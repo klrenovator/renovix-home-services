@@ -9,6 +9,8 @@ const eslintConfig = defineConfig([
   globalIgnores([
     // Default ignores of eslint-config-next:
     ".next/**",
+    // Throwaway build produced by `npm run verify:analytics:e2e -- --configured`.
+    ".next-analytics-e2e/**",
     "out/**",
     "build/**",
     "next-env.d.ts",

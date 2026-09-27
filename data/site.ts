@@ -35,6 +35,16 @@ export type SiteConfig = {
   businessHours: SiteBusinessHours;
   facebookUrl: string;
   instagramUrl: string;
+  /**
+   * The business's live Google Business Profile review URL, or an empty string
+   * while no profile exists. OWNER-SUPPLIED ONLY (Lead-generation Task 3.1):
+   * it is copied from the verified profile in Google Maps / Search once the
+   * owner has created and verified it, and it may never be guessed, templated
+   * from the business name, or filled with a search URL. When it is empty the
+   * homepage reviews block renders exactly as it did before — no link, and no
+   * claim that one exists. See `LOCAL_SEO_SETUP.md` §6.
+   */
+  googleReviewsUrl: string;
 };
 
 /**
@@ -72,6 +82,14 @@ export const siteConfig: SiteConfig = {
   },
   facebookUrl: "https://www.facebook.com/share/1dr51n9qii/",
   instagramUrl: "https://www.instagram.com/renovixhomeservices/",
+  /**
+   * OWNER-PENDING (Lead-generation Task 3.1): no verified Google Business
+   * Profile review URL has been supplied, so this stays empty and the homepage
+   * reviews block publishes no profile link. Paste the real review URL here
+   * once the profile is created and verified (`LOCAL_SEO_SETUP.md` §6) — the
+   * link, its tracking and its EN/MS/ZH label are already wired.
+   */
+  googleReviewsUrl: "",
 };
 
 /**

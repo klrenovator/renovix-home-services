@@ -167,6 +167,13 @@ export type Dictionary = {
       title: string;
       description: string;
       postedOn: string;
+      /**
+       * Visible label of the link to the business's live Google Business
+       * Profile. Rendered only when `siteConfig.googleReviewsUrl` is set
+       * (Lead-generation Task 3.1); the key exists in all three languages so
+       * the link can never fall back to English or to a slug.
+       */
+      viewOnGoogle: string;
       items: { name: string; area: string; service: string; quote: string }[];
     };
   };

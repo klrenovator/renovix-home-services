@@ -207,6 +207,7 @@ export const zh: Dictionary = {
       description:
         "来自吉隆坡与雪兰莪客户的五星评价，涵盖瓷砖、水管、电工、油漆与装修工程。",
       postedOn: "发布于 Google",
+      viewOnGoogle: "在 Google 上查看评价",
       items: [
         {
           name: "Ahmad Razak",
