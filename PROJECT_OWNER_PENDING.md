@@ -173,6 +173,23 @@ correctly with only the data that exists.
 
 ## Phase 24 — analytics & measurement activation (all measurement is OFF until IDs are supplied)
 
+> **Canonical guide: `ANALYTICS_SETUP.md`** (Lead-generation Task 2.2,
+> 2026-09-27) — dashboard-by-dashboard steps for GA4 and Clarity, the Vercel
+> variables, the mandatory redeploy, optional Ads/GTM, troubleshooting and the
+> live verification gate. Local checks: `npm run verify:analytics`
+> (configuration) and `npm run verify:analytics:e2e` (the four business events
+> fired by a real browser).
+>
+> **Unresolved record, do not skip:** the Phase 26 table above (item 4) says a
+> GA4 Measurement ID was set in Vercel Production on 2026-09-06, while this
+> section and `PHASE_24_ANALYTICS.md` state that every ID is unset. Neither can
+> be settled from the repository — the variables live in Vercel and the
+> deployed site could not be fetched from the environment Task 2.2 ran in.
+> `ANALYTICS_SETUP.md` §2.1 gives the two checks that settle it
+> (`vercel env ls`, and searching the deployed page source for
+> `googletagmanager`); do those before creating anything, so a second stream
+> is not added on top of a working one.
+
 The measurement system is fully coded (`PHASE_24_ANALYTICS.md`). Today, with
 no IDs configured, **no analytics script loads at all**. Each service below
 activates only when its real ID is set as an environment variable in Vercel →
@@ -192,6 +209,16 @@ the (optional) three custom dimensions `language` / `service` / `surface`.
 After activating anything, browse the site and confirm data in the provider's
 own UI (GA4 Realtime / Ads conversions diagnostics / Clarity sessions) before
 calling it live — code-complete is not live-verified.
+
+What Task 2.2 *did* verify locally, with a real headless browser against the
+real production build (`npm run verify:analytics:e2e`, both modes PASS):
+`whatsapp_click` fires once per click in EN, MS and ZH; `phone_click` fires on
+the header `tel:` CTA; `quote_form_submit` and `quote_form_success` fire once
+per accepted submission with the selected service slug; `quote_form_error`
+fires with `reason: "unavailable"` against the real unstubbed 503; Consent
+Mode defaults precede every provider; no event parameter ever contains the
+name, phone, location or description typed into the form. That is the site's
+half of the chain — the provider's half needs the owner's IDs and dashboards.
 
 ## Phase 22 — quote form go-live & lead handling (highest priority)
 

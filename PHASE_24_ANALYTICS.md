@@ -5,12 +5,25 @@ Status overview (the three states used throughout this document):
 | Area | Status |
 | --- | --- |
 | Measurement architecture (event layer, provider glue, click tracking, page views, Web Vitals, consent defaults, CSP wiring, docs, audits) | **CODE COMPLETE** |
-| GA4 Measurement ID · GTM Container ID · Google Ads conversion ID/labels · Clarity Project ID | **OWNER CONFIGURATION PENDING** |
-| Live data collection, real Search Console / GA4 reports, Ads conversion counts, Clarity recordings | **NOT CLAIMED — LIVE VERIFIED requires owner-configured IDs plus real measured data** |
+| Event firing end-to-end in a real browser (`whatsapp_click`, `phone_click`, `quote_form_submit`, `quote_form_success`, `quote_form_error`, `page_view` dedupe, consent defaults, Web Vitals, no PII) | **VERIFIED LOCALLY — Lead-generation Task 2.2, `npm run verify:analytics:e2e`** |
+| GA4 Measurement ID · GTM Container ID · Google Ads conversion ID/labels · Clarity Project ID | **OWNER CONFIGURATION PENDING** — step-by-step in `ANALYTICS_SETUP.md` |
+| Live data collection, real Search Console / GA4 reports, Ads conversion counts, Clarity recordings | **NOT CLAIMED — LIVE VERIFIED requires owner-configured IDs plus real measured data (`ANALYTICS_SETUP.md` §5.2–§5.3)** |
 
 No measurement ID was invented. With every variable empty (today's state) **no
 measurement script loads at all**; the Content-Security-Policy, the page HTML
 and the performance profile are byte-for-byte the pre-Phase-24 site.
+
+> **Owner activation moved to `ANALYTICS_SETUP.md`** (Lead-generation
+> Task 2.2): the GA4 property/stream, the Clarity project, the Vercel
+> variables, the redeploy requirement and the live verification gate all live
+> there. This document stays the architecture and event reference.
+>
+> Two automated checks accompany it: `npm run verify:analytics` (configuration
+> formats, delivery-route exclusivity and the exact CSP effect — loads
+> nothing) and `npm run verify:analytics:e2e` (a real headless browser performs
+> the customer actions and the four business events must each fire exactly
+> once; `-- --configured` adds the provider hop using TEST-format IDs in a
+> throwaway build).
 
 ---
 
@@ -281,6 +294,10 @@ conclusions belong to a future phase once real data exists.
 
 ## 12. Owner activation checklist
 
+> Superseded in detail by **`ANALYTICS_SETUP.md`** (Lead-generation Task 2.2),
+> which carries the dashboard-by-dashboard steps, the troubleshooting table and
+> the tick-box checklist. The summary below is kept for context.
+
 Do these only for the services actually wanted (see also
 `PROJECT_OWNER_PENDING.md`):
 
@@ -305,9 +322,11 @@ Do these only for the services actually wanted (see also
 4. **GTM instead of direct GA4 (only if tag management is wanted)** — set
    `NEXT_PUBLIC_GTM_CONTAINER_ID` (leave the GA4 variable empty unless GA4 is
    delivered through the container) and follow §3's container setup.
-5. After any activation, run `npm run audit:analytics` and a real browse
-   session, and only then update the status table at the top of this file
-   from OWNER CONFIGURATION PENDING to LIVE VERIFIED with the date.
+5. After any activation, run `npm run verify:analytics` (configuration),
+   `npm run verify:analytics:e2e` (event firing in a real browser) and
+   `npm run audit:analytics` (invariants), then a real browse session in the
+   provider's own UI — and only then update the status table at the top of this
+   file from OWNER CONFIGURATION PENDING to LIVE VERIFIED with the date.
 
 ## 13. Validation performed in this phase
 
@@ -322,7 +341,19 @@ Do these only for the services actually wanted (see also
 | Configured-mode build (dummy-format IDs, local only): CSP widens exactly for the enabled providers; gtag.js xor gtm.js templates ship; consent/dedupe logic in the client chunk | Verified |
 | GTM+GA4 both set → GTM wins with a build-time warning | Verified |
 
-Browser-level runtime testing (headless click-through) could not run in this
-sandbox (no browser available), so live event delivery is **not** claimed —
-per §10/§12 it is verified by the owner after configuring real IDs, or by any
-future local run with `npm run dev`.
+### Added by Lead-generation Task 2.2 (2026-09-27)
+
+| Check | Result |
+| --- | --- |
+| `npm run verify:analytics` — configuration formats, GA4-xor-GTM route, CSP effect, missing-`NEXT_PUBLIC_`-prefix detection | PASS in NOT CONFIGURED, CONFIGURED, GTM-wins, malformed-ID and misnamed-variable states |
+| `npm run verify:analytics:e2e` — real headless Chromium against the real production build | PASS (0 failures): `whatsapp_click` on `/en/`, `/ms/`, `/zh/`; `phone_click`; `quote_form_start`/`submit`/`success`; `quote_form_error` with `reason: unavailable` against the real unstubbed 503; consent defaults; no PII in any parameter; no external request |
+| `npm run verify:analytics:e2e -- --configured` — TEST-format IDs in a throwaway `.next-analytics-e2e/` build | PASS (0 failures): `gtag.js` and the Clarity tag load with the configured IDs, the CSP allows exactly those origins, one `page_view` per route plus exactly one more per client-side navigation, every event reaches `window.dataLayer`, web vitals arrive, and every provider request fails at DNS |
+
+The earlier note that "browser-level runtime testing could not run in this
+sandbox (no browser available)" no longer applies: a headless Chromium is now
+driven over the DevTools Protocol by `scripts/verify-analytics-e2e.mjs`, so
+event firing **is** verified locally. What is still **not** claimed is *live
+provider delivery* — that a real GA4 property or Clarity project receives this
+data — because that requires the owner's own IDs and dashboards
+(`ANALYTICS_SETUP.md` §5.2–§5.3). The harness runs with every non-loopback
+hostname unresolvable, so no test event has ever been sent anywhere.

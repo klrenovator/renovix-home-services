@@ -28,7 +28,9 @@
     "audit:routes": "node scripts/audit-routes.mjs",
     "audit:search": "node scripts/audit-search.mjs",
     "audit:live": "node scripts/phase25-live-qa.mjs",
-    "verify:quote-email": "node scripts/verify-quote-email.mjs"
+    "verify:quote-email": "node scripts/verify-quote-email.mjs",
+    "verify:analytics": "node scripts/verify-analytics.mjs",
+    "verify:analytics:e2e": "node scripts/verify-analytics-e2e.mjs"
   },
   "dependencies": {
     "next": "16.3.3",

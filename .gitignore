@@ -16,6 +16,8 @@
 # next.js
 /.next/
 /out/
+# Throwaway build produced by `npm run verify:analytics:e2e -- --configured`
+/.next-analytics-e2e/
 
 # production
 /build
