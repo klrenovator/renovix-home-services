@@ -56,7 +56,7 @@ export function Hero({ lang }: HeroProps) {
           </ul>
 
           <div className="mt-8 max-w-xl">
-            <SmartSearchBar lang={code} variant="hero" />
+            <SmartSearchBar lang={code} variant="hero-light" />
           </div>
         </div>
 

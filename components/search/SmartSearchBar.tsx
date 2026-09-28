@@ -18,7 +18,7 @@ import { localizedHref } from "@/i18n/hrefs";
 type SmartSearchBarProps = {
   lang: string;
   initialQuery?: string;
-  variant?: "hero" | "compact";
+  variant?: "hero" | "hero-light" | "compact";
   /** Placeholder override (defaults to the dictionary's placeholder). */
   placeholder?: string;
   /** Whether the bar carries its own label (visible vs sr-only). */
@@ -37,15 +37,20 @@ export function SmartSearchBar({
   const exampleQueries = t.search.exampleQueries;
   const helperId = "search-helper";
 
-  const isHero = variant === "hero";
+  const isHero = variant !== "compact";
+  const isLightHero = variant === "hero-light";
 
-  const inputClass = isHero
-    ? "h-14 w-full rounded-2xl border-2 border-white/20 bg-white/10 pl-5 pr-32 text-base text-white placeholder:text-white/60 focus-visible:border-amber-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-300 sm:text-lg"
-    : "h-11 w-full rounded-full border border-slate-300 bg-white pl-4 pr-24 text-sm text-slate-900 placeholder:text-slate-500 focus-visible:border-brand focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent";
+  const inputClass = isLightHero
+    ? "h-14 w-full rounded-2xl border-2 border-slate-500 bg-white pl-5 pr-32 text-base text-slate-900 shadow-sm placeholder:text-slate-700 focus-visible:border-brand focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent sm:text-lg"
+    : isHero
+      ? "h-14 w-full rounded-2xl border-2 border-white/20 bg-white/10 pl-5 pr-32 text-base text-white placeholder:text-white/60 focus-visible:border-amber-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-300 sm:text-lg"
+      : "h-11 w-full rounded-full border border-slate-300 bg-white pl-4 pr-24 text-sm text-slate-900 placeholder:text-slate-500 focus-visible:border-brand focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent";
 
-  const submitClass = isHero
-    ? "absolute right-2 top-2 inline-flex h-10 items-center gap-1.5 rounded-xl bg-amber-400 px-4 text-sm font-semibold text-navy transition-colors hover:bg-amber-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white sm:text-base"
-    : "absolute right-1 top-1 inline-flex h-9 items-center gap-1 rounded-full bg-brand px-3 text-xs font-semibold text-white transition-colors hover:bg-brand/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent";
+  const submitClass = isLightHero
+    ? "absolute right-1.5 top-1.5 inline-flex h-11 min-w-11 items-center justify-center gap-1.5 rounded-xl bg-amber-400 px-4 text-sm font-semibold text-navy shadow-sm transition-colors hover:bg-amber-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-navy focus-visible:ring-offset-2 focus-visible:ring-offset-white sm:text-base"
+    : isHero
+      ? "absolute right-2 top-2 inline-flex h-10 items-center gap-1.5 rounded-xl bg-amber-400 px-4 text-sm font-semibold text-navy transition-colors hover:bg-amber-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white sm:text-base"
+      : "absolute right-1 top-1 inline-flex h-9 items-center gap-1 rounded-full bg-brand px-3 text-xs font-semibold text-white transition-colors hover:bg-brand/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent";
 
   return (
     <form
@@ -86,7 +91,14 @@ export function SmartSearchBar({
           <IconArrowRight className="h-4 w-4" aria-hidden="true" />
         </button>
       </div>
-      <p id={helperId} className={`mt-2 text-xs ${isHero ? "text-white/70" : "text-slate-500"}`}>
+      <p
+        id={helperId}
+        className={
+          isLightHero
+            ? "mt-2 text-sm leading-5 text-slate-700"
+            : `mt-2 text-xs ${isHero ? "text-white/70" : "text-slate-500"}`
+        }
+      >
         {isHero ? t.search.helperText : t.search.typeaheadHint}
       </p>
       {isHero ? (
@@ -95,7 +107,11 @@ export function SmartSearchBar({
             <li key={example}>
               <a
                 href={`${action}?q=${encodeURIComponent(example)}`}
-                className="inline-flex items-center gap-1 rounded-full border border-white/20 bg-white/5 px-3 py-1 text-xs text-white/80 transition-colors hover:border-amber-300 hover:text-amber-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-300"
+                className={
+                  isLightHero
+                    ? "inline-flex items-center gap-1 rounded-full border border-slate-500 bg-white px-3 py-1.5 text-[13px] font-medium text-slate-700 shadow-sm transition-colors hover:border-brand hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
+                    : "inline-flex items-center gap-1 rounded-full border border-white/20 bg-white/5 px-3 py-1 text-xs text-white/80 transition-colors hover:border-amber-300 hover:text-amber-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-300"
+                }
               >
                 {example}
               </a>
