@@ -162,12 +162,23 @@ still says "installed". Microsoft's guidance for Clarity (`*.clarity.ms` in
 never uploaded. `lib/analytics-config.ts` now emits all of them,
 `scripts/verify-analytics.mjs` prints the identical list, `audit:analytics`
 §10 pins the documented set, and `npm run verify:analytics:live` reports any
-missing origin as a defect against the deployed policy. **The already-deployed
-build predates the fix — and so does the deployed branch:** the fix reaches
-production only after it is merged (pull request #82) *and* the site is
-redeployed; redeploying the old commit rebuilds exactly the same policy, which
-is what a 2026-10-06 header check showed (the live policy was still the pre-fix
-one after a redeploy).
+missing origin as a defect against the deployed policy. **Fixed and verified live (2026-10-06, 18:14 UTC).** The fix was merged
+(pull request #82, squash commit `342fc75`) and Vercel completed the production
+deployment at 18:13 UTC; the header fetched immediately afterwards carries the
+complete set:
+
+```
+  script-src  : 'self' 'unsafe-inline' https://www.googletagmanager.com
+  img-src     : 'self' data: blob: https://www.googletagmanager.com
+                https://www.google-analytics.com https://*.google-analytics.com
+  connect-src : 'self' https://www.googletagmanager.com
+                https://www.google-analytics.com https://*.google-analytics.com
+                https://*.analytics.google.com https://*.google.com
+```
+
+Note the ordering: a redeploy of the *old* commit rebuilds exactly the same
+policy, which is why a redeploy before the merge changed nothing (checked at
+17:28 UTC the same day). The merge had to come first.
 §6.2 has the check.
 
 A note on the check this guide used to suggest: searching the deployed **page
