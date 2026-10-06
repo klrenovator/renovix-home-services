@@ -181,6 +181,7 @@ dedupe guard are audited by `npm run audit:analytics`.
 | `service_cta_click` | Quote CTA on a service page (hero + bottom CTA) | `lang`, `surface`, `service` |
 | `subservice_cta_click` | Quote CTA on a sub-service page (hero + bottom CTA) | `lang`, `surface`, `service`, `subservice` |
 | `review_profile_click` | The homepage reviews block was followed to the live Google Business Profile (Lead-generation Task 3.1). The link only renders when the owner has supplied a verified profile URL, so the event cannot fire while none exists. | `lang`, `surface` (`home_reviews`) |
+| `directory_profile_click` | A public local-directory profile was opened from the Contact page (Lead-generation Task 3.3). Only owner-declared published profiles render; no URL or free text is sent. | `lang`, `surface` (`contact_local_citations`), `directory` (one of four fixed IDs) |
 | `web_vitals` | Each Core Web Vital reported (see §7) | `metric_name`, `metric_value`, `metric_rating`, `navigation_type`, `language`, `non_interaction` |
 
 `surface` values: `header`, `footer`, the path section of the page the click

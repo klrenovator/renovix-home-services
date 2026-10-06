@@ -18,6 +18,22 @@ export type SiteBusinessHours = {
   closes: string;
 };
 
+export const localCitationDirectoryIds = [
+  "yellowPagesMalaysia",
+  "hotfrog",
+  "businessList",
+  "facebookLocal",
+] as const;
+
+export type LocalCitationDirectoryId = (typeof localCitationDirectoryIds)[number];
+
+export type LocalCitationProfile = {
+  /** Owner-confirmed state; only a public listing with matching NAP is published. */
+  status: "pending" | "published";
+  /** Direct HTTPS profile URL copied from the live listing; empty while pending. */
+  url: string;
+};
+
 export type SiteConfig = {
   name: string;
   legalName: string;
@@ -45,6 +61,15 @@ export type SiteConfig = {
    * claim that one exists. See `LOCAL_SEO_SETUP.md` §6.
    */
   googleReviewsUrl: string;
+  /**
+   * Direct public profile URLs for the Task 3.3 citation directories. Each URL
+   * and `published` status are OWNER-SUPPLIED only, after the listing is live
+   * and its name/address/phone have been checked against this file. Keep every
+   * entry pending with an empty URL until then; the contact-page links stay
+   * hidden, and the existing social Facebook share URL is not a citation.
+   * See `LOCAL_SEO_SETUP.md` §5.
+   */
+  localCitationProfiles: Record<LocalCitationDirectoryId, LocalCitationProfile>;
 };
 
 /**
@@ -90,6 +115,12 @@ export const siteConfig: SiteConfig = {
    * link, its tracking and its EN/MS/ZH label are already wired.
    */
   googleReviewsUrl: "",
+  localCitationProfiles: {
+    yellowPagesMalaysia: { status: "pending", url: "" },
+    hotfrog: { status: "pending", url: "" },
+    businessList: { status: "pending", url: "" },
+    facebookLocal: { status: "pending", url: "" },
+  },
 };
 
 /**

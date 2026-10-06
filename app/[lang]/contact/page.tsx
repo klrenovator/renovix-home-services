@@ -13,6 +13,7 @@ import {
   IconWhatsApp,
 } from "@/components/icons";
 import { PageSchema } from "@/components/seo/PageSchema";
+import { LocalCitationLinks } from "@/components/contact/LocalCitationLinks";
 import { PageHero } from "@/components/support/PageHero";
 import { Button, WhatsAppButton } from "@/components/ui/Button";
 import { getLanguage, languages } from "@/data/languages";
@@ -253,6 +254,7 @@ export default async function ContactPage({ params }: ContactPageProps) {
           </div>
         </div>
       </section>
+      <LocalCitationLinks lang={code} />
       {/* Task 1.1 — floating WhatsApp CTA (generic page message). */}
       <FloatingWhatsApp lang={code} />
     </>

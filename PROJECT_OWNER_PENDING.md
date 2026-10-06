@@ -25,7 +25,9 @@ wording where it conflicts.
 > **Canonical guide: `LOCAL_SEO_SETUP.md`.** Run `npm run verify:local-seo`
 > first: it prints the exact NAP block, phone, website and hours to paste, the
 > published service-area reference list, and whether the homepage reviews link
-> is armed. It contacts no Google service.
+> is armed. Run `npm run verify:citations` for each directory's repo-side
+> pending/published state and direct-URL shape; it makes no network call and
+> cannot confirm a listing is live.
 
 **Unresolved record, do not skip:** the 2026-09-24 owner decisions above and the
 Phase 26 checklist record a "Google Business Profile check" as done, while
@@ -43,7 +45,11 @@ than create if a listing is found.
 | 3 | Choose the service areas actually worked in | Owner decision | `npm run verify:local-seo` lists the 53 published locality guides as a reference; the profile claim must stay truthful, so select only real coverage |
 | 4 | Upload real job photos only | Owner → profile | No stock, no AI-generated images — the same rule the project pages follow |
 | 5 | Complete verification, then **paste the profile's review URL into `googleReviewsUrl` in `data/site.ts`** | `data/site.ts` (one line) | This is the only code-side step. The homepage link, its EN/MS/ZH labels and its `review_profile_click` event are already wired and inert until the value is set (`LOCAL_SEO_SETUP.md` §6) |
-| 6 | Publish the same NAP on the Task 3.3 citation sites (Yellow Pages Malaysia, Hotfrog, BusinessList.my, Facebook Local Business) | Owner | Copy from `npm run verify:local-seo` output — no rewording, no abbreviations |
+| 6 | Publish the same NAP on Yellow Pages Malaysia, Hotfrog, BusinessList.my and Facebook Local Business; search/claim existing profiles first | Owner-controlled directory accounts; then `data/site.ts` | Copy from `npm run verify:local-seo`; check each public page before setting its `localCitationProfiles.<directory>` entry to `status: "published"` with the direct HTTPS URL. `npm run verify:citations` validates URL shape/config only — it cannot verify publication or approval. Keep each entry pending until live NAP is checked; no paid plan without owner approval. |
+
+**Current Task 3.3 status: [PENDING] for all four directories.** Run
+`npm run verify:citations` to see the repository-side state; only the owner can
+confirm submission, publication and the matching live NAP on each directory.
 
 Nothing about a profile, its verification, its Maps visibility or its review
 count is claimed anywhere on the site, and none of it may be added to the

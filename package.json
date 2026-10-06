@@ -16,6 +16,7 @@
     "audit:projects": "node scripts/audit-projects.mjs",
     "audit:locations": "node scripts/audit-locations.mjs",
     "audit:authority": "node scripts/audit-authority.mjs",
+    "audit:citations": "node scripts/audit-citations.mjs",
     "audit:subservices": "node scripts/audit-subservices.mjs",
     "audit:blog": "node scripts/audit-blog.mjs",
     "audit:cro": "node scripts/audit-cro.mjs",
@@ -33,6 +34,7 @@
     "verify:analytics:live": "node scripts/verify-analytics-live.mjs",
     "verify:search-console": "node scripts/verify-search-console.mjs",
     "verify:local-seo": "node scripts/verify-local-seo.mjs",
+    "verify:citations": "node scripts/verify-citations.mjs",
     "verify:analytics:e2e": "node scripts/verify-analytics-e2e.mjs"
   },
   "dependencies": {

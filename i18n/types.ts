@@ -543,6 +543,19 @@ export type Dictionary = {
     kualaLumpurDescription: string;
     selangorDescription: string;
     klangValleyDescription: string;
+    directoryProfiles: {
+      eyebrow: string;
+      title: string;
+      description: string;
+      /** Accessible link name; `{directory}` is a localized brand label. */
+      openProfile: string;
+      directories: {
+        yellowPagesMalaysia: string;
+        hotfrog: string;
+        businessList: string;
+        facebookLocal: string;
+      };
+    };
   };
   quote: {
     metaTitle: string;

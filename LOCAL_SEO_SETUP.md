@@ -230,13 +230,69 @@ and a fresh profile can take a further one to three weeks to appear in Maps.
 | Fill in the services list with the site's own service names | Keeps the profile's language identical to the site's |
 | Ask recent customers for an honest review (§6) | Volume and recency of reviews are the strongest trust signals in the map pack |
 
-## 5. Citations elsewhere (Task 3.3)
+## 5. Malaysian directory citations (Task 3.3)
 
-Google checks whether other sites describe the business the same way. Task 3.3
-covers the Malaysian directories (Yellow Pages Malaysia, Hotfrog,
-BusinessList.my, Facebook Local Business). **Every one of them needs exactly
-the §2 block** — the same strings, no rewording. Run `npm run verify:local-seo`
-before starting that task and paste from its output.
+These listings are owner-side actions: this repository cannot create directory
+accounts, submit a listing, resolve a duplicate, or see whether a submission
+was approved. **NOT CLAIMED for any directory citation:** no profile is said to
+be live until the owner has opened its public page and checked it. Do not tick
+Task 3.3 complete based only on filling in a submission form.
+
+### Prepare one consistent listing
+
+1. Run `npm run verify:local-seo` and copy the NAP block exactly. The business
+   name, address, phone, website and email must match `data/site.ts`; do not
+   abbreviate `Jalan`, omit the postcode, or use a different phone format.
+2. On each directory, search by the exact business name, phone number and
+   address **before** creating anything. If a matching record exists, use that
+   directory's claim/update route; do not create a duplicate.
+3. Use only categories that match services Renovix actually offers. The site's
+   service registry is a reference, not evidence that every job or location is
+   accepted. Do not invent a registration number, opening days, years in
+   business, staff count, awards, reviews or certifications. The site publishes
+   `9:00 AM – 6:00 PM` but no days; do not guess day-by-day hours. If a listing
+   requires an unconfirmed field, pause and ask the owner rather than fabricate
+   an answer.
+4. Use real business photos only. If a directory offers a paid placement or
+   upgrade, review the current terms and price; **no paid plan or advertising
+   purchase is authorized without the owner's approval**.
+5. Once a listing is publicly visible, compare the published name, address and
+   phone against the verifier output. Copy its **direct public profile URL**
+   (not a directory home/search page, claim form, preview, or private account
+   URL) and keep a record of the date checked.
+
+| Directory | Official starting point | Listing-specific checks |
+| --- | --- | --- |
+| Yellow Pages Malaysia | [yellowpages.my](https://www.yellowpages.my/) | Search for an existing Renovix record, then use the site's current add/claim path. |
+| Hotfrog Malaysia | [hotfrog.com.my](https://www.hotfrog.com.my/) | Search name/phone first; claim an existing result instead of creating another. |
+| BusinessList.my | [Create a business listing](https://www.businesslist.my/create-business-listing) | Review the current plan and price before proceeding; stop for owner approval before any payment. |
+| Facebook Local Business | [Facebook business locations help](https://www.facebook.com/business/help/344106736167501) | Confirm whether an existing official Page/location already represents Renovix; do not treat a share URL as proof of a local business listing or create a duplicate Page just to complete this checklist. |
+
+### Enable only profiles that are live and checked
+
+Each entry in `localCitationProfiles` in `data/site.ts` is currently
+`status: "pending"` with an empty URL. Keep it that way until the public listing
+exists and its NAP has been checked; only then add its direct HTTPS profile URL
+and change that entry to `status: "published"`, for example:
+
+```ts
+hotfrog: {
+  status: "published",
+  url: "https://www.hotfrog.com.my/company/…",
+},
+```
+
+`npm run verify:citations` checks the URL host/path and the pending/published
+configuration offline; it does **not** log in to a directory or claim a listing
+is approved. `npm run audit:citations` protects the same rules, the localized
+contact-page labels and the no-false-profile display. The EN/MS/ZH Contact page
+shows a directory link only for a profile the owner has marked published, and
+records an aggregate `directory_profile_click` with only language, page surface
+and a fixed directory ID. Directory URLs are not added to structured data.
+
+**Current status: [PENDING]** for Yellow Pages Malaysia, Hotfrog, BusinessList.my
+and Facebook Local Business. None of the four off-site registrations or their
+publication state can be confirmed from this repository.
 
 ## 6. The reviews link (this is what unblocks problem P-05)
 
