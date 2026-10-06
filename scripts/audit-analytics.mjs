@@ -808,6 +808,7 @@ const emptyDashboardTopics = [
   ["the no-traffic-yet explanation", /no traffic yet/],
   ["the 24–48 hour processing delay", /24–48 hours/],
   ["the CSP data-origin check that comes before the ranked causes", /CSP completeness/],
+  ["a zero-install console check for the owner", /securitypolicyviolation/],
   ["the decisive blocked-request marker", /ERR_BLOCKED_BY_CLIENT/],
   ["the collect-request 204 interpretation", /\*\*204\*\*/],
 ];

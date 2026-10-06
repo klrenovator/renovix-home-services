@@ -163,7 +163,11 @@ never uploaded. `lib/analytics-config.ts` now emits all of them,
 `scripts/verify-analytics.mjs` prints the identical list, `audit:analytics`
 §10 pins the documented set, and `npm run verify:analytics:live` reports any
 missing origin as a defect against the deployed policy. **The already-deployed
-build predates the fix: it must be redeployed for the change to apply.**
+build predates the fix — and so does the deployed branch:** the fix reaches
+production only after it is merged (pull request #82) *and* the site is
+redeployed; redeploying the old commit rebuilds exactly the same policy, which
+is what a 2026-10-06 header check showed (the live policy was still the pre-fix
+one after a redeploy).
 §6.2 has the check.
 
 A note on the check this guide used to suggest: searching the deployed **page
@@ -426,6 +430,42 @@ property — so the reason is one of the following, in the order worth checking.
    one deliberate visit.
 7. **Processing delay.** Realtime is instant; standard reports can take up to
    24–48 hours before an event or page appears for the first time.
+
+**Zero-install check — paste this in the browser console.** Open the live site
+on a computer (Chrome), press **F12**, switch to **Console**, paste this and
+press Enter. It needs no tools, no account and no installation:
+
+```js
+(() => {
+  const scripts = [...document.querySelectorAll("script[src]")].map((s) => s.src);
+  const tag = scripts.filter((src) => src.includes("googletagmanager.com"));
+  const calls = performance
+    .getEntriesByType("resource")
+    .map((entry) => entry.name)
+    .filter((url) => /google-analytics\.com|googletagmanager\.com|clarity\.ms/.test(url));
+  window.__renovixBlocked = [];
+  document.addEventListener("securitypolicyviolation", (event) =>
+    window.__renovixBlocked.push(`${event.violatedDirective} → ${event.blockedURI}`),
+  );
+  console.log("tag script        :", tag.length ? tag[0] : "NOT INJECTED — report this line");
+  console.log("provider requests :", calls.length ? calls : "NONE — the tag never called Google");
+  console.log("dataLayer         :", window.dataLayer);
+  console.log("CSP violations so far:", window.__renovixBlocked);
+})();
+```
+
+Reading the result:
+
+| Output | Meaning |
+| --- | --- |
+| `tag script` shows `…gtag/js?id=G-…` | the site injected the Google tag — the tag itself is not the problem |
+| `provider requests` includes `google-analytics.com/g/collect` | the browser sent the hit; anything left is account- or view-side (§6.1 items 1–4, 7) |
+| `provider requests` is `NONE` | the tag never called Google in this browser — re-test with extensions off, another browser, or a phone on mobile data (items 5–6) |
+| `CSP violations so far` is not empty | the policy is dropping a request — §6.2 |
+
+Then click a second page on the site and run `console.log(window.__renovixBlocked)`
+— it keeps collecting violations until you reload, so a policy problem that only
+appears on later requests is still visible.
 
 **The one-minute test that says which side is at fault:** in Chrome press
 F12 → **Network** → type `collect` in the filter box → reload the page.
