@@ -85,6 +85,21 @@ const ADS_ID_PATTERN = /^AW-\d{8,12}$/;
 const ADS_LABEL_PATTERN = /^[A-Za-z0-9/_-]{5,100}$/;
 const CLARITY_ID_PATTERN = /^[a-z0-9]{6,20}$/i;
 
+/**
+ * Placeholder-shaped IDs: every character after the provider prefix is the
+ * same — the shape every guide (this repository's included) prints as an
+ * example. Kept behaviourally identical to `isPlaceholderBody` in
+ * `lib/analytics-config.ts` (pinned by `npm run audit:analytics`): a value
+ * like this passes the format check, so the site would load a tag that can
+ * never report — the exact "the ID is installed but the dashboard is empty"
+ * state this check exists to catch.
+ */
+function isPlaceholderBody(value) {
+  const separator = value.lastIndexOf("-");
+  const body = separator >= 0 ? value.slice(separator + 1) : value;
+  return body.length > 0 && new Set(body).size === 1;
+}
+
 /** Shows enough of an ID to recognise it, never enough to reuse it. */
 function mask(value) {
   if (!value) return "(empty)";
@@ -112,10 +127,23 @@ const ga4Value = ga4.value.trim();
 const gtm = env("NEXT_PUBLIC_GTM_CONTAINER_ID");
 const gtmValue = gtm.value.trim();
 
-const ga4Valid = ga4Value ? GA4_ID_PATTERN.test(ga4Value) : null;
-const gtmValid = gtmValue ? GTM_ID_PATTERN.test(gtmValue) : null;
+const ga4Placeholder = ga4Value ? isPlaceholderBody(ga4Value) : false;
+const gtmPlaceholder = gtmValue ? isPlaceholderBody(gtmValue) : false;
+const ga4Valid = ga4Value ? GA4_ID_PATTERN.test(ga4Value) && !ga4Placeholder : null;
+const gtmValid = gtmValue ? GTM_ID_PATTERN.test(gtmValue) && !gtmPlaceholder : null;
 
-if (ga4Value && ga4Valid === false) {
+if (ga4Value && ga4Valid === false && ga4Placeholder) {
+  problems.push(
+    "NEXT_PUBLIC_GA4_MEASUREMENT_ID is a documentation placeholder, not a real Measurement ID",
+  );
+  lines.push(`[check]  NEXT_PUBLIC_GA4_MEASUREMENT_ID (${ga4.source}): placeholder shape`);
+  lines.push("  Next: every character after the prefix is the same, so this value could");
+  lines.push("  never report anywhere — the tag would load (CSP and all) and every GA4");
+  lines.push("  report and Realtime view would stay empty. That is the exact state this");
+  lines.push("  check exists to catch. Copy the real Measurement ID from");
+  lines.push("  GA4 → Admin → Data streams, set it in Vercel → Production, redeploy, then");
+  lines.push("  confirm with `npm run verify:analytics:live` and GA4 Realtime (§5.2).");
+} else if (ga4Value && ga4Valid === false) {
   problems.push("NEXT_PUBLIC_GA4_MEASUREMENT_ID is not a valid GA4 Measurement ID");
   lines.push(`[check]  NEXT_PUBLIC_GA4_MEASUREMENT_ID (${ga4.source}): ${mask(ga4Value)}`);
   lines.push("  Next: a GA4 Measurement ID looks like G-XXXXXXXXXX (6–12 uppercase");
@@ -131,7 +159,12 @@ if (ga4Value && ga4Valid === false) {
   lines.push("  Environment Variables (Production), then redeploy. ANALYTICS_SETUP.md §3.");
 }
 
-if (gtmValue && gtmValid === false) {
+if (gtmValue && gtmValid === false && gtmPlaceholder) {
+  problems.push("NEXT_PUBLIC_GTM_CONTAINER_ID is a documentation placeholder, not a real container ID");
+  lines.push(`[check]  NEXT_PUBLIC_GTM_CONTAINER_ID (${gtm.source}): placeholder shape`);
+  lines.push("  Next: every character after the prefix is the same — no container answers");
+  lines.push("  to it. Copy the real container ID from tagmanager.google.com → Admin.");
+} else if (gtmValue && gtmValid === false) {
   problems.push("NEXT_PUBLIC_GTM_CONTAINER_ID is not a valid container ID");
   lines.push(`[check]  NEXT_PUBLIC_GTM_CONTAINER_ID (${gtm.source}): ${mask(gtmValue)}`);
   lines.push("  Next: a GTM container ID looks like GTM-XXXXXX (4–10 uppercase");
@@ -177,11 +210,12 @@ if (!clarityValue) {
   lines.push("  Next (optional): create the project at clarity.microsoft.com for");
   lines.push("  renovixhomeservices.my and set the Project ID. Recordings ship with");
   lines.push("  Clarity's default on-screen text masking left ON. ANALYTICS_SETUP.md §3 step 4.");
-} else if (!CLARITY_ID_PATTERN.test(clarityValue)) {
+} else if (!CLARITY_ID_PATTERN.test(clarityValue) || isPlaceholderBody(clarityValue)) {
   problems.push("NEXT_PUBLIC_CLARITY_PROJECT_ID is not a valid Clarity Project ID");
   lines.push(`[check]  NEXT_PUBLIC_CLARITY_PROJECT_ID (${clarity.source}): ${mask(clarityValue)}`);
-  lines.push("  Next: a Clarity Project ID is a short alphanumeric string (6–20 chars).");
-  lines.push("  Re-copy it from Clarity → Settings → Setup.");
+  lines.push("  Next: a Clarity Project ID is a short alphanumeric string (6–20 chars) —");
+  lines.push("  never a placeholder (all one character). Re-copy it from");
+  lines.push("  Clarity → Settings → Setup.");
 } else {
   lines.push(`[ok]     NEXT_PUBLIC_CLARITY_PROJECT_ID (${clarity.source}): ${mask(clarityValue)}`);
   lines.push("  Loads at browser idle (lazyOnload); default text masking is never disabled.");
@@ -206,10 +240,12 @@ if (!adsIdValue) {
   lines.push(`[unset]  NEXT_PUBLIC_GOOGLE_ADS_CONVERSION_ID (${adsId.source}) — no ad conversions fire`);
   lines.push("  Only needed if Google Ads are running. Three actions exist: quote");
   lines.push("  success, WhatsApp click, phone click. ANALYTICS_SETUP.md §3 step 5.");
-} else if (!ADS_ID_PATTERN.test(adsIdValue)) {
+} else if (!ADS_ID_PATTERN.test(adsIdValue) || isPlaceholderBody(adsIdValue)) {
   problems.push("NEXT_PUBLIC_GOOGLE_ADS_CONVERSION_ID is not a valid conversion ID");
   lines.push(`[check]  NEXT_PUBLIC_GOOGLE_ADS_CONVERSION_ID (${adsId.source}): ${mask(adsIdValue)}`);
-  lines.push("  Next: a Google Ads conversion ID looks like AW-123456789.");
+  lines.push("  Next: a Google Ads conversion ID looks like AW-123456789, and it must not");
+  lines.push("  be a placeholder (every character after `AW-` the same) — a placeholder");
+  lines.push("  would arm a conversion that can never be attributed.");
 } else {
   lines.push(`[ok]     NEXT_PUBLIC_GOOGLE_ADS_CONVERSION_ID (${adsId.source}): ${mask(adsIdValue)}`);
   for (const [variable, event] of labels) {
@@ -287,18 +323,31 @@ const cspImg = [];
 const cspFrame = [];
 
 if (mode !== "none") {
+  /* Mirrors analyticsCspSources() exactly — Google's CSP guide for Google
+   * Analytics without Ads also requires the tag host in connect-src/img-src
+   * and `*.google.com` for the denied-ads Consent Mode pings. Keeping this
+   * list identical to lib/analytics-config.ts is pinned by audit-analytics
+   * §10; a missing origin here means the browser drops those requests while
+   * every other check still passes. */
   cspScript.push("https://www.googletagmanager.com");
-  cspConnect.push("https://www.google-analytics.com", "https://*.google-analytics.com", "https://*.analytics.google.com");
-  cspImg.push("https://www.google-analytics.com", "https://*.google-analytics.com");
+  cspConnect.push(
+    "https://www.googletagmanager.com",
+    "https://www.google-analytics.com",
+    "https://*.google-analytics.com",
+    "https://*.analytics.google.com",
+    "https://*.google.com",
+  );
+  cspImg.push("https://www.googletagmanager.com", "https://www.google-analytics.com", "https://*.google-analytics.com");
 }
-if (adsIdValue && ADS_ID_PATTERN.test(adsIdValue)) {
+if (adsIdValue && ADS_ID_PATTERN.test(adsIdValue) && !isPlaceholderBody(adsIdValue)) {
   cspScript.push("https://www.googleadservices.com", "https://www.google.com");
   cspConnect.push("https://www.google.com", "https://www.google.com.sg", "https://*.g.doubleclick.net");
   cspImg.push("https://www.google.com", "https://www.google.com.sg", "https://*.g.doubleclick.net");
 }
-if (clarityValue && CLARITY_ID_PATTERN.test(clarityValue)) {
+if (clarityValue && CLARITY_ID_PATTERN.test(clarityValue) && !isPlaceholderBody(clarityValue)) {
   cspScript.push("https://www.clarity.ms");
-  cspConnect.push("https://www.clarity.ms");
+  cspConnect.push("https://www.clarity.ms", "https://*.clarity.ms");
+  cspImg.push("https://*.clarity.ms");
 }
 if (gtmValid) {
   cspFrame.push("https://www.googletagmanager.com", "https://tagmanager.google.com");

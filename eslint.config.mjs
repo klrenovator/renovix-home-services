@@ -11,6 +11,9 @@ const eslintConfig = defineConfig([
     ".next/**",
     // Throwaway build produced by `npm run verify:analytics:e2e -- --configured`.
     ".next-analytics-e2e/**",
+    // Any other throwaway build directory (RENOVIX_DIST_DIR) — generated
+    // bundles are not source and must never break `npm run lint`.
+    ".next-*/**",
     "out/**",
     "build/**",
     "next-env.d.ts",

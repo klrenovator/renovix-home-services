@@ -22,11 +22,24 @@
  *     the privacy policy discloses measurement in EN/MS/ZH.
  *  7. Search Console verification survives untouched, and the sitemap /
  *     canonical config is unchanged by Phase 24.
+ *  8. Lead-generation Task 2.2: the activation runbook, the configuration
+ *     check and the browser harness stay wired, honest and free of real IDs.
+ *  9. Task 2.2 follow-up (2026-10-06): placeholder-shaped IDs are rejected by
+ *     the app and by the configuration check with the same rule, the deployed-
+ *     site check stays read-only and never reports "could not reach" as a
+ *     pass, and the source scan behind the fabricated-ID, third-party-tag and
+ *     PII checks really collects files (an empty scan fails loudly).
+ * 10. CSP completeness (root-cause work 2026-10-06): every origin Google
+ *     documents for GA4-without-Ads and Microsoft documents for Clarity is
+ *     present in lib/analytics-config.ts, the configuration check prints the
+ *     identical list, and the live check turns a missing origin into a defect.
+ *     A CSP that allows the tag script but not the tag's data hosts is exactly
+ *     the "installed but empty dashboard" failure this section prevents.
  *
  * Run with: npm run audit:analytics
  */
 
-import { readFileSync } from "node:fs";
+import { readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -130,10 +143,11 @@ if (layout.includes('<Measurement />')) {
 }
 
 /* No Meta Pixel / other tags anywhere */
-const allSources = ["app", "components", "lib"]
-  .flatMap((dir) => readdir(join(ROOT, dir)))
-  .filter((name) => name.endsWith(".ts") || name.endsWith(".tsx"))
-  .map((name) => join(name));
+/* Recursive, root-relative paths — the helper below walks every subdirectory,
+ * so a file moved into a nested folder is still scanned. (A previous version
+ * collected bare entry names, which resolved to nothing and made every scan
+ * below silently vacuous.) */
+const allSources = ["app", "components", "lib"].flatMap((dir) => readdir(join(ROOT, dir)));
 const pixelPattern = /fbq\s*\(|connect\.facebook\.net|graph\.facebook\.com|tiktok\.com\/i18n\/pixel|static\.hotjar\.com|plausible\.io\/js|posthog\.com/i;
 const pixelHits = [];
 for (const source of allSources) {
@@ -146,6 +160,14 @@ if (pixelHits.length === 0) {
   pass("no Meta Pixel, TikTok, Hotjar, Plausible or PostHog tags exist anywhere");
 } else {
   fail(`unexpected third-party tags found in: ${pixelHits.join(", ")}`);
+}
+
+/* The scans above are only as good as the file list behind them: an empty or
+ * mis-resolved list makes every one of them pass silently. */
+if (allSources.length === 0) {
+  fail("the source scan collected no files — the hardcoded-ID, pixel and PII checks would all be vacuous");
+} else {
+  pass(`source scan covers ${allSources.length} files across app/, components/ and lib/ (recursive)`);
 }
 
 /* ------------------------------------------------------------------------ */
@@ -657,6 +679,237 @@ for (const [file, marker] of [
     pass(`privacy disclosure names Google Analytics and Clarity (${file})`);
   } else {
     fail(`privacy disclosure in ${file} must name both Google Analytics and Microsoft Clarity`);
+  }
+}
+
+/* ------------------------------------------------------------------------ */
+/* 9. Placeholder IDs are rejected, and the deployed site is checkable       */
+/*     (Lead-generation Task 2.2 follow-up, 2026-10-06)                     */
+/* ------------------------------------------------------------------------ */
+console.log("\n9. Placeholder IDs rejected + live deployment check");
+
+const analyticsConfigSource = read("lib/analytics-config.ts");
+const liveCheck = readSafe("scripts/verify-analytics-live.mjs");
+
+/* A placeholder-shaped ID passes every format check while reporting to
+ * nobody. The app must treat it as "not configured" rather than load a tag
+ * that can never fill a dashboard — the exact failure this session exists to
+ * make visible. */
+if (/function isPlaceholderBody\(value: string\): boolean/.test(analyticsConfigSource)) {
+  pass("lib/analytics-config.ts detects placeholder-shaped IDs");
+} else {
+  fail("lib/analytics-config.ts lost isPlaceholderBody — a placeholder ID would load a tag that can never report");
+}
+if (/if \(isPlaceholderBody\(trimmed\)\)/.test(analyticsConfigSource)) {
+  pass("a placeholder ID is treated as not configured (provider stays OFF, warning printed)");
+} else {
+  fail("lib/analytics-config.ts must return value:null for a placeholder ID");
+}
+for (const logicLine of [
+  'const separator = value.lastIndexOf("-");',
+  "return body.length > 0 && new Set(body).size === 1;",
+]) {
+  if (analyticsConfigSource.includes(logicLine) && verifyConfig.includes(logicLine)) {
+    pass(`placeholder rule identical in the app and the config check: ${logicLine.slice(0, 34)}…`);
+  } else {
+    fail(`placeholder rule drifted between lib/analytics-config.ts and verify-analytics.mjs (${logicLine})`);
+  }
+}
+if (/isPlaceholderBody\(trimmed\)/.test(analyticsConfigSource) && /isPlaceholderBody\(ga4Value\)/.test(verifyConfig)) {
+  pass("verify-analytics.mjs applies the same placeholder rule to GA4");
+} else {
+  fail("verify-analytics.mjs no longer applies isPlaceholderBody to GA4");
+}
+
+/* The live check: read-only, honest about what it cannot see, and it must be
+ * wired so the owner can answer "which ID does production report to?". */
+if (liveCheck === null) {
+  fail("scripts/verify-analytics-live.mjs is missing — the deployed ID cannot be read from outside");
+} else {
+  if (packageJson.includes('"verify:analytics:live": "node scripts/verify-analytics-live.mjs"')) {
+    pass("npm run verify:analytics:live is wired to scripts/verify-analytics-live.mjs");
+  } else {
+    fail("package.json does not wire npm run verify:analytics:live");
+  }
+
+  const reads = [
+    [/ga4MeasurementId/, "the inlined GA4 Measurement ID"],
+    [/gtmContainerId/, "the inlined GTM container ID"],
+    [/clarityProjectId/, "the inlined Clarity project ID"],
+    [/isPlaceholderBody/, "the placeholder rule"],
+    [/Could not reach/, "the offline path"],
+  ];
+  for (const [pattern, what] of reads) {
+    if (pattern.test(liveCheck)) {
+      pass(`live check reads ${what}`);
+    } else {
+      fail(`verify-analytics-live.mjs no longer reads ${what}`);
+    }
+  }
+
+  const unsafe = [
+    [/method:\s*"POST"/, "a POST request"],
+    [/method:\s*'POST'/, "a POST request"],
+    [/Authorization/, "an Authorization header"],
+    [/document\.cookie/, "cookie handling"],
+    [/credentials\s*:\s*["']include/, "credentialled fetches"],
+    [/process\.env/, "environment/secret access"],
+  ].filter(([pattern]) => pattern.test(liveCheck));
+  if (unsafe.length === 0) {
+    pass("live check is read-only: no writes, no credentials, no cookies, no secrets");
+  } else {
+    fail(`verify-analytics-live.mjs uses ${unsafe.map(([, name]) => name).join(", ")} — it must stay a public read-only probe`);
+  }
+
+  if (/This is NOT a verdict/.test(liveCheck) && /process\.exit\(0\)/.test(liveCheck)) {
+    pass('an unreachable site is reported as "not a verdict" (exit 0), never as a pass');
+  } else {
+    fail('verify-analytics-live.mjs must say an unreachable site is NOT a verdict and exit 0');
+  }
+  if (/defects\.length > 0 \? 1 : 0/.test(liveCheck)) {
+    pass("exit code 1 is reserved for a defect actually observed in the deployment");
+  } else {
+    fail("verify-analytics-live.mjs no longer reserves a non-zero exit for observed defects");
+  }
+  if (/Only your own GA4/.test(liveCheck)) {
+    pass("live check states that only the owner's GA4/Clarity UI can show data arriving");
+  } else {
+    fail("verify-analytics-live.mjs must not imply it can see dashboard data");
+  }
+}
+
+/* The guide must document the rule and the corrected verification method. */
+if (/npm run verify:analytics:live/.test(setupGuide)) {
+  pass("guide documents npm run verify:analytics:live");
+} else {
+  fail("ANALYTICS_SETUP.md does not document the live deployment check");
+}
+if (/placeholder/i.test(setupGuide) && /every character after the prefix/i.test(setupGuide)) {
+  pass("guide explains the placeholder state (ID set, dashboard empty)");
+} else {
+  fail("ANALYTICS_SETUP.md must explain what a placeholder-shaped ID does");
+}
+if (/DevTools → \*\*Network\*\*/.test(setupGuide)) {
+  pass("guide points at DevTools → Network instead of the (always empty) page source");
+} else {
+  fail("ANALYTICS_SETUP.md still sends the owner to the page source, where the tag never appears");
+}
+
+/* "The IDs match and the dashboard is still empty" — the state an owner reaches
+ * after confirming the value in Vercel equals the stream ID in GA4. The
+ * deployment is provably correct there, so the guide must rank the remaining
+ * causes instead of blaming the site again. */
+const emptyDashboardTopics = [
+  ["the 30-minute Realtime window", /last 30 minutes/],
+  ["reading a different property than the stream ID belongs to", /different property than the one whose stream ID/],
+  ["the property data-collection toggle", /Collect website and\s+app data/],
+  ["Active data filters (internal traffic)", /Internal traffic/],
+  ["browser- / DNS-level blocking", /DNS-level blocker/],
+  ["the no-traffic-yet explanation", /no traffic yet/],
+  ["the 24–48 hour processing delay", /24–48 hours/],
+  ["the CSP data-origin check that comes before the ranked causes", /CSP completeness/],
+  ["the decisive blocked-request marker", /ERR_BLOCKED_BY_CLIENT/],
+  ["the collect-request 204 interpretation", /\*\*204\*\*/],
+];
+for (const [topic, pattern] of emptyDashboardTopics) {
+  if (pattern.test(setupGuide)) {
+    pass(`guide's empty-dashboard section covers ${topic}`);
+  } else {
+    fail(`ANALYTICS_SETUP.md §6.1 does not cover ${topic} — an owner with a matching ID has nothing to follow`);
+  }
+}
+if (/§6\.1/.test(liveCheck) && /last 30/.test(liveCheck)) {
+  pass("the live check points a MATCH result at §6.1 and names the 30-minute Realtime window");
+} else {
+  fail("verify-analytics-live.mjs should send a MATCH to the §6.1 checklist, including the 30-minute Realtime window");
+}
+
+/* ------------------------------------------------------------------------ */
+/* 10. CSP completeness — the provider's own documented origin list          */
+/*     (root-cause work, 2026-10-06)                                         */
+/* ------------------------------------------------------------------------ */
+console.log("\n10. CSP carries every origin the providers document");
+
+/*
+ * A Content-Security-Policy that allows the tag *script* can still drop the
+ * tag's data traffic. That failure is invisible from every other angle: the
+ * script loads, the ID is right, the dashboard stays empty. Google documents
+ * the required origins for Google Analytics without Ads at
+ * https://developers.google.com/tag-platform/security/guides/csp and
+ * Microsoft documents `*.clarity.ms` for Clarity; this section pins them so a
+ * future edit cannot quietly remove one.
+ */
+const ga4CspRequirements = [
+  ["the tag host is allowed as a script", /scriptSources\.push\(\s*"https:\/\/www\.googletagmanager\.com"/],
+  ["connect-src carries the tag host", /connectSources\.push\([\s\S]{0,500}?"https:\/\/www\.googletagmanager\.com"/],
+  ["connect-src carries the analytics hosts", /connectSources\.push\([\s\S]{0,500}?"https:\/\/\*\.google-analytics\.com"/],
+  ["connect-src carries google.com (Consent Mode pings)", /connectSources\.push\([\s\S]{0,500}?"https:\/\/\*\.google\.com"/],
+  ["img-src carries the tag host", /imgSources\.push\([\s\S]{0,400}?"https:\/\/www\.googletagmanager\.com"/],
+  ["img-src carries the analytics hosts", /imgSources\.push\([\s\S]{0,400}?"https:\/\/\*\.google-analytics\.com"/],
+];
+const missingGa4Csp = ga4CspRequirements.filter(([, pattern]) => !pattern.test(analyticsConfigSource));
+if (missingGa4Csp.length === 0) {
+  pass(`lib/analytics-config.ts allows all ${ga4CspRequirements.length} origins Google documents for GA4 without Ads`);
+} else {
+  for (const [label] of missingGa4Csp) {
+    fail(`analytics-config.ts no longer satisfies: ${label} — the browser would drop those requests while the tag still loads`);
+  }
+}
+
+if (/developers\.google\.com\/tag-platform\/security\/guides\/csp/.test(analyticsConfigSource)) {
+  pass("the CSP builder cites Google's CSP guide, so the requirement survives future edits");
+} else {
+  fail("analytics-config.ts lost the citation for its CSP origins — the next editor cannot know why they exist");
+}
+
+const clarityCspRequirements = [
+  ["script-src carries the Clarity tag host", /scriptSources\.push\(\s*"https:\/\/www\.clarity\.ms"/],
+  ["connect-src carries the Clarity wildcard", /connectSources\.push\([\s\S]{0,300}?"https:\/\/\*\.clarity\.ms"/],
+];
+const missingClarityCsp = clarityCspRequirements.filter(([, pattern]) => !pattern.test(analyticsConfigSource));
+if (missingClarityCsp.length === 0) {
+  pass("lib/analytics-config.ts allows the Clarity origins Microsoft documents");
+} else {
+  for (const [label] of missingClarityCsp) {
+    fail(`analytics-config.ts no longer satisfies: ${label} — Clarity would load but never upload`);
+  }
+}
+
+/* The configuration check prints the same list, so the two must not drift. */
+function originRegion(source, startAnchor, endAnchor) {
+  const start = source.indexOf(startAnchor);
+  if (start < 0) return "";
+  const end = source.indexOf(endAnchor, start + startAnchor.length);
+  return source.slice(start, end < 0 ? start + 1600 : end);
+}
+function originsOf(block) {
+  return [...new Set([...block.matchAll(/"https:\/\/[^"]+"/g)].map((match) => match[0]))].sort();
+}
+const configGoogleBlock = originRegion(analyticsConfigSource, "if (usesGoogleTag) {", "if (usesGoogleAds) {");
+const verifyGoogleBlock = originRegion(verifyConfig, "/* Mirrors analyticsCspSources() exactly", "if (adsIdValue");
+const configOrigins = originsOf(configGoogleBlock);
+const verifyOrigins = originsOf(verifyGoogleBlock);
+const originDrift = [
+  ...configOrigins.filter((origin) => !verifyOrigins.includes(origin)).map((origin) => `verify-analytics.mjs is missing ${origin}`),
+  ...verifyOrigins.filter((origin) => !configOrigins.includes(origin)).map((origin) => `verify-analytics.mjs invents ${origin}`),
+];
+if (configOrigins.length > 0 && originDrift.length === 0) {
+  pass(`verify-analytics.mjs prints the same ${configOrigins.length} Google origins the build applies`);
+} else {
+  fail(`the Google CSP lists drifted: ${originDrift.join("; ") || "one of the two blocks could not be read"}`);
+}
+
+const liveCspGuard = [
+  ["the live check measures CSP completeness", /CSP completeness/],
+  ["a missing documented origin becomes a defect", /does not allow \$\{accepted\[0\]\} in \$\{directive\}/],
+  ["the live check cites the same Google guide", /tag-platform\/security\/guides\/csp/],
+];
+const missingLiveGuards = liveCspGuard.filter(([, pattern]) => !pattern.test(liveCheck));
+if (missingLiveGuards.length === 0) {
+  pass("verify-analytics-live.mjs reports a missing documented origin as a defect against the deployed CSP");
+} else {
+  for (const [label] of missingLiveGuards) {
+    fail(`verify-analytics-live.mjs no longer: ${label}`);
   }
 }
 

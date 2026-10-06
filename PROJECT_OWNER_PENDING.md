@@ -161,7 +161,7 @@ or real-data action; none of it can or should be faked in code.**
 | 1 | ~~Make apex `renovixhomeservices.my` the **primary domain** so `www` redirects to apex~~ **DONE 2026-09-05** — owner set it; AI-verified live: www → `renovixhomeservices.my/en/` redirect works, apex serves directly, no loop, all links/canonicals on apex | Vercel → Project → Settings → Domains | ✅ CLOSED — I-01 resolved; GSC submission (task 3) now unblocked |
 | 2 | ~~Configure Resend: API key + verified sending domain; env vars in Vercel; redeploy; one real test quote~~ **DONE 2026-09-06** — domain verified (AI checked SPF/DKIM DNS live), env set, redeployed, test quote delivered to inbox | Resend + Vercel dashboards | ✅ CLOSED — email funnel live |
 | 3 | ~~Submit `https://renovixhomeservices.my/sitemap.xml` once (apex property) in Google Search Console~~ **DONE 2026-09-06** — completion already recorded in the Phase 25 table below; current checklist reconciled 2026-09-20 | GSC | ✅ CLOSED per the existing owner record, not a new dashboard verification. Do not resubmit or infer indexing status from submission |
-| 4 | ~~Supply analytics IDs (GA4 or GTM, never both)~~ **DONE 2026-09-06** — GA4 property created by owner (KUL/MYR), `NEXT_PUBLIC_GA4_MEASUREMENT_ID` in Vercel Production, redeployed, Realtime verified. Clarity/Ads labels left optional | Vercel env | ✅ Analytics LIVE — quote/WhatsApp/phone events now measured |
+| 4 | ~~Supply analytics IDs (GA4 or GTM, never both)~~ **DONE 2026-09-06** — GA4 property created by owner (KUL/MYR), `NEXT_PUBLIC_GA4_MEASUREMENT_ID` in Vercel Production, redeployed, Realtime verified. Clarity/Ads labels left optional | Vercel env | ◐ **GA4 CONFIRMED IN THE DEPLOYED BUILD (2026-10-06 live check): the served CSP proves a format-valid GA4 ID was present at build time; GTM, Clarity and Ads are unconfigured.** Whether the *dashboards* receive data is still owner-side — run `npm run verify:analytics:live` and compare the ID it prints with GA4 → Admin → Data streams (`ANALYTICS_SETUP.md` §2.1/§6) — **plus a real defect found 2026-10-06:** the deployed Content-Security-Policy allowed the Google tag script but omitted the data origins Google documents for GA4 without Ads (`www.googletagmanager.com` in `connect-src`/`img-src`, `*.google.com` in `connect-src`), which drops the tag's traffic while everything still looks installed. Fixed in `lib/analytics-config.ts` and pinned by `audit:analytics` §10; **owner action: redeploy, then `npm run verify:analytics:live` must show `CSP completeness: complete`** |
 | 5 | ◐ 7 wired 2026-09-06, then ⏸ PARKED by owner decision — real Painting + Waterproofing photos to be uploaded from an actual future job; the 2 US-fittings painting shots are withdrawn from publication | Owner → `public/images/projects/` + `data/project-content/` | Raw jpgs on `main` were replaced by audited webp (originals recoverable from git history). Painting pair (US-style fittings) stays unpublished per owner's 2026-09-06 decision. Never stock/AI images |
 | 6 | ~~Real-device QA: mobile menu, quote form, WhatsApp deep link, `tel:`~~ **DONE per owner 2026-09-24** | Owner checked on phone | No further device task pending |
 | 7 | ~~Quote-form field expansion~~ **CLOSED — no new fields requested** | Owner decision already recorded 2026-09-07 | Existing form remains unchanged |
@@ -190,7 +190,7 @@ Only the following still need the owner:
 | --- | --- | --- | --- |
 | 1 | Vercel → Domains: make **`renovixhomeservices.my` (apex) the primary** so `www` redirects *to* apex, not the other way around | Edge domain redirect is a Vercel setting. Canonicals/sitemap already use apex; reversing it in Next.js would loop | YELLOW — live fetchers currently land on www |
 | 2 | Create a Resend API key, verify `renovixhomeservices.my` (or the sending domain) in Resend, set `RESEND_API_KEY` + `QUOTE_FROM_EMAIL` (+ optional `QUOTE_NOTIFICATION_EMAIL`) in Vercel, redeploy, then send **one real quote** and confirm the inbox | Secrets and mailbox access | GREY — API honestly returns 503 today |
-| 3 | ~~Submit the single sitemap once in Google Search Console~~ **DONE 2026-09-06** — apex property verified (HTML tag), sitemap.xml submitted once | GSC dashboard | ✅ CLOSED — Google-side indexing/reporting fills in over the next 1–2 weeks |
+| 3 | ~~Submit the single sitemap once in Google Search Console~~ **DONE 2026-09-06** — apex property verified (HTML tag), sitemap.xml submitted once | GSC dashboard | ✅ CLOSED — Lead-generation Task 3.2 now ships `SEARCH_CONSOLE_SETUP.md` (confirm-or-submit, statuses, URL Inspection, GSC↔GA4 link) + `npm run verify:search-console -- --live` so the repo half stays checkable; do not resubmit or infer indexing status from submission |
 | 4 | Supply a real GA4 Measurement ID (`G-…`) *or* a GTM container ID if measurement is wanted. Optionally Ads conversion ID+labels and Clarity ID | Inventing IDs would send data to someone else. With none set, **no script loads** | GREY |
 | 5 | Real-device pass on a phone (menu, quote form, WhatsApp, `tel:`) and confirm Search Console / GA4 realtime after IDs are on | No owner device in this environment | YELLOW |
 | 6 | Project metadata still missing per job (location, year, materials, extra photos) — same table as below | Must not be invented | GREY |
@@ -202,28 +202,34 @@ The project-proof items below remain optional metadata. Nothing here may be
 invented, estimated or placeholder-filled — the project pages already render
 correctly with only the data that exists.
 
-## Phase 24 — analytics & measurement activation (all measurement is OFF until IDs are supplied)
+## Phase 24 — analytics & measurement activation (GA4 configured in the deployed build; Clarity/Ads/GTM pending)
 
 > **Canonical guide: `ANALYTICS_SETUP.md`** (Lead-generation Task 2.2,
 > 2026-09-27) — dashboard-by-dashboard steps for GA4 and Clarity, the Vercel
 > variables, the mandatory redeploy, optional Ads/GTM, troubleshooting and the
-> live verification gate. Local checks: `npm run verify:analytics`
-> (configuration) and `npm run verify:analytics:e2e` (the four business events
-> fired by a real browser).
+> live verification gate. Checks: `npm run verify:analytics` (configuration),
+> `npm run verify:analytics:e2e` (the four business events fired by a real
+> browser) and `npm run verify:analytics:live` (the deployed build: it prints
+> the GA4 Measurement ID production reports to, and flags a documentation
+> placeholder).
 >
-> **Unresolved record, do not skip:** the Phase 26 table above (item 4) says a
-> GA4 Measurement ID was set in Vercel Production on 2026-09-06, while this
-> section and `PHASE_24_ANALYTICS.md` state that every ID is unset. Neither can
-> be settled from the repository — the variables live in Vercel and the
-> deployed site could not be fetched from the environment Task 2.2 ran in.
-> `ANALYTICS_SETUP.md` §2.1 gives the two checks that settle it
-> (`vercel env ls`, and searching the deployed page source for
-> `googletagmanager`); do those before creating anything, so a second stream
-> is not added on top of a working one.
+> **Record settled 2026-10-06:** the Phase 26 table (item 4) records a GA4
+> Measurement ID set in Vercel Production on 2026-09-06, while this section and
+> `PHASE_24_ANALYTICS.md` describe the code with no IDs. The deployed site
+> settles it: the served CSP carries `googletagmanager.com` and the
+> google-analytics hosts (a GA4 direct-tag build) with no `frame-src`, no
+> `clarity.ms` and no Ads origins — so the deployment has **GA4 configured**
+> and GTM/Clarity/Ads are unconfigured. The old "search the page source"
+> advice no longer applies: the tag is injected after hydration by design, so
+> use `npm run verify:analytics:live` or DevTools → Network. Do not add a
+> second stream; compare the ID the live check prints with
+> GA4 → Admin → Data streams first (`ANALYTICS_SETUP.md` §2.1, §6).
 
-The measurement system is fully coded (`PHASE_24_ANALYTICS.md`). Today, with
-no IDs configured, **no analytics script loads at all**. Each service below
-activates only when its real ID is set as an environment variable in Vercel →
+The measurement system is fully coded (`PHASE_24_ANALYTICS.md`). In this
+checkout no IDs are configured, and with none set **no analytics script loads
+at all**; the deployed build already carries a GA4 ID (see the blockquote
+above). Each service below activates only when its real ID is set as an
+environment variable in Vercel →
 Project → Settings → Environment Variables (or `.env.local` locally), followed
 by a redeploy. Never invent or placeholder these IDs — a wrong ID sends the
 data to someone else's account.

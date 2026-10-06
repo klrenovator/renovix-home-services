@@ -18,6 +18,9 @@
 /out/
 # Throwaway build produced by `npm run verify:analytics:e2e -- --configured`
 /.next-analytics-e2e/
+# Any other throwaway build directory (RENOVIX_DIST_DIR) used by the
+# deployed-site checks, so a scratch build can never be committed.
+/.next-*/
 
 # production
 /build

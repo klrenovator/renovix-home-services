@@ -41,6 +41,11 @@
  *      templated or search-shaped, never hardcoded in the component, never
  *      copied into structured data, and its label exists in all three
  *      languages.
+ *  10. Search Console readiness (Lead-generation Task 3.2): the deployed
+ *      verification token, the single-sitemap wiring (robots.txt →
+ *      lib/sitemap.ts → app/sitemap.ts), the retired per-language sitemap
+ *      redirects, and the owner runbook's honesty gates — dashboard state
+ *      (submitted / processed / indexed) is never claimed from the repository.
  */
 
 import { readFileSync, readdirSync, existsSync } from "node:fs";
@@ -1007,6 +1012,156 @@ if (Object.keys(reviewLabels).length === 3) {
     if (label.length > 60) {
       fail(`home.reviews.viewOnGoogle (${code}) is ${label.length} characters — keep it a button label`);
     }
+  }
+}
+
+/* ------------------------------------------------------------------------ */
+/* 10. Search Console readiness (Lead-generation Task 3.2)                   */
+/* ------------------------------------------------------------------------ */
+
+/**
+ * Google Search Console itself cannot be driven or read from this repository.
+ * What can be held to account is the half Google actually fetches — the
+ * verification token, one canonical sitemap, the robots.txt reference and the
+ * retired-URL redirects — plus the honesty of the owner runbook: the dashboard
+ * state (submitted / processed / indexed) may never be asserted here.
+ */
+const searchConsoleGuide = (() => {
+  try {
+    return readFileSync(join(ROOT, "SEARCH_CONSOLE_SETUP.md"), "utf8");
+  } catch {
+    return null;
+  }
+})();
+
+const publicFiles = (() => {
+  try {
+    return readdirSync(join(ROOT, "public"));
+  } catch {
+    return [];
+  }
+})();
+const verificationFile = publicFiles.find((name) => /^google.*\.html$/.test(name));
+if (!verificationFile) {
+  fail("public/ has no Google verification HTML file — Search Console's HTML-file method cannot work");
+} else {
+  const body = readFileSync(join(ROOT, "public", verificationFile), "utf8").trim();
+  const token = body.match(/^google-site-verification:\s*(\S+)$/)?.[1];
+  if (!token) {
+    fail(`public/${verificationFile} does not contain a google-site-verification token line`);
+  } else if (/^(x+|X+|0+)$/.test(token)) {
+    fail(`public/${verificationFile} holds a placeholder token — Search Console would reject it`);
+  } else {
+    note(`Search Console verification file is deployed with a real-shaped token (public/${verificationFile}).`);
+  }
+}
+
+const robotsSource = readFileSync(join(ROOT, "app/robots.ts"), "utf8");
+if (/sitemap:\s*mainSitemapUrl\(\)/.test(robotsSource)) {
+  note("robots.txt names the single canonical sitemap via mainSitemapUrl().");
+} else {
+  fail("app/robots.ts no longer references mainSitemapUrl() — the sitemap line could drift");
+}
+if (/^\s*host:\s*\S/im.test(robotsSource)) {
+  fail("app/robots.ts re-introduced a Host: directive (not part of RFC 9309)");
+}
+
+const sitemapLibSource = readFileSync(join(ROOT, "lib/sitemap.ts"), "utf8");
+if (/return `\$\{siteConfig\.url\}\/sitemap\.xml`;/.test(sitemapLibSource)) {
+  note("the submitted sitemap URL is built from the single business source (data/site.ts).");
+} else {
+  fail("lib/sitemap.ts no longer builds mainSitemapUrl() from siteConfig.url");
+}
+
+const configSource = readFileSync(join(ROOT, "next.config.ts"), "utf8");
+for (const lang of ["en", "ms", "zh"]) {
+  if (!new RegExp(`source:\\s*"/sitemap/${lang}\\.xml"`).test(configSource)) {
+    fail(`next.config.ts no longer redirects the retired /sitemap/${lang}.xml`);
+  }
+}
+note("retired per-language sitemap URLs still redirect to /sitemap.xml (no 404 for old crawler entries).");
+
+if (searchConsoleGuide === null) {
+  fail("SEARCH_CONSOLE_SETUP.md is missing — the Search Console steps have nowhere to live");
+} else {
+  for (const [topic, pattern] of [
+    ["the HTML-file verification method", /HTML file/],
+    ["submitting sitemap.xml once", /Submit the sitemap \(once\)|submit it \*\*once\*\*/],
+    ["the real sitemap URL", /https:\/\/renovixhomeservices\.my\/sitemap\.xml/],
+    ["reading the sitemap status honestly", /Couldn't fetch/],
+    ["URL Inspection + Request indexing", /Request indexing/],
+    ["linking Search Console to GA4", /Associations/],
+    ["a monthly reading routine", /every month/i],
+    ["troubleshooting", /Troubleshooting/],
+    ["the record conflict (plan PENDING vs the 2026-09-06 note)", /Where the record stands/],
+    ["the draft/production sitemap facts (lastmod, hreflang)", /hreflang/],
+    ["the no-second-property rule", /do not create a second property|Do not create a second property/i],
+  ]) {
+    if (pattern.test(searchConsoleGuide)) {
+      note(`SEARCH_CONSOLE_SETUP.md covers ${topic}.`);
+    } else {
+      fail(`SEARCH_CONSOLE_SETUP.md does not cover ${topic}`);
+    }
+  }
+
+  if (/NOT CLAIMED/.test(searchConsoleGuide) && /LIVE VERIFIED/.test(searchConsoleGuide)) {
+    note("SEARCH_CONSOLE_SETUP.md keeps its NOT CLAIMED / LIVE VERIFIED gates.");
+  } else {
+    fail("SEARCH_CONSOLE_SETUP.md lost its NOT CLAIMED / LIVE VERIFIED gates — dashboard state must not be asserted");
+  }
+  if (/only the owner's Search Console account|owner's Search Console account can show/i.test(searchConsoleGuide)) {
+    note("SEARCH_CONSOLE_SETUP.md states that only the owner's account can show submission/processing state.");
+  } else {
+    fail("SEARCH_CONSOLE_SETUP.md must say only the owner's Search Console account can show processing state");
+  }
+  if (/2026-09-06/.test(searchConsoleGuide)) {
+    note("SEARCH_CONSOLE_SETUP.md cites the existing 2026-09-06 submission record it reconciles.");
+  } else {
+    fail("SEARCH_CONSOLE_SETUP.md must cite the 2026-09-06 record it reconciles (PROJECT_OWNER_PENDING.md)");
+  }
+}
+
+const packageJsonSource = readFileSync(join(ROOT, "package.json"), "utf8");
+if (packageJsonSource.includes('"verify:search-console": "node scripts/verify-search-console.mjs"')) {
+  note("npm run verify:search-console is wired to scripts/verify-search-console.mjs.");
+} else {
+  fail("package.json does not wire npm run verify:search-console");
+}
+
+const searchConsoleVerifier = (() => {
+  try {
+    return readFileSync(join(ROOT, "scripts/verify-search-console.mjs"), "utf8");
+  } catch {
+    return null;
+  }
+})();
+if (searchConsoleVerifier === null) {
+  fail("scripts/verify-search-console.mjs is missing");
+} else {
+  if (searchConsoleVerifier.includes("--live")) {
+    note("the readiness check keeps its live mode behind an explicit --live flag.");
+  } else {
+    fail("scripts/verify-search-console.mjs lost its --live mode");
+  }
+  const writes = [
+    [/method:\s*["']POST["']/, "a POST request"],
+    [/Authorization/, "an Authorization header"],
+    [/document\.cookie/, "cookie handling"],
+  ].filter(([pattern]) => pattern.test(searchConsoleVerifier));
+  if (writes.length === 0) {
+    note("the readiness check only reads public URLs (no writes, no credentials).");
+  } else {
+    fail(`scripts/verify-search-console.mjs uses ${writes.map(([, name]) => name).join(", ")}`);
+  }
+  if (/NOT a pass or a failure/.test(searchConsoleVerifier) && /process\.exit\(defects\.length > 0/.test(searchConsoleVerifier)) {
+    note("an offline run is reported as unknown (exit 0); exit 1 is reserved for observed defects.");
+  } else {
+    fail("scripts/verify-search-console.mjs must treat an offline run as unknown and reserve exit 1 for defects");
+  }
+  if (/NOT CLAIMED by this script|NOT CLAIMED by this repository/.test(searchConsoleVerifier)) {
+    note("the readiness check claims nothing about Search Console state.");
+  } else {
+    fail("scripts/verify-search-console.mjs must not imply it can read Search Console state");
   }
 }
 
