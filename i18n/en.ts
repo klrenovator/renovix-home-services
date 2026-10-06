@@ -725,6 +725,18 @@ export const en: Dictionary = {
     kualaLumpurDescription: "City and neighbourhood guidance",
     selangorDescription: "State and town guidance",
     klangValleyDescription: "Explore all service areas",
+    directoryProfiles: {
+      eyebrow: "Local business listings",
+      title: "Find Renovix in local directories",
+      description: "Open a public Renovix profile on a directory below.",
+      openProfile: "Open Renovix’s profile on {directory} (opens in a new tab)",
+      directories: {
+        yellowPagesMalaysia: "Yellow Pages Malaysia",
+        hotfrog: "Hotfrog Malaysia",
+        businessList: "BusinessList.my",
+        facebookLocal: "Facebook Page",
+      },
+    },
   },
   quote: {
     metaTitle: "Renovix Home Services | Get a Quote in KL & Selangor",

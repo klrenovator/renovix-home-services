@@ -9,7 +9,7 @@
  *     events. No Meta Pixel or other tag exists anywhere.
  *  2. Owner-pending discipline: no real/hardcoded measurement IDs in code —
  *     every provider loads only through validated environment variables.
- *  3. Event layer: all ten conversion events are declared, fired from the
+ *  3. Event layer: all eleven conversion events are declared, fired from the
  *     right surfaces, and routed through the sanitizing allowlist in
  *     lib/analytics.ts (which stays platform-neutral — the Phase 22 audit
  *     still enforces that).
@@ -238,6 +238,8 @@ const EVENTS = [
   // Lead-generation Task 3.1: fires only when the owner has supplied a
   // verified Google Business Profile URL (see audit-authority §9).
   "review_profile_click",
+  // Lead-generation Task 3.3: only owner-declared published profiles render.
+  "directory_profile_click",
 ];
 for (const event of EVENTS) {
   if (analytics.includes(`"${event}"`)) {
@@ -279,6 +281,7 @@ const fireChecks = [
   [serviceCta, "service_cta_click", "service CtaSection quote CTA"],
   [subServicePage, "subservice_cta_click", "SubServicePage quote CTAs"],
   [read("components/home/ReviewsSection.tsx"), "review_profile_click", "homepage reviews profile link"],
+  [read("components/contact/LocalCitationLinks.tsx"), "directory_profile_click", "published directory profile link"],
 ];
 for (const [source, event, where] of fireChecks) {
   if (source.includes(`"${event}"`)) {

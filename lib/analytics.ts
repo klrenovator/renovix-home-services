@@ -41,6 +41,8 @@ export const CONVERSION_EVENTS = [
    * not rendered, so the event cannot exist.
    */
   "review_profile_click",
+  /** A published Malaysian directory profile was opened from the contact page. */
+  "directory_profile_click",
 ] as const;
 
 export type ConversionEvent = (typeof CONVERSION_EVENTS)[number];
@@ -59,12 +61,14 @@ export type ConversionContext = Partial<{
   subservice: string;
   /** Failure class: `validation` | `rate_limited` | `unavailable` | `network`. */
   reason: string;
+  /** Coarse, fixed directory ID; never a URL or customer-entered value. */
+  directory: "yellow_pages_malaysia" | "hotfrog" | "businesslist" | "facebook_local";
   /** Site language: `en` | `ms` | `zh`. */
   lang: string;
 }>;
 
 /** The only context keys ever forwarded to a provider. */
-const CONTEXT_KEYS = ["surface", "service", "subservice", "reason", "lang"] as const;
+const CONTEXT_KEYS = ["surface", "service", "subservice", "reason", "directory", "lang"] as const;
 
 export type ConversionEventRecord = {
   event: ConversionEvent;
@@ -105,6 +109,18 @@ function sanitizeContext(context: ConversionContext): ConversionContext {
 
   for (const key of CONTEXT_KEYS) {
     const value = context[key];
+
+    if (key === "directory") {
+      if (
+        value === "yellow_pages_malaysia" ||
+        value === "hotfrog" ||
+        value === "businesslist" ||
+        value === "facebook_local"
+      ) {
+        clean.directory = value;
+      }
+      continue;
+    }
 
     if (typeof value === "string" && value.length > 0) {
       clean[key] = value.slice(0, MAX_CONTEXT_VALUE_LENGTH);

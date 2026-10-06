@@ -684,6 +684,18 @@ export const zh: Dictionary = {
     kualaLumpurDescription: "市区与社区指南",
     selangorDescription: "州属与城镇指南",
     klangValleyDescription: "浏览全部服务地区",
+    directoryProfiles: {
+      eyebrow: "本地商家目录",
+      title: "查看 Renovix 的本地目录资料",
+      description: "打开下方目录中的 Renovix 公开商家资料。",
+      openProfile: "在 {directory} 打开 Renovix 的商家资料（在新标签页打开）",
+      directories: {
+        yellowPagesMalaysia: "Yellow Pages Malaysia",
+        hotfrog: "Hotfrog Malaysia",
+        businessList: "BusinessList.my",
+        facebookLocal: "Facebook 专页",
+      },
+    },
   },
   quote: {
     metaTitle: "Renovix Home Services | 吉隆坡与雪兰莪获取报价",
