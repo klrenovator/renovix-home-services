@@ -16,11 +16,11 @@
  * account.
  */
 
-/** Matches `G-XXXXXXXXXX` GA4 Measurement IDs (Google allows 6–12 chars). */
+/** Matches GA4 Measurement IDs: `G-` plus 6–12 uppercase letters/digits. */
 const GA4_ID_PATTERN = /^G-[A-Z0-9]{6,12}$/;
-/** Matches `GTM-XXXXXX` container IDs (Google allows 4–10 chars). */
+/** Matches Google Tag Manager container IDs: `GTM-` plus 4–10 uppercase letters/digits. */
 const GTM_ID_PATTERN = /^GTM-[A-Z0-9]{4,10}$/;
-/** Matches `AW-XXXXXXXXX` Google Ads conversion IDs. */
+/** Matches Google Ads conversion IDs: `AW-` plus 8–12 digits. */
 const ADS_ID_PATTERN = /^AW-\d{8,12}$/;
 /** Matches Google Ads conversion labels (alphanumeric, `/`, `_`, `-`). */
 const ADS_LABEL_PATTERN = /^[A-Za-z0-9/_-]{5,100}$/;
@@ -28,6 +28,26 @@ const ADS_LABEL_PATTERN = /^[A-Za-z0-9/_-]{5,100}$/;
 const CLARITY_ID_PATTERN = /^[a-z0-9]{6,20}$/i;
 
 type Validated<T> = { value: T | null; warning: string | null };
+
+/**
+ * Placeholder-shaped IDs: every character after the provider prefix is the
+ * same one — the shape every guide (this repository's included) prints as an
+ * example, e.g. `G-` followed by ten identical letters or `AW-` followed by
+ * identical digits.
+ *
+ * Such a value passes every format check and then reports to nobody: the tag
+ * still loads, the Content-Security-Policy still widens, and the provider's
+ * dashboard stays empty — the quietest measurement failure there is, because
+ * the website looks perfectly configured from the outside. Real Google and
+ * Clarity IDs are random strings, so a single repeated character cannot
+ * collide with a real value (below one in a trillion for every provider this
+ * module accepts).
+ */
+function isPlaceholderBody(value: string): boolean {
+  const separator = value.lastIndexOf("-");
+  const body = separator >= 0 ? value.slice(separator + 1) : value;
+  return body.length > 0 && new Set(body).size === 1;
+}
 
 function validateId(raw: string | undefined, label: string, pattern: RegExp): Validated<string> {
   const trimmed = (raw ?? "").trim();
@@ -37,6 +57,18 @@ function validateId(raw: string | undefined, label: string, pattern: RegExp): Va
   }
 
   if (pattern.test(trimmed)) {
+    if (isPlaceholderBody(trimmed)) {
+      return {
+        value: null,
+        warning:
+          `${label} looks like a documentation placeholder — every character after the ` +
+          `prefix is the same. Measurement for this provider stays OFF rather than loading ` +
+          `a tag that can never report. Paste the real value from the provider's own ` +
+          `dashboard; ANALYTICS_SETUP.md §2.1 explains how this state is detected on the ` +
+          `live site.`,
+      };
+    }
+
     return { value: trimmed, warning: null };
   }
 
@@ -173,12 +205,33 @@ export function analyticsCspSources(): {
   if (usesGoogleTag) {
     // gtag.js and gtm.js are both served from googletagmanager.com.
     scriptSources.push("https://www.googletagmanager.com");
+    /*
+     * Google's CSP guide for Google Analytics *without any Ads features*
+     * (https://developers.google.com/tag-platform/security/guides/csp) also
+     * requires the tag host in connect-src and img-src, plus `*.google.com`
+     * for the Consent Mode / conversion pings that run while advertising
+     * storage is denied — which is exactly how this site is configured.
+     *
+     * Dropping them fails quietly: the tag still loads, so every check that
+     * only looks at the script request passes, while the browser discards the
+     * tag's own fetch/beacon traffic and the dashboard stays empty. The
+     * deployed build was missing all three until 2026-10-06; the scripts that
+     * verify the CSP (scripts/verify-analytics.mjs,
+     * scripts/verify-analytics-live.mjs) and audit-analytics.mjs §10 now pin
+     * the documented set.
+     */
     connectSources.push(
+      "https://www.googletagmanager.com",
       "https://www.google-analytics.com",
       "https://*.google-analytics.com",
       "https://*.analytics.google.com",
+      "https://*.google.com",
     );
-    imgSources.push("https://www.google-analytics.com", "https://*.google-analytics.com");
+    imgSources.push(
+      "https://www.googletagmanager.com",
+      "https://www.google-analytics.com",
+      "https://*.google-analytics.com",
+    );
   }
 
   if (usesGoogleAds) {
@@ -195,7 +248,11 @@ export function analyticsCspSources(): {
 
   if (clarity.value) {
     scriptSources.push("https://www.clarity.ms");
-    connectSources.push("https://www.clarity.ms");
+    // Clarity collects to its own subdomains (`*.clarity.ms`) — Microsoft's
+    // CSP guidance lists the wildcard in connect-src, and the session
+    // collector also falls back to image beacons on the same host family.
+    connectSources.push("https://www.clarity.ms", "https://*.clarity.ms");
+    imgSources.push("https://*.clarity.ms");
   }
 
   if (gtm.value) {

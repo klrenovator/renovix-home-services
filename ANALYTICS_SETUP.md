@@ -13,6 +13,8 @@ Status overview (the three states used throughout this document):
 | `NEXT_PUBLIC_GA4_MEASUREMENT_ID` · `NEXT_PUBLIC_CLARITY_PROJECT_ID` · (optional) `NEXT_PUBLIC_GOOGLE_ADS_*` · `NEXT_PUBLIC_GTM_CONTAINER_ID` | **OWNER CONFIGURATION — set in the hosting dashboard, never in the repository** |
 | Data appearing in GA4 / Clarity dashboards for real visitors | **NOT CLAIMED — LIVE VERIFIED only after the owner completes §5.2–§5.3** |
 | The four business events firing correctly in a real browser | **VERIFIED LOCALLY by `npm run verify:analytics:e2e` (see §5.1) — this is not the same as live dashboard data** |
+| A GA4 Measurement ID in the **deployed** build (observed 2026-10-06) | **LIVE IN PRODUCTION** — the served Content-Security-Policy proves a format-valid GA4 ID was present at build time, with GTM, Clarity and Ads all unconfigured. *Which* ID, and whether its dashboards receive data, is settled in §2.1 and §6 |
+| Placeholder-shaped IDs (all one repeated character) | **REJECTED** — treated as "not configured" with a build warning, because such a value loads a tag that can never report (§2.1) |
 
 No measurement ID was invented for this guide. Every ID below is a placeholder
 marked as one, and the automated harness deliberately runs with DNS to every
@@ -27,7 +29,8 @@ Related files:
 | `components/analytics/Measurement.tsx` | The only provider glue: script loading, consent defaults, `page_view`, sink/replay, delegated click tracking, Web Vitals |
 | `components/analytics/TrackedLink.tsx` | Quote-flow links with rich context; marks its anchors so the delegated listener never double-fires |
 | `.env.example` | The documented variable list (values stay empty in git) |
-| `scripts/verify-analytics.mjs` (`npm run verify:analytics`) | Local configuration check — formats, route exclusivity, CSP effect; loads nothing, calls nothing |
+| `scripts/verify-analytics.mjs` (`npm run verify:analytics`) | Local configuration check — formats, placeholder rejection, route exclusivity, CSP effect; loads nothing, calls nothing |
+| `scripts/verify-analytics-live.mjs` (`npm run verify:analytics:live`) | Live deployment check — reads the served CSP and the client bundles and prints the GA4 Measurement ID production reports to; read-only, no credentials |
 | `scripts/verify-analytics-e2e.mjs` (`npm run verify:analytics:e2e`) | Drives a real headless browser through the four business events and asserts exactly one of each |
 | `PHASE_24_ANALYTICS.md` | The architecture, event catalogue, funnel and privacy reasoning behind all of it |
 
@@ -84,32 +87,95 @@ All of these are public identifiers, not secrets: they ship to browsers by
 design. They still belong in the hosting dashboard, not in git, so that the
 repository can never pin the site to one property.
 
-### 2.1 Where the record stands (read this before setting anything)
+One validation rule worth knowing because it exists specifically for this guide:
+a value whose characters after the prefix are all the same (the placeholder
+shape every guide prints) is treated as **not configured** — it would pass the
+format check, load a tag that can never report, and leave every dashboard empty
+while the site looked perfectly set up. `npm run verify:analytics` reports that
+state as a problem, and `npm run verify:analytics:live` finds it on the deployed
+site.
 
-Two statements exist in this repository and they cannot both be checked from
-the code:
+### 2.1 Where the record stands — settled by the live check (2026-10-06)
 
-- `PROJECT_OWNER_PENDING.md` (Phase 26 table, item 4) records that on
-  **2026-09-06** the owner created a GA4 property and set
-  `NEXT_PUBLIC_GA4_MEASUREMENT_ID` in Vercel Production, and that Clarity and
-  Ads labels were left optional.
-- `PHASE_24_ANALYTICS.md` and the Phase 24 section of the same file state that
-  every measurement ID is unset, and this checkout contains none
-  (`.env.example` is empty, and `npm run audit:analytics` reports
-  *"no measurement IDs configured in this environment"*).
+Two statements used to disagree: `PROJECT_OWNER_PENDING.md` records that on
+**2026-09-06** the owner created a GA4 property, set
+`NEXT_PUBLIC_GA4_MEASUREMENT_ID` in Vercel Production and saw Realtime, while
+`PHASE_24_ANALYTICS.md` states that every ID is unset. The first half of that
+question is now settled from production itself, because `next.config.ts` builds
+the Content-Security-Policy from the IDs present when the deployment was built.
 
-Neither can be resolved here: environment variables live in Vercel, and the
-deployed site could not be fetched from the environment this guide was written
-in. So treat the 2026-09-06 record as **unconfirmed** and settle it with two
-cheap checks before doing anything else:
+Fetched from production on 2026-10-06 (headers of `/en/`, repeated on
+`/sitemap.xml`):
 
-1. `vercel env ls` (or Vercel → Project → Settings → Environment Variables) —
-   is `NEXT_PUBLIC_GA4_MEASUREMENT_ID` present for Production?
-2. Open `https://renovixhomeservices.my/en/`, view source and search for
-   `googletagmanager`. A hit means measurement is live; nothing means it is not.
+```
+Content-Security-Policy: default-src 'self';
+  script-src 'self' 'unsafe-inline' https://www.googletagmanager.com;
+  img-src 'self' data: blob: https://www.google-analytics.com https://*.google-analytics.com;
+  connect-src 'self' https://www.google-analytics.com https://*.google-analytics.com
+    https://*.analytics.google.com; … frame-ancestors 'none'
+```
 
-If it is already set, skip to §5.2 (verify the data is arriving) and §3 step 4
-(add Clarity). If it is not, follow §3 from the top.
+Read against `analyticsCspSources()` in `lib/analytics-config.ts`, that proves:
+
+- **a GA4 Measurement ID is configured in the deployed build** — the direct
+  Google-tag route is active, which is the only thing that adds
+  `googletagmanager.com` to `script-src` and the analytics collect hosts to
+  `connect-src`;
+- **Google Tag Manager is not configured** — a container ID would also add a
+  `frame-src` for GTM Preview, which the live policy does not contain;
+- **Microsoft Clarity is not configured** — `clarity.ms` would appear in
+  `script-src` and `connect-src`;
+- **no Google Ads conversion ID is configured** — no `googleadservices` /
+  `doubleclick` origins.
+
+So the deployed site *is* measuring, through the direct GA4 route with a
+format-valid ID, and Clarity is still an open optional step (§3 step 4). What
+the header cannot show is *which* ID it is — that value lives in the Next.js
+client bundles, not in the HTML, because the tag is injected after hydration by
+design (Consent Mode defaults are pushed first).
+
+**If your GA4 property shows no data, this is the sequence that settles it:**
+
+1. `npm run verify:analytics:live` — fetches the deployed page and its client
+   bundles and prints the exact GA4 Measurement ID production reports to. It
+   also flags a **documentation placeholder** (every character after the prefix
+   identical), which passes every format check while loading a tag that can
+   never report — the classic "the ID is installed but the dashboard is empty"
+   state, now rejected at build time with a warning instead.
+2. GA4 → **Admin → Data streams**: read the Measurement ID of the stream you
+   expect, in the Google account you are signed in with. It must match step 1
+   **character for character**. §6 has the full decision tree.
+3. If they differ, or step 1 reports a placeholder, correct
+   `NEXT_PUBLIC_GA4_MEASUREMENT_ID` in Vercel → Production and redeploy — IDs
+   are inlined at build time, so nothing changes until the site is rebuilt.
+
+**Known gap in that policy — found and fixed on 2026-10-06 (evening).** The
+policy quoted above allows the Google tag to *load* but omits three origins
+Google's own CSP guide requires for Google Analytics without Ads
+(<https://developers.google.com/tag-platform/security/guides/csp>):
+`https://www.googletagmanager.com` in `connect-src` and `img-src`, and
+`https://*.google.com` in `connect-src`. A policy in that state fails
+silently — the tag script loads, the browser then discards the tag's own
+config/beacon traffic, and the dashboard stays empty while every other check
+still says "installed". Microsoft's guidance for Clarity (`*.clarity.ms` in
+`connect-src`) was missing in the same way, so Clarity would have loaded and
+never uploaded. `lib/analytics-config.ts` now emits all of them,
+`scripts/verify-analytics.mjs` prints the identical list, `audit:analytics`
+§10 pins the documented set, and `npm run verify:analytics:live` reports any
+missing origin as a defect against the deployed policy. **The already-deployed
+build predates the fix — and so does the deployed branch:** the fix reaches
+production only after it is merged (pull request #82) *and* the site is
+redeployed; redeploying the old commit rebuilds exactly the same policy, which
+is what a 2026-10-06 header check showed (the live policy was still the pre-fix
+one after a redeploy).
+§6.2 has the check.
+
+A note on the check this guide used to suggest: searching the deployed **page
+source** for `googletagmanager` will find nothing even when measurement is
+live, because the provider script is deliberately injected after hydration
+(`components/analytics/Measurement.tsx` pushes Consent Mode defaults before any
+provider code runs). Use DevTools → **Network** (filter `googletagmanager`) or
+`npm run verify:analytics:live` instead.
 
 ## 3. Step-by-step activation
 
@@ -270,7 +336,12 @@ aborts if the block is not active), and the success path fulfils
 
 ### 5.2 Live in GA4 — the only LIVE VERIFIED gate for GA4
 
-1. Browse `https://renovixhomeservices.my/en/` in a normal browser.
+0. Before browsing, confirm what the deployment reports to:
+   `npm run verify:analytics:live -- --expect <the G-… value from Admin → Data streams>`.
+   A `MATCH` means the site and the property agree; anything else is answered in
+   §6 before you spend time reading reports.
+1. Browse `https://renovixhomeservices.my/en/` in a normal browser (no ad
+   blocker, no script blocker).
    **Admin → Realtime** must show one active user within ~30 seconds.
 2. Navigate to a service page, click the floating WhatsApp CTA, click the
    call button, then submit a real quote request.
@@ -307,13 +378,129 @@ correct to describe GA4 as live.
 
 | Symptom | Cause | Fix |
 | --- | --- | --- |
-| No `gtag.js` in the page source after setting the ID | The deployment was not rebuilt — `NEXT_PUBLIC_*` values are inlined at build time | Redeploy (Vercel → Deployments → Redeploy) |
-| Realtime shows nothing | ID typo, or the variable is scoped to Preview only | `npm run verify:analytics` locally with the same values; check the Vercel scope |
+| GA4 (and Realtime) shows no data although an ID is set in Vercel | The deployed ID is a **placeholder** (every character after the prefix the same) — the tag loads and reports nowhere — or it belongs to a **different property or Google account** than the one being read | `npm run verify:analytics:live` prints the live ID and flags placeholders. Compare it with GA4 → Admin → Data streams; if they differ, correct the Vercel value and redeploy. This is the state §2.1 was written to settle |
+| `npm run verify:analytics:live` reports "placeholder shape" or the deploy check in `verify:analytics` does | The variable holds the example value copied from a guide | Paste the real Measurement ID from GA4 → Admin → Data streams into Vercel → Production and redeploy. `lib/analytics-config.ts` keeps the provider OFF until then, so nothing is silently wrong |
+| The deployed build carries no Google tag at all (`verify:analytics:live` finds none) | The variable is unset, malformed, or the deployment predates the change | `npm run verify:analytics` locally with the same values; set/fix the variable for **Production**; redeploy |
+| `googletagmanager` not found in the page *source* after setting the ID | Expected: the provider script is injected after hydration so Consent Mode defaults are pushed first | Check DevTools → **Network** (filter `googletagmanager`) or run `npm run verify:analytics:live` — the page source is not the right place to look |
+| The deployment was not rebuilt after changing an ID | `NEXT_PUBLIC_*` values are inlined at build time | Redeploy (Vercel → Deployments → Redeploy), then re-run `verify:analytics:live` |
+| GA4 reports stay empty although the tag loads and the ID matches | The **Content-Security-Policy** is missing an origin the provider documents — the tag's data traffic is dropped while the script itself is allowed | `npm run verify:analytics:live` measures this directly (`CSP completeness` line, and a defect for every missing origin). Fix in `lib/analytics-config.ts`, redeploy, re-check. §6.2 |
+| Realtime shows nothing | ID typo, or the variable is scoped to Preview only while you browse Production | `npm run verify:analytics` locally with the same values; `npm run verify:analytics:live` against the deployed URL; check the Vercel scope |
 | `page_view` appears twice per page | Both GA4 routes are active (direct tag **and** a container that also holds a GA4 tag) | Pick one route. In GTM mode, remove the container's "All Pages" GA4 tag and keep only the Custom Event trigger on `page_view` |
 | An event name never appears in DebugView | The event exists but no custom dimension was registered — it is still recorded | Register `language` / `service` / `surface` as custom dimensions (§3 step 7), or read the raw event |
 | CSP violation for `googletagmanager.com` in the console | A provider ID was added by hand somewhere the config cannot see | IDs must come from the documented variables; `lib/analytics-config.ts` derives the CSP from them |
 | Clarity shows no recordings | The project ID is unset or the deployment was not rebuilt | `npm run verify:analytics` shows whether Clarity is configured; Clarity also needs a couple of sessions before the dashboard fills |
 | WhatsApp/phone clicks missing on one language route | Never observed — the harness tests EN, MS and ZH | Re-run `npm run verify:analytics:e2e`; if it fails, the failure names the route |
+
+### 6.1 The IDs match and the dashboard is still empty
+
+`npm run verify:analytics:live -- --expect <G-…>` says **MATCH** and GA4 →
+Admin → Data streams shows that same value, yet nothing appears in GA4. The
+deployment side is then correct — the tag loads and the ID belongs to that
+property — so the reason is one of the following, in the order worth checking.
+
+0. **Check the deployment's policy first** — `npm run verify:analytics:live`
+   prints a **CSP completeness** line. If it reports missing origins, that is a
+   defect on the website side, not in GA4: the tag loads but its data traffic
+   is dropped. Fix it (§6.2), redeploy and re-test before working through the
+   list below.
+1. **Realtime only keeps the last 30 minutes.** Open GA4 → **Reports →
+   Realtime** *while* you are on the site, or within 30 minutes of the visit.
+   Opening Realtime hours after a test visit always shows nothing, and that is
+   not a fault.
+2. **Reports may be showing a different property than the one whose stream ID
+   you compared.** Accounts often end up with more than one property, and the
+   Data streams screen belongs to *one* of them. Check that the property name
+   at the top of **Reports** is the property you opened **Admin** in. One
+   stream ID can never fill another property's reports.
+3. **Data collection is switched off for the property** — Admin → Data
+   collection and modification → **Data collection** → "Collect website and
+   app data" must be ON. While it is off, every report including Realtime
+   stays empty no matter what the tag sends.
+4. **An Active data filter is excluding your traffic** — Admin → Data settings
+   → **Data filters**: an "Internal traffic" filter set to *Active* hides the
+   owner's own visits, so testing yourself can look exactly like a broken tag.
+5. **The browser — or the whole network — blocks Google.** Ad blockers, Brave
+   shields, a DNS-level blocker (AdGuard, Pi-hole, router or corporate
+   filtering) silently drop `googletagmanager.com` and `google-analytics.com`
+   requests. Re-test from a phone on **mobile data** with extensions off; if
+   that session shows up in Realtime, the site was never the problem.
+6. **There is no traffic yet.** A new site with no real visitors has an empty
+   dashboard, and Google's own crawlers are excluded from reports. GA4 is an
+   instrument, not a source of visitors — §5.2 works because *you* generate
+   one deliberate visit.
+7. **Processing delay.** Realtime is instant; standard reports can take up to
+   24–48 hours before an event or page appears for the first time.
+
+**Zero-install check — paste this in the browser console.** Open the live site
+on a computer (Chrome), press **F12**, switch to **Console**, paste this and
+press Enter. It needs no tools, no account and no installation:
+
+```js
+(() => {
+  const scripts = [...document.querySelectorAll("script[src]")].map((s) => s.src);
+  const tag = scripts.filter((src) => src.includes("googletagmanager.com"));
+  const calls = performance
+    .getEntriesByType("resource")
+    .map((entry) => entry.name)
+    .filter((url) => /google-analytics\.com|googletagmanager\.com|clarity\.ms/.test(url));
+  window.__renovixBlocked = [];
+  document.addEventListener("securitypolicyviolation", (event) =>
+    window.__renovixBlocked.push(`${event.violatedDirective} → ${event.blockedURI}`),
+  );
+  console.log("tag script        :", tag.length ? tag[0] : "NOT INJECTED — report this line");
+  console.log("provider requests :", calls.length ? calls : "NONE — the tag never called Google");
+  console.log("dataLayer         :", window.dataLayer);
+  console.log("CSP violations so far:", window.__renovixBlocked);
+})();
+```
+
+Reading the result:
+
+| Output | Meaning |
+| --- | --- |
+| `tag script` shows `…gtag/js?id=G-…` | the site injected the Google tag — the tag itself is not the problem |
+| `provider requests` includes `google-analytics.com/g/collect` | the browser sent the hit; anything left is account- or view-side (§6.1 items 1–4, 7) |
+| `provider requests` is `NONE` | the tag never called Google in this browser — re-test with extensions off, another browser, or a phone on mobile data (items 5–6) |
+| `CSP violations so far` is not empty | the policy is dropping a request — §6.2 |
+
+Then click a second page on the site and run `console.log(window.__renovixBlocked)`
+— it keeps collecting violations until you reload, so a policy problem that only
+appears on later requests is still visible.
+
+**The one-minute test that says which side is at fault:** in Chrome press
+F12 → **Network** → type `collect` in the filter box → reload the page.
+
+- A request to `google-analytics.com/g/collect` carrying `tid=G-…` with status
+  **204** means Google received the hit: the site is reporting correctly and
+  the answer is in 1–4 or 7 above.
+- The request shown as **blocked** (`ERR_BLOCKED_BY_CLIENT`) is a local
+  blocker — case 5.
+- **No `collect` request at all** means the tag never ran in that browser;
+  re-test in Incognito with extensions disabled before suspecting the
+  deployment.
+
+### 6.2 The Content-Security-Policy must carry the provider's data origins
+
+The Content-Security-Policy is generated from the configured IDs by
+`analyticsCspSources()` in `lib/analytics-config.ts`. Allowing only the tag
+*script* is not enough: Google's CSP guide for Google Analytics without Ads
+requires
+
+| Directive | Origins |
+| --- | --- |
+| `script-src` | `https://www.googletagmanager.com` |
+| `connect-src` | `https://www.googletagmanager.com`, `https://*.google-analytics.com`, `https://*.google.com` |
+| `img-src` | `https://www.googletagmanager.com`, `https://*.google-analytics.com` |
+
+and Microsoft's Clarity guidance requires `https://www.clarity.ms` in
+`script-src` plus `https://*.clarity.ms` in `connect-src`.
+
+A policy that lists the script host but not the data hosts produces the
+quietest possible failure: the tag is visible in DevTools → Network, the ID in
+the page is correct, and no hit is ever collected. `npm run
+verify:analytics:live` compares the deployed policy against the table above and
+reports every missing origin as a defect, so the state is never a guess. After
+any fix here, redeploy — the header is baked at build time, like the IDs.
 
 ## 7. Privacy & security notes
 
@@ -357,14 +544,15 @@ correct to describe GA4 as live.
 
 ## 9. Activation checklist
 
-- [ ] §2.1 resolved: confirmed whether `NEXT_PUBLIC_GA4_MEASUREMENT_ID` is
-      already set in Vercel Production (do not add a second stream blindly).
+- [ ] §2.1 read: the deployed build already carries a GA4 ID (settled
+      2026-10-06) — run `npm run verify:analytics:live` and confirm it is the
+      property you intend to read before adding or changing anything.
 - [ ] GA4 property + web data stream created for
       `https://renovixhomeservices.my` (Kuala Lumpur / MYR).
 - [ ] `NEXT_PUBLIC_GA4_MEASUREMENT_ID` set in Vercel **Production** and the
       site redeployed.
-- [ ] `googletagmanager.com/gtag/js?id=G-…` visible in the deployed page
-      source.
+- [ ] `npm run verify:analytics:live` finds the ID and (with
+      `--expect`) matches the value in GA4 → Admin → Data streams.
 - [ ] `npm run verify:analytics` reports `CONFIGURED` with the same values.
 - [ ] `npm run verify:analytics:e2e` passes against the real build.
 - [ ] Clarity project created; `NEXT_PUBLIC_CLARITY_PROJECT_ID` set;
@@ -384,7 +572,9 @@ correct to describe GA4 as live.
 | --- | --- |
 | `npm run build` | PASS (689 static entries, route set unchanged) |
 | All 18 `scripts/audit-*.mjs` | PASS, including the new Task 2.2 section of `npm run audit:analytics` |
-| `npm run verify:analytics` | Exercised in `NOT CONFIGURED`, GA4+Clarity `CONFIGURED`, GTM-wins, malformed-ID and missing-`NEXT_PUBLIC_`-prefix states |
+| `npm run verify:analytics` | Exercised in `NOT CONFIGURED`, GA4+Clarity `CONFIGURED`, GTM-wins, malformed-ID, placeholder-ID and missing-`NEXT_PUBLIC_`-prefix states |
+| `npm run verify:analytics:live` | Exercised against production in its offline path (clean "could not reach — NOT a verdict" message, exit 0). Its assertions were validated against the 2026-10-06 production headers recorded in §2.1 and against a locally served build |
 | `npm run verify:analytics:e2e` | PASS — real headless Chromium against the real production build: `whatsapp_click` (EN/MS/ZH), `phone_click`, `quote_form_submit`, `quote_form_success`, `quote_form_start`, `quote_form_error` (`unavailable`), consent defaults, no PII, no external request |
 | `npm run verify:analytics:e2e -- --configured` | PASS — TEST-format IDs: `gtag.js` + Clarity tags load, CSP allows exactly those origins, one `page_view` per route plus one per client-side navigation, every event reaches `window.dataLayer`, web vitals arrive, and every provider request fails at DNS |
-| Live GA4 / Clarity dashboards | **NOT CLAIMED** — no measurement ID is available in this environment, and the deployed site could not be fetched from it. The owner completes §5.2–§5.3 |
+| Deployed measurement configuration (2026-10-06) | **OBSERVED, not claimed as working data**: the production Content-Security-Policy proves a format-valid GA4 ID was present at build time; GTM, Clarity and Ads are not configured. The ID itself is read on demand by `npm run verify:analytics:live` |
+| Live GA4 / Clarity dashboards | **NOT CLAIMED** — whether the property receives data is only visible in the owner's GA4 (and Clarity) account. The owner completes §5.2–§5.3 |
