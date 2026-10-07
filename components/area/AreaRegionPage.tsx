@@ -22,6 +22,7 @@ import { GuideLinksSection } from "@/components/blog/GuideLinksSection";
 import { getArticlesForRegion } from "@/data/blog";
 import { AreaRegionSubServicesBlock } from "@/components/area/AreaRegionSubServicesSection";
 import { AreaRegionProblemsSection } from "@/components/area/AreaRegionProblemsSection";
+import { AreaRegionProjectsSection } from "@/components/area/AreaRegionProjectsSection";
 import { getDistrictsForRegion } from "@/data/locations";
 import { getDistrictDescription, getDistrictName } from "@/data/i18n";
 import { FloatingWhatsApp } from "@/components/whatsapp/FloatingWhatsApp";
@@ -275,6 +276,9 @@ export function AreaRegionPage({ region, lang }: AreaRegionPageProps) {
           bordered white section mirrors the districts block above it, so the
           page keeps its existing surface/white rhythm. */}
       <AreaRegionProblemsSection region={region} lang={lang} />
+
+      {/* Lead-generation Task 3.4 — project proof across this region. */}
+      <AreaRegionProjectsSection region={region} lang={lang} />
 
       {/* Phase 41 — the third layer the region's own area guides carry: the
           Knowledge Hub guides they publish. Derived as their union in

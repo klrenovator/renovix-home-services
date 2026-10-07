@@ -511,6 +511,12 @@ export const zh: Dictionary = {
     problemsLinkTitle: "本区域的问题指南",
     problemsNote:
       "每份指南都会说明征兆、可能成因以及对应的处理方式。上方链接的地区指南会指出您所在位置最常见的问题。",
+    projectsEyebrow: "已完成工程",
+    projectsTitle: "{name}各地近期项目",
+    projectsDescription:
+      "在{name}各地完成的家居装修与维修工程施工照片与项目详情。",
+    viewProject: "查看项目",
+    allProjectsCta: "查看所有已完成项目",
   },
   areaPage: {
     breadcrumbAreas: "服务地区",
@@ -527,6 +533,12 @@ export const zh: Dictionary = {
     propertyTypesTitle: "{name}的房屋类型",
     problemsEyebrow: "常见问题",
     problemsTitle: "{name}常见的装修与维修问题",
+    projectsEyebrow: "已完成工程",
+    projectsTitle: "{name}近期项目",
+    projectsDescription:
+      "在{name}完成的家居装修与维修项目真实施工照片与工作范围记录。",
+    viewProject: "查看项目",
+    allProjectsCta: "查看所有已完成项目",
     processEyebrow: "施工流程",
     contextEyebrow: "本地服务情况",
     contextTitle: "在{name}施工 — 您可以预期什么",

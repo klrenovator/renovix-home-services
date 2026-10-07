@@ -56,6 +56,7 @@ Renovix Home Services – Home Renovation & Improvement Services in Kuala Lumpur
 | `npm run verify:analytics:e2e` | End-to-end conversion-event verification (Lead-generation Task 2.2) — serves the real production build, drives a real headless Chromium over CDP and asserts `whatsapp_click` (EN/MS/ZH), `phone_click`, `quote_form_submit`, `quote_form_success`, `quote_form_error`, the consent defaults and the no-PII allowlist each hold exactly once; `-- --configured` rebuilds into a throwaway `.next-analytics-e2e/` with TEST-format IDs and additionally asserts the provider hop (gtag.js + Clarity tags, CSP, `page_view` dedupe, `window.dataLayer`, web vitals) with every external hostname unresolvable |
 | `npm run verify:local-seo` | Local authority readiness check (Lead-generation Task 3.1) — prints the exact NAP block, phone, website and hours a Google Business Profile and every Malaysian citation must use, read live from `data/site.ts` so profile and site cannot diverge; lists the 53 published locality guides grouped by region as the service-area reference; reports whether the homepage reviews link is armed with a verified profile URL. Contacts no Google service, prints only supplied facts, always exits 0 |
 | `npm run verify:citations` | Local citation readiness (Lead-generation Task 3.3) — reports Yellow Pages Malaysia, Hotfrog, BusinessList.my and Facebook Page status; validates any owner-declared direct HTTPS profile URL; does not contact directories or claim listings are live/approved |
+| `npm run verify:project-locations` | Project Area Tagging verification (Lead-generation Task 3.4) — inspects all 28 published projects in `data/project-content/projects.ts` for confirmed neighbourhood locations, validates region and area guide slugs against published KL/Selangor guides, and reports tagged vs pending projects. Enforces non-fabrication rules |
 | `npm run verify:analytics:live` | Deployed-site measurement check (Lead-generation Task 2.2 follow-up) — fetches the live page, reads the served CSP and the Next.js client bundles and prints the GA4 Measurement ID (and GTM/Clarity/Ads IDs) the deployment actually reports to, flags a documentation placeholder that could never report, verifies the served policy against the complete origin list Google and Microsoft document (the `CSP completeness` line; a missing origin is reported as a defect, because the tag then loads while its data traffic is dropped), and supports `--expect G-…` to compare against GA4 → Admin → Data streams. Read-only: no writes, no credentials; an unreachable host is reported as "not a verdict" (exit 0), and exit 1 is reserved for a defect observed in the deployment |
 | `npm run verify:search-console` | Search Console readiness check (Lead-generation Task 3.2) — reads the HTML-file verification token, `app/robots.ts` (one canonical `Sitemap:` line), `lib/sitemap.ts`, `app/sitemap.ts` and the retired-URL redirects from the repository, then prints the owner steps that remain; `-- --live` also fetches `/robots.txt`, `/sitemap.xml` and the verification file to prove Google's three fetches answer. Draws no conclusion about submission/processing — that is only visible in the owner's Search Console |
 ## Pricing data
@@ -180,6 +181,21 @@ npm run verify:search-console -- --live
 
 Whether the sitemap is submitted and processed, and what is indexed, is only
 visible in the owner's own Search Console account — no script here claims it.
+
+## Project Area Tagging (Local Proof & CRO)
+
+Owner guide (Lead-generation Task 3.4): **`PROJECT_LOCATIONS_SETUP.md`** — step-by-step
+mapping instructions for the 28 published projects in `data/project-content/projects.ts`.
+The repository provides full bidirectional architecture: when a project is tagged with a
+confirmed `location: { region, area? }`, it appears with real photos and case study links on
+that area's guide (`AreaProjectsSection`), on the region hub (`AreaRegionProjectsSection`),
+and links back from the project detail page. Untagged projects cleanly omit the section so no
+fake case studies or placeholders are ever rendered. Check current progress with:
+
+```bash
+npm run verify:project-locations
+```
+
 
 ## Version notes
 

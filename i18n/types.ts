@@ -400,6 +400,13 @@ export type Dictionary = {
     problemsLinkTitle: string;
     /** "Noted across {name} — open the guide for causes and the work that fixes it." */
     problemsNote: string;
+    /** Task 3.4 — project proof on region hubs. */
+    projectsEyebrow: string;
+    /** "Recent Projects Across {name}" */
+    projectsTitle: string;
+    projectsDescription: string;
+    viewProject: string;
+    allProjectsCta: string;
   };
   areaPage: {
     breadcrumbAreas: string;
@@ -426,6 +433,13 @@ export type Dictionary = {
     problemsEyebrow: string;
     /** "Common Renovation & Repair Problems in {name}" */
     problemsTitle: string;
+    /** Task 3.4 — project proof on area guides. */
+    projectsEyebrow: string;
+    /** "Recent Projects in {name}" */
+    projectsTitle: string;
+    projectsDescription: string;
+    viewProject: string;
+    allProjectsCta: string;
     processEyebrow: string;
     contextEyebrow: string;
     /** "Working in {name} — What to Expect" */
