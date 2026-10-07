@@ -546,6 +546,12 @@ export const en: Dictionary = {
     problemsLinkTitle: "Problem guides for this region",
     problemsNote:
       "Each guide explains the warning signs, the likely causes and the work that fixes it. The area guides linked above say which of these are most common where you are.",
+    projectsEyebrow: "Completed Work",
+    projectsTitle: "Recent Projects Across {name}",
+    projectsDescription:
+      "Photographs and project details from renovation and repair work completed across {name}.",
+    viewProject: "View project",
+    allProjectsCta: "View all completed projects",
   },
   areaPage: {
     breadcrumbAreas: "Service Areas",
@@ -562,6 +568,12 @@ export const en: Dictionary = {
     propertyTypesTitle: "Property Types in {name}",
     problemsEyebrow: "Common Problems",
     problemsTitle: "Common Renovation & Repair Problems in {name}",
+    projectsEyebrow: "Completed Work",
+    projectsTitle: "Recent Projects in {name}",
+    projectsDescription:
+      "Real photographs and documented scope from home renovation and repair projects completed in {name}.",
+    viewProject: "View project",
+    allProjectsCta: "View all completed projects",
     processEyebrow: "Our Process",
     contextEyebrow: "Local Service Context",
     contextTitle: "Working in {name} — What to Expect",

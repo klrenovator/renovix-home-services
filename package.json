@@ -35,6 +35,7 @@
     "verify:search-console": "node scripts/verify-search-console.mjs",
     "verify:local-seo": "node scripts/verify-local-seo.mjs",
     "verify:citations": "node scripts/verify-citations.mjs",
+    "verify:project-locations": "node scripts/verify-project-locations.mjs",
     "verify:analytics:e2e": "node scripts/verify-analytics-e2e.mjs"
   },
   "dependencies": {

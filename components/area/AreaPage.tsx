@@ -5,6 +5,7 @@ import { AreaIntentMatrixSection } from "@/components/area/AreaIntentMatrixSecti
 import { AreaPricingSection } from "@/components/area/AreaPricingSection";
 import { AreaPropertyTypesSection } from "@/components/area/AreaPropertyTypesSection";
 import { AreaProblemsSection } from "@/components/area/AreaProblemsSection";
+import { AreaProjectsSection } from "@/components/area/AreaProjectsSection";
 import { AreaProcessSection } from "@/components/area/AreaProcessSection";
 import { AreaContextSection } from "@/components/area/AreaContextSection";
 import { AreaFaqSection } from "@/components/area/AreaFaqSection";
@@ -37,6 +38,8 @@ export function AreaPage({ area, lang }: AreaPageProps) {
       <AreaPricingSection area={area} lang={lang} />
       <AreaPropertyTypesSection area={area} lang={lang} />
       <AreaProblemsSection area={area} lang={lang} />
+      {/* Lead-generation Task 3.4 — project proof for this specific area. */}
+      <AreaProjectsSection area={area} lang={lang} />
       <AreaProcessSection area={area} lang={lang} />
       <AreaContextSection area={area} lang={lang} />
       <AreaFaqSection name={area.name} faqs={area.faqs} lang={lang} />

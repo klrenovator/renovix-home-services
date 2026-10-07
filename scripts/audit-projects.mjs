@@ -499,6 +499,93 @@ for (const file of readdirSync(join(ROOT, "data", "blog", "content")).filter(
 }
 
 /* ------------------------------------------------------------------------ */
+/* 12. Project ↔ Location graph (Lead-generation Task 3.4)                  */
+/* ------------------------------------------------------------------------ */
+
+const projectIndexSource = read("data/project-content/index.ts");
+const areaPageSource = read("components/area/AreaPage.tsx");
+const areaRegionPageSource = read("components/area/AreaRegionPage.tsx");
+const areaProjectsSectionSource = read("components/area/AreaProjectsSection.tsx");
+const areaRegionProjectsSectionSource = read("components/area/AreaRegionProjectsSection.tsx");
+const packageJsonSource = read("package.json");
+
+// 1. Data layer getters exported
+if (!/export function getPublishedProjectsForLocation\(/.test(projectIndexSource)) {
+  fail("Task 3.4 guard: data/project-content/index.ts must export getPublishedProjectsForLocation().");
+}
+if (!/export function getPublishedProjectsForArea\(/.test(projectIndexSource)) {
+  fail("Task 3.4 guard: data/project-content/index.ts must export getPublishedProjectsForArea().");
+}
+if (!/export function getPublishedProjectsForRegion\(/.test(projectIndexSource)) {
+  fail("Task 3.4 guard: data/project-content/index.ts must export getPublishedProjectsForRegion().");
+}
+
+// 2. Component integration in Area and Region pages
+if (!/<AreaProjectsSection\s+area=\{area\}\s+lang=\{lang\}\s*\/>/.test(areaPageSource)) {
+  fail("Task 3.4 guard: components/area/AreaPage.tsx must mount <AreaProjectsSection area={area} lang={lang} />.");
+}
+if (!/<AreaRegionProjectsSection\s+region=\{region\}\s+lang=\{lang\}\s*\/>/.test(areaRegionPageSource)) {
+  fail("Task 3.4 guard: components/area/AreaRegionPage.tsx must mount <AreaRegionProjectsSection region={region} lang={lang} />.");
+}
+
+// 3. Components return null when no projects match (honesty gate, no empty cards or thin content)
+if (!/projects\.length === 0[\s\S]*?return null/.test(areaProjectsSectionSource)) {
+  fail("Task 3.4 guard: AreaProjectsSection must return null when projects.length === 0 (omit cleanly).");
+}
+if (!/projects\.length === 0[\s\S]*?return null/.test(areaRegionProjectsSectionSource)) {
+  fail("Task 3.4 guard: AreaRegionProjectsSection must return null when projects.length === 0 (omit cleanly).");
+}
+
+// 4. Multilingual dictionary keys in EN, MS, ZH
+for (const dict of ["en", "ms", "zh"]) {
+  const dictSource = read(`i18n/${dict}.ts`);
+  for (const key of ["projectsEyebrow", "projectsTitle", "projectsDescription", "viewProject", "allProjectsCta"]) {
+    const areaPageKeyMatch = new RegExp(`areaPage:[\\s\\S]*?${key}:\\s*"([^"]+)"`);
+    if (!areaPageKeyMatch.test(dictSource)) {
+      fail(`Task 3.4 guard: i18n/${dict}.ts is missing areaPage.${key}.`);
+    }
+    const areaRegionKeyMatch = new RegExp(`areaRegion:[\\s\\S]*?${key}:\\s*"([^"]+)"`);
+    if (!areaRegionKeyMatch.test(dictSource)) {
+      fail(`Task 3.4 guard: i18n/${dict}.ts is missing areaRegion.${key}.`);
+    }
+  }
+}
+
+// 5. Verification script & runbook present
+if (!existsSync(join(ROOT, "scripts/verify-project-locations.mjs"))) {
+  fail("Task 3.4 guard: scripts/verify-project-locations.mjs must exist.");
+}
+if (!packageJsonSource.includes('"verify:project-locations"')) {
+  fail("Task 3.4 guard: package.json must wire npm run verify:project-locations.");
+}
+if (!existsSync(join(ROOT, "PROJECT_LOCATIONS_SETUP.md"))) {
+  fail("Task 3.4 guard: PROJECT_LOCATIONS_SETUP.md owner runbook must exist.");
+}
+
+// 6. Project location validity: if any project has location configured, region & area must be sound
+const locationGuideIds = new Set();
+const locationsRegistrySource = read("data/locations/registry.ts");
+for (const [, id] of locationsRegistrySource.matchAll(/id:\s*"((?:kuala-lumpur|selangor)\/[a-z0-9-]+)"/g)) {
+  locationGuideIds.add(id);
+}
+
+for (const project of publishedProjects) {
+  const locMatch = PROJECTS_FILE.slice(PROJECTS_FILE.indexOf(`slug: "${project.slug}"`))
+    .slice(0, 1500)
+    .match(/location:\s*\{\s*region:\s*"([^"]+)"(?:,\s*area:\s*"([^"]+)")?\s*\}/);
+  if (locMatch) {
+    const [, reg, ar] = locMatch;
+    if (!["kuala-lumpur", "selangor"].includes(reg)) {
+      fail(`Task 3.4 guard: Project "${project.slug}" references invalid region "${reg}".`);
+    }
+    if (ar && !locationGuideIds.has(`${reg}/${ar}`)) {
+      fail(`Task 3.4 guard: Project "${project.slug}" references unknown area guide "${reg}/${ar}".`);
+    }
+  }
+}
+
+
+/* ------------------------------------------------------------------------ */
 /* Report.                                                                   */
 /* ------------------------------------------------------------------------ */
 

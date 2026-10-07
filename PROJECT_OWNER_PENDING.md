@@ -56,6 +56,33 @@ count is claimed anywhere on the site, and none of it may be added to the
 site's structured data. **NOT CLAIMED** until the owner has personally seen
 every item in `LOCAL_SEO_SETUP.md` §7.
 
+## Lead-generation Task 3.4 — Project Area Tagging (2026-10-07)
+
+> **Canonical guide: `PROJECT_LOCATIONS_SETUP.md`.** Run
+> `npm run verify:project-locations` to check tagged versus pending project
+> locations, validate slug correctness, and see the inventory.
+
+The codebase is fully wired for bidirectional project proof:
+1. When a project is tagged with `location: { region, area? }` in
+   `data/project-content/projects.ts`, it automatically displays on the matching
+   area guide (`AreaProjectsSection`), on the region hub
+   (`AreaRegionProjectsSection`), and links back from the project detail page
+   (`ProjectLocationSection`).
+2. Untagged projects cleanly omit the area section — no empty placeholders or
+   fake case studies are ever shown.
+3. Multilingual copy is fully implemented in EN, MS, and ZH.
+
+| # | Action | Where | Notes |
+| --- | --- | --- | --- |
+| 1 | Check job records, invoices, or client communication for the 28 published projects | Owner client files | Identify the real neighbourhood/township for each completed job |
+| 2 | Add `location: { region: "...", area: "..." }` to each confirmed project | `data/project-content/projects.ts` | Use valid area slugs from `PROJECT_LOCATIONS_SETUP.md` §5 (21 KL, 32 Selangor). If a township has no guide, use region-wide `{ region: "..." }` |
+| 3 | Run `npm run verify:project-locations` | Terminal | Verifies all slugs resolve to real published area guides |
+| 4 | Never guess locations from photos | Content governance | Per `CONTENT_GOVERNANCE.md` §1, locations must be real client records; never invent addresses or publish private client details |
+
+**Current Task 3.4 status: [PENDING] for owner location confirmation.** Run
+`npm run verify:project-locations` to see current progress across all 28
+projects.
+
 ## Phase 49 (2026-09-23) — two decisions the AI deliberately did not make
 
 Both were found by an independent sweep of all 678 served pages. Neither is a

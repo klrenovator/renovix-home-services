@@ -1,3 +1,4 @@
+import type { AreaRegionId } from "@/data/area-content/types";
 import type { LanguageCode } from "@/data/languages";
 import { getLanguageCode } from "@/data/languages";
 import { projectCategories, type ProjectCategory, type ProjectCategoryId } from "@/data/projects";
@@ -166,3 +167,44 @@ export function getProjectCategoryServicePath(
 ): string | undefined {
   return getProjectCategory(id)?.servicePath;
 }
+
+/**
+ * Lead-generation Task 3.4 — bidirectional location-to-project queries.
+ *
+ * Returns published projects whose confirmed location matches the given region
+ * (and area slug, if specified). Projects without a confirmed location or
+ * whose location does not match are excluded.
+ */
+export function getPublishedProjectsForLocation(
+  region: AreaRegionId,
+  area?: string,
+): Project[] {
+  return getPublishedProjects().filter((project) => {
+    if (!project.location) return false;
+    if (project.location.region !== region) return false;
+    if (area && project.location.area !== area) return false;
+    return true;
+  });
+}
+
+/**
+ * Published projects confirmed to have taken place in a specific area guide.
+ */
+export function getPublishedProjectsForArea(
+  region: AreaRegionId,
+  area: string,
+): Project[] {
+  return getPublishedProjectsForLocation(region, area);
+}
+
+/**
+ * Published projects confirmed to have taken place anywhere within a region hub.
+ */
+export function getPublishedProjectsForRegion(
+  region: AreaRegionId,
+): Project[] {
+  return getPublishedProjects().filter(
+    (project) => project.location?.region === region,
+  );
+}
+

@@ -553,6 +553,12 @@ export const ms: Dictionary = {
     problemsLinkTitle: "Panduan masalah untuk wilayah ini",
     problemsNote:
       "Setiap panduan menerangkan tanda amaran, punca yang mungkin dan kerja yang menyelesaikannya. Panduan kawasan yang dipaut di atas menyatakan masalah mana yang paling biasa di lokasi anda.",
+    projectsEyebrow: "Projek Siap",
+    projectsTitle: "Projek Terkini di Seluruh {name}",
+    projectsDescription:
+      "Gambar dan butiran projek daripada kerja renovasi dan pembaikan rumah yang telah disiapkan di seluruh {name}.",
+    viewProject: "Lihat projek",
+    allProjectsCta: "Lihat semua projek siap",
   },
   areaPage: {
     breadcrumbAreas: "Kawasan Perkhidmatan",
@@ -569,6 +575,12 @@ export const ms: Dictionary = {
     propertyTypesTitle: "Jenis Hartanah di {name}",
     problemsEyebrow: "Masalah Biasa",
     problemsTitle: "Masalah Renovasi & Pembaikan Yang Biasa di {name}",
+    projectsEyebrow: "Projek Siap",
+    projectsTitle: "Projek Terkini di {name}",
+    projectsDescription:
+      "Gambar sebenar dan skop kerja daripada projek renovasi dan pembaikan rumah yang telah disiapkan di {name}.",
+    viewProject: "Lihat projek",
+    allProjectsCta: "Lihat semua projek siap",
     processEyebrow: "Proses Kami",
     contextEyebrow: "Konteks Perkhidmatan Tempatan",
     contextTitle: "Bekerja di {name} — Apa Yang Perlu Dijangka",
