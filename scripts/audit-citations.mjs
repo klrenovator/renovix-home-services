@@ -5,8 +5,10 @@
  * Guards the repo-side preparation for Yellow Pages Malaysia, Hotfrog,
  * BusinessList.my and Facebook Local Business: owner-only profile state,
  * direct HTTPS URLs, a localized contact-page presentation, privacy-safe click
- * measurement, and an honest owner runbook. This audit never claims that an
- * external listing has been submitted or approved.
+ * measurement, an honest owner runbook, and the opt-in read-only live listing
+ * check (`npm run verify:citations -- --live`) with its honesty contract.
+ * This audit never claims that an external listing has been submitted or
+ * approved.
  *
  * Run with: npm run audit:citations
  */
@@ -15,6 +17,7 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { CITATION_DIRECTORIES, validateCitationUrl } from "./citation-rules.mjs";
+import { checkNapPresence, classifyLiveOutcome } from "./citation-live-check.mjs";
 
 const ROOT = join(fileURLToPath(new URL(".", import.meta.url)), "..");
 const read = (path) => readFileSync(join(ROOT, path), "utf8");
@@ -204,6 +207,95 @@ for (const [label, source, pattern] of [
   if (typeof pattern === "boolean" ? pattern : pattern.test(source)) note(`${label} is covered.`);
   else fail(`${label} is missing or inaccurate.`);
 }
+
+/* Opt-in live listing verification: read-only, offline-honest, write-free. */
+const liveModule = read("scripts/citation-live-check.mjs");
+
+for (const [label, ok] of [
+  ["live mode is opt-in via --live", /process\.argv[\s\S]{0,120}--live/.test(verifier)],
+  ["live checks are imported only behind the flag", /await import\(["']\.\/citation-live-check\.mjs["']\)/.test(verifier)],
+  ["the default verification path still performs no network request", !/\bfetch\s*\(|node:https?|XMLHttpRequest/.test(verifier)],
+  ["the live module performs the read-only GET", /\bfetch\s*\(/.test(liveModule)],
+  ["the live module writes nothing and never touches the profile config", !/writeFileSync|appendFileSync|writeFile\(|createWriteStream|localCitationProfiles/.test(liveModule)],
+  ["every live request is bounded by a timeout", /AbortController/.test(liveModule) && /setTimeout/.test(liveModule)],
+  ["redirects are followed and the final URL is reported", /redirect:\s*"follow"/.test(liveModule) && /response\.url/.test(liveModule)],
+  ["network failure is classified unverified, never pass or fail", /"unverified"/.test(liveModule)],
+  ["the live check compares the published NAP (name, phone, address)", /checkNapPresence/.test(liveModule) && /phone/.test(liveModule) && /postalCode/.test(liveModule)],
+  ["the live check never marks a listing published", !/status:\s*"published"|status\s*=\s*"published"/.test(liveModule)],
+  ["the guide documents the live check and its honesty contract", /verify:citations -- --live/.test(localSeoGuide) && /NOT VERIFIED/.test(localSeoGuide)],
+  ["README documents the live mode", /verify:citations -- --live/.test(readme)],
+  ["the owner checklist points at the live check", /verify:citations -- --live/.test(ownerPending)],
+]) {
+  if (ok) note(`${label} is covered.`);
+  else fail(`${label} is missing or inaccurate.`);
+}
+
+/* The live classifiers are pinned offline so this audit cannot pass vacuously. */
+const nap = {
+  name: "Renovix Home Services",
+  phone: "+601159259521",
+  streetAddress: "Jalan Kiara, Mont Kiara",
+  postalCode: "50480",
+};
+
+const napCases = [
+  [
+    "a full NAP page is recognised",
+    "<html><body>Renovix Home Services · +60 11-5925 9521 · Jalan Kiara, Mont Kiara, 50480 Kuala Lumpur</body></html>",
+    { name: "full", phone: true, address: true },
+  ],
+  [
+    "the local phone format is recognised",
+    "<html><body>Renovix Home Services · 011-5925 9521 · Jalan Kiara, Mont Kiara, 50480</body></html>",
+    { name: "full", phone: true, address: true },
+  ],
+  [
+    "a truncated business name is flagged",
+    "<html><body>Renovix — handyman services · 011-5925 9521 · Jalan Kiara, Mont Kiara, 50480</body></html>",
+    { name: "truncated", phone: true, address: true },
+  ],
+  [
+    "a page without the business name is flagged",
+    "<html><body>Best Renovation KL · 011-5925 9521 · Jalan Kiara, Mont Kiara, 50480</body></html>",
+    { name: "missing", phone: true, address: true },
+  ],
+  [
+    "a hidden phone is reported missing",
+    "<html><body>Renovix Home Services · Jalan Kiara, Mont Kiara, 50480</body></html>",
+    { name: "full", phone: false, address: true },
+  ],
+  [
+    "a missing postcode is reported missing",
+    "<html><body>Renovix Home Services · 011-5925 9521 · Jalan Kiara, Mont Kiara</body></html>",
+    { name: "full", phone: true, address: false },
+  ],
+];
+for (const [label, body, expected] of napCases) {
+  const presence = checkNapPresence(body, nap);
+  const actual = { name: presence.name, phone: presence.phone, address: presence.address };
+  if (JSON.stringify(actual) !== JSON.stringify(expected)) {
+    fail(`${label}: expected ${JSON.stringify(expected)}, got ${JSON.stringify(actual)}.`);
+  }
+}
+note("NAP comparison recognises full/local phone formats and flags truncated names, hidden phones and missing address fragments.");
+
+const liveDirectory = { label: "Hotfrog Malaysia", allowedHosts: ["hotfrog.com.my", "www.hotfrog.com.my"] };
+const liveCases = [
+  ["a failed request is unverified, never a failure", liveDirectory, { error: new Error("getaddrinfo ENOTFOUND") }, nap, "unverified"],
+  ["a 404 is a failure", liveDirectory, { status: 404, finalUrl: "https://www.hotfrog.com.my/company/gone", body: "" }, nap, "fail"],
+  ["a redirect off the directory host is a failure", liveDirectory, { status: 200, finalUrl: "https://www.facebook.com/RenovixHomeServices", body: "Renovix Home Services" }, nap, "fail"],
+  ["a nameless page is a failure", liveDirectory, { status: 200, finalUrl: "https://www.hotfrog.com.my/company/other", body: "Other Renovation Sdn Bhd" }, nap, "fail"],
+  ["a full-NAP page passes", liveDirectory, { status: 200, finalUrl: "https://www.hotfrog.com.my/company/renovix", body: "Renovix Home Services · +601159259521 · Jalan Kiara, Mont Kiara, 50480" }, nap, "pass"],
+  ["a truncated name warns", liveDirectory, { status: 200, finalUrl: "https://www.hotfrog.com.my/company/renovix", body: "Renovix · 011-5925 9521 · Jalan Kiara, Mont Kiara, 50480" }, nap, "warn"],
+  ["a hidden phone warns", liveDirectory, { status: 200, finalUrl: "https://www.hotfrog.com.my/company/renovix", body: "Renovix Home Services · Jalan Kiara, Mont Kiara, 50480" }, nap, "warn"],
+];
+for (const [label, directory, outcome, napCase, expected] of liveCases) {
+  const result = classifyLiveOutcome(directory, outcome, napCase);
+  if (result.verdict !== expected) {
+    fail(`${label}: expected verdict ${expected}, got ${result.verdict} (${result.reasons.join("; ")}).`);
+  }
+}
+note("live verdicts pinned: unreachable is unverified; broken, off-directory or nameless pages fail; truncated or partially visible NAP warns.");
 
 if (failures.length > 0) {
   console.error("Renovix Home Services — local citation audit\n" + "=".repeat(58));
