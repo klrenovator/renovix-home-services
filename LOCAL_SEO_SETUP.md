@@ -290,6 +290,36 @@ shows a directory link only for a profile the owner has marked published, and
 records an aggregate `directory_profile_click` with only language, page surface
 and a fixed directory ID. Directory URLs are not added to structured data.
 
+### Check each listing before and after enabling it
+
+`npm run verify:citations` validates the repository side only: pending entries
+stay empty, published entries use a direct HTTPS profile URL on the expected
+directory host, and no search, claim, share or submission URL can be
+configured. It contacts no directory.
+
+`npm run verify:citations -- --live` additionally performs **one read-only GET
+per published profile** (redirects followed, 20-second timeout, no
+credentials, no writes) and reports what it can honestly see:
+
+- **LIVE PASS** — the public page answers 2xx on the directory's own host and
+  shows the full business name, phone and address from `data/site.ts`.
+- **LIVE WARN** — the page answers but the name is truncated, or the phone /
+  address are not visible in the served HTML (directories often render these
+  with JavaScript or behind a "show number" click). Confirm by eye.
+- **LIVE FAIL** — the URL does not answer 2xx, redirects off the directory's
+  host, or the page shows no trace of the business; a contact-page link to it
+  would be broken or wrong. Fix the listing or the configured URL.
+- **NOT VERIFIED** — this machine could not reach the directory (no network,
+  DNS failure, timeout). Never a pass and never a failure; re-run it where a
+  browser can open the listing.
+
+The live check is read-only: it writes nothing, changes no configuration and
+never marks a listing published. It cannot confirm that a directory approved
+the listing, that the listing is the official record, or that no duplicate
+exists — those stay owner checks, and the Task 3.3 completion gate in
+`LEAD_GENERATION_PLAN.md` still requires the owner to have seen all four
+public listings.
+
 **Current status: [PENDING]** for Yellow Pages Malaysia, Hotfrog, BusinessList.my
 and Facebook Local Business. None of the four off-site registrations or their
 publication state can be confirmed from this repository.
