@@ -51,7 +51,7 @@ than create if a listing is found.
 | 5 | Complete verification, then **paste the profile's review URL into `googleReviewsUrl` in `data/site.ts`** | `data/site.ts` (one line) | This is the only code-side step. The homepage link, its EN/MS/ZH labels and its `review_profile_click` event are already wired and inert until the value is set (`LOCAL_SEO_SETUP.md` §6) |
 | 6 | Publish the same NAP on Yellow Pages Malaysia, Hotfrog, BusinessList.my and Facebook Local Business; search/claim existing profiles first | Owner-controlled directory accounts; then `data/site.ts` | Copy from `npm run verify:local-seo`; check each public page before setting its `localCitationProfiles.<directory>` entry to `status: "published"` with the direct HTTPS URL. `npm run verify:citations` validates URL shape/config only and `npm run verify:citations -- --live` retrieves each published profile read-only to check it answers and shows the NAP — neither can verify approval or that the listing is the official record. Keep each entry pending until the live NAP is checked; no paid plan without owner approval. |
 
-**Current Task 3.3 status: [PENDING] for all four directories.** Run
+**Current Task 3.3 status: [PENDING] for all four directories.** Owner confirmed on 2026-10-08 that the listings have not yet been published. Run
 `npm run verify:citations` to see the repository-side state and
 `npm run verify:citations -- --live` to retrieve each published profile once
 (read-only) and check that its public page answers and shows the site's NAP;
