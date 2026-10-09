@@ -8699,3 +8699,84 @@ now exist with enforced honesty rules.
   and deploy follow the owner's normal review workflow.
 - Production deploy: **not performed** — no code was deployed by this session;
   the live site was only read for comparison.
+
+---
+
+## Phase 59 — Post-merge baseline re-verification (2026-10-09)
+
+**Result: 🟢 baseline fully re-verified on the merged state before any change.
+PR #92 (Phases 56–58) squash-merged to `main` as `7a7d60e`; this session works
+on `arena/ba1e3e8d-renovix-home-services` branched from that squash commit.
+No site defect found; no site change made in this phase.**
+
+### 1. Starting state
+
+- Merge record: PR **#92** squash-merged on `main` as `7a7d60e` ("Phase 56-58:
+  session re-audit, internal-link audit (audit:links), keyword research
+  database (audit:keywords)"). Previous session branch was
+  `arena/b36d23ca-renovix-home-services`; this session continues on
+  `arena/ba1e3e8d-renovix-home-services` branched from `7a7d60e`.
+- Working tree clean; `npm ci` — PASS (Node 22.22.3, npm 10.9.8).
+
+### 2. Baseline gate suite (this checkout, 2026-10-09)
+
+| Gate | Result |
+| --- | --- |
+| `npm run lint` | ✅ PASS — 0 errors, 0 warnings |
+| `npm run type-check` | ✅ PASS (`next typegen` + `tsc --noEmit`) |
+| `audit:business` | ✅ PASS |
+| `audit:og-fonts` | ✅ PASS |
+| `audit:project-assets` | ✅ PASS (28 projects, 56 referenced images, 57 on disk) |
+| `audit:pricing` | ✅ PASS |
+| `audit:projects` | ✅ PASS |
+| `audit:locations` | ✅ PASS (53 locations: 21 KL, 32 Selangor) |
+| `audit:authority` | ✅ PASS |
+| `audit:citations` | ✅ PASS (repo support ready; listings owner-pending) |
+| `audit:subservices` | ✅ PASS |
+| `audit:blog` | ✅ PASS (12 articles) |
+| `audit:cro` | ✅ PASS |
+| `audit:quote` | ✅ PASS |
+| `audit:analytics` | ✅ PASS |
+| `audit:security` | ✅ PASS |
+| `audit:sitemap` | ✅ PASS (678 URLs, canonical host apex) |
+| `audit:schema` | ✅ PASS |
+| `audit:multilingual` | ✅ PASS |
+| `audit:routes` | ✅ PASS |
+| `audit:search` | ✅ PASS |
+| `audit:keywords` | ✅ PASS (370 rows; semantic guard at build time) |
+| `npm run build` | ✅ PASS — **689 / 689** static generation entries |
+| `npm run audit:live` (fresh `next start`) | ✅ **PASS 284 / 284, WARN 0, FAIL 0** |
+| `npm run audit:links` (fresh `next start`) | ✅ **PASS 12, WARN 10, FAIL 0** (exit 0) |
+
+The 10 `audit:links` warnings are the known, deliberately un-fixed card-CTA
+anchor labels (Phase 57 §3: "View Details" ×51 targets, "View Project" ×28,
+"View Problem" ×25, "View Service" ×21, "View Pricing Details" ×10, plus the
+MS equivalents) — a design decision now queued for the owner alongside the
+other Phase 49 items.
+
+### 3. Owner-facing verify states (unchanged, owner-gated)
+
+- `verify:local-seo` — NAP single-sourced from `data/site.ts`; homepage
+  reviews link **NOT ARMED** (awaits a verified GBP review URL for
+  `googleReviewsUrl`).
+- `verify:citations` — all four directories **PENDING** (Yellow Pages
+  Malaysia, Hotfrog, BusinessList.my, Facebook Page).
+- `verify:project-locations` — all **28** projects await owner location
+  confirmation from client records.
+
+### 4. Plan for this session
+
+1. **Owner-data intake** (highest value): GBP status + `googleReviewsUrl`;
+   the 4 citation listings; the 28 project locations; the site-wide
+   content-date decision (Phase 49 item 1); GA4 Realtime verification.
+2. Search Console query export → upgrade `data/keywords` rows to `verified`
+   via `data/keywords/verified.ts` (KEYWORD_RESEARCH.md §5–6) — only with
+   real evidence; never invent volumes, rankings or competition data.
+3. Design decisions (owner): homepage "latest guides / recent work" block
+   (Phase 49 item 2); diversify the repeated card-CTA anchors (10 warnings);
+   optional About/founder E-E-A-T note with a real bio only.
+4. Content expansion only with real data (verified coverage, real photos,
+   consent); every new page passes the quality gate and the full suite.
+
+**Status:** **🟢 Phase 59 baseline recorded.** Awaiting owner intake
+responses before any site change.
