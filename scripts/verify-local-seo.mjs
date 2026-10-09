@@ -176,12 +176,13 @@ if (business.googleReviewsUrl.trim()) {
   lines.push("   The homepage reviews block links to the profile and fires");
   lines.push("   review_profile_click (surface: home_reviews) in EN/MS/ZH.");
 } else {
-  lines.push("   NOT ARMED — no verified profile URL has been supplied");
-  lines.push("   The homepage reviews block renders exactly as it did before: reviews,");
-  lines.push("   the localized \"Posted on Google\" line and no link. Nothing claims a");
-  lines.push("   profile that does not exist.");
-  lines.push("   Next: once the profile is created AND verified, open it in Google Maps,");
-  lines.push("   copy the review URL, and set `googleReviewsUrl` in data/site.ts.");
+  lines.push("   NOT ARMED — by owner decision (2026-10-09): the owner-supplied");
+  lines.push("   profile link is published on the footer social icon only, and the");
+  lines.push("   reviews-block link stays off while the profile has no Google reviews.");
+  lines.push("   The homepage reviews block renders exactly as the owner approved:");
+  lines.push("   reviews, the localized \"Posted on Google\" line and no link.");
+  lines.push("   To arm it later, paste the profile URL into `googleReviewsUrl` in");
+  lines.push("   data/site.ts — one line; labels and tracking stay wired.");
   lines.push("   See LOCAL_SEO_SETUP.md §6.");
 }
 lines.push("");

@@ -8865,3 +8865,68 @@ must not be removed. All three are honored exactly.**
 
 **Status:** **🟢 Phase 60 complete.** GBP link live in the footer social row
 across all three languages; website reviews verbatim per owner instruction.
+
+---
+
+## Phase 61 — Second owner decision round: reviews button off, content dates bumped, GBP verified record, GA4/locations intake (2026-10-09)
+
+**Result: 🟢 all owner decisions of 2026-10-09 (second message) implemented and
+verified. The "Read the reviews on Google" button is OFF (owner instruction);
+content dates are updated (`CONTENT_LAST_MODIFIED` → 2026-10-09); the GBP is
+recorded as verified & Maps-visible (owner confirmation); the 4 citations stay
+pending; GA4 Realtime is still empty (owner-side diagnosis queued); the request
+to fill the 28 project locations "randomly" was declined with the honest
+alternative (region-only real answers) — nothing was fabricated.**
+
+### 1. Owner decisions received (2026-10-09, second message)
+
+| # | Decision | Implementation |
+| --- | --- | --- |
+| 1 | "Read the reviews" button **band karn hai** (off) | `googleReviewsUrl` back to `""` — the reviews block renders the owner-approved cards + "Posted on Google" lines and **no link**; the footer Google icon keeps the profile link (that icon stays ON — the owner did not rescind it) |
+| 2 | 4 citation listings **not done yet** | All four stay `pending`; recorded as reconfirmed 2026-10-09 |
+| 3 | Fill the 28 project locations "randomly, SEO type" | **DECLINED — no fabrication.** The owner's own 2026-09-24 decision ("Do not create missing details") and `CONTENT_GOVERNANCE.md` §1 forbid inventing townships for real photographed jobs (fake local proof; misleading-content risk). Offered instead: **region-only** tags (`{ region }`) from quick owner recall — 28 one-word answers — or stay untagged (current clean state). Awaiting real answers |
+| 4 | Content dates **update karn hai** | Phase 49 item 1 decided — option (a): `CONTENT_LAST_MODIFIED` bumped `2026-09-01` → **`2026-10-09`** (the date of the decision; one-line change if the owner prefers a different review date). Per-page `updatedAt` remains the future upgrade |
+| 5 | GA4 Realtime **still not showing** | No code change; owner-side diagnosis recorded (`ANALYTICS_SETUP.md` §6.1 decision tree; the 2026-10-06 CSP defect was already fixed live in PR #82). NOT LIVE-VERIFIED |
+| 6 | GBP **verified and shows on Google Maps** | Owner confirmation recorded in `LOCAL_SEO_SETUP.md` §7 (two checklist items ticked owner-confirmed); site copy still claims nothing |
+
+### 2. What changed (code)
+
+- **`data/site.ts`** — `googleReviewsUrl` intentionally `""` (comments record
+  both owner decisions); `googleBusinessProfileUrl` unchanged (footer icon).
+- **`lib/sitemap.ts`** — `CONTENT_LAST_MODIFIED` = `2026-10-09` with the owner
+  decision recorded in the comment block.
+- **`scripts/verify-local-seo.mjs` / `scripts/audit-authority.mjs`** — the
+  unarmed-state notes now state the real reason (owner decision 2026-10-09,
+  not "no profile supplied").
+- **Docs** — `LOCAL_SEO_SETUP.md` §6/§7/§10/§11 (two-decision record + owner
+  confirmations), `PROJECT_OWNER_PENDING.md` (owner-update block, Task 3.1
+  row 5, Task 3.3 reconfirm, Task 3.4 fabrication decline + alternative,
+  Phase 49 item 1 decided, GA4 owner report), `LEAD_GENERATION_PLAN.md`
+  (P-05 owner-accepted, P-06 resolved owner-side, progress log rows).
+
+### 3. QA after changes
+
+- [x] `npm run lint` — PASS; `npm run type-check` — PASS.
+- [x] All **20 static audits** — PASS; `audit:links --self-test` — **36 / 36**.
+- [x] `npm run build` — PASS, **689 / 689**.
+- [x] Fresh `next start` + `npm run audit:live` — **PASS 284 / 284**;
+      `npm run audit:links` — **PASS 12, WARN 10, FAIL 0**; 835/835 external
+      anchors allowlist-matched (footer Google icon href included).
+- [x] Rendered checks: "Read the reviews on Google" **absent** (0 hits);
+      review cards verbatim ("Posted on Google" ×36 in the EN marquee);
+      footer Google icon with correct EN/MS/ZH aria-labels; `/sitemap.xml`
+      serves **678 × `<lastmod>2026-10-09</lastmod>`** (the later-of rule —
+      the site-wide date is now later than the Knowledge Hub's 2026-09-04).
+- [x] `npm run verify:local-seo` — prints the owner-decision unarmed state.
+
+### 4. Open items after this round
+
+- 28 project locations — **awaiting real region answers** (fabrication
+  refused; `verify:project-locations` stays the gate).
+- 4 citation listings — owner (reconfirmed not done).
+- GA4 Realtime — owner follows `ANALYTICS_SETUP.md` §6.1.
+- Phase 49 item 2 (homepage guides/work block), CTA-anchor diversification
+  (10 `audit:links` warnings), optional E-E-A-T bio — owner design decisions.
+
+**Status:** **🟢 Phase 61 complete.** Every 2026-10-09 owner decision is
+implemented, gated and recorded; nothing invented.

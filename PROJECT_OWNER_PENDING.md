@@ -42,18 +42,19 @@ it (Google Maps search, and the Businesses list at business.google.com); a
 second profile for the same business damages both listings, so claim rather
 than create if a listing is found.
 
-**Owner update 2026-10-09 — profile link supplied.** The owner shared the
-business's Google Business Profile link (`https://share.google/FxD6lF5xTiX9sNCcu`,
-Google's own Share format) with three instructions, recorded verbatim in
-intent: (1) add its icon alongside the other social icons; (2) the profile
-currently has **no Google reviews**; (3) the reviews already shown on the
-website are the approved presentation and **must not be removed**. Done:
-the footer Google icon now links the profile in EN/MS/ZH
-(`googleBusinessProfileUrl`), the pre-wired homepage "Read the reviews on
-Google" link is armed with the same owner-supplied URL (`googleReviewsUrl`),
-and the published review cards are **untouched** — nothing removed, replaced
-or added to their content. Verification state of the profile is still
-**NOT CLAIMED**; the remaining table rows below stay owner-open.
+**Owner update 2026-10-09 — profile link supplied; two presentation
+decisions.** The owner shared the business's Google Business Profile link
+(`https://share.google/FxD6lF5xTiX9sNCcu`, Google's own Share format) and
+later the same day confirmed: the profile is **verified and shows on Google
+Maps**; the **"Read the reviews on Google" button must be OFF** (the profile
+has no Google reviews); and the reviews already shown on the website are the
+approved presentation and **must not be removed**. Done: the footer Google
+icon links the profile in EN/MS/ZH (`googleBusinessProfileUrl`) exactly as
+requested; `googleReviewsUrl` is **intentionally empty** (the reviews-block
+link stays unarmed per the owner's later instruction); the published review
+cards are **untouched** — nothing removed or replaced. Owner confirmation of
+verification/Maps visibility is recorded in `LOCAL_SEO_SETUP.md` §7 as
+owner-verified; the remaining §7 gates stay open.
 
 | # | Action | Where | Notes |
 | --- | --- | --- | --- |
@@ -61,10 +62,10 @@ or added to their content. Verification state of the profile is still
 | 2 | Decide the **opening days** (Google asks day by day; the site states only `9:00 AM – 6:00 PM`) | Owner decision | If the real days/hours differ, `data/site.ts` must be updated **first** so site and profile agree; the site still publishes no opening days in structured data because none have been supplied |
 | 3 | Choose the service areas actually worked in | Owner decision | `npm run verify:local-seo` lists the 53 published locality guides as a reference; the profile claim must stay truthful, so select only real coverage |
 | 4 | Upload real job photos only | Owner → profile | No stock, no AI-generated images — the same rule the project pages follow |
-| 5 | Complete verification, then **paste the profile's review URL into `googleReviewsUrl` in `data/site.ts`** | `data/site.ts` (one line) | ✅ **DONE 2026-10-09** — owner supplied the profile link; `googleReviewsUrl` and the new `googleBusinessProfileUrl` (footer Google icon) are set to it; homepage labels and `review_profile_click` fire in EN/MS/ZH. Owner decision: the website's review cards stay exactly as they are (the profile has no Google reviews yet) |
+| 5 | Complete verification, then **paste the profile's review URL into `googleReviewsUrl` in `data/site.ts`** | `data/site.ts` (one line) | ✅ **DECIDED 2026-10-09** — owner supplied the profile link but later the same day instructed that the reviews-block button stays **OFF** while the profile has no Google reviews. `googleBusinessProfileUrl` (footer Google icon) carries the link; `googleReviewsUrl` is intentionally empty. Re-arm later by pasting the profile URL — labels and `review_profile_click` stay wired |
 | 6 | Publish the same NAP on Yellow Pages Malaysia, Hotfrog, BusinessList.my and Facebook Local Business; search/claim existing profiles first | Owner-controlled directory accounts; then `data/site.ts` | Copy from `npm run verify:local-seo`; check each public page before setting its `localCitationProfiles.<directory>` entry to `status: "published"` with the direct HTTPS URL. `npm run verify:citations` validates URL shape/config only and `npm run verify:citations -- --live` retrieves each published profile read-only to check it answers and shows the NAP — neither can verify approval or that the listing is the official record. Keep each entry pending until the live NAP is checked; no paid plan without owner approval. |
 
-**Current Task 3.3 status: [PENDING] for all four directories.** Owner confirmed on 2026-10-08 that the listings have not yet been published. Run
+**Current Task 3.3 status: [PENDING] for all four directories.** Owner confirmed on 2026-10-08 that the listings have not yet been published, and **reconfirmed 2026-10-09: still not done**. Run
 `npm run verify:citations` to see the repository-side state and
 `npm run verify:citations -- --live` to retrieve each published profile once
 (read-only) and check that its public page answers and shows the site's NAP;
@@ -99,7 +100,20 @@ The codebase is fully wired for bidirectional project proof:
 | 3 | Run `npm run verify:project-locations` | Terminal | Verifies all slugs resolve to real published area guides |
 | 4 | Never guess locations from photos | Content governance | Per `CONTENT_GOVERNANCE.md` §1, locations must be real client records; never invent addresses or publish private client details |
 
-**Current Task 3.4 status: [PENDING] for owner location confirmation.** Run
+**Current Task 3.4 status: [PENDING] for owner location confirmation.**
+**2026-10-09 exchange, recorded honestly:** the owner asked whether the 28
+locations could simply be written "randomly, SEO type". **No — and the
+owner's own 2026-09-24 decision says the same ("Do not create missing
+details"):** inventing townships for real, photographed jobs would publish
+false case-study claims ("this job was in Bangsar" when it may not have
+been) — fake local proof, against `CONTENT_GOVERNANCE.md` §1, and exactly
+what Google's misleading-content policies penalize. The fast honest
+alternative was offered: **region-only answers** (`location: { region }`,
+28 one-word replies: "Kuala Lumpur" or "Selangor" or "don't remember") from
+a quick look at invoices/WA chats — that needs zero detail work and still
+wires region-level local proof. Until real answers arrive, untagged
+projects keep cleanly omitting the area section (the current honest state).
+Run
 `npm run verify:project-locations` to see current progress across all 28
 projects.
 
@@ -113,6 +127,17 @@ counts as "the content changed", the other is a design call.
 | --- | --- | --- | --- |
 | 1 | The site-wide reviewed content date (`CONTENT_LAST_MODIFIED` in `lib/sitemap.ts`) is still **2026-09-01**. Phase 49 fixed the one family with recorded dates — the 12 Knowledge Hub guides are now dated **2026-09-04**, their own published date — but the other 642 pages still carry the hand-bumped constant, even though Phases 39–48 changed content on specific page families afterwards | Either (a) bump the constant to the date the owner considers the last whole-site content review, or (b) leave it until a review is done | One line in `lib/sitemap.ts`. It was **not** bumped automatically: the constant marks *every* page without its own date, so setting it to today would stamp 642 unchanged pages with a date nothing in the repository supports — exactly what `SITEMAP.md` forbids. If the owner wants true per-page dates for services, problems, areas and projects, that needs a real `updatedAt` field in those registries (a data-model change, worth doing properly rather than inferred) |
 | 2 | The homepage links all 10 services, the problem library and all 53 area guides from its main content, but the **Knowledge Hub (`/blog/`) and the project portfolio (`/projects/`) are reachable only through the site chrome (header/footer) and the sitemap** — 0 contextual links from any page's main content into those two hubs. `/search/` is in the same position: the Smart Service Finder is linked from the footer and the sitemap, but `InlineSearch` is a form, so it carries no crawlable anchor | Whether the homepage should gain a "latest guides" / "recent work" block, or the owner prefers the current homepage structure as it is | This is a **design** decision, not a missing edge in the content graph: every guide already links — and is linked by — the services, scopes, problems, areas, region hubs and projects it is about (Phases 32, 41, 45, 48). Adding a homepage section was left to the owner rather than slipped into a phase that otherwise changed no visible DOM on any of the 678 pages |
+
+**Decisions recorded 2026-10-09:**
+
+- **Item 1 — content dates: DECIDED.** The owner chose option (a): update the
+  dates. `CONTENT_LAST_MODIFIED` in `lib/sitemap.ts` is bumped to **2026-10-09**
+  (the date of the decision). If the owner later supplies a different date that
+  better marks the last whole-site content review, it is a one-line change. The
+  per-page `updatedAt` model (option b) remains the proper upgrade if true
+  per-page dates are ever wanted.
+- **Item 2 — homepage "latest guides / recent work" block: STILL OPEN** (design
+  decision; see the open questions list below).
 
 ## Phase 47 (2026-09-23) — Chinese locality names (owner decision recorded 2026-09-24)
 
@@ -277,6 +302,19 @@ correctly with only the data that exists.
 > use `npm run verify:analytics:live` or DevTools → Network. Do not add a
 > second stream; compare the ID the live check prints with
 > GA4 → Admin → Data streams first (`ANALYTICS_SETUP.md` §2.1, §6).
+
+> **Owner report 2026-10-09: GA4 Realtime still shows nothing.** The site
+> side is code-complete and the deployed build carries the GA4 tag; what is
+> left is the provider-side diagnosis in `ANALYTICS_SETUP.md` §6.1, in order:
+> (0) `npm run verify:analytics:live -- --expect <G-…>` for ID match + CSP
+> completeness, (1) open Realtime *while* on the site (it only keeps 30
+> minutes), (2) check the Reports screen shows the *same* property as the
+> data stream, (3) Admin → Data collection ON, (4) Data filters — an Active
+> "Internal traffic" filter hides the owner's own visits, (5) re-test from a
+> phone on mobile data with ad blockers off, (6) a brand-new site may simply
+> have no visitors yet. The zero-install browser-console snippet is in §6.1.
+> **NOT LIVE-VERIFIED** until Realtime shows a session; nothing in this
+> repository can read the GA4 dashboard.
 
 The measurement system is fully coded (`PHASE_24_ANALYTICS.md`). In this
 checkout no IDs are configured, and with none set **no analytics script loads

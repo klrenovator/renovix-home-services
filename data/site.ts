@@ -56,9 +56,10 @@ export type SiteConfig = {
    * empty string while none exists. OWNER-SUPPLIED ONLY (Lead-generation Task
    * 3.1, supplied 2026-10-09): the footer's social row links it next to
    * Facebook and Instagram. It may never be guessed or templated from the
-   * business name. While both fields point at the same profile this stays in
-   * sync with `googleReviewsUrl` below; the two may diverge if the owner ever
-   * supplies a dedicated review link instead of the profile link.
+   * business name. Owner decision 2026-10-09: this footer icon is the only
+   * place the profile link is published — `googleReviewsUrl` below stays
+   * empty (the reviews-block link is deliberately unarmed while the profile
+   * has no Google reviews).
    */
   googleBusinessProfileUrl: string;
   /**
@@ -126,14 +127,17 @@ export const siteConfig: SiteConfig = {
    */
   googleBusinessProfileUrl: "https://share.google/FxD6lF5xTiX9sNCcu",
   /**
-   * OWNER-SUPPLIED 2026-10-09 (Lead-generation Task 3.1 step 5): the same
-   * profile link the owner shared, arming the homepage reviews block's
-   * "View on Google" button (`review_profile_click`). Owner decision
-   * 2026-10-09: keep the existing website reviews exactly as they are — the
-   * profile has no Google reviews of its own yet and nothing here removes or
-   * replaces the published review cards (`LOCAL_SEO_SETUP.md` §6).
+   * OWNER DECISION 2026-10-09 (later the same day): the homepage reviews-block
+   * link ("Read the reviews on Google") is **intentionally unarmed** — the
+   * owner wants the reviews block to stay exactly as it is while the profile
+   * has no Google reviews. The owner-supplied profile link is still published
+   * where the owner asked for it: the footer social icon
+   * (`googleBusinessProfileUrl`). Owner confirms the profile is verified and
+   * shows on Google Maps (2026-10-09). If the owner ever wants the reviews
+   * link back, paste the profile URL here — one line; the localized labels
+   * and `review_profile_click` tracking stay wired (`LOCAL_SEO_SETUP.md` §6).
    */
-  googleReviewsUrl: "https://share.google/FxD6lF5xTiX9sNCcu",
+  googleReviewsUrl: "",
   localCitationProfiles: {
     yellowPagesMalaysia: { status: "pending", url: "" },
     hotfrog: { status: "pending", url: "" },

@@ -330,26 +330,26 @@ The homepage reviews block says *"Posted on Google"* but has had nowhere to
 link, because no verified profile URL could be supplied — a reader has no way
 to check it (the plan's P-05).
 
-**Status 2026-10-09 — ARMED with the owner-supplied profile link.** The owner
-shared the business's Google Business Profile link (`share.google/…`, Google's
-own Share format) and it is now wired to two places:
+**Status 2026-10-09 — footer icon ON, reviews-block link OFF (owner decisions).**
+The owner shared the business's Google Business Profile link (`share.google/…`,
+Google's own Share format), confirmed the profile is **verified and shows on
+Google Maps**, and gave two presentation decisions:
 
-1. `googleBusinessProfileUrl` in `data/site.ts` — the footer's Google icon,
-   beside Facebook and Instagram, in all three languages.
-2. `googleReviewsUrl` in `data/site.ts` — the homepage reviews block's
-   localized link (*"Read the reviews on Google"* / *"Baca ulasan di Google"* /
-   *"在 Google 上查看评价"*), as a tracked `review_profile_click` event with
-   `surface: home_reviews`.
+1. **Footer Google icon — ON.** `googleBusinessProfileUrl` in `data/site.ts`
+   publishes the link beside Facebook and Instagram, in all three languages.
+   This is where the owner wants the profile linked.
+2. **Reviews-block link — OFF (owner decision, later the same day).** While
+   the profile has no Google reviews, the owner wants the homepage reviews
+   block to stay exactly as it is — the *"Read the reviews on Google"* /
+   *"Baca ulasan di Google"* / *"在 Google 上查看评价"* button is deliberately
+   **not armed** (`googleReviewsUrl` is intentionally empty). Nothing in the
+   review cards is removed or replaced; they are the owner-approved
+   presentation.
 
-Owner decision 2026-10-09, recorded exactly: the profile currently has **no
-Google reviews**, and the reviews already published on the website are the
-owner-approved presentation — **nothing in the reviews block is removed or
-replaced**. The arming above only makes the *"Posted on Google"* attribution
-checkable; the review cards themselves never change with the URL.
-
-If the profile URL ever changes (or the owner supplies a dedicated review
-link from the profile's "Ask for reviews" panel), replace the value in
-`data/site.ts` — one line, no code change.
+If the owner ever wants the reviews-block link back (for example once the
+profile has real reviews), paste the profile URL into `googleReviewsUrl` in
+`data/site.ts` — one line; the localized labels and the tracked
+`review_profile_click` (`surface: home_reviews`) stay wired.
 
 Rules the build enforces (`audit:authority` §9):
 
@@ -379,14 +379,21 @@ added to the site's structured data or copy as if it were.
 
 **LIVE VERIFIED** means the owner has personally seen all of the following:
 
-- [ ] The profile is verified (Google says so, not just "submitted").
-- [ ] Searching the business name in Google Maps shows the exact §2 NAP.
+- [x] The profile is verified (Google says so, not just "submitted").
+      — **owner-confirmed 2026-10-09**.
+- [x] Searching the business name in Google Maps shows the exact §2 NAP.
+      — **owner-confirmed 2026-10-09** (profile shows on Google Maps; one
+      eyeball pass that the listed name/address/phone match §2 is still worth
+      doing whenever the owner next opens the profile).
 - [ ] `site:renovixhomeservices.my` and the profile agree on phone, address,
       hours and website.
 - [ ] The profile's own **Performance** report shows impressions and at least
       one real action (call, directions, website or message).
 - [ ] At least one genuine customer review is published.
 - [ ] `googleReviewsUrl` is set and the homepage link opens the same profile.
+      — **owner decision 2026-10-09: the reviews-block link stays unarmed**
+      while the profile has no reviews; the profile link lives on the footer
+      Google icon instead.
 
 Only then should any phase document, plan or report describe the local profile
 as live. Until then the honest state is: *the website is ready; the profile is
@@ -431,9 +438,12 @@ an owner action.*
 - [ ] Description factual, no unverifiable claims.
 - [ ] Real photos only (no stock, no AI); logo uploaded.
 - [ ] Verification completed.
-- [x] Reviews link copied into `googleReviewsUrl` in `data/site.ts`
-      (2026-10-09, owner-supplied profile link; also `googleBusinessProfileUrl`
-      for the footer Google icon).
+      — **owner-confirmed 2026-10-09: verified and shows on Google Maps.**
+- [x] Reviews-link decision recorded (2026-10-09): the owner-supplied profile
+      link is published on the footer Google icon (`googleBusinessProfileUrl`);
+      `googleReviewsUrl` is intentionally empty — the reviews-block link stays
+      off while the profile has no Google reviews (owner wants the homepage
+      reviews block exactly as it is).
 - [ ] §7 live-verification checklist completed before calling it live.
 
 ## 11. Validation performed for this guide (Task 3.1)
@@ -443,6 +453,6 @@ an owner action.*
 | `npm run verify:local-seo` | PASS — prints the NAP read from `data/site.ts`, the hours caveat, 53 published locality guides grouped by region, and the reviews-link status; no network call |
 | `npm run audit:authority` (§9, new) | PASS — reviews link is owner-supplied or absent, never guessed, never hardcoded, never in structured data, label translated in EN/MS/ZH. Negative-tested: a search-shaped URL fails, a hardcoded component URL fails, an armed URL without the tracked event fails |
 | `npm run audit:analytics` | PASS — `review_profile_click` declared and fired from the homepage reviews link |
-| `npm run build` | PASS (689 static entries; with `googleReviewsUrl` armed the homepage reviews block adds only the localized "Read the reviews on Google" link — the review cards are unchanged) |
-| `npm run audit:live` | PASS — rendered pages carry the profile link only where §6 says it appears |
+| `npm run build` | PASS (689 static entries; with `googleReviewsUrl` empty the homepage reviews block renders exactly as the owner approved — cards plus "Posted on Google" lines, no profile link — while the footer Google icon carries the profile link in EN/MS/ZH) |
+| `npm run audit:live` | PASS — rendered pages carry the profile link only where §6 says it appears (footer social icon) |
 | A verified profile in Google Maps / the Local Pack | **NOT CLAIMED** — §7 is the owner's gate; the owner-supplied profile link exists but verification state is not claimed anywhere |
