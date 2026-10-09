@@ -135,7 +135,7 @@ branding were deliberately left untouched.
 | Static generation entries | **689** (`next build` progress total; distinct from the 678 canonical sitemap URLs) |
 | Pricing rows (`data/pricing/pricing.ts`) | **51** |
 | Search-intent matrix entries | **24** (all pricing derived from `pricingId`) |
-| Audit scripts | 17 static + 1 live server QA (**284** served-site checks after Phase 51; 280 after Phase 49, 271 after Phase 48, 270 after Phase 47, 259 after Phase 46) |
+| Audit scripts | 20 static + 2 live-server (`audit:live` **284** served-site checks; `audit:links` whole-corpus link audit, **12 PASS / 10 WARN / 0 FAIL** after Phase 57; `audit:keywords` added Phase 58) |
 | In-copy contextual links (rendered anchors) | **313 EN / 362 MS / 364 ZH** (Phase 39) |
 | FAQ hub rendered main-content links per language | **26** (was 17; Phase 51) — all 5 content families (services, problems, areas, guides, projects) plus the 17 anchors the 18 answers resolve to |
 | FAQ answers linking the page their own copy names | **17 of 18** (Phase 51; was **11 of 18** — 6 answers named a page and rendered no link, and `send-photos` names no page so it correctly links none) |
@@ -8427,3 +8427,275 @@ problem the profile unblocks: **P-05**, the homepage reviews block that says
 `LEAD_GENERATION_PLAN.md`; Tasks 3.2–3.4 remain `[PENDING]`. The profile
 itself, its verification, its Maps visibility and its review count are
 **not claimed** — they are owner actions, gated by `LOCAL_SEO_SETUP.md` §7.
+
+
+---
+
+## Phase 56 — Session Phase Zero re-audit + audit-coverage gap plan (2026-10-09)
+
+**Result: 🟢 baseline fully re-verified on this checkout; live site confirmed in
+sync; two brief-mandated QA/research artifacts identified as the remaining
+code-side work (Phases 57–58). No site defect found; no site change made in
+this phase.**
+
+### 1. Baseline re-verification (this checkout, `arena/b36d23ca-renovix-home-services`, `df952c3`)
+
+- Working tree clean; history at `df952c3` (2026-10-08, "docs: record pending
+  local citation listings (#91)").
+- `npm ci` — PASS.
+- `npm run lint` — PASS (0 errors, 0 warnings).
+- `npm run type-check` — PASS.
+- All **19 static audits** — PASS (business, og-fonts, project-assets, pricing,
+  projects, locations, authority, citations, subservices, blog, cro, quote,
+  analytics, security, sitemap, schema, multilingual, routes, search).
+- `npm run build` — PASS; **689 / 689** static generation entries.
+- Fresh `next start` + `npm run audit:live` — **PASS 284 / 284, WARN 0, FAIL 0**.
+- `verify:search-console` — repository wiring ready; Search Console dashboard
+  access is an owner action (no credentials exist in the repo; NOT CLAIMED).
+- `verify:local-seo` — NAP single-sourced from `data/site.ts`; homepage reviews
+  link NOT ARMED (owner-gated on a verified GBP URL).
+- `verify:citations` — all four directories PENDING (owner confirmed 2026-10-08
+  the listings are not yet published).
+- `verify:project-locations` — all 28 projects await owner location
+  confirmation from client records.
+
+### 2. Live-site vs repository comparison (read-only fetches)
+
+- `https://renovixhomeservices.my/en/` — serves the expected homepage (10
+  service cards, problem links, area links, guides/projects paragraph).
+- `/robots.txt` — matches `app/robots.ts` (`Allow: /` + the single sitemap line).
+- `/sitemap.xml` — same **678** URLs, same order and `lastmod` values as the
+  local production build.
+- `/llms.txt` — matches the repository feed (services, 51 sub-services with
+  prices, areas, contact block).
+- Direct shell egress to the production domain is blocked in this sandbox, so
+  all live checks went through the platform's read-only page fetcher; no
+  response-header claim is re-made here (the 2026-10-06 CSP fix was verified
+  live in the earlier session record).
+
+### 3. Audit-coverage gaps found (brief Sections 11 + 19 and Section 4)
+
+The 19 static audits + live QA already cover: route tree, sitemap/robots parity,
+orphan pages, hub↔spoke edges, problem/area/project/guide reciprocity, dead
+internal targets (target ∈ sitemap), breadcrumbs, canonicals, hreflang,
+structured data, pricing parity, localization, analytics wiring, security
+headers and the quote API. Two brief-mandated artifacts do **not** exist yet:
+
+1. **A dedicated internal-link auditing script** (Sections 11 + 19).
+   `audit:live` samples broken links (6 pages) and checks that internal targets
+   are *served*, but no committed script reports: internal links whose verbatim
+   href is noncanonical or redirected (trailing slash / host / scheme / query
+   string), a full unsampled broken-target sweep, per-page inbound-link
+   sufficiency, repetitive or non-descriptive anchor text, unexpected external
+   links, and click-depth from the homepages. → **Phase 57: `npm run audit:links`.**
+2. **A keyword research database** (Section 4). The intent matrix (24 entries
+   with real `searchQueryExamples`), the per-language synonym tables and the
+   service/problem/location registries hold the raw material, but there is no
+   single keyword database with the mandated fields (keyword, language, intent,
+   service, subservice, problem, location, modifier, source, volume-if-verified,
+   existing ranking URL, proposed target URL, conversion relevance, priority,
+   status, last reviewed). → **Phase 58: `data/keywords/` +
+   `scripts/audit-keywords.mjs` + `KEYWORD_RESEARCH.md`.**
+
+Everything else still open is owner-gated (`PROJECT_OWNER_PENDING.md`): the GBP
+profile + 4 citation listings, project location tagging (28 projects), the
+site-wide content-date decision, GA4 dashboard verification, and optional
+E-E-A-T/photo supply. No code may substitute for those.
+
+### 4. Plan
+
+- **Phase 57** — `scripts/audit-links.mjs` (`npm run audit:links`): whole-corpus
+  internal-link audit against a running production server; report-only for
+  ambiguous signals, fail on deterministic defects; wired into package.json;
+  run against a fresh `next start`; results recorded here.
+- **Phase 58** — keyword research database (`data/keywords/`,
+  `KEYWORD_RESEARCH.md`, `npm run audit:keywords`): derived only from existing
+  registries; every search volume left `unknown`; resolvable-target and
+  cannibalization guards.
+- Re-run the full gate suite after each phase; update this file.
+
+**Status:** **🟢 Phase Zero complete.** Baseline verified; plan recorded.
+
+
+---
+
+## Phase 57 — Whole-corpus internal-link auditing script `npm run audit:links` (2026-10-09)
+
+**Result: 🟢 shipped and verified. The brief's Sections 11 + 19 mandated an
+internal-link auditing script; none existed (`audit:live` samples broken links
+and checks that internal targets are *served*, but no committed tool reported
+noncanonical link targets, a full broken-target sweep, inbound-link
+sufficiency, repetitive anchors, unexpected external links or click-depth).
+The new script crawls all 678 sitemap URLs against a running production
+server — no sampling — and reports all nine mandated dimensions.**
+
+### 1. What was built
+
+- **`scripts/audit-links.mjs`** (wired as `npm run audit:links`, follows the
+  `audit:live` conventions: `QA_BASE` env, canonical-host constant,
+  pass/warn/fail + summary + exit code). Nine checks:
+  1. every sitemap URL serves 200 — FAIL
+  2. orphan indexable pages (no inbound internal link from another page) — FAIL
+  3. broken internal links / invalid destinations — full sweep of every
+     distinct internal target, no sampling — FAIL
+  4. links to redirected / noncanonical URLs — verbatim href vs canonical
+     form (trailing slash, www host, http scheme, query string off the finder
+     route), each suspect probed with redirects disabled — FAIL
+  5. missing breadcrumbs (BreadcrumbList JSON-LD; the 3 language homepages are
+     the roots) — FAIL
+  6. pages with insufficient relevant internal links (< 3 inbound) — WARN
+     review list, with min/median/max distribution
+  7. non-descriptive anchors ("click here" & friends) — FAIL; one anchor text
+     reused for > 8 distinct targets — WARN review list
+  8. unexpected external links — every external/contact `<a href>` must match
+     an allowlist **derived from `data/site.ts`** (wa.me deep links, `tel:`,
+     `mailto:`, the two configured social profiles) — FAIL
+  9. navigation depth — same-language BFS from each homepage; unreachable
+     sitemap URL — FAIL; click depth > 4 — WARN review list
+- The external-link allowlist is regex-derived from `data/site.ts` (the single
+  source of truth), not a second hand-copied list.
+- **Self-test mode** (`node scripts/audit-links.mjs --self-test`): 34
+  assertions over synthetic fixtures — no server needed — proving every
+  report path can actually fail (orphan, missing breadcrumb, thin page,
+  "click here", repetitive anchor, unexpected external, unreachable page,
+  deep page, noncanonical href forms, allowlist accept/reject). A check that
+  cannot fail is not a check.
+
+### 2. Measured results (fresh `next start` on the production build, 2026-10-09)
+
+**PASS 12, WARN 10, FAIL 0** (exit 0). Highlights:
+
+- 678/678 sitemap URLs return 200; **0 orphans**; **679** distinct internal
+  targets, all served; **all 678 distinct page targets return 200** (full
+  sweep, previously only 6 pages were sampled); **0 noncanonical link hrefs** —
+  no internal link on the site passes through a redirect.
+- BreadcrumbList on **675 of 675** non-home pages (3 homepages are the roots).
+- Inbound links per page: **min 4, median 29, max 227** — no thin pages.
+- External/contact anchors: **834 distinct hrefs, 100% allowlist-matched**
+  (830 wa.me deep links, 1 tel:, 1 mailto:, 1 facebook, 1 instagram).
+- Click depth: **max 2** from each language homepage; all 226 pages per
+  language reachable.
+
+### 3. The 10 warnings — reported, deliberately not "fixed"
+
+All 10 are one pattern: the localized card CTA labels ("View Details" /
+"Lihat Butiran" → 51 targets, "View Project" / "Lihat Projek" → 28, "View
+Problem" / "Lihat Masalah" → 25, "View Service" / "Lihat Perkhidmatan" →
+21, "View Pricing Details" / "Lihat Butiran Harga" → 10). Each card already
+carries its entity name as the heading, so the repeated CTA label is a
+deliberate, consistent design — exactly the "ambiguous issue for review" the
+brief says to report rather than auto-fix. Changing visible CTA copy is a
+design decision, so nothing was changed; the warnings stay in the report for
+the owner to review. (ZH CTA labels are shorter than the 12-character
+reporting floor, so they do not appear.)
+
+### 4. QA after changes
+
+- [x] `node scripts/audit-links.mjs --self-test` — **34 / 34 PASS**.
+- [x] `npm run audit:links` on a fresh `next start` — **PASS 12, WARN 10, FAIL 0**, exit 0.
+- [x] `npx eslint scripts/audit-links.mjs` — clean; `npm run lint` — PASS (0 errors, 0 warnings).
+- [x] No site code, content, URL, price or metadata changed — the script and
+  the `package.json` script entry are the only diffs; `npm run build` output
+  is unaffected (689 static entries, verified in Phase 56 baseline).
+
+**Status:** **🟢 complete.** The internal-link audit the brief mandates now
+exists, runs against the whole corpus, and is proven able to fail.
+
+
+---
+
+## Phase 58 — Keyword research database (master brief §4) (2026-10-09)
+
+**Result: 🟢 shipped and verified. The brief's Section 4 mandated a keyword
+research database with a fixed field set; none existed. It is now a typed,
+registry-derived database with build-time semantic guards, a static audit
+script and a runbook — with every search volume, ranking URL and competition
+note honestly `null`.**
+
+### 1. What was built
+
+- **`data/keywords/types.ts`** — `KeywordResearchEntry` with every mandated
+  field (keyword, language, intent, service/sub-service/problem/location,
+  modifier, source, volume-if-verified, competition-if-observed, existing
+  ranking URL, target, conversion relevance, priority, research status, last
+  reviewed), plus a **typed target reference** (`KeywordTarget`) from which
+  the URL is always derived — a row can never drift from the page it names.
+- **`data/keywords/phrases.ts`** — the one authored input: natural base
+  phrasings per service per language (EN/MS drawn from the master brief's own
+  research examples; ZH natural short forms matching the localized service
+  names), each marked as a research hypothesis, not measured data.
+- **`data/keywords/index.ts`** — the composition (nothing hand-copied):
+  - `core-service` — 10 services × 2 regions × 3 languages = **60 rows** →
+    the localized service pillar.
+  - `near-me` — 10 × 3 = **30 rows** → the service pillar; intent only, **no
+    dedicated near-me URL** per the brief.
+  - `hyperlocal` — the 24 published search-intent-matrix entries × their 73
+    authored query examples = **73 rows** → the sub-service (or pillar) page.
+  - `problem` — 57 guides × 3 languages = **171 rows** → the problem guide.
+  - `informational` — 12 Knowledge Hub guides × 3 languages = **36 rows** →
+    the guide page (cost guides commercial/high, the rest informational/medium).
+  - **370 rows total**, all `researchStatus: "derived"`, every
+    `searchVolume` / `competitionNotes` / `existingRankingUrl` = `null`.
+- **`runKeywordResearchAudits()`** — semantic validation wired into
+  `app/sitemap.ts` (same build-time pattern as the search-index audits):
+  fails the build when a target is not a published page in the row's
+  language, when two rows claim the same normalized keyword in one language
+  (cannibalization), when a volume lacks a source, when a ranking URL is not
+  a canonical production URL, or when a near-me row stops targeting a service
+  page.
+- **`scripts/audit-keywords.mjs`** (`npm run audit:keywords`) — static source
+  guards: files exist, package.json + `app/sitemap.ts` wiring present, no
+  honesty-field literal other than `null` in the composition sources (comments
+  stripped before scanning), the phrasing table covers all 10 services in all
+  3 languages, the composition imports only the verified registries, the
+  runbook documents the no-fabrication rule.
+- **`KEYWORD_RESEARCH.md`** — the runbook: field dictionary, honesty rules,
+  cluster→URL strategy, the GSC/autocomplete/PAA/Trends workflow for upgrading
+  rows to `verified`, and the controlled home for real evidence
+  (`data/keywords/verified.ts` overlay, reviewed in a PR).
+
+### 2. QA after changes
+
+- [x] `npm run audit:keywords` — **PASS 28 / FAIL 0** (the audit caught and
+      I fixed two of its own regex bugs: a backtracking lookahead that let
+      `searchVolume: null` through, and doc-comment text scanned as code).
+- [x] `npm run build` — PASS, **689 / 689** static entries; the build-time
+      semantic audit is green on all 370 rows.
+- [x] **Negative test:** a deliberately duplicated keyword
+      ("tile repair Kuala Lumpur") failed the build with
+      `[audit:keywords] failed at build time: keyword … is claimed by both
+      core-service:en:tiling:kuala-lumpur and negative-test:duplicate` —
+      the guard genuinely bites. Row removed, build re-verified green.
+- [x] `npm run type-check` — PASS; `npm run lint` — PASS (0 errors, 0 warnings).
+- [x] Fresh `next start` on the final build: `npm run audit:live` —
+      **PASS 284 / 284, WARN 0, FAIL 0**; `npm run audit:links` —
+      **PASS 12, WARN 10, FAIL 0**; `audit:links --self-test` — **34 / 34**.
+- [x] All **20 static audits** — PASS. No site page, URL, price, metadata or
+      visible content changed: the diff is the new `data/keywords/` module,
+      the build-time guard in `app/sitemap.ts`, the new script + runbook, and
+      two `package.json` script entries.
+
+### 3. Honest limits
+
+- **No search volume, difficulty, ranking or competition data is claimed** —
+  none is available in this environment. Google Search Console API access
+  does not exist here; the owner's dashboard export is the first `verified`
+  milestone (brief §18, `SEARCH_CONSOLE_SETUP.md`).
+- The database maps keywords to the pages that already exist; it creates no
+  pages and changes no content.
+
+**Status:** **🟢 complete.** Phases 56–58 delivered: baseline re-verified,
+the internal-link audit (§11/§19) and the keyword research database (§4)
+now exist with enforced honesty rules.
+
+---
+
+## Phase 56–58 delivery record (2026-10-09)
+
+- Branch: `arena/b36d23ca-renovix-home-services` (pushed).
+- Commits: `22c8cb6` (Phase 56 audit + plan), `78ce6cb` (Phase 57
+  `audit:links`), `ea26657` (Phase 58 keyword research database).
+- Pull request: **#92** (open, base `main`) — not merged by the agent; merge
+  and deploy follow the owner's normal review workflow.
+- Production deploy: **not performed** — no code was deployed by this session;
+  the live site was only read for comparison.

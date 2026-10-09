@@ -12,6 +12,7 @@ import { absoluteUrl } from "@/i18n/seo";
 import { CONTENT_LAST_MODIFIED, contentLastModified } from "@/lib/sitemap";
 import { assertCoverageInSync } from "@/i18n/verify";
 import { runSearchAudits } from "@/data/search/audit-data";
+import { runKeywordResearchAudits } from "@/data/keywords";
 import { getAllSubServices, subServiceLanguages } from "@/data/sub-services";
 import { articleLanguages, getArticles } from "@/data/blog";
 
@@ -36,6 +37,17 @@ for (const lang of languages) {
     const lines = searchIssues.map((issue) => `  - [${issue.kind}] ${issue.docId}: ${issue.detail}`);
     throw new Error(`[audit:search] ${lang.code} failed at build time:\n${lines.join("\n")}`);
   }
+}
+
+// Phase 58 — keyword research database integrity (master brief §4). The same
+// build-time guard pattern as the search index above: a row whose target stops
+// resolving to a published page, two rows claiming the same keyword in one
+// language (cannibalization), or a search volume / ranking URL without a
+// source fails the build instead of shipping a dishonest keyword map.
+const keywordIssues = runKeywordResearchAudits();
+if (keywordIssues.length > 0) {
+  const lines = keywordIssues.map((issue) => `  - ${issue}`);
+  throw new Error(`[audit:keywords] failed at build time:\n${lines.join("\n")}`);
 }
 
 /**
