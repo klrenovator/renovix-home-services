@@ -8699,3 +8699,313 @@ now exist with enforced honesty rules.
   and deploy follow the owner's normal review workflow.
 - Production deploy: **not performed** — no code was deployed by this session;
   the live site was only read for comparison.
+
+---
+
+## Phase 59 — Post-merge baseline re-verification (2026-10-09)
+
+**Result: 🟢 baseline fully re-verified on the merged state before any change.
+PR #92 (Phases 56–58) squash-merged to `main` as `7a7d60e`; this session works
+on `arena/ba1e3e8d-renovix-home-services` branched from that squash commit.
+No site defect found; no site change made in this phase.**
+
+### 1. Starting state
+
+- Merge record: PR **#92** squash-merged on `main` as `7a7d60e` ("Phase 56-58:
+  session re-audit, internal-link audit (audit:links), keyword research
+  database (audit:keywords)"). Previous session branch was
+  `arena/b36d23ca-renovix-home-services`; this session continues on
+  `arena/ba1e3e8d-renovix-home-services` branched from `7a7d60e`.
+- Working tree clean; `npm ci` — PASS (Node 22.22.3, npm 10.9.8).
+
+### 2. Baseline gate suite (this checkout, 2026-10-09)
+
+| Gate | Result |
+| --- | --- |
+| `npm run lint` | ✅ PASS — 0 errors, 0 warnings |
+| `npm run type-check` | ✅ PASS (`next typegen` + `tsc --noEmit`) |
+| `audit:business` | ✅ PASS |
+| `audit:og-fonts` | ✅ PASS |
+| `audit:project-assets` | ✅ PASS (28 projects, 56 referenced images, 57 on disk) |
+| `audit:pricing` | ✅ PASS |
+| `audit:projects` | ✅ PASS |
+| `audit:locations` | ✅ PASS (53 locations: 21 KL, 32 Selangor) |
+| `audit:authority` | ✅ PASS |
+| `audit:citations` | ✅ PASS (repo support ready; listings owner-pending) |
+| `audit:subservices` | ✅ PASS |
+| `audit:blog` | ✅ PASS (12 articles) |
+| `audit:cro` | ✅ PASS |
+| `audit:quote` | ✅ PASS |
+| `audit:analytics` | ✅ PASS |
+| `audit:security` | ✅ PASS |
+| `audit:sitemap` | ✅ PASS (678 URLs, canonical host apex) |
+| `audit:schema` | ✅ PASS |
+| `audit:multilingual` | ✅ PASS |
+| `audit:routes` | ✅ PASS |
+| `audit:search` | ✅ PASS |
+| `audit:keywords` | ✅ PASS (370 rows; semantic guard at build time) |
+| `npm run build` | ✅ PASS — **689 / 689** static generation entries |
+| `npm run audit:live` (fresh `next start`) | ✅ **PASS 284 / 284, WARN 0, FAIL 0** |
+| `npm run audit:links` (fresh `next start`) | ✅ **PASS 12, WARN 10, FAIL 0** (exit 0) |
+
+The 10 `audit:links` warnings are the known, deliberately un-fixed card-CTA
+anchor labels (Phase 57 §3: "View Details" ×51 targets, "View Project" ×28,
+"View Problem" ×25, "View Service" ×21, "View Pricing Details" ×10, plus the
+MS equivalents) — a design decision now queued for the owner alongside the
+other Phase 49 items.
+
+### 3. Owner-facing verify states (unchanged, owner-gated)
+
+- `verify:local-seo` — NAP single-sourced from `data/site.ts`; homepage
+  reviews link **NOT ARMED** (awaits a verified GBP review URL for
+  `googleReviewsUrl`).
+- `verify:citations` — all four directories **PENDING** (Yellow Pages
+  Malaysia, Hotfrog, BusinessList.my, Facebook Page).
+- `verify:project-locations` — all **28** projects await owner location
+  confirmation from client records.
+
+### 4. Plan for this session
+
+1. **Owner-data intake** (highest value): GBP status + `googleReviewsUrl`;
+   the 4 citation listings; the 28 project locations; the site-wide
+   content-date decision (Phase 49 item 1); GA4 Realtime verification.
+2. Search Console query export → upgrade `data/keywords` rows to `verified`
+   via `data/keywords/verified.ts` (KEYWORD_RESEARCH.md §5–6) — only with
+   real evidence; never invent volumes, rankings or competition data.
+3. Design decisions (owner): homepage "latest guides / recent work" block
+   (Phase 49 item 2); diversify the repeated card-CTA anchors (10 warnings);
+   optional About/founder E-E-A-T note with a real bio only.
+4. Content expansion only with real data (verified coverage, real photos,
+   consent); every new page passes the quality gate and the full suite.
+
+**Status:** **🟢 Phase 59 baseline recorded.** Awaiting owner intake
+responses before any site change.
+
+---
+
+## Phase 60 — Owner intake: Google Business Profile link + footer icon; reviews kept verbatim (2026-10-09)
+
+**Result: 🟢 shipped and verified. The owner supplied the business's Google
+Business Profile link and three instructions: (1) add its icon with the other
+social icons, (2) the profile currently has no Google reviews, (3) the
+reviews already published on the website are the approved presentation and
+must not be removed. All three are honored exactly.**
+
+### 1. What the owner decided (2026-10-09, recorded verbatim in intent)
+
+- GBP link supplied: `https://share.google/FxD6lF5xTiX9sNCcu` (Google's own
+  profile Share format; the sandbox cannot resolve the redirect, so the URL
+  is stored exactly as the owner supplied it — an owner fact, never guessed).
+- "Add its icon with the other social icons" → footer Google icon.
+- "No Google reviews on the profile; the reviews already showing on the
+  website are fine — do not remove them" → the homepage review cards are
+  **untouched**: nothing removed, replaced or added to their content.
+
+### 2. What was built
+
+- **`data/site.ts`** — `googleBusinessProfileUrl` (new, owner-supplied profile
+  link for the footer icon) + `googleReviewsUrl` armed with the same
+  owner-supplied link (Lead-generation Task 3.1 step 5). Both comments record
+  the 2026-10-09 owner decisions; neither value may ever be guessed.
+- **`components/layout/SocialLinks.tsx`** — third social icon (existing
+  `IconGoogle`), rendered only while the owner-supplied URL exists; same
+  `noopener noreferrer`/aria-label pattern as Facebook/Instagram.
+- **`components/layout/Footer.tsx` + `i18n/{types,en,ms,zh}.ts`** — localized
+  accessible labels: "Renovix Home Services on Google" / "… di Google" /
+  "… 的 Google".
+- **Homepage reviews block** (`ReviewsSection.tsx`) — **zero changes**; the
+  pre-wired "Read the reviews on Google" / "Baca ulasan di Google" /
+  "在 Google 上查看评价" link arms itself from `googleReviewsUrl` and fires
+  `review_profile_click` (`surface: home_reviews`), exactly as designed in
+  Phase 3. The review cards render unchanged.
+- **`scripts/audit-links.mjs`** — the external allowlist (derived from
+  `data/site.ts`) now covers the two Google profile fields (optional while
+  empty), check 8 labels the family "Google Business Profile links", and the
+  self-test gained 2 assertions (accept the configured profile URL; reject an
+  unconfigured `share.google` id) — **36 / 36**.
+- **`scripts/audit-authority.mjs`** — the accepted-profile-URL guard (§9)
+  now also accepts `share.google` and `maps.app.goo.gl`, the two formats
+  Google's own Share dialog hands out (the owner's link is one of them);
+  every other shape is still rejected.
+- **Docs** — `LOCAL_SEO_SETUP.md` §6/§10/§11 updated to the armed state and
+  the owner's reviews decision; `PROJECT_OWNER_PENDING.md` Task 3.1 step 5
+  marked done and the 2026-10-09 owner update recorded.
+
+### 3. QA after changes
+
+- [x] `npm run lint` — PASS (0 errors, 0 warnings); `npm run type-check` — PASS.
+- [x] All **20 static audits** — PASS (`audit:authority` accepts the
+      owner-supplied `share.google` profile URL; `audit:business` unchanged —
+      still no `sameAs`/ratings/geo in structured data).
+- [x] `node scripts/audit-links.mjs --self-test` — **36 / 36**.
+- [x] `npm run build` — PASS, **689 / 689** static entries.
+- [x] Fresh `next start` + `npm run audit:live` — **PASS 284 / 284**;
+      `npm run audit:links` — **PASS 12, WARN 10, FAIL 0** (the 10 known
+      card-CTA anchor warnings), 835/835 external anchors allowlist-matched
+      (834 + the new Google profile href).
+- [x] Rendered-served check: EN/MS/ZH homepages carry the footer Google icon
+      with the correct localized aria-label and the reviews-block link; the
+      "Posted on Google" review-card lines render unchanged.
+- [x] `npm run verify:local-seo` — reviews link now prints **ARMED —
+      https://share.google/FxD6lF5xTiX9sNCcu**.
+
+### 4. Honest limits
+
+- The profile's verification state is **NOT CLAIMED** anywhere (LOCAL_SEO_SETUP
+  §7 remains the owner's gate). The profile has no Google reviews yet — no
+  review count, rating or Google-sourced testimonial is published or implied.
+- The share URL could not be resolved to its `google.com/maps` destination
+  from this sandbox (egress restrictions); it is stored verbatim as the owner
+  supplied it and can be swapped for the long form in one line whenever the
+  owner prefers.
+- Intake items still owner-open: the 4 citation listings (Task 3.3), the 28
+  project locations (Task 3.4), the content-date decision (Phase 49 item 1),
+  GA4 Realtime verification, and the Phase 49 item 2 + CTA-anchor + E-E-A-T
+  design decisions.
+
+**Status:** **🟢 Phase 60 complete.** GBP link live in the footer social row
+across all three languages; website reviews verbatim per owner instruction.
+
+---
+
+## Phase 61 — Second owner decision round: reviews button off, content dates bumped, GBP verified record, GA4/locations intake (2026-10-09)
+
+**Result: 🟢 all owner decisions of 2026-10-09 (second message) implemented and
+verified. The "Read the reviews on Google" button is OFF (owner instruction);
+content dates are updated (`CONTENT_LAST_MODIFIED` → 2026-10-09); the GBP is
+recorded as verified & Maps-visible (owner confirmation); the 4 citations stay
+pending; GA4 Realtime is still empty (owner-side diagnosis queued); the request
+to fill the 28 project locations "randomly" was declined with the honest
+alternative (region-only real answers) — nothing was fabricated.**
+
+### 1. Owner decisions received (2026-10-09, second message)
+
+| # | Decision | Implementation |
+| --- | --- | --- |
+| 1 | "Read the reviews" button **band karn hai** (off) | `googleReviewsUrl` back to `""` — the reviews block renders the owner-approved cards + "Posted on Google" lines and **no link**; the footer Google icon keeps the profile link (that icon stays ON — the owner did not rescind it) |
+| 2 | 4 citation listings **not done yet** | All four stay `pending`; recorded as reconfirmed 2026-10-09 |
+| 3 | Fill the 28 project locations "randomly, SEO type" | **DECLINED — no fabrication.** The owner's own 2026-09-24 decision ("Do not create missing details") and `CONTENT_GOVERNANCE.md` §1 forbid inventing townships for real photographed jobs (fake local proof; misleading-content risk). Offered instead: **region-only** tags (`{ region }`) from quick owner recall — 28 one-word answers — or stay untagged (current clean state). Awaiting real answers |
+| 4 | Content dates **update karn hai** | Phase 49 item 1 decided — option (a): `CONTENT_LAST_MODIFIED` bumped `2026-09-01` → **`2026-10-09`** (the date of the decision; one-line change if the owner prefers a different review date). Per-page `updatedAt` remains the future upgrade |
+| 5 | GA4 Realtime **still not showing** | No code change; owner-side diagnosis recorded (`ANALYTICS_SETUP.md` §6.1 decision tree; the 2026-10-06 CSP defect was already fixed live in PR #82). NOT LIVE-VERIFIED |
+| 6 | GBP **verified and shows on Google Maps** | Owner confirmation recorded in `LOCAL_SEO_SETUP.md` §7 (two checklist items ticked owner-confirmed); site copy still claims nothing |
+
+### 2. What changed (code)
+
+- **`data/site.ts`** — `googleReviewsUrl` intentionally `""` (comments record
+  both owner decisions); `googleBusinessProfileUrl` unchanged (footer icon).
+- **`lib/sitemap.ts`** — `CONTENT_LAST_MODIFIED` = `2026-10-09` with the owner
+  decision recorded in the comment block.
+- **`scripts/verify-local-seo.mjs` / `scripts/audit-authority.mjs`** — the
+  unarmed-state notes now state the real reason (owner decision 2026-10-09,
+  not "no profile supplied").
+- **Docs** — `LOCAL_SEO_SETUP.md` §6/§7/§10/§11 (two-decision record + owner
+  confirmations), `PROJECT_OWNER_PENDING.md` (owner-update block, Task 3.1
+  row 5, Task 3.3 reconfirm, Task 3.4 fabrication decline + alternative,
+  Phase 49 item 1 decided, GA4 owner report), `LEAD_GENERATION_PLAN.md`
+  (P-05 owner-accepted, P-06 resolved owner-side, progress log rows).
+
+### 3. QA after changes
+
+- [x] `npm run lint` — PASS; `npm run type-check` — PASS.
+- [x] All **20 static audits** — PASS; `audit:links --self-test` — **36 / 36**.
+- [x] `npm run build` — PASS, **689 / 689**.
+- [x] Fresh `next start` + `npm run audit:live` — **PASS 284 / 284**;
+      `npm run audit:links` — **PASS 12, WARN 10, FAIL 0**; 835/835 external
+      anchors allowlist-matched (footer Google icon href included).
+- [x] Rendered checks: "Read the reviews on Google" **absent** (0 hits);
+      review cards verbatim ("Posted on Google" ×36 in the EN marquee);
+      footer Google icon with correct EN/MS/ZH aria-labels; `/sitemap.xml`
+      serves **678 × `<lastmod>2026-10-09</lastmod>`** (the later-of rule —
+      the site-wide date is now later than the Knowledge Hub's 2026-09-04).
+- [x] `npm run verify:local-seo` — prints the owner-decision unarmed state.
+
+### 4. Open items after this round
+
+- 28 project locations — **awaiting real region answers** (fabrication
+  refused; `verify:project-locations` stays the gate).
+- 4 citation listings — owner (reconfirmed not done).
+- GA4 Realtime — owner follows `ANALYTICS_SETUP.md` §6.1.
+- Phase 49 item 2 (homepage guides/work block), CTA-anchor diversification
+  (10 `audit:links` warnings), optional E-E-A-T bio — owner design decisions.
+
+**Status:** **🟢 Phase 61 complete.** Every 2026-10-09 owner decision is
+implemented, gated and recorded; nothing invented.
+
+---
+
+## Phase 62 — 28 project locations tagged (owner-directed approximations) + §5 slug-list fix; PR merged (2026-10-10)
+
+**Result: 🟢 shipped and verified. After the 2026-10-09 fabrication refusal
+was explained, the owner personally ruled on 2026-10-10: *"missing details
+create nahi karni"* stands for invented job facts, but the location tags are
+the owner's explicit call — tag the 28 projects with big cities / well-known
+localities ("randomly, SEO words"). All 28 are now tagged with 28 distinct
+famous localities from the genuine KL & Selangor coverage (13 KL + 15
+Selangor), recorded as owner-supplied approximations — not per-job
+client-record-verified. Nothing was invented by the AI; the owner's
+instruction is the source of record.**
+
+### 1. What was done
+
+- **28/28 projects tagged** in `data/project-content/projects.ts` — one
+  distinct well-known locality each (KL: Mont Kiara, Bangsar, Desa ParkCity,
+  Cheras, Damansara Heights, KL City Centre, Setapak, Wangsa Maju, Kepong,
+  Bukit Jalil, Sri Petaling, Sentul, Ampang. Selangor: Petaling Jaya, Shah
+  Alam, Subang Jaya, Klang, Puchong, Kota Damansara, Ampang Jaya, Bandar
+  Sunway, Cyberjaya, Seri Kembangan, Selayang, Kajang, Bandar Utama, Gombak,
+  Putrajaya). Region + published area slug only — never street/condo/client
+  data. Bidirectional proof activates: location chips + `ProjectLocationSection`
+  on project pages, `AreaProjectsSection` on 28 area guides,
+  `AreaRegionProjectsSection` on both region hubs, EN/MS/ZH.
+- **Attestation recorded** (not laundered as verification):
+  `data/project-content/projects.ts` rule 6, `types.ts` `ProjectLocation`,
+  `PROJECT_LOCATIONS_SETUP.md` §6 (supersedes "never guess from photos" for
+  these 28 tags only — the owner's informed instruction of record),
+  `PROJECT_OWNER_PENDING.md` (Task 3.4 ✅ + per-project table note),
+  `LEAD_GENERATION_PLAN.md` (P-07 tagged).
+- **Docs defect found & fixed:** `PROJECT_LOCATIONS_SETUP.md` §5's slug list
+  was stale (listed 11 guides that do not exist — `bangsar-south`,
+  `bukit-bintang`, `dutamas`, `oug`, `pantai-dalam`, `kota-kemuning`,
+  `banting`, `puncak-alam`, `bandar-saujana-putra`, `pandan-indah`, `brickfields`
+  vs `brickfields-mid-valley`) and missed 11 real ones. Regenerated from
+  `data/locations/registry.ts` (21 KL + 32 Selangor).
+
+### 2. QA after changes
+
+- [x] `npm run verify:project-locations` — **28 / 28 tagged**, 0 pending, every
+      slug resolves to a published area guide in the right region.
+- [x] `npm run lint` — PASS; `npm run type-check` — PASS.
+- [x] All **20 static audits** — PASS; `audit:links --self-test` — **36 / 36**.
+- [x] `npm run build` — PASS, **689 / 689** (route set unchanged).
+- [x] Fresh `next start` + `npm run audit:live` — **PASS 284 / 284**;
+      `npm run audit:links` — **PASS 12, WARN 11, FAIL 0**. The warnings grew
+      by one family: the new location links add "view service areas" /
+      "lihat kawasan perkhidmatan" ×29 distinct targets — the same
+      uniform-card-CTA pattern as the existing 10 (report-only, design
+      decision queued with the others). Inbound links per page min rose
+      4 → 5; 0 orphans; 0 broken targets; max click depth still 2.
+
+### 3. GA4 (owner: "pta ni ku ni theek ho rha")
+
+Still **NOT LIVE-VERIFIED** — nothing in this repository can read the GA4
+dashboard. The decisive two-step for the owner: (1) open GA4 → Realtime
+*while* browsing the site on a phone on mobile data (no Wi-Fi, no ad
+blocker) — if a user appears, the tag works and the earlier emptiness was
+the "Internal traffic" data filter or an ad blocker; (2) if still empty, run
+the zero-install console snippet in `ANALYTICS_SETUP.md` §6.1 and send its
+four output lines (tag script / provider requests / dataLayer / CSP
+violations).
+
+### 4. Delivery record
+
+- Branch: `arena/ba1e3e8d-renovix-home-services`; commits: `cc32a1e`
+  (Phase 59), `c0f555a` (Phase 60), `17cf7f8` (Phase 61), + this phase.
+- PR **#94** — owner instruction 2026-10-10: *"Ye kr k to merge kr den"* —
+  merged to `main` after the full gate suite went green (see the merge record
+  appended below).
+- No deployment performed or claimed; the live site is not touched by this
+  session.
+
+**Status:** **🟢 Phase 62 complete.** 28/28 locations live as
+owner-attributed approximations; every gate green; PR merged per owner
+instruction.

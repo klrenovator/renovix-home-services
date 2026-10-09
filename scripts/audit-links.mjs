@@ -94,7 +94,8 @@ async function batch(items, size, fn) {
  * Reads the verified contact values out of `data/site.ts` so the allowlist
  * tracks the registry instead of a second hand-copied list. The site's only
  * legitimate external anchors are WhatsApp deep links, the `tel:` call link,
- * the `mailto:` link and the two configured social profiles.
+ * the `mailto:` link, the configured social profiles and the owner-supplied
+ * Google Business Profile links (footer icon + homepage reviews link).
  */
 function externalAllowlist() {
   const site = readFileSync(join(ROOT, "data/site.ts"), "utf8");
@@ -107,6 +108,8 @@ function externalAllowlist() {
   const email = grab("email");
   const facebookUrl = grab("facebookUrl");
   const instagramUrl = grab("instagramUrl");
+  const googleBusinessProfileUrl = grab("googleBusinessProfileUrl");
+  const googleReviewsUrl = grab("googleReviewsUrl");
   const missing = [
     ["phone", phone],
     ["whatsapp", whatsapp],
@@ -124,11 +127,16 @@ function externalAllowlist() {
     email,
     facebookUrl,
     instagramUrl,
+    googleBusinessProfileUrl,
+    googleReviewsUrl,
     /** True when the external href is one the business itself publishes. */
     isAllowed(href) {
       if (href === `tel:${phone}`) return true;
       if (href === `mailto:${email}`) return true;
       if (href === facebookUrl || href === instagramUrl) return true;
+      // Owner-supplied Google Business Profile links (may stay unconfigured).
+      if (googleBusinessProfileUrl && href === googleBusinessProfileUrl) return true;
+      if (googleReviewsUrl && href === googleReviewsUrl) return true;
       // WhatsApp deep links carry a pre-filled ?text= message.
       if (href === `https://wa.me/${digits}`) return true;
       if (href.startsWith(`https://wa.me/${digits}?`)) return true;
@@ -560,7 +568,11 @@ function checkExternalLinks(pages, allowlist) {
             ? "facebook.com"
             : href.includes("instagram.com")
               ? "instagram.com"
-              : `other: ${href.slice(0, 60)}`;
+              : /^https:\/\/(share\.google|maps\.app\.goo\.gl|g\.page|www\.google\.[a-z.]+\/maps|maps\.google\.[a-z.]+)/i.test(
+                    href,
+                  )
+                ? "Google Business Profile links"
+                : `other: ${href.slice(0, 60)}`;
     families.set(family, (families.get(family) ?? 0) + 1);
   }
   console.log(
@@ -752,8 +764,13 @@ function selfTest() {
   t("allowlist: mailto", allow.isAllowed("mailto:renovixhomeservices@gmail.com"));
   t("allowlist: facebook", allow.isAllowed("https://www.facebook.com/share/1dr51n9qii/"));
   t("allowlist: instagram", allow.isAllowed("https://www.instagram.com/renovixhomeservices/"));
+  t(
+    "allowlist: google business profile icon",
+    allow.isAllowed("https://share.google/FxD6lF5xTiX9sNCcu"),
+  );
   t("allowlist: rejects unknown external", !allow.isAllowed("https://example.com/"));
   t("allowlist: rejects a different wa.me number", !allow.isAllowed("https://wa.me/60123456789"));
+  t("allowlist: rejects an unconfigured share.google id", !allow.isAllowed("https://share.google/ZZZZZZZZZZZZZZZ"));
 
   // Synthetic link graph. /en/orphan/ is linked by nobody; /en/bad/ links to
   // an unserved destination with a non-descriptive anchor and an unexpected

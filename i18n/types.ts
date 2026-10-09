@@ -112,6 +112,8 @@ export type Dictionary = {
     machineReadable: string;
     facebook: string;
     instagram: string;
+    /** Accessible label of the footer Google Business Profile icon. */
+    google: string;
   };
   home: {
     hero: {

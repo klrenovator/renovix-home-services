@@ -855,11 +855,18 @@ const reviewsUrl = reviewsUrlMatch ? reviewsUrlMatch[1].trim() : null;
 if (reviewsUrl === null) {
   fail("data/site.ts no longer declares googleReviewsUrl — the reviews link cannot be armed");
 } else if (reviewsUrl === "") {
-  note("Google reviews link: not armed (no verified Business Profile URL supplied yet)");
-} else if (!/^https:\/\/(www\.)?(google\.[a-z.]+\/maps|maps\.google\.[a-z.]+|g\.page|search\.google\.[a-z.]+)\/?/i.test(reviewsUrl)) {
+  note(
+    "Google reviews link: not armed (owner decision 2026-10-09 — the profile link is published on the footer social icon only; the reviews-block link stays off while the profile has no Google reviews)",
+  );
+} else if (
+  !/^https:\/\/(www\.)?(google\.[a-z.]+\/maps|maps\.google\.[a-z.]+|g\.page|search\.google\.[a-z.]+|maps\.app\.goo\.gl|share\.google)\/?/i.test(
+    reviewsUrl,
+  )
+) {
   fail(
     "data/site.ts googleReviewsUrl must be a real Google Business Profile URL " +
-      "(google.com/maps, maps.google.com, g.page or search.google.com), never a search or guessed URL",
+      "(google.com/maps, maps.google.com, g.page, search.google.com, maps.app.goo.gl or share.google — " +
+      "the formats Google's own Share dialog hands out), never a search or guessed URL",
   );
 } else {
   note("Google reviews link: armed with an owner-supplied profile URL");

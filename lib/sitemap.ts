@@ -24,8 +24,13 @@ import { siteConfig } from "@/data/site";
  * - It must never be set to "now" programmatically.
  * - If the data model ever gains real per-page timestamps, use those instead
  *   and delete this constant.
+ *
+ * 2026-10-09 — bumped from 2026-09-01 by explicit owner decision ("content
+ * dates update"), choosing the site-wide reviewed-date model over per-page
+ * `updatedAt` fields for now. If the owner supplies a different date that
+ * better marks the last whole-site content review, replace this value.
  */
-export const CONTENT_LAST_MODIFIED = "2026-09-01";
+export const CONTENT_LAST_MODIFIED = "2026-10-09";
 
 /**
  * The `lastModified` for one sitemap entry: the *later* of the site-wide

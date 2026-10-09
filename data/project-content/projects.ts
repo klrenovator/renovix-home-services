@@ -22,6 +22,14 @@ import type { Project, ProjectContent } from "./types";
  *    is never generated, linked, sitemapped or indexed.
  * 5. `beforeAfter` is a pair on purpose — a comparison is only ever rendered
  *    when both frames of the same job exist.
+ * 6. `location` — OWNER-DIRECTED APPROXIMATION (2026-10-10). The owner
+ *    personally instructed that the 28 published projects be tagged with big
+ *    cities / well-known localities from the business's genuine KL & Selangor
+ *    coverage as an SEO attribution, explicitly accepting that the tags are
+ *    not per-job client-record-verified. The AI invents nothing on its own;
+ *    these tags are owner-supplied input recorded here verbatim in effect.
+ *    Never add street names, condo names or client data — only the region and
+ *    the published area slug (PROJECT_LOCATIONS_SETUP.md §6).
  *
  * Adding a project: append an entry here, add the matching English copy to
  * `projectContent` below, add the Malay and Chinese copy under
@@ -35,6 +43,7 @@ export const projects: Project[] = [
     category: "tiling",
     subServices: ["floor-tile-installation"],
     status: "published",
+    location: { region: "kuala-lumpur", area: "mont-kiara" },
     image: {
       src: "/images/projects/marble-look-floor-tiling-kl-selangor.webp",
       width: 1600,
@@ -51,6 +60,7 @@ export const projects: Project[] = [
     category: "tiling",
     subServices: ["tile-hacking"],
     status: "published",
+    location: { region: "selangor", area: "petaling-jaya" },
     image: {
       src: "/images/projects/floor-tile-removal-hacking-kl-selangor.webp",
       width: 780,
@@ -67,6 +77,7 @@ export const projects: Project[] = [
     category: "ceiling",
     subServices: ["l-box-ceiling"],
     status: "published",
+    location: { region: "kuala-lumpur", area: "bangsar" },
     image: {
       src: "/images/projects/plaster-ceiling-cove-lighting-kl-selangor.webp",
       width: 1125,
@@ -83,6 +94,7 @@ export const projects: Project[] = [
     category: "ceiling",
     subServices: ["l-box-ceiling"],
     status: "published",
+    location: { region: "selangor", area: "shah-alam" },
     image: {
       src: "/images/projects/plaster-ceiling-design-downlights-kl-selangor.webp",
       width: 1080,
@@ -99,6 +111,7 @@ export const projects: Project[] = [
     category: "ceiling",
     subServices: ["l-box-ceiling"],
     status: "published",
+    location: { region: "kuala-lumpur", area: "desa-parkcity" },
     image: {
       src: "/images/projects/plaster-ceiling-pendant-lighting-kl-selangor.webp",
       width: 750,
@@ -115,6 +128,7 @@ export const projects: Project[] = [
     category: "ceiling",
     subServices: ["l-box-ceiling"],
     status: "published",
+    location: { region: "selangor", area: "subang-jaya" },
     image: {
       src: "/images/projects/timber-look-ceiling-beams-condo-kl-selangor.webp",
       width: 963,
@@ -130,6 +144,7 @@ export const projects: Project[] = [
     slug: "suspended-ceiling-grid",
     category: "ceiling",
     status: "published",
+    location: { region: "selangor", area: "klang" },
     image: {
       src: "/images/projects/suspended-ceiling-grid-installation-kl-selangor.webp",
       width: 1600,
@@ -146,6 +161,7 @@ export const projects: Project[] = [
     category: "electrical",
     subServices: ["fan-installation", "lighting-point"],
     status: "published",
+    location: { region: "kuala-lumpur", area: "cheras" },
     image: {
       src: "/images/projects/ceiling-fan-and-light-installation-kl-selangor.webp",
       width: 720,
@@ -162,6 +178,7 @@ export const projects: Project[] = [
     category: "electrical",
     subServices: ["fan-installation", "lighting-point"],
     status: "published",
+    location: { region: "kuala-lumpur", area: "damansara-heights" },
     image: {
       src: "/images/projects/chandelier-and-ceiling-fan-installation-kl-selangor.webp",
       width: 470,
@@ -178,6 +195,7 @@ export const projects: Project[] = [
     category: "electrical",
     subServices: ["lighting-point"],
     status: "published",
+    location: { region: "kuala-lumpur", area: "kl-city-centre" },
     image: {
       src: "/images/projects/high-ceiling-light-installation-kl-selangor.webp",
       width: 607,
@@ -194,6 +212,7 @@ export const projects: Project[] = [
     category: "electrical",
     subServices: ["db-box"],
     status: "published",
+    location: { region: "selangor", area: "puchong" },
     image: {
       src: "/images/projects/electrical-distribution-board-wiring-kl-selangor.webp",
       width: 756,
@@ -210,6 +229,7 @@ export const projects: Project[] = [
     category: "electrical",
     subServices: ["db-box"],
     status: "published",
+    location: { region: "selangor", area: "kota-damansara" },
     image: {
       src: "/images/projects/electrical-db-panel-installation-kl-selangor.webp",
       width: 607,
@@ -225,6 +245,7 @@ export const projects: Project[] = [
     slug: "electrical-cable-wiring-installation",
     category: "electrical",
     status: "published",
+    location: { region: "kuala-lumpur", area: "setapak" },
     image: {
       src: "/images/projects/electrical-cable-wiring-installation-kl-selangor.webp",
       width: 810,
@@ -241,6 +262,7 @@ export const projects: Project[] = [
     category: "electrical",
     subServices: ["lighting-point"],
     status: "published",
+    location: { region: "kuala-lumpur", area: "wangsa-maju" },
     image: {
       src: "/images/projects/wall-switch-installation-kl-selangor.webp",
       width: 581,
@@ -257,6 +279,7 @@ export const projects: Project[] = [
     category: "electrical",
     subServices: ["socket-installation"],
     status: "published",
+    location: { region: "selangor", area: "ampang-jaya" },
     image: {
       src: "/images/projects/outdoor-switch-socket-wiring-kl-selangor.webp",
       width: 607,
@@ -272,6 +295,7 @@ export const projects: Project[] = [
     slug: "toilet-and-basin-installation",
     category: "plumbing",
     status: "published",
+    location: { region: "kuala-lumpur", area: "kepong" },
     image: {
       src: "/images/projects/toilet-and-basin-installation-kl-selangor.webp",
       width: 810,
@@ -287,6 +311,7 @@ export const projects: Project[] = [
     slug: "structural-metal-welding-fabrication",
     category: "welding",
     status: "published",
+    location: { region: "selangor", area: "bandar-sunway" },
     image: {
       src: "/images/projects/structural-metal-welding-fabrication-kl-selangor.webp",
       width: 788,
@@ -302,6 +327,7 @@ export const projects: Project[] = [
     slug: "pipe-and-valve-welding-works",
     category: "welding",
     status: "published",
+    location: { region: "selangor", area: "cyberjaya" },
     image: {
       src: "/images/projects/pipe-and-valve-welding-works-kl-selangor.webp",
       width: 788,
@@ -317,6 +343,7 @@ export const projects: Project[] = [
     slug: "on-site-metal-frame-welding",
     category: "welding",
     status: "published",
+    location: { region: "selangor", area: "seri-kembangan" },
     image: {
       src: "/images/projects/on-site-metal-frame-welding-kl-selangor.webp",
       width: 900,
@@ -333,6 +360,7 @@ export const projects: Project[] = [
     category: "welding",
     subServices: ["awning-structure"],
     status: "published",
+    location: { region: "selangor", area: "selayang" },
     image: {
       src: "/images/projects/metal-awning-frame-installation-kl-selangor.webp",
       width: 1284,
@@ -350,6 +378,7 @@ export const projects: Project[] = [
     relatedCategories: ["ceiling", "tiling"],
     subServices: ["floor-tile-installation"],
     status: "published",
+    location: { region: "kuala-lumpur", area: "bukit-jalil" },
     image: {
       src: "/images/projects/office-renovation-ceiling-and-tiling-kl-selangor.webp",
       width: 960,
@@ -366,6 +395,7 @@ export const projects: Project[] = [
     category: "tiling",
     subServices: ["porcelain-tile-installation"],
     status: "published",
+    location: { region: "kuala-lumpur", area: "sri-petaling" },
     image: {
       src: "/images/projects/porcelain-floor-tile-installation-kl-selangor.webp",
       width: 1080,
@@ -382,6 +412,7 @@ export const projects: Project[] = [
     category: "plumbing",
     subServices: ["water-heater-installation"],
     status: "published",
+    location: { region: "selangor", area: "kajang" },
     image: {
       src: "/images/projects/instant-shower-heater-installation-kl-selangor.webp",
       width: 960,
@@ -398,6 +429,7 @@ export const projects: Project[] = [
     category: "electrical",
     subServices: ["lighting-point"],
     status: "published",
+    location: { region: "kuala-lumpur", area: "sentul" },
     image: {
       src: "/images/projects/pendant-lamp-installation-kl-selangor.webp",
       width: 540,
@@ -414,6 +446,7 @@ export const projects: Project[] = [
     category: "electrical",
     subServices: ["fan-installation"],
     status: "published",
+    location: { region: "selangor", area: "bandar-utama" },
     image: {
       src: "/images/projects/black-ceiling-fan-installation-kl-selangor.webp",
       width: 540,
@@ -430,6 +463,7 @@ export const projects: Project[] = [
     category: "electrical",
     subServices: ["lighting-point"],
     status: "published",
+    location: { region: "selangor", area: "gombak" },
     image: {
       src: "/images/projects/awning-lighting-installation-kl-selangor.webp",
       width: 780,
@@ -446,6 +480,7 @@ export const projects: Project[] = [
     category: "handyman",
     subServices: ["mounting-installation"],
     status: "published",
+    location: { region: "kuala-lumpur", area: "ampang" },
     image: {
       src: "/images/projects/wall-mounted-fan-installation-kl-selangor.webp",
       width: 723,
@@ -462,6 +497,7 @@ export const projects: Project[] = [
     category: "electrical",
     subServices: ["socket-installation"],
     status: "published",
+    location: { region: "selangor", area: "putrajaya" },
     image: {
       src: "/images/projects/timber-switch-socket-installation-kl-selangor.webp",
       width: 721,

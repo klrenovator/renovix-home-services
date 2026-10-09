@@ -52,6 +52,17 @@ export type SiteConfig = {
   facebookUrl: string;
   instagramUrl: string;
   /**
+   * The business's Google Business Profile link as shared by the owner, or an
+   * empty string while none exists. OWNER-SUPPLIED ONLY (Lead-generation Task
+   * 3.1, supplied 2026-10-09): the footer's social row links it next to
+   * Facebook and Instagram. It may never be guessed or templated from the
+   * business name. Owner decision 2026-10-09: this footer icon is the only
+   * place the profile link is published — `googleReviewsUrl` below stays
+   * empty (the reviews-block link is deliberately unarmed while the profile
+   * has no Google reviews).
+   */
+  googleBusinessProfileUrl: string;
+  /**
    * The business's live Google Business Profile review URL, or an empty string
    * while no profile exists. OWNER-SUPPLIED ONLY (Lead-generation Task 3.1):
    * it is copied from the verified profile in Google Maps / Search once the
@@ -108,11 +119,23 @@ export const siteConfig: SiteConfig = {
   facebookUrl: "https://www.facebook.com/share/1dr51n9qii/",
   instagramUrl: "https://www.instagram.com/renovixhomeservices/",
   /**
-   * OWNER-PENDING (Lead-generation Task 3.1): no verified Google Business
-   * Profile review URL has been supplied, so this stays empty and the homepage
-   * reviews block publishes no profile link. Paste the real review URL here
-   * once the profile is created and verified (`LOCAL_SEO_SETUP.md` §6) — the
-   * link, its tracking and its EN/MS/ZH label are already wired.
+   * OWNER-SUPPLIED 2026-10-09: the owner's own Google Business Profile share
+   * link (https://share.google/… is Google's current profile-share format).
+   * Renders the footer Google icon beside Facebook and Instagram. The profile
+   * currently has no Google reviews; the homepage reviews block's cards are
+   * the owner-approved presentation and are deliberately untouched.
+   */
+  googleBusinessProfileUrl: "https://share.google/FxD6lF5xTiX9sNCcu",
+  /**
+   * OWNER DECISION 2026-10-09 (later the same day): the homepage reviews-block
+   * link ("Read the reviews on Google") is **intentionally unarmed** — the
+   * owner wants the reviews block to stay exactly as it is while the profile
+   * has no Google reviews. The owner-supplied profile link is still published
+   * where the owner asked for it: the footer social icon
+   * (`googleBusinessProfileUrl`). Owner confirms the profile is verified and
+   * shows on Google Maps (2026-10-09). If the owner ever wants the reviews
+   * link back, paste the profile URL here — one line; the localized labels
+   * and `review_profile_click` tracking stay wired (`LOCAL_SEO_SETUP.md` §6).
    */
   googleReviewsUrl: "",
   localCitationProfiles: {

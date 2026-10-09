@@ -91,6 +91,7 @@ export const en: Dictionary = {
     machineReadable: "Machine-readable data",
     facebook: "Renovix Home Services on Facebook",
     instagram: "Renovix Home Services on Instagram",
+    google: "Renovix Home Services on Google",
   },
   home: {
     hero: {
