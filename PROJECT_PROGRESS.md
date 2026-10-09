@@ -8427,3 +8427,91 @@ problem the profile unblocks: **P-05**, the homepage reviews block that says
 `LEAD_GENERATION_PLAN.md`; Tasks 3.2–3.4 remain `[PENDING]`. The profile
 itself, its verification, its Maps visibility and its review count are
 **not claimed** — they are owner actions, gated by `LOCAL_SEO_SETUP.md` §7.
+
+
+---
+
+## Phase 56 — Session Phase Zero re-audit + audit-coverage gap plan (2026-10-09)
+
+**Result: 🟢 baseline fully re-verified on this checkout; live site confirmed in
+sync; two brief-mandated QA/research artifacts identified as the remaining
+code-side work (Phases 57–58). No site defect found; no site change made in
+this phase.**
+
+### 1. Baseline re-verification (this checkout, `arena/b36d23ca-renovix-home-services`, `df952c3`)
+
+- Working tree clean; history at `df952c3` (2026-10-08, "docs: record pending
+  local citation listings (#91)").
+- `npm ci` — PASS.
+- `npm run lint` — PASS (0 errors, 0 warnings).
+- `npm run type-check` — PASS.
+- All **19 static audits** — PASS (business, og-fonts, project-assets, pricing,
+  projects, locations, authority, citations, subservices, blog, cro, quote,
+  analytics, security, sitemap, schema, multilingual, routes, search).
+- `npm run build` — PASS; **689 / 689** static generation entries.
+- Fresh `next start` + `npm run audit:live` — **PASS 284 / 284, WARN 0, FAIL 0**.
+- `verify:search-console` — repository wiring ready; Search Console dashboard
+  access is an owner action (no credentials exist in the repo; NOT CLAIMED).
+- `verify:local-seo` — NAP single-sourced from `data/site.ts`; homepage reviews
+  link NOT ARMED (owner-gated on a verified GBP URL).
+- `verify:citations` — all four directories PENDING (owner confirmed 2026-10-08
+  the listings are not yet published).
+- `verify:project-locations` — all 28 projects await owner location
+  confirmation from client records.
+
+### 2. Live-site vs repository comparison (read-only fetches)
+
+- `https://renovixhomeservices.my/en/` — serves the expected homepage (10
+  service cards, problem links, area links, guides/projects paragraph).
+- `/robots.txt` — matches `app/robots.ts` (`Allow: /` + the single sitemap line).
+- `/sitemap.xml` — same **678** URLs, same order and `lastmod` values as the
+  local production build.
+- `/llms.txt` — matches the repository feed (services, 51 sub-services with
+  prices, areas, contact block).
+- Direct shell egress to the production domain is blocked in this sandbox, so
+  all live checks went through the platform's read-only page fetcher; no
+  response-header claim is re-made here (the 2026-10-06 CSP fix was verified
+  live in the earlier session record).
+
+### 3. Audit-coverage gaps found (brief Sections 11 + 19 and Section 4)
+
+The 19 static audits + live QA already cover: route tree, sitemap/robots parity,
+orphan pages, hub↔spoke edges, problem/area/project/guide reciprocity, dead
+internal targets (target ∈ sitemap), breadcrumbs, canonicals, hreflang,
+structured data, pricing parity, localization, analytics wiring, security
+headers and the quote API. Two brief-mandated artifacts do **not** exist yet:
+
+1. **A dedicated internal-link auditing script** (Sections 11 + 19).
+   `audit:live` samples broken links (6 pages) and checks that internal targets
+   are *served*, but no committed script reports: internal links whose verbatim
+   href is noncanonical or redirected (trailing slash / host / scheme / query
+   string), a full unsampled broken-target sweep, per-page inbound-link
+   sufficiency, repetitive or non-descriptive anchor text, unexpected external
+   links, and click-depth from the homepages. → **Phase 57: `npm run audit:links`.**
+2. **A keyword research database** (Section 4). The intent matrix (24 entries
+   with real `searchQueryExamples`), the per-language synonym tables and the
+   service/problem/location registries hold the raw material, but there is no
+   single keyword database with the mandated fields (keyword, language, intent,
+   service, subservice, problem, location, modifier, source, volume-if-verified,
+   existing ranking URL, proposed target URL, conversion relevance, priority,
+   status, last reviewed). → **Phase 58: `data/keywords/` +
+   `scripts/audit-keywords.mjs` + `KEYWORD_RESEARCH.md`.**
+
+Everything else still open is owner-gated (`PROJECT_OWNER_PENDING.md`): the GBP
+profile + 4 citation listings, project location tagging (28 projects), the
+site-wide content-date decision, GA4 dashboard verification, and optional
+E-E-A-T/photo supply. No code may substitute for those.
+
+### 4. Plan
+
+- **Phase 57** — `scripts/audit-links.mjs` (`npm run audit:links`): whole-corpus
+  internal-link audit against a running production server; report-only for
+  ambiguous signals, fail on deterministic defects; wired into package.json;
+  run against a fresh `next start`; results recorded here.
+- **Phase 58** — keyword research database (`data/keywords/`,
+  `KEYWORD_RESEARCH.md`, `npm run audit:keywords`): derived only from existing
+  registries; every search volume left `unknown`; resolvable-target and
+  cannibalization guards.
+- Re-run the full gate suite after each phase; update this file.
+
+**Status:** **🟢 Phase Zero complete.** Baseline verified; plan recorded.
