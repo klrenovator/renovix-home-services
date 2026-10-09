@@ -8699,3 +8699,17 @@ now exist with enforced honesty rules.
   and deploy follow the owner's normal review workflow.
 - Production deploy: **not performed** — no code was deployed by this session;
   the live site was only read for comparison.
+
+---
+
+## Phase 56–58 merge record (2026-10-09)
+
+- Pull request **#92** merged into `main` at 2026-10-09T07:32:32Z — squash
+  commit **`7a7d60e`** ("Phase 56-58: session re-audit, internal-link audit
+  (audit:links), keyword research database (audit:keywords) (#92)").
+- GitHub checks were green before merge (Vercel preview SUCCESS).
+- **Deployment not verified by this session:** the merge triggers the normal
+  Vercel production workflow, but no post-deploy check was run and none is
+  claimed. The merged diff changes no served page (build-time audits, QA
+  scripts, keyword database, docs), so production content is identical
+  either way.
