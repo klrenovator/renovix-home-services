@@ -96,6 +96,7 @@ export const ms: Dictionary = {
     machineReadable: "Data mesra mesin",
     facebook: "Renovix Home Services di Facebook",
     instagram: "Renovix Home Services di Instagram",
+    google: "Renovix Home Services di Google",
   },
   home: {
     hero: {

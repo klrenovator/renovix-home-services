@@ -42,13 +42,26 @@ it (Google Maps search, and the Businesses list at business.google.com); a
 second profile for the same business damages both listings, so claim rather
 than create if a listing is found.
 
+**Owner update 2026-10-09 — profile link supplied.** The owner shared the
+business's Google Business Profile link (`https://share.google/FxD6lF5xTiX9sNCcu`,
+Google's own Share format) with three instructions, recorded verbatim in
+intent: (1) add its icon alongside the other social icons; (2) the profile
+currently has **no Google reviews**; (3) the reviews already shown on the
+website are the approved presentation and **must not be removed**. Done:
+the footer Google icon now links the profile in EN/MS/ZH
+(`googleBusinessProfileUrl`), the pre-wired homepage "Read the reviews on
+Google" link is armed with the same owner-supplied URL (`googleReviewsUrl`),
+and the published review cards are **untouched** — nothing removed, replaced
+or added to their content. Verification state of the profile is still
+**NOT CLAIMED**; the remaining table rows below stay owner-open.
+
 | # | Action | Where | Notes |
 | --- | --- | --- | --- |
 | 1 | Confirm whether a profile already exists, then claim or create it with the exact NAP from `npm run verify:local-seo` | Google account the business controls | Name exactly `Renovix Home Services` — no keywords, no neighbourhood. Address `Jalan Kiara, Mont Kiara`, `50480`, `Kuala Lumpur`, `Wilayah Persekutuan Kuala Lumpur` |
 | 2 | Decide the **opening days** (Google asks day by day; the site states only `9:00 AM – 6:00 PM`) | Owner decision | If the real days/hours differ, `data/site.ts` must be updated **first** so site and profile agree; the site still publishes no opening days in structured data because none have been supplied |
 | 3 | Choose the service areas actually worked in | Owner decision | `npm run verify:local-seo` lists the 53 published locality guides as a reference; the profile claim must stay truthful, so select only real coverage |
 | 4 | Upload real job photos only | Owner → profile | No stock, no AI-generated images — the same rule the project pages follow |
-| 5 | Complete verification, then **paste the profile's review URL into `googleReviewsUrl` in `data/site.ts`** | `data/site.ts` (one line) | This is the only code-side step. The homepage link, its EN/MS/ZH labels and its `review_profile_click` event are already wired and inert until the value is set (`LOCAL_SEO_SETUP.md` §6) |
+| 5 | Complete verification, then **paste the profile's review URL into `googleReviewsUrl` in `data/site.ts`** | `data/site.ts` (one line) | ✅ **DONE 2026-10-09** — owner supplied the profile link; `googleReviewsUrl` and the new `googleBusinessProfileUrl` (footer Google icon) are set to it; homepage labels and `review_profile_click` fire in EN/MS/ZH. Owner decision: the website's review cards stay exactly as they are (the profile has no Google reviews yet) |
 | 6 | Publish the same NAP on Yellow Pages Malaysia, Hotfrog, BusinessList.my and Facebook Local Business; search/claim existing profiles first | Owner-controlled directory accounts; then `data/site.ts` | Copy from `npm run verify:local-seo`; check each public page before setting its `localCitationProfiles.<directory>` entry to `status: "published"` with the direct HTTPS URL. `npm run verify:citations` validates URL shape/config only and `npm run verify:citations -- --live` retrieves each published profile read-only to check it answers and shows the NAP — neither can verify approval or that the listing is the official record. Keep each entry pending until the live NAP is checked; no paid plan without owner approval. |
 
 **Current Task 3.3 status: [PENDING] for all four directories.** Owner confirmed on 2026-10-08 that the listings have not yet been published. Run

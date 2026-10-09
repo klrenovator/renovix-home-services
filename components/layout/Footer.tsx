@@ -66,6 +66,7 @@ export function Footer({ lang }: FooterProps) {
               className="pt-1"
               facebookLabel={t.footer.facebook}
               instagramLabel={t.footer.instagram}
+              googleLabel={t.footer.google}
             />
             <div className="pt-2">
               <p className="text-xs font-semibold uppercase tracking-wider text-white/50">

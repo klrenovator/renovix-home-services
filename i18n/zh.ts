@@ -88,6 +88,7 @@ export const zh: Dictionary = {
     machineReadable: "机器可读数据",
     facebook: "Renovix Home Services 的 Facebook",
     instagram: "Renovix Home Services 的 Instagram",
+    google: "Renovix Home Services 的 Google",
   },
   home: {
     hero: {

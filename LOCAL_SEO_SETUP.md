@@ -330,22 +330,33 @@ The homepage reviews block says *"Posted on Google"* but has had nowhere to
 link, because no verified profile URL could be supplied — a reader has no way
 to check it (the plan's P-05).
 
-That is now wired, but **inert until a real URL exists**:
+**Status 2026-10-09 — ARMED with the owner-supplied profile link.** The owner
+shared the business's Google Business Profile link (`share.google/…`, Google's
+own Share format) and it is now wired to two places:
 
-1. Create and verify the profile (§3) and collect at least a few real reviews.
-2. Open the profile in Google Maps → **Share → Copy link** (or use the
-   `g.page/r/…` review link from the profile's "Ask for reviews" panel).
-3. Paste that URL into `googleReviewsUrl` in `data/site.ts`.
-4. The homepage then renders a localized link — *"Read the reviews on Google"* /
-   *"Baca ulasan di Google"* / *"在 Google 上查看评价"* — as a tracked
-   `review_profile_click` event with `surface: home_reviews`, so the business
-   can see how many visitors check the reviews before enquiring.
+1. `googleBusinessProfileUrl` in `data/site.ts` — the footer's Google icon,
+   beside Facebook and Instagram, in all three languages.
+2. `googleReviewsUrl` in `data/site.ts` — the homepage reviews block's
+   localized link (*"Read the reviews on Google"* / *"Baca ulasan di Google"* /
+   *"在 Google 上查看评价"*), as a tracked `review_profile_click` event with
+   `surface: home_reviews`.
+
+Owner decision 2026-10-09, recorded exactly: the profile currently has **no
+Google reviews**, and the reviews already published on the website are the
+owner-approved presentation — **nothing in the reviews block is removed or
+replaced**. The arming above only makes the *"Posted on Google"* attribution
+checkable; the review cards themselves never change with the URL.
+
+If the profile URL ever changes (or the owner supplies a dedicated review
+link from the profile's "Ask for reviews" panel), replace the value in
+`data/site.ts` — one line, no code change.
 
 Rules the build enforces (`audit:authority` §9):
 
 - The URL must be a real profile URL (`google.com/maps`, `maps.google.com`,
-  `g.page`, `search.google.com`). A **search URL is rejected** — it would look
-  like proof without being proof.
+  `g.page`, `search.google.com`, `maps.app.goo.gl`, `share.google` — the
+  formats Google's own Share dialog hands out). A **search URL is rejected** —
+  it would look like proof without being proof.
 - The component may not hardcode any URL; it must come from `data/site.ts`.
 - The URL must not enter structured data (no `sameAs`, no ratings — the site
   publishes no `Review`/`aggregateRating` node).
@@ -420,7 +431,9 @@ an owner action.*
 - [ ] Description factual, no unverifiable claims.
 - [ ] Real photos only (no stock, no AI); logo uploaded.
 - [ ] Verification completed.
-- [ ] Reviews link copied into `googleReviewsUrl` in `data/site.ts`.
+- [x] Reviews link copied into `googleReviewsUrl` in `data/site.ts`
+      (2026-10-09, owner-supplied profile link; also `googleBusinessProfileUrl`
+      for the footer Google icon).
 - [ ] §7 live-verification checklist completed before calling it live.
 
 ## 11. Validation performed for this guide (Task 3.1)
@@ -430,6 +443,6 @@ an owner action.*
 | `npm run verify:local-seo` | PASS — prints the NAP read from `data/site.ts`, the hours caveat, 53 published locality guides grouped by region, and the reviews-link status; no network call |
 | `npm run audit:authority` (§9, new) | PASS — reviews link is owner-supplied or absent, never guessed, never hardcoded, never in structured data, label translated in EN/MS/ZH. Negative-tested: a search-shaped URL fails, a hardcoded component URL fails, an armed URL without the tracked event fails |
 | `npm run audit:analytics` | PASS — `review_profile_click` declared and fired from the homepage reviews link |
-| `npm run build` | PASS (689 static entries; the rendered homepage carries no profile link and no Google URL while `googleReviewsUrl` is empty) |
-| `npm run audit:live` | PASS — rendered pages unchanged with no URL supplied |
-| A verified profile in Google Maps / the Local Pack | **NOT CLAIMED** — no profile exists that this repository can see; §7 is the owner's gate |
+| `npm run build` | PASS (689 static entries; with `googleReviewsUrl` armed the homepage reviews block adds only the localized "Read the reviews on Google" link — the review cards are unchanged) |
+| `npm run audit:live` | PASS — rendered pages carry the profile link only where §6 says it appears |
+| A verified profile in Google Maps / the Local Pack | **NOT CLAIMED** — §7 is the owner's gate; the owner-supplied profile link exists but verification state is not claimed anywhere |

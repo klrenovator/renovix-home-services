@@ -52,6 +52,16 @@ export type SiteConfig = {
   facebookUrl: string;
   instagramUrl: string;
   /**
+   * The business's Google Business Profile link as shared by the owner, or an
+   * empty string while none exists. OWNER-SUPPLIED ONLY (Lead-generation Task
+   * 3.1, supplied 2026-10-09): the footer's social row links it next to
+   * Facebook and Instagram. It may never be guessed or templated from the
+   * business name. While both fields point at the same profile this stays in
+   * sync with `googleReviewsUrl` below; the two may diverge if the owner ever
+   * supplies a dedicated review link instead of the profile link.
+   */
+  googleBusinessProfileUrl: string;
+  /**
    * The business's live Google Business Profile review URL, or an empty string
    * while no profile exists. OWNER-SUPPLIED ONLY (Lead-generation Task 3.1):
    * it is copied from the verified profile in Google Maps / Search once the
@@ -108,13 +118,22 @@ export const siteConfig: SiteConfig = {
   facebookUrl: "https://www.facebook.com/share/1dr51n9qii/",
   instagramUrl: "https://www.instagram.com/renovixhomeservices/",
   /**
-   * OWNER-PENDING (Lead-generation Task 3.1): no verified Google Business
-   * Profile review URL has been supplied, so this stays empty and the homepage
-   * reviews block publishes no profile link. Paste the real review URL here
-   * once the profile is created and verified (`LOCAL_SEO_SETUP.md` §6) — the
-   * link, its tracking and its EN/MS/ZH label are already wired.
+   * OWNER-SUPPLIED 2026-10-09: the owner's own Google Business Profile share
+   * link (https://share.google/… is Google's current profile-share format).
+   * Renders the footer Google icon beside Facebook and Instagram. The profile
+   * currently has no Google reviews; the homepage reviews block's cards are
+   * the owner-approved presentation and are deliberately untouched.
    */
-  googleReviewsUrl: "",
+  googleBusinessProfileUrl: "https://share.google/FxD6lF5xTiX9sNCcu",
+  /**
+   * OWNER-SUPPLIED 2026-10-09 (Lead-generation Task 3.1 step 5): the same
+   * profile link the owner shared, arming the homepage reviews block's
+   * "View on Google" button (`review_profile_click`). Owner decision
+   * 2026-10-09: keep the existing website reviews exactly as they are — the
+   * profile has no Google reviews of its own yet and nothing here removes or
+   * replaces the published review cards (`LOCAL_SEO_SETUP.md` §6).
+   */
+  googleReviewsUrl: "https://share.google/FxD6lF5xTiX9sNCcu",
   localCitationProfiles: {
     yellowPagesMalaysia: { status: "pending", url: "" },
     hotfrog: { status: "pending", url: "" },

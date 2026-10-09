@@ -8780,3 +8780,88 @@ other Phase 49 items.
 
 **Status:** **🟢 Phase 59 baseline recorded.** Awaiting owner intake
 responses before any site change.
+
+---
+
+## Phase 60 — Owner intake: Google Business Profile link + footer icon; reviews kept verbatim (2026-10-09)
+
+**Result: 🟢 shipped and verified. The owner supplied the business's Google
+Business Profile link and three instructions: (1) add its icon with the other
+social icons, (2) the profile currently has no Google reviews, (3) the
+reviews already published on the website are the approved presentation and
+must not be removed. All three are honored exactly.**
+
+### 1. What the owner decided (2026-10-09, recorded verbatim in intent)
+
+- GBP link supplied: `https://share.google/FxD6lF5xTiX9sNCcu` (Google's own
+  profile Share format; the sandbox cannot resolve the redirect, so the URL
+  is stored exactly as the owner supplied it — an owner fact, never guessed).
+- "Add its icon with the other social icons" → footer Google icon.
+- "No Google reviews on the profile; the reviews already showing on the
+  website are fine — do not remove them" → the homepage review cards are
+  **untouched**: nothing removed, replaced or added to their content.
+
+### 2. What was built
+
+- **`data/site.ts`** — `googleBusinessProfileUrl` (new, owner-supplied profile
+  link for the footer icon) + `googleReviewsUrl` armed with the same
+  owner-supplied link (Lead-generation Task 3.1 step 5). Both comments record
+  the 2026-10-09 owner decisions; neither value may ever be guessed.
+- **`components/layout/SocialLinks.tsx`** — third social icon (existing
+  `IconGoogle`), rendered only while the owner-supplied URL exists; same
+  `noopener noreferrer`/aria-label pattern as Facebook/Instagram.
+- **`components/layout/Footer.tsx` + `i18n/{types,en,ms,zh}.ts`** — localized
+  accessible labels: "Renovix Home Services on Google" / "… di Google" /
+  "… 的 Google".
+- **Homepage reviews block** (`ReviewsSection.tsx`) — **zero changes**; the
+  pre-wired "Read the reviews on Google" / "Baca ulasan di Google" /
+  "在 Google 上查看评价" link arms itself from `googleReviewsUrl` and fires
+  `review_profile_click` (`surface: home_reviews`), exactly as designed in
+  Phase 3. The review cards render unchanged.
+- **`scripts/audit-links.mjs`** — the external allowlist (derived from
+  `data/site.ts`) now covers the two Google profile fields (optional while
+  empty), check 8 labels the family "Google Business Profile links", and the
+  self-test gained 2 assertions (accept the configured profile URL; reject an
+  unconfigured `share.google` id) — **36 / 36**.
+- **`scripts/audit-authority.mjs`** — the accepted-profile-URL guard (§9)
+  now also accepts `share.google` and `maps.app.goo.gl`, the two formats
+  Google's own Share dialog hands out (the owner's link is one of them);
+  every other shape is still rejected.
+- **Docs** — `LOCAL_SEO_SETUP.md` §6/§10/§11 updated to the armed state and
+  the owner's reviews decision; `PROJECT_OWNER_PENDING.md` Task 3.1 step 5
+  marked done and the 2026-10-09 owner update recorded.
+
+### 3. QA after changes
+
+- [x] `npm run lint` — PASS (0 errors, 0 warnings); `npm run type-check` — PASS.
+- [x] All **20 static audits** — PASS (`audit:authority` accepts the
+      owner-supplied `share.google` profile URL; `audit:business` unchanged —
+      still no `sameAs`/ratings/geo in structured data).
+- [x] `node scripts/audit-links.mjs --self-test` — **36 / 36**.
+- [x] `npm run build` — PASS, **689 / 689** static entries.
+- [x] Fresh `next start` + `npm run audit:live` — **PASS 284 / 284**;
+      `npm run audit:links` — **PASS 12, WARN 10, FAIL 0** (the 10 known
+      card-CTA anchor warnings), 835/835 external anchors allowlist-matched
+      (834 + the new Google profile href).
+- [x] Rendered-served check: EN/MS/ZH homepages carry the footer Google icon
+      with the correct localized aria-label and the reviews-block link; the
+      "Posted on Google" review-card lines render unchanged.
+- [x] `npm run verify:local-seo` — reviews link now prints **ARMED —
+      https://share.google/FxD6lF5xTiX9sNCcu**.
+
+### 4. Honest limits
+
+- The profile's verification state is **NOT CLAIMED** anywhere (LOCAL_SEO_SETUP
+  §7 remains the owner's gate). The profile has no Google reviews yet — no
+  review count, rating or Google-sourced testimonial is published or implied.
+- The share URL could not be resolved to its `google.com/maps` destination
+  from this sandbox (egress restrictions); it is stored verbatim as the owner
+  supplied it and can be swapped for the long form in one line whenever the
+  owner prefers.
+- Intake items still owner-open: the 4 citation listings (Task 3.3), the 28
+  project locations (Task 3.4), the content-date decision (Phase 49 item 1),
+  GA4 Realtime verification, and the Phase 49 item 2 + CTA-anchor + E-E-A-T
+  design decisions.
+
+**Status:** **🟢 Phase 60 complete.** GBP link live in the footer social row
+across all three languages; website reviews verbatim per owner instruction.
