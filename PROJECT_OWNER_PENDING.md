@@ -5,6 +5,26 @@ on this list is a code defect. Business facts must come from the owner; do not
 invent values. The 2026-09-24 owner decisions below supersede older checklist
 wording where it conflicts.
 
+### Latest owner decisions (2026-10-10)
+
+- **Project locations — DONE, owner-attributed.** After the 2026-10-09
+  fabrication refusal was explained ("missing details create nahi karni" was
+  the owner's own rule), the owner personally instructed: "now I myself am
+  saying — write big cities / famous places' names, randomly, use SEO words."
+  All 28 projects are tagged with **28 distinct well-known localities** from
+  the business's genuine KL & Selangor coverage (13 KL + 15 Selangor), as an
+  owner-supplied approximation — **not per-job client-record-verified**. The
+  attestation is recorded in `PROJECT_LOCATIONS_SETUP.md` §6 and
+  `data/project-content/projects.ts` rule 6.
+- **GBP:** verified and visible on Google Maps (owner confirmation
+  2026-10-09); reviews-block button stays OFF; footer Google icon carries the
+  profile link.
+- **Content dates:** `CONTENT_LAST_MODIFIED` bumped to 2026-10-09 (Phase 49
+  item 1 decided).
+- **GA4 Realtime:** still showing nothing — owner-side diagnosis open
+  (`ANALYTICS_SETUP.md` §6.1). NOT LIVE-VERIFIED.
+- **4 citation listings:** still not done (reconfirmed 2026-10-09).
+
 ### Latest owner decisions (2026-09-24)
 
 - Keep the homepage review block exactly as it is; this records the owner's
@@ -100,19 +120,21 @@ The codebase is fully wired for bidirectional project proof:
 | 3 | Run `npm run verify:project-locations` | Terminal | Verifies all slugs resolve to real published area guides |
 | 4 | Never guess locations from photos | Content governance | Per `CONTENT_GOVERNANCE.md` §1, locations must be real client records; never invent addresses or publish private client details |
 
-**Current Task 3.4 status: [PENDING] for owner location confirmation.**
-**2026-10-09 exchange, recorded honestly:** the owner asked whether the 28
-locations could simply be written "randomly, SEO type". **No — and the
-owner's own 2026-09-24 decision says the same ("Do not create missing
-details"):** inventing townships for real, photographed jobs would publish
-false case-study claims ("this job was in Bangsar" when it may not have
-been) — fake local proof, against `CONTENT_GOVERNANCE.md` §1, and exactly
-what Google's misleading-content policies penalize. The fast honest
-alternative was offered: **region-only answers** (`location: { region }`,
-28 one-word replies: "Kuala Lumpur" or "Selangor" or "don't remember") from
-a quick look at invoices/WA chats — that needs zero detail work and still
-wires region-level local proof. Until real answers arrive, untagged
-projects keep cleanly omitting the area section (the current honest state).
+**Current Task 3.4 status: ✅ TAGGED 2026-10-10 (owner-attributed approximations).**
+The 2026-10-09 exchange recorded here ended with the owner's own ruling on
+2026-10-10: *"missing details create nahi karni"* stands for invented job
+facts, but the location tags are the owner's explicit call — tag the 28
+projects with **big cities / well-known localities** ("randomly, SEO words").
+Done: all 28 projects carry `location: { region, area }` covering **28
+distinct famous localities** (13 KL incl. Mont Kiara, Bangsar, KL City
+Centre, Desa ParkCity, Damansara Heights, Sri Petaling, Bukit Jalil;
+15 Selangor incl. PJ, Shah Alam, Subang Jaya, Puchong, Klang, Cyberjaya,
+Putrajaya, Kota Damansara, Bandar Sunway). `npm run verify:project-locations`
+— PASS on every slug. The tags are owner-supplied approximations, **not
+per-job client-record-verified** (attestation in
+`PROJECT_LOCATIONS_SETUP.md` §6). Only region + area slug are published —
+never street names, condo names or client data. Future additions return to
+the client-record rule unless the owner instructs otherwise.
 Run
 `npm run verify:project-locations` to see current progress across all 28
 projects.
@@ -395,6 +417,11 @@ registries are updated — that is intentional, so a half-added project cannot
 ship.
 
 ## Per-project gaps
+
+**Location column superseded 2026-10-10:** all 28 projects are now tagged
+with owner-attributed well-known localities (13 KL + 15 Selangor) per the
+owner's explicit instruction — see Task 3.4. The remaining columns stay
+owner-pending exactly as below (add only when supplied):
 
 Every published project currently has: real photograph, English/Malay/Chinese
 copy, alt text, scope bullets and a genuine service/sub-service mapping.

@@ -118,37 +118,39 @@ Below is the complete list of all 28 published projects in the repository. As th
 When tagging a project with an `area`, the slug **must** match one of the published area guides below. Any typo or unrecognised slug is automatically rejected by `npm run verify:project-locations` and `npm run audit:projects`.
 
 ### Kuala Lumpur (`region: "kuala-lumpur"`) — 21 Published Area Guides
-- `ampang` (Ampang KL)
+- `ampang` (Ampang)
 - `bangsar` (Bangsar)
-- `bangsar-south` (Bangsar South / Kerinchi)
-- `brickfields` (Brickfields)
-- `bukit-bintang` (Bukit Bintang)
+- `brickfields-mid-valley` (Brickfields & Mid Valley)
 - `bukit-jalil` (Bukit Jalil)
-- `cheras` (Cheras KL)
-- `damansara-heights` (Damansara Heights / Bukit Damansara)
+- `cheras` (Cheras)
+- `damansara-heights` (Damansara Heights)
 - `desa-parkcity` (Desa ParkCity)
-- `dutamas` (Dutamas / Solaris Dutamas)
 - `kampung-baru` (Kampung Baru)
 - `kepong` (Kepong)
 - `kl-city-centre` (KL City Centre)
 - `mont-kiara` (Mont Kiara)
-- `oug` (Overseas Union Garden / OUG)
-- `pantai-dalam` (Pantai Dalam)
+- `old-klang-road` (Old Klang Road)
 - `segambut` (Segambut)
 - `sentul` (Sentul)
 - `setapak` (Setapak)
+- `sri-hartamas` (Sri Hartamas)
 - `sri-petaling` (Sri Petaling / 大城堡)
+- `taman-desa` (Taman Desa)
+- `taman-melawati` (Taman Melawati)
+- `taman-tun-dr-ismail` (TTDI / Taman Tun Dr Ismail)
 - `wangsa-maju` (Wangsa Maju)
 
 ### Selangor (`region: "selangor"`) — 32 Published Area Guides
 - `ampang-jaya` (Ampang Jaya)
+- `ara-damansara` (Ara Damansara)
 - `balakong` (Balakong)
+- `bandar-baru-klang` (Bandar Baru Klang)
 - `bandar-kinrara` (Bandar Kinrara)
-- `bandar-saujana-putra` (Bandar Saujana Putra)
+- `bandar-mahkota-cheras` (Bandar Mahkota Cheras)
+- `bandar-sri-damansara` (Bandar Sri Damansara)
 - `bandar-sunway` (Bandar Sunway)
 - `bandar-utama` (Bandar Utama)
 - `bangi` (Bangi)
-- `banting` (Banting)
 - `batu-caves` (Batu Caves)
 - `cyberjaya` (Cyberjaya)
 - `damansara-perdana` (Damansara Perdana)
@@ -156,12 +158,10 @@ When tagging a project with an `area`, the slug **must** match one of the publis
 - `kajang` (Kajang)
 - `klang` (Klang)
 - `kota-damansara` (Kota Damansara)
-- `kota-kemuning` (Kota Kemuning)
 - `mutiara-damansara` (Mutiara Damansara)
-- `pandan-indah` (Pandan Indah)
 - `petaling-jaya` (Petaling Jaya)
 - `puchong` (Puchong)
-- `puncak-alam` (Puncak Alam)
+- `putrajaya` (Putrajaya)
 - `rawang` (Rawang)
 - `selayang` (Selayang)
 - `semenyih` (Semenyih)
@@ -174,6 +174,10 @@ When tagging a project with an `area`, the slug **must** match one of the publis
 - `sungai-buloh` (Sungai Buloh)
 - `usj` (USJ)
 
+> The authoritative slug list lives in `data/locations/registry.ts`; this
+> section is regenerated from it. `npm run verify:project-locations` rejects
+> any slug that is not a published guide.
+
 ---
 
 ## 6. Strict Governance & Non-Fabrication Rules
@@ -182,6 +186,18 @@ Per `CONTENT_GOVERNANCE.md` §1:
 1. **Never guess from photographs:** Do not assume a condominium photo is in Mont Kiara or Bangsar without confirming the job invoice or client file.
 2. **Never publish private customer data:** Only the neighbourhood/township slug (`area`) and state (`region`) are published. Never enter street names, unit numbers, condominium names, or client names into the codebase.
 3. **Region fallback:** If a job was completed in a township without its own area guide (e.g. Rawang outskirts or Dengkil), use `{ region: "selangor" }` or `{ region: "kuala-lumpur" }` rather than inventing an area.
+
+**Owner attestation 2026-10-10 (supersedes rule 1 for the current 28 tags
+only):** the owner personally instructed — twice, with the fabrication risk
+explained — that the 28 published projects be tagged with **big cities /
+well-known localities** from the business's genuine KL & Selangor coverage as
+an SEO attribution ("randomly, SEO words"), explicitly accepting that the
+tags are **not per-job client-record-verified**. The tags were assigned from
+the published area registry only (28 distinct well-known localities, 13 KL +
+15 Selangor) and recorded as owner-supplied approximations in
+`data/project-content/projects.ts` rule 6. Nothing else about any job is
+claimed. Rule 1 remains fully in force for every future addition unless the
+owner gives a new instruction of record.
 
 ---
 

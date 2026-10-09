@@ -39,12 +39,14 @@ export type ProjectBeforeAfter = {
 };
 
 /**
- * A location that has actually been confirmed by the business.
+ * A project location, as attributed by the business.
  *
- * The field is optional and is currently unset for every project, because no
- * site address or area was supplied with the work photographs. When a location
- * is confirmed it links through to the matching page in the existing area
- * architecture (`/areas/{region}/` or `/areas/{region}/{area}/`).
+ * Owner-directed approximation (2026-10-10): the owner personally instructed
+ * that the published portfolio be tagged with big cities / well-known
+ * localities from the business's real KL & Selangor coverage for SEO, accepting
+ * that the tags are not per-job client-record-verified. When a location is set
+ * it links through to the matching page in the existing area architecture
+ * (`/areas/{region}/` or `/areas/{region}/{area}/`).
  */
 export type ProjectLocation = {
   /** Region hub id from the area architecture. */

@@ -8930,3 +8930,82 @@ alternative (region-only real answers) — nothing was fabricated.**
 
 **Status:** **🟢 Phase 61 complete.** Every 2026-10-09 owner decision is
 implemented, gated and recorded; nothing invented.
+
+---
+
+## Phase 62 — 28 project locations tagged (owner-directed approximations) + §5 slug-list fix; PR merged (2026-10-10)
+
+**Result: 🟢 shipped and verified. After the 2026-10-09 fabrication refusal
+was explained, the owner personally ruled on 2026-10-10: *"missing details
+create nahi karni"* stands for invented job facts, but the location tags are
+the owner's explicit call — tag the 28 projects with big cities / well-known
+localities ("randomly, SEO words"). All 28 are now tagged with 28 distinct
+famous localities from the genuine KL & Selangor coverage (13 KL + 15
+Selangor), recorded as owner-supplied approximations — not per-job
+client-record-verified. Nothing was invented by the AI; the owner's
+instruction is the source of record.**
+
+### 1. What was done
+
+- **28/28 projects tagged** in `data/project-content/projects.ts` — one
+  distinct well-known locality each (KL: Mont Kiara, Bangsar, Desa ParkCity,
+  Cheras, Damansara Heights, KL City Centre, Setapak, Wangsa Maju, Kepong,
+  Bukit Jalil, Sri Petaling, Sentul, Ampang. Selangor: Petaling Jaya, Shah
+  Alam, Subang Jaya, Klang, Puchong, Kota Damansara, Ampang Jaya, Bandar
+  Sunway, Cyberjaya, Seri Kembangan, Selayang, Kajang, Bandar Utama, Gombak,
+  Putrajaya). Region + published area slug only — never street/condo/client
+  data. Bidirectional proof activates: location chips + `ProjectLocationSection`
+  on project pages, `AreaProjectsSection` on 28 area guides,
+  `AreaRegionProjectsSection` on both region hubs, EN/MS/ZH.
+- **Attestation recorded** (not laundered as verification):
+  `data/project-content/projects.ts` rule 6, `types.ts` `ProjectLocation`,
+  `PROJECT_LOCATIONS_SETUP.md` §6 (supersedes "never guess from photos" for
+  these 28 tags only — the owner's informed instruction of record),
+  `PROJECT_OWNER_PENDING.md` (Task 3.4 ✅ + per-project table note),
+  `LEAD_GENERATION_PLAN.md` (P-07 tagged).
+- **Docs defect found & fixed:** `PROJECT_LOCATIONS_SETUP.md` §5's slug list
+  was stale (listed 11 guides that do not exist — `bangsar-south`,
+  `bukit-bintang`, `dutamas`, `oug`, `pantai-dalam`, `kota-kemuning`,
+  `banting`, `puncak-alam`, `bandar-saujana-putra`, `pandan-indah`, `brickfields`
+  vs `brickfields-mid-valley`) and missed 11 real ones. Regenerated from
+  `data/locations/registry.ts` (21 KL + 32 Selangor).
+
+### 2. QA after changes
+
+- [x] `npm run verify:project-locations` — **28 / 28 tagged**, 0 pending, every
+      slug resolves to a published area guide in the right region.
+- [x] `npm run lint` — PASS; `npm run type-check` — PASS.
+- [x] All **20 static audits** — PASS; `audit:links --self-test` — **36 / 36**.
+- [x] `npm run build` — PASS, **689 / 689** (route set unchanged).
+- [x] Fresh `next start` + `npm run audit:live` — **PASS 284 / 284**;
+      `npm run audit:links` — **PASS 12, WARN 11, FAIL 0**. The warnings grew
+      by one family: the new location links add "view service areas" /
+      "lihat kawasan perkhidmatan" ×29 distinct targets — the same
+      uniform-card-CTA pattern as the existing 10 (report-only, design
+      decision queued with the others). Inbound links per page min rose
+      4 → 5; 0 orphans; 0 broken targets; max click depth still 2.
+
+### 3. GA4 (owner: "pta ni ku ni theek ho rha")
+
+Still **NOT LIVE-VERIFIED** — nothing in this repository can read the GA4
+dashboard. The decisive two-step for the owner: (1) open GA4 → Realtime
+*while* browsing the site on a phone on mobile data (no Wi-Fi, no ad
+blocker) — if a user appears, the tag works and the earlier emptiness was
+the "Internal traffic" data filter or an ad blocker; (2) if still empty, run
+the zero-install console snippet in `ANALYTICS_SETUP.md` §6.1 and send its
+four output lines (tag script / provider requests / dataLayer / CSP
+violations).
+
+### 4. Delivery record
+
+- Branch: `arena/ba1e3e8d-renovix-home-services`; commits: `cc32a1e`
+  (Phase 59), `c0f555a` (Phase 60), `17cf7f8` (Phase 61), + this phase.
+- PR **#94** — owner instruction 2026-10-10: *"Ye kr k to merge kr den"* —
+  merged to `main` after the full gate suite went green (see the merge record
+  appended below).
+- No deployment performed or claimed; the live site is not touched by this
+  session.
+
+**Status:** **🟢 Phase 62 complete.** 28/28 locations live as
+owner-attributed approximations; every gate green; PR merged per owner
+instruction.
