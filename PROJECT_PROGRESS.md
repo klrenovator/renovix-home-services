@@ -135,7 +135,7 @@ branding were deliberately left untouched.
 | Static generation entries | **689** (`next build` progress total; distinct from the 678 canonical sitemap URLs) |
 | Pricing rows (`data/pricing/pricing.ts`) | **51** |
 | Search-intent matrix entries | **24** (all pricing derived from `pricingId`) |
-| Audit scripts | 17 static + 1 live server QA (**284** served-site checks after Phase 51; 280 after Phase 49, 271 after Phase 48, 270 after Phase 47, 259 after Phase 46) |
+| Audit scripts | 20 static + 2 live-server (`audit:live` **284** served-site checks; `audit:links` whole-corpus link audit, **12 PASS / 10 WARN / 0 FAIL** after Phase 57; `audit:keywords` added Phase 58) |
 | In-copy contextual links (rendered anchors) | **313 EN / 362 MS / 364 ZH** (Phase 39) |
 | FAQ hub rendered main-content links per language | **26** (was 17; Phase 51) — all 5 content families (services, problems, areas, guides, projects) plus the 17 anchors the 18 answers resolve to |
 | FAQ answers linking the page their own copy names | **17 of 18** (Phase 51; was **11 of 18** — 6 answers named a page and rendered no link, and `send-photos` names no page so it correctly links none) |
@@ -8600,3 +8600,90 @@ reporting floor, so they do not appear.)
 
 **Status:** **🟢 complete.** The internal-link audit the brief mandates now
 exists, runs against the whole corpus, and is proven able to fail.
+
+
+---
+
+## Phase 58 — Keyword research database (master brief §4) (2026-10-09)
+
+**Result: 🟢 shipped and verified. The brief's Section 4 mandated a keyword
+research database with a fixed field set; none existed. It is now a typed,
+registry-derived database with build-time semantic guards, a static audit
+script and a runbook — with every search volume, ranking URL and competition
+note honestly `null`.**
+
+### 1. What was built
+
+- **`data/keywords/types.ts`** — `KeywordResearchEntry` with every mandated
+  field (keyword, language, intent, service/sub-service/problem/location,
+  modifier, source, volume-if-verified, competition-if-observed, existing
+  ranking URL, target, conversion relevance, priority, research status, last
+  reviewed), plus a **typed target reference** (`KeywordTarget`) from which
+  the URL is always derived — a row can never drift from the page it names.
+- **`data/keywords/phrases.ts`** — the one authored input: natural base
+  phrasings per service per language (EN/MS drawn from the master brief's own
+  research examples; ZH natural short forms matching the localized service
+  names), each marked as a research hypothesis, not measured data.
+- **`data/keywords/index.ts`** — the composition (nothing hand-copied):
+  - `core-service` — 10 services × 2 regions × 3 languages = **60 rows** →
+    the localized service pillar.
+  - `near-me` — 10 × 3 = **30 rows** → the service pillar; intent only, **no
+    dedicated near-me URL** per the brief.
+  - `hyperlocal` — the 24 published search-intent-matrix entries × their 73
+    authored query examples = **73 rows** → the sub-service (or pillar) page.
+  - `problem` — 57 guides × 3 languages = **171 rows** → the problem guide.
+  - `informational` — 12 Knowledge Hub guides × 3 languages = **36 rows** →
+    the guide page (cost guides commercial/high, the rest informational/medium).
+  - **370 rows total**, all `researchStatus: "derived"`, every
+    `searchVolume` / `competitionNotes` / `existingRankingUrl` = `null`.
+- **`runKeywordResearchAudits()`** — semantic validation wired into
+  `app/sitemap.ts` (same build-time pattern as the search-index audits):
+  fails the build when a target is not a published page in the row's
+  language, when two rows claim the same normalized keyword in one language
+  (cannibalization), when a volume lacks a source, when a ranking URL is not
+  a canonical production URL, or when a near-me row stops targeting a service
+  page.
+- **`scripts/audit-keywords.mjs`** (`npm run audit:keywords`) — static source
+  guards: files exist, package.json + `app/sitemap.ts` wiring present, no
+  honesty-field literal other than `null` in the composition sources (comments
+  stripped before scanning), the phrasing table covers all 10 services in all
+  3 languages, the composition imports only the verified registries, the
+  runbook documents the no-fabrication rule.
+- **`KEYWORD_RESEARCH.md`** — the runbook: field dictionary, honesty rules,
+  cluster→URL strategy, the GSC/autocomplete/PAA/Trends workflow for upgrading
+  rows to `verified`, and the controlled home for real evidence
+  (`data/keywords/verified.ts` overlay, reviewed in a PR).
+
+### 2. QA after changes
+
+- [x] `npm run audit:keywords` — **PASS 28 / FAIL 0** (the audit caught and
+      I fixed two of its own regex bugs: a backtracking lookahead that let
+      `searchVolume: null` through, and doc-comment text scanned as code).
+- [x] `npm run build` — PASS, **689 / 689** static entries; the build-time
+      semantic audit is green on all 370 rows.
+- [x] **Negative test:** a deliberately duplicated keyword
+      ("tile repair Kuala Lumpur") failed the build with
+      `[audit:keywords] failed at build time: keyword … is claimed by both
+      core-service:en:tiling:kuala-lumpur and negative-test:duplicate` —
+      the guard genuinely bites. Row removed, build re-verified green.
+- [x] `npm run type-check` — PASS; `npm run lint` — PASS (0 errors, 0 warnings).
+- [x] Fresh `next start` on the final build: `npm run audit:live` —
+      **PASS 284 / 284, WARN 0, FAIL 0**; `npm run audit:links` —
+      **PASS 12, WARN 10, FAIL 0**; `audit:links --self-test` — **34 / 34**.
+- [x] All **20 static audits** — PASS. No site page, URL, price, metadata or
+      visible content changed: the diff is the new `data/keywords/` module,
+      the build-time guard in `app/sitemap.ts`, the new script + runbook, and
+      two `package.json` script entries.
+
+### 3. Honest limits
+
+- **No search volume, difficulty, ranking or competition data is claimed** —
+  none is available in this environment. Google Search Console API access
+  does not exist here; the owner's dashboard export is the first `verified`
+  milestone (brief §18, `SEARCH_CONSOLE_SETUP.md`).
+- The database maps keywords to the pages that already exist; it creates no
+  pages and changes no content.
+
+**Status:** **🟢 complete.** Phases 56–58 delivered: baseline re-verified,
+the internal-link audit (§11/§19) and the keyword research database (§4)
+now exist with enforced honesty rules.

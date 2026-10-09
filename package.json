@@ -30,6 +30,7 @@
     "audit:search": "node scripts/audit-search.mjs",
     "audit:live": "node scripts/phase25-live-qa.mjs",
     "audit:links": "node scripts/audit-links.mjs",
+    "audit:keywords": "node scripts/audit-keywords.mjs",
     "verify:quote-email": "node scripts/verify-quote-email.mjs",
     "verify:analytics": "node scripts/verify-analytics.mjs",
     "verify:analytics:live": "node scripts/verify-analytics-live.mjs",
