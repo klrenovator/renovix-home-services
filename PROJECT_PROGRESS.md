@@ -8515,3 +8515,88 @@ E-E-A-T/photo supply. No code may substitute for those.
 - Re-run the full gate suite after each phase; update this file.
 
 **Status:** **🟢 Phase Zero complete.** Baseline verified; plan recorded.
+
+
+---
+
+## Phase 57 — Whole-corpus internal-link auditing script `npm run audit:links` (2026-10-09)
+
+**Result: 🟢 shipped and verified. The brief's Sections 11 + 19 mandated an
+internal-link auditing script; none existed (`audit:live` samples broken links
+and checks that internal targets are *served*, but no committed tool reported
+noncanonical link targets, a full broken-target sweep, inbound-link
+sufficiency, repetitive anchors, unexpected external links or click-depth).
+The new script crawls all 678 sitemap URLs against a running production
+server — no sampling — and reports all nine mandated dimensions.**
+
+### 1. What was built
+
+- **`scripts/audit-links.mjs`** (wired as `npm run audit:links`, follows the
+  `audit:live` conventions: `QA_BASE` env, canonical-host constant,
+  pass/warn/fail + summary + exit code). Nine checks:
+  1. every sitemap URL serves 200 — FAIL
+  2. orphan indexable pages (no inbound internal link from another page) — FAIL
+  3. broken internal links / invalid destinations — full sweep of every
+     distinct internal target, no sampling — FAIL
+  4. links to redirected / noncanonical URLs — verbatim href vs canonical
+     form (trailing slash, www host, http scheme, query string off the finder
+     route), each suspect probed with redirects disabled — FAIL
+  5. missing breadcrumbs (BreadcrumbList JSON-LD; the 3 language homepages are
+     the roots) — FAIL
+  6. pages with insufficient relevant internal links (< 3 inbound) — WARN
+     review list, with min/median/max distribution
+  7. non-descriptive anchors ("click here" & friends) — FAIL; one anchor text
+     reused for > 8 distinct targets — WARN review list
+  8. unexpected external links — every external/contact `<a href>` must match
+     an allowlist **derived from `data/site.ts`** (wa.me deep links, `tel:`,
+     `mailto:`, the two configured social profiles) — FAIL
+  9. navigation depth — same-language BFS from each homepage; unreachable
+     sitemap URL — FAIL; click depth > 4 — WARN review list
+- The external-link allowlist is regex-derived from `data/site.ts` (the single
+  source of truth), not a second hand-copied list.
+- **Self-test mode** (`node scripts/audit-links.mjs --self-test`): 34
+  assertions over synthetic fixtures — no server needed — proving every
+  report path can actually fail (orphan, missing breadcrumb, thin page,
+  "click here", repetitive anchor, unexpected external, unreachable page,
+  deep page, noncanonical href forms, allowlist accept/reject). A check that
+  cannot fail is not a check.
+
+### 2. Measured results (fresh `next start` on the production build, 2026-10-09)
+
+**PASS 12, WARN 10, FAIL 0** (exit 0). Highlights:
+
+- 678/678 sitemap URLs return 200; **0 orphans**; **679** distinct internal
+  targets, all served; **all 678 distinct page targets return 200** (full
+  sweep, previously only 6 pages were sampled); **0 noncanonical link hrefs** —
+  no internal link on the site passes through a redirect.
+- BreadcrumbList on **675 of 675** non-home pages (3 homepages are the roots).
+- Inbound links per page: **min 4, median 29, max 227** — no thin pages.
+- External/contact anchors: **834 distinct hrefs, 100% allowlist-matched**
+  (830 wa.me deep links, 1 tel:, 1 mailto:, 1 facebook, 1 instagram).
+- Click depth: **max 2** from each language homepage; all 226 pages per
+  language reachable.
+
+### 3. The 10 warnings — reported, deliberately not "fixed"
+
+All 10 are one pattern: the localized card CTA labels ("View Details" /
+"Lihat Butiran" → 51 targets, "View Project" / "Lihat Projek" → 28, "View
+Problem" / "Lihat Masalah" → 25, "View Service" / "Lihat Perkhidmatan" →
+21, "View Pricing Details" / "Lihat Butiran Harga" → 10). Each card already
+carries its entity name as the heading, so the repeated CTA label is a
+deliberate, consistent design — exactly the "ambiguous issue for review" the
+brief says to report rather than auto-fix. Changing visible CTA copy is a
+design decision, so nothing was changed; the warnings stay in the report for
+the owner to review. (ZH CTA labels are shorter than the 12-character
+reporting floor, so they do not appear.)
+
+### 4. QA after changes
+
+- [x] `node scripts/audit-links.mjs --self-test` — **34 / 34 PASS**.
+- [x] `npm run audit:links` on a fresh `next start` — **PASS 12, WARN 10, FAIL 0**, exit 0.
+- [x] `npx eslint scripts/audit-links.mjs` — clean; `npm run lint` — PASS (0 errors, 0 warnings).
+- [x] No site code, content, URL, price or metadata changed — the script and
+  the `package.json` script entry are the only diffs; `npm run build` output
+  is unaffected (689 static entries, verified in Phase 56 baseline).
+
+**Status:** **🟢 complete.** The internal-link audit the brief mandates now
+exists, runs against the whole corpus, and is proven able to fail.
