@@ -43,10 +43,10 @@ export const waterproofingProblems: ProblemDetail[] = [
     ...waterproofingBase,
     slug: "roof-leakage",
     name: "Roof Leakage",
-    title: "Renovix Home Services | Roof Leakage in KL & Selangor",
+    title: "Renovix Home Services | Roof Leakage Repair in KL & Selangor",
     metaDescription:
-      "Roof leakage in KL & Selangor — water through the ceiling, stains and damp patches. Learn the causes, warning signs and roof waterproofing solutions.",
-    h1: "Roof Leakage",
+      "Roof leakage repair in Kuala Lumpur & Selangor. We trace the entry point and repair damaged tiles, flashing or membranes to stop water reaching your ceiling.",
+    h1: "Roof Leakage Repair in Kuala Lumpur & Selangor",
     subtitle:
       "A roof leak spreads as fast as it rains. Renovix finds the entry point, waterproofs the roof and stops the leak at its source.",
     whatItMeans: [

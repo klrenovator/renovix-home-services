@@ -113,9 +113,20 @@ Two property types are possible for this site:
 | **URL prefix** — `https://renovixhomeservices.my/` | Exactly this host and path prefix | The one the deployed HTML file verifies. It is already in the repository and served (table above) |
 | **Domain** — `renovixhomeservices.my` | Every subdomain and both protocols | Only if the owner can add a DNS TXT record at the registrar. Optional; do not add it just to have it |
 
-If neither exists, add the **URL prefix** property and verify it with the
-**HTML file** method — the file is already deployed and serving, so Google's
-check passes immediately.
+**Check the hostname in the property selector.** The site's canonical host is
+the apex `https://renovixhomeservices.my/`; the sitemap and page canonicals
+use that host. `www.renovixhomeservices.my` is an alias configured to redirect
+to the apex. If the URL-inspection bar says
+`https://www.renovixhomeservices.my/`, you are viewing the separate **www
+URL-prefix property**, not the canonical apex URL-prefix property. Switch to
+the existing apex property (already recorded as verified), or use an existing
+Domain property if the owner has one. Do not create another property or
+re-submit the sitemap. A www-prefix view alone is not the site's canonical
+property view.
+
+If neither canonical property exists, add the **URL prefix** property and
+verify it with the **HTML file** method — the file is already deployed and
+serving, so Google's check passes immediately.
 
 ### Step 3 — Submit the sitemap (once)
 
