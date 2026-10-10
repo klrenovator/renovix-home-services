@@ -45,7 +45,7 @@ export const tilingProblems: ProblemDetail[] = [
     name: "Broken Tile Repair",
     title: "Renovix Home Services | Broken Tile Repair in KL & Selangor",
     metaDescription:
-      "Broken, chipped or shattered tiles repaired and replaced in Kuala Lumpur & Selangor without retiling the whole floor. Find causes, warning signs, solutions and when to call a professional.",
+      "Need a broken tile repaired in Kuala Lumpur or Selangor? We replace cracked, chipped or loose tiles without retiling the whole floor. Request a quote.",
     h1: "Broken Tile Repair",
     subtitle:
       "A single broken tile does not have to mean a full retile. Renovix replaces damaged tiles cleanly and matches them to the surrounding floor or wall.",

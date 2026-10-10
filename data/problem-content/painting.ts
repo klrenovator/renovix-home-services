@@ -162,10 +162,10 @@ export const paintingProblems: ProblemDetail[] = [
     ...paintingBase,
     slug: "cracked-walls",
     name: "Cracked Walls",
-    title: "Renovix Home Services | Cracked Wall Repair in KL & Selangor",
+    title: "Renovix Home Services | Wall Crack Repair in KL & Selangor",
     metaDescription:
-      "Cracked walls, hairline cracks and plaster damage in Kuala Lumpur & Selangor repaired. Learn the causes, warning signs, plastering and repainting solutions, and when to call a professional.",
-    h1: "Cracked Walls",
+      "Wall crack repair in Kuala Lumpur & Selangor for hairline cracks and damaged plaster. Learn the repair process and signs that need structural assessment.",
+    h1: "Wall Crack Repair in Kuala Lumpur & Selangor",
     subtitle:
       "Cracks in walls range from cosmetic to structural. Renovix repairs cracked plaster and tells you when a crack needs closer attention.",
     whatItMeans: [
