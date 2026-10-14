@@ -9096,3 +9096,22 @@ figure is claimed.
 
 **Status:** **🟢 Phase 63 complete in code.** It goes live on the next
 production deploy.
+
+### Phase 63 — merge & deploy record (2026-10-14)
+
+- Owner instruction (2026-10-14, in the session's merge prompt): *"Haan, merge
+  kar den"*. PR **#97** was merged to `main` as `93c0f01` at 11:06 UTC, after
+  the Vercel preview check passed and the full local gate suite was green.
+- Vercel production deployment of `93c0f01` completed at about 11:08 UTC
+  (GitHub commit status: "Deployment has completed").
+- **Live verification (external header check, 11:09 UTC):**
+  `https://renovix-home-services.vercel.app/` → **308**
+  `https://renovixhomeservices.my/en/`;
+  `https://renovix-home-services.vercel.app/en/services/` → **308**
+  `https://renovixhomeservices.my/en/services/` (single hop, trailing slash
+  kept); `https://renovixhomeservices.my/en/services/` → **200**, no
+  `X-Robots-Tag`; `/robots.txt` unchanged. The duplicate copy of the site is
+  gone.
+- Still owner-side: the GitHub "About" website link (403 to the
+  integration), Request indexing on the money pages in the **apex**
+  property, and re-sending the Search Console exports.
