@@ -1,5 +1,64 @@
 import type { NextConfig } from "next";
+import { siteConfig } from "./data/site";
 import { analyticsConfigWarnings, analyticsCspSources } from "./lib/analytics-config";
+
+/**
+ * Hostnames that answer with this same production deployment but are NOT the
+ * canonical site (`siteConfig.url`, the apex `https://renovixhomeservices.my`).
+ *
+ * `renovix-home-services.vercel.app` is the Vercel project's production alias.
+ * Checked on 2026-10-14: it served every page with HTTP 200 (the same ETag as
+ * the apex homepage) and no `X-Robots-Tag`, so the whole site was publicly
+ * available on two hostnames. The public GitHub repository's homepage link also
+ * pointed at it. Every page's canonical tag already names the apex, but Google
+ * treats a canonical tag as a hint, not a rule. With two copies, a new domain
+ * can lose ranking signals and crawl budget to the vercel.app copy.
+ *
+ * A permanent (308) redirect that keeps the path is the strongest signal for
+ * merging the copies. The value is matched as an anchored pattern, and only
+ * against this exact production alias:
+ * - preview deployments (`renovix-home-services-git-…` / `-<hash>-…vercel.app`)
+ *   keep working for review, and Vercel already sends `noindex` on them;
+ * - `www.renovixhomeservices.my` is already redirected to the apex by the Vercel
+ *   domain settings before a request reaches the app;
+ * - local `next start` / `next dev` (`localhost`) is never redirected.
+ *
+ * The dots are deliberately left unescaped. As a pattern a dot also matches a
+ * literal dot, and as a plain string the value is the exact hostname, so the
+ * rule works whichever way the platform reads it.
+ */
+const NON_CANONICAL_PRODUCTION_HOSTS = ["renovix-home-services.vercel.app"] as const;
+
+const nonCanonicalHostRedirects = NON_CANONICAL_PRODUCTION_HOSTS.flatMap((host) => [
+  // Every rule lands on the exact URL the apex serves with 200 in a single hop,
+  // never on a URL that would redirect again.
+  //
+  // Bare root: straight to the default-language homepage instead of chaining
+  // through the apex root redirect below.
+  {
+    source: "/",
+    has: [{ type: "host" as const, value: host }],
+    destination: `${siteConfig.url}/en/`,
+    permanent: true,
+  },
+  // Files (`/sitemap.xml`, `/robots.txt`, the verification file, …) are
+  // served without a trailing slash. This uses the same "last segment has an
+  // extension" test that Next.js applies to its own trailing-slash redirects.
+  {
+    source: "/:file((?:[^/]+/)*[^/]+\\.\\w+)",
+    has: [{ type: "host" as const, value: host }],
+    destination: `${siteConfig.url}/:file`,
+    permanent: true,
+  },
+  // Pages: the matched path drops its trailing slash, so add it back here.
+  // That keeps `trailingSlash: true` from adding a second hop on the apex.
+  {
+    source: "/:path*",
+    has: [{ type: "host" as const, value: host }],
+    destination: `${siteConfig.url}/:path*/`,
+    permanent: true,
+  },
+]);
 
 /**
  * Analytics origins enter the Content-Security-Policy only when the matching
@@ -105,6 +164,9 @@ const nextConfig: NextConfig = {
    */
   async redirects() {
     return [
+      // Must come first: a request on a non-canonical production hostname is
+      // sent to the same path on the canonical apex before any other rule runs.
+      ...nonCanonicalHostRedirects,
       {
         source: "/",
         destination: "/en/",

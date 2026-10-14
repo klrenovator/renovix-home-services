@@ -185,6 +185,29 @@ if (["en", "ms", "zh"].every((lang) => new RegExp(`/sitemap/${lang}\\.xml`).test
   ok("the three retired per-language sitemap URLs still 308 to /sitemap.xml");
 }
 
+/* The Vercel production alias served the whole site with HTTP 200 on
+ * 2026-10-14, which made it a full public copy of the canonical apex. It
+ * must keep redirecting to the same path on siteConfig.url, and its rules
+ * must come first in redirects(). */
+const DUPLICATE_HOST = "renovix-home-services.vercel.app";
+const hostListMatch = config.match(/NON_CANONICAL_PRODUCTION_HOSTS\s*=\s*\[([^\]]*)\]/);
+const redirectsBody = config.slice(Math.max(0, config.indexOf("async redirects()")));
+const spreadAt = redirectsBody.indexOf("...nonCanonicalHostRedirects");
+const rootRuleAt = redirectsBody.indexOf('destination: "/en/"');
+if (!hostListMatch || !hostListMatch[1].includes(`"${DUPLICATE_HOST}"`)) {
+  bad(`next.config.ts no longer lists ${DUPLICATE_HOST} as a non-canonical host — the whole site would be served twice`);
+} else if (
+  !/destination:\s*`\$\{siteConfig\.url\}\/:path\*\/`/.test(config) ||
+  !/destination:\s*`\$\{siteConfig\.url\}\/:file`/.test(config) ||
+  !/has:\s*\[\{\s*type:\s*"host"/.test(config)
+) {
+  bad("next.config.ts: the non-canonical host redirect lost its host match or its path-preserving apex destinations (pages /:path*/ and files /:file)");
+} else if (spreadAt === -1 || rootRuleAt === -1 || spreadAt > rootRuleAt) {
+  bad("next.config.ts: the non-canonical host redirects must be spread first in redirects(), before the root rule");
+} else {
+  ok(`${DUPLICATE_HOST} (Vercel production alias) 308s to the same path on the apex — no duplicate copy of the site`);
+}
+
 /* ------------------------------------------------------------------------ */
 /* 4. The owner runbook exists                                               */
 /* ------------------------------------------------------------------------ */
@@ -258,6 +281,37 @@ if (live) {
         );
         if (locations.length === 0) bad("/sitemap.xml contains no <loc> entries");
         if (!/<lastmod>/.test(sitemap.body)) bad("/sitemap.xml carries no <lastmod> dates");
+      }
+
+      // The duplicate-host guard, observed from outside: the production alias
+      // must answer with a permanent redirect to the same path on the apex,
+      // never with the page itself.
+      {
+        const probePath = "/en/services/";
+        const controller = new AbortController();
+        const timer = setTimeout(() => controller.abort(), 20_000);
+        try {
+          const response = await fetch(`https://${DUPLICATE_HOST}${probePath}`, {
+            redirect: "manual",
+            signal: controller.signal,
+            headers: { "user-agent": "renovix-search-console-check/1.0 (read-only duplicate-host verification)" },
+          });
+          const location = response.headers.get("location") ?? "";
+          if (response.status === 200) {
+            bad(`https://${DUPLICATE_HOST}${probePath} serves the page itself (200) — the whole site is duplicated on the Vercel alias; deploy the next.config.ts host redirect`);
+          } else if ([301, 308].includes(response.status) && location === `${siteUrl}${probePath}`) {
+            ok(`https://${DUPLICATE_HOST}${probePath} → ${response.status} ${location}`);
+          } else if (response.status === 404) {
+            ok(`https://${DUPLICATE_HOST}${probePath} no longer resolves (404) — no duplicate copy is served`);
+          } else {
+            bad(`https://${DUPLICATE_HOST}${probePath} answered ${response.status} ${location || "(no Location)"} — expected a permanent redirect to ${siteUrl}${probePath}`);
+          }
+        } catch (error) {
+          const reason = error?.cause?.code ?? error?.name ?? String(error);
+          skip(`could not reach https://${DUPLICATE_HOST} (${reason}) — duplicate-host check skipped, NOT a pass or a failure`);
+        } finally {
+          clearTimeout(timer);
+        }
       }
 
       if (verificationFileName) {
