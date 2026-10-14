@@ -9009,3 +9009,90 @@ violations).
 **Status:** **🟢 Phase 62 complete.** 28/28 locations live as
 owner-attributed approximations; every gate green; PR merged per owner
 instruction.
+
+---
+
+## Phase 63 — "Indexing nahi ho rahi, traffic nahi aa raha": full indexability audit; duplicate Vercel host closed (2026-10-14)
+
+**Result: 🟢 one real indexing defect found and fixed in code: the whole site
+was publicly served a second time on `renovix-home-services.vercel.app`.
+Every other technical check passed. The remaining causes of low indexing and
+traffic are off-site and owner-side. They are listed below and not presented
+as code defects.**
+
+The owner said Search Console exports were attached. **No file reached the
+session**: no attachment list was provided and nothing new appeared on disk.
+Nothing in this phase is derived from those exports, and no Search Console
+figure is claimed.
+
+### 1. What was checked (evidence, 2026-10-14)
+
+| Check | Result |
+| --- | --- |
+| Production `robots.txt` | `Allow: /`, one `Sitemap:` line naming the apex sitemap |
+| Production response headers (`/en/`) | 200, **no `X-Robots-Tag`**, served by Vercel, cache HIT |
+| `www` → apex, root → `/en/` | single-hop **308** each |
+| All 678 sitemap URLs (fresh `next start`, same code as production) | 678 × 200 · 678 self-canonical · 0 `noindex` · 0 duplicate titles / descriptions / H1s · hreflang self + `x-default` on every page · correct `<html lang>` per language |
+| `https://renovix-home-services.vercel.app/en/` | 🔴 **HTTP 200, full site, same ETag as the apex, no `X-Robots-Tag`**. A complete public duplicate |
+| GitHub repository "About" homepage link | 🔴 pointed at `https://renovix-home-services.vercel.app` |
+| Other aliases (`…-git-main-klrenovator`, `…-klrenovator`) | 404 `DEPLOYMENT_NOT_FOUND`, so no duplicate there |
+| Near-duplicate content (6-word shingles, site-wide boilerplate removed) | 39 EN / 37 MS pairs above Jaccard 0.5, **all among project portfolio pages** (e.g. the ceiling-fan and DB-board projects, 0.78–0.79). Service, problem, area and guide pages are distinct |
+
+### 2. Fix shipped
+
+- `next.config.ts` → `NON_CANONICAL_PRODUCTION_HOSTS = ["renovix-home-services.vercel.app"]`:
+  three host-conditioned permanent redirects, spread **first** in
+  `redirects()`. Root → `${siteConfig.url}/en/`; files (`/sitemap.xml`,
+  `/robots.txt`, the verification file, …) → same path; pages → same path with
+  the trailing slash restored. Every URL resolves in **one hop** to a URL that
+  answers 200. Verified locally with a `Host:` header: 15 paths 308 to the
+  exact apex URL; the apex, `localhost` and preview-style hosts still return 200;
+  `/_next/*` is excluded by Next.js.
+- `scripts/verify-search-console.mjs`: the repository check fails when the
+  host is removed from the list, loses its apex destinations, or is moved below
+  the root rule. Negative tests were run for both failure modes and both
+  failed as expected. `--live` probes the alias and fails if it ever answers
+  200 again.
+- `SEARCH_CONSOLE_SETUP.md`: §2 table row, new §2.2 (finding, fix, owner
+  follow-ups), and three troubleshooting rows: `www` property confusion,
+  `vercel.app` chosen as canonical, *Crawled – currently not indexed*.
+- Attempted to set the GitHub repository's homepage link to the apex. The
+  integration was refused (HTTP 403), so this is now §2.2 owner step 5.
+
+### 3. Why indexing and traffic are low (honest diagnosis)
+
+1. **The duplicate host above.** Fixed in code; takes effect on deploy.
+2. **A new domain with almost no external signals.** The sitemap was
+   submitted on 2026-09-06. GBP has no reviews and the four citation listings
+   are pending. Google indexes a new 678-URL site gradually.
+3. **The Search Console view.** If the `www` URL-prefix property is selected,
+   every URL shows as *Page with redirect* and Performance is empty by design
+   (§6 row).
+4. **Near-identical project pages** (84 URLs across 3 languages) are the most
+   likely *Crawled – currently not indexed* candidates. Making them distinct
+   needs real job details from the owner. Nothing will be invented.
+5. **Brand-first titles** (582/678 start with `Renovix Home Services |`, by
+   owner decision in Phase 41). This does not block indexing, but searchers
+   see the brand before the service. Keyword-first is an optional owner
+   decision.
+
+### 4. QA after changes
+
+- [x] `npm run build` — PASS (689 static entries); `npm run lint` — PASS;
+      `npm run type-check` — PASS.
+- [x] All **20 static audits** — PASS; `verify:search-console` — PASS with the
+      new check.
+- [x] Fresh `next start`: `npm run audit:live` — **PASS 284 / 284, WARN 0,
+      FAIL 0**; `npm run audit:links` — exit 0 (the known card-CTA anchor
+      warnings only); `audit:links --self-test` — **36 / 36**.
+
+### 5. Owner actions
+
+- Re-send the Search Console exports (Indexing → Pages export, plus the
+  per-reason lists; Performance → Search results, last 3 months). Attach
+  them in chat; **do not commit them to the public repository**.
+- After deploy: §2.2 steps 1–5 (verify the redirect, URL-inspect the money
+  pages, fix the GitHub "About" link, use only the apex address everywhere).
+
+**Status:** **🟢 Phase 63 complete in code.** It goes live on the next
+production deploy.
