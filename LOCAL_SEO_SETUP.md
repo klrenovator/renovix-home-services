@@ -454,7 +454,9 @@ an owner action.*
       (2026-10-15).
 - [ ] Hours always break, phone and website set (website with **no** UTM).
 - [ ] Description factual, no unverifiable claims.
-- [ ] Real photos only (no stock, no AI); logo uploaded.
+- [x] Real photos only (no stock, no AI); logo uploaded.
+      — **owner-confirmed 2026-10-15: real job photos uploaded to the
+      Google Business Profile.**
 - [ ] Verification completed.
       — **owner-confirmed 2026-10-09: verified and shows on Google Maps.**
 - [x] Reviews-link decision recorded (2026-10-09): the owner-supplied profile
