@@ -14,9 +14,10 @@ wording where it conflicts.
   `data/site.ts` `businessHours.dayOfWeek` (Monday–Sunday), EN/MS/ZH
   `businessHours` copy ("open daily" / "buka setiap hari" / 每日开放), and the
   schema `dayOfWeek` now publish the supplied days; `audit:business` /
-  `audit:schema` enforce them. Owner still to set Monday–Sunday 09:00–18:00
-  and the Kuala Lumpur & Selangor service area inside the profile itself so
-  both surfaces agree (`LOCAL_SEO_SETUP.md` §3 steps 5–6, §7).
+  `audit:schema` enforce them. Owner confirmed the same day that
+  Monday–Sunday 09:00–18:00 and the Kuala Lumpur & Selangor service area are
+  set inside the profile, so both surfaces agree (`LOCAL_SEO_SETUP.md` §3
+  steps 5–6, §7).
 
 ### Latest owner decisions (2026-10-10)
 
@@ -92,8 +93,8 @@ owner-verified; the remaining §7 gates stay open.
 | # | Action | Where | Notes |
 | --- | --- | --- | --- |
 | 1 | Confirm whether a profile already exists, then claim or create it with the exact NAP from `npm run verify:local-seo` | Google account the business controls | Name exactly `Renovix Home Services` — no keywords, no neighbourhood. Address `Jalan Kiara, Mont Kiara`, `50480`, `Kuala Lumpur`, `Wilayah Persekutuan Kuala Lumpur` |
-| 2 | Decide the **opening days** (Google asks day by day; the site states only `9:00 AM – 6:00 PM`) | Owner decision | ✅ **DECIDED 2026-10-15** — open every day, 9:00 AM – 6:00 PM. `data/site.ts`, EN/MS/ZH copy and schema `dayOfWeek` (Monday–Sunday) updated; owner to set Monday–Sunday 09:00–18:00 in the profile |
-| 3 | Choose the service areas actually worked in | Owner decision | ✅ **DECIDED 2026-10-15** — Klang Valley: Kuala Lumpur and Selangor. Owner to select the same in the profile; `npm run verify:local-seo` lists the 53 published locality guides as a reference |
+| 2 | Decide the **opening days** (Google asks day by day; the site states only `9:00 AM – 6:00 PM`) | Owner decision | ✅ **DONE 2026-10-15** — open every day, 9:00 AM – 6:00 PM. `data/site.ts`, EN/MS/ZH copy and schema `dayOfWeek` (Monday–Sunday) updated; owner confirmed Monday–Sunday 09:00–18:00 set in the profile |
+| 3 | Choose the service areas actually worked in | Owner decision | ✅ **DONE 2026-10-15** — Klang Valley: Kuala Lumpur and Selangor; owner confirmed the same selected in the profile. `npm run verify:local-seo` lists the 53 published locality guides as a reference |
 | 4 | Upload real job photos only | Owner → profile | No stock, no AI-generated images — the same rule the project pages follow |
 | 5 | Complete verification, then **paste the profile's review URL into `googleReviewsUrl` in `data/site.ts`** | `data/site.ts` (one line) | ✅ **DECIDED 2026-10-09** — owner supplied the profile link but later the same day instructed that the reviews-block button stays **OFF** while the profile has no Google reviews. `googleBusinessProfileUrl` (footer Google icon) carries the link; `googleReviewsUrl` is intentionally empty. Re-arm later by pasting the profile URL — labels and `review_profile_click` stay wired |
 | 6 | Publish the same NAP on Yellow Pages Malaysia, Hotfrog, BusinessList.my and Facebook Local Business; search/claim existing profiles first | Owner-controlled directory accounts; then `data/site.ts` | Copy from `npm run verify:local-seo`; check each public page before setting its `localCitationProfiles.<directory>` entry to `status: "published"` with the direct HTTPS URL. `npm run verify:citations` validates URL shape/config only and `npm run verify:citations -- --live` retrieves each published profile read-only to check it answers and shows the NAP — neither can verify approval or that the listing is the official record. Keep each entry pending until the live NAP is checked; no paid plan without owner approval. |

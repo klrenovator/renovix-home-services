@@ -205,8 +205,8 @@ lines.push("   Google Maps (2026-10-09, reconfirmed 2026-10-15). This offline ch
 lines.push("   cannot independently confirm that, citation submissions, or Local Pack");
 lines.push("   performance — only the owner's Google account can (LOCAL_SEO_SETUP.md §7).");
 lines.push("");
-lines.push("   Next: in the profile, set Monday–Sunday 09:00–18:00 and the Klang Valley");
-lines.push("   service area (Kuala Lumpur & Selangor) to match §2–§3 above, then follow");
-lines.push("   LOCAL_SEO_SETUP.md §5 for the citation sites.");
+lines.push("   Done (owner 2026-10-15): Monday–Sunday 09:00–18:00 and the Klang Valley");
+lines.push("   service area (Kuala Lumpur & Selangor) are set inside the profile,");
+lines.push("   matching §2–§3 above. Next owner step: LOCAL_SEO_SETUP.md §5 citations.");
 
 console.log(lines.join("\n"));

@@ -394,10 +394,13 @@ added to the site's structured data or copy as if it were.
       §2 is still worth doing whenever the owner next opens the profile).
       Owner also supplied on 2026-10-15: opening days (open daily,
       9:00 AM – 6:00 PM) and the service area (Klang Valley — Kuala Lumpur
-      and Selangor); the website now publishes both, and the owner is to set
-      the same Monday–Sunday hours and service area inside the profile.
+      and Selangor); the website now publishes both, and the owner confirmed
+      the same day that Monday–Sunday 09:00–18:00 hours and the Kuala Lumpur
+      & Selangor service area are set inside the profile.
 - [ ] `site:renovixhomeservices.my` and the profile agree on phone, address,
-      hours and website.
+      hours and website. — hours and service area confirmed aligned
+      2026-10-15; the phone/address/website eyeball pass against §2 is still
+      worth doing whenever the owner next opens the profile.
 - [ ] The profile's own **Performance** report shows impressions and at least
       one real action (call, directions, website or message).
 - [ ] At least one genuine customer review is published.
@@ -443,10 +446,12 @@ an owner action.*
 - [ ] Primary category set to what the business actually does most; secondary
       categories only for services genuinely offered.
 - [x] Service areas decided (owner 2026-10-15): Klang Valley — Kuala Lumpur
-      and Selangor; select the same inside the profile.
+      and Selangor; owner confirmed the same selected inside the profile
+      (2026-10-15).
 - [x] Hours decided day by day (owner 2026-10-15): open daily, 9:00 AM –
       6:00 PM; `data/site.ts`, EN/MS/ZH copy and schema `dayOfWeek` updated;
-      owner to set Monday–Sunday 09:00–18:00 inside the profile.
+      owner confirmed Monday–Sunday 09:00–18:00 set inside the profile
+      (2026-10-15).
 - [ ] Hours always break, phone and website set (website with **no** UTM).
 - [ ] Description factual, no unverifiable claims.
 - [ ] Real photos only (no stock, no AI); logo uploaded.
