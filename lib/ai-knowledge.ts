@@ -204,7 +204,7 @@ export function getAiKnowledge() {
       "All published prices are indicative starting prices, never final quotes.",
       "Final quotation is confirmed only after assessing the actual site condition.",
       "Service area is Kuala Lumpur, Selangor and the Klang Valley only.",
-      `Business hours are ${siteConfig.businessHours.display}; the business has not stated which days it opens.`,
+      `Business hours are ${siteConfig.businessHours.display} (Monday to Sunday).`,
       "No ranking, review-count, licence, certification, award or outcome claims are made.",
     ],
     keyPages: {

@@ -75,6 +75,7 @@ const business = {
   hoursDisplay: field(site, /businessHours:\s*\{[\s\S]*?display:\s*"([^"]+)"/, "businessHours.display"),
   opens: field(site, /businessHours:\s*\{[\s\S]*?opens:\s*"([^"]+)"/, "businessHours.opens"),
   closes: field(site, /businessHours:\s*\{[\s\S]*?closes:\s*"([^"]+)"/, "businessHours.closes"),
+  market: field(site, /\n\s*market:\s*"([^"]+)"/, "market"),
   googleReviewsUrl: field(site, /googleReviewsUrl:\s*"([^"]*)"/, "googleReviewsUrl"),
 };
 
@@ -130,18 +131,22 @@ lines.push("");
 lines.push("2. Opening hours");
 lines.push("");
 lines.push(`   Published hours    ${business.hoursDisplay} (${business.opens}–${business.closes})`);
-lines.push("   Days               NOT STATED by the business");
+lines.push("   Days               Monday–Sunday — owner-supplied 2026-10-15");
 lines.push("");
-lines.push("   Google asks for hours day-by-day, so the owner must decide them. Two rules:");
-lines.push("   - If the real hours differ from the published range, update");
-lines.push("     data/site.ts first so the site and the profile agree.");
-lines.push("   - If the business is not open every day, the site copy needs the days");
-lines.push("     added too. Do not enter days in GBP that the site does not state.");
-lines.push("   The site deliberately publishes no opening days in structured data");
-lines.push("   (audit:schema enforces this) because none have been supplied.");
+lines.push("   The owner confirmed on 2026-10-15 that the business works every day");
+lines.push("   of the week, 9:00 AM – 6:00 PM. Enter the same day by day in the");
+lines.push("   Google Business Profile (Monday to Sunday, 09:00–18:00). Two rules:");
+lines.push("   - If the real hours ever differ, update data/site.ts first so the");
+lines.push("     site and the profile agree.");
+lines.push("   - The site publishes these days in structured data (audit:schema");
+lines.push("     enforces the dayOfWeek list from data/site.ts).");
 lines.push("");
 
 lines.push("3. Service areas — published coverage (owner chooses; GBP is a claim)");
+lines.push("");
+lines.push(`   Owner-supplied GBP service area (2026-10-15): ${business.market} —`);
+lines.push("   Kuala Lumpur and Selangor. In the profile, select Kuala Lumpur and");
+lines.push("   Selangor (the Klang Valley) so the claim matches the website.");
 lines.push("");
 if (totalAreas === 0) {
   lines.push("   No published area guides were parsed — see data/area-content/.");
@@ -190,16 +195,18 @@ lines.push("");
 lines.push("5. Result");
 lines.push("");
 lines.push("   The website's half is ready: one name, one address, one phone number, one");
-lines.push("   email and one hours range, published from data/site.ts and enforced by");
+lines.push("   email and one set of opening hours (open daily, owner-supplied");
+lines.push("   2026-10-15), published from data/site.ts and enforced by");
 lines.push("   `npm run audit:business`; a LocalBusiness entity on every page; and a");
 lines.push("   reviews link that arms itself the moment a verified profile URL exists.");
 lines.push("");
-lines.push("   NOT CLAIMED: that a Google Business Profile has been created, verified or");
-lines.push("   approved, that any citation has been submitted, or that anything appears");
-lines.push("   in Maps / the Local Pack. Those are owner actions, and only the owner's");
-lines.push("   Google account can confirm them (LOCAL_SEO_SETUP.md §7).");
+lines.push("   Owner reports the Google Business Profile is verified and visible in");
+lines.push("   Google Maps (2026-10-09, reconfirmed 2026-10-15). This offline check");
+lines.push("   cannot independently confirm that, citation submissions, or Local Pack");
+lines.push("   performance — only the owner's Google account can (LOCAL_SEO_SETUP.md §7).");
 lines.push("");
-lines.push("   Next: follow LOCAL_SEO_SETUP.md §3 to create and verify the profile, then");
-lines.push("   §5 for the citation sites, then re-run this check with the URL supplied.");
+lines.push("   Done (owner 2026-10-15): Monday–Sunday 09:00–18:00 and the Klang Valley");
+lines.push("   service area (Kuala Lumpur & Selangor) are set inside the profile,");
+lines.push("   matching §2–§3 above. Next owner step: LOCAL_SEO_SETUP.md §5 citations.");
 
 console.log(lines.join("\n"));

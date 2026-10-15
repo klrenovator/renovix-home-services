@@ -29,8 +29,12 @@ import { siteConfig } from "@/data/site";
  * dates update"), choosing the site-wide reviewed-date model over per-page
  * `updatedAt` fields for now. If the owner supplies a different date that
  * better marks the last whole-site content review, replace this value.
+ *
+ * 2026-10-15 — bumped for the owner-supplied opening-days change (open
+ * daily, 9:00 AM – 6:00 PM) published in the footer/contact copy, the
+ * AI feeds and the LocalBusiness schema on every page.
  */
-export const CONTENT_LAST_MODIFIED = "2026-10-09";
+export const CONTENT_LAST_MODIFIED = "2026-10-15";
 
 /**
  * The `lastModified` for one sitemap entry: the *later* of the site-wide

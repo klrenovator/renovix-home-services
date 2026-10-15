@@ -1414,7 +1414,7 @@ export const en: Dictionary = {
     freeQuotation: "Free Quotation",
     klSelangor: "Kuala Lumpur & Selangor",
     step: "Step",
-    businessHours: "9:00 AM – 6:00 PM",
+    businessHours: "9:00 AM – 6:00 PM, open daily",
     callOrWhatsApp: "Call or WhatsApp",
   },
   areasBlock: {
