@@ -43,8 +43,18 @@ for (const b of banned) {
 if (/["']award["']\s*:/.test(schema)) fail("schema.ts emits an award field");
 else pass("schema.ts does not emit awards");
 
-if (/["']dayOfWeek["']\s*:/.test(schema) || /dayOfWeek\s*:/.test(schema)) fail("schema invents opening days");
-else pass("openingHoursSpecification has no invented dayOfWeek");
+// Owner-supplied 2026-10-15: open every day of the week. The schema must now
+// publish `dayOfWeek`, and it must come from `data/site.ts` (the single
+// source), never from a list typed into the schema builder.
+if (/dayOfWeek\s*:\s*\[\.\.\.siteConfig\.businessHours\.dayOfWeek\]/.test(schema)) {
+  pass("openingHoursSpecification publishes dayOfWeek from data/site.ts");
+} else fail("openingHoursSpecification must publish dayOfWeek from siteConfig.businessHours.dayOfWeek");
+
+const siteForDays = read("data/site.ts");
+for (const day of ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]) {
+  if (siteForDays.includes(`"${day}"`)) pass(`data/site.ts supplies opening day ${day}`);
+  else fail(`data/site.ts is missing the owner-supplied opening day ${day}`);
+}
 
 const siteSchema = read("components/seo/SiteSchema.tsx");
 if (siteSchema.includes("organizationNode") && siteSchema.includes("websiteNode")) {

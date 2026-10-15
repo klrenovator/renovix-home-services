@@ -16,6 +16,12 @@ export type SiteBusinessHours = {
   opens: string;
   /** 24-hour closing time, for structured data. */
   closes: string;
+  /**
+   * schema.org `dayOfWeek` names the business opens, owner-supplied
+   * 2026-10-15: open every day of the week, 9:00 AM – 6:00 PM. Before that
+   * date no days had been supplied and the schema published no `dayOfWeek`.
+   */
+  dayOfWeek: readonly string[];
 };
 
 export const localCitationDirectoryIds = [
@@ -112,9 +118,22 @@ export const siteConfig: SiteConfig = {
     country: "MY",
   },
   businessHours: {
-    display: "9:00 AM – 6:00 PM",
+    display: "9:00 AM – 6:00 PM, open daily",
     opens: "09:00",
     closes: "18:00",
+    // OWNER-SUPPLIED 2026-10-15: open every day of the week (Monday–Sunday),
+    // 9:00 AM – 6:00 PM, matching the Google Business Profile. The profile's
+    // service-area claim is the Klang Valley — Kuala Lumpur and Selangor —
+    // which is what `market` / `region` above already publish.
+    dayOfWeek: [
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+      "Sunday",
+    ],
   },
   facebookUrl: "https://www.facebook.com/share/1dr51n9qii/",
   instagramUrl: "https://www.instagram.com/renovixhomeservices/",

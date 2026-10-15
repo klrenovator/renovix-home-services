@@ -24,8 +24,9 @@ import { absoluteUrl } from "@/i18n/seo";
  * emitted. The verified contact block (name, phone, email, address, opening
  * time) comes from `data/site.ts`. No ratings, reviews, prices, geo
  * coordinates, certifications, licences, awards or registration numbers are
- * published anywhere, and the opening-hours node deliberately carries no
- * `dayOfWeek` because the business has not stated which days it opens.
+ * published anywhere. The opening-hours node carries the `dayOfWeek` list
+ * the owner supplied on 2026-10-15 (open every day); before that date no
+ * days had been supplied and no `dayOfWeek` was published.
  */
 
 /**
@@ -82,10 +83,12 @@ export function organizationNode(lang: string) {
       postalCode: siteConfig.address.postalCode,
       addressCountry: siteConfig.address.country,
     },
-    // Opening and closing time only: the business has stated 9:00 AM – 6:00 PM
-    // but has not stated which days, so no `dayOfWeek` is invented here.
+    // Owner-supplied 2026-10-15: open every day of the week, 9:00 AM – 6:00 PM.
+    // The days come from `data/site.ts` like every other business fact, so the
+    // schema can never state days the business has not supplied.
     openingHoursSpecification: {
       "@type": "OpeningHoursSpecification",
+      dayOfWeek: [...siteConfig.businessHours.dayOfWeek],
       opens: siteConfig.businessHours.opens,
       closes: siteConfig.businessHours.closes,
     },

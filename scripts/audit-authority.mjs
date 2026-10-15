@@ -938,7 +938,7 @@ if (localSeoGuide === null) {
   for (const [topic, pattern] of [
     ["the exact NAP block", /Jalan Kiara, Mont Kiara/],
     ["the published phone number", /\+601159259521/],
-    ["the hours question (days are not stated)", /days not stated|day by day/i],
+    ["the owner-supplied opening days (open daily, 2026-10-15)", /open daily|every day of the week/i],
     ["the business-name keyword rule", /keyword/i],
     ["service areas as a claim", /service area/i],
     ["the reviews-link step", /googleReviewsUrl/],

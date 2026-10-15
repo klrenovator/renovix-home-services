@@ -1345,7 +1345,7 @@ export const zh: Dictionary = {
     freeQuotation: "免费报价",
     klSelangor: "吉隆坡与雪兰莪",
     step: "步骤",
-    businessHours: "上午 9:00 – 下午 6:00",
+    businessHours: "上午 9:00 – 下午 6:00，每日开放",
     callOrWhatsApp: "致电或 WhatsApp",
   },
   areasBlock: {

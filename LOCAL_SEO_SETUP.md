@@ -10,8 +10,8 @@ Status overview (the three states used throughout this document):
 | Area | Status |
 | --- | --- |
 | Website's half (one NAP source, LocalBusiness entity, service-area coverage, reviews link that arms itself) | **CODE COMPLETE** — enforced by `npm run audit:business` and `audit:authority` |
-| Google Business Profile created, verified and populated | **OWNER ACTION PENDING** — only the business's own Google account can do this |
-| Appearing in Google Maps / the Local Pack, calls, direction requests, review count | **NOT CLAIMED** — no profile exists that this repository can see; live verification is §7 |
+| Google Business Profile created, verified and populated | **OWNER-CONFIRMED** — verified and visible on Google Maps (owner 2026-10-09, reconfirmed 2026-10-15); opening days and service area supplied 2026-10-15 (see §3 steps 5–6) |
+| Appearing in Google Maps / the Local Pack, calls, direction requests, review count | **PARTLY OWNER-CONFIRMED** — Maps visibility owner-confirmed; performance and review gates still open in §7 |
 
 Nothing in this guide was invented. Every business detail below is copied from
 `data/site.ts` — the single place the website publishes them — and the same
@@ -22,8 +22,8 @@ npm run verify:local-seo
 ```
 
 Run that first. It makes no network call, contacts no Google service, and
-prints the exact strings to paste (plus the hours question and the service-area
-reference list). It deliberately does not claim that a profile exists.
+prints the exact strings to paste (including the owner-supplied opening days
+and the service-area reference list).
 
 Related files:
 
@@ -31,7 +31,7 @@ Related files:
 | --- | --- |
 | `data/site.ts` | The only source of name, address, phone, WhatsApp, email and hours |
 | `components/seo/schema.ts` | The `LocalBusiness` entity every page publishes (no `geo`, no `rating`, no `sameAs` — those signals have not been supplied) |
-| `scripts/verify-local-seo.mjs` (`npm run verify:local-seo`) | Prints the exact NAP block, the hours caveat, the published coverage list and the reviews-link status |
+| `scripts/verify-local-seo.mjs` (`npm run verify:local-seo`) | Prints the exact NAP block, the owner-supplied opening days, the published coverage list and the reviews-link status |
 | `components/home/ReviewsSection.tsx` | The homepage reviews block; its profile link renders only when a verified URL is supplied (§6) |
 | `audit:business` · `audit:authority` | Fail the build if two conflicting business facts appear, or if the reviews link is guessed rather than supplied |
 
@@ -72,7 +72,7 @@ a different phone format weakens the match:
 | WhatsApp | `+601159259521` |
 | Email | `renovixhomeservices@gmail.com` |
 | Website | `https://renovixhomeservices.my` |
-| Hours published on the site | `9:00 AM – 6:00 PM` — **days not stated** |
+| Hours published on the site | `9:00 AM – 6:00 PM, open daily` (Monday–Sunday) — owner-supplied 2026-10-15 |
 | One-line address (for any form that asks for a single field) | `Jalan Kiara, Mont Kiara, 50480 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia` |
 
 `npm run verify:local-seo` prints this same block, read live from
@@ -163,6 +163,11 @@ leads waste the owner's time and suppress the profile.
 
 ### Step 5 — Service areas
 
+**Owner decision 2026-10-15:** the service area is the **Klang Valley —
+Kuala Lumpur and Selangor**. In the profile, select Kuala Lumpur and Selangor
+so the claim matches what the website publishes (`market` / `region` in
+`data/site.ts`, and the `areaServed` places in the schema).
+
 Service areas are a public claim about where the business works. Use the
 published list from `npm run verify:local-seo` as a reference, but select
 **only the localities where the business genuinely takes jobs**. The website
@@ -173,15 +178,16 @@ Alam …) and add more later; areas can be changed at any time without penalty.
 
 ### Step 6 — Hours
 
-Google asks for hours **day by day**; the website currently states only
-`9:00 AM – 6:00 PM` and no days, because the owner has not supplied them.
+**Owner-supplied 2026-10-15:** open **every day of the week, 9:00 AM –
+6:00 PM**. The website now states the same (`9:00 AM – 6:00 PM, open daily`
+in EN/MS/ZH, and `dayOfWeek` Monday–Sunday in structured data, enforced by
+`audit:schema`).
 
-1. Decide the real opening days and times.
-2. If they differ from `9:00 AM – 6:00 PM`, update `data/site.ts` first so the
-   site and the profile agree.
-3. If the business is closed on some days, the site copy should state the days
-   too — then both surfaces match.
-4. Never enter hours the business does not keep: those become customer
+1. In the profile, set **Monday to Sunday, 09:00–18:00** — the same day by
+   day, so the profile and the site agree exactly.
+2. If the real days or times ever change, update `data/site.ts` first, then
+   the profile — never let them disagree.
+3. Never enter hours the business does not keep: those become customer
    complaints and can cost the profile its visibility.
 
 ### Step 7 — Contact details
@@ -250,7 +256,8 @@ Task 3.3 complete based only on filling in a submission form.
    service registry is a reference, not evidence that every job or location is
    accepted. Do not invent a registration number, opening days, years in
    business, staff count, awards, reviews or certifications. The site publishes
-   `9:00 AM – 6:00 PM` but no days; do not guess day-by-day hours. If a listing
+   `9:00 AM – 6:00 PM, open daily` (owner-supplied 2026-10-15); copy those
+   day-by-day hours exactly. If a listing
    requires an unconfirmed field, pause and ask the owner rather than fabricate
    an answer.
 4. Use real business photos only. If a directory offers a paid placement or
@@ -382,9 +389,13 @@ added to the site's structured data or copy as if it were.
 - [x] The profile is verified (Google says so, not just "submitted").
       — **owner-confirmed 2026-10-09**.
 - [x] Searching the business name in Google Maps shows the exact §2 NAP.
-      — **owner-confirmed 2026-10-09** (profile shows on Google Maps; one
-      eyeball pass that the listed name/address/phone match §2 is still worth
-      doing whenever the owner next opens the profile).
+      — **owner-confirmed 2026-10-09, reconfirmed 2026-10-15** (profile shows
+      on Google Maps; one eyeball pass that the listed name/address/phone match
+      §2 is still worth doing whenever the owner next opens the profile).
+      Owner also supplied on 2026-10-15: opening days (open daily,
+      9:00 AM – 6:00 PM) and the service area (Klang Valley — Kuala Lumpur
+      and Selangor); the website now publishes both, and the owner is to set
+      the same Monday–Sunday hours and service area inside the profile.
 - [ ] `site:renovixhomeservices.my` and the profile agree on phone, address,
       hours and website.
 - [ ] The profile's own **Performance** report shows impressions and at least
@@ -431,9 +442,11 @@ an owner action.*
 - [ ] Service-area business decision made (address shown or hidden).
 - [ ] Primary category set to what the business actually does most; secondary
       categories only for services genuinely offered.
-- [ ] Service areas limited to localities where the business really works.
-- [ ] Hours decided day by day; `data/site.ts` updated first if they differ
-      from `9:00 AM – 6:00 PM`.
+- [x] Service areas decided (owner 2026-10-15): Klang Valley — Kuala Lumpur
+      and Selangor; select the same inside the profile.
+- [x] Hours decided day by day (owner 2026-10-15): open daily, 9:00 AM –
+      6:00 PM; `data/site.ts`, EN/MS/ZH copy and schema `dayOfWeek` updated;
+      owner to set Monday–Sunday 09:00–18:00 inside the profile.
 - [ ] Hours always break, phone and website set (website with **no** UTM).
 - [ ] Description factual, no unverifiable claims.
 - [ ] Real photos only (no stock, no AI); logo uploaded.

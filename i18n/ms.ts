@@ -1429,7 +1429,7 @@ export const ms: Dictionary = {
     freeQuotation: "Sebut Harga Percuma",
     klSelangor: "Kuala Lumpur & Selangor",
     step: "Langkah",
-    businessHours: "9:00 pagi – 6:00 petang",
+    businessHours: "9:00 pagi – 6:00 petang, buka setiap hari",
     callOrWhatsApp: "Telefon atau WhatsApp",
   },
   areasBlock: {

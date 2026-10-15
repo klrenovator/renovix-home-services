@@ -30,12 +30,22 @@ const OFFICIAL = {
   address:
     "Jalan Kiara, Mont Kiara, 50480 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia",
   hours: {
-    en: "9:00 AM – 6:00 PM",
-    ms: "9:00 pagi – 6:00 petang",
-    zh: "上午 9:00 – 下午 6:00",
+    en: "9:00 AM – 6:00 PM, open daily",
+    ms: "9:00 pagi – 6:00 petang, buka setiap hari",
+    zh: "上午 9:00 – 下午 6:00，每日开放",
   },
   opens: "09:00",
   closes: "18:00",
+  // Owner-supplied 2026-10-15: open every day of the week.
+  dayOfWeek: [
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+    "Sunday",
+  ],
 };
 
 const SOURCE_DIRS = ["app", "components", "data", "i18n", "lib"];
@@ -43,14 +53,16 @@ const SOURCE_EXTENSIONS = new Set([".ts", ".tsx"]);
 const SITE_FILE = "data/site.ts";
 const SCHEMA_FILE = "components/seo/schema.ts";
 
-/** Strings that would claim hours or capabilities the business never stated. */
+/**
+ * Strings that would claim hours or capabilities the business never stated.
+ * ("Open every day" is NOT forbidden: the owner supplied it on 2026-10-15.
+ * Round-the-clock / emergency availability has never been supplied.)
+ */
 const FORBIDDEN_HOURS_CLAIMS = [
   "24/7",
   "24 hours",
   "24-hour",
   "open 24",
-  "seven days a week",
-  "7 days a week",
   "around the clock",
   "overnight service",
   "emergency service",
@@ -150,6 +162,12 @@ for (const [label, value] of [
 ]) {
   if (!siteSource.includes(value)) {
     fail(`data/site.ts does not contain the verified ${label}: ${value}`);
+  }
+}
+
+for (const day of OFFICIAL.dayOfWeek) {
+  if (!siteSource.includes(`"${day}"`)) {
+    fail(`data/site.ts does not contain the owner-supplied opening day: ${day}`);
   }
 }
 
